@@ -1,0 +1,44 @@
+---
+// What every column and label means, always visible, from the same text the cells show on hover
+import { TONE } from '../lib/labels';
+
+interface Props {
+  groups: { column: string; question: string; states: { label: string; tone: keyof typeof TONE; meaning: string }[] }[];
+  extra?: { label: string; tone: keyof typeof TONE; meaning: string }[];
+}
+
+const { groups, extra } = Astro.props;
+const PILL = 'inline-flex shrink-0 items-center whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset';
+const CARD = 'rounded-lg bg-zinc-900/60 p-4 ring-1 ring-zinc-800';
+---
+
+<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+  {groups.map((group) => (
+    <div class={CARD}>
+      <h3 class="text-sm font-semibold text-zinc-100">{group.column}</h3>
+      <p class="mt-0.5 text-xs text-zinc-400">{group.question}</p>
+      <dl class="mt-3 space-y-2">
+        {group.states.map((state) => (
+          <div class="flex items-start gap-2">
+            <dt class={`${PILL} ${TONE[state.tone]}`}>{state.label}</dt>
+            <dd class="text-xs leading-5 text-zinc-400">{state.meaning}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  ))}
+  {extra && (
+    <div class={CARD}>
+      <h3 class="text-sm font-semibold text-zinc-100">Colours and badges</h3>
+      <p class="mt-0.5 text-xs text-zinc-400">Every label also explains itself when you point at it.</p>
+      <dl class="mt-3 space-y-2">
+        {extra.map((state) => (
+          <div class="flex items-start gap-2">
+            <dt class={`${PILL} ${TONE[state.tone]}`}>{state.label}</dt>
+            <dd class="text-xs leading-5 text-zinc-400">{state.meaning}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  )}
+</div>

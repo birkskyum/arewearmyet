@@ -1,5 +1,7 @@
 ---
 // The model's name, linked to where its details come from, with a badge when it isn't shipping yet
+import { ANNOUNCED, TONE } from '../lib/labels';
+
 interface Props {
   model: { vendor: string; name: string; status?: string | null; sources?: string[] };
 }
@@ -10,5 +12,5 @@ const href = model.sources?.[0];
 
 <div class="font-medium text-zinc-100">
   {href ? <a href={href} class="hover:underline hover:decoration-zinc-500 hover:underline-offset-2">{model.vendor} {model.name}</a> : <>{model.vendor} {model.name}</>}
-  {model.status && <span title={model.status} class="ml-1.5 inline-flex rounded-full bg-sky-500/15 px-2 py-0.5 align-middle text-xs font-medium text-sky-300 ring-1 ring-inset ring-sky-500/30">Announced</span>}
+  {model.status && <span title={`${ANNOUNCED.meaning} The vendor said: ${model.status}.`} class={`ml-1.5 inline-flex rounded-full px-2 py-0.5 align-middle text-xs font-medium ring-1 ring-inset ${TONE[ANNOUNCED.tone]}`}>{ANNOUNCED.label}</span>}
 </div>
