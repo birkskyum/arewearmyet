@@ -77,15 +77,11 @@ const year = (released: string | number | null) => (released ? String(released).
       </p>
     </section>
 
-    <section class="mt-10">
-      <h2 class="text-xl font-semibold text-zinc-50">What the labels mean</h2>
-      <div class="mt-4">
-        <Legend groups={LEGEND} extra={legendExtra} />
-      </div>
-    </section>
-
     <section class="mt-10 scroll-mt-6" id="snapdragon">
       <h2 class="text-xl font-semibold text-zinc-50">Snapdragon X and X2</h2>
+      <div class="mt-4">
+        <Legend title="What the labels mean" groups={LEGEND} extra={legendExtra} />
+      </div>
       <div class="mt-4 flex flex-wrap items-center gap-2" id="filters">
         <input id="search" type="search" placeholder="Search models" class="w-56 rounded-md bg-zinc-900 px-3 py-1.5 text-sm text-zinc-100 ring-1 ring-zinc-700 placeholder:text-zinc-500 focus:outline-none focus:ring-zinc-400" />
         <span class="ml-2 text-sm text-zinc-500">Chip</span>
@@ -167,7 +163,7 @@ const year = (released: string | number | null) => (released ? String(released).
           NVIDIA's ARM laptops and desktops boot through ACPI, so they need no device tree or hardware IDs. What counts here is whether someone has booted Omarchy on them.
         </p>
         <div class="mt-4">
-          <Legend groups={NVIDIA_LEGEND} />
+          <Legend title="What the labels mean" groups={NVIDIA_LEGEND} />
         </div>
         <div class="mt-4 overflow-x-auto rounded-xl ring-1 ring-zinc-800">
           <table class="w-full text-left text-sm">
