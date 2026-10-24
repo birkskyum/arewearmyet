@@ -1,0 +1,62 @@
+name: Add a model or send its data
+description: A model that's missing from the board, or data for one that's on it
+labels: [model]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping. Every model needs a device tree, written from its ACPI tables, and its hardware IDs, which let a boot image pick that device tree by itself. Send what you have; one field is already useful.
+
+        Don't paste serial numbers. If you attach ACPI tables, leave out `MSDM`, which holds the Windows product key.
+
+  - type: input
+    id: model
+    attributes:
+      label: Laptop
+      description: Brand and name, as the vendor sells it
+      placeholder: ASUS Zenbook 14
+    validations:
+      required: true
+
+  - type: input
+    id: model-number
+    attributes:
+      label: Model number
+      description: From the sticker underneath or the system information
+      placeholder: UX3480QA
+    validations:
+      required: true
+
+  - type: input
+    id: chip
+    attributes:
+      label: Processor
+      placeholder: Snapdragon X X1-26-100
+
+  - type: textarea
+    id: hwids
+    attributes:
+      label: Hardware IDs
+      description: |
+        On Linux, the output of `sudo fwupdtool hwids`. On Windows, the output of this in PowerShell, which shows the strings the IDs are made from:
+        `Get-CimInstance Win32_ComputerSystem | fl Manufacturer,Model,SystemFamily,SystemSKUNumber; Get-CimInstance Win32_BaseBoard | fl Manufacturer,Product; Get-CimInstance Win32_BIOS | fl Manufacturer,SMBIOSBIOSVersion,SystemBiosMajorVersion,SystemBiosMinorVersion; Get-CimInstance Win32_SystemEnclosure | fl ChassisTypes`
+      render: text
+
+  - type: textarea
+    id: acpi
+    attributes:
+      label: ACPI tables
+      description: Attach a zip of the dumped tables, or link to where they are
+
+  - type: input
+    id: drivers
+    attributes:
+      label: Driver download
+      description: The vendor's support page with the Windows driver package for this model, where the firmware files come from
+
+  - type: checkboxes
+    id: tester
+    attributes:
+      label: Testing
+      options:
+        - label: I own this laptop and can test boot images on it

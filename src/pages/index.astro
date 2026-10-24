@@ -27,6 +27,7 @@ const collected = new Date(status.collected).toISOString().slice(0, 10);
 const PILL = 'inline-flex items-center whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset';
 const BUTTON = 'rounded-md px-2.5 py-1 text-sm text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 aria-pressed:bg-zinc-200 aria-pressed:text-zinc-900 aria-pressed:ring-zinc-200';
 const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
+const REPO = 'https://github.com/birkskyum/arewearmyet';
 ---
 
 <Layout title="Are we ARM yet?" description="Omarchy on ARM PCs, model by model: which laptops run it today, and what each one still needs upstream.">
@@ -132,6 +133,17 @@ const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-1
         </table>
       </div>
       <p id="empty" hidden class="mt-4 text-sm text-zinc-500">No models match.</p>
+    </section>
+
+    <section class="mt-12 rounded-xl bg-zinc-900 p-6 text-sm text-zinc-400 ring-1 ring-zinc-800">
+      <h2 class="text-base font-semibold text-zinc-100">Help a model get there</h2>
+      <p class="mt-2 max-w-3xl">
+        Own one of the models marked <span class={`${PILL} ${TONE.wanted}`}>Wanted</span>, or one that's missing from the list? Its hardware IDs and ACPI tables are what a device tree gets written from, and an owner who can test boot images is what gets it finished.
+      </p>
+      <div class="mt-4 flex flex-wrap gap-3">
+        <a href={`${REPO}/issues/new?template=model.yml`} class="rounded-md bg-zinc-100 px-3 py-1.5 font-medium text-zinc-900 hover:bg-white">Send data for a model</a>
+        <a href={`${REPO}/blob/main/data/models.yaml`} class="rounded-md px-3 py-1.5 text-zinc-200 ring-1 ring-zinc-700 hover:bg-zinc-800">Edit the model list</a>
+      </div>
     </section>
 
     <section class="mt-12 grid gap-8 text-sm text-zinc-400 sm:grid-cols-2">

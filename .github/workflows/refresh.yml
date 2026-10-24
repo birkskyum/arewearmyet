@@ -1,0 +1,52 @@
+name: Refresh and deploy
+
+on:
+  schedule:
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Collect the sources
+        if: github.event_name != 'push'
+        run: pnpm collect
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: pnpm status
+
+      # Commit only when something besides the collection time changed
+      - name: Commit changed data
+        if: github.event_name != 'push'
+        run: |
+          git add data/sources.json src/data/status.json
+          if git diff --cached -U0 | grep -E '^[+-] ' | grep -vqE '"collected"'; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Refresh the data'
+            git push
+          fi
+
+      - run: pnpm build
+
+      - name: Deploy
+        run: pnpm wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
