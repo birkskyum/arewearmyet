@@ -60,6 +60,7 @@ export type NvidiaModel = (typeof status.nvidia)[number];
 export function nvidiaOmarchyCell(model: NvidiaModel): Cell {
   if (model.omarchy === 'works') return { label: 'Boots', tone: 'good', title: 'A tester booted Omarchy on it' };
   if (model.omarchy === 'expected') return { label: 'Should boot', tone: 'close', title: 'Same platform as a tested model, but nobody has tried it yet' };
+  if (model.omarchy === 'untested') return { label: 'Not tested', tone: 'muted', title: 'Nobody has tried Omarchy on it yet' };
   if (model.omarchy === 'problems') return { label: 'Problems', tone: 'wanted', title: 'A tester booted it and hit problems' };
   return { label: 'Not yet', tone: 'wanted', title: `Omarchy doesn't support it yet` };
 }

@@ -1,465 +1,1400 @@
 # Every ARM PC model the board tracks. One entry per hardware model; variants
 # that Linux describes with separate device trees are listed inside it.
 #
-#   generation   x1 (Snapdragon X), x2 (Snapdragon X2) or 8cx (8cx Gen 3)
-#   compatible   the device tree's first compatible string, also for trees that
-#                are only posted or out of tree; quote it
-#   ids          systemd hardware ID files to check even when they name a
-#                different compatible
-#   firmware     linux-firmware folders with this model's files
-#   acpi         aarch64-laptops/build misc/ folders with its ACPI dump
+#   generation     x1 (Snapdragon X), x2 (Snapdragon X2) or 8cx (8cx Gen 3)
+#   chips          the processors it's sold with
+#   variants       one per device tree: compatible is the tree's first
+#                  compatible string, also for trees that are only posted or
+#                  out of tree; ids are systemd hardware ID files to check even
+#                  when they name a different compatible
+#   firmware       linux-firmware folders with this model's files
+#   acpi           aarch64-laptops/build misc/ folders with its ACPI dump
+#   status         set when it was announced but isn't confirmed shipping
+#   sources        where the model's details come from
 
 models:
-  # ASUS
-  - id: asus-zenbook-a14-ux3407
-    vendor: ASUS
-    name: Zenbook A14
-    generation: x1
-    released: 2025
-    model_numbers: [UX3407RA, UX3407QA]
-    variants:
-      - { model: UX3407RA, chip: X1E-78-100, compatible: "asus,zenbook-a14-ux3407ra" }
-      - { model: UX3407QA OLED, chip: X1P-42-100, compatible: "asus,zenbook-a14-ux3407qa-oled" }
-      - { model: UX3407QA LCD, chip: X1P-42-100, compatible: "asus,zenbook-a14-ux3407qa-lcd" }
-    firmware: [qcom/x1e80100/ASUSTeK/zenbook-a14]
-    acpi: [asus-zenbook-a14-ux3407q]
-
-  - id: asus-zenbook-14-ux3480qa
-    vendor: ASUS
-    name: Zenbook 14 (2026)
-    generation: x1
-    released: 2026
-    model_numbers: [UX3480QA]
-    variants:
-      - { model: UX3480QA, chip: X1-26-100 }
-
-  - id: asus-vivobook-s15
-    vendor: ASUS
-    name: Vivobook S 15
-    generation: x1
-    released: 2024
-    model_numbers: [S5507QA, Q5507QA]
-    variants:
-      - { model: X Elite, chip: X1E-78-100, compatible: "asus,vivobook-s15" }
-      - { model: X Plus, chip: X1P-42-100, compatible: "asus,vivobook-s15-x1p4" }
-    firmware: [qcom/x1e80100/ASUSTeK/vivobook-s15]
-    acpi: [asus-vivobook-s-15, asus-vivobook-s15-q5507, asus-vivobook-s15-s5507]
-
-  - id: asus-vivobook-16
-    vendor: ASUS
-    name: Vivobook 16
-    generation: x1
-    firmware: [qcom/x1e80100/ASUSTeK/vivobook-16]
-    notes: linux-firmware has its audio topology, so a device tree exists somewhere out of tree.
-
-  - id: asus-zenbook-a14-ux3407na
-    vendor: ASUS
-    name: Zenbook A14 (X2)
-    generation: x2
-    released: 2026
-    model_numbers: [UX3407NA]
-    variants:
-      - { model: UX3407NA, compatible: "asus,zenbook-a14-ux3407na" }
-    firmware: [qcom/glymur/ASUSTeK/UX3407NA]
-
-  - id: asus-zenbook-a16-ux3607oa
-    vendor: ASUS
-    name: Zenbook A16
-    generation: x2
-    released: 2026
-    model_numbers: [UX3607OA]
-    variants:
-      - { model: UX3607OA, compatible: "asus,zenbook-a16-ux3607oa" }
-    firmware: [qcom/glymur/ASUSTeK/UX3607OA]
-    acpi: [asus-zenbook-a16-ux3607oa]
 
   # Acer
-  - id: acer-swift-14-ai-sf14-11
-    vendor: Acer
-    name: Swift 14 AI
+  - id: acer-aspire-14-ai-a14-11m
+    vendor: "Acer"
+    name: "Aspire 14 AI"
     generation: x1
-    released: 2024
-    model_numbers: [SF14-11]
-    variants:
-      - { model: SF14-11, chip: X1P-64-100, compatible: "acer,swift-sf14-11" }
+    released: "2025-06"
+    chips: ["X1-26-100"]
+    model_numbers: ["A14-11M", "A14-11MT"]
+    sources:
+      - https://news.acer.com/acer-expands-aspire-ai-series-with-six-new-copilot-pcs-powered-by-next-gen-processors
+      - https://www.notebookcheck.net/Acer-Aspire-14-AI-A14-11M.1173609.0.html
 
-  - id: acer-swift-sfa14-11
-    vendor: Acer
-    name: Swift 14 Go Pro AI
+  - id: acer-aspire-16-ai-a16-11m
+    vendor: "Acer"
+    name: "Aspire 16 AI"
     generation: x1
-    model_numbers: [SFA14-11]
+    released: "2025-06"
+    chips: ["X1-26-100"]
+    model_numbers: ["A16-11M", "A16-11MT"]
+    sources:
+      - https://news.acer.com/acer-expands-aspire-ai-series-with-six-new-copilot-pcs-powered-by-next-gen-processors
+      - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/acer-aspire-16-ai
+      - https://www.pcmag.com/reviews/acer-aspire-16-ai
+
+  - id: acer-aspire-lite-14-ai-al14-11m
+    vendor: "Acer"
+    name: "Aspire Lite 14 AI"
+    generation: x1
+    released: "2026-10"
+    chips: ["X1-26-101"]
+    model_numbers: ["AL14-11M"]
+    sources:
+      - https://www.notebookcheck.net/New-lightweight-laptop-launches-with-14-inch-display-and-Qualcomm-Snapdragon-X-Plus-chipset.1413302.0.html
+
+  - id: acer-swift-14-ai-sf14-11
+    vendor: "Acer"
+    name: "Swift 14 AI"
+    generation: x1
+    released: "2024-06"
+    chips: ["X1E-78-100", "X1P-64-100"]
+    model_numbers: ["SF14-11", "SF14-11T"]
     variants:
-      - { model: SFA14-11, chip: X1E-78-100, compatible: "acer,swift-sfa14-11" }
-    acpi: [acer-sfa14-11]
+      - { model: "SF14-11", chip: "X1P-64-100", compatible: "acer,swift-sf14-11" }
+    sources:
+      - https://news.acer.com/acer-announces-its-first-ngai-pc-the-swift-14-ai-laptop
+      - https://www.notebookcheck.net/Acer-Swift-14-AI-SF14-11.861026.0.html
+      - https://github.com/systemd/systemd/blob/main/src/boot/hwids/aa64/x1p64100-acer-swift-sf14-11.json
+
+  - id: acer-swift-go-pro-ai-sfa14-11
+    vendor: "Acer"
+    name: "Swift 14 Go Pro AI"
+    generation: x1
+    released: "2024-06"
+    chips: ["X1E-78-100"]
+    model_numbers: ["SFA14-11"]
+    variants:
+      - { model: "SFA14-11", chip: "X1E-78-100", compatible: "acer,swift-sfa14-11" }
+    acpi: ["acer-sfa14-11"]
+    sources:
+      - https://www.ithome.com/0/775/814.htm
+      - https://github.com/systemd/systemd/blob/main/src/boot/hwids/aa64/x1e78100-acer-sfa14-11.json
+      - https://github.com/aarch64-laptops/build/tree/master/misc/acer-sfa14-11
 
   - id: acer-swift-go-14-ai-sfg14-01
-    vendor: Acer
-    name: Swift Go 14 AI
+    vendor: "Acer"
+    name: "Swift Go 14 AI"
     generation: x1
-    model_numbers: [SFG14-01]
+    released: "2024-09"
+    chips: ["X1P-42-100"]
+    model_numbers: ["SFG14-01"]
     variants:
-      - { model: SFG14-01, chip: X1P-42-100, compatible: "acer,swift-go14-01" }
+      - { model: "SFG14-01", chip: "X1P-42-100", compatible: "acer,swift-go14-01" }
+    sources:
+      - https://news.acer.com/acer-expands-its-copilot-pc-line-with-new-swift-14-ai-and-swift-go-14-ai-laptops
+      - https://www.computerbase.de/artikel/notebooks/acer-swift-go-14-ai-snapdragon-x-plus-test.90425/
+      - https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p42100-acer-swift-go14-01.txt
+
+  - id: acer-swift-spin-14-ai-sfsp14-q51t
+    vendor: "Acer"
+    name: "Swift Spin 14 AI"
+    generation: x2
+    form: 2-in-1
+    released: "2026-07"
+    chips: ["X2E-78-100"]
+    model_numbers: ["SFSP14-Q51T"]
+    sources:
+      - https://news.acer.com/acer-broadens-portfolio
+      - https://www.notebookcheck.net/Acer-Swift-Spin-14-AI-SFSP14-Q51T-Reviews-and-Specs.1393057.0.html
+
+
+  # ASUS
+  - id: asus-proart-pz13-ht5306
+    vendor: "ASUS"
+    name: "ProArt PZ13"
+    generation: x1
+    form: tablet
+    released: "2024-09"
+    chips: ["X1P-42-100"]
+    model_numbers: ["HT5306QA"]
+    sources:
+      - https://www.asus.com/laptops/for-creators/proart/proart-pz13-ht5306/techspec/
+      - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-proart-pz13
+
+  - id: asus-v400-aio-vm441qa
+    vendor: "ASUS"
+    name: "V400 AiO (VM441QA)"
+    generation: x1
+    form: desktop
+    released: "2026-01"
+    chips: ["X1-26-100"]
+    model_numbers: ["VM441QA"]
+    sources:
+      - https://www.asus.com/displays-desktops/all-in-one-pcs/asus-aio/asus-v400-aio-vm441qa/techspec/
+      - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-aio-vm441qa
+
+  - id: asus-v400-aio-vm471qa
+    vendor: "ASUS"
+    name: "V400 AiO (VM471QA)"
+    generation: x1
+    form: desktop
+    released: "2026"
+    chips: ["X1-26-100"]
+    model_numbers: ["VM471QA"]
+    sources:
+      - https://www.asus.com/displays-desktops/all-in-one-pcs/asus-aio/asus-v400-aio-vm471qa/techspec/
+
+  - id: asus-vivobook-14-x1407qa
+    vendor: "ASUS"
+    name: "Vivobook 14"
+    generation: x1
+    released: "2025-01"
+    chips: ["X1-26-100"]
+    model_numbers: ["X1407QA", "A1407QA"]
+    sources:
+      - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-14-x1407q/techspec/
+      - https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html
+
+  - id: asus-vivobook-16-x1607qa
+    vendor: "ASUS"
+    name: "Vivobook 16"
+    generation: x1
+    released: "2025-01"
+    chips: ["X1-26-100"]
+    model_numbers: ["X1607QA", "F1607QA", "A1607QA"]
+    firmware: ["qcom/x1e80100/ASUSTeK/vivobook-16"]
+    notes: "linux-firmware has its audio topology, so a device tree exists somewhere out of tree."
+    sources:
+      - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-16-x1607q/techspec/
+      - https://eshop.asus.com/us/90nb15z1-m00590-asus-vivobook-16-x1607qa-copilot-pc.html
+      - https://github.com/linux-msm/audioreach-topology/commit/744161325eba0fca72436f8d98576d9d4f7e87de
+
+  - id: asus-vivobook-s15-s5507
+    vendor: "ASUS"
+    name: "Vivobook S 15"
+    generation: x1
+    released: "2024-06"
+    chips: ["X1E-78-100", "X1P-64-100", "X1P-42-100"]
+    model_numbers: ["S5507QA", "S5507QAD", "Q5507QA"]
+    variants:
+      - { model: "X Elite", chip: "X1E-78-100", compatible: "asus,vivobook-s15" }
+      - { model: "X Plus", chip: "X1P-42-100", compatible: "asus,vivobook-s15-x1p4" }
+    firmware: ["qcom/x1e80100/ASUSTeK/vivobook-s15"]
+    acpi: ["asus-vivobook-s-15", "asus-vivobook-s15-q5507", "asus-vivobook-s15-s5507"]
+    sources:
+      - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s-15-s5507/techspec/
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1p42100-asus-vivobook-s15.dts
+      - https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1e80100-asus-vivobook-s15.txt
+
+  - id: asus-vivobook-s14-s3407qa
+    vendor: "ASUS"
+    name: "Vivobook S14 (S3407QA)"
+    generation: x1
+    released: "2025-01"
+    chips: ["X1-26-100"]
+    model_numbers: ["S3407QA"]
+    sources:
+      - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s14-s3407q/techspec/
+      - https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/
+
+  - id: asus-vivobook-s14-s5408qa
+    vendor: "ASUS"
+    name: "Vivobook S14 (S5408QA)"
+    generation: x1
+    released: "2026"
+    chips: ["X1-26-101"]
+    model_numbers: ["S5408QA"]
+    sources:
+      - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s14-s5408-qualcomm/techspec/
+
+  - id: asus-vivobook-s14-flip-tp5408qa
+    vendor: "ASUS"
+    name: "Vivobook S14 Flip"
+    generation: x1
+    form: 2-in-1
+    released: "2026"
+    chips: ["X1-26-100"]
+    model_numbers: ["TP5408QA"]
+    sources:
+      - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s14-flip-tp5408-qualcomm/techspec/
+
+  - id: asus-vivobook-s16-s3607qa
+    vendor: "ASUS"
+    name: "Vivobook S16 (S3607QA)"
+    generation: x1
+    released: "2025"
+    chips: ["X1-26-100"]
+    model_numbers: ["S3607QA"]
+    sources:
+      - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s3607q/techspec/
+      - https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/
+
+  - id: asus-vivobook-s16-s5608qa
+    vendor: "ASUS"
+    name: "Vivobook S16 (S5608QA)"
+    generation: x1
+    released: "2026"
+    chips: ["X1-26-101"]
+    model_numbers: ["S5608QA"]
+    sources:
+      - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s5608-qualcomm/techspec/
+
+  - id: asus-vivobook-s16-flip-tp5608qa
+    vendor: "ASUS"
+    name: "Vivobook S16 Flip"
+    generation: x1
+    form: 2-in-1
+    released: "2026"
+    chips: ["X1-26-100"]
+    model_numbers: ["TP5608QA"]
+    sources:
+      - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-flip-tp5608-qualcomm/techspec/
+
+  - id: asus-zenbook-14-ux3480qa
+    vendor: "ASUS"
+    name: "Zenbook 14 (2026)"
+    generation: x1
+    released: "2026"
+    chips: ["X1-26-100"]
+    model_numbers: ["UX3480QA"]
+    variants:
+      - { model: "UX3480QA", chip: "X1-26-100" }
+    sources:
+      - https://www.asus.com/laptops/for-home/zenbook/asus-zenbook-14-ux3480-qualcomm/techspec/
+      - https://www.windowscentral.com/hardware/laptops/asus-zenbook-14-snapdragon-x-2026-review
+
+  - id: asus-zenbook-a14-ux3407
+    vendor: "ASUS"
+    name: "Zenbook A14"
+    generation: x1
+    released: "2025-01"
+    chips: ["X1E-78-100", "X1P-42-100", "X1-26-100"]
+    model_numbers: ["UX3407RA", "UX3407QA"]
+    variants:
+      - { model: "UX3407RA", chip: "X1E-78-100", compatible: "asus,zenbook-a14-ux3407ra" }
+      - { model: "UX3407QA OLED", chip: "X1P-42-100", compatible: "asus,zenbook-a14-ux3407qa-oled" }
+      - { model: "UX3407QA LCD", chip: "X1P-42-100", compatible: "asus,zenbook-a14-ux3407qa-lcd" }
+    firmware: ["qcom/x1e80100/ASUSTeK/zenbook-a14"]
+    acpi: ["asus-zenbook-a14-ux3407q"]
+    sources:
+      - https://www.asus.com/laptops/for-home/zenbook/asus-zenbook-a14-ux3407/techspec/
+      - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-zenbook-a14
+      - https://github.com/systemd/systemd/blob/main/src/boot/hwids/aa64/x1p42100-asus-zenbook-a14.json
+
+  - id: asus-ascent-qn10
+    vendor: "ASUS"
+    name: "Ascent QN10"
+    generation: x2
+    form: desktop
+    released: "2026-06"
+    chips: ["X2E-88-100"]
+    model_numbers: ["QN10", "90MS03E2-M000B0"]
+    sources:
+      - https://www.asus.com/displays-desktops/mini-pcs/ascent-series/asus-ascent-qn10/techspec/
+      - https://eshop.asus.com/us/90ms03e2-m000b0-asus-ascent-qn10.html
+      - https://videocardz.com/newz/asus-launches-first-snapdragon-x2-elite-mini-pc-ascent-qn10-costs-1350
+
+  - id: asus-proart-pz14-ht7407
+    vendor: "ASUS"
+    name: "ProArt PZ14"
+    generation: x2
+    form: tablet
+    released: "2026-01"
+    chips: ["X2E-88-100"]
+    model_numbers: ["HT7407NA"]
+    sources:
+      - https://www.asus.com/laptops/for-creators/proart/proart-pz14-ht7407/techspec/
+      - https://www.notebookcheck.net/Powerful-creator-tablet-with-Snapdragon-X2-Elite-Asus-ProArt-PZ14-Review.1359622.0.html
+
+  - id: asus-vivobook-s16-s3607na
+    vendor: "ASUS"
+    name: "Vivobook S16 (S3607NA)"
+    generation: x2
+    released: "2026-01"
+    chips: ["X2E-88-100"]
+    model_numbers: ["S3607NA"]
+    sources:
+      - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s3607q/techspec/
+      - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-vivobook-s16
+
+  - id: asus-zenbook-a14-ux3407na
+    vendor: "ASUS"
+    name: "Zenbook A14 (X2)"
+    generation: x2
+    released: "2026-04"
+    chips: ["X2E-88-100"]
+    model_numbers: ["UX3407NA"]
+    variants:
+      - { model: "UX3407NA", compatible: "asus,zenbook-a14-ux3407na" }
+    firmware: ["qcom/glymur/ASUSTeK/UX3407NA"]
+    sources:
+      - https://www.asus.com/laptops/for-home/zenbook/asus-zenbook-a14-ux3407/techspec/
+      - https://www.notebookcheck.net/Asus-Zenbook-A14-Laptop-Review-Snapdragon-X2-Elite-against-the-MacBook-Air-M5.1261944.0.html
+      - https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a14-ux3407na.dts
+
+  - id: asus-zenbook-a16-ux3607oa
+    vendor: "ASUS"
+    name: "Zenbook A16"
+    generation: x2
+    released: "2026-04"
+    chips: ["X2E-96-100", "X2E-94-100"]
+    model_numbers: ["UX3607OA"]
+    variants:
+      - { model: "UX3607OA", compatible: "asus,zenbook-a16-ux3607oa" }
+    firmware: ["qcom/glymur/ASUSTeK/UX3607OA"]
+    acpi: ["asus-zenbook-a16-ux3607oa"]
+    sources:
+      - https://www.asus.com/laptops/for-home/zenbook/asus-zenbook-a16-ux3607/techspec/
+      - https://www.howtogeek.com/the-first-snapdragon-x2-laptops-arrive-in-the-usheres-what-you-need-to-know/
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a16-ux3607oa.dts
+
 
   # Dell
-  - id: dell-xps-13-9345
-    vendor: Dell
-    name: XPS 13 9345
+  - id: dell-inspiron-14-5441
+    vendor: "Dell"
+    name: "Inspiron 14 5441"
     generation: x1
-    released: 2024
+    released: "2024-09"
+    chips: ["X1P-64-100", "X1P-42-100", "X1-26-100"]
+    model_numbers: ["5441", "P190G", "P190G001"]
     variants:
-      - { chip: X1E-80-100, compatible: "dell,xps13-9345" }
-    firmware: [qcom/x1e80100/dell/xps13-9345]
-    acpi: [dell-xps-9345]
+      - { chip: "X1P-42-100" }
+    acpi: ["dell-inspiron-14-5441-x1p-42-100"]
+    sources:
+      - https://www.notebookcheck.net/Dell-Inspiron-14-5441-now-available-for-899-with-new-Snapdragon-X-Plus-X1P-42-100-SoC.883655.0.html
+      - https://dl.dell.com/content/manual20917790-inspiron-14-5441-owner-s-manual.pdf
 
   - id: dell-inspiron-14-plus-7441
-    vendor: Dell
-    name: Inspiron 14 Plus 7441
+    vendor: "Dell"
+    name: "Inspiron 14 Plus 7441"
     generation: x1
-    released: 2024
+    released: "2024-06"
+    chips: ["X1E-80-100", "X1P-64-100"]
+    model_numbers: ["7441", "P190G", "P190G001"]
     variants:
-      - { chip: X1E-80-100, compatible: "dell,inspiron-14-plus-7441" }
-    firmware: [qcom/x1e80100/dell/inspiron-14-plus-7441]
-    acpi: [dell-inspiron-14-7441-x1e-80-100]
-
-  - id: dell-inspiron-14-5441
-    vendor: Dell
-    name: Inspiron 14 5441
-    generation: x1
-    released: 2024
-    variants:
-      - { chip: X1P-42-100 }
-    acpi: [dell-inspiron-14-5441-x1p-42-100]
-
-  - id: dell-latitude-7455
-    vendor: Dell
-    name: Latitude 7455
-    generation: x1
-    released: 2024
-    variants:
-      - { chip: X1E-80-100, compatible: "dell,latitude-7455" }
-    firmware: [qcom/x1e80100/dell/latitude-7455]
-    acpi: [dell-latitude-7455]
+      - { chip: "X1E-80-100", compatible: "dell,inspiron-14-plus-7441" }
+    firmware: ["qcom/x1e80100/dell/inspiron-14-plus-7441"]
+    acpi: ["dell-inspiron-14-7441-x1e-80-100"]
+    sources:
+      - https://dl.dell.com/content/manual12164491-inspiron-14-plus-7441-owner-s-manual.pdf
+      - https://github.com/torvalds/linux/commit/e7733b42111ca83a60745b9b9db411ae74811ce9
 
   - id: dell-latitude-5455
-    vendor: Dell
-    name: Latitude 5455
+    vendor: "Dell"
+    name: "Latitude 5455"
     generation: x1
-    released: 2024
+    released: "2024-09"
+    chips: ["X1P-64-100", "X1P-42-100", "X1-26-100"]
+    model_numbers: ["5455", "P190G"]
     variants:
-      - { chip: X1P-64-100, compatible: "dell,latitude-5455" }
-    acpi: [dell-latitude-5455]
+      - { chip: "X1P-64-100", compatible: "dell,latitude-5455" }
+    acpi: ["dell-latitude-5455"]
+    sources:
+      - https://www.delltechnologies.com/asset/en-us/products/laptops-and-2-in-1s/technical-support/latitude-5455-spec-sheet.pdf
+      - https://www.notebookcheck.net/Dell-Latitude-5455-arrives-later-this-month-in-Snapdragon-X-Plus-X1P-64-100-and-X1P-42-100-options.883656.0.html
+
+  - id: dell-latitude-7455
+    vendor: "Dell"
+    name: "Latitude 7455"
+    generation: x1
+    released: "2024-06"
+    chips: ["X1E-80-100", "X1P-64-100"]
+    model_numbers: ["7455", "P190G", "P190G001"]
+    variants:
+      - { chip: "X1E-80-100", compatible: "dell,latitude-7455" }
+    firmware: ["qcom/x1e80100/dell/latitude-7455"]
+    acpi: ["dell-latitude-7455"]
+    sources:
+      - https://www.delltechnologies.com/asset/en-us/products/laptops-and-2-in-1s/technical-support/dell-latitude-7455-spec-sheet.pdf
+      - https://dl.dell.com/content/manual6242485-latitude-7455-owner-s-manual.pdf
+
+  - id: dell-xps-13-9345
+    vendor: "Dell"
+    name: "XPS 13 9345"
+    generation: x1
+    released: "2024-06"
+    chips: ["X1E-80-100", "X1P-64-100"]
+    model_numbers: ["9345", "P189G", "P189G001"]
+    variants:
+      - { chip: "X1E-80-100", compatible: "dell,xps13-9345" }
+    firmware: ["qcom/x1e80100/dell/xps13-9345"]
+    acpi: ["dell-xps-9345"]
+    sources:
+      - https://www.delltechnologies.com/asset/en-us/products/laptops-and-2-in-1s/technical-support/xps-13-9345-spec-sheet.pdf
+      - https://www.notebookcheck.net/Dell-XPS-13-9345-Snapdragon-X-Elite-review-Undercutting-the-Intel-Core-Ultra-7.869106.0.html
+
+
+  # Dynabook
+  - id: dynabook-xd5
+    vendor: "Dynabook"
+    name: "XD5"
+    generation: x1
+    released: "2025-12"
+    chips: ["X1P-42-100"]
+    model_numbers: ["P1D5APBL", "W6XDZA5BAM-K"]
+    sources:
+      - https://pc.watch.impress.co.jp/docs/news/2072007.html
+      - https://www.notebookcheck.net/Dynabook-XD5-first-Dynabook-laptop-powered-by-a-Snapdragon-X-Plus-processor.1189810.0.html
+      - https://kakaku.com/item/K0001724657/
+
+
+  # Fujitsu
+  - id: fujitsu-fmv-note-u-snapdragon
+    vendor: "Fujitsu"
+    name: "FMV Note U"
+    generation: x1
+    released: "2026-01"
+    chips: ["X1-26-100"]
+    model_numbers: ["WU6-L1", "UQ-L1", "FMVUQSL1WA", "FMVUQSL1BA", "FMVUQSL1BC"]
+    sources:
+      - https://pc.watch.impress.co.jp/docs/column/ubiq/2077242.html
+
 
   # Honor
   - id: honor-magicbook-art-14-snapdragon
-    vendor: Honor
-    name: MagicBook Art 14 Snapdragon
+    vendor: "Honor"
+    name: "MagicBook Art 14"
     generation: x1
-    released: 2025
-    model_numbers: [MRO-521]
+    released: "2024-09"
+    chips: ["X1E-80-100"]
+    model_numbers: ["MRO-521"]
     variants:
-      - { chip: X1E-80-100, compatible: "honor,magicbook-art-14-snapdragon" }
-    acpi: [honor-mro-521]
+      - { chip: "X1E-80-100", compatible: "honor,magicbook-art-14-snapdragon" }
+    acpi: ["honor-mro-521"]
+    sources:
+      - https://www.honor.com/cn/shop/product/10086978403812.html
+      - https://www.notebookcheck.net/Honor-MagicBook-Art-14-Snapdragon-released-in-Europe-with-free-tablet-and-earbuds.929574.0.html
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1e80100-honor-magicbook-art-14.dts
+
 
   # HP
-  - id: hp-omnibook-x-14
-    vendor: HP
-    name: OmniBook X 14
+  - id: hp-elitebook-6-g1q
+    vendor: "HP"
+    name: "EliteBook 6 G1q"
     generation: x1
-    released: 2024
-    model_numbers: [14-fe0, 14-fe1]
+    released: "2025-04"
+    chips: ["X1E-78-100", "X1P-42-100", "X1-26-100"]
+    model_numbers: ["HSN-Q42C", "8E06"]
     variants:
-      - { model: 14-fe0, chip: X1E-78-100, compatible: "hp,omnibook-x14" }
-      - { model: 14-fe1, chip: X1P-42-100, compatible: "hp,omnibook-x14-fe1" }
-    firmware: [qcom/x1e80100/hp/omnibook-x14]
-    acpi: [hp-omnibook-x14-fe0xxx]
+      - { chip: "X1P-42-100", compatible: "hp,elitebook-6-g1q" }
+    acpi: ["hp-elitebook-6-g1q"]
+    sources:
+      - https://www.energystar.gov/productfinder/product/certified-computers/details/4005529
+      - https://www.thurrott.com/mobile/copilot-pc/329645/hp-elitebook-6-g1q-review
+      - https://github.com/aarch64-laptops/build/tree/master/misc/hp-elitebook-6-g1q
 
   - id: hp-elitebook-ultra-g1q
-    vendor: HP
-    name: EliteBook Ultra G1q
+    vendor: "HP"
+    name: "EliteBook Ultra G1q"
     generation: x1
-    released: 2024
+    released: "2024-06"
+    chips: ["X1E-78-100", "X1P-42-100"]
+    model_numbers: ["EliteBook Ultra G1q", "EliteBook Ultra G1q8", "8CBE"]
     variants:
-      - { chip: X1E-78-100, compatible: "hp,elitebook-ultra-g1q" }
-    acpi: [hp-elitebook-ultra-g1q]
+      - { chip: "X1E-78-100", compatible: "hp,elitebook-ultra-g1q" }
+    acpi: ["hp-elitebook-ultra-g1q"]
+    sources:
+      - https://github.com/torvalds/linux/commit/afc48c680438da813e42407009707350c87f8c43
+      - https://shop.teqex.co.uk/hp-elitebook-ultra-g1q8-14-inch-notebook-ai-pc-x1p-42-100-laptop-35-6-cm-14-touchscreen-2-2k-windows-11-pro-a37cket-abu.html
 
-  - id: hp-elitebook-6-g1q
-    vendor: HP
-    name: EliteBook 6 G1q
+  - id: hp-omnibook-3-14-hz0
+    vendor: "HP"
+    name: "OmniBook 3 14"
     generation: x1
-    released: 2025
+    released: "2026-01"
+    chips: ["X1-26-100"]
+    model_numbers: ["14-hz0xxx"]
+    sources:
+      - https://www.hp.com/au-en/shop/hp-omnibook-3-laptop-next-gen-ai-14-hz0062qu-dz4m3pa.html
+      - https://www.energystar.gov/productfinder/product/certified-computers/details/4520692
+
+  - id: hp-omnibook-3-16-bz0
+    vendor: "HP"
+    name: "OmniBook 3 16 (16-bz0)"
+    generation: x1
+    released: "2026-01"
+    chips: ["X1-26-100"]
+    model_numbers: ["16-bz0xxx"]
+    sources:
+      - https://www.hp.com/au-en/shop/hp-omnibook-3-laptop-next-gen-ai-16-bz0003qu-d46xfpa.html
+      - https://www.notebookcheck.net/Efficient-16-GB-RAM-laptop-for-less-than-700-HP-OmniBook-3-16-review.1365529.0.html
+
+  - id: hp-omnibook-3-16-ct0
+    vendor: "HP"
+    name: "OmniBook 3 16 (16-ct0)"
+    generation: x1
+    released: "2026-09"
+    chips: ["X1-26-100"]
+    model_numbers: ["16-ct0xxx"]
+    sources:
+      - https://www.hp.com/au-en/shop/hp-omnibook-3-laptop-ai-16-ct0030qu-e5hs8pa.html
+      - https://www.energystar.gov/productfinder/product/certified-computers/details/4688594
+
+  - id: hp-omnibook-5-14-he0
+    vendor: "HP"
+    name: "OmniBook 5 14"
+    generation: x1
+    released: "2025-05"
+    chips: ["X1P-42-100", "X1-26-100"]
+    model_numbers: ["14-he0xxx", "14-he0"]
+    acpi: ["hp-omnibook-5-14-he0xxx"]
+    sources:
+      - https://www.energystar.gov/productfinder/product/certified-computers/details/4021617
+      - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-omnibook-5
+      - https://github.com/aarch64-laptops/build/tree/master/misc/hp-omnibook-5-14-he0xxx
+
+  - id: hp-omnibook-5-16-bf0
+    vendor: "HP"
+    name: "OmniBook 5 16"
+    generation: x1
+    released: "2025-06"
+    chips: ["X1P-42-100", "X1-26-100"]
+    model_numbers: ["16-bf0xxx", "16-fb0xxx"]
+    sources:
+      - https://www.energystar.gov/productfinder/product/certified-computers/details/4439453
+      - https://www.notebookcheck.net/HP-OmniBook-5-NGAI-16-fb0000.1190138.0.html
+      - https://www.thurrott.com/mobile/copilot-pc/328237/hp-omnibook-5-16-review-its-a-snapdragon-miracle
+
+  - id: hp-omnibook-x-14-fe
+    vendor: "HP"
+    name: "OmniBook X 14"
+    generation: x1
+    released: "2024-06"
+    chips: ["X1E-78-100", "X1P-42-100"]
+    model_numbers: ["14-fe0xxx", "14-fe1xxx", "8CBE", "8CCF", "14-fe0", "14-fe1"]
     variants:
-      - { chip: X1P-42-100, compatible: "hp,elitebook-6-g1q" }
-    acpi: [hp-elitebook-6-g1q]
+      - { model: "14-fe0", chip: "X1E-78-100", compatible: "hp,omnibook-x14" }
+      - { model: "14-fe1", chip: "X1P-42-100", compatible: "hp,omnibook-x14-fe1" }
+    firmware: ["qcom/x1e80100/hp/omnibook-x14"]
+    acpi: ["hp-omnibook-x14-fe0xxx"]
+    sources:
+      - https://www.hp.com/au-en/shop/hp-omnibook-x-laptop-14-fe0000qu-a42h8par.html
+      - https://liliputing.com/hp-introduces-a-cheaper-omnibook-x-14-inch-laptop-with-an-8-core-snapdragon-plus-processor/
+      - https://github.com/torvalds/linux/commit/f8f7cc59dcd234f0dcc4964ff2188a7a2ae09fd6
 
-  - id: hp-omnibook-5-14
-    vendor: HP
-    name: OmniBook 5 14
+  - id: hp-probook-4-g1q
+    vendor: "HP"
+    name: "ProBook 4 G1q"
     generation: x1
-    released: 2025
-    model_numbers: [14-he0]
-    acpi: [hp-omnibook-5-14-he0xxx]
+    released: "2025-05"
+    chips: ["X1-26-100", "X1P-42-100"]
+    model_numbers: ["HSN-Q42C"]
+    sources:
+      - https://www.hp.com/au-en/shop/hp-probook-4-g1q-14-inch-notebook-next-gen-ai-pc-bx2e6pt.html
+      - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-probook-4-g1q
+
+  - id: hp-elitebook-6-g2q
+    vendor: "HP"
+    name: "EliteBook 6 G2q"
+    generation: x2
+    released: "2026-05"
+    chips: ["X2E-84-100", "X2P-64-100"]
+    model_numbers: ["HSN-I68C"]
+    sources:
+      - https://www.energystar.gov/productfinder/product/certified-computers/details/4586583
+      - https://shop.avoira.com/hp-elitebook-6-g2q-14-next-gen-ai-copilot-pc-snapdragon-x2p-64-100-laptop-35-6-cm-14-wuxga-16-gb-lpddr5x-sdram-512-gb-ssd-wi-fi-7-802-11be-windows-11-pro-silver-dq0b5et-abu.html
 
   - id: hp-elitebook-x-g2q
-    vendor: HP
-    name: EliteBook X G2q
+    vendor: "HP"
+    name: "EliteBook X G2q"
     generation: x2
-    released: 2026
+    released: "2026-03"
+    chips: ["X2E-90-100", "X2E-88-100", "X2E-84-100", "X2E-80-100", "X2P-42-100"]
+    model_numbers: ["HSN-I66C-4", "8E91"]
     variants:
       - { compatible: "hp,elitebook-x-g2q" }
+    sources:
+      - https://www.notebookcheck.net/HP-unveils-EliteBook-X-G2q-and-EliteBook-X-G2x-enterprise-laptops-with-new-Qualcomm-and-AMD-CPUs.1196602.0.html
+      - https://www.91mobiles.com/reviews/hp-elitebook-x-g2q-14-ai-review/
+      - https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/glymur-hp-elitebook-x-g2q.dts
+
+  - id: hp-omnibook-5-14-he1
+    vendor: "HP"
+    name: "OmniBook 5 14 (2026)"
+    generation: x2
+    released: "2026"
+    chips: ["X2P-42-100"]
+    model_numbers: ["14-he1xxx"]
+    sources:
+      - https://www.bruneau.fr/product/pc-portable-hp-omnibook-5-14-he1003nfx-14-oled-copilot-pc-snapdragon-ai-x2-16-go-ram-512-go-ssd-argent/8573172
+      - https://9to5google.com/2026/01/05/hp-unveils-its-new-snapdragon-x2-intel-powered-laptops-and-some-chromebooks-too/
+
+  - id: hp-omnibook-5-16-bf1
+    vendor: "HP"
+    name: "OmniBook 5 16 (2026)"
+    generation: x2
+    released: "2026-10"
+    chips: ["X2P-64-100"]
+    model_numbers: ["16-bf1xxx"]
+    sources:
+      - https://www.notebookcheck.net/HP-releases-new-16-inch-laptop-with-Snapdragon-X2-Plus-and-over-30-hours-battery-life.1414570.0.html
+
+  - id: hp-omnibook-ultra-14-kg0
+    vendor: "HP"
+    name: "OmniBook Ultra 14"
+    generation: x2
+    released: "2026-02"
+    chips: ["X2E-90-100", "X2E-84-100", "X2P-64-100"]
+    model_numbers: ["14-kg0xxx"]
+    sources:
+      - https://www.hp.com/au-en/shop/hp-omnibook-ultra-laptop-next-gen-ai-14-kg0017qu-d78gmpa.html
+      - https://www.energystar.gov/productfinder/product/certified-computers/details/4520421
+      - https://www.tomshardware.com/laptops/hp-omnibook-ultra-14-snapdragon-x2-elite-2026-review
+
+  - id: hp-omnibook-x-14-kr
+    vendor: "HP"
+    name: "OmniBook X 14 (2026)"
+    generation: x2
+    released: "2026"
+    chips: ["X2P-42-100", "X2P-64-100", "X2E-80-100"]
+    model_numbers: ["14-kr0xxx", "14-kr1xxx"]
+    sources:
+      - https://www.hp.com/au-en/shop/laptops-tablets/personal-laptops/omnibook-x-laptops/hp-omnibook-x-laptop-next-gen-ai-14-kr1000qu-d8qf4pa.html
+      - https://www.harveynorman.co.nz/computers/laptops/hp-omnibook-x-14-laptop-snapdragon-x2-plus-16gb-ram-512gb-ssd-copilot-pc-meteor-silver-14-kr1002qu.html
+      - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-omnibook-x
+
+  - id: hp-omnibook-x-16-cp
+    vendor: "HP"
+    name: "OmniBook X 16 (2026)"
+    generation: x2
+    released: "2026-07"
+    chips: ["X2E-84-100", "X2P-42-100"]
+    model_numbers: ["16-cp0xxx", "16-cp1xxx"]
+    sources:
+      - https://www.hp.com/au-en/shop/hp-omnibook-x-laptop-next-gen-ai-16-cp1000qu-d8cu5pa.html
+      - https://support.hp.com/au-en/document/ish_14096181-14096226-16
+      - https://www.notebookcheck.net/HP-OmniBook-X-16-with-Snapdragon-X2-Elite-24-GB-RAM-OLED-drops-below-900.1356231.0.html
+
+
+  # HUMAIN
+  - id: humain-horizon
+    vendor: "HUMAIN"
+    name: "Horizon"
+    generation: x2
+    released: "2026-09"
+    chips: ["X2E-80-100", "X2E-88-100"]
+    model_numbers: ["Horizon", "Horizon Ultra"]
+    sources:
+      - https://www.qualcomm.com/news/releases/2026/08/qualcomm-and-humain-unveil-horizon-ultra-ai-pc-at-leap-2026--bri
+      - https://www.humain.com/en/horizon.html
+      - https://www.digitaltrends.com/computing/humain-horizon-ultra-ai-pc-unveiled-with-snapdragon-x2-elite-and-on-device-ai/
+
 
   # Lenovo
-  - id: lenovo-yoga-slim-7x
-    vendor: Lenovo
-    name: Yoga Slim 7x
-    generation: x1
-    released: 2024
-    model_numbers: [14Q8X9, 83ED]
-    variants:
-      - { model: 14Q8X9, chip: X1E-78-100, compatible: "lenovo,yoga-slim7x" }
-    firmware: [qcom/x1e80100/LENOVO/83ED]
-    acpi: [lenovo-yoga-slim-7x]
-
-  - id: lenovo-yoga-slim-7x-gen-11
-    vendor: Lenovo
-    name: Yoga Slim 7x Gen 11
-    generation: x2
-    released: 2026
-    model_numbers: [14Q8Y11]
-    variants:
-      - { model: 14Q8Y11, compatible: "lenovo,yoga-slim7x-gen11" }
-    acpi: [lenovo-yoga-slim-7x-14Q8Y11]
-
-  - id: lenovo-thinkpad-t14s-gen-6
-    vendor: Lenovo
-    name: ThinkPad T14s Gen 6
-    generation: x1
-    released: 2024
-    model_numbers: [21N1]
-    variants:
-      - { model: LCD, chip: X1E-78-100, compatible: "lenovo,thinkpad-t14s-lcd" }
-      - { model: OLED, chip: X1E-78-100, compatible: "lenovo,thinkpad-t14s-oled" }
-    firmware: [qcom/x1e80100/LENOVO/21N1]
-    acpi: [lenovo-thinkpad-t14s, lenovo-thinkpad-t14s-120hz-64gb]
-
-  - id: lenovo-thinkpad-t14s-gen-7
-    vendor: Lenovo
-    name: ThinkPad T14s Gen 7
-    generation: x2
-    released: 2026
-    model_numbers: [22A8]
-    firmware: [qcom/glymur/LENOVO/22A8]
-    notes: linux-firmware has its audio topology, so a device tree exists somewhere out of tree.
-
-  - id: lenovo-thinkbook-16-g7-qoy
-    vendor: Lenovo
-    name: ThinkBook 16 G7 QOY
-    generation: x1
-    released: 2024
-    variants:
-      - { chip: X1P-64-100, compatible: "lenovo,thinkbook-16" }
-    acpi: [lenovo-thinkbook-16-g7-qoy]
-
-  - id: lenovo-ideacentre-mini-01q8x10
-    vendor: Lenovo
-    name: IdeaCentre Mini x
+  - id: lenovo-ideacentre-mini-x-01q8x10
+    vendor: "Lenovo"
+    name: "IdeaCentre Mini x"
     generation: x1
     form: desktop
-    released: 2025
-    model_numbers: [01Q8X10, 91B6]
+    released: "2025-04"
+    chips: ["X1P-64-100", "X1-26-100"]
+    model_numbers: ["01Q8X10", "91B6"]
     variants:
-      - { model: X Elite, chip: X1E-78-100, compatible: "lenovo,ideacentre-mini-01q8x10" }
-      - { model: X Plus, chip: X1P-42-100, compatible: "lenovo,purwa-ideacentre-mini-01q8x10" }
-    firmware: [qcom/x1e80100/LENOVO/91B6]
-    acpi: [lenovo-ideacentre-01q8x10]
+      - { model: "X Elite", chip: "X1E-78-100", compatible: "lenovo,ideacentre-mini-01q8x10" }
+      - { model: "X Plus", chip: "X1P-42-100", compatible: "lenovo,purwa-ideacentre-mini-01q8x10" }
+    firmware: ["qcom/x1e80100/LENOVO/91B6"]
+    acpi: ["lenovo-ideacentre-01q8x10"]
+    sources:
+      - https://psref.lenovo.com/Product/IdeaCentre/IdeaCentre_Mini_01Q8X10
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/hamoa-lenovo-ideacentre-mini-01q8x10.dts
+      - https://www.windowscentral.com/hardware/lenovo/lenovo-ideacentre-mini-x-review
 
-  - id: lenovo-ideapad-slim-5x
-    vendor: Lenovo
-    name: IdeaPad Slim 5x
-    generation: x1
-    released: 2024
-    model_numbers: [14Q8X9]
-    variants:
-      - { model: OLED, chip: X1P-42-100, compatible: "lenovo,ideapad-slim5x-oled" }
-    acpi: [lenovo-ideapad-5-slim-14Q8X9]
-
-  - id: lenovo-ideapad-5-2-in-1
-    vendor: Lenovo
-    name: IdeaPad 5 2-in-1
+  - id: lenovo-ideapad-5x-2-in-1-14q8x9
+    vendor: "Lenovo"
+    name: "IdeaPad 5x 2-in-1"
     generation: x1
     form: 2-in-1
-    released: 2024
-    model_numbers: [14Q8X9, 83GH]
+    released: "2024-09"
+    chips: ["X1P-42-100", "X1-26-100"]
+    model_numbers: ["14Q8X9", "83GH"]
     variants:
-      - { chip: X1P-42-100, compatible: "lenovo,ideapad-5-2in1" }
-    acpi: [lenovo-ideapad-5-2in1-83GH-14Q8X9]
+      - { chip: "X1P-42-100", compatible: "lenovo,ideapad-5-2in1" }
+    acpi: ["lenovo-ideapad-5-2in1-83GH-14Q8X9"]
+    sources:
+      - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_5_2_in_1_14Q8X9
+      - https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-ideapad-5-2in1-83GH-14Q8X9
 
-  - id: lenovo-ideapad-slim-3x
-    vendor: Lenovo
-    name: IdeaPad Slim 3x
+  - id: lenovo-ideapad-slim-3x-15q8x10
+    vendor: "Lenovo"
+    name: "IdeaPad Slim 3x"
     generation: x1
-    released: 2025
-    model_numbers: [15Q8X10]
+    released: "2025-03"
+    chips: ["X1-26-100"]
+    model_numbers: ["15Q8X10", "83N3", "83TW"]
     variants:
-      - { chip: X1-26-100, compatible: "lenovo,ideapad-slim3" }
-    acpi: [lenovo-ideapad-slim3x-15q8x10-WCN7850]
+      - { chip: "X1-26-100", compatible: "lenovo,ideapad-slim3" }
+    acpi: ["lenovo-ideapad-slim3x-15q8x10-WCN7850"]
+    sources:
+      - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Slim_3_15Q8X10
+      - https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-ideapad-slim3x-15q8x10-WCN7850
 
-  - id: lenovo-xiaoxin-14-q8x9
-    vendor: Lenovo
-    name: Xiaoxin 14 (China)
+  - id: lenovo-ideapad-slim-5x-14q8x9
+    vendor: "Lenovo"
+    name: "IdeaPad Slim 5x"
     generation: x1
-    acpi: [lenovo-xiaoxin-14-q8x9]
+    released: "2024-09"
+    chips: ["X1P-42-100", "X1-26-100"]
+    model_numbers: ["14Q8X9", "83HL"]
+    variants:
+      - { model: "OLED", chip: "X1P-42-100", compatible: "lenovo,ideapad-slim5x-oled" }
+    acpi: ["lenovo-ideapad-5-slim-14Q8X9", "lenovo-xiaoxin-14-q8x9"]
+    sources:
+      - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Slim_5_14Q8X9
+      - https://www.ithome.com/0/799/284.htm
+      - https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-xiaoxin-14-q8x9
+
+  - id: lenovo-ideapad-vibe-14q8x12
+    vendor: "Lenovo"
+    name: "IdeaPad Vibe"
+    generation: x1
+    released: "2026-10"
+    chips: ["X1-26-100"]
+    model_numbers: ["14Q8X12", "84A9"]
+    sources:
+      - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Vibe_14Q8X12
+
+  - id: lenovo-thinkbook-16-gen-7-qoy
+    vendor: "Lenovo"
+    name: "ThinkBook 16 G7 QOY"
+    generation: x1
+    released: "2024-09"
+    chips: ["X1P-42-100", "X1-26-100"]
+    model_numbers: ["21NH"]
+    variants:
+      - { chip: "X1P-64-100", compatible: "lenovo,thinkbook-16" }
+    acpi: ["lenovo-thinkbook-16-g7-qoy"]
+    sources:
+      - https://psref.lenovo.com/Product/ThinkBook/ThinkBook_16_G7_QOY
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts
+
+  - id: lenovo-thinkcentre-neo-50q-qc
+    vendor: "Lenovo"
+    name: "ThinkCentre neo 50q QC"
+    generation: x1
+    form: desktop
+    released: "2025-05"
+    chips: ["X1-26-100"]
+    model_numbers: ["13C8", "13C9", "13CA"]
+    sources:
+      - https://psref.lenovo.com/Product/ThinkCentre/ThinkCentre_neo_50q_QC
+      - https://www.xda-developers.com/review-lenovo-thinkcenter-neo-50q-snapdragon/
+
+  - id: lenovo-thinkpad-t14s-gen-6-snapdragon
+    vendor: "Lenovo"
+    name: "ThinkPad T14s Gen 6"
+    generation: x1
+    released: "2024-06"
+    chips: ["X1E-78-100", "X1P-42-100"]
+    model_numbers: ["21N1", "21N2"]
+    variants:
+      - { model: "LCD", chip: "X1E-78-100", compatible: "lenovo,thinkpad-t14s-lcd" }
+      - { model: "OLED", chip: "X1E-78-100", compatible: "lenovo,thinkpad-t14s-oled" }
+    firmware: ["qcom/x1e80100/LENOVO/21N1"]
+    acpi: ["lenovo-thinkpad-t14s", "lenovo-thinkpad-t14s-120hz-64gb"]
+    sources:
+      - https://psref.lenovo.com/Product/ThinkPad/ThinkPad_T14s_Gen_6_Snapdragon
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts
+
+  - id: lenovo-yoga-slim-7x-14q8x9
+    vendor: "Lenovo"
+    name: "Yoga Slim 7x"
+    generation: x1
+    released: "2024-06"
+    chips: ["X1E-78-100", "X1P-64-100"]
+    model_numbers: ["14Q8X9", "83ED"]
+    variants:
+      - { model: "14Q8X9", chip: "X1E-78-100", compatible: "lenovo,yoga-slim7x" }
+    firmware: ["qcom/x1e80100/LENOVO/83ED"]
+    acpi: ["lenovo-yoga-slim-7x"]
+    sources:
+      - https://psref.lenovo.com/Product/Yoga/Yoga_Slim_7_14Q8X9
+      - https://www.ithome.com/0/777/290.htm
+      - https://www.ithome.com/0/815/508.htm
+
+  - id: lenovo-ideapad-5x-2-in-1-14q8y11
+    vendor: "Lenovo"
+    name: "IdeaPad 5x 2-in-1 Gen 11"
+    generation: x2
+    form: 2-in-1
+    released: "2026-04"
+    chips: ["X2P-42-100"]
+    model_numbers: ["14Q8Y11", "83UK"]
+    sources:
+      - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_5_2_in_1_14Q8Y11
+      - https://www.notebookcheck.net/Lenovo-releases-new-14-inch-laptop-globally-with-Snapdragon-X2-and-over-33-hours-battery-life.1360398.0.html
+
+  - id: lenovo-ideapad-slim-5x-13q8y11
+    vendor: "Lenovo"
+    name: "IdeaPad Slim 5x 13 Gen 11"
+    generation: x2
+    released: "2026-03"
+    chips: ["X2P-42-100"]
+    model_numbers: ["13Q8Y11", "83RK"]
+    sources:
+      - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Slim_5_13Q8Y11
+      - https://www.notebookcheck.net/Lenovo-IdeaPad-Slim-5-13Q8Y11.1311036.0.html
+
+  - id: lenovo-ideapad-slim-5x-15q8y11
+    vendor: "Lenovo"
+    name: "IdeaPad Slim 5x 15 Gen 11"
+    generation: x2
+    released: "2026-03"
+    chips: ["X2P-42-100"]
+    model_numbers: ["15Q8Y11", "83RL"]
+    sources:
+      - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Slim_5_15Q8Y11
+      - https://www.pcmag.com/reviews/lenovo-ideapad-slim-5x-gen-11
+
+  - id: lenovo-thinkbook-14-gen-9-q8y
+    vendor: "Lenovo"
+    name: "ThinkBook 14 Gen 9"
+    generation: x2
+    released: "2026-10"
+    chips: ["X2P-42-100"]
+    model_numbers: ["22BB"]
+    sources:
+      - https://psref.lenovo.com/Product/ThinkBook/ThinkBook_14_G9_Q8Y
+
+  - id: lenovo-thinkpad-t14s-gen-7-snapdragon
+    vendor: "Lenovo"
+    name: "ThinkPad T14s Gen 7"
+    generation: x2
+    released: "2026-07"
+    chips: ["X2E-80-100", "X2P-42-100"]
+    model_numbers: ["22A7", "22A8"]
+    firmware: ["qcom/glymur/LENOVO/22A8"]
+    notes: "linux-firmware has its audio topology, so a device tree exists somewhere out of tree."
+    sources:
+      - https://psref.lenovo.com/Product/ThinkPad/ThinkPad_T14s_Gen_7_Snapdragon
+      - https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/mahua-lenovo-thinkpad-t14s-gen7-lcd.dts
+      - https://www.notebookcheck.net/Lenovo-releases-new-14-inch-ThinkPad-with-Snapdragon-X2-Elite-and-over-27-hours-battery-life.1345695.0.html
+
+  - id: lenovo-yoga-slim-7x-14q8y11
+    vendor: "Lenovo"
+    name: "Yoga Slim 7x Gen 11"
+    generation: x2
+    released: "2026-03"
+    chips: ["X2E-88-100", "X2E-80-100", "X2P-42-100"]
+    model_numbers: ["14Q8Y11", "83QR"]
+    variants:
+      - { model: "14Q8Y11", compatible: "lenovo,yoga-slim7x-gen11" }
+    acpi: ["lenovo-yoga-slim-7x-14Q8Y11"]
+    sources:
+      - https://psref.lenovo.com/Product/Yoga/Yoga_Slim_7_14Q8Y11
+      - https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/glymur-lenovo-yoga-slim7x.dts
+      - https://www.xda-developers.com/lenovo-yoga-slim-7x-gen-11-review/
+
 
   # Medion
   - id: medion-sprchrgd-14-s1
-    vendor: Medion
-    name: SPRCHRGD 14 S1
+    vendor: "Medion"
+    name: "SPRCHRGD 14 S1"
     generation: x1
-    released: 2024
+    released: "2024-06"
+    chips: ["X1E-78-100", "X1P-42-100"]
+    model_numbers: ["MD62636", "MD62637", "MD62695"]
     variants:
-      - { model: S1 Elite, chip: X1E-78-100, compatible: "medion,sprchrgd14s1" }
-    acpi: [medion-14-s1-elite-sprchrgd, medion-14-s1-sprchrgd]
+      - { model: "S1 Elite", chip: "X1E-78-100", compatible: "medion,sprchrgd14s1" }
+    acpi: ["medion-14-s1-elite-sprchrgd", "medion-14-s1-sprchrgd"]
+    sources:
+      - https://www.notebookcheck.net/Medion-SPRCHRGD-14-S1-Elite-review-A-stylish-Snapdragon-ultraportable-with-bags-of-stamina.873557.0.html
+      - https://www.discounto.de/Angebot/SPRCHRGD-14-S1-MD62695-35-56-cm-14-Notebook-16-GB-RAM-512-GB-SSD-Qualcomm-Snapdragon-X-Plus-Windows-11-2880-x-1800-Aufloesung-10131081/
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1e80100-medion-sprchrgd-14-s1.dts
+
 
   # Microsoft
-  - id: microsoft-surface-pro-11
-    vendor: Microsoft
-    name: Surface Pro 11th Edition
-    generation: x1
-    form: 2-in-1
-    released: 2024
-    variants:
-      - { model: OLED, chip: X1E-80-100, compatible: "microsoft,denali-oled" }
-      - { model: LCD, chip: X1P-64-100, compatible: "microsoft,denali-lcd" }
-    acpi: [microsoft-surface-pro-11]
-
-  - id: microsoft-surface-pro-12in
-    vendor: Microsoft
-    name: Surface Pro 12-inch
-    generation: x1
-    form: 2-in-1
-    released: 2025
-    variants:
-      - { chip: X1P-42-100, compatible: "microsoft,surface-pro-12in", ids: [x1p42100-microsoft-surface-pro-12in.json] }
-    acpi: [microsoft-surface-pro-12-in]
-
   - id: microsoft-surface-laptop-7-13
-    vendor: Microsoft
-    name: Surface Laptop 7 (13.8")
+    vendor: "Microsoft"
+    name: "Surface Laptop 7 (13.8\")"
     generation: x1
-    released: 2024
+    released: "2024-06"
+    chips: ["X1P-64-100", "X1E-80-100"]
+    model_numbers: ["2036"]
     variants:
       - { compatible: "microsoft,romulus13" }
-    acpi: [microsoft-surface-romulus13_and_15]
+    acpi: ["microsoft-surface-romulus13_and_15"]
+    sources:
+      - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
+      - https://www.cdw.com/product/sur-lt7-13in-x1p-64-100-16-512-w11-g/7941189
+      - https://galaxus.it/en/s1/product/microsoft-surface-laptop-copilot-pc-7-edition-1380-snapdragon-x-elite-x1e-80-100-16-gb-1000-gb-de-no-45967365
 
   - id: microsoft-surface-laptop-7-15
-    vendor: Microsoft
-    name: Surface Laptop 7 (15")
+    vendor: "Microsoft"
+    name: "Surface Laptop 7 (15\")"
     generation: x1
-    released: 2024
+    released: "2024-06"
+    chips: ["X1E-80-100"]
+    model_numbers: ["2037"]
     variants:
-      - { chip: X1E-80-100, compatible: "microsoft,romulus15" }
-    acpi: [microsoft-surface-romulus13_and_15]
+      - { chip: "X1E-80-100", compatible: "microsoft,romulus15" }
+    acpi: ["microsoft-surface-romulus13_and_15"]
+    sources:
+      - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
+      - https://www.notebookcheck.net/Microsoft-Surface-Laptop-15-Snapdragon-X-Elite.1246035.0.html
+      - https://galaxus.it/en/s1/product/microsoft-surface-laptop-copilot-pc-7-edition-15-snapdragon-x-elite-x1e-80-100-16-gb-256-gb-de-noteb-45967360
+
+  - id: microsoft-surface-laptop-13in-1st-edition
+    vendor: "Microsoft"
+    name: "Surface Laptop 13-inch"
+    generation: x1
+    released: "2025-05"
+    chips: ["X1P-42-100"]
+    model_numbers: ["2095"]
+    sources:
+      - https://blogs.windows.com/devices/2025/05/06/introducing-all-new-surface-copilot-pcs-the-surface-pro-12-inch-and-surface-laptop-13-inch/
+      - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
+
+  - id: microsoft-surface-pro-11
+    vendor: "Microsoft"
+    name: "Surface Pro 11th Edition"
+    generation: x1
+    form: tablet
+    released: "2024-06"
+    chips: ["X1P-64-100", "X1E-80-100"]
+    model_numbers: ["2076", "2085", "2077", "2078"]
+    variants:
+      - { model: "OLED", chip: "X1E-80-100", compatible: "microsoft,denali-oled" }
+      - { model: "LCD", chip: "X1P-64-100", compatible: "microsoft,denali-lcd" }
+    acpi: ["microsoft-surface-pro-11"]
+    sources:
+      - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
+      - https://www.notebookcheck.it/Microsoft-rilascia-il-nuovo-Surface-Pro-11-con-display-OLED-da-120-Hz-opzionale-e-chipset-Snapdragon-X-Plus-o-Snapdragon-X-Elite.839774.0.html
+      - https://www.energystar.gov/productfinder/product/certified-computers/details/4015656/export/pdf
+
+  - id: microsoft-surface-pro-12in-1st-edition
+    vendor: "Microsoft"
+    name: "Surface Pro 12-inch"
+    generation: x1
+    form: tablet
+    released: "2025-05"
+    chips: ["X1P-42-100"]
+    model_numbers: ["2110", "2109"]
+    variants:
+      - { chip: "X1P-42-100", compatible: "microsoft,surface-pro-12in", ids: ["x1p42100-microsoft-surface-pro-12in.json"] }
+    acpi: ["microsoft-surface-pro-12-in"]
+    sources:
+      - https://learn.microsoft.com/en-us/surface/tech-specs/surface-pro-copilot-plus-pc-12inch-tech-specs
+      - https://www.notebookcheck.net/Finally-a-silent-Snapdragon-2-in-1-Microsoft-Surface-Pro-12-review.1041342.0.html
+      - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
+
+  - id: microsoft-surface-laptop-13in-2nd-edition
+    vendor: "Microsoft"
+    name: "Surface Laptop 13-inch (2nd Edition)"
+    generation: x2
+    released: "2026-10"
+    chips: ["X2P-42-100"]
+    model_numbers: ["2145"]
+    sources:
+      - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
+      - https://www.notebookcheck.com/Microsoft-plant-neuen-Surface-Laptop-mit-Qualcomm-Snapdragon-X2.1406655.0.html
+      - https://www.abt.com/Microsoft-Surface-Laptop-13-inch-Snapdragon-X2-Plus-6-core-16GB-RAM-256GB-SSD-Windows-11-2nd-Edition-in-Black-EP285663/p/249297.html
+
+  - id: microsoft-surface-laptop-8-13
+    vendor: "Microsoft"
+    name: "Surface Laptop 8 (13.8\")"
+    generation: x2
+    released: "2026-06"
+    chips: ["X2P-64-100", "X2E-78-100"]
+    model_numbers: ["2036", "2138"]
+    sources:
+      - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
+      - https://www.notebookcheck.net/Microsoft-Surface-Laptop-8-13-8-Reviews-and-Specs.1336515.0.html
+      - https://www.cdw.com/product/microsoft-surface-laptop-for-business-8th-edition-copilot-pc-13.8/9186835
+
+  - id: microsoft-surface-laptop-8-15
+    vendor: "Microsoft"
+    name: "Surface Laptop 8 (15\")"
+    generation: x2
+    released: "2026-06"
+    chips: ["X2E-78-100", "X2P-64-100"]
+    model_numbers: ["2037", "2139"]
+    sources:
+      - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
+      - https://www.abt.com/Microsoft-Surface-Laptop-15-inch-Snapdragon-X2-Elite-12-core-32GB-RAM-512GB-SSD-Windows-11-8th-Edition-in-Platinum-EP260726/p/247633.html
+
+  - id: microsoft-surface-pro-12in-2nd-edition
+    vendor: "Microsoft"
+    name: "Surface Pro 12-inch (2nd Edition)"
+    generation: x2
+    form: tablet
+    released: "2026-10"
+    chips: ["X2P-42-100"]
+    model_numbers: ["2148", "2149"]
+    sources:
+      - https://www.notebookcheck.net/Microsoft-Surface-Pro-12-2nd-edition-2-in-1-tablet-PC-arrives-with-fanless-design-and-optional-5G-cellular-module.1405432.0.html
+      - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
+
+  - id: microsoft-surface-pro-12th-edition
+    vendor: "Microsoft"
+    name: "Surface Pro 12th Edition"
+    generation: x2
+    form: tablet
+    released: "2026-06"
+    chips: ["X2P-64-100", "X2E-78-100"]
+    model_numbers: ["2076", "2140", "2085", "2141"]
+    sources:
+      - https://www.notebookcheck.net/Microsoft-Surface-Pro-13-OLED-Reviews-and-Specs.1403321.0.html
+      - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
+      - https://www.cdw.com/product/microsoft-surface-pro-for-business-12th-edition-copilot-pc-13-qua/9186879
+
 
   # Qualcomm
-  - id: qualcomm-snapdragon-dev-kit
-    vendor: Qualcomm
-    name: Snapdragon Dev Kit for Windows
+  - id: qualcomm-snapdragon-dev-kit-for-windows
+    vendor: "Qualcomm"
+    name: "Snapdragon Dev Kit for Windows"
     generation: x1
     form: devkit
-    released: 2024
+    released: "2024-10"
+    chips: ["X1E-00-1DE"]
+    model_numbers: ["X1E001DE Devkit"]
     variants:
-      - { chip: X1E-00-1DE, compatible: "qcom,x1e001de-devkit" }
-    acpi: [qualcomm-snapdragon-dev-kit]
+      - { chip: "X1E-00-1DE", compatible: "qcom,x1e001de-devkit" }
+    acpi: ["qualcomm-snapdragon-dev-kit"]
+    sources:
+      - https://www.theregister.com/2024/10/17/qualcomm_kills_xelite_dev_kit/
+      - https://www.jeffgeerling.com/blog/2024/snapdragon-dev-kit-windows-fastest-x-elite-tested/
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+
 
   # Samsung
-  - id: samsung-galaxy-book4-edge
-    vendor: Samsung
-    name: Galaxy Book4 Edge
+  - id: samsung-galaxy-book4-edge-15
+    vendor: "Samsung"
+    name: "Galaxy Book4 Edge 15"
     generation: x1
-    released: 2024
-    devicetree_posted: https://lore.kernel.org/linux-arm-msm/?q=galaxy+book4+edge
-    acpi: [samsung-galaxybook4-edge]
+    released: "2024-10"
+    chips: ["X1P-42-100", "X1-26-100"]
+    model_numbers: ["NP750XQA", "NT750XQA", "NP750XQB", "NT750XQB"]
+    sources:
+      - https://news.samsung.com/global/galaxy-book4-edge-samsungs-next-gen-ai-pc-now-available-with-15-inch-display
+      - https://www.notebookcheck.net/Samsung-Galaxy-Book4-Edge-15.988764.0.html
+
+  - id: samsung-galaxy-book4-edge-16
+    vendor: "Samsung"
+    name: "Galaxy Book4 Edge 16"
+    generation: x1
+    released: "2024-06"
+    chips: ["X1E-80-100", "X1E-84-100"]
+    model_numbers: ["NP960XMA", "NP960XMB", "NP964XMA", "NT960XMA", "NT960XMB"]
+    devicetree_posted: "https://lore.kernel.org/linux-arm-msm/?q=galaxy+book4+edge"
+    sources:
+      - https://www.computerbase.de/2024-09/samsung-galaxy-book4-edge-x1e-84-10-test/
+      - https://www.energystar.gov/productfinder/product/certified-computers/details/4512701/export/pdf
+      - https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/
+
+  - id: samsung-galaxy-book4-edge-14
+    vendor: "Samsung"
+    name: "Galaxy Book4 Edge 14"
+    generation: x1
+    released: "2024-06"
+    chips: ["X1E-80-100"]
+    model_numbers: ["NP940XMA", "NP944XMA", "NT940XMA"]
+    acpi: ["samsung-galaxybook4-edge"]
+    devicetree_posted: "https://lore.kernel.org/linux-arm-msm/?q=galaxy+book4+edge"
+    sources:
+      - https://www.notebookcheck.net/Samsung-releases-Galaxy-Book4-Edge-laptops-in-Snapdragon-X-Elite-X1E-80-100-and-X1E-84-100-variants-from-1-349-99.839723.0.html
+      - https://www.energystar.gov/productfinder/product/certified-computers/details/4510120/export/pdf
+      - https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/
+
+  - id: samsung-galaxy-book5-edge-5g
+    vendor: "Samsung"
+    name: "Galaxy Book5 Edge 5G"
+    generation: x1
+    released: "2025-11"
+    chips: ["X1-26-100"]
+    model_numbers: ["NP755XRA"]
+    sources:
+      - https://www.samsung.com/uk/computers/galaxy-book/galaxy-book5-edge-5g-15-6-inch-x-26-16gb-512gb-np755xra-ka1uk/
+      - https://liliputing.com/samsung-launches-galaxy-book5-edge-5g-windows-laptop-with-snapdragon-x-and-5g-wireless/
+
+  - id: samsung-galaxy-book6-edge-16
+    vendor: "Samsung"
+    name: "Galaxy Book6 Edge 16"
+    generation: x2
+    released: "2026-05"
+    chips: ["X2E-88-100"]
+    model_numbers: ["NP960XRD", "NT960XRD"]
+    sources:
+      - https://www.samsung.com/ca/computers/galaxy-book/galaxy-book6-edge-x2-elite-16gb-512gb-np960xrd-kb1ca/
+      - https://news.samsung.com/us/galaxy-book6-edge-available-next-generation-ai-performance-premium-portability
+
 
   # Snapdragon 8cx Gen 3, the generation before
-  - id: lenovo-thinkpad-x13s
-    vendor: Lenovo
-    name: ThinkPad X13s
-    generation: 8cx
-    released: 2022
-    model_numbers: [21BX, 21BY]
-    variants:
-      - { compatible: "lenovo,thinkpad-x13s" }
-    firmware: [qcom/sc8280xp/LENOVO/21BX]
-    acpi: [lenovo-thinkpad-x13s]
-
-  - id: microsoft-surface-pro-9-5g
-    vendor: Microsoft
-    name: Surface Pro 9 5G
-    generation: 8cx
-    form: 2-in-1
-    released: 2022
-    variants:
-      - { compatible: "microsoft,arcata" }
-    acpi: [microsoft-surface-pro-9-5G]
-
-  - id: microsoft-windows-dev-kit-2023
-    vendor: Microsoft
-    name: Windows Dev Kit 2023
-    generation: 8cx
-    form: devkit
-    released: 2022
-    variants:
-      - { compatible: "microsoft,blackrock" }
-    acpi: [microsoft-devkit-2023]
-
   - id: huawei-matebook-e-go
-    vendor: Huawei
-    name: MateBook E Go
+    vendor: "Huawei"
+    name: "MateBook E Go"
     generation: 8cx
-    form: 2-in-1
-    released: 2022
+    form: tablet
+    released: "2022-07"
+    chips: ["SC8280XP"]
+    model_numbers: ["GK-W7X"]
     variants:
       - { compatible: "huawei,gaokun3" }
-    acpi: [huawei-matebooke-go]
+    acpi: ["huawei-matebooke-go"]
+    sources:
+      - https://github.com/aarch64-laptops/build/tree/master/misc/huawei-matebooke-go
 
-# Source entries the board leaves out on purpose: older Snapdragon chips that
-# Omarchy's image has no device trees for, and Qualcomm's reference boards.
-ignore:
-  ids: [glymur-crd.json, x1e80100-crd.json, msm8998-lenovo-miix-630-81f1.json, sc7180-acer-aspire1.json, sc7180-ecs-liva-qc710.json, sc8180x-lenovo-flex-5g-81xe.json, sc8180x-lenovo-flex-5g-82ak.json, sdm850-lenovo-yoga-c630.json, sc8280xp-radxa-dragon-q8b.json]
-  firmware: [qcom/sc8280xp/radxa/dragon-q8b]
-  acpi: [acer-aspire-1, acer-gateway-gwtn133-1, acer-spin-7-sp714-61na, apcsilmic-dot-1, asus-tp370ql, dell-inspiron-14-3420, ecs-liva-qc710, hp-envy-x2, huawei-matebooke-2019, lenovo-flex-5g, lenovo-ideapad-5g-14q8x05, lenovo-l10w, lenovo-miix-630, lenovo-yoga-c630, microsoft-surface-prox, samsung-galaxy-book-go, samsung-galaxy-book-go-5g, samsung-galaxy-book-s, samsung-galaxybook2, samsung-galaxybook2-go, tcl-book-14-go, xiaomi-book-s]
+  - id: lenovo-thinkpad-x13s-gen-1
+    vendor: "Lenovo"
+    name: "ThinkPad X13s"
+    generation: 8cx
+    released: "2022-05"
+    chips: ["SC8280XP"]
+    model_numbers: ["21BX", "21BY"]
+    variants:
+      - { compatible: "lenovo,thinkpad-x13s" }
+    firmware: ["qcom/sc8280xp/LENOVO/21BX"]
+    acpi: ["lenovo-thinkpad-x13s"]
+    sources:
+      - https://psref.lenovo.com/Product/ThinkPad/ThinkPad_X13s_Gen_1
+      - https://github.com/systemd/systemd/blob/main/src/boot/hwids/aa64/sc8280xp-lenovo-thinkpad-x13s-21bx.json
+
+  - id: microsoft-surface-pro-9-5g
+    vendor: "Microsoft"
+    name: "Surface Pro 9 5G"
+    generation: 8cx
+    form: tablet
+    released: "2022-10"
+    chips: ["Microsoft SQ3"]
+    model_numbers: ["1996", "1997"]
+    variants:
+      - { compatible: "microsoft,arcata" }
+    acpi: ["microsoft-surface-pro-9-5G"]
+    sources:
+      - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
+
+  - id: microsoft-windows-dev-kit-2023
+    vendor: "Microsoft"
+    name: "Windows Dev Kit 2023"
+    generation: 8cx
+    form: devkit
+    released: "2022-10"
+    chips: ["SC8280XP"]
+    model_numbers: ["2043"]
+    variants:
+      - { compatible: "microsoft,blackrock" }
+    acpi: ["microsoft-devkit-2023"]
+    sources:
+      - https://en.wikipedia.org/wiki/Windows_Dev_Kit_2023
+      - https://www.cnx-software.com/2022/10/25/600-windows-dev-kit-2023-is-powered-by-qualcomm-snapdragon-8cx-gen-3-processor/
 
 # NVIDIA's ARM PCs boot through ACPI, so they need no device tree or hardware
 # IDs. Their Omarchy status is what testers report.
 #
 #   omarchy   works (someone booted it), expected (same platform as a tested
-#             model, not tried yet), problems, or missing
+#             model, not tried yet), untested, problems, or missing
 #   linux     omarchy (needs patches Omarchy's kernel carries) or mainline
 nvidia:
-  - id: asus-proart-p14-n1x
-    vendor: ASUS
-    name: ProArt P14
-    generation: n1x
-    released: 2026
-    omarchy: works
-    linux: omarchy
-    notes: Boots through ACPI with Omarchy's kernel.
-
-  - id: nvidia-dgx-spark
-    vendor: NVIDIA
-    name: DGX Spark
+  - id: acer-veriton-gn100
+    vendor: "Acer"
+    name: "Veriton GN100"
     generation: gb10
     form: desktop
-    released: 2025
-    omarchy: works
-    linux: omarchy
-    notes: Sleep is off on every GB10 for now.
-
-  - id: asus-ascent-gx10
-    vendor: ASUS
-    name: Ascent GX10
-    generation: gb10
-    form: desktop
-    released: 2025
+    released: "2025-10"
     omarchy: expected
     linux: omarchy
-    notes: Same GB10 platform as the DGX Spark.
+    notes: "Same GB10 platform as the DGX Spark."
+    sources:
+      - https://www.acer.com/us-en/desktops-and-all-in-ones/veriton-workstations/veriton-gn100-ai-mini-workstation
+      - https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers
+
+  - id: asus-ascent-gx10
+    vendor: "ASUS"
+    name: "Ascent GX10"
+    generation: gb10
+    form: desktop
+    released: "2025-10"
+    omarchy: expected
+    linux: omarchy
+    notes: "Same GB10 platform as the DGX Spark."
+    sources:
+      - https://www.asus.com/networking-iot-servers/desktop-ai-supercomputer/ultra-small-ai-supercomputers/asus-ascent-gx10/
+      - https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers
+
+  - id: dell-pro-max-gb10
+    vendor: "Dell"
+    name: "Pro Max with GB10"
+    generation: gb10
+    form: desktop
+    released: "2025-10"
+    omarchy: expected
+    linux: omarchy
+    notes: "Same GB10 platform as the DGX Spark."
+    sources:
+      - https://www.dell.com/en-us/blog/how-dell-pro-max-with-gb10-transforms-ai-development/
+      - https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers
+
+  - id: gigabyte-ai-top-atom
+    vendor: "Gigabyte"
+    name: "AI TOP ATOM"
+    generation: gb10
+    form: desktop
+    released: "2025-10"
+    omarchy: expected
+    linux: omarchy
+    notes: "Same GB10 platform as the DGX Spark."
+    sources:
+      - https://www.prnewswire.com/news-releases/gigabyte-announces-its-personal-ai-supercomputer-ai-top-atom-will-be-available-globally-on-october-15-302581862.html
+      - https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers
+
+  - id: hp-zgx-nano-g1n
+    vendor: "HP"
+    name: "ZGX Nano G1n"
+    generation: gb10
+    form: desktop
+    released: "2025-10"
+    omarchy: expected
+    linux: omarchy
+    notes: "Same GB10 platform as the DGX Spark."
+    sources:
+      - https://www.hp.com/us-en/newsroom/press-releases/2025/hp-accelerates-the-future-of-work.html
+      - https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers
+
+  - id: lenovo-thinkstation-pgx
+    vendor: "Lenovo"
+    name: "ThinkStation PGX"
+    generation: gb10
+    form: desktop
+    released: "2025-10"
+    omarchy: expected
+    linux: omarchy
+    notes: "Same GB10 platform as the DGX Spark."
+    sources:
+      - https://news.lenovo.com/all-new-lenovo-thinkstation-pgx-big-ai-innovation-in-a-small-form-factor/
+      - https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers
+
+  - id: msi-edgexpert-ms-c931
+    vendor: "MSI"
+    name: "EdgeXpert"
+    generation: gb10
+    form: desktop
+    released: "2025-10"
+    omarchy: expected
+    linux: omarchy
+    notes: "Same GB10 platform as the DGX Spark."
+    sources:
+      - https://ipc.msi.com/news/147188
+      - https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers
+
+  - id: nvidia-dgx-spark
+    vendor: "NVIDIA"
+    name: "DGX Spark"
+    generation: gb10
+    form: desktop
+    released: "2025-10"
+    omarchy: works
+    linux: omarchy
+    notes: "Sleep is off on every GB10 for now."
+    sources:
+      - https://www.nvidia.com/en-us/products/workstations/dgx-spark/
+      - https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers
+
+  - id: asus-proart-p14-h7407ba
+    vendor: "ASUS"
+    name: "ProArt P14"
+    generation: n1x
+    released: "2026-10"
+    omarchy: works
+    linux: omarchy
+    notes: "Boots through ACPI with Omarchy's kernel."
+    sources:
+      - https://www.computerbase.de/artikel/notebooks/nvidia-rtx-spark-n1x-test.99679/
+      - https://blogs.windows.com/windowsexperience/2026/05/31/introducing-a-powerful-new-chapter-for-windows-pcs-accelerated-by-nvidia-rtx-spark/
+
+  - id: asus-proart-p16-h7607ba
+    vendor: "ASUS"
+    name: "ProArt P16"
+    generation: n1x
+    released: "2026-10"
+    omarchy: untested
+    linux: omarchy
+    sources:
+      - https://www.notebookcheck.net/Asus-ProArt-P16-RTX-Spark-Laptop-Review-The-future-of-multimedia-laptops.1422366.0.html
+      - https://www.computerbase.de/artikel/notebooks/nvidia-rtx-spark-n1x-test.99679/
+
+  - id: dell-xps-16-creator-edition
+    vendor: "Dell"
+    name: "XPS 16 Creator Edition"
+    generation: n1x
+    released: "2026"
+    omarchy: untested
+    linux: omarchy
+    status: "announced 2026-05-31 for \"this fall\""
+    sources:
+      - https://nvidianews.nvidia.com/news/nvidia-microsoft-windows-pcs-agents-rtx-spark
+      - https://blogs.windows.com/windowsexperience/2026/05/31/introducing-a-powerful-new-chapter-for-windows-pcs-accelerated-by-nvidia-rtx-spark/
+
+  - id: hp-omnibook-ultra-16-bk0
+    vendor: "HP"
+    name: "OmniBook Ultra 16"
+    generation: n1x
+    released: "2026-10"
+    omarchy: untested
+    linux: omarchy
+    sources:
+      - https://www.hp.com/us-en/shop/pdp/hp-omnibook-ultra-laptop-next-gen-ai-16-bk000-16-bg9s9av-1
+      - https://www.notebookcheck.net/NVIDIA-RTX-Spark-N1X-6144-Core-Blackwell-GPU-Benchmarks-and-Specs.1428028.0.html
+
+  - id: hp-omnibook-x-14-ks0
+    vendor: "HP"
+    name: "OmniBook X 14"
+    generation: n1x
+    released: "2026"
+    omarchy: untested
+    linux: omarchy
+    sources:
+      - https://blogs.windows.com/windowsexperience/2026/05/31/introducing-a-powerful-new-chapter-for-windows-pcs-accelerated-by-nvidia-rtx-spark/
+
+  - id: lenovo-yoga-pro-9n
+    vendor: "Lenovo"
+    name: "Yoga Pro 9n"
+    generation: n1x
+    released: "2026"
+    omarchy: untested
+    linux: omarchy
+    status: "announced 2026-05-31 for fall 2026"
+    sources:
+      - https://blogs.windows.com/windowsexperience/2026/05/31/introducing-a-powerful-new-chapter-for-windows-pcs-accelerated-by-nvidia-rtx-spark/
+
+  - id: microsoft-surface-laptop-ultra
+    vendor: "Microsoft"
+    name: "Surface Laptop Ultra"
+    generation: n1x
+    released: "2026-10"
+    omarchy: untested
+    linux: omarchy
+    sources:
+      - https://www.microsoft.com/en-us/surface/devices/surface-laptop-ultra
+      - https://www.notebookcheck.net/Microsoft-Surface-Laptop-Ultra-RTX-Spark-Review-The-2000-nits-Mini-LED-panel-is-a-problem.1426103.0.html
+      - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
+
+  - id: microsoft-surface-rtx-spark-dev-box
+    vendor: "Microsoft"
+    name: "Surface RTX Spark Dev Box"
+    generation: n1x
+    form: devkit
+    released: "2026"
+    omarchy: untested
+    linux: omarchy
+    status: "announced at Build 2026 for later in 2026, US Microsoft"
+    sources:
+      - https://www.gsmarena.com/microsoft_unveils_the_surface_rtx_spark_dev_box_a_desktop_rtx_sparkpowered_computer-news-73106.php
+      - https://en.wikipedia.org/wiki/Surface_Laptop_Ultra
+
+  - id: msi-prestige-n16-flip-ai-plus
+    vendor: "MSI"
+    name: "Prestige N16 Flip AI+"
+    generation: n1x
+    form: 2-in-1
+    released: "2026"
+    omarchy: untested
+    linux: omarchy
+    status: "announced 2026-05-31 for fall 2026"
+    sources:
+      - https://blogs.windows.com/windowsexperience/2026/05/31/introducing-a-powerful-new-chapter-for-windows-pcs-accelerated-by-nvidia-rtx-spark/
+
+# Source entries the board leaves out on purpose: older Snapdragon chips that
+# Omarchy's image has no device trees for, and Qualcomm's reference boards.
+# Also left out: Qualcomm's internal reference designs and industrial boards,
+# the cancelled TUXEDO Elite 14, models announced but never confirmed shipping
+# (Tecno Megabook S14, HUMAIN Horizon Pro, Geekom QS1, Zenbook A16 UX3607QA),
+# and the HP and Dell Googlebooks, which run Google's own OS.
+ignore:
+  ids: ["glymur-crd.json", "x1e80100-crd.json", "msm8998-lenovo-miix-630-81f1.json", "sc7180-acer-aspire1.json", "sc7180-ecs-liva-qc710.json", "sc8180x-lenovo-flex-5g-81xe.json", "sc8180x-lenovo-flex-5g-82ak.json", "sdm850-lenovo-yoga-c630.json", "sc8280xp-radxa-dragon-q8b.json"]
+  firmware: ["qcom/sc8280xp/radxa/dragon-q8b"]
+  acpi: ["acer-aspire-1", "acer-gateway-gwtn133-1", "acer-spin-7-sp714-61na", "apcsilmic-dot-1", "asus-tp370ql", "dell-inspiron-14-3420", "ecs-liva-qc710", "hp-envy-x2", "huawei-matebooke-2019", "lenovo-flex-5g", "lenovo-ideapad-5g-14q8x05", "lenovo-l10w", "lenovo-miix-630", "lenovo-yoga-c630", "microsoft-surface-prox", "samsung-galaxy-book-go", "samsung-galaxy-book-go-5g", "samsung-galaxy-book-s", "samsung-galaxybook2", "samsung-galaxybook2-go", "tcl-book-14-go", "xiaomi-book-s"]

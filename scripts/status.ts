@@ -17,6 +17,9 @@ type Model = {
   form?: string;
   released?: string | number;
   model_numbers?: string[];
+  chips?: string[];
+  status?: string;
+  sources?: string[];
   variants?: Variant[];
   firmware?: string[];
   firmware_download?: string;
@@ -31,8 +34,8 @@ const models: Model[] = list.models;
 const ignore: { ids?: string[]; firmware?: string[]; acpi?: string[] } = list.ignore ?? {};
 
 // NVIDIA's ARM PCs boot through ACPI; their status is what testers report
-type NvidiaModel = { id: string; vendor: string; name: string; generation: 'n1x' | 'gb10'; form?: string; released?: string | number; omarchy: 'works' | 'expected' | 'problems' | 'missing'; linux: 'omarchy' | 'mainline'; notes?: string };
-const nvidia: NvidiaModel[] = (list.nvidia ?? []).map((model: NvidiaModel) => ({ form: 'laptop', released: null, notes: null, ...model }));
+type NvidiaModel = { id: string; vendor: string; name: string; generation: 'n1x' | 'gb10'; form?: string; released?: string | number; omarchy: 'works' | 'expected' | 'untested' | 'problems' | 'missing'; linux: 'omarchy' | 'mainline'; status?: string; notes?: string; sources?: string[] };
+const nvidia: NvidiaModel[] = (list.nvidia ?? []).map((model: NvidiaModel) => ({ form: 'laptop', released: null, status: null, notes: null, sources: [], ...model }));
 
 // An unquoted vendor,model inside { } is split at the comma by YAML, so catch it here
 for (const model of models) {
@@ -119,6 +122,9 @@ const rows = models.map((model) => {
     form: model.form ?? 'laptop',
     released: model.released ?? null,
     modelNumbers: model.model_numbers ?? [],
+    chips: model.chips ?? [],
+    status: model.status ?? null,
+    sources: model.sources ?? [],
     notes: model.notes ?? null,
     omarchy: best(variants.map((v) => v.omarchy), omarchyOrder),
     upstream: {
@@ -140,6 +146,8 @@ const count = <T>(items: T[], test: (item: T) => boolean) => items.filter(test).
 const current = rows.filter((row) => row.generation !== '8cx');
 const summary = {
   models: current.length,
+  nvidia: nvidia.length,
+  nvidiaWorks: count(nvidia, (m) => m.omarchy === 'works'),
   omarchyWorks: count(current, (r) => r.omarchy === 'works'),
   omarchyManual: count(current, (r) => r.omarchy === 'manual'),
   deviceTree: count(current, (r) => r.upstream.deviceTree === 'released' || r.upstream.deviceTree === 'next'),
