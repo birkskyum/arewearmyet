@@ -53,4 +53,18 @@ export function acpiCell(model: Model): Cell {
   return { label: 'Wanted', tone: 'wanted', title: 'A device tree is written from these, so this is the first thing to send' };
 }
 
-export const GENERATION: Record<string, string> = { x1: 'Snapdragon X', x2: 'Snapdragon X2', '8cx': 'Snapdragon 8cx Gen 3' };
+export const GENERATION: Record<string, string> = { x1: 'Snapdragon X', x2: 'Snapdragon X2', '8cx': 'Snapdragon 8cx Gen 3', n1x: 'NVIDIA N1x', gb10: 'NVIDIA GB10' };
+
+export type NvidiaModel = (typeof status.nvidia)[number];
+
+export function nvidiaOmarchyCell(model: NvidiaModel): Cell {
+  if (model.omarchy === 'works') return { label: 'Boots', tone: 'good', title: 'A tester booted Omarchy on it' };
+  if (model.omarchy === 'expected') return { label: 'Should boot', tone: 'close', title: 'Same platform as a tested model, but nobody has tried it yet' };
+  if (model.omarchy === 'problems') return { label: 'Problems', tone: 'wanted', title: 'A tester booted it and hit problems' };
+  return { label: 'Not yet', tone: 'wanted', title: `Omarchy doesn't support it yet` };
+}
+
+export function nvidiaLinuxCell(model: NvidiaModel): Cell {
+  if (model.linux === 'mainline') return { label: 'Mainline', tone: 'good', title: 'Plain Linux supports it' };
+  return { label: `Omarchy's kernel`, tone: 'close', title: `Needs patches that Omarchy carries in linux-omarchy and that aren't in Linux yet` };
+}

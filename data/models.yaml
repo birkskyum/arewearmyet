@@ -427,3 +427,39 @@ ignore:
   ids: [glymur-crd.json, x1e80100-crd.json, msm8998-lenovo-miix-630-81f1.json, sc7180-acer-aspire1.json, sc7180-ecs-liva-qc710.json, sc8180x-lenovo-flex-5g-81xe.json, sc8180x-lenovo-flex-5g-82ak.json, sdm850-lenovo-yoga-c630.json, sc8280xp-radxa-dragon-q8b.json]
   firmware: [qcom/sc8280xp/radxa/dragon-q8b]
   acpi: [acer-aspire-1, acer-gateway-gwtn133-1, acer-spin-7-sp714-61na, apcsilmic-dot-1, asus-tp370ql, dell-inspiron-14-3420, ecs-liva-qc710, hp-envy-x2, huawei-matebooke-2019, lenovo-flex-5g, lenovo-ideapad-5g-14q8x05, lenovo-l10w, lenovo-miix-630, lenovo-yoga-c630, microsoft-surface-prox, samsung-galaxy-book-go, samsung-galaxy-book-go-5g, samsung-galaxy-book-s, samsung-galaxybook2, samsung-galaxybook2-go, tcl-book-14-go, xiaomi-book-s]
+
+# NVIDIA's ARM PCs boot through ACPI, so they need no device tree or hardware
+# IDs. Their Omarchy status is what testers report.
+#
+#   omarchy   works (someone booted it), expected (same platform as a tested
+#             model, not tried yet), problems, or missing
+#   linux     omarchy (needs patches Omarchy's kernel carries) or mainline
+nvidia:
+  - id: asus-proart-p14-n1x
+    vendor: ASUS
+    name: ProArt P14
+    generation: n1x
+    released: 2026
+    omarchy: works
+    linux: omarchy
+    notes: Boots through ACPI with Omarchy's kernel.
+
+  - id: nvidia-dgx-spark
+    vendor: NVIDIA
+    name: DGX Spark
+    generation: gb10
+    form: desktop
+    released: 2025
+    omarchy: works
+    linux: omarchy
+    notes: Sleep is off on every GB10 for now.
+
+  - id: asus-ascent-gx10
+    vendor: ASUS
+    name: Ascent GX10
+    generation: gb10
+    form: desktop
+    released: 2025
+    omarchy: expected
+    linux: omarchy
+    notes: Same GB10 platform as the DGX Spark.

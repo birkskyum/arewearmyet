@@ -1998,6 +1998,41 @@
       ]
     }
   ],
+  "nvidia": [
+    {
+      "form": "laptop",
+      "released": 2026,
+      "notes": "Boots through ACPI with Omarchy's kernel.",
+      "id": "asus-proart-p14-n1x",
+      "vendor": "ASUS",
+      "name": "ProArt P14",
+      "generation": "n1x",
+      "omarchy": "works",
+      "linux": "omarchy"
+    },
+    {
+      "form": "desktop",
+      "released": 2025,
+      "notes": "Sleep is off on every GB10 for now.",
+      "id": "nvidia-dgx-spark",
+      "vendor": "NVIDIA",
+      "name": "DGX Spark",
+      "generation": "gb10",
+      "omarchy": "works",
+      "linux": "omarchy"
+    },
+    {
+      "form": "desktop",
+      "released": 2025,
+      "notes": "Same GB10 platform as the DGX Spark.",
+      "id": "asus-ascent-gx10",
+      "vendor": "ASUS",
+      "name": "Ascent GX10",
+      "generation": "gb10",
+      "omarchy": "expected",
+      "linux": "omarchy"
+    }
+  ],
   "unmatched": {
     "deviceTrees": [],
     "ids": [],

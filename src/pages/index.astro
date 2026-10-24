@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import status from '../data/status.json';
-import { TONE, GENERATION, omarchyCell, deviceTreeCell, idsCell, firmwareCell, acpiCell, type Cell, type Model } from '../lib/labels';
+import { TONE, GENERATION, omarchyCell, deviceTreeCell, idsCell, firmwareCell, acpiCell, nvidiaOmarchyCell, nvidiaLinuxCell, type Cell, type Model } from '../lib/labels';
 
 const models = [...status.models].sort((a, b) => a.vendor.localeCompare(b.vendor) || a.name.localeCompare(b.name));
 const vendors = [...new Set(models.map((model) => model.vendor))];
@@ -134,6 +134,45 @@ const REPO = 'https://github.com/birkskyum/arewearmyet';
       </div>
       <p id="empty" hidden class="mt-4 text-sm text-zinc-500">No models match.</p>
     </section>
+
+    {status.nvidia.length > 0 && (
+      <section class="mt-12">
+        <h2 class="text-xl font-semibold text-zinc-50">NVIDIA N1x and GB10</h2>
+        <p class="mt-1 max-w-3xl text-sm text-zinc-400">
+          NVIDIA's ARM laptops and desktops boot through ACPI, so they need no device tree or hardware IDs. What counts here is whether someone has booted Omarchy on them.
+        </p>
+        <div class="mt-4 overflow-x-auto rounded-xl ring-1 ring-zinc-800">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-zinc-900 text-xs uppercase tracking-wide text-zinc-400">
+              <tr>
+                <th class="px-4 py-3 font-medium">Model</th>
+                <th class="px-3 py-3 font-medium">Omarchy</th>
+                <th class="px-3 py-3 font-medium">Linux</th>
+                <th class="px-3 py-3 font-medium">Notes</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-zinc-800">
+              {[...status.nvidia].sort((a, b) => a.generation.localeCompare(b.generation) || a.vendor.localeCompare(b.vendor) || a.name.localeCompare(b.name)).map((model) => (
+                <tr class="align-top hover:bg-zinc-900/60">
+                  <td class="px-4 py-3">
+                    <div class="font-medium text-zinc-100">{model.vendor} {model.name}</div>
+                    <div class="mt-0.5 text-xs text-zinc-500">{GENERATION[model.generation]}{model.released && <> · {model.released}</>}</div>
+                  </td>
+                  {[nvidiaOmarchyCell(model), nvidiaLinuxCell(model)].map((cell) => (
+                    <td class="px-3 py-3"><span title={cell.title} class={`${PILL} ${TONE[cell.tone]}`}>{cell.label}</span></td>
+                  ))}
+                  <td class="px-3 py-3 text-xs text-zinc-400">{model.notes}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )}
+
+    <p class="mt-8 text-sm text-zinc-400">
+      Apple Silicon Macs run Omarchy on top of Asahi Linux. <a class={LINK} href="https://asahilinux.org/docs/platform/feature-support/overview/">Asahi's feature support pages</a> track which models and features work.
+    </p>
 
     <section class="mt-12 rounded-xl bg-zinc-900 p-6 text-sm text-zinc-400 ring-1 ring-zinc-800">
       <h2 class="text-base font-semibold text-zinc-100">Help a model get there</h2>

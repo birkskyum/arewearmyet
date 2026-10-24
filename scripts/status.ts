@@ -30,6 +30,10 @@ const list = parse(readFileSync('data/models.yaml', 'utf8'));
 const models: Model[] = list.models;
 const ignore: { ids?: string[]; firmware?: string[]; acpi?: string[] } = list.ignore ?? {};
 
+// NVIDIA's ARM PCs boot through ACPI; their status is what testers report
+type NvidiaModel = { id: string; vendor: string; name: string; generation: 'n1x' | 'gb10'; form?: string; released?: string | number; omarchy: 'works' | 'expected' | 'problems' | 'missing'; linux: 'omarchy' | 'mainline'; notes?: string };
+const nvidia: NvidiaModel[] = (list.nvidia ?? []).map((model: NvidiaModel) => ({ form: 'laptop', released: null, notes: null, ...model }));
+
 // An unquoted vendor,model inside { } is split at the comma by YAML, so catch it here
 for (const model of models) {
   for (const variant of model.variants ?? []) {
@@ -155,7 +159,7 @@ const unmatched = {
 mkdirSync('src/data', { recursive: true });
 writeFileSync(
   'src/data/status.json',
-  JSON.stringify({ collected: sources.collected, linuxNext: sources.linuxNext, omarchy: { channel: OMARCHY_CHANNEL, kernel: channel.kernel, systemd: channel.systemd, kernelBase, systemdRelease, channels: sources.omarchy.channels }, summary, models: rows, unmatched }, null, 2) + '\n',
+  JSON.stringify({ collected: sources.collected, linuxNext: sources.linuxNext, omarchy: { channel: OMARCHY_CHANNEL, kernel: channel.kernel, systemd: channel.systemd, kernelBase, systemdRelease, channels: sources.omarchy.channels }, summary, models: rows, nvidia, unmatched }, null, 2) + '\n',
 );
 console.log(summary);
 console.log(`unmatched: ${unmatched.deviceTrees.length} device trees, ${unmatched.ids.length} ID entries, ${unmatched.firmware.length} firmware folders, ${unmatched.acpi.length} ACPI dumps`);
