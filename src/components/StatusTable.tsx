@@ -62,12 +62,12 @@ export default function StatusTable(props: Props) {
   const helper = createColumnHelper<typeof features, TableRow>();
   const rank = (cell: CellData | undefined) => cell?.rank ?? Number.MAX_SAFE_INTEGER;
   const columns = helper.columns([
-    helper.accessor((row) => `${row.vendor} ${row.name}`, { id: 'model', header: 'Model', sortFn: 'alphanumeric' }),
+    helper.accessor('vendor', { id: 'vendor', header: 'Brand', sortFn: 'alphanumeric', filterFn: equals }),
+    helper.accessor('name', { id: 'model', header: 'Model', sortFn: 'alphanumeric' }),
     // Ranks put the best state first, so the first click sorts best to worst
     ...props.columns.map((column) => helper.accessor((row) => rank(row.cells[column.id]), { id: column.id, header: column.header, sortDescFirst: false })),
     helper.accessor('generation', { id: 'chip', filterFn: equals }),
     helper.accessor('outcome', { id: 'omarchy-status', filterFn: equals }),
-    helper.accessor('vendor', { id: 'vendor', filterFn: equals }),
     helper.accessor('search', { id: 'q', filterFn: 'includesString' }),
   ]);
 
@@ -147,12 +147,12 @@ export default function StatusTable(props: Props) {
           </Show>
           <Show when={props.vendors}>
             <select
-              aria-label="Vendor"
+              aria-label="Brand"
               value={filterValue('vendor')}
               onChange={(event) => setFilter('vendor', event.currentTarget.value)}
               class="ml-2 rounded-md bg-zinc-900 px-2 py-1.5 text-sm text-zinc-200 ring-1 ring-zinc-700"
             >
-              <option value="">All vendors</option>
+              <option value="">All brands</option>
               <For each={props.vendors}>{(vendor) => <option value={vendor}>{vendor}</option>}</For>
             </select>
           </Show>
@@ -166,12 +166,12 @@ export default function StatusTable(props: Props) {
         <table class="w-full text-left text-sm">
           <thead class="bg-zinc-900 text-xs uppercase tracking-wide text-zinc-400">
             <tr>
-              <For each={[{ id: 'model', header: 'Model', question: 'Sort by vendor and name' }, ...props.columns]}>
+              <For each={[{ id: 'vendor', header: 'Brand', question: 'Who makes it' }, { id: 'model', header: 'Model', question: 'The model and its variants' }, ...props.columns]}>
                 {(column) => {
                   const tableColumn = table.getColumn(column.id)!;
                   const direction = () => (sorting()[0]?.id === column.id ? (sorting()[0].desc ? 'desc' : 'asc') : null);
                   return (
-                    <th class={column.id === 'model' ? 'px-4 py-3 font-medium' : 'px-3 py-3 font-medium'} title={column.question} aria-sort={direction() === 'asc' ? 'ascending' : direction() === 'desc' ? 'descending' : 'none'}>
+                    <th class={column.id === 'vendor' ? 'px-4 py-3 font-medium' : 'px-3 py-3 font-medium'} title={column.question} aria-sort={direction() === 'asc' ? 'ascending' : direction() === 'desc' ? 'descending' : 'none'}>
                       <button type="button" class="inline-flex items-center gap-1 uppercase tracking-wide hover:text-zinc-100" onClick={tableColumn.getToggleSortingHandler()}>
                         {column.header}
                         <span class={direction() ? 'text-zinc-200' : 'text-zinc-600'} aria-hidden="true">
@@ -190,16 +190,15 @@ export default function StatusTable(props: Props) {
                 const model = row.original;
                 return (
                   <tr class="align-top hover:bg-zinc-900/60" data-row data-chip={model.generation} data-outcome={model.outcome}>
-                    <td class="px-4 py-3">
+                    <td class="whitespace-nowrap px-4 py-3 text-zinc-300">{model.vendor}</td>
+                    <td class="px-3 py-3">
                       <div class="font-medium text-zinc-100">
                         {model.href ? (
                           <a href={model.href} class="hover:underline hover:decoration-zinc-500 hover:underline-offset-2">
-                            {model.vendor} {model.name}
+                            {model.name}
                           </a>
                         ) : (
-                          <>
-                            {model.vendor} {model.name}
-                          </>
+                          model.name
                         )}
                         <Show when={model.announced}>
                           <span title={model.announced!} class={`ml-1.5 align-middle ${PILL} ${TONE.info}`}>
