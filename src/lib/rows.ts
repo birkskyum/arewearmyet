@@ -3,7 +3,7 @@
 import status from '../data/status.json';
 import { ANNOUNCED, GENERATION, acpiCell, deviceTreeCell, firmwareCell, idsCell, nvidiaLinuxCell, nvidiaOmarchyCell, omarchyCell, type Cell, type Model, type NvidiaModel } from './labels';
 
-export type CellData = Pick<Cell, 'label' | 'tone' | 'title' | 'href' | 'rank'> | { text: string; rank: number };
+export type CellData = Pick<Cell, 'key' | 'label' | 'tone' | 'title' | 'href' | 'rank'> | { key: string; text: string; rank: number };
 export type TableRow = {
   id: string;
   vendor: string;
@@ -20,7 +20,7 @@ export type TableRow = {
 };
 
 const year = (released: string | number | null) => (released ? String(released).slice(0, 4) : '');
-const plain = ({ label, tone, title, href, rank }: Cell) => ({ label, tone, title, href, rank });
+const plain = ({ key, label, tone, title, href, rank }: Cell) => ({ key, label, tone, title, href, rank });
 const announcedTitle = (statusText: string | null) => (statusText ? `${ANNOUNCED.meaning} The vendor said: ${statusText}.` : null);
 
 const VARIANT: Record<string, { tone: TableRow['variants'][number]['tone']; state: string }> = {
@@ -73,7 +73,7 @@ export function nvidiaRows(): TableRow[] {
     cells: {
       omarchy: plain(nvidiaOmarchyCell(model)),
       linux: plain(nvidiaLinuxCell(model)),
-      notes: { text: model.notes ?? '', rank: model.notes ? 0 : 1 },
+      notes: { key: model.notes ? 'notes' : 'none', text: model.notes ?? '', rank: model.notes ? 0 : 1 },
     },
   }));
 }

@@ -5,7 +5,7 @@ import SplitBar from '../components/SplitBar.astro';
 import StatusTable from '../components/StatusTable';
 import OmarchyIcon from '../assets/omarchy-icon.svg';
 import status from '../data/status.json';
-import { ANNOUNCED, LEGEND, NVIDIA_LEGEND, TONE } from '../lib/labels';
+import { ANNOUNCED, FILTERS, LEGEND, NVIDIA_LEGEND, TONE } from '../lib/labels';
 import { PILL } from '../lib/tones';
 import { nvidiaRows, snapdragonRows } from '../lib/rows';
 
@@ -14,7 +14,6 @@ const channel = status.omarchy.channel.toUpperCase();
 const byName = <T extends { vendor: string; name: string }>(a: T, b: T) => a.vendor.localeCompare(b.vendor) || a.name.localeCompare(b.name);
 const rows = snapdragonRows().sort(byName);
 const nvidia = nvidiaRows().sort((a, b) => a.generation.localeCompare(b.generation) || byName(a, b));
-const vendors = [...new Set(rows.map((row) => row.vendor))];
 
 // What owners saw first, then what the pieces predict
 const outcomeBar = [
@@ -35,10 +34,11 @@ const upstreamBars = [
   { label: 'ACPI dump collected', value: summary.acpi, total: summary.acpiNeeded, color: 'bg-rose-400', note: 'for the models still without a device tree' },
 ];
 
-const snapdragonColumns = LEGEND.map((group, i) => ({ id: ['omarchy', 'device-tree', 'ids', 'firmware', 'acpi'][i], header: group.column, question: group.question }));
+const snapdragonIds = ['omarchy', 'device-tree', 'ids', 'firmware', 'acpi'] as const;
+const snapdragonColumns = LEGEND.map((group, i) => ({ id: snapdragonIds[i], header: group.column, question: group.question, options: FILTERS[snapdragonIds[i]] }));
 const nvidiaColumns = [
-  { id: 'omarchy', header: 'Omarchy', question: NVIDIA_LEGEND[0].question },
-  { id: 'linux', header: 'Linux', question: NVIDIA_LEGEND[1].question },
+  { id: 'omarchy', header: 'Omarchy', question: NVIDIA_LEGEND[0].question, options: FILTERS.nvidiaOmarchy },
+  { id: 'linux', header: 'Linux', question: NVIDIA_LEGEND[1].question, options: FILTERS.nvidiaLinux },
   { id: 'notes', header: 'Notes', question: 'What else to know' },
 ];
 const legendExtra = [
@@ -121,9 +121,8 @@ const HEADLINE = 'text-2xl font-semibold text-zinc-50';
           client:load
           rows={rows}
           columns={snapdragonColumns}
-          chips={[{ value: 'x1', label: 'X' }, { value: 'x2', label: 'X2' }, { value: '8cx', label: '8cx Gen 3' }]}
-          outcomes={[{ value: 'works', label: 'Works' }, { value: 'should', label: 'Should work' }, { value: 'problems', label: 'Problems' }, { value: 'notyet', label: 'Not yet' }]}
-          vendors={vendors}
+          chips={[{ key: 'x1', label: 'Snapdragon X' }, { key: 'x2', label: 'Snapdragon X2' }, { key: '8cx', label: 'Snapdragon 8cx Gen 3' }]}
+          urlPrefix=""
         />
       </div>
     </section>
@@ -137,7 +136,7 @@ const HEADLINE = 'text-2xl font-semibold text-zinc-50';
         <Legend title="What the labels mean" groups={NVIDIA_LEGEND} />
       </div>
       <div class="mt-4">
-        <StatusTable client:load rows={nvidia} columns={nvidiaColumns} />
+        <StatusTable client:load rows={nvidia} columns={nvidiaColumns} chips={[{ key: 'n1x', label: 'NVIDIA N1x' }, { key: 'gb10', label: 'NVIDIA GB10' }]} urlPrefix="nvidia-" />
       </div>
     </section>
 

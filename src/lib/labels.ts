@@ -7,7 +7,7 @@ export type NvidiaModel = (typeof status.nvidia)[number];
 
 // A label as the legend shows it; cells reuse its text as their hover title and sort by rank
 type State = { label: string; tone: Tone; meaning: string };
-export type Cell = State & { title: string; href?: string; rank: number };
+export type Cell = State & { key: string; title: string; href?: string; rank: number };
 
 const kernel = status.omarchy.kernelBase.replace(/^v/, '');
 
@@ -76,7 +76,7 @@ export const NVIDIA_LEGEND: Group[] = [
 // Ranks sort best first: a state's position in its group, or a release number within "done"
 const cell = (group: Record<string, State>, key: string, extra: { label?: string; title?: string; href?: string; rank?: number } = {}): Cell => {
   const state = group[key];
-  return { ...state, label: extra.label ?? state.label, title: extra.title ?? state.meaning, href: extra.href, rank: extra.rank ?? 1000 + Object.keys(group).indexOf(key) };
+  return { ...state, key, label: extra.label ?? state.label, title: extra.title ?? state.meaning, href: extra.href, rank: extra.rank ?? 1000 + Object.keys(group).indexOf(key) };
 };
 const release = (tag: string) => tag.replace(/^v/, '');
 const releaseRank = (tag: string) => {
@@ -94,7 +94,7 @@ export function omarchyCell(model: Model): Cell {
 
 export function deviceTreeCell(model: Model): Cell {
   const { deviceTree, firstRelease, devicetreePosted } = model.upstream;
-  if (deviceTree === 'released') return cell(STATES.deviceTree, 'released', { label: `Linux ${release(firstRelease!)}`, title: `In Linux since ${release(firstRelease!)}.`, rank: releaseRank(firstRelease!) });
+  if (deviceTree === 'released') return { ...cell(STATES.deviceTree, 'released', { label: `Linux ${release(firstRelease!)}`, title: `In Linux since ${release(firstRelease!)}.`, rank: releaseRank(firstRelease!) }), key: `linux-${release(firstRelease!)}` };
   if (deviceTree === 'posted') return cell(STATES.deviceTree, 'posted', { href: devicetreePosted ?? undefined });
   return cell(STATES.deviceTree, deviceTree === 'next' ? 'next' : 'wanted');
 }
@@ -102,11 +102,12 @@ export function deviceTreeCell(model: Model): Cell {
 export function idsCell(model: Model): Cell {
   if (model.upstream.ids === 'listed') {
     const first = model.variants.flatMap((variant) => variant.ids).filter((entry) => entry.matches).map((entry) => entry.firstRelease).filter(Boolean).sort()[0];
-    return cell(STATES.ids, 'listed', {
+    const listed = cell(STATES.ids, 'listed', {
       label: first ? `systemd ${release(first)}` : 'systemd main',
       title: first ? `In systemd's list since ${release(first)}, so an install image recognises the model.` : `In systemd's development branch, coming in its next release.`,
       rank: first ? Number(release(first)) : 999,
     });
+    return { ...listed, key: first ? `systemd-${release(first)}` : 'systemd-main' };
   }
   return cell(STATES.ids, model.upstream.ids === 'mismatch' ? 'mismatch' : 'wanted');
 }
@@ -137,3 +138,19 @@ export function nvidiaLinuxCell(model: NvidiaModel): Cell {
 }
 
 export const GENERATION: Record<string, string> = { x1: 'Snapdragon X', x2: 'Snapdragon X2', '8cx': 'Snapdragon 8cx Gen 3', n1x: 'NVIDIA N1x', gb10: 'NVIDIA GB10' };
+
+// The choices a column header's filter offers, one per state, in legend order. "Linux 6.x" and
+// "systemd 2xx" stand for any release, so their filter choices say so.
+const options = (group: Record<string, State>, skip?: string) => Object.entries(group).filter(([key]) => key !== skip).map(([key, state]) => ({ key, label: state.label, tone: state.tone }));
+// Device trees and hardware IDs offer each release that occurs, oldest first, before their other states
+const releases = (cells: { key: string; label: string; rank: number }[], prefix: string) =>
+  [...new Map(cells.filter((c) => c.key.startsWith(prefix)).sort((a, b) => a.rank - b.rank).map((c) => [c.key, { key: c.key, label: c.label, tone: 'good' as Tone }])).values()];
+export const FILTERS = {
+  omarchy: options(STATES.omarchy),
+  'device-tree': [...releases(status.models.map(deviceTreeCell), 'linux-'), ...options(STATES.deviceTree, 'released')],
+  ids: [...releases(status.models.map(idsCell), 'systemd-'), ...options(STATES.ids, 'listed')],
+  firmware: options(STATES.firmware),
+  acpi: options(STATES.acpi),
+  nvidiaOmarchy: options(STATES.nvidiaOmarchy),
+  nvidiaLinux: options(STATES.nvidiaLinux),
+};
