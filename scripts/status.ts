@@ -132,7 +132,9 @@ const rows = models.map((model) => {
       firstRelease,
       devicetreePosted: model.devicetree_posted ?? null,
       ids: idsState,
-      firmware: signed ? 'linux-firmware' : model.firmware_download ? 'download' : firmware.length ? 'audio' : 'missing',
+      // What counts is getting the firmware without the laptop's own Windows
+      firmware: signed ? 'linux-firmware' : model.firmware_download ? 'download' : 'windows',
+      firmwareAudioOnly: !signed && firmware.length > 0,
       firmwareDownload: model.firmware_download ?? null,
       firmwareFolders: firmware.map((folder) => folder.path),
       acpi: acpi.length ? 'collected' : 'missing',
@@ -153,7 +155,7 @@ const summary = {
   omarchyManual: count(current, (r) => r.omarchy === 'manual'),
   deviceTree: count(current, (r) => r.upstream.deviceTree === 'released' || r.upstream.deviceTree === 'next'),
   ids: count(current, (r) => r.upstream.ids === 'listed'),
-  firmware: count(current, (r) => r.upstream.firmware === 'linux-firmware'),
+  firmware: count(current, (r) => r.upstream.firmware === 'linux-firmware' || r.upstream.firmware === 'download'),
   acpi: count(current, (r) => r.upstream.acpi === 'collected'),
 };
 

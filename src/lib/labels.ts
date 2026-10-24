@@ -37,10 +37,9 @@ const STATES = {
     wanted: { label: 'Wanted', tone: 'wanted', meaning: `Not in systemd's list yet.` },
   },
   firmware: {
-    'linux-firmware': { label: 'linux-firmware', tone: 'good', meaning: 'The signed firmware for its audio, sensor and graphics chips ships in linux-firmware, so nothing has to be copied.' },
-    audio: { label: 'Audio only', tone: 'close', meaning: 'linux-firmware has its audio setup file, but the signed firmware for its chips still comes from Windows.' },
-    download: { label: 'Vendor download', tone: 'close', meaning: `Not in linux-firmware, but the vendor's driver package has it.` },
-    missing: { label: 'From Windows', tone: 'muted', meaning: `Not in linux-firmware. Today it's copied from the laptop's own Windows.` },
+    'linux-firmware': { label: 'linux-firmware', tone: 'good', meaning: 'Ships in linux-firmware, so nothing has to be copied.' },
+    download: { label: 'Vendor download', tone: 'good', meaning: `The vendor's driver download has it, so it works even after Windows is wiped.` },
+    windows: { label: 'Windows only', tone: 'close', meaning: `Copied from the laptop's own Windows today. A link to the vendor's driver download would cover laptops whose Windows is gone.` },
   },
   acpi: {
     collected: { label: 'Collected', tone: 'good', meaning: 'Its ACPI tables are in the aarch64-laptops collection.' },
@@ -66,7 +65,7 @@ export const LEGEND: { column: string; question: string; states: State[] }[] = [
   { column: 'Omarchy', question: 'Does the Omarchy install image boot on it today?', states: Object.values(STATES.omarchy) as State[] },
   { column: 'Device tree', question: 'The description of the hardware that Linux needs for each model.', states: Object.values(STATES.deviceTree) as State[] },
   { column: 'Hardware IDs', question: 'How an install image recognises the model and picks its device tree.', states: Object.values(STATES.ids) as State[] },
-  { column: 'Firmware', question: 'Files for the chips inside, which only the vendor can license.', states: Object.values(STATES.firmware) as State[] },
+  { column: 'Firmware', question: `Signed files for its audio, sensor and graphics chips. Every model needs them; the goal is getting them without the laptop's own Windows.`, states: Object.values(STATES.firmware) as State[] },
   { column: 'ACPI dump', question: `The laptop's own hardware tables, which a device tree is written from.`, states: Object.values(STATES.acpi) as State[] },
 ];
 
@@ -106,7 +105,8 @@ export function idsCell(model: Model): Cell {
 
 export function firmwareCell(model: Model): Cell {
   const state = STATES.firmware[model.upstream.firmware as keyof typeof STATES.firmware] as State;
-  return cell(state, { href: model.upstream.firmware === 'download' ? (model.upstream.firmwareDownload ?? undefined) : undefined });
+  const audio = model.upstream.firmwareAudioOnly ? ' linux-firmware already has its audio setup file.' : '';
+  return cell(state, { title: state.meaning + audio, href: model.upstream.firmware === 'download' ? (model.upstream.firmwareDownload ?? undefined) : undefined });
 }
 
 export function acpiCell(model: Model): Cell {
