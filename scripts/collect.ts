@@ -15,6 +15,14 @@ const SYSTEMD_RELEASES = ['v257', 'v258', 'v259', 'v260', 'v261', 'v262'];
 const DT_PATTERN = /^(x1|hamoa|purwa|glymur|sc8280xp).*\.dts$/;
 const DT_DIR = 'arch/arm64/boot/dts/qcom';
 const FIRMWARE_SOCS = ['x1e80100', 'x1p42100', 'glymur', 'sc8280xp'];
+// Omarchy's package channels: its own repository carries the kernel, its Arch Linux
+// ARM mirror carries systemd, whose hardware ID list decides which device tree boots
+const OMARCHY_CHANNELS = [
+  { name: 'stable', packages: 'https://pkgs.omarchy.org/stable/aarch64/omarchy.db', core: 'https://arm-stable-mirror.omarchy.org/aarch64/core/core.db' },
+  { name: 'rc', packages: 'https://pkgs.omarchy.org/rc/aarch64/omarchy.db', core: 'https://arm-rc-mirror.omarchy.org/aarch64/core/core.db' },
+  { name: 'edge', packages: 'https://pkgs.omarchy.org/edge/aarch64/omarchy.db', core: 'https://arm-mirror.omarchy.org/aarch64/core/core.db' },
+];
+const OMARCHY_KERNEL_RECIPE = 'pkgbuilds/linux-omarchy-aarch64';
 
 function githubToken(): string | undefined {
   if (process.env.GITHUB_TOKEN) return process.env.GITHUB_TOKEN;
@@ -137,6 +145,51 @@ async function collectFirmware() {
   return folders.sort((a, b) => a.path.localeCompare(b.path));
 }
 
+// The version of a package in a pacman repository database, or undefined if it isn't there
+async function packageVersion(dbUrl: string, name: string): Promise<string | undefined> {
+  const response = await fetch(dbUrl);
+  if (!response.ok) return undefined;
+  const file = join(tmpdir(), `arewearmyet-${Buffer.from(dbUrl).toString('base64url')}.db`);
+  writeFileSync(file, Buffer.from(await response.arrayBuffer()));
+  const entries = execFileSync('tar', ['-tf', file], { encoding: 'utf8', maxBuffer: 64 << 20 }).split('\n');
+  const match = entries.map((entry) => entry.match(new RegExp(`^${name}-(\\d[^/]*)/$`))).find(Boolean);
+  return match?.[1];
+}
+
+// Device trees the linux-omarchy recipe adds on top of the Linux release it builds
+function omarchyKernelDeviceTrees() {
+  const dir = join(tmpdir(), 'arewearmyet-omarchy-pkgs');
+  if (existsSync(join(dir, '.git'))) {
+    execFileSync('git', ['-C', dir, 'fetch', '-q', '--depth', '1', 'origin', 'master'], { stdio: 'inherit' });
+    execFileSync('git', ['-C', dir, 'reset', '-q', '--hard', 'FETCH_HEAD'], { stdio: 'inherit' });
+  } else {
+    execFileSync('git', ['clone', '-q', '--depth', '1', '--filter=blob:none', '--sparse', 'https://github.com/omacom/omarchy-pkgs.git', dir], { stdio: 'inherit' });
+    execFileSync('git', ['-C', dir, 'sparse-checkout', 'set', OMARCHY_KERNEL_RECIPE], { stdio: 'inherit' });
+  }
+  const recipe = join(dir, OMARCHY_KERNEL_RECIPE);
+  const added = [];
+  for (const patch of readdirSync(recipe).filter((name) => name.endsWith('.patch')).sort()) {
+    // A new file shows up in a patch as a section from /dev/null to b/<path>
+    for (const section of readFileSync(join(recipe, patch), 'utf8').split(/^diff --git /m)) {
+      const file = section.match(/^--- \/dev\/null\n\+\+\+ b\/arch\/arm64\/boot\/dts\/qcom\/(\S+)$/m)?.[1];
+      if (!file || !DT_PATTERN.test(file)) continue;
+      const source = section.split('\n').filter((line) => line.startsWith('+') && !line.startsWith('+++')).map((line) => line.slice(1)).join('\n');
+      added.push({ file, patch, ...parseDts(source) });
+    }
+  }
+  return added;
+}
+
+async function collectOmarchy() {
+  const channels = [];
+  for (const channel of OMARCHY_CHANNELS) {
+    const kernel = await packageVersion(channel.packages, 'linux-omarchy');
+    const systemd = await packageVersion(channel.core, 'systemd');
+    channels.push({ name: channel.name, kernel: kernel ?? null, systemd: systemd ?? null });
+  }
+  return { channels, kernelAddedDeviceTrees: omarchyKernelDeviceTrees() };
+}
+
 async function collectAcpiDumps() {
   const tree = await github('repos/aarch64-laptops/build/git/trees/HEAD?recursive=1');
   const paths: string[] = tree.tree.map((entry: { path: string }) => entry.path);
@@ -144,11 +197,11 @@ async function collectAcpiDumps() {
   return [...folders].sort().map((folder) => ({ folder, url: `https://github.com/aarch64-laptops/build/tree/HEAD/misc/${folder}` }));
 }
 
-const [kernel, hardwareIds, firmware, acpiDumps] = await Promise.all([collectDeviceTrees(), collectHardwareIds(), collectFirmware(), collectAcpiDumps()]);
+const [kernel, hardwareIds, firmware, acpiDumps, omarchy] = await Promise.all([collectDeviceTrees(), collectHardwareIds(), collectFirmware(), collectAcpiDumps(), collectOmarchy()]);
 
 mkdirSync('data', { recursive: true });
 writeFileSync(
   'data/sources.json',
-  JSON.stringify({ collected: new Date().toISOString(), kernelReleases: KERNEL_RELEASES, systemdReleases: SYSTEMD_RELEASES, ...kernel, ...hardwareIds, firmware, acpiDumps }, null, 2) + '\n',
+  JSON.stringify({ collected: new Date().toISOString(), kernelReleases: KERNEL_RELEASES, systemdReleases: SYSTEMD_RELEASES, ...kernel, ...hardwareIds, firmware, acpiDumps, omarchy }, null, 2) + '\n',
 );
-console.log(`device trees ${kernel.deviceTrees.length}, systemd IDs ${hardwareIds.systemd.length}, stubble ${hardwareIds.stubble.length}, firmware folders ${firmware.length}, ACPI dumps ${acpiDumps.length}`);
+console.log(`Omarchy ${omarchy.channels.map((c) => `${c.name} ${c.kernel}/${c.systemd}`).join(', ')}, recipe device trees ${omarchy.kernelAddedDeviceTrees.length}; device trees ${kernel.deviceTrees.length}, systemd IDs ${hardwareIds.systemd.length}, stubble ${hardwareIds.stubble.length}, firmware folders ${firmware.length}, ACPI dumps ${acpiDumps.length}`);

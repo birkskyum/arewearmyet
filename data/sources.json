@@ -1,5 +1,5 @@
 {
-  "collected": "2026-10-24T20:05:56.446Z",
+  "collected": "2026-10-24T20:12:44.827Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -2305,5 +2305,25 @@
       "folder": "xiaomi-book-s",
       "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/xiaomi-book-s"
     }
-  ]
+  ],
+  "omarchy": {
+    "channels": [
+      {
+        "name": "stable",
+        "kernel": "7.2.8-13",
+        "systemd": "262.1-1"
+      },
+      {
+        "name": "rc",
+        "kernel": "7.2.8-20",
+        "systemd": "262.1-1"
+      },
+      {
+        "name": "edge",
+        "kernel": "7.2.8-23",
+        "systemd": "262.1-1"
+      }
+    ],
+    "kernelAddedDeviceTrees": []
+  }
 }
