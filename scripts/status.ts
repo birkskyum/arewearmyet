@@ -26,7 +26,9 @@ type Model = {
   acpi?: string[];
   devicetree_posted?: string;
   notes?: string;
+  reports?: Report[];
 };
+type Report = { state: 'works' | 'problems'; variant?: string; note: string; checked?: string };
 
 const sources = JSON.parse(readFileSync('data/sources.json', 'utf8'));
 const list = parse(readFileSync('data/models.yaml', 'utf8'));
@@ -84,24 +86,37 @@ function variantStatus(variant: Variant) {
   const matching = ids.filter((entry) => compatibles.includes(entry.compatible));
   const idsInOmarchy = matching.some((entry) => systemdRank(entry.firstRelease) <= systemdRank(systemdRelease));
 
-  // Omarchy boots a model when its kernel has the device tree and systemd's list picks it
-  const omarchy = !dt?.inOmarchy ? 'missing' : idsInOmarchy ? 'works' : 'manual';
+  // Omarchy should boot a model when its kernel has the device tree and systemd's list picks it
+  const computed = dt?.inOmarchy ? (idsInOmarchy ? 'should' : 'manual') : dt ? 'newer' : 'none';
   return {
     ...variant,
-    omarchy,
+    computed,
     deviceTree: dt ? { file: dt.file, firstRelease: dt.firstRelease, inNext: dt.inNext, inOmarchy: dt.inOmarchy } : null,
     ids: ids.map((entry) => ({ file: entry.file, firstRelease: entry.firstRelease, inMain: entry.inMain, matches: compatibles.includes(entry.compatible), compatible: entry.compatible })),
   };
 }
 
-const omarchyOrder = ['works', 'manual', 'missing'];
-const best = <T extends string>(values: T[], order: T[]) => values.sort((a, b) => order.indexOf(a) - order.indexOf(b))[0];
+// What an owner saw outranks what the pieces predict; a model shows its best variant
+const OUTCOMES = ['works', 'should', 'problems', 'manual', 'newer', 'none'] as const;
+type Outcome = (typeof OUTCOMES)[number];
+const best = (values: Outcome[]) => [...values].sort((a, b) => OUTCOMES.indexOf(a) - OUTCOMES.indexOf(b))[0];
+
+function outcome(computed: string, reports: Report[]): Outcome {
+  if (reports.some((r) => r.state === 'problems')) return 'problems';
+  if (reports.some((r) => r.state === 'works')) return 'works';
+  return computed as Outcome;
+}
 
 const firmwareFolders: { path: string; files: string[] }[] = sources.firmware;
 const acpiDumps: { folder: string; url: string }[] = sources.acpiDumps;
 
 const rows = models.map((model) => {
-  const variants = (model.variants?.length ? model.variants : [{}]).map(variantStatus);
+  const reports = model.reports ?? [];
+  const variants = (model.variants?.length ? model.variants : [{}]).map((variant: Variant) => {
+    const status = variantStatus(variant);
+    const own = reports.filter((r) => !r.variant || r.variant === variant.model);
+    return { ...status, outcome: outcome(status.computed, own), reports: own };
+  });
   const firmware = (model.firmware ?? []).map((path) => firmwareFolders.find((folder) => folder.path === path)).filter(Boolean) as typeof firmwareFolders;
   // The signed DSP images are what a laptop can't do without; many folders only carry the open audio topology
   const signed = firmware.some((folder) => folder.files.some((file) => /^qcadsp\d+\.mbn$/.test(file)));
@@ -126,7 +141,8 @@ const rows = models.map((model) => {
     status: model.status ?? null,
     sources: model.sources ?? [],
     notes: model.notes ?? null,
-    omarchy: best(variants.map((v) => v.omarchy), omarchyOrder),
+    outcome: best(variants.map((v) => v.outcome)),
+    reports,
     upstream: {
       deviceTree,
       firstRelease,
@@ -151,12 +167,16 @@ const summary = {
   nvidia: nvidia.length,
   nvidiaWorks: count(nvidia, (m) => m.omarchy === 'works'),
   nvidiaExpected: count(nvidia, (m) => m.omarchy === 'expected'),
-  omarchyWorks: count(current, (r) => r.omarchy === 'works'),
-  omarchyManual: count(current, (r) => r.omarchy === 'manual'),
+  works: count(current, (r) => r.outcome === 'works'),
+  should: count(current, (r) => r.outcome === 'should'),
+  problems: count(current, (r) => r.outcome === 'problems'),
+  notYet: count(current, (r) => ['manual', 'newer', 'none'].includes(r.outcome)),
   deviceTree: count(current, (r) => r.upstream.deviceTree === 'released' || r.upstream.deviceTree === 'next'),
   ids: count(current, (r) => r.upstream.ids === 'listed'),
   firmware: count(current, (r) => r.upstream.firmware === 'linux-firmware' || r.upstream.firmware === 'download'),
-  acpi: count(current, (r) => r.upstream.acpi === 'collected'),
+  // A dump only matters until a model has a device tree
+  acpiNeeded: count(current, (r) => r.upstream.deviceTree !== 'released' && r.upstream.deviceTree !== 'next'),
+  acpi: count(current, (r) => r.upstream.deviceTree !== 'released' && r.upstream.deviceTree !== 'next' && r.upstream.acpi === 'collected'),
 };
 
 // Anything the sources know that no model claims yet, so the list can be completed

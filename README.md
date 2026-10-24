@@ -6,10 +6,10 @@ Omarchy on ARM PCs, model by model: which ARM laptops and desktops run Omarchy t
 
 For every model in [`data/models.yaml`](data/models.yaml):
 
-- **Omarchy**: whether the kernel of Omarchy's current release candidate carries the model's device tree, and whether the image picks it by itself through systemd's hardware IDs.
+- **Omarchy**: what owners report on the current release (works or problems), and otherwise whether every piece is in place for it to work: the kernel of Omarchy's release candidate carries the model's device tree, and the image picks it by itself through systemd's hardware IDs.
 - **Device tree**: the first Linux release with it, or linux-next, or a posted series.
 - **Hardware IDs**: whether systemd's `src/boot/hwids/aa64` has an entry for the model's device tree.
-- **Firmware**: whether linux-firmware carries the model's DSP, GPU and Wi-Fi files.
+- **Firmware**: whether its signed firmware can be had without the laptop's own Windows, from linux-firmware or a known vendor download.
 - **ACPI dump**: whether the aarch64-laptops project has the model's ACPI tables, which a device tree is written from.
 
 ## How the data flows
@@ -37,3 +37,15 @@ Add an entry to `data/models.yaml`. Quote compatible strings, since YAML splits 
 ```
 
 Then run `pnpm status` and check that the model no longer shows up under `unmatched`.
+
+## Reporting how a model runs
+
+Owners' reports go under the model, one per report. A report applies to every variant unless it names one:
+
+```yaml
+  reports:
+    - { state: "works", note: "In daily use on Omarchy's kernel 7.2.8.", checked: "2026-10" }
+    - { state: "problems", variant: "LCD", note: "The screen stays dark after install.", checked: "2026-10" }
+```
+
+The page is Astro with Tailwind; the tables are a Solid component on TanStack Table, which keeps its filters and sort in the page address.

@@ -1,46 +1,59 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ModelName from '../components/ModelName.astro';
-import status from '../data/status.json';
-import { TONE, GENERATION, LEGEND, NVIDIA_LEGEND, ANNOUNCED, omarchyCell, deviceTreeCell, idsCell, firmwareCell, acpiCell, nvidiaOmarchyCell, nvidiaLinuxCell, type Cell, type Model } from '../lib/labels';
 import Legend from '../components/Legend.astro';
+import SplitBar from '../components/SplitBar.astro';
+import StatusTable from '../components/StatusTable';
 import OmarchyIcon from '../assets/omarchy-icon.svg';
+import status from '../data/status.json';
+import { ANNOUNCED, LEGEND, NVIDIA_LEGEND, TONE } from '../lib/labels';
+import { PILL } from '../lib/tones';
+import { nvidiaRows, snapdragonRows } from '../lib/rows';
 
-const models = [...status.models].sort((a, b) => a.vendor.localeCompare(b.vendor) || a.name.localeCompare(b.name));
-const vendors = [...new Set(models.map((model) => model.vendor))];
 const { summary } = status;
+const channel = status.omarchy.channel.toUpperCase();
+const byName = <T extends { vendor: string; name: string }>(a: T, b: T) => a.vendor.localeCompare(b.vendor) || a.name.localeCompare(b.name);
+const rows = snapdragonRows().sort(byName);
+const nvidia = nvidiaRows().sort((a, b) => a.generation.localeCompare(b.generation) || byName(a, b));
+const vendors = [...new Set(rows.map((row) => row.vendor))];
 
-const bars = [
-  { label: 'Run Omarchy', value: summary.omarchyWorks, color: 'bg-emerald-400', note: `boot the ${status.omarchy.channel.toUpperCase()} image with nothing picked by hand` },
-  { label: 'Device tree in Linux', value: summary.deviceTree, color: 'bg-sky-400', note: 'released or queued in linux-next' },
-  { label: 'Hardware IDs in systemd', value: summary.ids, color: 'bg-violet-400', note: 'so an image picks the device tree by itself' },
-  { label: `Firmware without the laptop's Windows`, value: summary.firmware, color: 'bg-amber-400', note: 'in linux-firmware or a known vendor download' },
-  { label: 'ACPI dump collected', value: summary.acpi, color: 'bg-rose-400', note: 'the starting point for a device tree' },
+// What owners saw first, then what the pieces predict
+const outcomeBar = [
+  { label: 'Works', value: summary.works, color: 'bg-emerald-400', title: 'An owner confirmed the current Omarchy release runs on it.' },
+  { label: 'Should work', value: summary.should, color: 'bg-amber-400', title: 'Every piece is in place, but no owner has confirmed it yet.' },
+  { label: 'Problems', value: summary.problems, color: 'bg-rose-400', title: 'An owner reported it failing.' },
+  { label: 'Not yet', value: summary.notYet, color: 'bg-zinc-600', title: 'Pieces are still missing.' },
 ];
-
-const cells: Record<string, (model: Model) => Cell> = { Omarchy: omarchyCell, 'Device tree': deviceTreeCell, 'Hardware IDs': idsCell, Firmware: firmwareCell, 'ACPI dump': acpiCell };
-// One bar for NVIDIA: booted by someone, same platform as one that boots, nobody tried yet
 const nvidiaBar = [
-  { label: 'Boots', value: summary.nvidiaWorks, color: 'bg-emerald-400' },
-  { label: 'Should boot', value: summary.nvidiaExpected, color: 'bg-amber-400' },
-  { label: 'Not tested', value: summary.nvidia - summary.nvidiaWorks - summary.nvidiaExpected, color: 'bg-zinc-600' },
+  { label: 'Works', value: summary.nvidiaWorks, color: 'bg-emerald-400', title: 'Someone ran Omarchy on it.' },
+  { label: 'Should work', value: summary.nvidiaExpected, color: 'bg-amber-400', title: 'Same platform as a model that works.' },
+  { label: 'Not tested', value: summary.nvidia - summary.nvidiaWorks - summary.nvidiaExpected, color: 'bg-zinc-600', title: 'Nobody has tried it yet.' },
 ];
-const columns = LEGEND.map((group) => ({ name: group.column, question: group.question, cell: cells[group.column] }));
+const upstreamBars = [
+  { label: 'Device tree in Linux', value: summary.deviceTree, total: summary.models, color: 'bg-sky-400', note: 'released or queued in linux-next' },
+  { label: 'Hardware IDs in systemd', value: summary.ids, total: summary.models, color: 'bg-violet-400', note: 'so an image picks the device tree by itself' },
+  { label: `Firmware without the laptop's Windows`, value: summary.firmware, total: summary.models, color: 'bg-amber-400', note: 'in linux-firmware or a known vendor download' },
+  { label: 'ACPI dump collected', value: summary.acpi, total: summary.acpiNeeded, color: 'bg-rose-400', note: 'for the models still without a device tree' },
+];
+
+const snapdragonColumns = LEGEND.map((group, i) => ({ id: ['omarchy', 'device-tree', 'ids', 'firmware', 'acpi'][i], header: group.column, question: group.question }));
+const nvidiaColumns = [
+  { id: 'omarchy', header: 'Omarchy', question: NVIDIA_LEGEND[0].question },
+  { id: 'linux', header: 'Linux', question: NVIDIA_LEGEND[1].question },
+  { id: 'notes', header: 'Notes', question: 'What else to know' },
+];
 const legendExtra = [
   { label: 'Green', tone: 'good' as const, meaning: 'Done.' },
   { label: 'Amber', tone: 'close' as const, meaning: 'On its way, or partly there.' },
-  { label: 'Red', tone: 'wanted' as const, meaning: 'Missing, and where help counts most.' },
+  { label: 'Red', tone: 'wanted' as const, meaning: 'Missing or failing, and where help counts most.' },
   { label: 'Grey', tone: 'muted' as const, meaning: 'Works another way today, or not needed.' },
   ANNOUNCED,
 ];
 
 const collected = new Date(status.collected).toISOString().slice(0, 10);
-const PILL = 'inline-flex items-center whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset';
-const BUTTON = 'rounded-md px-2.5 py-1 text-sm text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 aria-pressed:bg-zinc-200 aria-pressed:text-zinc-900 aria-pressed:ring-zinc-200';
 const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
 const REPO = 'https://github.com/birkskyum/arewearmyet';
 const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100';
-const year = (released: string | number | null) => (released ? String(released).slice(0, 4) : '');
+const HEADLINE = 'text-2xl font-semibold text-zinc-50';
 ---
 
 <Layout title="Are we ARM yet?" description="Omarchy on ARM PCs, model by model: which laptops run it today, and what each one still needs upstream.">
@@ -62,43 +75,38 @@ const year = (released: string | number | null) => (released ? String(released).
     </header>
 
     <section class="mt-10 rounded-xl bg-zinc-900 p-6 ring-1 ring-zinc-800">
-      <p class="text-2xl font-semibold text-zinc-50">
-        {summary.omarchyWorks} of {summary.models} Snapdragon X and X2 models run Omarchy
+      <p class={HEADLINE}>
+        {summary.works} of {summary.models} <a href="#snapdragon" class="hover:underline hover:decoration-zinc-500 hover:underline-offset-4">Snapdragon X and X2 models</a> run Omarchy
       </p>
       <p class="mt-1 text-sm text-zinc-400">
-        Omarchy {status.omarchy.channel.toUpperCase()} ships linux-omarchy {status.omarchy.kernel} and systemd {status.omarchy.systemd}.
-        {summary.omarchyManual > 0 && <> {summary.omarchyManual} more {summary.omarchyManual === 1 ? 'has' : 'have'} a device tree that the image can't pick yet.</>}
+        Confirmed by an owner on Omarchy {channel}, which ships linux-omarchy {status.omarchy.kernel} and systemd {status.omarchy.systemd}. {summary.should} more should work, and {summary.problems} {summary.problems === 1 ? 'has' : 'have'} reported problems.
       </p>
-      <dl class="mt-6 space-y-4">
-        {bars.map((bar) => (
+      <div class="mt-6">
+        <SplitBar parts={outcomeBar} total={summary.models} />
+      </div>
+
+      <h3 class="mt-8 text-sm font-semibold text-zinc-200">What the models have upstream</h3>
+      <dl class="mt-3 space-y-4">
+        {upstreamBars.map((bar) => (
           <div>
             <div class="flex items-baseline justify-between gap-4 text-sm">
               <dt class="text-zinc-200">{bar.label} <span class="text-zinc-500">{bar.note}</span></dt>
-              <dd class="tabular-nums text-zinc-300">{bar.value} / {summary.models}</dd>
+              <dd class="tabular-nums text-zinc-300">{bar.value} / {bar.total}</dd>
             </div>
             <div class="mt-1.5 h-2 overflow-hidden rounded-full bg-zinc-800">
-              <div class={`h-full rounded-full ${bar.color}`} style={`width: ${(100 * bar.value) / Math.max(summary.models, 1)}%`}></div>
+              <div class={`h-full rounded-full ${bar.color}`} style={`width: ${(100 * bar.value) / Math.max(bar.total, 1)}%`}></div>
             </div>
           </div>
         ))}
       </dl>
+
       <div class="mt-8 border-t border-zinc-800 pt-6">
-        <p class="text-2xl font-semibold text-zinc-50">
+        <p class={HEADLINE}>
           {summary.nvidiaWorks} of {summary.nvidia} <a href="#nvidia" class="hover:underline hover:decoration-zinc-500 hover:underline-offset-4">NVIDIA N1x and GB10 machines</a> run Omarchy
         </p>
-        <p class="mt-1 text-sm text-zinc-400">They boot through ACPI, so what counts is whether someone has booted Omarchy on them.</p>
-        <div class="mt-6 flex items-baseline justify-between gap-4 text-sm">
-          <span class="flex flex-wrap gap-x-4 gap-y-1 text-zinc-200">
-            {nvidiaBar.map((part) => (
-              <span class="inline-flex items-center gap-1.5"><span class={`h-2 w-2 rounded-full ${part.color}`}></span>{part.label} <span class="text-zinc-500">{part.value}</span></span>
-            ))}
-          </span>
-          <span class="tabular-nums text-zinc-300">{summary.nvidiaWorks} / {summary.nvidia}</span>
-        </div>
-        <div class="mt-1.5 flex h-2 overflow-hidden rounded-full bg-zinc-800">
-          {nvidiaBar.map((part) => (
-            <div class={`h-full ${part.color}`} style={`width: ${(100 * part.value) / Math.max(summary.nvidia, 1)}%`} title={`${part.label}: ${part.value}`}></div>
-          ))}
+        <p class="mt-1 text-sm text-zinc-400">They boot through ACPI, so what counts is whether someone has run Omarchy on them.</p>
+        <div class="mt-6">
+          <SplitBar parts={nvidiaBar} total={summary.nvidia} />
         </div>
       </div>
     </section>
@@ -108,117 +116,30 @@ const year = (released: string | number | null) => (released ? String(released).
       <div class="mt-4">
         <Legend title="What the labels mean" groups={LEGEND} extra={legendExtra} />
       </div>
-      <div class="mt-4 flex flex-wrap items-center gap-2" id="filters">
-        <input id="search" type="search" placeholder="Search models" class="w-56 rounded-md bg-zinc-900 px-3 py-1.5 text-sm text-zinc-100 ring-1 ring-zinc-700 placeholder:text-zinc-500 focus:outline-none focus:ring-zinc-400" />
-        <span class="ml-2 text-sm text-zinc-500">Chip</span>
-        <button class={BUTTON} data-filter="generation" data-value="" aria-pressed="true">All</button>
-        <button class={BUTTON} data-filter="generation" data-value="x1" aria-pressed="false">X</button>
-        <button class={BUTTON} data-filter="generation" data-value="x2" aria-pressed="false">X2</button>
-        <button class={BUTTON} data-filter="generation" data-value="8cx" aria-pressed="false">8cx Gen 3</button>
-        <span class="ml-2 text-sm text-zinc-500">Omarchy</span>
-        <button class={BUTTON} data-filter="omarchy" data-value="" aria-pressed="true">All</button>
-        <button class={BUTTON} data-filter="omarchy" data-value="Boots" aria-pressed="false">Boots</button>
-        <button class={BUTTON} data-filter="omarchy" data-value="todo" aria-pressed="false">Not yet</button>
-        <select id="vendor" class="ml-2 rounded-md bg-zinc-900 px-2 py-1.5 text-sm text-zinc-200 ring-1 ring-zinc-700">
-          <option value="">All vendors</option>
-          {vendors.map((vendor) => <option value={vendor}>{vendor}</option>)}
-        </select>
+      <div class="mt-4">
+        <StatusTable
+          client:load
+          rows={rows}
+          columns={snapdragonColumns}
+          chips={[{ value: 'x1', label: 'X' }, { value: 'x2', label: 'X2' }, { value: '8cx', label: '8cx Gen 3' }]}
+          outcomes={[{ value: 'works', label: 'Works' }, { value: 'should', label: 'Should work' }, { value: 'problems', label: 'Problems' }, { value: 'notyet', label: 'Not yet' }]}
+          vendors={vendors}
+        />
       </div>
-
-      <div class="mt-4 overflow-x-auto rounded-xl ring-1 ring-zinc-800">
-        <table class="w-full text-left text-sm">
-          <thead class="bg-zinc-900 text-xs uppercase tracking-wide text-zinc-400">
-            <tr>
-              <th class="px-4 py-3 font-medium">Model</th>
-              {columns.map((column) => <th class="px-3 py-3 font-medium" title={column.question}>{column.name}</th>)}
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-zinc-800">
-            {models.map((model) => (
-              <tr
-                class="align-top hover:bg-zinc-900/60"
-                data-row
-                data-generation={model.generation}
-                data-vendor={model.vendor}
-                data-omarchy={omarchyCell(model).label}
-                data-search={[model.vendor, model.name, ...model.modelNumbers, ...model.chips, ...model.variants.map((v) => `${v.model ?? ''} ${v.chip ?? ''}`)].join(' ').toLowerCase()}
-              >
-                <td class="px-4 py-3">
-                  <ModelName model={model} />
-                  <div class="mt-0.5 text-xs text-zinc-500">
-                    {[GENERATION[model.generation], year(model.released), model.chips.join(', '), model.modelNumbers.slice(0, 3).join(', ')].filter(Boolean).join(' · ')}
-                  </div>
-                  {model.variants.length > 1 && (
-                    <ul class="mt-1.5 space-y-0.5 text-xs text-zinc-400">
-                      {model.variants.map((variant) => (
-                        <li>
-                          {[variant.model, variant.chip].filter(Boolean).join(' · ')}
-                          <span class={variant.omarchy === 'works' ? 'text-emerald-400' : variant.omarchy === 'manual' ? 'text-amber-400' : 'text-zinc-500'}>
-                            {' '}{variant.omarchy === 'works' ? 'boots' : variant.omarchy === 'manual' ? 'not picked' : 'not yet'}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {model.notes && <p class="mt-1.5 max-w-xs text-xs text-zinc-500">{model.notes}</p>}
-                </td>
-                {columns.map((column) => {
-                  const cell = column.cell(model);
-                  return (
-                    <td class="px-3 py-3">
-                      {cell.href ? (
-                        <a href={cell.href} title={`${column.name}: ${cell.title}`} class={`${PILL} ${TONE[cell.tone]} hover:brightness-125`}>{cell.label}</a>
-                      ) : (
-                        <span title={`${column.name}: ${cell.title}`} class={`${PILL} ${TONE[cell.tone]}`}>{cell.label}</span>
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p id="empty" hidden class="mt-4 text-sm text-zinc-500">No models match.</p>
     </section>
 
-    {status.nvidia.length > 0 && (
-      <section class="mt-12 scroll-mt-6" id="nvidia">
-        <h2 class="text-xl font-semibold text-zinc-50">NVIDIA N1x and GB10</h2>
-        <p class="mt-1 max-w-3xl text-sm text-zinc-400">
-          NVIDIA's ARM laptops and desktops boot through ACPI, so they need no device tree or hardware IDs. What counts here is whether someone has booted Omarchy on them.
-        </p>
-        <div class="mt-4">
-          <Legend title="What the labels mean" groups={NVIDIA_LEGEND} />
-        </div>
-        <div class="mt-4 overflow-x-auto rounded-xl ring-1 ring-zinc-800">
-          <table class="w-full text-left text-sm">
-            <thead class="bg-zinc-900 text-xs uppercase tracking-wide text-zinc-400">
-              <tr>
-                <th class="px-4 py-3 font-medium">Model</th>
-                <th class="px-3 py-3 font-medium" title={NVIDIA_LEGEND[0].question}>Omarchy</th>
-                <th class="px-3 py-3 font-medium" title={NVIDIA_LEGEND[1].question}>Linux</th>
-                <th class="px-3 py-3 font-medium">Notes</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-zinc-800">
-              {[...status.nvidia].sort((a, b) => a.generation.localeCompare(b.generation) || a.vendor.localeCompare(b.vendor) || a.name.localeCompare(b.name)).map((model) => (
-                <tr class="align-top hover:bg-zinc-900/60">
-                  <td class="px-4 py-3">
-                    <ModelName model={model} />
-                    <div class="mt-0.5 text-xs text-zinc-500">{[GENERATION[model.generation], year(model.released)].filter(Boolean).join(' · ')}</div>
-                  </td>
-                  {[nvidiaOmarchyCell(model), nvidiaLinuxCell(model)].map((cell, i) => (
-                    <td class="px-3 py-3"><span title={`${NVIDIA_LEGEND[i].column}: ${cell.title}`} class={`${PILL} ${TONE[cell.tone]}`}>{cell.label}</span></td>
-                  ))}
-                  <td class="px-3 py-3 text-xs text-zinc-400">{model.notes}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-    )}
+    <section class="mt-12 scroll-mt-6" id="nvidia">
+      <h2 class="text-xl font-semibold text-zinc-50">NVIDIA N1x and GB10</h2>
+      <p class="mt-1 max-w-3xl text-sm text-zinc-400">
+        NVIDIA's ARM laptops and desktops boot through ACPI, so they need no device tree or hardware IDs. What counts here is whether someone has run Omarchy on them.
+      </p>
+      <div class="mt-4">
+        <Legend title="What the labels mean" groups={NVIDIA_LEGEND} />
+      </div>
+      <div class="mt-4">
+        <StatusTable client:load rows={nvidia} columns={nvidiaColumns} />
+      </div>
+    </section>
 
     <p class="mt-8 scroll-mt-6 text-sm text-zinc-400" id="apple">
       Apple Silicon Macs run Omarchy on top of Asahi Linux. <a class={LINK} href="https://asahilinux.org/docs/platform/feature-support/overview/">Asahi's feature support pages</a> track which models and features work.
@@ -259,40 +180,3 @@ const year = (released: string | number | null) => (released ? String(released).
     </section>
   </main>
 </Layout>
-
-<script>
-  const rows = [...document.querySelectorAll<HTMLTableRowElement>('[data-row]')];
-  const search = document.querySelector<HTMLInputElement>('#search')!;
-  const vendor = document.querySelector<HTMLSelectElement>('#vendor')!;
-  const empty = document.querySelector<HTMLElement>('#empty')!;
-  const chosen: Record<string, string> = { generation: '', omarchy: '' };
-
-  function apply() {
-    const query = search.value.trim().toLowerCase();
-    let shown = 0;
-    for (const row of rows) {
-      const omarchy = row.dataset.omarchy!;
-      const visible =
-        (!chosen.generation || row.dataset.generation === chosen.generation) &&
-        (!chosen.omarchy || (chosen.omarchy === 'todo' ? omarchy !== 'Boots' : omarchy === chosen.omarchy)) &&
-        (!vendor.value || row.dataset.vendor === vendor.value) &&
-        (!query || row.dataset.search!.includes(query));
-      row.hidden = !visible;
-      if (visible) shown++;
-    }
-    empty.hidden = shown > 0;
-  }
-
-  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-filter]')) {
-    button.addEventListener('click', () => {
-      const filter = button.dataset.filter!;
-      chosen[filter] = button.dataset.value!;
-      for (const other of document.querySelectorAll<HTMLButtonElement>(`[data-filter="${filter}"]`)) {
-        other.setAttribute('aria-pressed', String(other === button));
-      }
-      apply();
-    });
-  }
-  search.addEventListener('input', apply);
-  vendor.addEventListener('change', apply);
-</script>

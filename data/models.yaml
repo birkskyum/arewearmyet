@@ -10,6 +10,8 @@
 #   firmware       linux-firmware folders with this model's files
 #   acpi           aarch64-laptops/build misc/ folders with its ACPI dump
 #   status         set when it was announced but isn't confirmed shipping
+#   reports        what owners saw on the current Omarchy release: state works
+#                  or problems, an optional variant, a short note and the month
 #   sources        where the model's details come from
 
 models:
@@ -177,6 +179,8 @@ models:
       - { model: "X Plus", chip: "X1P-42-100", compatible: "asus,vivobook-s15-x1p4" }
     firmware: ["qcom/x1e80100/ASUSTeK/vivobook-s15"]
     acpi: ["asus-vivobook-s-15", "asus-vivobook-s15-q5507", "asus-vivobook-s15-s5507"]
+    reports:
+      - { state: "problems", note: "Two owners report the screen going dark after the boot menu on the RC image.", checked: "2026-10" }
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s-15-s5507/techspec/
       - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1p42100-asus-vivobook-s15.dts
@@ -371,6 +375,8 @@ models:
       - { chip: "X1E-80-100", compatible: "dell,inspiron-14-plus-7441" }
     firmware: ["qcom/x1e80100/dell/inspiron-14-plus-7441"]
     acpi: ["dell-inspiron-14-7441-x1e-80-100"]
+    reports:
+      - { state: "problems", note: "The screen goes dark after install since the image moved to Omarchy's own kernel.", checked: "2026-10" }
     sources:
       - https://dl.dell.com/content/manual12164491-inspiron-14-plus-7441-owner-s-manual.pdf
       - https://github.com/torvalds/linux/commit/e7733b42111ca83a60745b9b9db411ae74811ce9
@@ -802,6 +808,8 @@ models:
       - { model: "14Q8X9", chip: "X1E-78-100", compatible: "lenovo,yoga-slim7x" }
     firmware: ["qcom/x1e80100/LENOVO/83ED"]
     acpi: ["lenovo-yoga-slim-7x"]
+    reports:
+      - { state: "works", note: "In daily use on Omarchy's kernel 7.2.8.", checked: "2026-10" }
     sources:
       - https://psref.lenovo.com/Product/Yoga/Yoga_Slim_7_14Q8X9
       - https://www.ithome.com/0/777/290.htm
@@ -909,6 +917,8 @@ models:
     variants:
       - { compatible: "microsoft,romulus13" }
     acpi: ["microsoft-surface-romulus13_and_15"]
+    reports:
+      - { state: "problems", note: "The screen stays dark after install; the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.", checked: "2026-10" }
     sources:
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
       - https://www.cdw.com/product/sur-lt7-13in-x1p-64-100-16-512-w11-g/7941189
@@ -924,6 +934,8 @@ models:
     variants:
       - { chip: "X1E-80-100", compatible: "microsoft,romulus15" }
     acpi: ["microsoft-surface-romulus13_and_15"]
+    reports:
+      - { state: "problems", note: "The screen stays dark after install; the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.", checked: "2026-10" }
     sources:
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
       - https://www.notebookcheck.net/Microsoft-Surface-Laptop-15-Snapdragon-X-Elite.1246035.0.html
@@ -952,6 +964,8 @@ models:
       - { model: "OLED", chip: "X1E-80-100", compatible: "microsoft,denali-oled" }
       - { model: "LCD", chip: "X1P-64-100", compatible: "microsoft,denali-lcd" }
     acpi: ["microsoft-surface-pro-11"]
+    reports:
+      - { state: "works", variant: "OLED", note: "OLED model: suspend, both cameras, pen and touch work on Omarchy's kernel.", checked: "2026-10" }
     sources:
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
       - https://www.notebookcheck.it/Microsoft-rilascia-il-nuovo-Surface-Pro-11-con-display-OLED-da-120-Hz-opzionale-e-chipset-Snapdragon-X-Plus-o-Snapdragon-X-Elite.839774.0.html

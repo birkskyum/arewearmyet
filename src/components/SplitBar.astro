@@ -1,0 +1,24 @@
+---
+// One bar split into outcomes, with a key above it; used for both chip families
+interface Props {
+  parts: { label: string; value: number; color: string; title: string }[];
+  total: number;
+}
+
+const { parts, total } = Astro.props;
+const done = parts[0].value;
+---
+
+<div class="flex items-baseline justify-between gap-4 text-sm">
+  <span class="flex flex-wrap gap-x-4 gap-y-1 text-zinc-200">
+    {parts.map((part) => (
+      <span class="inline-flex items-center gap-1.5" title={part.title}><span class={`h-2 w-2 rounded-full ${part.color}`}></span>{part.label} <span class="text-zinc-500">{part.value}</span></span>
+    ))}
+  </span>
+  <span class="tabular-nums text-zinc-300">{done} / {total}</span>
+</div>
+<div class="mt-1.5 flex h-2 overflow-hidden rounded-full bg-zinc-800">
+  {parts.map((part) => (
+    <div class={`h-full ${part.color}`} style={`width: ${(100 * part.value) / Math.max(total, 1)}%`} title={`${part.label}: ${part.value}`}></div>
+  ))}
+</div>

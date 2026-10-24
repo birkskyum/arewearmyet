@@ -1,29 +1,24 @@
 import status from '../data/status.json';
+import { TONE, type Tone } from './tones';
 
+export { TONE, type Tone };
 export type Model = (typeof status.models)[number];
 export type NvidiaModel = (typeof status.nvidia)[number];
-export type Tone = 'good' | 'close' | 'wanted' | 'muted' | 'info';
 
-export const TONE: Record<Tone, string> = {
-  good: 'bg-emerald-500/15 text-emerald-300 ring-emerald-500/30',
-  close: 'bg-amber-500/15 text-amber-300 ring-amber-500/30',
-  wanted: 'bg-rose-500/15 text-rose-300 ring-rose-500/30',
-  muted: 'bg-zinc-500/10 text-zinc-400 ring-zinc-500/20',
-  info: 'bg-sky-500/15 text-sky-300 ring-sky-500/30',
-};
-
-// A label as the legend shows it; cells reuse its text as their hover title
+// A label as the legend shows it; cells reuse its text as their hover title and sort by rank
 type State = { label: string; tone: Tone; meaning: string };
-export type Cell = State & { title: string; href?: string };
+export type Cell = State & { title: string; href?: string; rank: number };
 
 const kernel = status.omarchy.kernelBase.replace(/^v/, '');
 
 const STATES = {
   omarchy: {
-    works: { label: 'Boots', tone: 'good', meaning: `Omarchy's kernel has its device tree, and the install image picks it by itself.` },
+    works: { label: 'Works', tone: 'good', meaning: 'An owner confirmed that the current Omarchy release runs on it.' },
+    should: { label: 'Should work', tone: 'close', meaning: `Omarchy's kernel has its device tree and the install image picks it by itself, but no owner has confirmed it yet.` },
+    problems: { label: 'Problems', tone: 'wanted', meaning: 'An owner reported it failing on the current Omarchy release.' },
     manual: { label: 'Not picked', tone: 'close', meaning: `Omarchy's kernel has its device tree, but the install image can't tell it's this model, because systemd has no hardware IDs for it.` },
-    newer: { label: 'Newer kernel', tone: 'close', meaning: `Linux has its device tree, but Omarchy's kernel (${kernel}) doesn't yet. It boots once Omarchy moves to a newer kernel.` },
-    none: { label: 'No device tree', tone: 'wanted', meaning: 'Nobody has written a device tree for it yet, so Linux can\'t start on it.' },
+    newer: { label: 'Newer kernel', tone: 'close', meaning: `Linux has its device tree, but Omarchy's kernel (${kernel}) doesn't yet. It should work once Omarchy moves to a newer kernel.` },
+    none: { label: 'No device tree', tone: 'wanted', meaning: `Nobody has written a device tree for it yet, so Linux can't start on it.` },
   },
   deviceTree: {
     released: { label: 'Linux 6.x', tone: 'good', meaning: 'In Linux since that release.' },
@@ -47,10 +42,10 @@ const STATES = {
     wanted: { label: 'Wanted', tone: 'wanted', meaning: 'The first thing to send for a model without a device tree.' },
   },
   nvidiaOmarchy: {
-    works: { label: 'Boots', tone: 'good', meaning: 'Someone booted Omarchy on it.' },
-    expected: { label: 'Should boot', tone: 'close', meaning: `Same platform as a model that boots, but nobody has tried this one yet.` },
+    works: { label: 'Works', tone: 'good', meaning: 'Someone ran Omarchy on it.' },
+    expected: { label: 'Should work', tone: 'close', meaning: 'Same platform as a model that works, but nobody has tried this one yet.' },
+    problems: { label: 'Problems', tone: 'wanted', meaning: 'Someone tried it and hit problems.' },
     untested: { label: 'Not tested', tone: 'muted', meaning: 'Nobody has tried Omarchy on it yet.' },
-    problems: { label: 'Problems', tone: 'wanted', meaning: 'Someone booted it and hit problems.' },
   },
   nvidiaLinux: {
     omarchy: { label: `Omarchy's kernel`, tone: 'close', meaning: `Needs patches that Omarchy's kernel carries and Linux doesn't have yet.` },
@@ -61,66 +56,76 @@ const STATES = {
 
 export const ANNOUNCED = STATES.announced as State;
 
-export const LEGEND: { column: string; question: string; states: State[] }[] = [
-  { column: 'Omarchy', question: 'Does the Omarchy install image boot on it today?', states: Object.values(STATES.omarchy) as State[] },
+type Group = { column: string; question: string; states: State[] };
+
+export const LEGEND: Group[] = [
+  { column: 'Omarchy', question: 'Does the current Omarchy release run on it?', states: Object.values(STATES.omarchy) as State[] },
   { column: 'Device tree', question: 'The description of the hardware that Linux needs for each model.', states: Object.values(STATES.deviceTree) as State[] },
   { column: 'Hardware IDs', question: 'How an install image recognises the model and picks its device tree.', states: Object.values(STATES.ids) as State[] },
-  { column: 'Firmware', question: `Signed files for its audio, sensor and graphics chips. Every model needs them; the goal is getting them without the laptop's own Windows.`, states: Object.values(STATES.firmware) as State[] },
+  { column: 'Firmware', question: `Signed files for its audio, sensor and graphics chips. Booting doesn't need them, but without them there's no sound, battery status, USB-C display, sensors or graphics acceleration. The goal is getting them without the laptop's own Windows.`, states: Object.values(STATES.firmware) as State[] },
   { column: 'ACPI dump', question: `The laptop's own hardware tables, which a device tree is written from.`, states: Object.values(STATES.acpi) as State[] },
 ];
 
-export const NVIDIA_LEGEND: { column: string; question: string; states: State[] }[] = [
-  { column: 'Omarchy', question: 'Has someone booted Omarchy on it?', states: Object.values(STATES.nvidiaOmarchy) as State[] },
-  { column: 'Linux', question: 'Whether plain Linux runs it, or it needs Omarchy\'s kernel.', states: Object.values(STATES.nvidiaLinux) as State[] },
+export const NVIDIA_LEGEND: Group[] = [
+  { column: 'Omarchy', question: 'Has someone run Omarchy on it?', states: Object.values(STATES.nvidiaOmarchy) as State[] },
+  { column: 'Linux', question: `Whether plain Linux runs it, or it needs Omarchy's kernel.`, states: Object.values(STATES.nvidiaLinux) as State[] },
 ];
 
-const cell = (state: State, extra: { label?: string; title?: string; href?: string } = {}): Cell => ({ ...state, label: extra.label ?? state.label, title: extra.title ?? state.meaning, href: extra.href });
+// Ranks sort best first: a state's position in its group, or a release number within "done"
+const cell = (group: Record<string, State>, key: string, extra: { label?: string; title?: string; href?: string; rank?: number } = {}): Cell => {
+  const state = group[key];
+  return { ...state, label: extra.label ?? state.label, title: extra.title ?? state.meaning, href: extra.href, rank: extra.rank ?? 1000 + Object.keys(group).indexOf(key) };
+};
 const release = (tag: string) => tag.replace(/^v/, '');
+const releaseRank = (tag: string) => {
+  const [major, minor] = release(tag).split('.').map(Number);
+  return major * 100 + (minor || 0);
+};
 const hasUpstreamTree = (model: Model) => model.upstream.deviceTree === 'released' || model.upstream.deviceTree === 'next';
+const reportNotes = (reports: { note: string; variant?: string }[]) => reports.map((r) => (r.variant ? `${r.variant}: ${r.note}` : r.note)).join(' ');
 
 export function omarchyCell(model: Model): Cell {
-  if (model.omarchy === 'works') return cell(STATES.omarchy.works as State);
-  if (model.omarchy === 'manual') return cell(STATES.omarchy.manual as State);
-  if (hasUpstreamTree(model)) return cell(STATES.omarchy.newer as State);
-  return cell(STATES.omarchy.none as State);
+  const meaning = (STATES.omarchy[model.outcome as keyof typeof STATES.omarchy] as State).meaning;
+  const notes = model.outcome === 'works' || model.outcome === 'problems' ? reportNotes(model.reports) : '';
+  return cell(STATES.omarchy, model.outcome, { title: notes ? `${meaning} ${notes}` : meaning });
 }
 
 export function deviceTreeCell(model: Model): Cell {
   const { deviceTree, firstRelease, devicetreePosted } = model.upstream;
-  if (deviceTree === 'released') return cell(STATES.deviceTree.released as State, { label: `Linux ${release(firstRelease!)}`, title: `In Linux since ${release(firstRelease!)}.` });
-  if (deviceTree === 'next') return cell(STATES.deviceTree.next as State);
-  if (deviceTree === 'posted') return cell(STATES.deviceTree.posted as State, { href: devicetreePosted ?? undefined });
-  return cell(STATES.deviceTree.wanted as State);
+  if (deviceTree === 'released') return cell(STATES.deviceTree, 'released', { label: `Linux ${release(firstRelease!)}`, title: `In Linux since ${release(firstRelease!)}.`, rank: releaseRank(firstRelease!) });
+  if (deviceTree === 'posted') return cell(STATES.deviceTree, 'posted', { href: devicetreePosted ?? undefined });
+  return cell(STATES.deviceTree, deviceTree === 'next' ? 'next' : 'wanted');
 }
 
 export function idsCell(model: Model): Cell {
   if (model.upstream.ids === 'listed') {
     const first = model.variants.flatMap((variant) => variant.ids).filter((entry) => entry.matches).map((entry) => entry.firstRelease).filter(Boolean).sort()[0];
-    const label = first ? `systemd ${release(first)}` : 'systemd main';
-    return cell(STATES.ids.listed as State, { label, title: first ? `In systemd's list since ${release(first)}, so an install image recognises the model.` : `In systemd's development branch, coming in its next release.` });
+    return cell(STATES.ids, 'listed', {
+      label: first ? `systemd ${release(first)}` : 'systemd main',
+      title: first ? `In systemd's list since ${release(first)}, so an install image recognises the model.` : `In systemd's development branch, coming in its next release.`,
+      rank: first ? Number(release(first)) : 999,
+    });
   }
-  if (model.upstream.ids === 'mismatch') return cell(STATES.ids.mismatch as State);
-  return cell(STATES.ids.wanted as State);
+  return cell(STATES.ids, model.upstream.ids === 'mismatch' ? 'mismatch' : 'wanted');
 }
 
 export function firmwareCell(model: Model): Cell {
-  const state = STATES.firmware[model.upstream.firmware as keyof typeof STATES.firmware] as State;
+  const key = model.upstream.firmware;
   const audio = model.upstream.firmwareAudioOnly ? ' linux-firmware already has its audio setup file.' : '';
-  return cell(state, { title: state.meaning + audio, href: model.upstream.firmware === 'download' ? (model.upstream.firmwareDownload ?? undefined) : undefined });
+  return cell(STATES.firmware, key, { title: (STATES.firmware[key as keyof typeof STATES.firmware] as State).meaning + audio, href: key === 'download' ? (model.upstream.firmwareDownload ?? undefined) : undefined });
 }
 
 export function acpiCell(model: Model): Cell {
-  if (model.upstream.acpi === 'collected') return cell(STATES.acpi.collected as State, { href: model.upstream.acpiUrls[0] });
-  if (hasUpstreamTree(model)) return cell(STATES.acpi.notNeeded as State);
-  return cell(STATES.acpi.wanted as State);
+  if (model.upstream.acpi === 'collected') return cell(STATES.acpi, 'collected', { href: model.upstream.acpiUrls[0] });
+  return cell(STATES.acpi, hasUpstreamTree(model) ? 'notNeeded' : 'wanted');
 }
 
 export function nvidiaOmarchyCell(model: NvidiaModel): Cell {
-  return cell((STATES.nvidiaOmarchy[model.omarchy as keyof typeof STATES.nvidiaOmarchy] ?? STATES.nvidiaOmarchy.untested) as State);
+  return cell(STATES.nvidiaOmarchy, model.omarchy in STATES.nvidiaOmarchy ? model.omarchy : 'untested');
 }
 
 export function nvidiaLinuxCell(model: NvidiaModel): Cell {
-  return cell(STATES.nvidiaLinux[model.linux as keyof typeof STATES.nvidiaLinux] as State);
+  return cell(STATES.nvidiaLinux, model.linux);
 }
 
 export const GENERATION: Record<string, string> = { x1: 'Snapdragon X', x2: 'Snapdragon X2', '8cx': 'Snapdragon 8cx Gen 3', n1x: 'NVIDIA N1x', gb10: 'NVIDIA GB10' };

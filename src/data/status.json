@@ -30,12 +30,15 @@
     "nvidia": 17,
     "nvidiaWorks": 2,
     "nvidiaExpected": 7,
-    "omarchyWorks": 15,
-    "omarchyManual": 1,
+    "works": 2,
+    "should": 9,
+    "problems": 4,
+    "notYet": 68,
     "deviceTree": 22,
     "ids": 29,
     "firmware": 3,
-    "acpi": 29
+    "acpiNeeded": 61,
+    "acpi": 9
   },
   "models": [
     {
@@ -58,7 +61,8 @@
         "https://www.notebookcheck.net/Acer-Aspire-14-AI-A14-11M.1173609.0.html"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -73,9 +77,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -100,7 +106,8 @@
         "https://www.pcmag.com/reviews/acer-aspire-16-ai"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -115,9 +122,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -139,7 +148,8 @@
         "https://www.notebookcheck.net/New-lightweight-laptop-launches-with-14-inch-display-and-Qualcomm-Snapdragon-X-Plus-chipset.1413302.0.html"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -154,9 +164,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -182,7 +194,8 @@
         "https://github.com/systemd/systemd/blob/main/src/boot/hwids/aa64/x1p64100-acer-swift-sf14-11.json"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -200,7 +213,7 @@
           "model": "SF14-11",
           "chip": "X1P-64-100",
           "compatible": "acer,swift-sf14-11",
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
           "ids": [
             {
@@ -210,7 +223,9 @@
               "matches": true,
               "compatible": "acer,swift-sf14-11"
             }
-          ]
+          ],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -234,7 +249,8 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/acer-sfa14-11"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -254,7 +270,7 @@
           "model": "SFA14-11",
           "chip": "X1E-78-100",
           "compatible": "acer,swift-sfa14-11",
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
           "ids": [
             {
@@ -264,7 +280,9 @@
               "matches": true,
               "compatible": "acer,swift-sfa14-11"
             }
-          ]
+          ],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -288,7 +306,8 @@
         "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p42100-acer-swift-go14-01.txt"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -306,7 +325,7 @@
           "model": "SFG14-01",
           "chip": "X1P-42-100",
           "compatible": "acer,swift-go14-01",
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
           "ids": [
             {
@@ -316,7 +335,9 @@
               "matches": true,
               "compatible": "acer,swift-go14-01"
             }
-          ]
+          ],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -339,7 +360,8 @@
         "https://www.notebookcheck.net/Acer-Swift-Spin-14-AI-SFSP14-Q51T-Reviews-and-Specs.1393057.0.html"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -354,9 +376,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -379,7 +403,8 @@
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-proart-pz13"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -394,9 +419,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -419,7 +446,8 @@
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-aio-vm441qa"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -434,9 +462,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -458,7 +488,8 @@
         "https://www.asus.com/displays-desktops/all-in-one-pcs/asus-aio/asus-v400-aio-vm471qa/techspec/"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -473,9 +504,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -499,7 +532,8 @@
         "https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -514,9 +548,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -542,7 +578,8 @@
         "https://github.com/linux-msm/audioreach-topology/commit/744161325eba0fca72436f8d98576d9d4f7e87de"
       ],
       "notes": "linux-firmware has its audio topology, so a device tree exists somewhere out of tree.",
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -559,9 +596,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -589,7 +628,14 @@
         "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1e80100-asus-vivobook-s15.txt"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "problems",
+      "reports": [
+        {
+          "state": "problems",
+          "note": "Two owners report the screen going dark after the boot menu on the RC image.",
+          "checked": "2026-10"
+        }
+      ],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.11",
@@ -613,7 +659,7 @@
           "model": "X Elite",
           "chip": "X1E-78-100",
           "compatible": "asus,vivobook-s15",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1e80100-asus-vivobook-s15.dts",
             "firstRelease": "v6.11",
@@ -628,13 +674,21 @@
               "matches": true,
               "compatible": "asus,vivobook-s15"
             }
+          ],
+          "outcome": "problems",
+          "reports": [
+            {
+              "state": "problems",
+              "note": "Two owners report the screen going dark after the boot menu on the RC image.",
+              "checked": "2026-10"
+            }
           ]
         },
         {
           "model": "X Plus",
           "chip": "X1P-42-100",
           "compatible": "asus,vivobook-s15-x1p4",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1p42100-asus-vivobook-s15.dts",
             "firstRelease": "v7.1",
@@ -648,6 +702,14 @@
               "inMain": true,
               "matches": true,
               "compatible": "asus,vivobook-s15-x1p4"
+            }
+          ],
+          "outcome": "problems",
+          "reports": [
+            {
+              "state": "problems",
+              "note": "Two owners report the screen going dark after the boot menu on the RC image.",
+              "checked": "2026-10"
             }
           ]
         }
@@ -672,7 +734,8 @@
         "https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -687,9 +750,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -711,7 +776,8 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s14-s5408-qualcomm/techspec/"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -726,9 +792,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -750,7 +818,8 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s14-flip-tp5408-qualcomm/techspec/"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -765,9 +834,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -790,7 +861,8 @@
         "https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -805,9 +877,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -829,7 +903,8 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s5608-qualcomm/techspec/"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -844,9 +919,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -868,7 +945,8 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-flip-tp5608-qualcomm/techspec/"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -883,9 +961,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -908,7 +988,8 @@
         "https://www.windowscentral.com/hardware/laptops/asus-zenbook-14-snapdragon-x-2026-review"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -925,9 +1006,11 @@
         {
           "model": "UX3480QA",
           "chip": "X1-26-100",
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -954,7 +1037,8 @@
         "https://github.com/systemd/systemd/blob/main/src/boot/hwids/aa64/x1p42100-asus-zenbook-a14.json"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "should",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.17",
@@ -976,7 +1060,7 @@
           "model": "UX3407RA",
           "chip": "X1E-78-100",
           "compatible": "asus,zenbook-a14-ux3407ra",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1e80100-asus-zenbook-a14.dts",
             "firstRelease": "v6.17",
@@ -991,13 +1075,15 @@
               "matches": true,
               "compatible": "asus,zenbook-a14-ux3407ra"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         },
         {
           "model": "UX3407QA OLED",
           "chip": "X1P-42-100",
           "compatible": "asus,zenbook-a14-ux3407qa-oled",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1p42100-asus-zenbook-a14.dts",
             "firstRelease": "v6.17",
@@ -1012,13 +1098,15 @@
               "matches": true,
               "compatible": "asus,zenbook-a14-ux3407qa-oled"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         },
         {
           "model": "UX3407QA LCD",
           "chip": "X1P-42-100",
           "compatible": "asus,zenbook-a14-ux3407qa-lcd",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1p42100-asus-zenbook-a14-lcd.dts",
             "firstRelease": "v6.19",
@@ -1033,7 +1121,9 @@
               "matches": true,
               "compatible": "asus,zenbook-a14-ux3407qa-lcd"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         }
       ]
     },
@@ -1058,7 +1148,8 @@
         "https://videocardz.com/newz/asus-launches-first-snapdragon-x2-elite-mini-pc-ascent-qn10-costs-1350"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -1073,9 +1164,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -1098,7 +1191,8 @@
         "https://www.notebookcheck.net/Powerful-creator-tablet-with-Snapdragon-X2-Elite-Asus-ProArt-PZ14-Review.1359622.0.html"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -1113,9 +1207,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -1138,7 +1234,8 @@
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-vivobook-s16"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -1153,9 +1250,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -1179,7 +1278,8 @@
         "https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a14-ux3407na.dts"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "newer",
+      "reports": [],
       "upstream": {
         "deviceTree": "next",
         "firstRelease": null,
@@ -1198,7 +1298,7 @@
         {
           "model": "UX3407NA",
           "compatible": "asus,zenbook-a14-ux3407na",
-          "omarchy": "missing",
+          "computed": "newer",
           "deviceTree": {
             "file": "glymur-asus-zenbook-a14-ux3407na.dts",
             "firstRelease": null,
@@ -1213,7 +1313,9 @@
               "matches": true,
               "compatible": "asus,zenbook-a14-ux3407na"
             }
-          ]
+          ],
+          "outcome": "newer",
+          "reports": []
         }
       ]
     },
@@ -1238,7 +1340,8 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a16-ux3607oa.dts"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "newer",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v7.3",
@@ -1259,7 +1362,7 @@
         {
           "model": "UX3607OA",
           "compatible": "asus,zenbook-a16-ux3607oa",
-          "omarchy": "missing",
+          "computed": "newer",
           "deviceTree": {
             "file": "glymur-asus-zenbook-a16-ux3607oa.dts",
             "firstRelease": "v7.3",
@@ -1274,7 +1377,9 @@
               "matches": true,
               "compatible": "asus,zenbook-a16-ux3607oa"
             }
-          ]
+          ],
+          "outcome": "newer",
+          "reports": []
         }
       ]
     },
@@ -1301,7 +1406,8 @@
         "https://dl.dell.com/content/manual20917790-inspiron-14-5441-owner-s-manual.pdf"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -1319,9 +1425,11 @@
       "variants": [
         {
           "chip": "X1P-42-100",
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -1347,7 +1455,14 @@
         "https://github.com/torvalds/linux/commit/e7733b42111ca83a60745b9b9db411ae74811ce9"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "problems",
+      "reports": [
+        {
+          "state": "problems",
+          "note": "The screen goes dark after install since the image moved to Omarchy's own kernel.",
+          "checked": "2026-10"
+        }
+      ],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.18",
@@ -1368,7 +1483,7 @@
         {
           "chip": "X1E-80-100",
           "compatible": "dell,inspiron-14-plus-7441",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1e80100-dell-inspiron-14-plus-7441.dts",
             "firstRelease": "v6.18",
@@ -1382,6 +1497,14 @@
               "inMain": true,
               "matches": true,
               "compatible": "dell,inspiron-14-plus-7441"
+            }
+          ],
+          "outcome": "problems",
+          "reports": [
+            {
+              "state": "problems",
+              "note": "The screen goes dark after install since the image moved to Omarchy's own kernel.",
+              "checked": "2026-10"
             }
           ]
         }
@@ -1409,7 +1532,8 @@
         "https://www.notebookcheck.net/Dell-Latitude-5455-arrives-later-this-month-in-Snapdragon-X-Plus-X1P-64-100-and-X1P-42-100-options.883656.0.html"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -1428,7 +1552,7 @@
         {
           "chip": "X1P-64-100",
           "compatible": "dell,latitude-5455",
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
           "ids": [
             {
@@ -1438,7 +1562,9 @@
               "matches": true,
               "compatible": "dell,latitude-5455"
             }
-          ]
+          ],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -1464,7 +1590,8 @@
         "https://dl.dell.com/content/manual6242485-latitude-7455-owner-s-manual.pdf"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "should",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.18",
@@ -1485,7 +1612,7 @@
         {
           "chip": "X1E-80-100",
           "compatible": "dell,latitude-7455",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1e80100-dell-latitude-7455.dts",
             "firstRelease": "v6.18",
@@ -1500,7 +1627,9 @@
               "matches": true,
               "compatible": "dell,latitude-7455"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         }
       ]
     },
@@ -1526,7 +1655,8 @@
         "https://www.notebookcheck.net/Dell-XPS-13-9345-Snapdragon-X-Elite-review-Undercutting-the-Intel-Core-Ultra-7.869106.0.html"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "should",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.13",
@@ -1547,7 +1677,7 @@
         {
           "chip": "X1E-80-100",
           "compatible": "dell,xps13-9345",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1e80100-dell-xps13-9345.dts",
             "firstRelease": "v6.13",
@@ -1562,7 +1692,9 @@
               "matches": true,
               "compatible": "dell,xps13-9345"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         }
       ]
     },
@@ -1587,7 +1719,8 @@
         "https://kakaku.com/item/K0001724657/"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -1602,9 +1735,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -1630,7 +1765,8 @@
         "https://pc.watch.impress.co.jp/docs/column/ubiq/2077242.html"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -1645,9 +1781,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -1671,7 +1809,8 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1e80100-honor-magicbook-art-14.dts"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "newer",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v7.3",
@@ -1690,7 +1829,7 @@
         {
           "chip": "X1E-80-100",
           "compatible": "honor,magicbook-art-14-snapdragon",
-          "omarchy": "missing",
+          "computed": "newer",
           "deviceTree": {
             "file": "x1e80100-honor-magicbook-art-14.dts",
             "firstRelease": "v7.3",
@@ -1705,7 +1844,9 @@
               "matches": true,
               "compatible": "honor,magicbook-art-14-snapdragon"
             }
-          ]
+          ],
+          "outcome": "newer",
+          "reports": []
         }
       ]
     },
@@ -1732,7 +1873,8 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/hp-elitebook-6-g1q"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -1751,7 +1893,7 @@
         {
           "chip": "X1P-42-100",
           "compatible": "hp,elitebook-6-g1q",
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
           "ids": [
             {
@@ -1761,7 +1903,9 @@
               "matches": true,
               "compatible": "hp,elitebook-6-g1q"
             }
-          ]
+          ],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -1787,7 +1931,8 @@
         "https://shop.teqex.co.uk/hp-elitebook-ultra-g1q8-14-inch-notebook-ai-pc-x1p-42-100-laptop-35-6-cm-14-touchscreen-2-2k-windows-11-pro-a37cket-abu.html"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "should",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.16",
@@ -1806,7 +1951,7 @@
         {
           "chip": "X1E-78-100",
           "compatible": "hp,elitebook-ultra-g1q",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1e80100-hp-elitebook-ultra-g1q.dts",
             "firstRelease": "v6.16",
@@ -1821,7 +1966,9 @@
               "matches": true,
               "compatible": "hp,elitebook-ultra-g1q"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         }
       ]
     },
@@ -1844,7 +1991,8 @@
         "https://www.energystar.gov/productfinder/product/certified-computers/details/4520692"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -1859,9 +2007,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -1884,7 +2034,8 @@
         "https://www.notebookcheck.net/Efficient-16-GB-RAM-laptop-for-less-than-700-HP-OmniBook-3-16-review.1365529.0.html"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -1899,9 +2050,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -1924,7 +2077,8 @@
         "https://www.energystar.gov/productfinder/product/certified-computers/details/4688594"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -1939,9 +2093,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -1967,7 +2123,8 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/hp-omnibook-5-14-he0xxx"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -1984,9 +2141,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -2012,7 +2171,8 @@
         "https://www.thurrott.com/mobile/copilot-pc/328237/hp-omnibook-5-16-review-its-a-snapdragon-miracle"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2027,9 +2187,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -2059,7 +2221,8 @@
         "https://github.com/torvalds/linux/commit/f8f7cc59dcd234f0dcc4964ff2188a7a2ae09fd6"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "should",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.14",
@@ -2081,7 +2244,7 @@
           "model": "14-fe0",
           "chip": "X1E-78-100",
           "compatible": "hp,omnibook-x14",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1e80100-hp-omnibook-x14.dts",
             "firstRelease": "v6.14",
@@ -2096,13 +2259,15 @@
               "matches": true,
               "compatible": "hp,omnibook-x14"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         },
         {
           "model": "14-fe1",
           "chip": "X1P-42-100",
           "compatible": "hp,omnibook-x14-fe1",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1p42100-hp-omnibook-x14.dts",
             "firstRelease": "v6.18",
@@ -2117,7 +2282,9 @@
               "matches": true,
               "compatible": "hp,omnibook-x14-fe1"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         }
       ]
     },
@@ -2141,7 +2308,8 @@
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-probook-4-g1q"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2156,9 +2324,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -2182,7 +2352,8 @@
         "https://shop.avoira.com/hp-elitebook-6-g2q-14-next-gen-ai-copilot-pc-snapdragon-x2p-64-100-laptop-35-6-cm-14-wuxga-16-gb-lpddr5x-sdram-512-gb-ssd-wi-fi-7-802-11be-windows-11-pro-silver-dq0b5et-abu.html"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2197,9 +2368,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -2228,7 +2401,8 @@
         "https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/glymur-hp-elitebook-x-g2q.dts"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "newer",
+      "reports": [],
       "upstream": {
         "deviceTree": "next",
         "firstRelease": null,
@@ -2244,7 +2418,7 @@
       "variants": [
         {
           "compatible": "hp,elitebook-x-g2q",
-          "omarchy": "missing",
+          "computed": "newer",
           "deviceTree": {
             "file": "glymur-hp-elitebook-x-g2q.dts",
             "firstRelease": null,
@@ -2259,7 +2433,9 @@
               "matches": true,
               "compatible": "hp,elitebook-x-g2q"
             }
-          ]
+          ],
+          "outcome": "newer",
+          "reports": []
         }
       ]
     },
@@ -2282,7 +2458,8 @@
         "https://9to5google.com/2026/01/05/hp-unveils-its-new-snapdragon-x2-intel-powered-laptops-and-some-chromebooks-too/"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2297,9 +2474,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -2321,7 +2500,8 @@
         "https://www.notebookcheck.net/HP-releases-new-16-inch-laptop-with-Snapdragon-X2-Plus-and-over-30-hours-battery-life.1414570.0.html"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2336,9 +2516,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -2364,7 +2546,8 @@
         "https://www.tomshardware.com/laptops/hp-omnibook-ultra-14-snapdragon-x2-elite-2026-review"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2379,9 +2562,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -2408,7 +2593,8 @@
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-omnibook-x"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2423,9 +2609,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -2451,7 +2639,8 @@
         "https://www.notebookcheck.net/HP-OmniBook-X-16-with-Snapdragon-X2-Elite-24-GB-RAM-OLED-drops-below-900.1356231.0.html"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2466,9 +2655,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -2494,7 +2685,8 @@
         "https://www.digitaltrends.com/computing/humain-horizon-ultra-ai-pc-unveiled-with-snapdragon-x2-elite-and-on-device-ai/"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2509,9 +2701,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -2537,7 +2731,8 @@
         "https://www.windowscentral.com/hardware/lenovo/lenovo-ideacentre-mini-x-review"
       ],
       "notes": null,
-      "omarchy": "manual",
+      "outcome": "manual",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v7.1",
@@ -2559,20 +2754,22 @@
           "model": "X Elite",
           "chip": "X1E-78-100",
           "compatible": "lenovo,ideacentre-mini-01q8x10",
-          "omarchy": "manual",
+          "computed": "manual",
           "deviceTree": {
             "file": "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
             "firstRelease": "v7.1",
             "inNext": true,
             "inOmarchy": true
           },
-          "ids": []
+          "ids": [],
+          "outcome": "manual",
+          "reports": []
         },
         {
           "model": "X Plus",
           "chip": "X1P-42-100",
           "compatible": "lenovo,purwa-ideacentre-mini-01q8x10",
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
           "ids": [
             {
@@ -2582,7 +2779,9 @@
               "matches": true,
               "compatible": "lenovo,purwa-ideacentre-mini-01q8x10"
             }
-          ]
+          ],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -2607,7 +2806,8 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-ideapad-5-2in1-83GH-14Q8X9"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2626,7 +2826,7 @@
         {
           "chip": "X1P-42-100",
           "compatible": "lenovo,ideapad-5-2in1",
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
           "ids": [
             {
@@ -2636,7 +2836,9 @@
               "matches": true,
               "compatible": "lenovo,ideapad-5-2in1"
             }
-          ]
+          ],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -2661,7 +2863,8 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-ideapad-slim3x-15q8x10-WCN7850"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2680,7 +2883,7 @@
         {
           "chip": "X1-26-100",
           "compatible": "lenovo,ideapad-slim3",
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
           "ids": [
             {
@@ -2690,7 +2893,9 @@
               "matches": true,
               "compatible": "lenovo,ideapad-slim3"
             }
-          ]
+          ],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -2716,7 +2921,8 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-xiaoxin-14-q8x9"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2737,7 +2943,7 @@
           "model": "OLED",
           "chip": "X1P-42-100",
           "compatible": "lenovo,ideapad-slim5x-oled",
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
           "ids": [
             {
@@ -2747,7 +2953,9 @@
               "matches": true,
               "compatible": "lenovo,ideapad-slim5x-oled"
             }
-          ]
+          ],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -2770,7 +2978,8 @@
         "https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Vibe_14Q8X12"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2785,9 +2994,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -2811,7 +3022,8 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "should",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.18",
@@ -2830,7 +3042,7 @@
         {
           "chip": "X1P-64-100",
           "compatible": "lenovo,thinkbook-16",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1p42100-lenovo-thinkbook-16.dts",
             "firstRelease": "v6.18",
@@ -2845,7 +3057,9 @@
               "matches": true,
               "compatible": "lenovo,thinkbook-16"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         }
       ]
     },
@@ -2870,7 +3084,8 @@
         "https://www.xda-developers.com/review-lenovo-thinkcenter-neo-50q-snapdragon/"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2885,9 +3100,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -2912,7 +3129,8 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "should",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.12",
@@ -2935,7 +3153,7 @@
           "model": "LCD",
           "chip": "X1E-78-100",
           "compatible": "lenovo,thinkpad-t14s-lcd",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1e78100-lenovo-thinkpad-t14s.dts",
             "firstRelease": "v6.12",
@@ -2957,13 +3175,15 @@
               "matches": true,
               "compatible": "lenovo,thinkpad-t14s-lcd"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         },
         {
           "model": "OLED",
           "chip": "X1E-78-100",
           "compatible": "lenovo,thinkpad-t14s-oled",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1e78100-lenovo-thinkpad-t14s-oled.dts",
             "firstRelease": "v6.16",
@@ -2978,7 +3198,9 @@
               "matches": true,
               "compatible": "lenovo,thinkpad-t14s-oled"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         }
       ]
     },
@@ -3004,7 +3226,14 @@
         "https://www.ithome.com/0/815/508.htm"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "works",
+      "reports": [
+        {
+          "state": "works",
+          "note": "In daily use on Omarchy's kernel 7.2.8.",
+          "checked": "2026-10"
+        }
+      ],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.11",
@@ -3026,7 +3255,7 @@
           "model": "14Q8X9",
           "chip": "X1E-78-100",
           "compatible": "lenovo,yoga-slim7x",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1e80100-lenovo-yoga-slim7x.dts",
             "firstRelease": "v6.11",
@@ -3040,6 +3269,14 @@
               "inMain": true,
               "matches": true,
               "compatible": "lenovo,yoga-slim7x"
+            }
+          ],
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "In daily use on Omarchy's kernel 7.2.8.",
+              "checked": "2026-10"
             }
           ]
         }
@@ -3065,7 +3302,8 @@
         "https://www.notebookcheck.net/Lenovo-releases-new-14-inch-laptop-globally-with-Snapdragon-X2-and-over-33-hours-battery-life.1360398.0.html"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -3080,9 +3318,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -3106,7 +3346,8 @@
         "https://www.notebookcheck.net/Lenovo-IdeaPad-Slim-5-13Q8Y11.1311036.0.html"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -3121,9 +3362,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -3147,7 +3390,8 @@
         "https://www.pcmag.com/reviews/lenovo-ideapad-slim-5x-gen-11"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -3162,9 +3406,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -3186,7 +3432,8 @@
         "https://psref.lenovo.com/Product/ThinkBook/ThinkBook_14_G9_Q8Y"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -3201,9 +3448,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -3229,7 +3478,8 @@
         "https://www.notebookcheck.net/Lenovo-releases-new-14-inch-ThinkPad-with-Snapdragon-X2-Elite-and-over-27-hours-battery-life.1345695.0.html"
       ],
       "notes": "linux-firmware has its audio topology, so a device tree exists somewhere out of tree.",
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -3246,9 +3496,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -3275,7 +3527,8 @@
         "https://www.xda-developers.com/lenovo-yoga-slim-7x-gen-11-review/"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "newer",
+      "reports": [],
       "upstream": {
         "deviceTree": "next",
         "firstRelease": null,
@@ -3294,7 +3547,7 @@
         {
           "model": "14Q8Y11",
           "compatible": "lenovo,yoga-slim7x-gen11",
-          "omarchy": "missing",
+          "computed": "newer",
           "deviceTree": {
             "file": "glymur-lenovo-yoga-slim7x.dts",
             "firstRelease": null,
@@ -3309,7 +3562,9 @@
               "matches": true,
               "compatible": "lenovo,yoga-slim7x-gen11"
             }
-          ]
+          ],
+          "outcome": "newer",
+          "reports": []
         }
       ]
     },
@@ -3336,7 +3591,8 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1e80100-medion-sprchrgd-14-s1.dts"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "should",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v7.0",
@@ -3357,7 +3613,7 @@
           "model": "S1 Elite",
           "chip": "X1E-78-100",
           "compatible": "medion,sprchrgd14s1",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1e80100-medion-sprchrgd-14-s1.dts",
             "firstRelease": "v7.0",
@@ -3372,7 +3628,9 @@
               "matches": true,
               "compatible": "medion,sprchrgd14s1"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         }
       ]
     },
@@ -3397,7 +3655,14 @@
         "https://galaxus.it/en/s1/product/microsoft-surface-laptop-copilot-pc-7-edition-1380-snapdragon-x-elite-x1e-80-100-16-gb-1000-gb-de-no-45967365"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "problems",
+      "reports": [
+        {
+          "state": "problems",
+          "note": "The screen stays dark after install; the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.",
+          "checked": "2026-10"
+        }
+      ],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.12",
@@ -3415,7 +3680,7 @@
       "variants": [
         {
           "compatible": "microsoft,romulus13",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1e80100-microsoft-romulus13.dts",
             "firstRelease": "v6.12",
@@ -3429,6 +3694,14 @@
               "inMain": true,
               "matches": true,
               "compatible": "microsoft,romulus13"
+            }
+          ],
+          "outcome": "problems",
+          "reports": [
+            {
+              "state": "problems",
+              "note": "The screen stays dark after install; the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.",
+              "checked": "2026-10"
             }
           ]
         }
@@ -3454,7 +3727,14 @@
         "https://galaxus.it/en/s1/product/microsoft-surface-laptop-copilot-pc-7-edition-15-snapdragon-x-elite-x1e-80-100-16-gb-256-gb-de-noteb-45967360"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "problems",
+      "reports": [
+        {
+          "state": "problems",
+          "note": "The screen stays dark after install; the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.",
+          "checked": "2026-10"
+        }
+      ],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.12",
@@ -3473,7 +3753,7 @@
         {
           "chip": "X1E-80-100",
           "compatible": "microsoft,romulus15",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1e80100-microsoft-romulus15.dts",
             "firstRelease": "v6.12",
@@ -3487,6 +3767,14 @@
               "inMain": true,
               "matches": true,
               "compatible": "microsoft,romulus15"
+            }
+          ],
+          "outcome": "problems",
+          "reports": [
+            {
+              "state": "problems",
+              "note": "The screen stays dark after install; the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.",
+              "checked": "2026-10"
             }
           ]
         }
@@ -3511,7 +3799,8 @@
         "https://learn.microsoft.com/en-us/surface/surface-system-sku-reference"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -3526,9 +3815,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -3556,7 +3847,15 @@
         "https://www.energystar.gov/productfinder/product/certified-computers/details/4015656/export/pdf"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "works",
+      "reports": [
+        {
+          "state": "works",
+          "variant": "OLED",
+          "note": "OLED model: suspend, both cameras, pen and touch work on Omarchy's kernel.",
+          "checked": "2026-10"
+        }
+      ],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v7.0",
@@ -3576,7 +3875,7 @@
           "model": "OLED",
           "chip": "X1E-80-100",
           "compatible": "microsoft,denali-oled",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1e80100-microsoft-denali-oled.dts",
             "firstRelease": "v7.0",
@@ -3591,20 +3890,31 @@
               "matches": true,
               "compatible": "microsoft,denali-oled"
             }
+          ],
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "variant": "OLED",
+              "note": "OLED model: suspend, both cameras, pen and touch work on Omarchy's kernel.",
+              "checked": "2026-10"
+            }
           ]
         },
         {
           "model": "LCD",
           "chip": "X1P-64-100",
           "compatible": "microsoft,denali-lcd",
-          "omarchy": "manual",
+          "computed": "manual",
           "deviceTree": {
             "file": "x1p64100-microsoft-denali.dts",
             "firstRelease": "v7.0",
             "inNext": true,
             "inOmarchy": true
           },
-          "ids": []
+          "ids": [],
+          "outcome": "manual",
+          "reports": []
         }
       ]
     },
@@ -3629,7 +3939,8 @@
         "https://learn.microsoft.com/en-us/surface/surface-system-sku-reference"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "newer",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v7.3",
@@ -3657,13 +3968,15 @@
               "compatible": "microsoft,sp12"
             }
           ],
-          "omarchy": "missing",
+          "computed": "newer",
           "deviceTree": {
             "file": "x1p42100-microsoft-sp12in.dts",
             "firstRelease": "v7.3",
             "inNext": true,
             "inOmarchy": false
-          }
+          },
+          "outcome": "newer",
+          "reports": []
         }
       ]
     },
@@ -3687,7 +4000,8 @@
         "https://www.abt.com/Microsoft-Surface-Laptop-13-inch-Snapdragon-X2-Plus-6-core-16GB-RAM-256GB-SSD-Windows-11-2nd-Edition-in-Black-EP285663/p/249297.html"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -3702,9 +4016,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -3730,7 +4046,8 @@
         "https://www.cdw.com/product/microsoft-surface-laptop-for-business-8th-edition-copilot-pc-13.8/9186835"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -3745,9 +4062,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -3772,7 +4091,8 @@
         "https://www.abt.com/Microsoft-Surface-Laptop-15-inch-Snapdragon-X2-Elite-12-core-32GB-RAM-512GB-SSD-Windows-11-8th-Edition-in-Platinum-EP260726/p/247633.html"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -3787,9 +4107,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -3813,7 +4135,8 @@
         "https://learn.microsoft.com/en-us/surface/surface-system-sku-reference"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -3828,9 +4151,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -3858,7 +4183,8 @@
         "https://www.cdw.com/product/microsoft-surface-pro-for-business-12th-edition-copilot-pc-13-qua/9186879"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -3873,9 +4199,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -3899,7 +4227,8 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "should",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.14",
@@ -3918,7 +4247,7 @@
         {
           "chip": "X1E-00-1DE",
           "compatible": "qcom,x1e001de-devkit",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "x1e001de-devkit.dts",
             "firstRelease": "v6.14",
@@ -3933,7 +4262,9 @@
               "matches": true,
               "compatible": "qcom,x1e001de-devkit"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         }
       ]
     },
@@ -3960,7 +4291,8 @@
         "https://www.notebookcheck.net/Samsung-Galaxy-Book4-Edge-15.988764.0.html"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -3975,9 +4307,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -4006,7 +4340,8 @@
         "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "posted",
         "firstRelease": null,
@@ -4021,9 +4356,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -4049,7 +4386,8 @@
         "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "posted",
         "firstRelease": null,
@@ -4066,9 +4404,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -4091,7 +4431,8 @@
         "https://liliputing.com/samsung-launches-galaxy-book5-edge-5g-windows-laptop-with-snapdragon-x-and-5g-wireless/"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -4106,9 +4447,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -4132,7 +4475,8 @@
         "https://news.samsung.com/us/galaxy-book6-edge-available-next-generation-ai-performance-premium-portability"
       ],
       "notes": null,
-      "omarchy": "missing",
+      "outcome": "none",
+      "reports": [],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -4147,9 +4491,11 @@
       },
       "variants": [
         {
-          "omarchy": "missing",
+          "computed": "none",
           "deviceTree": null,
-          "ids": []
+          "ids": [],
+          "outcome": "none",
+          "reports": []
         }
       ]
     },
@@ -4171,7 +4517,8 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/huawei-matebooke-go"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "should",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.14",
@@ -4189,7 +4536,7 @@
       "variants": [
         {
           "compatible": "huawei,gaokun3",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "sc8280xp-huawei-gaokun3.dts",
             "firstRelease": "v6.14",
@@ -4204,7 +4551,9 @@
               "matches": true,
               "compatible": "huawei,gaokun3"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         }
       ]
     },
@@ -4228,7 +4577,8 @@
         "https://github.com/systemd/systemd/blob/main/src/boot/hwids/aa64/sc8280xp-lenovo-thinkpad-x13s-21bx.json"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "should",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.8",
@@ -4248,7 +4598,7 @@
       "variants": [
         {
           "compatible": "lenovo,thinkpad-x13s",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "sc8280xp-lenovo-thinkpad-x13s.dts",
             "firstRelease": "v6.8",
@@ -4277,7 +4627,9 @@
               "matches": true,
               "compatible": "lenovo,thinkpad-x13s"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         }
       ]
     },
@@ -4300,7 +4652,8 @@
         "https://learn.microsoft.com/en-us/surface/surface-system-sku-reference"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "should",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.13",
@@ -4318,7 +4671,7 @@
       "variants": [
         {
           "compatible": "microsoft,arcata",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "sc8280xp-microsoft-arcata.dts",
             "firstRelease": "v6.13",
@@ -4333,7 +4686,9 @@
               "matches": true,
               "compatible": "microsoft,arcata"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         }
       ]
     },
@@ -4356,7 +4711,8 @@
         "https://www.cnx-software.com/2022/10/25/600-windows-dev-kit-2023-is-powered-by-qualcomm-snapdragon-8cx-gen-3-processor/"
       ],
       "notes": null,
-      "omarchy": "works",
+      "outcome": "should",
+      "reports": [],
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.14",
@@ -4374,7 +4730,7 @@
       "variants": [
         {
           "compatible": "microsoft,blackrock",
-          "omarchy": "works",
+          "computed": "should",
           "deviceTree": {
             "file": "sc8280xp-microsoft-blackrock.dts",
             "firstRelease": "v6.14",
@@ -4389,7 +4745,9 @@
               "matches": true,
               "compatible": "microsoft,blackrock"
             }
-          ]
+          ],
+          "outcome": "should",
+          "reports": []
         }
       ]
     }
