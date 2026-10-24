@@ -27,7 +27,7 @@ const VARIANT: Record<string, { tone: TableRow['variants'][number]['tone']; stat
   works: { tone: 'good', state: 'boots' },
   should: { tone: 'close', state: 'should boot' },
   problems: { tone: 'wanted', state: 'problems' },
-  manual: { tone: 'close', state: 'not picked' },
+  manual: { tone: 'close', state: 'not recognised' },
   newer: { tone: 'close', state: 'newer kernel' },
   none: { tone: 'muted', state: 'no device tree' },
 };

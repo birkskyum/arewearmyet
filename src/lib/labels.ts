@@ -16,7 +16,7 @@ const STATES = {
     works: { label: 'Boots', tone: 'good', meaning: 'An owner booted into the Omarchy desktop on the current release. Not every feature has to work yet.' },
     should: { label: 'Should boot', tone: 'close', meaning: `Omarchy's kernel has its device tree and the install image picks it by itself, but no owner has confirmed it boots yet.` },
     problems: { label: 'Problems', tone: 'wanted', meaning: `An owner couldn't get to the Omarchy desktop on the current release without a workaround.` },
-    manual: { label: 'Not picked', tone: 'close', meaning: `Omarchy's kernel has its device tree, but the install image can't tell it's this model, because systemd has no hardware IDs for it.` },
+    manual: { label: 'Not recognised', tone: 'close', meaning: `Omarchy's kernel has its device tree, but the install image doesn't recognise this model, because systemd has no hardware IDs for it. Its hardware IDs would fix that.` },
     newer: { label: 'Newer kernel', tone: 'close', meaning: `Linux has its device tree, but Omarchy's kernel (${kernel}) doesn't yet. It should boot once Omarchy moves to a newer kernel.` },
     none: { label: 'No device tree', tone: 'wanted', meaning: `Nobody has written a device tree for it yet, so Linux can't start on it.` },
   },
