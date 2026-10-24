@@ -1,13 +1,13 @@
-name: Add a model or send its data
-description: A model that's missing from the board, or data for one that's on it
+name: Add your model
+description: A model that's missing from the board, or what you know about one that's on it
 labels: [model]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for helping. Every model needs a device tree, written from its ACPI tables, and its hardware IDs, which let a boot image pick that device tree by itself. Send what you have; one field is already useful.
+        Thanks for helping. Every model needs a device tree and its hardware IDs, which let a boot image pick that device tree by itself. Send what you have; one field is already useful.
 
-        Don't paste serial numbers. If you attach ACPI tables, leave out `MSDM`, which holds the Windows product key.
+        Don't paste serial numbers, and don't attach firmware files: they belong to the vendor, so a link to the vendor's download is what helps.
 
   - type: input
     id: model
@@ -45,8 +45,8 @@ body:
   - type: textarea
     id: acpi
     attributes:
-      label: ACPI tables
-      description: Attach a zip of the dumped tables, or link to where they are
+      label: ACPI tables (optional)
+      description: Only if you already have a dump. A tool that collects them for you is on its way. Leave out the `MSDM` table, which holds the Windows product key.
 
   - type: input
     id: drivers
