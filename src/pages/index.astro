@@ -19,6 +19,12 @@ const bars = [
 ];
 
 const cells: Record<string, (model: Model) => Cell> = { Omarchy: omarchyCell, 'Device tree': deviceTreeCell, 'Hardware IDs': idsCell, Firmware: firmwareCell, 'ACPI dump': acpiCell };
+// One bar for NVIDIA: booted by someone, same platform as one that boots, nobody tried yet
+const nvidiaBar = [
+  { label: 'Boots', value: summary.nvidiaWorks, color: 'bg-emerald-400' },
+  { label: 'Should boot', value: summary.nvidiaExpected, color: 'bg-amber-400' },
+  { label: 'Not tested', value: summary.nvidia - summary.nvidiaWorks - summary.nvidiaExpected, color: 'bg-zinc-600' },
+];
 const columns = LEGEND.map((group) => ({ name: group.column, question: group.question, cell: cells[group.column] }));
 const legendExtra = [
   { label: 'Green', tone: 'good' as const, meaning: 'Done.' },
@@ -76,11 +82,25 @@ const year = (released: string | number | null) => (released ? String(released).
           </div>
         ))}
       </dl>
-      <p class="mt-6 border-t border-zinc-800 pt-4 text-sm text-zinc-300">
-        {summary.nvidiaWorks} of {summary.nvidia}{' '}
-        <a href="#nvidia" class="font-medium text-zinc-100 hover:underline hover:underline-offset-2">NVIDIA N1x and GB10 machines</a>{' '}
-        boot Omarchy, and {summary.nvidiaExpected} more share a platform with one that does.
-      </p>
+      <div class="mt-8 border-t border-zinc-800 pt-6">
+        <p class="text-2xl font-semibold text-zinc-50">
+          {summary.nvidiaWorks} of {summary.nvidia} <a href="#nvidia" class="hover:underline hover:decoration-zinc-500 hover:underline-offset-4">NVIDIA N1x and GB10 machines</a> run Omarchy
+        </p>
+        <p class="mt-1 text-sm text-zinc-400">They boot through ACPI, so what counts is whether someone has booted Omarchy on them.</p>
+        <div class="mt-6 flex items-baseline justify-between gap-4 text-sm">
+          <span class="flex flex-wrap gap-x-4 gap-y-1 text-zinc-200">
+            {nvidiaBar.map((part) => (
+              <span class="inline-flex items-center gap-1.5"><span class={`h-2 w-2 rounded-full ${part.color}`}></span>{part.label} <span class="text-zinc-500">{part.value}</span></span>
+            ))}
+          </span>
+          <span class="tabular-nums text-zinc-300">{summary.nvidiaWorks} / {summary.nvidia}</span>
+        </div>
+        <div class="mt-1.5 flex h-2 overflow-hidden rounded-full bg-zinc-800">
+          {nvidiaBar.map((part) => (
+            <div class={`h-full ${part.color}`} style={`width: ${(100 * part.value) / Math.max(summary.nvidia, 1)}%`} title={`${part.label}: ${part.value}`}></div>
+          ))}
+        </div>
+      </div>
     </section>
 
     <section class="mt-10 scroll-mt-6" id="snapdragon">
