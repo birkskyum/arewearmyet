@@ -21,7 +21,7 @@
     "yaml": "^2.9.1"
   },
   "devDependencies": {
-    "wrangler": "^4.152.0"
+    "wrangler": "4.149.0"
   },
   "packageManager": "pnpm@11.23.0"
 }
