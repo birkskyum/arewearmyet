@@ -1,0 +1,752 @@
+{
+  "collected": "2026-10-24T20:12:44.827Z",
+  "linuxNext": "20261023",
+  "omarchy": {
+    "channel": "rc",
+    "kernel": "7.2.8-20",
+    "systemd": "262.1-1",
+    "kernelBase": "v7.2",
+    "systemdRelease": "v262",
+    "channels": [
+      {
+        "name": "stable",
+        "kernel": "7.2.8-13",
+        "systemd": "262.1-1"
+      },
+      {
+        "name": "rc",
+        "kernel": "7.2.8-20",
+        "systemd": "262.1-1"
+      },
+      {
+        "name": "edge",
+        "kernel": "7.2.8-23",
+        "systemd": "262.1-1"
+      }
+    ]
+  },
+  "summary": {
+    "models": 6,
+    "omarchyWorks": 2,
+    "omarchyManual": 0,
+    "deviceTree": 4,
+    "ids": 3,
+    "firmware": 2,
+    "acpi": 4
+  },
+  "models": [
+    {
+      "id": "lenovo-yoga-slim-7x",
+      "vendor": "Lenovo",
+      "name": "Yoga Slim 7x",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2024,
+      "modelNumbers": [
+        "14Q8X9",
+        "83ED"
+      ],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.11",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "linux-firmware",
+        "firmwareDownload": null,
+        "firmwareFolders": [
+          "qcom/x1e80100/LENOVO/83ED"
+        ],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-yoga-slim-7x"
+        ]
+      },
+      "variants": [
+        {
+          "model": "14Q8X9",
+          "chip": "X1E-78-100",
+          "compatible": "lenovo,yoga-slim7x",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1e80100-lenovo-yoga-slim7x.dts",
+            "firstRelease": "v6.11",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1e80100-lenovo-yoga-slim7x.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,yoga-slim7x"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "microsoft-surface-pro-11",
+      "vendor": "Microsoft",
+      "name": "Surface Pro 11th Edition",
+      "generation": "x1",
+      "form": "2-in-1",
+      "released": 2024,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v7.0",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-11"
+        ]
+      },
+      "variants": [
+        {
+          "model": "OLED",
+          "chip": "X1E-80-100",
+          "compatible": "microsoft,denali-oled",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1e80100-microsoft-denali-oled.dts",
+            "firstRelease": "v7.0",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1e80100-microsoft-denali.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "microsoft,denali-oled"
+            }
+          ]
+        },
+        {
+          "model": "LCD",
+          "chip": "X1P-64-100",
+          "compatible": "microsoft,denali-lcd",
+          "omarchy": "manual",
+          "deviceTree": {
+            "file": "x1p64100-microsoft-denali.dts",
+            "firstRelease": "v7.0",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": []
+        }
+      ]
+    },
+    {
+      "id": "microsoft-surface-pro-12in",
+      "vendor": "Microsoft",
+      "name": "Surface Pro 12-inch",
+      "generation": "x1",
+      "form": "2-in-1",
+      "released": 2025,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v7.3",
+        "devicetreePosted": null,
+        "ids": "mismatch",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-12-in"
+        ]
+      },
+      "variants": [
+        {
+          "chip": "X1P-42-100",
+          "compatible": "microsoft,surface-pro-12in",
+          "ids": [
+            {
+              "file": "x1p42100-microsoft-surface-pro-12in.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": false,
+              "compatible": "microsoft,sp12"
+            }
+          ],
+          "omarchy": "missing",
+          "deviceTree": {
+            "file": "x1p42100-microsoft-sp12in.dts",
+            "firstRelease": "v7.3",
+            "inNext": true,
+            "inOmarchy": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "asus-zenbook-a14-ux3407na",
+      "vendor": "ASUS",
+      "name": "Zenbook A14 (X2)",
+      "generation": "x2",
+      "form": "laptop",
+      "released": 2026,
+      "modelNumbers": [
+        "UX3407NA"
+      ],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "next",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "linux-firmware",
+        "firmwareDownload": null,
+        "firmwareFolders": [
+          "qcom/glymur/ASUSTeK/UX3407NA"
+        ],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "model": "UX3407NA",
+          "compatible": "asus,zenbook-a14-ux3407na",
+          "omarchy": "missing",
+          "deviceTree": {
+            "file": "glymur-asus-zenbook-a14-ux3407na.dts",
+            "firstRelease": null,
+            "inNext": true,
+            "inOmarchy": false
+          },
+          "ids": [
+            {
+              "file": "glymur-asus-zenbook-a14-ux3407na.json",
+              "firstRelease": "v262",
+              "inMain": true,
+              "matches": true,
+              "compatible": "asus,zenbook-a14-ux3407na"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "asus-zenbook-14-ux3480qa",
+      "vendor": "ASUS",
+      "name": "Zenbook 14 (2026)",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2026,
+      "modelNumbers": [
+        "UX3480QA"
+      ],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "missing",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "model": "UX3480QA",
+          "chip": "X1-26-100",
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": []
+        }
+      ]
+    },
+    {
+      "id": "samsung-galaxy-book4-edge",
+      "vendor": "Samsung",
+      "name": "Galaxy Book4 Edge",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2024,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "posted",
+        "firstRelease": null,
+        "devicetreePosted": "https://lore.kernel.org/linux-arm-msm/",
+        "ids": "missing",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxybook4-edge"
+        ]
+      },
+      "variants": [
+        {
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": []
+        }
+      ]
+    }
+  ],
+  "unmatched": {
+    "deviceTrees": [
+      {
+        "file": "glymur-asus-zenbook-a16-ux3607oa.dts",
+        "model": "ASUS Zenbook A16 (UX3607OA)",
+        "compatible": "asus,zenbook-a16-ux3607oa"
+      },
+      {
+        "file": "glymur-hp-elitebook-x-g2q.dts",
+        "model": "HP EliteBook X G2q 14 AI",
+        "compatible": "hp,elitebook-x-g2q"
+      },
+      {
+        "file": "glymur-lenovo-yoga-slim7x.dts",
+        "model": "Lenovo Yoga Slim 7x Gen 11",
+        "compatible": "lenovo,yoga-slim7x-gen11"
+      },
+      {
+        "file": "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
+        "model": "Lenovo IdeaCentre Mini 01Q8X10",
+        "compatible": "lenovo,ideacentre-mini-01q8x10"
+      },
+      {
+        "file": "sc8280xp-huawei-gaokun3.dts",
+        "model": "Matebook E Go",
+        "compatible": "huawei,gaokun3"
+      },
+      {
+        "file": "sc8280xp-lenovo-thinkpad-x13s.dts",
+        "model": "Lenovo ThinkPad X13s",
+        "compatible": "lenovo,thinkpad-x13s"
+      },
+      {
+        "file": "sc8280xp-microsoft-arcata.dts",
+        "model": "Microsoft Surface Pro 9 5G",
+        "compatible": "microsoft,arcata"
+      },
+      {
+        "file": "sc8280xp-microsoft-blackrock.dts",
+        "model": "Windows Dev Kit 2023",
+        "compatible": "microsoft,blackrock"
+      },
+      {
+        "file": "x1e78100-lenovo-thinkpad-t14s-oled.dts",
+        "model": "Lenovo ThinkPad T14s Gen 6 (OLED)",
+        "compatible": "lenovo,thinkpad-t14s-oled"
+      },
+      {
+        "file": "x1e78100-lenovo-thinkpad-t14s.dts",
+        "model": "Lenovo ThinkPad T14s Gen 6 (LCD)",
+        "compatible": "lenovo,thinkpad-t14s-lcd"
+      },
+      {
+        "file": "x1e80100-asus-vivobook-s15.dts",
+        "model": "ASUS Vivobook S 15",
+        "compatible": "asus,vivobook-s15"
+      },
+      {
+        "file": "x1e80100-asus-zenbook-a14.dts",
+        "model": "ASUS Zenbook A14 (UX3407RA)",
+        "compatible": "asus,zenbook-a14-ux3407ra"
+      },
+      {
+        "file": "x1e80100-dell-inspiron-14-plus-7441.dts",
+        "model": "Dell Inspiron 14 Plus 7441",
+        "compatible": "dell,inspiron-14-plus-7441"
+      },
+      {
+        "file": "x1e80100-dell-latitude-7455.dts",
+        "model": "Dell Latitude 7455",
+        "compatible": "dell,latitude-7455"
+      },
+      {
+        "file": "x1e80100-dell-xps13-9345.dts",
+        "model": "Dell XPS 13 9345",
+        "compatible": "dell,xps13-9345"
+      },
+      {
+        "file": "x1e80100-honor-magicbook-art-14.dts",
+        "model": "HONOR MagicBook Art 14 Snapdragon",
+        "compatible": "honor,magicbook-art-14-snapdragon"
+      },
+      {
+        "file": "x1e80100-hp-elitebook-ultra-g1q.dts",
+        "model": "HP EliteBook Ultra G1q",
+        "compatible": "hp,elitebook-ultra-g1q"
+      },
+      {
+        "file": "x1e80100-hp-omnibook-x14.dts",
+        "model": "HP Omnibook X 14-fe0",
+        "compatible": "hp,omnibook-x14"
+      },
+      {
+        "file": "x1e80100-medion-sprchrgd-14-s1.dts",
+        "model": "Medion SPRCHRGD 14 S1",
+        "compatible": "medion,sprchrgd14s1"
+      },
+      {
+        "file": "x1e80100-microsoft-romulus13.dts",
+        "model": "Microsoft Surface Laptop 7 (13.8 inch)",
+        "compatible": "microsoft,romulus13"
+      },
+      {
+        "file": "x1e80100-microsoft-romulus15.dts",
+        "model": "Microsoft Surface Laptop 7 (15 inch)",
+        "compatible": "microsoft,romulus15"
+      },
+      {
+        "file": "x1p42100-asus-vivobook-s15.dts",
+        "model": "ASUS Vivobook S 15 X1P-42-100",
+        "compatible": "asus,vivobook-s15-x1p4"
+      },
+      {
+        "file": "x1p42100-asus-zenbook-a14-lcd.dts",
+        "model": "ASUS Zenbook A14 (UX3407QA, LCD)",
+        "compatible": "asus,zenbook-a14-ux3407qa-lcd"
+      },
+      {
+        "file": "x1p42100-asus-zenbook-a14.dts",
+        "model": "ASUS Zenbook A14 (UX3407QA)",
+        "compatible": "asus,zenbook-a14-ux3407qa-oled"
+      },
+      {
+        "file": "x1p42100-hp-omnibook-x14.dts",
+        "model": "HP Omnibook X 14-fe1",
+        "compatible": "hp,omnibook-x14-fe1"
+      },
+      {
+        "file": "x1p42100-lenovo-thinkbook-16.dts",
+        "model": "Lenovo ThinkBook 16 Gen 7 QOY",
+        "compatible": "lenovo,thinkbook-16"
+      }
+    ],
+    "ids": [
+      {
+        "file": "glymur-asus-zenbook-a16-ux3607oa.json",
+        "name": "ASUS Zenbook A16 UX3607OA",
+        "compatible": "asus,zenbook-a16-ux3607oa"
+      },
+      {
+        "file": "glymur-crd.json",
+        "name": "Qualcomm Technologies, Inc. Glymur CRD",
+        "compatible": "qcom,glymur-crd"
+      },
+      {
+        "file": "glymur-hp-elitebook-x-g2q.json",
+        "name": "HP 103C_5336AN HP EliteBook",
+        "compatible": "hp,elitebook-x-g2q"
+      },
+      {
+        "file": "glymur-lenovo-yoga-slim7x.json",
+        "name": "LENOVO Yoga Slim 7 14Q8Y11",
+        "compatible": "lenovo,yoga-slim7x-gen11"
+      },
+      {
+        "file": "msm8998-lenovo-miix-630-81f1.json",
+        "name": "LENOVO Miix 630",
+        "compatible": "lenovo,miix-630"
+      },
+      {
+        "file": "purwa-lenovo-ideacentre-mini-01q8x10.json",
+        "name": "LENOVO IdeaCentre Mini 01Q8X10 (Purwa)",
+        "compatible": "lenovo,purwa-ideacentre-mini-01q8x10"
+      },
+      {
+        "file": "sc7180-acer-aspire1.json",
+        "name": "Acer Aspire 1",
+        "compatible": "acer,aspire1"
+      },
+      {
+        "file": "sc7180-ecs-liva-qc710.json",
+        "name": "Elitegroup Computer Systems Co., LTD. SC7180",
+        "compatible": "ecs,liva-qc710"
+      },
+      {
+        "file": "sc8180x-lenovo-flex-5g-81xe.json",
+        "name": "LENOVO Yoga 5G 14Q8CX05",
+        "compatible": "lenovo,flex-5g"
+      },
+      {
+        "file": "sc8180x-lenovo-flex-5g-82ak.json",
+        "name": "LENOVO Flex 5G 14Q8CX05",
+        "compatible": "lenovo,flex-5g"
+      },
+      {
+        "file": "sc8280xp-huawei-gaokun3.json",
+        "name": "HUAWEI MateBook E",
+        "compatible": "huawei,gaokun3"
+      },
+      {
+        "file": "sc8280xp-lenovo-thinkpad-x13s-21bx.json",
+        "name": "LENOVO ThinkPad X13s Gen 1",
+        "compatible": "lenovo,thinkpad-x13s"
+      },
+      {
+        "file": "sc8280xp-lenovo-thinkpad-x13s-21by.json",
+        "name": "LENOVO ThinkPad X13s Gen 1",
+        "compatible": "lenovo,thinkpad-x13s"
+      },
+      {
+        "file": "sc8280xp-lenovo-thinkpad-x13s-4810.json",
+        "name": "LENOVO ThinkPad X13s Gen 1",
+        "compatible": "lenovo,thinkpad-x13s"
+      },
+      {
+        "file": "sc8280xp-microsoft-blackrock.json",
+        "name": "Microsoft Corporation Surface",
+        "compatible": "microsoft,blackrock"
+      },
+      {
+        "file": "sc8280xp-microsoft-surface-pro-9-5G.json",
+        "name": "Microsoft Corporation Surface",
+        "compatible": "microsoft,arcata"
+      },
+      {
+        "file": "sc8280xp-radxa-dragon-q8b.json",
+        "name": "Radxa Computer Co., Ltd. Dragon Q8B",
+        "compatible": "radxa,dragon-q8b"
+      },
+      {
+        "file": "sdm850-lenovo-yoga-c630.json",
+        "name": "LENOVO YOGA C630-13Q50",
+        "compatible": "lenovo,yoga-c630"
+      },
+      {
+        "file": "x126100-lenovo-ideapad-slim3.json",
+        "name": "LENOVO IdeaPad Slim 3 15Q8X10",
+        "compatible": "lenovo,ideapad-slim3"
+      },
+      {
+        "file": "x1e001de-devkit.json",
+        "name": "Qualcomm SCP_HAMOA",
+        "compatible": "qcom,x1e001de-devkit"
+      },
+      {
+        "file": "x1e78100-acer-sfa14-11.json",
+        "name": "Acer Swift 14 Go Pro AI",
+        "compatible": "acer,swift-sfa14-11"
+      },
+      {
+        "file": "x1e78100-lenovo-thinkpad-t14s-lcd.json",
+        "name": "LENOVO ThinkPad T14s Gen 6 (LCD)",
+        "compatible": "lenovo,thinkpad-t14s-lcd"
+      },
+      {
+        "file": "x1e78100-lenovo-thinkpad-t14s-oled.json",
+        "name": "LENOVO ThinkPad T14s Gen 6 (OLED)",
+        "compatible": "lenovo,thinkpad-t14s-oled"
+      },
+      {
+        "file": "x1e78100-lenovo-thinkpad-t14s.json",
+        "name": "LENOVO ThinkPad T14s Gen 6",
+        "compatible": "lenovo,thinkpad-t14s-lcd"
+      },
+      {
+        "file": "x1e78100-medion-sprchrgd-14s1-elite.json",
+        "name": "MEDION SPRCHRGD",
+        "compatible": "medion,sprchrgd14s1"
+      },
+      {
+        "file": "x1e80100-asus-vivobook-s15.json",
+        "name": "ASUSTeK COMPUTER INC. ASUS Vivobook S 15",
+        "compatible": "asus,vivobook-s15"
+      },
+      {
+        "file": "x1e80100-asus-zenbook-a14-oled.json",
+        "name": "ASUSTeK COMPUTER INC. ASUS Zenbook A14",
+        "compatible": "asus,zenbook-a14-ux3407qa-oled"
+      },
+      {
+        "file": "x1e80100-asus-zenbook-a14.json",
+        "name": "ASUSTeK COMPUTER INC. ASUS Zenbook A14",
+        "compatible": "asus,zenbook-a14-ux3407ra"
+      },
+      {
+        "file": "x1e80100-crd.json",
+        "name": "Qualcomm SCP_HAMOA",
+        "compatible": "qcom,x1e80100-crd"
+      },
+      {
+        "file": "x1e80100-dell-inspiron-14-plus-7441.json",
+        "name": "Dell Inc. Inspiron",
+        "compatible": "dell,inspiron-14-plus-7441"
+      },
+      {
+        "file": "x1e80100-dell-latitude-7455.json",
+        "name": "Dell Inc. Latitude",
+        "compatible": "dell,latitude-7455"
+      },
+      {
+        "file": "x1e80100-dell-xps13-9345.json",
+        "name": "Dell Inc. XPS",
+        "compatible": "dell,xps13-9345"
+      },
+      {
+        "file": "x1e80100-honor-magicbook-art-14.json",
+        "name": "HONOR MagicBook Art 14 Snapdragon",
+        "compatible": "honor,magicbook-art-14-snapdragon"
+      },
+      {
+        "file": "x1e80100-hp-elitebook-ultra-g1q.json",
+        "name": "HP 103C_5336AN HP EliteBook Ultra",
+        "compatible": "hp,elitebook-ultra-g1q"
+      },
+      {
+        "file": "x1e80100-hp-omnibook-x14.json",
+        "name": "HP 103C_5335M8 HP OmniBook X",
+        "compatible": "hp,omnibook-x14"
+      },
+      {
+        "file": "x1e80100-microsoft-romulus13.json",
+        "name": "Microsoft Corporation Surface",
+        "compatible": "microsoft,romulus13"
+      },
+      {
+        "file": "x1e80100-microsoft-romulus15.json",
+        "name": "Microsoft Corporation Surface",
+        "compatible": "microsoft,romulus15"
+      },
+      {
+        "file": "x1p42100-acer-swift-go14-01.json",
+        "name": "Acer Swift Go 14 AI",
+        "compatible": "acer,swift-go14-01"
+      },
+      {
+        "file": "x1p42100-asus-vivobook-s15.json",
+        "name": "ASUSTeK COMPUTER INC. ASUS Vivobook S 15",
+        "compatible": "asus,vivobook-s15-x1p4"
+      },
+      {
+        "file": "x1p42100-asus-zenbook-a14.json",
+        "name": "ASUSTeK COMPUTER INC. ASUS Zenbook A14",
+        "compatible": "asus,zenbook-a14-ux3407qa-lcd"
+      },
+      {
+        "file": "x1p42100-hp-elitebook-6-g1q.json",
+        "name": "HP 103C_5336AN HP EliteBook",
+        "compatible": "hp,elitebook-6-g1q"
+      },
+      {
+        "file": "x1p42100-hp-omnibook-x14.json",
+        "name": "HP 103C_5335M8 HP OmniBook X",
+        "compatible": "hp,omnibook-x14-fe1"
+      },
+      {
+        "file": "x1p42100-lenovo-ideapad-5-2in1.json",
+        "name": "LENOVO IdeaPad 5 2-in-1 14Q8X9",
+        "compatible": "lenovo,ideapad-5-2in1"
+      },
+      {
+        "file": "x1p42100-lenovo-ideapad-slim-5-oled.json",
+        "name": "LENOVO IdeaPad Slim 5 14Q8X9 (OLED)",
+        "compatible": "lenovo,ideapad-slim5x-oled"
+      },
+      {
+        "file": "x1p42100-lenovo-thinkbook-16.json",
+        "name": "LENOVO ThinkBook 16 G7 QOY",
+        "compatible": "lenovo,thinkbook-16"
+      },
+      {
+        "file": "x1p64100-acer-swift-sf14-11.json",
+        "name": "Acer Swift 14 AI",
+        "compatible": "acer,swift-sf14-11"
+      },
+      {
+        "file": "x1p64100-dell-latitude-5455.json",
+        "name": "Dell Inc. Latitude 5455",
+        "compatible": "dell,latitude-5455"
+      }
+    ],
+    "firmware": [
+      "qcom/glymur/ASUSTeK/UX3607OA",
+      "qcom/glymur/LENOVO/22A8",
+      "qcom/sc8280xp/LENOVO/21BX",
+      "qcom/sc8280xp/radxa/dragon-q8b",
+      "qcom/x1e80100/ASUSTeK/vivobook-16",
+      "qcom/x1e80100/ASUSTeK/vivobook-s15",
+      "qcom/x1e80100/ASUSTeK/zenbook-a14",
+      "qcom/x1e80100/dell/inspiron-14-plus-7441",
+      "qcom/x1e80100/dell/latitude-7455",
+      "qcom/x1e80100/dell/xps13-9345",
+      "qcom/x1e80100/hp/omnibook-x14",
+      "qcom/x1e80100/LENOVO/21N1",
+      "qcom/x1e80100/LENOVO/91B6"
+    ],
+    "acpi": [
+      "acer-aspire-1",
+      "acer-gateway-gwtn133-1",
+      "acer-sfa14-11",
+      "acer-spin-7-sp714-61na",
+      "apcsilmic-dot-1",
+      "asus-tp370ql",
+      "asus-vivobook-s-15",
+      "asus-vivobook-s15-q5507",
+      "asus-vivobook-s15-s5507",
+      "asus-zenbook-a14-ux3407q",
+      "asus-zenbook-a16-ux3607oa",
+      "dell-inspiron-14-3420",
+      "dell-inspiron-14-5441-x1p-42-100",
+      "dell-inspiron-14-7441-x1e-80-100",
+      "dell-latitude-5455",
+      "dell-latitude-7455",
+      "dell-xps-9345",
+      "ecs-liva-qc710",
+      "honor-mro-521",
+      "hp-elitebook-6-g1q",
+      "hp-elitebook-ultra-g1q",
+      "hp-envy-x2",
+      "hp-omnibook-5-14-he0xxx",
+      "hp-omnibook-x14-fe0xxx",
+      "huawei-matebooke-2019",
+      "huawei-matebooke-go",
+      "lenovo-flex-5g",
+      "lenovo-ideacentre-01q8x10",
+      "lenovo-ideapad-5-2in1-83GH-14Q8X9",
+      "lenovo-ideapad-5-slim-14Q8X9",
+      "lenovo-ideapad-5g-14q8x05",
+      "lenovo-ideapad-slim3x-15q8x10-WCN7850",
+      "lenovo-l10w",
+      "lenovo-miix-630",
+      "lenovo-thinkbook-16-g7-qoy",
+      "lenovo-thinkpad-t14s",
+      "lenovo-thinkpad-t14s-120hz-64gb",
+      "lenovo-thinkpad-x13s",
+      "lenovo-xiaoxin-14-q8x9",
+      "lenovo-yoga-c630",
+      "lenovo-yoga-slim-7x-14Q8Y11",
+      "medion-14-s1-elite-sprchrgd",
+      "medion-14-s1-sprchrgd",
+      "microsoft-devkit-2023",
+      "microsoft-surface-pro-9-5G",
+      "microsoft-surface-prox",
+      "microsoft-surface-romulus13_and_15",
+      "qualcomm-snapdragon-dev-kit",
+      "samsung-galaxy-book-go",
+      "samsung-galaxy-book-go-5g",
+      "samsung-galaxy-book-s",
+      "samsung-galaxybook2",
+      "samsung-galaxybook2-go",
+      "tcl-book-14-go",
+      "xiaomi-book-s"
+    ]
+  }
+}

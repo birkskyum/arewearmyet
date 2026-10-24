@@ -1,0 +1,69 @@
+# Every ARM PC model the board tracks. One entry per hardware model; variants
+# that Linux describes with separate device trees are listed inside it.
+#
+#   compatible   the device tree's first compatible string, also for trees that
+#                are only posted or out of tree
+#   ids          systemd hardware ID files to check even when they name a
+#                different compatible
+#   firmware     linux-firmware folders with this model's files
+#   acpi         aarch64-laptops/build misc/ folders with its ACPI dump
+
+models:
+  - id: lenovo-yoga-slim-7x
+    vendor: Lenovo
+    name: Yoga Slim 7x
+    generation: x1
+    released: 2024
+    model_numbers: [14Q8X9, 83ED]
+    variants:
+      - { model: 14Q8X9, chip: X1E-78-100, compatible: "lenovo,yoga-slim7x" }
+    firmware: [qcom/x1e80100/LENOVO/83ED]
+    acpi: [lenovo-yoga-slim-7x]
+
+  - id: microsoft-surface-pro-11
+    vendor: Microsoft
+    name: Surface Pro 11th Edition
+    generation: x1
+    form: 2-in-1
+    released: 2024
+    variants:
+      - { model: OLED, chip: X1E-80-100, compatible: "microsoft,denali-oled" }
+      - { model: LCD, chip: X1P-64-100, compatible: "microsoft,denali-lcd" }
+    acpi: [microsoft-surface-pro-11]
+
+  - id: microsoft-surface-pro-12in
+    vendor: Microsoft
+    name: Surface Pro 12-inch
+    generation: x1
+    form: 2-in-1
+    released: 2025
+    variants:
+      - { chip: X1P-42-100, compatible: "microsoft,surface-pro-12in", ids: [x1p42100-microsoft-surface-pro-12in.json] }
+    acpi: [microsoft-surface-pro-12-in]
+
+  - id: asus-zenbook-a14-ux3407na
+    vendor: ASUS
+    name: Zenbook A14 (X2)
+    generation: x2
+    released: 2026
+    model_numbers: [UX3407NA]
+    variants:
+      - { model: UX3407NA, compatible: "asus,zenbook-a14-ux3407na" }
+    firmware: [qcom/glymur/ASUSTeK/UX3407NA]
+
+  - id: asus-zenbook-14-ux3480qa
+    vendor: ASUS
+    name: Zenbook 14 (2026)
+    generation: x1
+    released: 2026
+    model_numbers: [UX3480QA]
+    variants:
+      - { model: UX3480QA, chip: X1-26-100 }
+
+  - id: samsung-galaxy-book4-edge
+    vendor: Samsung
+    name: Galaxy Book4 Edge
+    generation: x1
+    released: 2024
+    devicetree_posted: https://lore.kernel.org/linux-arm-msm/
+    acpi: [samsung-galaxybook4-edge]
