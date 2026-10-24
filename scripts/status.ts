@@ -148,6 +148,7 @@ const summary = {
   models: current.length,
   nvidia: nvidia.length,
   nvidiaWorks: count(nvidia, (m) => m.omarchy === 'works'),
+  nvidiaExpected: count(nvidia, (m) => m.omarchy === 'expected'),
   omarchyWorks: count(current, (r) => r.omarchy === 'works'),
   omarchyManual: count(current, (r) => r.omarchy === 'manual'),
   deviceTree: count(current, (r) => r.upstream.deviceTree === 'released' || r.upstream.deviceTree === 'next'),

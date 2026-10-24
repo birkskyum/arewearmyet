@@ -32,6 +32,7 @@ const PILL = 'inline-flex items-center whitespace-nowrap rounded-full px-2 py-0.
 const BUTTON = 'rounded-md px-2.5 py-1 text-sm text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 aria-pressed:bg-zinc-200 aria-pressed:text-zinc-900 aria-pressed:ring-zinc-200';
 const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
 const REPO = 'https://github.com/birkskyum/arewearmyet';
+const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100';
 const year = (released: string | number | null) => (released ? String(released).slice(0, 4) : '');
 ---
 
@@ -40,6 +41,12 @@ const year = (released: string | number | null) => (released ? String(released).
     <header>
       <h1 class="text-4xl font-bold tracking-tight text-zinc-50 sm:text-5xl">Are we ARM yet?</h1>
       <p class="mt-3 text-lg text-zinc-400">Omarchy on ARM PCs, model by model.</p>
+      <nav class="mt-5 flex flex-wrap gap-2 text-sm">
+        <a href="#snapdragon" class={NAV}>Snapdragon X and X2 <span class="text-zinc-500">{summary.models}</span></a>
+        <a href="#nvidia" class={NAV}>NVIDIA N1x and GB10 <span class="text-zinc-500">{summary.nvidia}</span></a>
+        <a href="#apple" class={NAV}>Apple Silicon</a>
+        <a href="#help" class={NAV}>Help a model get there</a>
+      </nav>
     </header>
 
     <section class="mt-10 rounded-xl bg-zinc-900 p-6 ring-1 ring-zinc-800">
@@ -63,6 +70,11 @@ const year = (released: string | number | null) => (released ? String(released).
           </div>
         ))}
       </dl>
+      <p class="mt-6 border-t border-zinc-800 pt-4 text-sm text-zinc-300">
+        {summary.nvidiaWorks} of {summary.nvidia}{' '}
+        <a href="#nvidia" class="font-medium text-zinc-100 hover:underline hover:underline-offset-2">NVIDIA N1x and GB10 machines</a>{' '}
+        boot Omarchy, and {summary.nvidiaExpected} more share a platform with one that does.
+      </p>
     </section>
 
     <section class="mt-10">
@@ -72,8 +84,9 @@ const year = (released: string | number | null) => (released ? String(released).
       </div>
     </section>
 
-    <section class="mt-10">
-      <div class="flex flex-wrap items-center gap-2" id="filters">
+    <section class="mt-10 scroll-mt-6" id="snapdragon">
+      <h2 class="text-xl font-semibold text-zinc-50">Snapdragon X and X2</h2>
+      <div class="mt-4 flex flex-wrap items-center gap-2" id="filters">
         <input id="search" type="search" placeholder="Search models" class="w-56 rounded-md bg-zinc-900 px-3 py-1.5 text-sm text-zinc-100 ring-1 ring-zinc-700 placeholder:text-zinc-500 focus:outline-none focus:ring-zinc-400" />
         <span class="ml-2 text-sm text-zinc-500">Chip</span>
         <button class={BUTTON} data-filter="generation" data-value="" aria-pressed="true">All</button>
@@ -148,7 +161,7 @@ const year = (released: string | number | null) => (released ? String(released).
     </section>
 
     {status.nvidia.length > 0 && (
-      <section class="mt-12">
+      <section class="mt-12 scroll-mt-6" id="nvidia">
         <h2 class="text-xl font-semibold text-zinc-50">NVIDIA N1x and GB10</h2>
         <p class="mt-1 max-w-3xl text-sm text-zinc-400">
           NVIDIA's ARM laptops and desktops boot through ACPI, so they need no device tree or hardware IDs. What counts here is whether someone has booted Omarchy on them.
@@ -185,11 +198,11 @@ const year = (released: string | number | null) => (released ? String(released).
       </section>
     )}
 
-    <p class="mt-8 text-sm text-zinc-400">
+    <p class="mt-8 scroll-mt-6 text-sm text-zinc-400" id="apple">
       Apple Silicon Macs run Omarchy on top of Asahi Linux. <a class={LINK} href="https://asahilinux.org/docs/platform/feature-support/overview/">Asahi's feature support pages</a> track which models and features work.
     </p>
 
-    <section class="mt-12 rounded-xl bg-zinc-900 p-6 text-sm text-zinc-400 ring-1 ring-zinc-800">
+    <section class="mt-12 scroll-mt-6 rounded-xl bg-zinc-900 p-6 text-sm text-zinc-400 ring-1 ring-zinc-800" id="help">
       <h2 class="text-base font-semibold text-zinc-100">Help a model get there</h2>
       <p class="mt-2 max-w-3xl">
         Own one of the models marked <span class={`${PILL} ${TONE.wanted}`}>Wanted</span>, or one that's missing from the list? Its hardware IDs and ACPI tables are what a device tree gets written from, and an owner who can test boot images is what gets it finished.
