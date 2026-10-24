@@ -56,7 +56,7 @@ const systemdRelease = `v${channel.systemd.split('.')[0]}`;
 const kernelRank = (release: string | null) => (release ? sources.kernelReleases.indexOf(release) : Infinity);
 const systemdRank = (release: string | null) => (release ? sources.systemdReleases.indexOf(release) : Infinity);
 
-type DeviceTree = { file: string; firstRelease: string | null; inNext: boolean; model?: string; compatible: string[] };
+type DeviceTree = { file: string; firstRelease: string | null; inNext: boolean; model?: string; compatible: string[]; firmware?: string[] };
 const deviceTrees: DeviceTree[] = sources.deviceTrees;
 const omarchyAdded: DeviceTree[] = sources.omarchy.kernelAddedDeviceTrees.map((dt: DeviceTree) => ({ ...dt, firstRelease: null, inNext: false }));
 
@@ -67,7 +67,7 @@ function findDeviceTree(compatible: string | undefined) {
   if (!upstream && !added) return undefined;
   const dt = upstream ?? added!;
   const inOmarchy = Boolean(added) || kernelRank(dt.firstRelease) <= kernelRank(kernelBase);
-  return { file: dt.file, compatible: dt.compatible, firstRelease: upstream?.firstRelease ?? null, inNext: upstream?.inNext ?? false, inOmarchy };
+  return { file: dt.file, compatible: dt.compatible, firstRelease: upstream?.firstRelease ?? null, inNext: upstream?.inNext ?? false, inOmarchy, firmware: dt.firmware ?? [] };
 }
 
 type Ids = { file: string; firstRelease: string | null; inMain: boolean; compatible: string; name: string };
@@ -92,6 +92,7 @@ function variantStatus(variant: Variant) {
     ...variant,
     computed,
     deviceTree: dt ? { file: dt.file, firstRelease: dt.firstRelease, inNext: dt.inNext, inOmarchy: dt.inOmarchy } : null,
+    firmwareNeeded: dt?.firmware ?? [],
     ids: ids.map((entry) => ({ file: entry.file, firstRelease: entry.firstRelease, inMain: entry.inMain, matches: compatibles.includes(entry.compatible), compatible: entry.compatible })),
   };
 }
@@ -108,6 +109,25 @@ function outcome(computed: string, reports: Report[]): Outcome {
 }
 
 const firmwareFolders: { path: string; files: string[] }[] = sources.firmware;
+const firmwareReleased = new Set<string>(sources.firmwareReleased);
+const firmwareMain = new Set<string>(sources.firmwareMain);
+
+// Firmware counts as there when every file the device tree loads is in linux-firmware: in its
+// newest release, which distributions ship, or already merged for the next one. Models without a
+// device tree fall back to their folder having the signed audio DSP image.
+function firmwareState(needed: string[], folders: { path: string; files: string[] }[], download?: string) {
+  const fallback = folders.flatMap((folder) => folder.files.filter((file) => /^qcadsp\d+\.mbn$/.test(file)).map((file) => `${folder.path}/${file}`));
+  const files = needed.length ? needed : fallback;
+  const missingReleased = files.filter((file) => !firmwareReleased.has(file));
+  const missingMain = files.filter((file) => !firmwareMain.has(file));
+  const name = (file: string) => file.split('/').pop()!;
+  if (files.length && !missingReleased.length) return { state: 'linux-firmware', missing: [] as string[] };
+  if (files.length && !missingMain.length) return { state: 'next-release', missing: missingReleased.map(name) };
+  if (download) return { state: 'download', missing: [] as string[] };
+  // Some files there, some not: say which are still missing
+  if (needed.length && missingMain.length < needed.length) return { state: 'partial', missing: missingMain.map(name) };
+  return { state: 'windows', missing: missingMain.map(name) };
+}
 const acpiDumps: { folder: string; url: string }[] = sources.acpiDumps;
 
 const rows = models.map((model) => {
@@ -118,8 +138,7 @@ const rows = models.map((model) => {
     return { ...status, outcome: outcome(status.computed, own), reports: own };
   });
   const firmware = (model.firmware ?? []).map((path) => firmwareFolders.find((folder) => folder.path === path)).filter(Boolean) as typeof firmwareFolders;
-  // The signed DSP images are what a laptop can't do without; many folders only carry the open audio topology
-  const signed = firmware.some((folder) => folder.files.some((file) => /^qcadsp\d+\.mbn$/.test(file)));
+  const fw = firmwareState([...new Set(variants.flatMap((v) => v.firmwareNeeded))], firmware, model.firmware_download);
   firmware.forEach((folder) => used.firmware.add(folder.path));
   const acpi = (model.acpi ?? []).map((folder) => acpiDumps.find((dump) => dump.folder === folder)).filter(Boolean) as typeof acpiDumps;
   acpi.forEach((dump) => used.acpi.add(dump.folder));
@@ -149,8 +168,9 @@ const rows = models.map((model) => {
       devicetreePosted: model.devicetree_posted ?? null,
       ids: idsState,
       // What counts is getting the firmware without the laptop's own Windows
-      firmware: signed ? 'linux-firmware' : model.firmware_download ? 'download' : 'windows',
-      firmwareAudioOnly: !signed && firmware.length > 0,
+      firmware: fw.state,
+      firmwareMissing: fw.missing,
+      firmwareAudioOnly: fw.state === 'windows' && firmware.length > 0,
       firmwareDownload: model.firmware_download ?? null,
       firmwareFolders: firmware.map((folder) => folder.path),
       acpi: acpi.length ? 'collected' : 'missing',
@@ -190,7 +210,7 @@ const unmatched = {
 mkdirSync('src/data', { recursive: true });
 writeFileSync(
   'src/data/status.json',
-  JSON.stringify({ collected: sources.collected, linuxNext: sources.linuxNext, omarchy: { channel: OMARCHY_CHANNEL, kernel: channel.kernel, systemd: channel.systemd, kernelBase, systemdRelease, channels: sources.omarchy.channels }, summary, models: rows, nvidia, unmatched }, null, 2) + '\n',
+  JSON.stringify({ collected: sources.collected, linuxNext: sources.linuxNext, firmwareRelease: sources.firmwareRelease, omarchy: { channel: OMARCHY_CHANNEL, kernel: channel.kernel, systemd: channel.systemd, kernelBase, systemdRelease, channels: sources.omarchy.channels }, summary, models: rows, nvidia, unmatched }, null, 2) + '\n',
 );
 console.log(summary);
 console.log(`unmatched: ${unmatched.deviceTrees.length} device trees, ${unmatched.ids.length} ID entries, ${unmatched.firmware.length} firmware folders, ${unmatched.acpi.length} ACPI dumps`);

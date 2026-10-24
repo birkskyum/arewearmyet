@@ -1,6 +1,7 @@
 {
-  "collected": "2026-10-24T20:12:44.827Z",
+  "collected": "2026-10-24T21:54:36.688Z",
   "linuxNext": "20261023",
+  "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "rc",
     "kernel": "7.2.8-20",
@@ -36,7 +37,7 @@
     "notYet": 68,
     "deviceTree": 22,
     "ids": 29,
-    "firmware": 3,
+    "firmware": 1,
     "acpiNeeded": 61,
     "acpi": 9
   },
@@ -69,6 +70,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -79,6 +81,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -114,6 +117,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -124,6 +128,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -156,6 +161,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -166,6 +172,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -202,6 +209,7 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -215,6 +223,7 @@
           "compatible": "acer,swift-sf14-11",
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [
             {
               "file": "x1p64100-acer-swift-sf14-11.json",
@@ -257,6 +266,7 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -272,6 +282,7 @@
           "compatible": "acer,swift-sfa14-11",
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [
             {
               "file": "x1e78100-acer-sfa14-11.json",
@@ -314,6 +325,7 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -327,6 +339,7 @@
           "compatible": "acer,swift-go14-01",
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [
             {
               "file": "x1p42100-acer-swift-go14-01.json",
@@ -368,6 +381,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -378,6 +392,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -411,6 +426,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -421,6 +437,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -454,6 +471,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -464,6 +482,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -496,6 +515,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -506,6 +526,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -540,6 +561,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -550,6 +572,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -586,6 +609,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": true,
         "firmwareDownload": null,
         "firmwareFolders": [
@@ -598,6 +622,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -642,6 +667,20 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8380.mbn",
+          "qcvss8380.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf",
+          "qcdxkmsucpurwa.mbn",
+          "qcvss8380.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": true,
         "firmwareDownload": null,
         "firmwareFolders": [
@@ -666,6 +705,14 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/qcvss8380.mbn",
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/qcadsp8380.mbn",
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/adsp_dtbs.elf",
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/qccdsp8380.mbn",
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1e80100-asus-vivobook-s15.json",
@@ -695,6 +742,14 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/qcvss8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1p42100-asus-vivobook-s15.json",
@@ -742,6 +797,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -752,6 +808,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -784,6 +841,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -794,6 +852,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -826,6 +885,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -836,6 +896,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -869,6 +930,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -879,6 +941,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -911,6 +974,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -921,6 +985,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -953,6 +1018,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -963,6 +1029,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -996,6 +1063,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -1008,6 +1076,7 @@
           "chip": "X1-26-100",
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -1045,6 +1114,18 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8380.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf",
+          "qcdxkmsucpurwa.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": true,
         "firmwareDownload": null,
         "firmwareFolders": [
@@ -1067,6 +1148,13 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/ASUSTeK/zenbook-a14/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+            "qcom/x1e80100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+            "qcom/x1e80100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+            "qcom/x1e80100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1e80100-asus-zenbook-a14.json",
@@ -1090,6 +1178,13 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1e80100-asus-zenbook-a14-oled.json",
@@ -1113,6 +1208,13 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1p42100-asus-zenbook-a14.json",
@@ -1156,6 +1258,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -1166,6 +1269,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -1199,6 +1303,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -1209,6 +1314,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -1242,6 +1348,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -1252,6 +1359,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -1286,6 +1394,12 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcadsp8480.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8480.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": true,
         "firmwareDownload": null,
         "firmwareFolders": [
@@ -1305,6 +1419,12 @@
             "inNext": true,
             "inOmarchy": false
           },
+          "firmwareNeeded": [
+            "qcom/glymur/ASUSTeK/UX3407NA/qcadsp8480.mbn",
+            "qcom/glymur/ASUSTeK/UX3407NA/adsp_dtbs.elf",
+            "qcom/glymur/ASUSTeK/UX3407NA/qccdsp8480.mbn",
+            "qcom/glymur/ASUSTeK/UX3407NA/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "glymur-asus-zenbook-a14-ux3407na.json",
@@ -1348,6 +1468,14 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcadsp8480.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8480.mbn",
+          "cdsp_dtbs.elf",
+          "soccp.mbn",
+          "soccp_dtb.mbn"
+        ],
         "firmwareAudioOnly": true,
         "firmwareDownload": null,
         "firmwareFolders": [
@@ -1369,6 +1497,14 @@
             "inNext": true,
             "inOmarchy": false
           },
+          "firmwareNeeded": [
+            "qcom/glymur/ASUSTeK/UX3607OA/qcadsp8480.mbn",
+            "qcom/glymur/ASUSTeK/UX3607OA/adsp_dtbs.elf",
+            "qcom/glymur/ASUSTeK/UX3607OA/qccdsp8480.mbn",
+            "qcom/glymur/ASUSTeK/UX3607OA/cdsp_dtbs.elf",
+            "qcom/glymur/ASUSTeK/UX3607OA/soccp.mbn",
+            "qcom/glymur/ASUSTeK/UX3607OA/soccp_dtb.mbn"
+          ],
           "ids": [
             {
               "file": "glymur-asus-zenbook-a16-ux3607oa.json",
@@ -1414,6 +1550,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -1427,6 +1564,7 @@
           "chip": "X1P-42-100",
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -1469,6 +1607,14 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8380.mbn",
+          "qcvss8380.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": true,
         "firmwareDownload": null,
         "firmwareFolders": [
@@ -1490,6 +1636,14 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/qcvss8380.mbn",
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/qcadsp8380.mbn",
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/adsp_dtbs.elf",
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/qccdsp8380.mbn",
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1e80100-dell-inspiron-14-plus-7441.json",
@@ -1540,6 +1694,7 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -1554,6 +1709,7 @@
           "compatible": "dell,latitude-5455",
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [
             {
               "file": "x1p64100-dell-latitude-5455.json",
@@ -1598,6 +1754,14 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8380.mbn",
+          "qcvss8380.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": true,
         "firmwareDownload": null,
         "firmwareFolders": [
@@ -1619,6 +1783,14 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/dell/latitude-7455/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/dell/latitude-7455/qcvss8380.mbn",
+            "qcom/x1e80100/dell/latitude-7455/qcadsp8380.mbn",
+            "qcom/x1e80100/dell/latitude-7455/adsp_dtbs.elf",
+            "qcom/x1e80100/dell/latitude-7455/qccdsp8380.mbn",
+            "qcom/x1e80100/dell/latitude-7455/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1e80100-dell-latitude-7455.json",
@@ -1662,7 +1834,10 @@
         "firstRelease": "v6.13",
         "devicetreePosted": null,
         "ids": "listed",
-        "firmware": "linux-firmware",
+        "firmware": "partial",
+        "firmwareMissing": [
+          "qcvss8380.mbn"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [
@@ -1684,6 +1859,14 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/dell/xps13-9345/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/dell/xps13-9345/qcvss8380.mbn",
+            "qcom/x1e80100/dell/xps13-9345/qcadsp8380.mbn",
+            "qcom/x1e80100/dell/xps13-9345/adsp_dtbs.elf",
+            "qcom/x1e80100/dell/xps13-9345/qccdsp8380.mbn",
+            "qcom/x1e80100/dell/xps13-9345/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1e80100-dell-xps13-9345.json",
@@ -1727,6 +1910,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -1737,6 +1921,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -1773,6 +1958,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -1783,6 +1969,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -1817,6 +2004,14 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8380.mbn",
+          "qcvss8380.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -1836,6 +2031,14 @@
             "inNext": true,
             "inOmarchy": false
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/HONOR/MRO-XXX/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/HONOR/MRO-XXX/qcvss8380.mbn",
+            "qcom/x1e80100/HONOR/MRO-XXX/qcadsp8380.mbn",
+            "qcom/x1e80100/HONOR/MRO-XXX/adsp_dtbs.elf",
+            "qcom/x1e80100/HONOR/MRO-XXX/qccdsp8380.mbn",
+            "qcom/x1e80100/HONOR/MRO-XXX/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1e80100-honor-magicbook-art-14.json",
@@ -1881,6 +2084,7 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -1895,6 +2099,7 @@
           "compatible": "hp,elitebook-6-g1q",
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [
             {
               "file": "x1p42100-hp-elitebook-6-g1q.json",
@@ -1939,6 +2144,13 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8380.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -1958,6 +2170,13 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/hp/elitebook-ultra-g1q/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/hp/elitebook-ultra-g1q/qcadsp8380.mbn",
+            "qcom/x1e80100/hp/elitebook-ultra-g1q/adsp_dtbs.elf",
+            "qcom/x1e80100/hp/elitebook-ultra-g1q/qccdsp8380.mbn",
+            "qcom/x1e80100/hp/elitebook-ultra-g1q/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1e80100-hp-elitebook-ultra-g1q.json",
@@ -1999,6 +2218,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2009,6 +2229,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -2042,6 +2263,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2052,6 +2274,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -2085,6 +2308,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2095,6 +2319,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -2131,6 +2356,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2143,6 +2369,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -2179,6 +2406,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2189,6 +2417,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -2229,6 +2458,18 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8380.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf",
+          "qcdxkmsucpurwa.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": true,
         "firmwareDownload": null,
         "firmwareFolders": [
@@ -2251,6 +2492,13 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/hp/omnibook-x14/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/hp/omnibook-x14/qcadsp8380.mbn",
+            "qcom/x1e80100/hp/omnibook-x14/adsp_dtbs.elf",
+            "qcom/x1e80100/hp/omnibook-x14/qccdsp8380.mbn",
+            "qcom/x1e80100/hp/omnibook-x14/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1e80100-hp-omnibook-x14.json",
@@ -2274,6 +2522,13 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1p42100/hp/omnibook-x14/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/hp/omnibook-x14/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-x14/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-x14/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-x14/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1p42100-hp-omnibook-x14.json",
@@ -2316,6 +2571,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2326,6 +2582,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -2360,6 +2617,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2370,6 +2628,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -2409,6 +2668,14 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcadsp8480.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8480.mbn",
+          "cdsp_dtbs.elf",
+          "soccp.mbn",
+          "soccp_dtb.mbn"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2425,6 +2692,14 @@
             "inNext": true,
             "inOmarchy": false
           },
+          "firmwareNeeded": [
+            "qcom/glymur/hp/elitebook-x-g2q/qcadsp8480.mbn",
+            "qcom/glymur/hp/elitebook-x-g2q/adsp_dtbs.elf",
+            "qcom/glymur/hp/elitebook-x-g2q/qccdsp8480.mbn",
+            "qcom/glymur/hp/elitebook-x-g2q/cdsp_dtbs.elf",
+            "qcom/glymur/hp/elitebook-x-g2q/soccp.mbn",
+            "qcom/glymur/hp/elitebook-x-g2q/soccp_dtb.mbn"
+          ],
           "ids": [
             {
               "file": "glymur-hp-elitebook-x-g2q.json",
@@ -2466,6 +2741,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2476,6 +2752,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -2508,6 +2785,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2518,6 +2796,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -2554,6 +2833,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2564,6 +2844,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -2601,6 +2882,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2611,6 +2893,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -2647,6 +2930,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2657,6 +2941,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -2693,6 +2978,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2703,6 +2989,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -2739,6 +3026,14 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcvss8380.mbn",
+          "qcdxkmsuc8380.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": true,
         "firmwareDownload": null,
         "firmwareFolders": [
@@ -2761,6 +3056,14 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/LENOVO/91B6/qcvss8380.mbn",
+            "qcom/x1e80100/LENOVO/91B6/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/LENOVO/91B6/qcadsp8380.mbn",
+            "qcom/x1e80100/LENOVO/91B6/adsp_dtbs.elf",
+            "qcom/x1e80100/LENOVO/91B6/qccdsp8380.mbn",
+            "qcom/x1e80100/LENOVO/91B6/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "outcome": "manual",
           "reports": []
@@ -2771,6 +3074,7 @@
           "compatible": "lenovo,purwa-ideacentre-mini-01q8x10",
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [
             {
               "file": "purwa-lenovo-ideacentre-mini-01q8x10.json",
@@ -2814,6 +3118,7 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2828,6 +3133,7 @@
           "compatible": "lenovo,ideapad-5-2in1",
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [
             {
               "file": "x1p42100-lenovo-ideapad-5-2in1.json",
@@ -2871,6 +3177,7 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2885,6 +3192,7 @@
           "compatible": "lenovo,ideapad-slim3",
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [
             {
               "file": "x126100-lenovo-ideapad-slim3.json",
@@ -2929,6 +3237,7 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2945,6 +3254,7 @@
           "compatible": "lenovo,ideapad-slim5x-oled",
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [
             {
               "file": "x1p42100-lenovo-ideapad-slim-5-oled.json",
@@ -2986,6 +3296,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -2996,6 +3307,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -3030,6 +3342,13 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsucpurwa.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -3049,6 +3368,13 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1p42100/LENOVO/21NH/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/21NH/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/21NH/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/21NH/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/21NH/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1p42100-lenovo-thinkbook-16.json",
@@ -3092,6 +3418,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -3102,6 +3429,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -3137,6 +3465,7 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "linux-firmware",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [
@@ -3160,6 +3489,14 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/LENOVO/21N1/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/LENOVO/21N1/qcvss8380.mbn",
+            "qcom/x1e80100/LENOVO/21N1/qcadsp8380.mbn",
+            "qcom/x1e80100/LENOVO/21N1/adsp_dtbs.elf",
+            "qcom/x1e80100/LENOVO/21N1/qccdsp8380.mbn",
+            "qcom/x1e80100/LENOVO/21N1/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1e78100-lenovo-thinkpad-t14s-lcd.json",
@@ -3190,6 +3527,14 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/LENOVO/21N1/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/LENOVO/21N1/qcvss8380.mbn",
+            "qcom/x1e80100/LENOVO/21N1/qcadsp8380.mbn",
+            "qcom/x1e80100/LENOVO/21N1/adsp_dtbs.elf",
+            "qcom/x1e80100/LENOVO/21N1/qccdsp8380.mbn",
+            "qcom/x1e80100/LENOVO/21N1/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1e78100-lenovo-thinkpad-t14s-oled.json",
@@ -3239,7 +3584,10 @@
         "firstRelease": "v6.11",
         "devicetreePosted": null,
         "ids": "listed",
-        "firmware": "linux-firmware",
+        "firmware": "next-release",
+        "firmwareMissing": [
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [
@@ -3262,6 +3610,14 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/LENOVO/83ED/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/LENOVO/83ED/qcvss8380.mbn",
+            "qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn",
+            "qcom/x1e80100/LENOVO/83ED/adsp_dtbs.elf",
+            "qcom/x1e80100/LENOVO/83ED/qccdsp8380.mbn",
+            "qcom/x1e80100/LENOVO/83ED/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1e80100-lenovo-yoga-slim7x.json",
@@ -3310,6 +3666,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -3320,6 +3677,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -3354,6 +3712,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -3364,6 +3723,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -3398,6 +3758,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -3408,6 +3769,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -3440,6 +3802,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -3450,6 +3813,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -3486,6 +3850,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": true,
         "firmwareDownload": null,
         "firmwareFolders": [
@@ -3498,6 +3863,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -3535,6 +3901,12 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcadsp8480.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8480.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -3554,6 +3926,12 @@
             "inNext": true,
             "inOmarchy": false
           },
+          "firmwareNeeded": [
+            "qcom/glymur/LENOVO/83QR/qcadsp8480.mbn",
+            "qcom/glymur/LENOVO/83QR/adsp_dtbs.elf",
+            "qcom/glymur/LENOVO/83QR/qccdsp8480.mbn",
+            "qcom/glymur/LENOVO/83QR/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "glymur-lenovo-yoga-slim7x.json",
@@ -3599,6 +3977,14 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8380.mbn",
+          "qcvss8380.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -3620,6 +4006,14 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/Medion/sprchrgd-14-s1/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/Medion/sprchrgd-14-s1/qcvss8380.mbn",
+            "qcom/x1e80100/Medion/sprchrgd-14-s1/qcadsp8380.mbn",
+            "qcom/x1e80100/Medion/sprchrgd-14-s1/adsp_dtbs.elf",
+            "qcom/x1e80100/Medion/sprchrgd-14-s1/qccdsp8380.mbn",
+            "qcom/x1e80100/Medion/sprchrgd-14-s1/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1e78100-medion-sprchrgd-14s1-elite.json",
@@ -3669,6 +4063,13 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8380.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -3687,6 +4088,13 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/microsoft/Romulus/qcadsp8380.mbn",
+            "qcom/x1e80100/microsoft/Romulus/adsp_dtbs.elf",
+            "qcom/x1e80100/microsoft/Romulus/qccdsp8380.mbn",
+            "qcom/x1e80100/microsoft/Romulus/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1e80100-microsoft-romulus13.json",
@@ -3741,6 +4149,13 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8380.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -3760,6 +4175,13 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/microsoft/Romulus/qcadsp8380.mbn",
+            "qcom/x1e80100/microsoft/Romulus/adsp_dtbs.elf",
+            "qcom/x1e80100/microsoft/Romulus/qccdsp8380.mbn",
+            "qcom/x1e80100/microsoft/Romulus/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1e80100-microsoft-romulus15.json",
@@ -3807,6 +4229,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -3817,6 +4240,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -3862,6 +4286,13 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8380.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtb.mbn",
+          "qccdsp8380.mbn",
+          "cdsp_dtb.mbn"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -3882,6 +4313,13 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/microsoft/Denali/qcadsp8380.mbn",
+            "qcom/x1e80100/microsoft/Denali/adsp_dtb.mbn",
+            "qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn",
+            "qcom/x1e80100/microsoft/Denali/cdsp_dtb.mbn"
+          ],
           "ids": [
             {
               "file": "x1e80100-microsoft-denali.json",
@@ -3912,6 +4350,13 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/microsoft/Denali/qcadsp8380.mbn",
+            "qcom/x1e80100/microsoft/Denali/adsp_dtb.mbn",
+            "qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn",
+            "qcom/x1e80100/microsoft/Denali/cdsp_dtb.mbn"
+          ],
           "ids": [],
           "outcome": "manual",
           "reports": []
@@ -3947,6 +4392,13 @@
         "devicetreePosted": null,
         "ids": "mismatch",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsucpurwa.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -3975,6 +4427,13 @@
             "inNext": true,
             "inOmarchy": false
           },
+          "firmwareNeeded": [
+            "qcom/x1p42100/Microsoft/Surface12/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/Microsoft/Surface12/qcadsp8380.mbn",
+            "qcom/x1p42100/Microsoft/Surface12/adsp_dtbs.elf",
+            "qcom/x1p42100/Microsoft/Surface12/qccdsp8380.mbn",
+            "qcom/x1p42100/Microsoft/Surface12/cdsp_dtbs.elf"
+          ],
           "outcome": "newer",
           "reports": []
         }
@@ -4008,6 +4467,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -4018,6 +4478,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -4054,6 +4515,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -4064,6 +4526,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -4099,6 +4562,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -4109,6 +4573,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -4143,6 +4608,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -4153,6 +4619,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -4191,6 +4658,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -4201,6 +4669,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -4235,6 +4704,13 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8380.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -4254,6 +4730,13 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/x1e80100/Thundercomm/DEVKIT/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/qcadsp8380.mbn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/adsp_dtbs.elf",
+            "qcom/x1e80100/Thundercomm/DEVKIT/qccdsp8380.mbn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1e001de-devkit.json",
@@ -4299,6 +4782,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -4309,6 +4793,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -4348,6 +4833,7 @@
         "devicetreePosted": "https://lore.kernel.org/linux-arm-msm/?q=galaxy+book4+edge",
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -4358,6 +4844,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -4394,6 +4881,7 @@
         "devicetreePosted": "https://lore.kernel.org/linux-arm-msm/?q=galaxy+book4+edge",
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -4406,6 +4894,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -4439,6 +4928,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -4449,6 +4939,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -4483,6 +4974,7 @@
         "devicetreePosted": null,
         "ids": "missing",
         "firmware": "windows",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -4493,6 +4985,7 @@
         {
           "computed": "none",
           "deviceTree": null,
+          "firmwareNeeded": [],
           "ids": [],
           "outcome": "none",
           "reports": []
@@ -4525,6 +5018,11 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8280.mbn",
+          "qcadsp8280.mbn",
+          "qccdsp8280.mbn"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -4543,6 +5041,11 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/sc8280xp/HUAWEI/gaokun3/qcdxkmsuc8280.mbn",
+            "qcom/sc8280xp/HUAWEI/gaokun3/qcadsp8280.mbn",
+            "qcom/sc8280xp/HUAWEI/gaokun3/qccdsp8280.mbn"
+          ],
           "ids": [
             {
               "file": "sc8280xp-huawei-gaokun3.json",
@@ -4585,6 +5088,7 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "linux-firmware",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [
@@ -4605,6 +5109,13 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn",
+            "qcom/sc8280xp/LENOVO/21BX/qcvss8280.mbn",
+            "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn",
+            "qcom/sc8280xp/LENOVO/21BX/qccdsp8280.mbn",
+            "qcom/sc8280xp/LENOVO/21BX/qcslpi8280.mbn"
+          ],
           "ids": [
             {
               "file": "sc8280xp-lenovo-thinkpad-x13s-21bx.json",
@@ -4660,6 +5171,11 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8280.mbn",
+          "qcadsp8280.mbn",
+          "qccdsp8280.mbn"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -4678,6 +5194,11 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcdxkmsuc8280.mbn",
+            "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcadsp8280.mbn",
+            "qcom/sc8280xp/MICROSOFT/SurfacePro9/qccdsp8280.mbn"
+          ],
           "ids": [
             {
               "file": "sc8280xp-microsoft-surface-pro-9-5G.json",
@@ -4719,6 +5240,11 @@
         "devicetreePosted": null,
         "ids": "listed",
         "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8280.mbn",
+          "qcadsp8280.mbn",
+          "qccdsp8280.mbn"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
@@ -4737,6 +5263,11 @@
             "inNext": true,
             "inOmarchy": true
           },
+          "firmwareNeeded": [
+            "qcom/sc8280xp/microsoft/blackrock/qcdxkmsuc8280.mbn",
+            "qcom/sc8280xp/microsoft/blackrock/qcadsp8280.mbn",
+            "qcom/sc8280xp/microsoft/blackrock/qccdsp8280.mbn"
+          ],
           "ids": [
             {
               "file": "sc8280xp-microsoft-blackrock.json",

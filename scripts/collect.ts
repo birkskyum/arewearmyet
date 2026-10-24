@@ -66,6 +66,17 @@ function parseDts(source: string): { model?: string; compatible: string[] } {
   return { model, compatible: [...compatibleList.matchAll(/"([^"]+)"/g)].map((m) => m[1]) };
 }
 
+// The vendor-specific firmware a device tree loads, from its firmware-name lines and those of
+// the .dtsi files it includes from the same folder
+function dtFirmware(dir: string, file: string, seen = new Set<string>()): string[] {
+  if (seen.has(file) || !existsSync(join(dir, file))) return [];
+  seen.add(file);
+  const source = readFileSync(join(dir, file), 'utf8');
+  const names = [...source.matchAll(/firmware-name\s*=\s*([^;]+);/g)].flatMap((m) => [...m[1].matchAll(/"([^"]+)"/g)].map((n) => n[1]));
+  const included = [...source.matchAll(/^#include "([^"]+\.dtsi)"/gm)].flatMap((m) => dtFirmware(dir, m[1], seen));
+  return [...new Set([...names, ...included])].filter((name) => name.startsWith('qcom/') && name.split('/').length >= 4);
+}
+
 // linux-next has no GitHub mirror, so take its device tree folder from a sparse clone
 function linuxNextCheckout(): string {
   const dir = join(tmpdir(), 'arewearmyet-linux-next');
@@ -96,7 +107,8 @@ async function collectDeviceTrees() {
     deviceTrees: names.map((file) => {
       const inNext = nextNames.includes(file);
       const source = inNext ? readFileSync(join(next, DT_DIR, file), 'utf8') : '';
-      return { file, firstRelease: firstRelease.get(file) ?? null, inNext, ...parseDts(source) };
+      const firmware = inNext ? dtFirmware(join(next, DT_DIR), file) : [];
+      return { file, firstRelease: firstRelease.get(file) ?? null, inNext, ...parseDts(source), firmware };
     }),
   };
 }
@@ -126,23 +138,33 @@ async function collectHardwareIds() {
   return { systemd, stubble };
 }
 
-async function collectFirmware() {
-  const folders: { path: string; files: string[] }[] = [];
+const LINUX_FIRMWARE = 'https://gitlab.com/api/v4/projects/kernel-firmware%2Flinux-firmware';
+
+// Every Qualcomm laptop file at one linux-firmware ref, counting the symlinks WHENCE creates
+async function firmwareFiles(ref: string): Promise<string[]> {
+  const files: string[] = [];
   for (const soc of FIRMWARE_SOCS) {
-    const entries: { type: string; path: string }[] = [];
     for (let page = 1; ; page++) {
-      const batch = await getJson(`https://gitlab.com/api/v4/projects/kernel-firmware%2Flinux-firmware/repository/tree?path=qcom/${soc}&recursive=true&per_page=100&page=${page}`);
+      const batch: { type: string; path: string }[] = await getJson(`${LINUX_FIRMWARE}/repository/tree?path=qcom/${soc}&recursive=true&per_page=100&page=${page}&ref=${ref}`);
       if (!batch?.length) break;
-      entries.push(...batch);
-    }
-    const blobs = entries.filter((entry) => entry.type === 'blob').map((entry) => entry.path);
-    // A model's folder is one that holds files, below qcom/<soc>/<vendor>/
-    for (const dir of new Set(blobs.map((path) => path.slice(0, path.lastIndexOf('/'))))) {
-      if (dir.split('/').length < 4) continue;
-      folders.push({ path: dir, files: blobs.filter((path) => path.startsWith(`${dir}/`)).map((path) => path.slice(dir.length + 1)) });
+      files.push(...batch.filter((entry) => entry.type === 'blob').map((entry) => entry.path));
     }
   }
-  return folders.sort((a, b) => a.path.localeCompare(b.path));
+  const whence = await (await fetch(`https://gitlab.com/kernel-firmware/linux-firmware/-/raw/${ref}/WHENCE`)).text();
+  const links = [...whence.matchAll(/^Link: (qcom\/\S+) ->/gm)].map((m) => m[1]).filter((path) => FIRMWARE_SOCS.some((soc) => path.startsWith(`qcom/${soc}/`)));
+  return [...new Set([...files, ...links])].sort();
+}
+
+async function collectFirmware() {
+  // Distributions ship linux-firmware releases, which are dated tags
+  const tags: { name: string }[] = await getJson(`${LINUX_FIRMWARE}/repository/tags?order_by=name&sort=desc&per_page=20`);
+  const release = tags.map((tag) => tag.name).find((name) => /^\d{8}$/.test(name))!;
+  const [main, released] = await Promise.all([firmwareFiles('main'), firmwareFiles(release)]);
+  // A model's folder is one that holds files, below qcom/<soc>/<vendor>/
+  const folders = [...new Set(main.map((path) => path.slice(0, path.lastIndexOf('/'))))]
+    .filter((dir) => dir.split('/').length >= 4)
+    .map((dir) => ({ path: dir, files: main.filter((path) => path.startsWith(`${dir}/`)).map((path) => path.slice(dir.length + 1)) }));
+  return { release, firmwareMain: main, firmwareReleased: released, folders: folders.sort((a, b) => a.path.localeCompare(b.path)) };
 }
 
 // The version of a package in a pacman repository database, or undefined if it isn't there
@@ -202,6 +224,6 @@ const [kernel, hardwareIds, firmware, acpiDumps, omarchy] = await Promise.all([c
 mkdirSync('data', { recursive: true });
 writeFileSync(
   'data/sources.json',
-  JSON.stringify({ collected: new Date().toISOString(), kernelReleases: KERNEL_RELEASES, systemdReleases: SYSTEMD_RELEASES, ...kernel, ...hardwareIds, firmware, acpiDumps, omarchy }, null, 2) + '\n',
+  JSON.stringify({ collected: new Date().toISOString(), kernelReleases: KERNEL_RELEASES, systemdReleases: SYSTEMD_RELEASES, ...kernel, ...hardwareIds, firmwareRelease: firmware.release, firmware: firmware.folders, firmwareMain: firmware.firmwareMain, firmwareReleased: firmware.firmwareReleased, acpiDumps, omarchy }, null, 2) + '\n',
 );
-console.log(`Omarchy ${omarchy.channels.map((c) => `${c.name} ${c.kernel}/${c.systemd}`).join(', ')}, recipe device trees ${omarchy.kernelAddedDeviceTrees.length}; device trees ${kernel.deviceTrees.length}, systemd IDs ${hardwareIds.systemd.length}, stubble ${hardwareIds.stubble.length}, firmware folders ${firmware.length}, ACPI dumps ${acpiDumps.length}`);
+console.log(`Omarchy ${omarchy.channels.map((c) => `${c.name} ${c.kernel}/${c.systemd}`).join(', ')}, recipe device trees ${omarchy.kernelAddedDeviceTrees.length}; device trees ${kernel.deviceTrees.length}, systemd IDs ${hardwareIds.systemd.length}, stubble ${hardwareIds.stubble.length}, firmware folders ${firmware.folders.length} (release ${firmware.release}), ACPI dumps ${acpiDumps.length}`);

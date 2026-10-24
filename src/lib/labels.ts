@@ -32,8 +32,10 @@ const STATES = {
     wanted: { label: 'Wanted', tone: 'wanted', meaning: `Not in systemd's list yet.` },
   },
   firmware: {
-    'linux-firmware': { label: 'linux-firmware', tone: 'good', meaning: 'Ships in linux-firmware, so nothing has to be copied.' },
+    'linux-firmware': { label: 'linux-firmware', tone: 'good', meaning: `Every file its device tree loads ships in linux-firmware's newest release, so nothing has to be copied.` },
     download: { label: 'Vendor download', tone: 'good', meaning: `The vendor's driver download has it, so it works even after Windows is wiped.` },
+    'next-release': { label: 'Next release', tone: 'close', meaning: `Merged into linux-firmware, and coming with its next release.` },
+    partial: { label: 'Partly', tone: 'close', meaning: 'linux-firmware has some of the files its device tree loads; the rest still come from Windows.' },
     windows: { label: 'Windows only', tone: 'close', meaning: `Copied from the laptop's own Windows today. A link to the vendor's driver download would cover laptops whose Windows is gone.` },
   },
   acpi: {
@@ -111,8 +113,14 @@ export function idsCell(model: Model): Cell {
 
 export function firmwareCell(model: Model): Cell {
   const key = model.upstream.firmware;
-  const audio = model.upstream.firmwareAudioOnly ? ' linux-firmware already has its audio setup file.' : '';
-  return cell(STATES.firmware, key, { title: (STATES.firmware[key as keyof typeof STATES.firmware] as State).meaning + audio, href: key === 'download' ? (model.upstream.firmwareDownload ?? undefined) : undefined });
+  const meaning = (STATES.firmware[key as keyof typeof STATES.firmware] as State).meaning;
+  const missing = model.upstream.firmwareMissing;
+  const detail =
+    key === 'next-release' ? ` The release after ${status.firmwareRelease} adds ${missing.join(', ')}.` :
+    key === 'partial' ? ` Still missing: ${missing.join(', ')}.` :
+    key === 'linux-firmware' ? ` Checked against release ${status.firmwareRelease}.` :
+    model.upstream.firmwareAudioOnly ? ' linux-firmware already has its audio setup file.' : '';
+  return cell(STATES.firmware, key, { title: meaning + detail, href: key === 'download' ? (model.upstream.firmwareDownload ?? undefined) : undefined });
 }
 
 export function acpiCell(model: Model): Cell {

@@ -1,5 +1,5 @@
 {
-  "collected": "2026-10-24T20:12:44.827Z",
+  "collected": "2026-10-24T21:54:36.688Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -36,6 +36,12 @@
       "compatible": [
         "asus,zenbook-a14-ux3407na",
         "qcom,glymur"
+      ],
+      "firmware": [
+        "qcom/glymur/ASUSTeK/UX3407NA/qcadsp8480.mbn",
+        "qcom/glymur/ASUSTeK/UX3407NA/adsp_dtbs.elf",
+        "qcom/glymur/ASUSTeK/UX3407NA/qccdsp8480.mbn",
+        "qcom/glymur/ASUSTeK/UX3407NA/cdsp_dtbs.elf"
       ]
     },
     {
@@ -46,6 +52,14 @@
       "compatible": [
         "asus,zenbook-a16-ux3607oa",
         "qcom,glymur"
+      ],
+      "firmware": [
+        "qcom/glymur/ASUSTeK/UX3607OA/qcadsp8480.mbn",
+        "qcom/glymur/ASUSTeK/UX3607OA/adsp_dtbs.elf",
+        "qcom/glymur/ASUSTeK/UX3607OA/qccdsp8480.mbn",
+        "qcom/glymur/ASUSTeK/UX3607OA/cdsp_dtbs.elf",
+        "qcom/glymur/ASUSTeK/UX3607OA/soccp.mbn",
+        "qcom/glymur/ASUSTeK/UX3607OA/soccp_dtb.mbn"
       ]
     },
     {
@@ -56,7 +70,8 @@
       "compatible": [
         "qcom,glymur-crd",
         "qcom,glymur"
-      ]
+      ],
+      "firmware": []
     },
     {
       "file": "glymur-hp-elitebook-x-g2q.dts",
@@ -66,6 +81,14 @@
       "compatible": [
         "hp,elitebook-x-g2q",
         "qcom,glymur"
+      ],
+      "firmware": [
+        "qcom/glymur/hp/elitebook-x-g2q/qcadsp8480.mbn",
+        "qcom/glymur/hp/elitebook-x-g2q/adsp_dtbs.elf",
+        "qcom/glymur/hp/elitebook-x-g2q/qccdsp8480.mbn",
+        "qcom/glymur/hp/elitebook-x-g2q/cdsp_dtbs.elf",
+        "qcom/glymur/hp/elitebook-x-g2q/soccp.mbn",
+        "qcom/glymur/hp/elitebook-x-g2q/soccp_dtb.mbn"
       ]
     },
     {
@@ -76,6 +99,12 @@
       "compatible": [
         "lenovo,yoga-slim7x-gen11",
         "qcom,glymur"
+      ],
+      "firmware": [
+        "qcom/glymur/LENOVO/83QR/qcadsp8480.mbn",
+        "qcom/glymur/LENOVO/83QR/adsp_dtbs.elf",
+        "qcom/glymur/LENOVO/83QR/qccdsp8480.mbn",
+        "qcom/glymur/LENOVO/83QR/cdsp_dtbs.elf"
       ]
     },
     {
@@ -86,7 +115,8 @@
       "compatible": [
         "qcom,glymur-qcb",
         "qcom,glymur"
-      ]
+      ],
+      "firmware": []
     },
     {
       "file": "hamoa-advantech-som-db5830.dts",
@@ -98,7 +128,8 @@
         "advantech,som-6820",
         "qcom,iq-x7181-evk-som",
         "qcom,x1e80100"
-      ]
+      ],
+      "firmware": []
     },
     {
       "file": "hamoa-iot-evk.dts",
@@ -109,7 +140,8 @@
         "qcom,hamoa-iot-evk",
         "qcom,hamoa-iot-som",
         "qcom,x1e80100"
-      ]
+      ],
+      "firmware": []
     },
     {
       "file": "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
@@ -119,6 +151,14 @@
       "compatible": [
         "lenovo,ideacentre-mini-01q8x10",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/LENOVO/91B6/qcvss8380.mbn",
+        "qcom/x1e80100/LENOVO/91B6/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/LENOVO/91B6/qcadsp8380.mbn",
+        "qcom/x1e80100/LENOVO/91B6/adsp_dtbs.elf",
+        "qcom/x1e80100/LENOVO/91B6/qccdsp8380.mbn",
+        "qcom/x1e80100/LENOVO/91B6/cdsp_dtbs.elf"
       ]
     },
     {
@@ -130,7 +170,8 @@
         "qcom,purwa-iot-evk",
         "qcom,purwa-iot-som",
         "qcom,x1p42100"
-      ]
+      ],
+      "firmware": []
     },
     {
       "file": "sc8280xp-crd.dts",
@@ -140,7 +181,8 @@
       "compatible": [
         "qcom,sc8280xp-crd",
         "qcom,sc8280xp"
-      ]
+      ],
+      "firmware": []
     },
     {
       "file": "sc8280xp-huawei-gaokun3.dts",
@@ -150,6 +192,11 @@
       "compatible": [
         "huawei,gaokun3",
         "qcom,sc8280xp"
+      ],
+      "firmware": [
+        "qcom/sc8280xp/HUAWEI/gaokun3/qcdxkmsuc8280.mbn",
+        "qcom/sc8280xp/HUAWEI/gaokun3/qcadsp8280.mbn",
+        "qcom/sc8280xp/HUAWEI/gaokun3/qccdsp8280.mbn"
       ]
     },
     {
@@ -160,6 +207,13 @@
       "compatible": [
         "lenovo,thinkpad-x13s",
         "qcom,sc8280xp"
+      ],
+      "firmware": [
+        "qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn",
+        "qcom/sc8280xp/LENOVO/21BX/qcvss8280.mbn",
+        "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn",
+        "qcom/sc8280xp/LENOVO/21BX/qccdsp8280.mbn",
+        "qcom/sc8280xp/LENOVO/21BX/qcslpi8280.mbn"
       ]
     },
     {
@@ -170,6 +224,11 @@
       "compatible": [
         "microsoft,arcata",
         "qcom,sc8280xp"
+      ],
+      "firmware": [
+        "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcdxkmsuc8280.mbn",
+        "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcadsp8280.mbn",
+        "qcom/sc8280xp/MICROSOFT/SurfacePro9/qccdsp8280.mbn"
       ]
     },
     {
@@ -180,6 +239,11 @@
       "compatible": [
         "microsoft,blackrock",
         "qcom,sc8280xp"
+      ],
+      "firmware": [
+        "qcom/sc8280xp/microsoft/blackrock/qcdxkmsuc8280.mbn",
+        "qcom/sc8280xp/microsoft/blackrock/qcadsp8280.mbn",
+        "qcom/sc8280xp/microsoft/blackrock/qccdsp8280.mbn"
       ]
     },
     {
@@ -191,6 +255,13 @@
         "qcom,x1e001de-devkit",
         "qcom,x1e001de",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/Thundercomm/DEVKIT/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/Thundercomm/DEVKIT/qcadsp8380.mbn",
+        "qcom/x1e80100/Thundercomm/DEVKIT/adsp_dtbs.elf",
+        "qcom/x1e80100/Thundercomm/DEVKIT/qccdsp8380.mbn",
+        "qcom/x1e80100/Thundercomm/DEVKIT/cdsp_dtbs.elf"
       ]
     },
     {
@@ -203,6 +274,14 @@
         "lenovo,thinkpad-t14s",
         "qcom,x1e78100",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/LENOVO/21N1/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/LENOVO/21N1/qcvss8380.mbn",
+        "qcom/x1e80100/LENOVO/21N1/qcadsp8380.mbn",
+        "qcom/x1e80100/LENOVO/21N1/adsp_dtbs.elf",
+        "qcom/x1e80100/LENOVO/21N1/qccdsp8380.mbn",
+        "qcom/x1e80100/LENOVO/21N1/cdsp_dtbs.elf"
       ]
     },
     {
@@ -215,6 +294,14 @@
         "lenovo,thinkpad-t14s",
         "qcom,x1e78100",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/LENOVO/21N1/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/LENOVO/21N1/qcvss8380.mbn",
+        "qcom/x1e80100/LENOVO/21N1/qcadsp8380.mbn",
+        "qcom/x1e80100/LENOVO/21N1/adsp_dtbs.elf",
+        "qcom/x1e80100/LENOVO/21N1/qccdsp8380.mbn",
+        "qcom/x1e80100/LENOVO/21N1/cdsp_dtbs.elf"
       ]
     },
     {
@@ -225,6 +312,14 @@
       "compatible": [
         "asus,vivobook-s15",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/ASUSTeK/vivobook-s15/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/ASUSTeK/vivobook-s15/qcvss8380.mbn",
+        "qcom/x1e80100/ASUSTeK/vivobook-s15/qcadsp8380.mbn",
+        "qcom/x1e80100/ASUSTeK/vivobook-s15/adsp_dtbs.elf",
+        "qcom/x1e80100/ASUSTeK/vivobook-s15/qccdsp8380.mbn",
+        "qcom/x1e80100/ASUSTeK/vivobook-s15/cdsp_dtbs.elf"
       ]
     },
     {
@@ -235,6 +330,13 @@
       "compatible": [
         "asus,zenbook-a14-ux3407ra",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/ASUSTeK/zenbook-a14/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+        "qcom/x1e80100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+        "qcom/x1e80100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+        "qcom/x1e80100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf"
       ]
     },
     {
@@ -245,7 +347,8 @@
       "compatible": [
         "qcom,x1e80100-crd",
         "qcom,x1e80100"
-      ]
+      ],
+      "firmware": []
     },
     {
       "file": "x1e80100-dell-inspiron-14-plus-7441.dts",
@@ -255,6 +358,14 @@
       "compatible": [
         "dell,inspiron-14-plus-7441",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/dell/inspiron-14-plus-7441/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/dell/inspiron-14-plus-7441/qcvss8380.mbn",
+        "qcom/x1e80100/dell/inspiron-14-plus-7441/qcadsp8380.mbn",
+        "qcom/x1e80100/dell/inspiron-14-plus-7441/adsp_dtbs.elf",
+        "qcom/x1e80100/dell/inspiron-14-plus-7441/qccdsp8380.mbn",
+        "qcom/x1e80100/dell/inspiron-14-plus-7441/cdsp_dtbs.elf"
       ]
     },
     {
@@ -265,6 +376,14 @@
       "compatible": [
         "dell,latitude-7455",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/dell/latitude-7455/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/dell/latitude-7455/qcvss8380.mbn",
+        "qcom/x1e80100/dell/latitude-7455/qcadsp8380.mbn",
+        "qcom/x1e80100/dell/latitude-7455/adsp_dtbs.elf",
+        "qcom/x1e80100/dell/latitude-7455/qccdsp8380.mbn",
+        "qcom/x1e80100/dell/latitude-7455/cdsp_dtbs.elf"
       ]
     },
     {
@@ -275,6 +394,14 @@
       "compatible": [
         "dell,xps13-9345",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/dell/xps13-9345/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/dell/xps13-9345/qcvss8380.mbn",
+        "qcom/x1e80100/dell/xps13-9345/qcadsp8380.mbn",
+        "qcom/x1e80100/dell/xps13-9345/adsp_dtbs.elf",
+        "qcom/x1e80100/dell/xps13-9345/qccdsp8380.mbn",
+        "qcom/x1e80100/dell/xps13-9345/cdsp_dtbs.elf"
       ]
     },
     {
@@ -285,6 +412,14 @@
       "compatible": [
         "honor,magicbook-art-14-snapdragon",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/HONOR/MRO-XXX/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/HONOR/MRO-XXX/qcvss8380.mbn",
+        "qcom/x1e80100/HONOR/MRO-XXX/qcadsp8380.mbn",
+        "qcom/x1e80100/HONOR/MRO-XXX/adsp_dtbs.elf",
+        "qcom/x1e80100/HONOR/MRO-XXX/qccdsp8380.mbn",
+        "qcom/x1e80100/HONOR/MRO-XXX/cdsp_dtbs.elf"
       ]
     },
     {
@@ -295,6 +430,13 @@
       "compatible": [
         "hp,elitebook-ultra-g1q",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/hp/elitebook-ultra-g1q/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/hp/elitebook-ultra-g1q/qcadsp8380.mbn",
+        "qcom/x1e80100/hp/elitebook-ultra-g1q/adsp_dtbs.elf",
+        "qcom/x1e80100/hp/elitebook-ultra-g1q/qccdsp8380.mbn",
+        "qcom/x1e80100/hp/elitebook-ultra-g1q/cdsp_dtbs.elf"
       ]
     },
     {
@@ -305,6 +447,13 @@
       "compatible": [
         "hp,omnibook-x14",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/hp/omnibook-x14/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/hp/omnibook-x14/qcadsp8380.mbn",
+        "qcom/x1e80100/hp/omnibook-x14/adsp_dtbs.elf",
+        "qcom/x1e80100/hp/omnibook-x14/qccdsp8380.mbn",
+        "qcom/x1e80100/hp/omnibook-x14/cdsp_dtbs.elf"
       ]
     },
     {
@@ -315,6 +464,14 @@
       "compatible": [
         "lenovo,yoga-slim7x",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/LENOVO/83ED/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/LENOVO/83ED/qcvss8380.mbn",
+        "qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn",
+        "qcom/x1e80100/LENOVO/83ED/adsp_dtbs.elf",
+        "qcom/x1e80100/LENOVO/83ED/qccdsp8380.mbn",
+        "qcom/x1e80100/LENOVO/83ED/cdsp_dtbs.elf"
       ]
     },
     {
@@ -326,6 +483,14 @@
         "medion,sprchrgd14s1",
         "qcom,x1e78100",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/Medion/sprchrgd-14-s1/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/Medion/sprchrgd-14-s1/qcvss8380.mbn",
+        "qcom/x1e80100/Medion/sprchrgd-14-s1/qcadsp8380.mbn",
+        "qcom/x1e80100/Medion/sprchrgd-14-s1/adsp_dtbs.elf",
+        "qcom/x1e80100/Medion/sprchrgd-14-s1/qccdsp8380.mbn",
+        "qcom/x1e80100/Medion/sprchrgd-14-s1/cdsp_dtbs.elf"
       ]
     },
     {
@@ -337,6 +502,13 @@
         "microsoft,denali-oled",
         "microsoft,denali",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/microsoft/Denali/qcadsp8380.mbn",
+        "qcom/x1e80100/microsoft/Denali/adsp_dtb.mbn",
+        "qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn",
+        "qcom/x1e80100/microsoft/Denali/cdsp_dtb.mbn"
       ]
     },
     {
@@ -347,6 +519,13 @@
       "compatible": [
         "microsoft,romulus13",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/microsoft/Romulus/qcadsp8380.mbn",
+        "qcom/x1e80100/microsoft/Romulus/adsp_dtbs.elf",
+        "qcom/x1e80100/microsoft/Romulus/qccdsp8380.mbn",
+        "qcom/x1e80100/microsoft/Romulus/cdsp_dtbs.elf"
       ]
     },
     {
@@ -357,6 +536,13 @@
       "compatible": [
         "microsoft,romulus15",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/microsoft/Romulus/qcadsp8380.mbn",
+        "qcom/x1e80100/microsoft/Romulus/adsp_dtbs.elf",
+        "qcom/x1e80100/microsoft/Romulus/qccdsp8380.mbn",
+        "qcom/x1e80100/microsoft/Romulus/cdsp_dtbs.elf"
       ]
     },
     {
@@ -367,7 +553,8 @@
       "compatible": [
         "qcom,x1e80100-qcp",
         "qcom,x1e80100"
-      ]
+      ],
+      "firmware": []
     },
     {
       "file": "x1p42100-asus-vivobook-s15.dts",
@@ -377,6 +564,14 @@
       "compatible": [
         "asus,vivobook-s15-x1p4",
         "qcom,x1p42100"
+      ],
+      "firmware": [
+        "qcom/x1p42100/ASUSTeK/vivobook-s15/qcdxkmsucpurwa.mbn",
+        "qcom/x1p42100/ASUSTeK/vivobook-s15/qcvss8380.mbn",
+        "qcom/x1p42100/ASUSTeK/vivobook-s15/qcadsp8380.mbn",
+        "qcom/x1p42100/ASUSTeK/vivobook-s15/adsp_dtbs.elf",
+        "qcom/x1p42100/ASUSTeK/vivobook-s15/qccdsp8380.mbn",
+        "qcom/x1p42100/ASUSTeK/vivobook-s15/cdsp_dtbs.elf"
       ]
     },
     {
@@ -388,6 +583,13 @@
         "asus,zenbook-a14-ux3407qa-lcd",
         "asus,zenbook-a14-ux3407qa",
         "qcom,x1p42100"
+      ],
+      "firmware": [
+        "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn",
+        "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+        "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+        "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+        "qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf"
       ]
     },
     {
@@ -399,6 +601,13 @@
         "asus,zenbook-a14-ux3407qa-oled",
         "asus,zenbook-a14-ux3407qa",
         "qcom,x1p42100"
+      ],
+      "firmware": [
+        "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn",
+        "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+        "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+        "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+        "qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf"
       ]
     },
     {
@@ -409,7 +618,8 @@
       "compatible": [
         "qcom,x1p42100-crd",
         "qcom,x1p42100"
-      ]
+      ],
+      "firmware": []
     },
     {
       "file": "x1p42100-hp-omnibook-x14.dts",
@@ -419,6 +629,13 @@
       "compatible": [
         "hp,omnibook-x14-fe1",
         "qcom,x1p42100"
+      ],
+      "firmware": [
+        "qcom/x1p42100/hp/omnibook-x14/qcdxkmsucpurwa.mbn",
+        "qcom/x1p42100/hp/omnibook-x14/qcadsp8380.mbn",
+        "qcom/x1p42100/hp/omnibook-x14/adsp_dtbs.elf",
+        "qcom/x1p42100/hp/omnibook-x14/qccdsp8380.mbn",
+        "qcom/x1p42100/hp/omnibook-x14/cdsp_dtbs.elf"
       ]
     },
     {
@@ -429,6 +646,13 @@
       "compatible": [
         "lenovo,thinkbook-16",
         "qcom,x1p42100"
+      ],
+      "firmware": [
+        "qcom/x1p42100/LENOVO/21NH/qcdxkmsucpurwa.mbn",
+        "qcom/x1p42100/LENOVO/21NH/qcadsp8380.mbn",
+        "qcom/x1p42100/LENOVO/21NH/adsp_dtbs.elf",
+        "qcom/x1p42100/LENOVO/21NH/qccdsp8380.mbn",
+        "qcom/x1p42100/LENOVO/21NH/cdsp_dtbs.elf"
       ]
     },
     {
@@ -439,6 +663,13 @@
       "compatible": [
         "microsoft,surface-pro-12in",
         "qcom,x1p42100"
+      ],
+      "firmware": [
+        "qcom/x1p42100/Microsoft/Surface12/qcdxkmsucpurwa.mbn",
+        "qcom/x1p42100/Microsoft/Surface12/qcadsp8380.mbn",
+        "qcom/x1p42100/Microsoft/Surface12/adsp_dtbs.elf",
+        "qcom/x1p42100/Microsoft/Surface12/qccdsp8380.mbn",
+        "qcom/x1p42100/Microsoft/Surface12/cdsp_dtbs.elf"
       ]
     },
     {
@@ -451,6 +682,13 @@
         "microsoft,denali",
         "qcom,x1p64100",
         "qcom,x1e80100"
+      ],
+      "firmware": [
+        "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/microsoft/Denali/qcadsp8380.mbn",
+        "qcom/x1e80100/microsoft/Denali/adsp_dtb.mbn",
+        "qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn",
+        "qcom/x1e80100/microsoft/Denali/cdsp_dtb.mbn"
       ]
     }
   ],
@@ -1933,6 +2171,7 @@
       "baseboardProduct": "KYDKV"
     }
   ],
+  "firmwareRelease": "20261019",
   "firmware": [
     {
       "path": "qcom/glymur/ASUSTeK/UX3407NA",
@@ -2067,6 +2306,203 @@
         "X1E80100-LENOVO-IdeaCentre-Mini-tplg.bin"
       ]
     }
+  ],
+  "firmwareMain": [
+    "qcom/glymur/ASUSTeK/UX3407NA/GLYMUR-ASUS-Zenbook-A14-UX3407NA-tplg.bin",
+    "qcom/glymur/ASUSTeK/UX3607OA/GLYMUR-ASUS-Zenbook-A16-UX3607OA-tplg.bin",
+    "qcom/glymur/GLYMUR-ASUS-Zenbook-A14-UX3407NA-tplg.bin",
+    "qcom/glymur/GLYMUR-ASUS-Zenbook-A16-UX3607OA-tplg.bin",
+    "qcom/glymur/GLYMUR-CRD-tplg.bin",
+    "qcom/glymur/LENOVO/22A8/Lenovo-ThinkPad-T14s-Gen-7-tplg.bin",
+    "qcom/glymur/Lenovo-ThinkPad-T14s-Gen-7-tplg.bin",
+    "qcom/glymur/adsp.mbn",
+    "qcom/glymur/adsp_dtb.mbn",
+    "qcom/glymur/adspr.jsn",
+    "qcom/glymur/adsps.jsn",
+    "qcom/glymur/adspua.jsn",
+    "qcom/glymur/cdsp.mbn",
+    "qcom/glymur/cdsp_dtb.mbn",
+    "qcom/glymur/cdspr.jsn",
+    "qcom/glymur/gen80100_zap.mbn",
+    "qcom/sc8280xp/LENOVO/21BX/adspr.jsn",
+    "qcom/sc8280xp/LENOVO/21BX/adspua.jsn",
+    "qcom/sc8280xp/LENOVO/21BX/audioreach-tplg.bin",
+    "qcom/sc8280xp/LENOVO/21BX/battmgr.jsn",
+    "qcom/sc8280xp/LENOVO/21BX/cdspr.jsn",
+    "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn",
+    "qcom/sc8280xp/LENOVO/21BX/qccdsp8280.mbn",
+    "qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn",
+    "qcom/sc8280xp/LENOVO/21BX/qcslpi8280.mbn",
+    "qcom/sc8280xp/LENOVO/21BX/qcvss8280.mbn",
+    "qcom/sc8280xp/SC8280XP-LENOVO-X13S-tplg.bin",
+    "qcom/sc8280xp/radxa/dragon-q8b/SC8280XP-Radxa-Dragon-Q8B-tplg.bin",
+    "qcom/sc8280xp/radxa/dragon-q8b/qcadsp8280.mbn",
+    "qcom/x1e80100/ASUSTeK/vivobook-16/X1E80100-ASUS-Vivobook-16-tplg.bin",
+    "qcom/x1e80100/ASUSTeK/vivobook-s15/X1E80100-ASUS-Vivobook-S15-tplg.bin",
+    "qcom/x1e80100/ASUSTeK/zenbook-a14/X1E80100-ASUS-Zenbook-A14-tplg.bin",
+    "qcom/x1e80100/LENOVO/21N1/X1E80100-LENOVO-Thinkpad-T14s-tplg.bin",
+    "qcom/x1e80100/LENOVO/21N1/adsp_dtbs.elf",
+    "qcom/x1e80100/LENOVO/21N1/adspr.jsn",
+    "qcom/x1e80100/LENOVO/21N1/adsps.jsn",
+    "qcom/x1e80100/LENOVO/21N1/adspua.jsn",
+    "qcom/x1e80100/LENOVO/21N1/battmgr.jsn",
+    "qcom/x1e80100/LENOVO/21N1/cdsp_dtbs.elf",
+    "qcom/x1e80100/LENOVO/21N1/cdspr.jsn",
+    "qcom/x1e80100/LENOVO/21N1/qcadsp8380.mbn",
+    "qcom/x1e80100/LENOVO/21N1/qccdsp8380.mbn",
+    "qcom/x1e80100/LENOVO/21N1/qcdxkmsuc8380.mbn",
+    "qcom/x1e80100/LENOVO/21N1/qcvss8380.mbn",
+    "qcom/x1e80100/LENOVO/83ED/X1E80100-LENOVO-Yoga-Slim7x-tplg.bin",
+    "qcom/x1e80100/LENOVO/83ED/adsp_dtbs.elf",
+    "qcom/x1e80100/LENOVO/83ED/adspr.jsn",
+    "qcom/x1e80100/LENOVO/83ED/adsps.jsn",
+    "qcom/x1e80100/LENOVO/83ED/adspua.jsn",
+    "qcom/x1e80100/LENOVO/83ED/battmgr.jsn",
+    "qcom/x1e80100/LENOVO/83ED/cdsp_dtbs.elf",
+    "qcom/x1e80100/LENOVO/83ED/cdspr.jsn",
+    "qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn",
+    "qcom/x1e80100/LENOVO/83ED/qcav1e8380.mbn",
+    "qcom/x1e80100/LENOVO/83ED/qccdsp8380.mbn",
+    "qcom/x1e80100/LENOVO/83ED/qcdxkmsuc8380.mbn",
+    "qcom/x1e80100/LENOVO/83ED/qcvss8380.mbn",
+    "qcom/x1e80100/LENOVO/91B6/X1E80100-LENOVO-IdeaCentre-Mini-tplg.bin",
+    "qcom/x1e80100/X1E001DE-DEVKIT-tplg.bin",
+    "qcom/x1e80100/X1E80100-ACER-SWIFT-14-tplg.bin",
+    "qcom/x1e80100/X1E80100-ASUS-Vivobook-16-tplg.bin",
+    "qcom/x1e80100/X1E80100-ASUS-Vivobook-S15-tplg.bin",
+    "qcom/x1e80100/X1E80100-ASUS-Zenbook-A14-tplg.bin",
+    "qcom/x1e80100/X1E80100-CRD-tplg.bin",
+    "qcom/x1e80100/X1E80100-Dell-Inspiron-14p-7441-tplg.bin",
+    "qcom/x1e80100/X1E80100-Dell-Latitude-7455-tplg.bin",
+    "qcom/x1e80100/X1E80100-Dell-XPS-13-9345-tplg.bin",
+    "qcom/x1e80100/X1E80100-EVK-tplg.bin",
+    "qcom/x1e80100/X1E80100-HP-OMNIBOOK-X14-tplg.bin",
+    "qcom/x1e80100/X1E80100-LENOVO-IdeaCentre-Mini-tplg.bin",
+    "qcom/x1e80100/X1E80100-LENOVO-Thinkpad-T14s-tplg.bin",
+    "qcom/x1e80100/X1E80100-LENOVO-Yoga-Slim7x-tplg.bin",
+    "qcom/x1e80100/X1E80100-MEDION-SPRCHRGD-14-S1-tplg.bin",
+    "qcom/x1e80100/X1E80100-Microsoft-Surface-Pro-11-tplg.bin",
+    "qcom/x1e80100/X1E80100-Romulus-tplg.bin",
+    "qcom/x1e80100/X1E80100-TUXEDO-Elite-14-tplg.bin",
+    "qcom/x1e80100/X1P42100-Microsoft-Surface-Pro-12in-tplg.bin",
+    "qcom/x1e80100/adsp.mbn",
+    "qcom/x1e80100/adsp_dtb.mbn",
+    "qcom/x1e80100/adspr.jsn",
+    "qcom/x1e80100/adsps.jsn",
+    "qcom/x1e80100/adspua.jsn",
+    "qcom/x1e80100/battmgr.jsn",
+    "qcom/x1e80100/cdsp.mbn",
+    "qcom/x1e80100/cdsp_dtb.mbn",
+    "qcom/x1e80100/cdspr.jsn",
+    "qcom/x1e80100/dell/inspiron-14-plus-7441/X1E80100-Dell-Inspiron-14p-7441-tplg.bin",
+    "qcom/x1e80100/dell/latitude-7455/X1E80100-Dell-Latitude-7455-tplg.bin",
+    "qcom/x1e80100/dell/xps13-9345/X1E80100-Dell-XPS-13-9345-tplg.bin",
+    "qcom/x1e80100/dell/xps13-9345/adsp_dtbs.elf",
+    "qcom/x1e80100/dell/xps13-9345/adspr.jsn",
+    "qcom/x1e80100/dell/xps13-9345/adsps.jsn",
+    "qcom/x1e80100/dell/xps13-9345/adspua.jsn",
+    "qcom/x1e80100/dell/xps13-9345/battmgr.jsn",
+    "qcom/x1e80100/dell/xps13-9345/cdsp_dtbs.elf",
+    "qcom/x1e80100/dell/xps13-9345/cdspr.jsn",
+    "qcom/x1e80100/dell/xps13-9345/qcadsp8380.mbn",
+    "qcom/x1e80100/dell/xps13-9345/qccdsp8380.mbn",
+    "qcom/x1e80100/dell/xps13-9345/qcdxkmsuc8380.mbn",
+    "qcom/x1e80100/gen70500_zap.mbn",
+    "qcom/x1e80100/hp/omnibook-x14/X1E80100-HP-OMNIBOOK-X14-tplg.bin",
+    "qcom/x1e80100/qupv3fw.elf",
+    "qcom/x1p42100/gen71500_zap.mbn"
+  ],
+  "firmwareReleased": [
+    "qcom/glymur/GLYMUR-CRD-tplg.bin",
+    "qcom/glymur/adsp.mbn",
+    "qcom/glymur/adsp_dtb.mbn",
+    "qcom/glymur/adspr.jsn",
+    "qcom/glymur/adsps.jsn",
+    "qcom/glymur/adspua.jsn",
+    "qcom/glymur/cdsp.mbn",
+    "qcom/glymur/cdsp_dtb.mbn",
+    "qcom/glymur/cdspr.jsn",
+    "qcom/glymur/gen80100_zap.mbn",
+    "qcom/sc8280xp/LENOVO/21BX/adspr.jsn",
+    "qcom/sc8280xp/LENOVO/21BX/adspua.jsn",
+    "qcom/sc8280xp/LENOVO/21BX/audioreach-tplg.bin",
+    "qcom/sc8280xp/LENOVO/21BX/battmgr.jsn",
+    "qcom/sc8280xp/LENOVO/21BX/cdspr.jsn",
+    "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn",
+    "qcom/sc8280xp/LENOVO/21BX/qccdsp8280.mbn",
+    "qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn",
+    "qcom/sc8280xp/LENOVO/21BX/qcslpi8280.mbn",
+    "qcom/sc8280xp/LENOVO/21BX/qcvss8280.mbn",
+    "qcom/sc8280xp/SC8280XP-LENOVO-X13S-tplg.bin",
+    "qcom/sc8280xp/radxa/dragon-q8b/qcadsp8280.mbn",
+    "qcom/x1e80100/ASUSTeK/vivobook-16/X1E80100-ASUS-Vivobook-16-tplg.bin",
+    "qcom/x1e80100/ASUSTeK/vivobook-s15/X1E80100-ASUS-Vivobook-S15-tplg.bin",
+    "qcom/x1e80100/ASUSTeK/zenbook-a14/X1E80100-ASUS-Zenbook-A14-tplg.bin",
+    "qcom/x1e80100/LENOVO/21N1/X1E80100-LENOVO-Thinkpad-T14s-tplg.bin",
+    "qcom/x1e80100/LENOVO/21N1/adsp_dtbs.elf",
+    "qcom/x1e80100/LENOVO/21N1/adspr.jsn",
+    "qcom/x1e80100/LENOVO/21N1/adsps.jsn",
+    "qcom/x1e80100/LENOVO/21N1/adspua.jsn",
+    "qcom/x1e80100/LENOVO/21N1/battmgr.jsn",
+    "qcom/x1e80100/LENOVO/21N1/cdsp_dtbs.elf",
+    "qcom/x1e80100/LENOVO/21N1/cdspr.jsn",
+    "qcom/x1e80100/LENOVO/21N1/qcadsp8380.mbn",
+    "qcom/x1e80100/LENOVO/21N1/qccdsp8380.mbn",
+    "qcom/x1e80100/LENOVO/21N1/qcdxkmsuc8380.mbn",
+    "qcom/x1e80100/LENOVO/21N1/qcvss8380.mbn",
+    "qcom/x1e80100/LENOVO/83ED/X1E80100-LENOVO-Yoga-Slim7x-tplg.bin",
+    "qcom/x1e80100/LENOVO/83ED/adsp_dtbs.elf",
+    "qcom/x1e80100/LENOVO/83ED/adspr.jsn",
+    "qcom/x1e80100/LENOVO/83ED/adsps.jsn",
+    "qcom/x1e80100/LENOVO/83ED/adspua.jsn",
+    "qcom/x1e80100/LENOVO/83ED/battmgr.jsn",
+    "qcom/x1e80100/LENOVO/83ED/cdspr.jsn",
+    "qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn",
+    "qcom/x1e80100/LENOVO/83ED/qcav1e8380.mbn",
+    "qcom/x1e80100/LENOVO/83ED/qccdsp8380.mbn",
+    "qcom/x1e80100/LENOVO/83ED/qcdxkmsuc8380.mbn",
+    "qcom/x1e80100/LENOVO/83ED/qcvss8380.mbn",
+    "qcom/x1e80100/X1E001DE-DEVKIT-tplg.bin",
+    "qcom/x1e80100/X1E80100-ASUS-Vivobook-16-tplg.bin",
+    "qcom/x1e80100/X1E80100-ASUS-Vivobook-S15-tplg.bin",
+    "qcom/x1e80100/X1E80100-ASUS-Zenbook-A14-tplg.bin",
+    "qcom/x1e80100/X1E80100-CRD-tplg.bin",
+    "qcom/x1e80100/X1E80100-Dell-Inspiron-14p-7441-tplg.bin",
+    "qcom/x1e80100/X1E80100-Dell-Latitude-7455-tplg.bin",
+    "qcom/x1e80100/X1E80100-Dell-XPS-13-9345-tplg.bin",
+    "qcom/x1e80100/X1E80100-EVK-tplg.bin",
+    "qcom/x1e80100/X1E80100-HP-OMNIBOOK-X14-tplg.bin",
+    "qcom/x1e80100/X1E80100-LENOVO-Thinkpad-T14s-tplg.bin",
+    "qcom/x1e80100/X1E80100-LENOVO-Yoga-Slim7x-tplg.bin",
+    "qcom/x1e80100/X1E80100-Romulus-tplg.bin",
+    "qcom/x1e80100/X1E80100-TUXEDO-Elite-14-tplg.bin",
+    "qcom/x1e80100/X1P42100-Microsoft-Surface-Pro-12in-tplg.bin",
+    "qcom/x1e80100/adsp.mbn",
+    "qcom/x1e80100/adsp_dtb.mbn",
+    "qcom/x1e80100/adspr.jsn",
+    "qcom/x1e80100/adsps.jsn",
+    "qcom/x1e80100/adspua.jsn",
+    "qcom/x1e80100/battmgr.jsn",
+    "qcom/x1e80100/cdsp.mbn",
+    "qcom/x1e80100/cdsp_dtb.mbn",
+    "qcom/x1e80100/cdspr.jsn",
+    "qcom/x1e80100/dell/inspiron-14-plus-7441/X1E80100-Dell-Inspiron-14p-7441-tplg.bin",
+    "qcom/x1e80100/dell/latitude-7455/X1E80100-Dell-Latitude-7455-tplg.bin",
+    "qcom/x1e80100/dell/xps13-9345/X1E80100-Dell-XPS-13-9345-tplg.bin",
+    "qcom/x1e80100/dell/xps13-9345/adsp_dtbs.elf",
+    "qcom/x1e80100/dell/xps13-9345/adspr.jsn",
+    "qcom/x1e80100/dell/xps13-9345/adsps.jsn",
+    "qcom/x1e80100/dell/xps13-9345/adspua.jsn",
+    "qcom/x1e80100/dell/xps13-9345/battmgr.jsn",
+    "qcom/x1e80100/dell/xps13-9345/cdsp_dtbs.elf",
+    "qcom/x1e80100/dell/xps13-9345/cdspr.jsn",
+    "qcom/x1e80100/dell/xps13-9345/qcadsp8380.mbn",
+    "qcom/x1e80100/dell/xps13-9345/qccdsp8380.mbn",
+    "qcom/x1e80100/dell/xps13-9345/qcdxkmsuc8380.mbn",
+    "qcom/x1e80100/gen70500_zap.mbn",
+    "qcom/x1e80100/hp/omnibook-x14/X1E80100-HP-OMNIBOOK-X14-tplg.bin",
+    "qcom/x1e80100/qupv3fw.elf",
+    "qcom/x1p42100/gen71500_zap.mbn"
   ],
   "acpiDumps": [
     {
