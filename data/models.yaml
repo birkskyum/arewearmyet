@@ -809,7 +809,7 @@ models:
     firmware: ["qcom/x1e80100/LENOVO/83ED"]
     acpi: ["lenovo-yoga-slim-7x"]
     reports:
-      - { state: "works", note: "In daily use on Omarchy's kernel 7.2.8.", checked: "2026-10" }
+      - { state: "works", note: "Boots and is in daily use on Omarchy's kernel 7.2.8. USB4 and hibernation don't work yet.", checked: "2026-10" }
     sources:
       - https://psref.lenovo.com/Product/Yoga/Yoga_Slim_7_14Q8X9
       - https://www.ithome.com/0/777/290.htm
@@ -965,7 +965,7 @@ models:
       - { model: "LCD", chip: "X1P-64-100", compatible: "microsoft,denali-lcd" }
     acpi: ["microsoft-surface-pro-11"]
     reports:
-      - { state: "works", variant: "OLED", note: "OLED model: suspend, both cameras, pen and touch work on Omarchy's kernel.", checked: "2026-10" }
+      - { state: "works", variant: "OLED", note: "Boots on Omarchy's kernel; suspend, both cameras, pen and touch work.", checked: "2026-10" }
     sources:
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
       - https://www.notebookcheck.it/Microsoft-rilascia-il-nuovo-Surface-Pro-11-con-display-OLED-da-120-Hz-opzionale-e-chipset-Snapdragon-X-Plus-o-Snapdragon-X-Elite.839774.0.html

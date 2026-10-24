@@ -15,16 +15,16 @@ const byName = <T extends { vendor: string; name: string }>(a: T, b: T) => a.ven
 const rows = snapdragonRows().sort(byName);
 const nvidia = nvidiaRows().sort((a, b) => a.generation.localeCompare(b.generation) || byName(a, b));
 
-// What owners saw first, then what the pieces predict
+// The first goal for every model is booting into Omarchy: what owners saw first, then what the pieces predict
 const outcomeBar = [
-  { label: 'Works', value: summary.works, color: 'bg-emerald-400', title: 'An owner confirmed the current Omarchy release runs on it.' },
-  { label: 'Should work', value: summary.should, color: 'bg-amber-400', title: 'Every piece is in place, but no owner has confirmed it yet.' },
-  { label: 'Problems', value: summary.problems, color: 'bg-rose-400', title: 'An owner reported it failing.' },
+  { label: 'Boots', value: summary.works, color: 'bg-emerald-400', title: 'An owner booted into the Omarchy desktop on the current release.' },
+  { label: 'Should boot', value: summary.should, color: 'bg-amber-400', title: 'Every piece is in place, but no owner has confirmed it boots yet.' },
+  { label: 'Problems', value: summary.problems, color: 'bg-rose-400', title: `An owner couldn't get to the desktop without a workaround.` },
   { label: 'Not yet', value: summary.notYet, color: 'bg-zinc-600', title: 'Pieces are still missing.' },
 ];
 const nvidiaBar = [
-  { label: 'Works', value: summary.nvidiaWorks, color: 'bg-emerald-400', title: 'Someone ran Omarchy on it.' },
-  { label: 'Should work', value: summary.nvidiaExpected, color: 'bg-amber-400', title: 'Same platform as a model that works.' },
+  { label: 'Boots', value: summary.nvidiaWorks, color: 'bg-emerald-400', title: 'Someone booted into Omarchy on it.' },
+  { label: 'Should boot', value: summary.nvidiaExpected, color: 'bg-amber-400', title: 'Same platform as a model that boots.' },
   { label: 'Not tested', value: summary.nvidia - summary.nvidiaWorks - summary.nvidiaExpected, color: 'bg-zinc-600', title: 'Nobody has tried it yet.' },
 ];
 const upstreamBars = [
@@ -56,7 +56,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
 const HEADLINE = 'text-2xl font-semibold text-zinc-50';
 ---
 
-<Layout title="Are we ARM yet?" description="Omarchy on ARM PCs, model by model: which laptops run it today, and what each one still needs upstream.">
+<Layout title="Are we ARM yet?" description="Omarchy on ARM PCs, model by model: which ones boot into it today, and what each one still needs upstream.">
   <main class="mx-auto max-w-[96rem] px-4 py-10 sm:px-6 lg:px-8">
     <header>
       <div class="flex items-center gap-4">
@@ -76,10 +76,10 @@ const HEADLINE = 'text-2xl font-semibold text-zinc-50';
 
     <section class="mt-10 rounded-xl bg-zinc-900 p-6 ring-1 ring-zinc-800">
       <p class={HEADLINE}>
-        {summary.works} of {summary.models} <a href="#snapdragon" class="hover:underline hover:decoration-zinc-500 hover:underline-offset-4">Snapdragon X and X2 models</a> run Omarchy
+        {summary.works} of {summary.models} <a href="#snapdragon" class="hover:underline hover:decoration-zinc-500 hover:underline-offset-4">Snapdragon X and X2 models</a> boot into Omarchy
       </p>
       <p class="mt-1 text-sm text-zinc-400">
-        Confirmed by an owner on Omarchy {channel}, which ships linux-omarchy {status.omarchy.kernel} and systemd {status.omarchy.systemd}. {summary.should} more should work, and {summary.problems} {summary.problems === 1 ? 'has' : 'have'} reported problems.
+        Confirmed by an owner on Omarchy {channel}, which ships linux-omarchy {status.omarchy.kernel} and systemd {status.omarchy.systemd}. {summary.should} more should boot, and {summary.problems} {summary.problems === 1 ? 'has' : 'have'} problems getting there. Booting is the first goal; features like suspend and USB4 come next.
       </p>
       <div class="mt-6">
         <SplitBar parts={outcomeBar} total={summary.models} />
@@ -102,9 +102,9 @@ const HEADLINE = 'text-2xl font-semibold text-zinc-50';
 
       <div class="mt-8 border-t border-zinc-800 pt-6">
         <p class={HEADLINE}>
-          {summary.nvidiaWorks} of {summary.nvidia} <a href="#nvidia" class="hover:underline hover:decoration-zinc-500 hover:underline-offset-4">NVIDIA N1x and GB10 machines</a> run Omarchy
+          {summary.nvidiaWorks} of {summary.nvidia} <a href="#nvidia" class="hover:underline hover:decoration-zinc-500 hover:underline-offset-4">NVIDIA N1x and GB10 machines</a> boot into Omarchy
         </p>
-        <p class="mt-1 text-sm text-zinc-400">They boot through ACPI, so what counts is whether someone has run Omarchy on them.</p>
+        <p class="mt-1 text-sm text-zinc-400">They start through ACPI, so what counts is whether someone has booted into Omarchy on them.</p>
         <div class="mt-6">
           <SplitBar parts={nvidiaBar} total={summary.nvidia} />
         </div>
@@ -130,7 +130,7 @@ const HEADLINE = 'text-2xl font-semibold text-zinc-50';
     <section class="mt-12 scroll-mt-6" id="nvidia">
       <h2 class="text-xl font-semibold text-zinc-50">NVIDIA N1x and GB10</h2>
       <p class="mt-1 max-w-3xl text-sm text-zinc-400">
-        NVIDIA's ARM laptops and desktops boot through ACPI, so they need no device tree or hardware IDs. What counts here is whether someone has run Omarchy on them.
+        NVIDIA's ARM laptops and desktops start through ACPI, so they need no device tree or hardware IDs. What counts here is whether someone has booted into Omarchy on them.
       </p>
       <div class="mt-4">
         <Legend title="What the labels mean" groups={NVIDIA_LEGEND} />

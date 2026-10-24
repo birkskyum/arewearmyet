@@ -13,11 +13,11 @@ const kernel = status.omarchy.kernelBase.replace(/^v/, '');
 
 const STATES = {
   omarchy: {
-    works: { label: 'Works', tone: 'good', meaning: 'An owner confirmed that the current Omarchy release runs on it.' },
-    should: { label: 'Should work', tone: 'close', meaning: `Omarchy's kernel has its device tree and the install image picks it by itself, but no owner has confirmed it yet.` },
-    problems: { label: 'Problems', tone: 'wanted', meaning: 'An owner reported it failing on the current Omarchy release.' },
+    works: { label: 'Boots', tone: 'good', meaning: 'An owner booted into the Omarchy desktop on the current release. Not every feature has to work yet.' },
+    should: { label: 'Should boot', tone: 'close', meaning: `Omarchy's kernel has its device tree and the install image picks it by itself, but no owner has confirmed it boots yet.` },
+    problems: { label: 'Problems', tone: 'wanted', meaning: `An owner couldn't get to the Omarchy desktop on the current release without a workaround.` },
     manual: { label: 'Not picked', tone: 'close', meaning: `Omarchy's kernel has its device tree, but the install image can't tell it's this model, because systemd has no hardware IDs for it.` },
-    newer: { label: 'Newer kernel', tone: 'close', meaning: `Linux has its device tree, but Omarchy's kernel (${kernel}) doesn't yet. It should work once Omarchy moves to a newer kernel.` },
+    newer: { label: 'Newer kernel', tone: 'close', meaning: `Linux has its device tree, but Omarchy's kernel (${kernel}) doesn't yet. It should boot once Omarchy moves to a newer kernel.` },
     none: { label: 'No device tree', tone: 'wanted', meaning: `Nobody has written a device tree for it yet, so Linux can't start on it.` },
   },
   deviceTree: {
@@ -44,9 +44,9 @@ const STATES = {
     wanted: { label: 'Wanted', tone: 'wanted', meaning: 'The first thing to send for a model without a device tree.' },
   },
   nvidiaOmarchy: {
-    works: { label: 'Works', tone: 'good', meaning: 'Someone ran Omarchy on it.' },
-    expected: { label: 'Should work', tone: 'close', meaning: 'Same platform as a model that works, but nobody has tried this one yet.' },
-    problems: { label: 'Problems', tone: 'wanted', meaning: 'Someone tried it and hit problems.' },
+    works: { label: 'Boots', tone: 'good', meaning: 'Someone booted into Omarchy on it. Not every feature has to work yet.' },
+    expected: { label: 'Should boot', tone: 'close', meaning: 'Same platform as a model that boots, but nobody has tried this one yet.' },
+    problems: { label: 'Problems', tone: 'wanted', meaning: `Someone tried it and couldn't get to the Omarchy desktop.` },
     untested: { label: 'Not tested', tone: 'muted', meaning: 'Nobody has tried Omarchy on it yet.' },
   },
   nvidiaLinux: {
@@ -61,7 +61,7 @@ export const ANNOUNCED = STATES.announced as State;
 type Group = { column: string; question: string; states: State[] };
 
 export const LEGEND: Group[] = [
-  { column: 'Omarchy', question: 'Does the current Omarchy release run on it?', states: Object.values(STATES.omarchy) as State[] },
+  { column: 'Omarchy', question: `Does it boot into Omarchy's current release? That's the first goal for every model; features like suspend and USB4 come next.`, states: Object.values(STATES.omarchy) as State[] },
   { column: 'Device tree', question: 'The description of the hardware that Linux needs for each model.', states: Object.values(STATES.deviceTree) as State[] },
   { column: 'Hardware IDs', question: 'How an install image recognises the model and picks its device tree.', states: Object.values(STATES.ids) as State[] },
   { column: 'Firmware', question: `Signed files for its audio, sensor and graphics chips. Booting doesn't need them, but without them there's no sound, battery status, USB-C display, sensors or graphics acceleration. The goal is getting them without the laptop's own Windows.`, states: Object.values(STATES.firmware) as State[] },
@@ -69,7 +69,7 @@ export const LEGEND: Group[] = [
 ];
 
 export const NVIDIA_LEGEND: Group[] = [
-  { column: 'Omarchy', question: 'Has someone run Omarchy on it?', states: Object.values(STATES.nvidiaOmarchy) as State[] },
+  { column: 'Omarchy', question: 'Has someone booted into Omarchy on it?', states: Object.values(STATES.nvidiaOmarchy) as State[] },
   { column: 'Linux', question: `Whether plain Linux runs it, or it needs Omarchy's kernel.`, states: Object.values(STATES.nvidiaLinux) as State[] },
 ];
 

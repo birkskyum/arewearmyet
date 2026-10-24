@@ -3575,7 +3575,7 @@
       "reports": [
         {
           "state": "works",
-          "note": "In daily use on Omarchy's kernel 7.2.8.",
+          "note": "Boots and is in daily use on Omarchy's kernel 7.2.8. USB4 and hibernation don't work yet.",
           "checked": "2026-10"
         }
       ],
@@ -3631,7 +3631,7 @@
           "reports": [
             {
               "state": "works",
-              "note": "In daily use on Omarchy's kernel 7.2.8.",
+              "note": "Boots and is in daily use on Omarchy's kernel 7.2.8. USB4 and hibernation don't work yet.",
               "checked": "2026-10"
             }
           ]
@@ -4276,7 +4276,7 @@
         {
           "state": "works",
           "variant": "OLED",
-          "note": "OLED model: suspend, both cameras, pen and touch work on Omarchy's kernel.",
+          "note": "Boots on Omarchy's kernel; suspend, both cameras, pen and touch work.",
           "checked": "2026-10"
         }
       ],
@@ -4334,7 +4334,7 @@
             {
               "state": "works",
               "variant": "OLED",
-              "note": "OLED model: suspend, both cameras, pen and touch work on Omarchy's kernel.",
+              "note": "Boots on Omarchy's kernel; suspend, both cameras, pen and touch work.",
               "checked": "2026-10"
             }
           ]
