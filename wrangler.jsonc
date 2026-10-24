@@ -1,0 +1,8 @@
+{
+  // Static site on Cloudflare Workers: the built pages from dist/, nothing else
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "arewearmyet",
+  "compatibility_date": "2026-10-24",
+  "assets": { "directory": "./dist", "not_found_handling": "404-page" },
+  "routes": [{ "pattern": "arewearmyet.com", "custom_domain": true }]
+}
