@@ -1,0 +1,2309 @@
+{
+  "collected": "2026-10-24T20:05:56.446Z",
+  "kernelReleases": [
+    "v6.8",
+    "v6.9",
+    "v6.10",
+    "v6.11",
+    "v6.12",
+    "v6.13",
+    "v6.14",
+    "v6.15",
+    "v6.16",
+    "v6.17",
+    "v6.18",
+    "v6.19",
+    "v7.0",
+    "v7.1",
+    "v7.2",
+    "v7.3"
+  ],
+  "systemdReleases": [
+    "v257",
+    "v258",
+    "v259",
+    "v260",
+    "v261",
+    "v262"
+  ],
+  "linuxNext": "20261023",
+  "deviceTrees": [
+    {
+      "file": "glymur-asus-zenbook-a14-ux3407na.dts",
+      "firstRelease": null,
+      "inNext": true,
+      "model": "ASUS Zenbook A14 (UX3407NA)",
+      "compatible": [
+        "asus,zenbook-a14-ux3407na",
+        "qcom,glymur"
+      ]
+    },
+    {
+      "file": "glymur-asus-zenbook-a16-ux3607oa.dts",
+      "firstRelease": "v7.3",
+      "inNext": true,
+      "model": "ASUS Zenbook A16 (UX3607OA)",
+      "compatible": [
+        "asus,zenbook-a16-ux3607oa",
+        "qcom,glymur"
+      ]
+    },
+    {
+      "file": "glymur-crd.dts",
+      "firstRelease": "v7.1",
+      "inNext": true,
+      "model": "Qualcomm Technologies, Inc. Glymur CRD",
+      "compatible": [
+        "qcom,glymur-crd",
+        "qcom,glymur"
+      ]
+    },
+    {
+      "file": "glymur-hp-elitebook-x-g2q.dts",
+      "firstRelease": null,
+      "inNext": true,
+      "model": "HP EliteBook X G2q 14 AI",
+      "compatible": [
+        "hp,elitebook-x-g2q",
+        "qcom,glymur"
+      ]
+    },
+    {
+      "file": "glymur-lenovo-yoga-slim7x.dts",
+      "firstRelease": null,
+      "inNext": true,
+      "model": "Lenovo Yoga Slim 7x Gen 11",
+      "compatible": [
+        "lenovo,yoga-slim7x-gen11",
+        "qcom,glymur"
+      ]
+    },
+    {
+      "file": "glymur-qcb.dts",
+      "firstRelease": null,
+      "inNext": true,
+      "model": "Qualcomm Technologies, Inc. Glymur QCB",
+      "compatible": [
+        "qcom,glymur-qcb",
+        "qcom,glymur"
+      ]
+    },
+    {
+      "file": "hamoa-advantech-som-db5830.dts",
+      "firstRelease": null,
+      "inNext": true,
+      "model": "Advantech SOM-6820 on SOM-DB5830",
+      "compatible": [
+        "advantech,som-db5830",
+        "advantech,som-6820",
+        "qcom,iq-x7181-evk-som",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "hamoa-iot-evk.dts",
+      "firstRelease": "v6.18",
+      "inNext": true,
+      "model": "Qualcomm Technologies, Inc. Hamoa IoT EVK",
+      "compatible": [
+        "qcom,hamoa-iot-evk",
+        "qcom,hamoa-iot-som",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
+      "firstRelease": "v7.1",
+      "inNext": true,
+      "model": "Lenovo IdeaCentre Mini 01Q8X10",
+      "compatible": [
+        "lenovo,ideacentre-mini-01q8x10",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "purwa-iot-evk.dts",
+      "firstRelease": "v7.1",
+      "inNext": true,
+      "model": "Qualcomm Technologies, Inc. Purwa IoT EVK",
+      "compatible": [
+        "qcom,purwa-iot-evk",
+        "qcom,purwa-iot-som",
+        "qcom,x1p42100"
+      ]
+    },
+    {
+      "file": "sc8280xp-crd.dts",
+      "firstRelease": "v6.8",
+      "inNext": true,
+      "model": "Qualcomm SC8280XP CRD",
+      "compatible": [
+        "qcom,sc8280xp-crd",
+        "qcom,sc8280xp"
+      ]
+    },
+    {
+      "file": "sc8280xp-huawei-gaokun3.dts",
+      "firstRelease": "v6.14",
+      "inNext": true,
+      "model": "Matebook E Go",
+      "compatible": [
+        "huawei,gaokun3",
+        "qcom,sc8280xp"
+      ]
+    },
+    {
+      "file": "sc8280xp-lenovo-thinkpad-x13s.dts",
+      "firstRelease": "v6.8",
+      "inNext": true,
+      "model": "Lenovo ThinkPad X13s",
+      "compatible": [
+        "lenovo,thinkpad-x13s",
+        "qcom,sc8280xp"
+      ]
+    },
+    {
+      "file": "sc8280xp-microsoft-arcata.dts",
+      "firstRelease": "v6.13",
+      "inNext": true,
+      "model": "Microsoft Surface Pro 9 5G",
+      "compatible": [
+        "microsoft,arcata",
+        "qcom,sc8280xp"
+      ]
+    },
+    {
+      "file": "sc8280xp-microsoft-blackrock.dts",
+      "firstRelease": "v6.14",
+      "inNext": true,
+      "model": "Windows Dev Kit 2023",
+      "compatible": [
+        "microsoft,blackrock",
+        "qcom,sc8280xp"
+      ]
+    },
+    {
+      "file": "x1e001de-devkit.dts",
+      "firstRelease": "v6.14",
+      "inNext": true,
+      "model": "Qualcomm Technologies, Inc. X1E001DE Snapdragon Devkit for Windows",
+      "compatible": [
+        "qcom,x1e001de-devkit",
+        "qcom,x1e001de",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e78100-lenovo-thinkpad-t14s-oled.dts",
+      "firstRelease": "v6.16",
+      "inNext": true,
+      "model": "Lenovo ThinkPad T14s Gen 6 (OLED)",
+      "compatible": [
+        "lenovo,thinkpad-t14s-oled",
+        "lenovo,thinkpad-t14s",
+        "qcom,x1e78100",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e78100-lenovo-thinkpad-t14s.dts",
+      "firstRelease": "v6.12",
+      "inNext": true,
+      "model": "Lenovo ThinkPad T14s Gen 6 (LCD)",
+      "compatible": [
+        "lenovo,thinkpad-t14s-lcd",
+        "lenovo,thinkpad-t14s",
+        "qcom,x1e78100",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e80100-asus-vivobook-s15.dts",
+      "firstRelease": "v6.11",
+      "inNext": true,
+      "model": "ASUS Vivobook S 15",
+      "compatible": [
+        "asus,vivobook-s15",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e80100-asus-zenbook-a14.dts",
+      "firstRelease": "v6.17",
+      "inNext": true,
+      "model": "ASUS Zenbook A14 (UX3407RA)",
+      "compatible": [
+        "asus,zenbook-a14-ux3407ra",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e80100-crd.dts",
+      "firstRelease": "v6.8",
+      "inNext": true,
+      "model": "Qualcomm Technologies, Inc. X1E80100 CRD",
+      "compatible": [
+        "qcom,x1e80100-crd",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e80100-dell-inspiron-14-plus-7441.dts",
+      "firstRelease": "v6.18",
+      "inNext": true,
+      "model": "Dell Inspiron 14 Plus 7441",
+      "compatible": [
+        "dell,inspiron-14-plus-7441",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e80100-dell-latitude-7455.dts",
+      "firstRelease": "v6.18",
+      "inNext": true,
+      "model": "Dell Latitude 7455",
+      "compatible": [
+        "dell,latitude-7455",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e80100-dell-xps13-9345.dts",
+      "firstRelease": "v6.13",
+      "inNext": true,
+      "model": "Dell XPS 13 9345",
+      "compatible": [
+        "dell,xps13-9345",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e80100-honor-magicbook-art-14.dts",
+      "firstRelease": "v7.3",
+      "inNext": true,
+      "model": "HONOR MagicBook Art 14 Snapdragon",
+      "compatible": [
+        "honor,magicbook-art-14-snapdragon",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e80100-hp-elitebook-ultra-g1q.dts",
+      "firstRelease": "v6.16",
+      "inNext": true,
+      "model": "HP EliteBook Ultra G1q",
+      "compatible": [
+        "hp,elitebook-ultra-g1q",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e80100-hp-omnibook-x14.dts",
+      "firstRelease": "v6.14",
+      "inNext": true,
+      "model": "HP Omnibook X 14-fe0",
+      "compatible": [
+        "hp,omnibook-x14",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e80100-lenovo-yoga-slim7x.dts",
+      "firstRelease": "v6.11",
+      "inNext": true,
+      "model": "Lenovo Yoga Slim 7x",
+      "compatible": [
+        "lenovo,yoga-slim7x",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e80100-medion-sprchrgd-14-s1.dts",
+      "firstRelease": "v7.0",
+      "inNext": true,
+      "model": "Medion SPRCHRGD 14 S1",
+      "compatible": [
+        "medion,sprchrgd14s1",
+        "qcom,x1e78100",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e80100-microsoft-denali-oled.dts",
+      "firstRelease": "v7.0",
+      "inNext": true,
+      "model": "Microsoft Surface Pro 11th Edition (OLED)",
+      "compatible": [
+        "microsoft,denali-oled",
+        "microsoft,denali",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e80100-microsoft-romulus13.dts",
+      "firstRelease": "v6.12",
+      "inNext": true,
+      "model": "Microsoft Surface Laptop 7 (13.8 inch)",
+      "compatible": [
+        "microsoft,romulus13",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e80100-microsoft-romulus15.dts",
+      "firstRelease": "v6.12",
+      "inNext": true,
+      "model": "Microsoft Surface Laptop 7 (15 inch)",
+      "compatible": [
+        "microsoft,romulus15",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1e80100-qcp.dts",
+      "firstRelease": "v6.8",
+      "inNext": true,
+      "model": "Qualcomm Technologies, Inc. X1E80100 QCP",
+      "compatible": [
+        "qcom,x1e80100-qcp",
+        "qcom,x1e80100"
+      ]
+    },
+    {
+      "file": "x1p42100-asus-vivobook-s15.dts",
+      "firstRelease": "v7.1",
+      "inNext": true,
+      "model": "ASUS Vivobook S 15 X1P-42-100",
+      "compatible": [
+        "asus,vivobook-s15-x1p4",
+        "qcom,x1p42100"
+      ]
+    },
+    {
+      "file": "x1p42100-asus-zenbook-a14-lcd.dts",
+      "firstRelease": "v6.19",
+      "inNext": true,
+      "model": "ASUS Zenbook A14 (UX3407QA, LCD)",
+      "compatible": [
+        "asus,zenbook-a14-ux3407qa-lcd",
+        "asus,zenbook-a14-ux3407qa",
+        "qcom,x1p42100"
+      ]
+    },
+    {
+      "file": "x1p42100-asus-zenbook-a14.dts",
+      "firstRelease": "v6.17",
+      "inNext": true,
+      "model": "ASUS Zenbook A14 (UX3407QA)",
+      "compatible": [
+        "asus,zenbook-a14-ux3407qa-oled",
+        "asus,zenbook-a14-ux3407qa",
+        "qcom,x1p42100"
+      ]
+    },
+    {
+      "file": "x1p42100-crd.dts",
+      "firstRelease": "v6.16",
+      "inNext": true,
+      "model": "Qualcomm Technologies, Inc. X1P42100 CRD",
+      "compatible": [
+        "qcom,x1p42100-crd",
+        "qcom,x1p42100"
+      ]
+    },
+    {
+      "file": "x1p42100-hp-omnibook-x14.dts",
+      "firstRelease": "v6.18",
+      "inNext": true,
+      "model": "HP Omnibook X 14-fe1",
+      "compatible": [
+        "hp,omnibook-x14-fe1",
+        "qcom,x1p42100"
+      ]
+    },
+    {
+      "file": "x1p42100-lenovo-thinkbook-16.dts",
+      "firstRelease": "v6.18",
+      "inNext": true,
+      "model": "Lenovo ThinkBook 16 Gen 7 QOY",
+      "compatible": [
+        "lenovo,thinkbook-16",
+        "qcom,x1p42100"
+      ]
+    },
+    {
+      "file": "x1p42100-microsoft-sp12in.dts",
+      "firstRelease": "v7.3",
+      "inNext": true,
+      "model": "Surface Pro 12in 1st Edition",
+      "compatible": [
+        "microsoft,surface-pro-12in",
+        "qcom,x1p42100"
+      ]
+    },
+    {
+      "file": "x1p64100-microsoft-denali.dts",
+      "firstRelease": "v7.0",
+      "inNext": true,
+      "model": "Microsoft Surface Pro 11th Edition (LCD)",
+      "compatible": [
+        "microsoft,denali-lcd",
+        "microsoft,denali",
+        "qcom,x1p64100",
+        "qcom,x1e80100"
+      ]
+    }
+  ],
+  "systemd": [
+    {
+      "file": "glymur-asus-zenbook-a14-ux3407na.json",
+      "firstRelease": "v262",
+      "inMain": true,
+      "name": "ASUS Zenbook A14 UX3407NA",
+      "compatible": "asus,zenbook-a14-ux3407na",
+      "hwids": [
+        "f83b2743-4d7a-5fc5-ab29-8f7c3955ce91",
+        "239dac86-8b01-592b-b89d-405153e44194",
+        "a44af168-a1f5-59cb-9af2-451316f4fe3d",
+        "1a80da71-97b3-50c6-a8c2-5c8c4356cbd1",
+        "889cd77f-34a1-541f-a95f-6566c8fcda20",
+        "b680d605-b115-5d67-b413-93f44ff3220a",
+        "48008168-2010-52ff-aaaf-ab706ba99638",
+        "27fc49a6-607b-5f8d-bcd4-eb8bdedfb31a",
+        "16ae4df2-f7ce-59fb-82be-33464322d7ee",
+        "7a71569d-bdb8-5feb-bf86-3c17d3eece44",
+        "c0717bbf-62ca-5ab1-a76b-75f3fd1bc013"
+      ]
+    },
+    {
+      "file": "glymur-asus-zenbook-a16-ux3607oa.json",
+      "firstRelease": "v262",
+      "inMain": true,
+      "name": "ASUS Zenbook A16 UX3607OA",
+      "compatible": "asus,zenbook-a16-ux3607oa",
+      "hwids": [
+        "5b6d366d-9a43-536d-9637-8e47abfb8e63",
+        "40ce3633-a61c-59ae-8336-6d861b933733",
+        "9aca06aa-73c1-5b12-9bdb-d88c0111910c",
+        "ef65dda1-fabb-5a20-9f5b-173b9876cf17",
+        "176f35e1-a53c-5823-85ec-0e69ddccc718",
+        "aa97280b-2a64-5146-8cf5-1ab4cff4f4f7",
+        "8d1e50f4-5fca-5e73-91f3-21e46a9419ab",
+        "a29d04c1-686b-5861-9ff7-cadf33cbcb97",
+        "e2bb821e-aeef-5cfc-a062-392f2539fd67",
+        "c4e7b7b9-2520-5397-8040-8ac279f540d8",
+        "ab022687-b75a-5f75-a1c3-b3996e227c96",
+        "d8bcee6b-2797-55ca-86b7-d69170e86bbb"
+      ]
+    },
+    {
+      "file": "glymur-crd.json",
+      "firstRelease": "v262",
+      "inMain": true,
+      "name": "Qualcomm Technologies, Inc. Glymur CRD",
+      "compatible": "qcom,glymur-crd",
+      "hwids": [
+        "e88849e7-af59-5c58-9776-75cfb6bac078",
+        "d9972e14-0a66-56a8-9cee-8c5647fbe470",
+        "e53db94e-68fe-541f-b06e-4b5a253dadf9",
+        "ce496e01-9bd8-522e-8937-8045126ed39a",
+        "031a5cd7-883e-5004-90c2-92d29025c777",
+        "4bb05d50-6c4f-525d-a9ec-8924afd6edea",
+        "339fc6d2-e0f4-5226-9dd9-62c4dc41881d",
+        "49bcdd2b-d769-5071-b3a4-4a02ff1d36f5",
+        "6fcbdad8-149e-5f72-b2e3-0fd78572ff93"
+      ]
+    },
+    {
+      "file": "glymur-hp-elitebook-x-g2q.json",
+      "firstRelease": "v262",
+      "inMain": true,
+      "name": "HP 103C_5336AN HP EliteBook",
+      "compatible": "hp,elitebook-x-g2q",
+      "hwids": [
+        "a8eb125e-80bb-5eb6-a448-8b9a73a9fda4",
+        "2111654e-fca0-5191-adf1-a341304be9ac",
+        "547910dc-38d6-509e-af6a-1bac70567950",
+        "6778dcb3-7a6c-5aa9-90fe-4b131dc2076a",
+        "1f684671-96d7-5c00-a060-54604fe83c55",
+        "02de9849-4c7c-5a0e-acda-f575977ecb10",
+        "b0d41b70-a607-5e5e-9da8-cce48044dfaf",
+        "99590fa9-8fc9-5066-80b8-49e1dbf06f4d",
+        "19fe40b5-1900-5d4a-a48f-b9f9938f3e69",
+        "4c84c882-b54c-58d5-b412-26bcdf254c3e",
+        "24c45613-de19-5b89-9fa1-9e269daf079d",
+        "93f84748-c854-5d6b-b78a-13c2361e0758"
+      ]
+    },
+    {
+      "file": "glymur-lenovo-yoga-slim7x.json",
+      "firstRelease": "v262",
+      "inMain": true,
+      "name": "LENOVO Yoga Slim 7 14Q8Y11",
+      "compatible": "lenovo,yoga-slim7x-gen11",
+      "hwids": [
+        "7859b01c-8448-5fce-bc9c-3ef5b6fcd5c7",
+        "4caf4999-fe35-5dd4-a32f-fe0ad2bbd139",
+        "229ef25c-5932-58ac-9f2d-1d0ce7f73f28",
+        "c9a98d97-803d-5f57-b68a-3bf9183764b3",
+        "fb337336-053c-55be-a877-2f1537ee6d51",
+        "ef043aee-e791-5919-ab57-409a5e063228",
+        "54ea1316-e372-5801-a3dd-a69ce58da3b5",
+        "7822b8e3-4c2b-58f7-b5d5-1bec836f09ec",
+        "2a58c488-aaca-53e6-9883-378fa23611a5",
+        "5e820764-888e-529d-a6f9-dfd12bacb160",
+        "71d86d4d-02f8-5566-a7a1-529cef184b7e",
+        "6de5d951-d755-576b-bd09-c5cf66b27234",
+        "51ae1f74-c06a-5ada-a4d3-57c5b050aa9c",
+        "4d7e2d2e-d9b8-54e5-a859-89fe74ceb38c",
+        "c98707aa-1249-5670-b3d8-3c560d008628"
+      ]
+    },
+    {
+      "file": "msm8998-lenovo-miix-630-81f1.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "LENOVO Miix 630",
+      "compatible": "lenovo,miix-630",
+      "hwids": [
+        "16a55446-eba9-5f97-80e3-5e39d8209bc3",
+        "c4c9a6be-5383-5de7-af35-c2de505edec8",
+        "14f581d2-d059-5cb2-9f8b-56d8be7932c9",
+        "a51054fb-5eef-594a-a5a0-cd87632d0aea",
+        "307ab358-ed84-57fe-bf05-e9195a28198d",
+        "7e613574-5445-5797-9567-2d0ed86e6ffa",
+        "b0f4463c-f851-5ec3-b031-2ccb873a609a",
+        "08b75d1f-6643-52a1-9bdd-071052860b33",
+        "34df58d6-b605-50aa-9313-9b34f5c4b6fc",
+        "e0a96696-f0a6-5466-a6db-207fbe8bae3c"
+      ]
+    },
+    {
+      "file": "purwa-lenovo-ideacentre-mini-01q8x10.json",
+      "firstRelease": "v262",
+      "inMain": true,
+      "name": "LENOVO IdeaCentre Mini 01Q8X10 (Purwa)",
+      "compatible": "lenovo,purwa-ideacentre-mini-01q8x10",
+      "hwids": [
+        "694ae0fe-f407-5a28-a7b8-42874f767fd1",
+        "ce9593db-c21e-5d92-922a-b5881d3b5bc0",
+        "a1a3bdb0-0bf6-51ba-84b8-15bc0ffa1085",
+        "0fa5b19a-d837-55eb-8cc3-2961dcbcc5cc",
+        "8db38791-9759-5f99-9fda-4528aa7fcd85",
+        "434b3aab-4cfb-5916-af0f-015b1887af66",
+        "e9b204d4-c5de-5235-a9e1-ca1a27930eae",
+        "03b204a1-c87d-5d0a-a830-71c3b267efe1",
+        "8cf5845d-547c-558e-b5db-2dc96c3a1918",
+        "3553f25c-472d-519d-9e7b-93284da42015",
+        "cedd9e06-b4d3-5a74-944e-7fba5d8f8faa",
+        "737534ab-4396-53d7-9bb7-3c21176b24b0",
+        "d3ff9b34-1c07-5574-ad73-f90bdc1d33f6"
+      ]
+    },
+    {
+      "file": "sc7180-acer-aspire1.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "Acer Aspire 1",
+      "compatible": "acer,aspire1",
+      "hwids": [
+        "45d37dbe-40fb-57bd-a257-55f422d4dc0a",
+        "373bfde5-ffaa-504c-84f3-f8f5357dfc29",
+        "e12521bf-0ed8-5406-af87-adad812c57c5",
+        "faa12ed4-bd49-5471-8f74-75c2267c3b46",
+        "965e3681-de3b-5e39-bb62-7d4917d7e36f",
+        "82fe1869-361c-56b2-b853-631747e64aa7",
+        "7e15f49e-04b4-5d56-a567-e7a15ba2aca1",
+        "7c107a7f-2d77-51aa-aef8-8d777e26ffbc",
+        "68b38fff-aadc-512c-937b-99d9c13eb484",
+        "260192d4-06d4-5124-ab46-ba210f4c14d7",
+        "175f000b-3d05-5c01-aedd-817b1a141f93"
+      ]
+    },
+    {
+      "file": "sc7180-ecs-liva-qc710.json",
+      "firstRelease": "v262",
+      "inMain": true,
+      "name": "Elitegroup Computer Systems Co., LTD. SC7180",
+      "compatible": "ecs,liva-qc710",
+      "hwids": [
+        "6303e758-6932-5e81-a3b9-cc9570590686",
+        "11bb94a9-341f-50bd-a569-2f61f7c745d3",
+        "9879a093-0829-5ddc-ad6c-2069f38bb66e",
+        "332352d0-6474-53ce-b480-46ced6d1327b",
+        "0253c128-80b3-584d-9fc1-74b546aad2e6",
+        "c0ef167b-7a32-5ad7-8dbb-2462f696c107",
+        "0a89edb3-78c9-5b09-b58a-c5a5c7890945",
+        "8d7bc998-a131-5a67-8f6b-3971a6a418ba",
+        "dfc147a4-4369-5b01-8148-86f55396b8f3",
+        "36a999ce-a606-57b5-a404-45bb5821669f"
+      ]
+    },
+    {
+      "file": "sc8180x-lenovo-flex-5g-81xe.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "LENOVO Yoga 5G 14Q8CX05",
+      "compatible": "lenovo,flex-5g",
+      "hwids": [
+        "ea646c11-3da1-5c8d-9346-8ff156746650",
+        "5100eeed-c5e2-5b74-9c24-a22ca0644826",
+        "ddb3bcda-db7b-579d-9dd9-bcc4f5b052b8",
+        "fb364c09-efc0-5d16-ac97-0a3e6235b16c",
+        "7e7007ac-603c-55ef-bb77-3548784b9578",
+        "566b9ae8-a7fd-5c44-94d6-bac3e4cf38a7",
+        "6f3bdfb7-f832-5c5f-9777-9e3db35e22a6",
+        "c4ea686c-c56c-5e8e-a91e-89056683d417",
+        "a1a13249-2689-5c6d-a43f-98af040284c4",
+        "01439aea-e75c-5fbb-8842-18dcd1a7b8b3",
+        "65ab9f32-bbc8-52d3-87f9-b618fda7c07e"
+      ]
+    },
+    {
+      "file": "sc8180x-lenovo-flex-5g-82ak.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "LENOVO Flex 5G 14Q8CX05",
+      "compatible": "lenovo,flex-5g",
+      "hwids": [
+        "ad47f2e9-2f8c-5cd1-a44e-82f35a43e44e",
+        "997c1c76-5595-5300-9f58-94d2c6ffc586",
+        "b9bf941f-3a32-57da-b609-5fff7fb382cd",
+        "ea658d2b-f644-555d-9b72-e1642401a795",
+        "fb5c3077-39d5-5a44-97ce-2d3be5f6bfec",
+        "16551bd5-37b0-571d-a94c-da61a9cfccf5",
+        "df3ecc56-b61b-5f8e-896f-801a42b536d6",
+        "06675172-9a6e-5276-a505-d205688a87f0",
+        "23dcfb84-d132-5f60-878e-64fe0b9417d6",
+        "12c0e5b0-8886-5444-b42b-93692fa736df",
+        "39fca706-c9a2-54d4-8c7c-d5e292d0a725"
+      ]
+    },
+    {
+      "file": "sc8280xp-huawei-gaokun3.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "HUAWEI MateBook E",
+      "compatible": "huawei,gaokun3",
+      "hwids": [
+        "80c86c24-c7a7-5714-abf2-4c48f348cecc",
+        "1c2effc1-1038-584d-ae8b-7c912c8e9504",
+        "6eb75906-3a4e-5de4-94c5-374d8f9723e5",
+        "4f04f31f-17f0-583f-802f-82c3a0b34128",
+        "e1b94e53-0f20-5d01-abfc-cfb348544a31",
+        "b866fc5c-261b-56d8-99e8-03ea0646af8f",
+        "d8846172-f0a0-55ba-bf41-55641f588ea7",
+        "7ea8b73b-2cbb-562b-aecc-7f0f64c42630",
+        "3eb6683b-0153-5365-81c6-cc599783e9c7",
+        "e5a0ed2b-7fed-5e2d-94ed-43dbaf0b9ccc",
+        "0c78ef16-4fe0-5e33-908e-b038949ee608",
+        "e98c95a8-b50e-5d8b-b2db-c679a39163df",
+        "13311789-793f-5d95-942c-3b6414a8ad1a"
+      ]
+    },
+    {
+      "file": "sc8280xp-lenovo-thinkpad-x13s-21bx.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "LENOVO ThinkPad X13s Gen 1",
+      "compatible": "lenovo,thinkpad-x13s",
+      "hwids": [
+        "810e34c6-cc69-5e36-8675-2f6e354272d3",
+        "f22c935e-2dc8-5949-9486-09bbf10361b2",
+        "abdbb2cb-ab52-5674-9d0a-2e2cb69bcbb4",
+        "ddf28a3f-43fc-54a4-a6a7-4cba5ad46b3e",
+        "4df470e6-7878-5b0f-b2e0-733d5d9fa228",
+        "3ad863ab-0181-5a2f-9cc1-70eedc446da9",
+        "69c47e1e-fde2-5062-b777-acbeab73784b",
+        "3486eccc-d0ac-534a-9e2f-a1c18bc310c6",
+        "c869f39e-f205-5ca0-be7b-d90f90ef5556",
+        "b470d002-ad8e-5d5c-a7bf-bb1333f2ce4b",
+        "64b71f12-4341-5e5c-b7cd-25b6503799e3"
+      ]
+    },
+    {
+      "file": "sc8280xp-lenovo-thinkpad-x13s-21by.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "LENOVO ThinkPad X13s Gen 1",
+      "compatible": "lenovo,thinkpad-x13s",
+      "hwids": [
+        "b265d777-007e-56e5-b0e2-bd666ab867be",
+        "3f9d2d91-73b2-5316-8c72-a0ecb3f0dae5",
+        "4b189129-8eb2-585c-a1bb-a4cfc979433a",
+        "fbf92a11-bb6f-5adb-b5a7-8abf9acbd7d9",
+        "0909a1c3-3a02-59a0-b1ea-04f1449c104f",
+        "69acf6bf-ed33-5806-857f-c76971d7061e",
+        "ddfbdaa2-7c46-5103-be64-84a9f88c485f",
+        "b41f58ed-7631-561f-9b0c-449a9c293afa",
+        "9f47e28f-e1ee-5cb5-b4ce-8f0605752b3d",
+        "873455fb-b2c5-5c0c-9c2c-90e80d44da57",
+        "a1dfe209-99e5-5ff2-9922-aa4c11491b49"
+      ]
+    },
+    {
+      "file": "sc8280xp-lenovo-thinkpad-x13s-4810.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "LENOVO ThinkPad X13s Gen 1",
+      "compatible": "lenovo,thinkpad-x13s",
+      "hwids": [
+        "e4e1e851-389a-5be8-bc77-d32bc3e96ba2",
+        "a84d13c1-3864-5d56-8c7c-15ad37074a3f",
+        "6026ec60-e5e0-56bf-9d71-f3465d7314c8",
+        "dc4ecdd0-c09b-5e84-ac5f-ccf0182e1ec6",
+        "04392ed0-22bc-56a4-ae4e-dcb325cb6899",
+        "6d8e538a-e089-5901-97ed-5ef670416fca",
+        "93a4dd46-2007-56bf-b176-390519d6f5bd",
+        "4a971ccf-1223-5f4d-b939-dcb8efc0b350",
+        "56eafd87-9fbc-5388-a5fd-ec9a9178fb1c",
+        "5188008f-3241-5f05-8d21-774b5c7a2887",
+        "1305c7fb-2943-53e5-aba5-5a948d96ed94",
+        "db1387e0-f13d-5000-889d-ff7cca53846a",
+        "30c7a7fe-f4bf-5ce1-aad8-f5e6db904c53"
+      ]
+    },
+    {
+      "file": "sc8280xp-microsoft-blackrock.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "Microsoft Corporation Surface",
+      "compatible": "microsoft,blackrock",
+      "hwids": [
+        "69ba0503-ca94-5fa3-b78c-5fa21a66c620",
+        "ad2ee931-a048-5253-b350-98c482670765",
+        "5bd24fc5-5edb-51f6-82e6-31a9ef954c5b",
+        "d67e799e-2ba7-555a-a874-a0523a8b3b11",
+        "813677fa-6d11-5756-a44d-dde0f552d3f6",
+        "ce83144b-b123-59e5-8a9a-0c1a13643fc4",
+        "53b87f48-fc47-54e9-ade5-f1a95e885681",
+        "046fefee-341b-5c40-b0a3-1c647d31b500",
+        "f59639f4-4970-5706-9a75-519dd059f69e",
+        "08f06457-aa19-51c5-be4c-0087ce4fa2ed",
+        "11b80238-dbee-57bc-8b26-83c9e5b4057d"
+      ]
+    },
+    {
+      "file": "sc8280xp-microsoft-surface-pro-9-5G.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "Microsoft Corporation Surface",
+      "compatible": "microsoft,arcata",
+      "hwids": [
+        "e3d941fa-2bfa-5875-8efd-87ce997f8338",
+        "a659ee2b-502d-50f7-9921-bdbd34734e0b",
+        "5caa88bc-ea9b-5d73-a69a-89024bfff854",
+        "c0cf7078-c325-5cf6-966b-3bbbc155275b",
+        "6309fbb9-68f4-54f9-bbc9-b3ca9685b48c",
+        "9d70dcfd-f56b-58bf-b1bd-a1b8f2b0ec7e",
+        "9bac72c6-83f6-5e21-af8e-bc1f5c2b7cc8",
+        "94fb24a7-ff7a-5d70-9ac8-518a9e44ea64",
+        "009d2337-4f76-514e-b2c1-b2816447b048",
+        "3a486e6f-3b0a-5603-a483-503381d3d8c3",
+        "636b6071-7848-50d5-b0b5-6290c49e9306"
+      ]
+    },
+    {
+      "file": "sc8280xp-radxa-dragon-q8b.json",
+      "firstRelease": "v262",
+      "inMain": true,
+      "name": "Radxa Computer Co., Ltd. Dragon Q8B",
+      "compatible": "radxa,dragon-q8b",
+      "hwids": [
+        "32978e78-153f-5ce0-a6c7-05332e9be35b",
+        "93975fa3-a84a-5a58-a065-1de7e0bcf58f",
+        "616a4751-7393-5af2-9d86-bd0830b2879c",
+        "72cee887-e3b7-569a-b301-a6c60ce4fe94",
+        "e12e80ad-d8a6-57e1-be79-ec1bc76f96e5",
+        "6f487192-b176-566b-b165-3a56ff779c1a",
+        "0892d6ad-c297-548b-813b-d3ade091f75a",
+        "fc3f2e5b-9d50-5e13-9002-b9765dcc78e5",
+        "67ae360a-59f4-5f6a-9100-15270232f899",
+        "5c83a423-e471-5160-be87-bf824c48b38c"
+      ]
+    },
+    {
+      "file": "sdm850-lenovo-yoga-c630.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "LENOVO YOGA C630-13Q50",
+      "compatible": "lenovo,yoga-c630",
+      "hwids": [
+        "b8c71349-3669-56f3-99ee-ae473a2edd96",
+        "d17c132e-f06e-5e38-8084-9cd642dd9b34",
+        "8f56cf17-7bdd-5414-832d-97cd26837114",
+        "b323d38a-88c6-5cf6-af0d-0db3f3c2560d",
+        "43b71948-9c47-5372-a5cb-18db47bb873f",
+        "67a23be6-42a6-5900-8325-847a318ce252",
+        "94f73d29-3981-59a8-8f25-214f84d1522a",
+        "5ca3cf2b-d6e9-5b54-93f7-1cebd7b3704f",
+        "81f308c0-db65-50c2-a660-52e06fc0ff9f",
+        "30b031c0-9de7-5d31-a61c-dee772871b7d",
+        "382926c0-ce35-53af-8ff9-ca9cc06cfc7b"
+      ]
+    },
+    {
+      "file": "x126100-lenovo-ideapad-slim3.json",
+      "firstRelease": "v262",
+      "inMain": true,
+      "name": "LENOVO IdeaPad Slim 3 15Q8X10",
+      "compatible": "lenovo,ideapad-slim3",
+      "hwids": [
+        "d0a73ed7-fc46-5f8c-bfaa-62375492a303",
+        "14d6f910-fb4f-5ff1-87e4-03a16448a255",
+        "57530352-2dd8-5087-8350-77d82bdc984d",
+        "4f6c85c4-b6e2-5cd9-9a22-91b839f31474",
+        "0549a586-ab3b-5606-a55a-f9374515909c",
+        "1bee74fc-5f4d-53a1-92a3-f532d4170a95",
+        "b59e5273-1ed4-51d7-9beb-da0e48f96459",
+        "123d7adb-792e-5e3e-9044-3d5eec53b59d",
+        "67f92433-2c48-5d27-8423-afe79c8f86e1",
+        "0b1ba81f-8f6b-5ba3-aebc-a6e71b280d83",
+        "f9f59b59-b3f3-5b8a-a65a-84bc573ee694",
+        "216c17d6-9f5b-5020-b8cc-1be8b74f6204",
+        "e093d715-70f7-51f4-b6c8-b4a7e31def85",
+        "71d86d4d-02f8-5566-a7a1-529cef184b7e",
+        "6de5d951-d755-576b-bd09-c5cf66b27234",
+        "9c54c867-8153-5607-8f22-413c8f17fc13",
+        "5963a641-1d3e-5431-86a8-5d0d98f90e3e",
+        "99431f53-09a1-5869-be79-65e2fa3f341d"
+      ]
+    },
+    {
+      "file": "x1e001de-devkit.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "Qualcomm SCP_HAMOA",
+      "compatible": "qcom,x1e001de-devkit",
+      "hwids": [
+        "baa7a649-12d8-56c7-93c5-a4e10f4852be",
+        "c8e75ab8-555c-5952-a3e3-5b607bea031d",
+        "4bb05d50-6c4f-525d-a9ec-8924afd6edea",
+        "830bd4a2-2498-55cf-b561-48f7dc5f4820",
+        "f37dc44b-0be4-5a70-86bd-81f3dacff2e9",
+        "9cba20d0-17ad-559f-94cd-cfcbbf5f71f5"
+      ]
+    },
+    {
+      "file": "x1e78100-acer-sfa14-11.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "Acer Swift 14 Go Pro AI",
+      "compatible": "acer,swift-sfa14-11",
+      "hwids": [
+        "730dea6f-efd9-5686-a975-656c9b8423f1",
+        "97f3186d-0ad3-5f8a-98bb-72674271590d",
+        "39379ca2-ff12-5f56-b54f-05064dc42166",
+        "c6d7090e-7535-5a11-aa9e-c61e2bf3e21c",
+        "b4835065-fd33-5d49-99d2-4e8a16147c23",
+        "74439855-9bdf-5cf1-9bf8-4057ee0fb250",
+        "7e4796fa-aa40-55f4-ac92-7350759fe5b7",
+        "eb342e11-e7f8-5b4b-b193-d379f676ec8b",
+        "3e7aed1f-e80e-59b9-a0e7-0011d93d05ba",
+        "488a4452-62a8-5362-87ba-8265d0d0ef61",
+        "3e7aed1f-e80e-59b9-a0e7-0011d93d05ba",
+        "dace3a5d-f5c6-5b0b-b15c-ff1ebfc2f5c2",
+        "c97fd9d6-efec-54e0-a6e2-3ba4cadd9655"
+      ]
+    },
+    {
+      "file": "x1e78100-lenovo-thinkpad-t14s-lcd.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "LENOVO ThinkPad T14s Gen 6 (LCD)",
+      "compatible": "lenovo,thinkpad-t14s-lcd",
+      "hwids": [
+        "83579fdf-8faf-57b4-b265-d2e817c7cf3f",
+        "b0e14398-0a96-5736-840b-7349e5c0b85c",
+        "53b6927f-d6ca-5674-a0e8-a50a989d4ba0",
+        "a8852b56-45ea-5377-ba2d-1910a5c897bb",
+        "1538c7fb-26b6-5144-b16f-2500b5a0a503",
+        "1480f3ca-b01a-5d7c-bbc9-7a17d7b4b58d",
+        "48a732b5-3989-5ac3-b661-516a46f00792",
+        "2b1b6e68-cee9-549b-b8ae-10c274b8c3a6",
+        "a07b8e34-d6b6-58b2-9963-38216ec67159"
+      ]
+    },
+    {
+      "file": "x1e78100-lenovo-thinkpad-t14s-oled.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "LENOVO ThinkPad T14s Gen 6 (OLED)",
+      "compatible": "lenovo,thinkpad-t14s-oled",
+      "hwids": [
+        "27378ce5-d999-5c3b-acde-0404805afd3b",
+        "7c09107d-0ac3-5582-837f-c614d518cf62",
+        "77ffaabe-038a-550f-b6ea-485dc49d4b45",
+        "e78c4e7a-68c3-5b29-b2a0-dbd2785e28cd",
+        "c012b92d-a6a6-57fa-ba06-4f3062d891d4",
+        "08ba7f5b-8136-5938-835a-fd99143d34a5"
+      ]
+    },
+    {
+      "file": "x1e78100-lenovo-thinkpad-t14s.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "LENOVO ThinkPad T14s Gen 6",
+      "compatible": "lenovo,thinkpad-t14s-lcd",
+      "hwids": [
+        "c81fee2f-cf41-5d5a-8c7b-afd6585b1d81",
+        "a9b59fea-e841-508a-a245-3a2d8d2802de",
+        "74593764-b6b9-58e9-bedc-93ebbb1eb057",
+        "e5d83424-0ecb-5632-b7b1-500f04e82725",
+        "76032e78-67a8-5dab-8512-157bfcfb8f75",
+        "dd83478e-e01b-5631-ae74-92ae275a9b4e",
+        "791ecd9d-1547-58e6-b72a-5ce417b729dd",
+        "8c602147-5363-5374-859e-8b7fe2d4d3ce",
+        "498d60ae-9b1d-5b67-8abd-af571babfa94",
+        "acbac5af-aa6a-5690-88f3-e910f04a7ead",
+        "5180bc01-5d18-5870-b955-969da38b2647",
+        "19b622ef-27fe-5c2e-bc53-13a79b862c65",
+        "ac09e50f-9b3b-53c0-9752-377c3a0baaa0",
+        "1d9f3ebb-96de-5dd6-8c88-38308b0c1c44",
+        "578dd7d5-5871-5bd5-92a9-be07f1067b92",
+        "ed647f93-3075-598b-9d89-d0f30ec11707",
+        "f6cd4a9f-9632-516e-b748-65952f7380c5",
+        "a5a4e3c1-5922-5ed6-b78e-9f0ea873a988",
+        "a20ae3ec-49a1-5cb5-acb8-5d31c77b105a",
+        "8cfd85bb-0d77-59df-8546-264239be475e",
+        "513976f8-3f51-5b42-9ae0-931ce23c5f38",
+        "86a0d770-3ca1-57fa-ac05-413481c00a24",
+        "5c20e964-d530-5dd7-9efd-4aed9e73c3cb",
+        "d93b21c0-5ed9-5955-911a-5b15f114d786",
+        "82fa4a02-8c3c-55f9-b0c9-e8feb669fd3a",
+        "34e7fadd-9c7d-5f91-ba7f-cedb04d59b9a"
+      ]
+    },
+    {
+      "file": "x1e78100-medion-sprchrgd-14s1-elite.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "MEDION SPRCHRGD",
+      "compatible": "medion,sprchrgd14s1",
+      "hwids": [
+        "e72ceeaf-45c6-50f5-9a8d-f3af93228f05",
+        "0f49db05-25d9-5f1a-a633-40b358f6f6d2",
+        "f6304115-77d2-52ef-b050-77b79c416b76",
+        "7cbb6d59-d341-5ef2-ba12-dd3bc4a41df6",
+        "2fee1e80-b28f-51f2-8421-f0c39aa97516",
+        "2904a882-918e-5f0b-9ac6-6a9737e685c9",
+        "ba6260c3-a098-59ba-b999-2783726d1e44",
+        "3713fa68-5f78-5538-b954-5e82e6c25646",
+        "f3ceb2c3-66db-5519-98bc-d62cba323666",
+        "9eb99973-f4f7-53b2-8682-faafa5f8ad1f",
+        "ec048a86-f99a-5f29-a128-04d9254808ba",
+        "6b54ec94-c2bb-5008-abe3-975b26e8a371",
+        "776dd828-0ea0-52b3-93d9-b4f97ac0e7e1"
+      ]
+    },
+    {
+      "file": "x1e80100-asus-vivobook-s15.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "ASUSTeK COMPUTER INC. ASUS Vivobook S 15",
+      "compatible": "asus,vivobook-s15",
+      "hwids": [
+        "6d634332-21fc-57c8-bc6b-e0f800f69f95",
+        "d0fce8d6-a709-5bf0-8be0-6ac6ab44b8e0",
+        "80430e03-90f0-5355-84b2-28fb17367203",
+        "fa342b0a-9e22-541f-8e95-93106778f97d",
+        "137a5f94-8fcf-5581-8ac6-70d50fdba4a6",
+        "3a3ef092-d5f1-5d4d-acea-70b38ef56e53",
+        "a6debedb-f954-5aa1-8260-4dc3b567c95f",
+        "f3a6ca3e-4791-5bb0-915e-0b31856ec19c",
+        "4262e277-58d3-5ac4-9858-c0751ad06f5c",
+        "f54cd4e6-3666-5b56-abd3-a5f2df50c534",
+        "807fe49f-cfd2-537d-b635-47bec9e36baf",
+        "c71e903b-4255-56cb-b961-a8f87b452cbe",
+        "1b6a0689-3f70-57e0-8bf3-39a8a74213e8"
+      ]
+    },
+    {
+      "file": "x1e80100-asus-zenbook-a14-oled.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "ASUSTeK COMPUTER INC. ASUS Zenbook A14",
+      "compatible": "asus,zenbook-a14-ux3407qa-oled",
+      "hwids": [
+        "f84ba711-7075-5c1b-a03c-57d2521a1ac2",
+        "91971b38-ae5d-5e14-9f44-7c0316710593"
+      ]
+    },
+    {
+      "file": "x1e80100-asus-zenbook-a14.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "ASUSTeK COMPUTER INC. ASUS Zenbook A14",
+      "compatible": "asus,zenbook-a14-ux3407ra",
+      "hwids": [
+        "c41d2cda-fda7-522c-b1a7-4a835c15c43d",
+        "0bfddfaf-e393-5dfe-a805-39b8b1098c81",
+        "f0bb1cd4-995a-5c90-946b-9bb958f35f42",
+        "2d610a5e-ef69-5e60-b15e-7786d0ebd79e",
+        "6f892377-a51e-5f99-a363-b79f28fc55f9",
+        "0c3f5e9c-eddb-5ba2-88ee-06ae0221a53d",
+        "20b8b77d-e450-550b-b1ff-55d3317f59a6",
+        "24652d54-00f4-59ae-96fb-f7adbfa4a939",
+        "5c9fc73f-f915-52bf-a82d-9c7fe2274ecc",
+        "3884ad58-4d63-589a-be98-b8ab1ddf3b93",
+        "cedbcc19-3a5a-5bae-9973-f8e158188de7",
+        "1f2f1045-a811-5e42-b31e-b433e384fc79",
+        "b307ab54-c79d-58ca-a3b2-d1b1e325bfc3"
+      ]
+    },
+    {
+      "file": "x1e80100-crd.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "Qualcomm SCP_HAMOA",
+      "compatible": "qcom,x1e80100-crd",
+      "hwids": [
+        "e73870a5-90e8-528d-93fd-3da59f78df18",
+        "2405af0b-d21d-5196-a228-4acffe7b3a10",
+        "8fa88c58-23eb-5aea-9ea7-c4a98ded7352",
+        "7faef667-9eb2-53f4-9764-26fe0e92fbff",
+        "b6d4eee8-30f3-564a-8246-e83935cf8dbb",
+        "4bb05d50-6c4f-525d-a9ec-8924afd6edea",
+        "339fc6d2-e0f4-5226-9dd9-62c4dc41881d",
+        "d52e3fb6-202c-5cfa-a27c-e3ffe15339fb",
+        "361b3d63-be90-52c2-8798-a05fbd68b773"
+      ]
+    },
+    {
+      "file": "x1e80100-dell-inspiron-14-plus-7441.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "Dell Inc. Inspiron",
+      "compatible": "dell,inspiron-14-plus-7441",
+      "hwids": [
+        "4689ccaf-4f31-5146-887f-ca965da0f28a",
+        "e4c9fe83-73ba-5160-bc18-57d4a98e960d",
+        "efc06900-f603-5944-88e5-4de722816f91",
+        "90117b25-1646-515b-bfeb-286e74f2a1e8",
+        "c1190be1-8ed5-50f1-9097-2a73ad9c4eb1",
+        "0d9ce3bc-620c-5209-9e82-7382cb6cffcd",
+        "ff394805-0b5f-52f6-9e1d-afb1d2bee411",
+        "07c6477a-7ef7-56c7-91d9-73d23295b0c0",
+        "a66b1244-0027-5451-a96a-dfcfc42ab892",
+        "ef84110e-bd09-5f0f-a3dd-7995b4a3a706",
+        "07c6bbd9-caf8-5025-84d8-4efdb790f663",
+        "bea2e67a-b660-5044-8acd-0d28e8c2e974",
+        "8548ce7c-fdf3-55d0-95ba-606ca8db50da"
+      ]
+    },
+    {
+      "file": "x1e80100-dell-latitude-7455.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "Dell Inc. Latitude",
+      "compatible": "dell,latitude-7455",
+      "hwids": [
+        "903e3a6f-e14b-5643-9d55-244f917aadb6",
+        "59e5c810-9e60-5a89-8665-db36c56b34d6",
+        "2b9277cd-85b1-51ee-9a38-d477632532da",
+        "6e01222b-b2aa-531e-b95f-0e4b2a063364",
+        "93055898-8c85-50e7-adde-8115f194579a",
+        "b3e5b59d-84ae-597d-9222-8a4d48480bc3",
+        "4f73f73b-e639-5353-bbf7-d851e48f18fc",
+        "68822228-a3e0-5b12-942d-9408751405d1",
+        "683e4579-8440-5bc1-89ac-dfcd7c25b307",
+        "fb7493ec-9634-5c5a-9f26-69cbf9b92460"
+      ]
+    },
+    {
+      "file": "x1e80100-dell-xps13-9345.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "Dell Inc. XPS",
+      "compatible": "dell,xps13-9345",
+      "hwids": [
+        "eedeb5d9-1a0e-56e6-9137-eb6a723e58d1",
+        "1eb87d70-2f37-5f18-85de-30e46c17d540",
+        "1d1baf60-e2f3-5821-9d98-19a131bf8d93",
+        "7c7c2920-cb59-56ad-bc8a-939e803b0192",
+        "940c6349-f0a5-54ba-8deb-10e709e0b76c",
+        "3b9a1d76-f2e8-52e8-84de-14c5942b3d41",
+        "3c2649a7-2275-5130-a0c4-cc5f9809a2c1",
+        "36e8dd88-512d-5a74-86a4-039333f9e15a",
+        "e656b5f2-69c3-55da-bf22-4dd58d5f6d4f",
+        "bc685cec-e979-5cb9-bf02-e15586c7cb4b",
+        "81972cb8-6fc7-5e08-b140-b0063ed4fefa"
+      ]
+    },
+    {
+      "file": "x1e80100-honor-magicbook-art-14.json",
+      "firstRelease": "v262",
+      "inMain": true,
+      "name": "HONOR MagicBook Art 14 Snapdragon",
+      "compatible": "honor,magicbook-art-14-snapdragon",
+      "hwids": [
+        "ea3d6abf-d171-51d9-aadc-2f01715a2526",
+        "8c4f216d-a380-5720-b036-13e1c9e6ed9f",
+        "533dd95d-f27c-5c70-bbfd-f60ed0ff9b8c",
+        "16f2294f-2175-5bac-8752-f304c65bccc3",
+        "8ca9c5e4-6465-5841-a567-b4c54597cf16",
+        "d9a47875-303e-5a56-bc53-a98ef97dda55",
+        "f470a9a4-99c0-5b88-8309-927c60430477",
+        "f05c7d5e-f47a-58de-88dc-4d92ac4c00a7",
+        "8850ea33-9bd6-5aaf-a013-45d1c87937a5",
+        "74e5317c-21cf-5cf6-bc70-5c78a3320848",
+        "b7b0f714-757e-5bee-83bf-061428e79201",
+        "9ecaf40d-d1bd-5963-888a-9757fcc95448",
+        "6a798bf3-64eb-5107-948b-810b9eabffba"
+      ]
+    },
+    {
+      "file": "x1e80100-hp-elitebook-ultra-g1q.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "HP 103C_5336AN HP EliteBook Ultra",
+      "compatible": "hp,elitebook-ultra-g1q",
+      "hwids": [
+        "ba2ddd3d-a06b-5b1f-9b2a-ce58f748486c",
+        "9145c311-f1b1-5f0f-902d-f6828baf8c46",
+        "5275e89b-e839-589e-9e90-e1bd6854255b",
+        "7bfc4a0e-15c1-58b3-b27b-4e5f60d4397e",
+        "a3c9ef57-67ab-5f75-a4cb-48cb7475b025",
+        "72a81f9e-c30b-5bf0-8449-948f8e593e92",
+        "829d699c-f082-5835-967a-8e7022cb20b5",
+        "25f49237-b3b4-58b2-9e58-6cc379781901",
+        "07be634a-0442-51fb-8a77-ecb370b5262b",
+        "e4944bcc-a1c3-540e-b400-cd91953b7ba9",
+        "ec4cdb9c-e6ff-581c-ac22-d597b5e880a2",
+        "b7f376e9-f5f8-5718-b00e-6bd7c265aeab",
+        "5473ba61-2807-585b-b2ac-f0366d84bdc0"
+      ]
+    },
+    {
+      "file": "x1e80100-hp-omnibook-x14.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "HP 103C_5335M8 HP OmniBook X",
+      "compatible": "hp,omnibook-x14",
+      "hwids": [
+        "045dfd0f-068b-5e57-86bd-f41b4b906006",
+        "ca5dab4f-a301-53c6-b753-c2db56172e0a",
+        "811126e6-4aee-5f9e-827d-d0f12f6a6f00",
+        "6a4511bc-0a3b-5b10-9c8b-dbcb834ecd83",
+        "abb2ffec-2acd-5750-8dfd-c3845fd4bf2a",
+        "1a192aee-2cfd-5ab5-95f9-8093218a48ef",
+        "eaab52c6-ed22-5e1b-b788-fc5a0531291d",
+        "848aeb1d-302b-5b6b-9109-0f4632535915",
+        "54500b82-f7ae-592d-ae68-8c8e362a1475",
+        "68d24be5-01b6-5d88-83fb-df2bcfa879aa"
+      ]
+    },
+    {
+      "file": "x1e80100-lenovo-yoga-slim7x.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "LENOVO Yoga Slim 7 14Q8X9",
+      "compatible": "lenovo,yoga-slim7x",
+      "hwids": [
+        "3fb1e5ba-05cd-5153-ad64-1d8bc6dc7a1b",
+        "d99f6cb2-4a96-5e4a-8e29-19d52dfc2870",
+        "6d53c38f-6adb-578b-a418-2abda4d8485d",
+        "8073dbed-501f-5f5e-a619-4cdd9c00e865",
+        "d27cf20e-e185-578e-bd46-f4cc3a718bb2",
+        "8477f828-512b-56cf-af55-c711a6831551",
+        "f7f92b85-ff01-5e93-a453-c7f91029aa55",
+        "0700776d-0de7-5ea7-b9bf-77e0454d35e1",
+        "ee39b629-4187-5ff7-84c0-e354555562cd",
+        "fdb12a4f-1e8b-524e-97b5-feef23a8a8da",
+        "63429d43-c970-570d-aaa7-54300924e0c5"
+      ]
+    },
+    {
+      "file": "x1e80100-microsoft-denali.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "Microsoft Corporation Surface",
+      "compatible": "microsoft,denali-oled",
+      "hwids": [
+        "66f9d954-5c66-5577-b3e4-e3f14f87d2ff",
+        "5a384f15-464d-5da8-9311-a2c021759afc",
+        "14b96570-4bc4-541a-9aef-1b7e2b61d7cd",
+        "aca467c0-5fc2-59ad-8ed5-1b7a0988d11c",
+        "95971fb3-d478-591f-9ea3-eb0af0d1dfb5",
+        "c9c14db9-2b61-597a-a4ba-84397fe75f63",
+        "7cef06f5-e7e6-56d7-b123-a6d640a5d302",
+        "48b86a5e-1955-5799-9577-150f9e1a69e4",
+        "06128fee-87dc-50f6-8a3f-97cd9a6d8bf6",
+        "84b2e1d1-e695-5f41-8c41-cf1f059c616a",
+        "16a47337-1f8b-5bd3-b3bd-8e50b31cb1c9",
+        "01bf1e61-d2e0-518b-bb46-eb4d1f2b1af1",
+        "584a5084-15f2-5d20-917b-57f299e61f7e",
+        "64fbb7cb-3c5b-5fd7-a361-41d1d0ef2ff2",
+        "fa26249f-6748-5ff3-8f78-b9cf9ab4ed2f",
+        "a362faea-8d41-5642-a48e-c0349d96ad60",
+        "fdc060ef-c134-5735-8b51-bfb157640a5c",
+        "d752a22b-1fd8-53c3-89ef-8ca95618134a",
+        "ca2ff828-b404-5253-9e0e-579c93bfb059",
+        "2ea92a70-ac64-51f7-a395-dc86b06f4e0a"
+      ]
+    },
+    {
+      "file": "x1e80100-microsoft-romulus13.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "Microsoft Corporation Surface",
+      "compatible": "microsoft,romulus13",
+      "hwids": [
+        "4ecd5e53-42ea-51a3-9602-aecdfee5c09d",
+        "53368ca9-12d5-5ee1-820b-ce979fa2cb0b",
+        "cb196e28-20bc-5e78-93f1-0ac41726bcf8",
+        "fdfca0f3-41b6-5872-a2ea-53539fd5160c",
+        "11696377-327d-5ad1-b01d-02a7dbb9b99a",
+        "892e90c9-31e3-5131-a217-a02632dba5e9",
+        "786c71b6-f60e-51c7-9ddc-f2999b75a3c5",
+        "f0d12ad9-f530-5b56-96d8-897dd704059e",
+        "3c329240-a447-5ec5-b79b-d1149420ac62",
+        "224ba2ff-14c1-5b33-ac10-079ccc217be2",
+        "924900a0-9be2-53ca-90d7-b0e38827f5c5",
+        "95c06fde-19b0-55dc-9ca6-55403bae23f5",
+        "c735618b-d526-5f71-9651-8d149340d620"
+      ]
+    },
+    {
+      "file": "x1e80100-microsoft-romulus15.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "Microsoft Corporation Surface",
+      "compatible": "microsoft,romulus15",
+      "hwids": [
+        "e56cd9fa-d992-5947-9f80-82345827e8e6",
+        "e1fbd53f-3738-5fa6-aa7b-5ae319663d6b",
+        "e4cef54f-d5b2-56b1-8aa0-07b48c3deedf",
+        "ebce3085-12c1-58f3-9456-ccdf741a1538",
+        "f91b1a95-926c-5fd7-9826-4a101e142f97",
+        "892e90c9-31e3-5131-a217-a02632dba5e9",
+        "27ec66e4-3f81-5c06-997e-e1ea0a98b8a1",
+        "90482ef5-831d-5069-8d40-92d339a75c77",
+        "3c329240-a447-5ec5-b79b-d1149420ac62",
+        "224ba2ff-14c1-5b33-ac10-079ccc217be2",
+        "924900a0-9be2-53ca-90d7-b0e38827f5c5",
+        "109cd8d8-6086-50b6-9c2d-d0aca0f418da",
+        "c735618b-d526-5f71-9651-8d149340d620"
+      ]
+    },
+    {
+      "file": "x1p42100-acer-swift-go14-01.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "Acer Swift Go 14 AI",
+      "compatible": "acer,swift-go14-01",
+      "hwids": [
+        "795d7de3-0e1e-5976-b0d2-2216375df442",
+        "327e7f1e-4a10-5fe1-8b4f-3c235ea128d9",
+        "627edbb7-fbdb-5de7-8382-f7abcbf9928a",
+        "79dd27da-6d6b-57da-8fba-b97b489be61d",
+        "3bd63b6b-dfa3-5314-9846-76363ae49445",
+        "03f8cc3c-5d61-5ea0-aeb1-b3142528bce2",
+        "3f49141c-d8fb-5a6f-8b4a-074a2397874d",
+        "7c107a7f-2d77-51aa-aef8-8d777e26ffbc",
+        "2e71fd01-d5f5-5c67-9abc-c47c10f08626",
+        "6abb9980-4909-5d87-95a4-871129047302",
+        "a07b1705-c904-5a73-b97a-f46bc2dd8400",
+        "e66990c4-b390-59c3-a580-149c73cfe585",
+        "69670c5e-509d-5193-9f0a-882a00180b1a"
+      ]
+    },
+    {
+      "file": "x1p42100-asus-vivobook-s15.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "ASUSTeK COMPUTER INC. ASUS Vivobook S 15",
+      "compatible": "asus,vivobook-s15-x1p4",
+      "hwids": [
+        "c4575028-e938-504d-850d-f36fbb6b300d",
+        "920bc3d2-69f0-5705-83d8-3e0019ab5223",
+        "ac5b6293-c2ac-5e82-98f2-0475efbc11fc",
+        "0c926a29-b883-5482-aea7-ddda46084840",
+        "c5fed9eb-6a7b-5378-b093-484d9322150b",
+        "c9cd4052-8d61-5a5b-ad16-b9f12a993822",
+        "be521b64-7759-5835-a0b2-c10300a191fa",
+        "24652d54-00f4-59ae-96fb-f7adbfa4a939",
+        "52499218-2ce9-5d3c-b276-e3cee52f2f7a",
+        "172515ff-feb1-5f61-bc14-116a23ea70da",
+        "f6b44a44-c913-572c-8c9c-0ff0f9c010f0",
+        "2ad07794-e07a-55da-b1a1-b9b56ed4cdcd",
+        "ab36b5d3-4e77-58be-9d55-939c7e6734c6"
+      ]
+    },
+    {
+      "file": "x1p42100-asus-zenbook-a14.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "ASUSTeK COMPUTER INC. ASUS Zenbook A14",
+      "compatible": "asus,zenbook-a14-ux3407qa-lcd",
+      "hwids": [
+        "c6d100b1-9de7-5636-a3cc-f28fa46fb926",
+        "85f50d27-f4cb-54df-9aae-f6f09700b132",
+        "8a72a2ea-3971-55e3-b982-cb6b82868f0e",
+        "a034eff6-2891-5de0-b0db-9c5ff350b968",
+        "a5b5becc-2a55-5017-b159-087f3846da26",
+        "59793319-4344-5755-9194-17f29f030d5d",
+        "14643426-35fa-5a20-bc31-3b6095d2b451",
+        "24652d54-00f4-59ae-96fb-f7adbfa4a939",
+        "a8425d85-573a-56f8-9d9d-98a196d712fa",
+        "7e6d3df4-bf5f-59ab-ad7b-e00677c0ae5a",
+        "00bc5418-646d-5bab-b772-4efb06f4e7f1",
+        "3ca4e2d9-50df-51a5-a87f-4636d425e97d",
+        "0b8b84da-462b-5620-bdb5-70272e0ddd94"
+      ]
+    },
+    {
+      "file": "x1p42100-hp-elitebook-6-g1q.json",
+      "firstRelease": "v262",
+      "inMain": true,
+      "name": "HP 103C_5336AN HP EliteBook",
+      "compatible": "hp,elitebook-6-g1q",
+      "hwids": [
+        "351005d4-e3e1-5387-a703-21cc93bd30ea",
+        "180994cf-7159-5b2d-be28-5624845887b1",
+        "3bf4bc3c-a850-5a6a-a95c-8e3eaf14bc96",
+        "aa2c3726-f5ea-53b6-8ed5-90f5a1abaaff",
+        "3c513e7a-56b8-5edf-8d1e-d90fa4a8974d",
+        "66ae13b5-9c0f-5f57-b2dd-dc699ccc409d",
+        "70b42fea-f55e-5d19-8110-d71be6bd5e32",
+        "be685a81-758f-58d4-8c4e-65cf4877588c",
+        "5ae54112-632c-57ee-b615-c2df8ba319cd",
+        "c7e47171-659b-55ad-a977-3df485a15742",
+        "2c1d5a7e-43d1-5fef-89d6-a3b368779536",
+        "ea8400a5-7227-5163-9664-225070358fa0",
+        "2dae3dcd-51ea-5422-9980-5220f02b883a"
+      ]
+    },
+    {
+      "file": "x1p42100-hp-omnibook-x14.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "HP 103C_5335M8 HP OmniBook X",
+      "compatible": "hp,omnibook-x14-fe1",
+      "hwids": [
+        "3fdb269e-c359-5004-b4e3-8541ef3580c9",
+        "29a43fda-41e4-5db5-b6d3-012d0674d84f",
+        "9c3e4a5b-8fa2-5045-9c4f-441307fa3b08",
+        "271cca67-bd9e-5dd6-8e5f-b5f6b969da97",
+        "612e268b-1233-5af6-b478-5596d3573d35",
+        "1d8361a7-1b3a-5915-8a35-03a3c1cf9c2e",
+        "6fe7a469-b01a-5530-9a34-2dd089e0e006",
+        "5120f011-8f7e-5ca5-9143-de545e288712",
+        "d4db0558-de1b-562b-bc23-3e0caadd4c94",
+        "38e7030f-993f-5bda-9ce8-ae13a13d7b5a"
+      ]
+    },
+    {
+      "file": "x1p42100-lenovo-ideapad-5-2in1.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "LENOVO IdeaPad 5 2-in-1 14Q8X9",
+      "compatible": "lenovo,ideapad-5-2in1",
+      "hwids": [
+        "db0cb253-2dc7-5164-8ce7-6ed312c1dd9b",
+        "72fe9329-cc32-5032-8714-d7ec08a9d441",
+        "aa4cb99b-c4ff-56a4-8b63-ab59db887972",
+        "d622845f-0305-5b33-b081-b7519488ed65",
+        "9b723570-d493-5541-ae58-49087512f816",
+        "eb458c6d-45b2-5299-95b7-87723235240e",
+        "920bf110-b027-51fc-97e5-bb9b46e78c75",
+        "9276913a-a9da-5237-b4e8-c8502197264a",
+        "a8a28ecb-200f-59c6-8fe3-62fa670fb80d",
+        "24248bed-dbd2-5e4f-ba41-4e03a09b904a",
+        "68320834-1316-5dad-babf-ae31cc3ff58c",
+        "d15b437b-55bf-5bd8-8a88-eb4b9e54cb97",
+        "32b7e294-a252-5a72-b3c6-6197f08c64f1",
+        "71d86d4d-02f8-5566-a7a1-529cef184b7e",
+        "6de5d951-d755-576b-bd09-c5cf66b27234",
+        "63fd3926-001c-5392-9c34-fdd477025bd8",
+        "4ff87ce0-b6ce-5e37-899b-389129fc099e",
+        "99431f53-09a1-5869-be79-65e2fa3f341d"
+      ]
+    },
+    {
+      "file": "x1p42100-lenovo-ideapad-slim-5-oled.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "LENOVO IdeaPad Slim 5 14Q8X9 (OLED)",
+      "compatible": "lenovo,ideapad-slim5x-oled",
+      "hwids": [
+        "6dede08b-32e0-520f-b3b5-6a8da842a919",
+        "bf1bc4fc-ddc8-5c48-8e31-8f8ff2418596",
+        "c1734f8b-41a9-5397-ae31-522795aaec18",
+        "28fc3712-01ae-5662-af6c-1d5eaed5f3db",
+        "eaa30ed1-62b1-51e2-9d1f-8308a1202657",
+        "8996d12b-d951-5792-92b5-4a8ac7593ec9",
+        "035da45a-624c-54a8-871d-a26f23330491",
+        "9c8eb132-0805-5a67-acae-5e24dcf34fa3",
+        "0ee69b2b-77f1-5424-a81a-f0f47ddf5dce",
+        "9b4980e7-d4d9-5f2f-9462-11dce522e7d3",
+        "f4fb1cdf-5465-57ef-9328-e1dec46b22ee",
+        "5c96e271-228e-573f-8d54-81ddc8df357f",
+        "3dc089c0-edd4-5ab2-bd70-537fb1acd96a"
+      ]
+    },
+    {
+      "file": "x1p42100-lenovo-thinkbook-16.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "LENOVO ThinkBook 16 G7 QOY",
+      "compatible": "lenovo,thinkbook-16",
+      "hwids": [
+        "e55d76ae-2ca4-543e-9144-86fdf0b0bf36",
+        "85f8bd67-fcad-50b8-8c67-0dbb786353b7",
+        "af0d539c-b28f-5a4d-b7a1-3640e2c4535f",
+        "ee9060fc-7565-54a3-ad4d-d6c637e9672d",
+        "11788bd3-612e-5b33-8d26-b8dd53d88ba0",
+        "894d8a8c-ab94-5193-ab7e-544927bdc40b",
+        "653dcb5a-527b-554c-921b-e4d93e112048",
+        "4279ea98-d0f8-588a-bb60-546a9bdefbbe",
+        "8442079a-81e2-5006-9aa0-f9c88bac9288",
+        "43977c23-c88a-5355-95ee-78667c5c4f1d",
+        "1f483d31-703d-5688-92a4-a72daaef38ec",
+        "e982f8e2-1687-5207-8674-44eea11e4b08",
+        "f81a6614-f23c-591a-b665-e19886a3d55e"
+      ]
+    },
+    {
+      "file": "x1p42100-microsoft-surface-pro-12in.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "Microsoft Corporation Surface",
+      "compatible": "microsoft,sp12",
+      "hwids": [
+        "38f75a5d-c3fc-5306-bb2e-bbb516e1ea91",
+        "57ba7c1d-8e88-59a9-82c9-044e765788e7",
+        "10cb324b-df3c-5081-bc7d-b5cc6795eeef",
+        "7c967d92-123c-5bfc-9fe8-430e6bba5ecb",
+        "277a48e4-924d-5ab0-81b9-d29c2ff47ad5",
+        "0a3f15dc-fcde-5159-baf8-1b55f5e1ae57",
+        "d17ea34a-39dc-5a14-8046-f47f082b4065",
+        "94996ddd-cdc3-5617-a625-3052726c4654",
+        "ef716fc4-b1b0-595c-b66e-1e3df6a0dc1d",
+        "b3930262-2a19-5f3f-adf0-b34629632fbb",
+        "2cdac0d6-d408-54ab-bf1e-a124b6c5425b",
+        "abbf3314-7dde-5966-980c-a1be8cf163b8",
+        "587dab3d-0f40-5962-b043-6fc86e41cba2"
+      ]
+    },
+    {
+      "file": "x1p64100-acer-swift-sf14-11.json",
+      "firstRelease": "v260",
+      "inMain": true,
+      "name": "Acer Swift 14 AI",
+      "compatible": "acer,swift-sf14-11",
+      "hwids": [
+        "27d2dba8-e6f1-5c19-ba1c-c25a4744c161",
+        "676172cd-d185-53ed-aac6-245d0caa02c4",
+        "20c2cf2f-231c-5d02-ae9b-c837ab5653ed",
+        "f2ea7095-999d-5e5b-8f2a-4b636a1e399f",
+        "331d7526-8b88-5923-bf98-450cf3ea82a4",
+        "98ad068a-f812-5f13-920c-3ff3d34d263f",
+        "3f49141c-d8fb-5a6f-8b4a-074a2397874d",
+        "7c107a7f-2d77-51aa-aef8-8d777e26ffbc",
+        "6a12c9bc-bcfa-5448-9f66-4159dbe8c326",
+        "f55122fb-303f-58bc-b342-6ef653956d1d",
+        "ee8fa049-e5f4-51e4-89d8-89a0140b8f38",
+        "058c0739-1843-5a10-bab7-fae8aaf30add",
+        "100917f4-9c0a-5ac3-a297-794222da9bc9"
+      ]
+    },
+    {
+      "file": "x1p64100-dell-latitude-5455.json",
+      "firstRelease": "v262",
+      "inMain": true,
+      "name": "Dell Inc. Latitude 5455",
+      "compatible": "dell,latitude-5455",
+      "hwids": [
+        "4d1ff2c8-dd8d-556b-befa-0cab2bc86be3",
+        "2d75e18e-e107-5c79-8a69-5f163d28ee6f",
+        "9195a554-2255-55ce-ab3f-59a2aba05c4e",
+        "6329967e-8fcd-5544-8869-36881d8b997b",
+        "f069ee1a-448c-55df-b8a2-eebce2ccaf7f",
+        "75d1456b-5a14-5868-b877-7b9f58f4dd0d",
+        "d33d10f9-d59d-5dc6-b13b-686ac24ea3c0",
+        "745f5023-2386-5aaa-944d-b825bea80756",
+        "9e9723ce-65b3-57d5-a98d-bf4e0b8f87ed",
+        "2f11e817-91c9-5aa2-acb1-bd1d317c9ba6",
+        "53c465c5-6425-51cd-b0aa-3382f3ad3622",
+        "dfb300e4-c621-562c-a147-521e95ce6b7f",
+        "838cf30a-6594-5200-8432-b94de34ce905"
+      ]
+    }
+  ],
+  "stubble": [
+    {
+      "file": "glymur-asus-zenbook-a14-ux3407na.txt",
+      "manufacturer": "ASUS",
+      "family": "Zenbook A14",
+      "productName": "Zenbook A14 UX3407NA",
+      "productSku": "",
+      "baseboardProduct": "UX3407NA"
+    },
+    {
+      "file": "glymur-asus-zenbook-a16-ux3607oa.txt"
+    },
+    {
+      "file": "glymur-crd.txt",
+      "manufacturer": "Qualcomm",
+      "family": "X2000094",
+      "productName": "CRD",
+      "productSku": "6"
+    },
+    {
+      "file": "glymur-hp-elitebook-x-g2q.txt",
+      "manufacturer": "HP",
+      "family": "103C_5336AN HP EliteBook",
+      "productName": "HP EliteBook X G2q 14 inch Notebook Next Gen AI PC",
+      "productSku": "1234567#ABA",
+      "baseboardProduct": "8E91"
+    },
+    {
+      "file": "glymur-lenovo-yoga-slim7x.txt",
+      "manufacturer": "LENOVO",
+      "family": "Yoga Slim 7 14Q8Y11",
+      "productName": "83QR",
+      "productSku": "LENOVO_MT_83QR_BU_idea_FM_Yoga Slim 7 14Q8Y11",
+      "baseboardProduct": "LNVNB161216"
+    },
+    {
+      "file": "mahua-lenovo-thinkpad-t14s-gen7-lcd.txt",
+      "manufacturer": "LENOVO",
+      "family": "ThinkPad T14s Gen 7",
+      "productName": "22A8S0070G",
+      "productSku": "LENOVO_MT_22A8_BU_Think_FM_ThinkPad T14s Gen 7",
+      "baseboardProduct": "22A8S0070G"
+    },
+    {
+      "file": "msm8998-lenovo-miix-630-81f1.txt",
+      "manufacturer": "LENOVO",
+      "family": "Miix 630",
+      "productName": "81F1",
+      "productSku": "LENOVO_MT_81F1_BU_idea_FM_Miix 630",
+      "baseboardProduct": "LNVNB161216"
+    },
+    {
+      "file": "purwa-lenovo-ideacentre-mini-01q8x10.txt",
+      "manufacturer": "LENOVO",
+      "family": "IdeaCentre Mini 01Q8X10",
+      "productName": "91B6001CUK",
+      "productSku": "LENOVO_MT_91B6_BU_Lenovo_FM_IdeaCentre Mini 01Q8X10",
+      "baseboardProduct": "3796"
+    },
+    {
+      "file": "sc7180-acer-aspire1.txt",
+      "manufacturer": "Acer",
+      "family": "Aspire 1",
+      "productName": "Aspire A114-61",
+      "productSku": "",
+      "baseboardProduct": "Daisy_7C"
+    },
+    {
+      "file": "sc7180-ecs-liva-qc710.txt",
+      "manufacturer": "Elitegroup Computer Systems Co., LTD.",
+      "family": "SC7180",
+      "productName": "QC710",
+      "productSku": "6",
+      "baseboardProduct": "QC710"
+    },
+    {
+      "file": "sc8180x-lenovo-flex-5g-81xe.txt",
+      "manufacturer": "LENOVO",
+      "family": "Yoga 5G 14Q8CX05",
+      "productName": "81XE",
+      "productSku": "LENOVO_MT_81XE_BU_idea_FM_Yoga 5G 14Q8CX05",
+      "baseboardProduct": "LNVNB161216"
+    },
+    {
+      "file": "sc8180x-lenovo-flex-5g-82ak.txt",
+      "manufacturer": "LENOVO",
+      "family": "Flex 5G 14Q8CX05",
+      "productName": "82AK",
+      "productSku": "LENOVO_MT_82AK_BU_idea_FM_Flex 5G 14Q8CX05",
+      "baseboardProduct": "LNVNB161216"
+    },
+    {
+      "file": "sc8280xp-huawei-gaokun3.txt",
+      "manufacturer": "HUAWEI",
+      "family": "MateBook E",
+      "productName": "GK-W7X",
+      "productSku": "C233",
+      "baseboardProduct": "GK-W7X-PCB"
+    },
+    {
+      "file": "sc8280xp-lenovo-thinkpad-x13s-21bx.txt",
+      "manufacturer": "LENOVO",
+      "family": "ThinkPad X13s Gen 1",
+      "productName": "21BXCTO1WW",
+      "productSku": "LENOVO_MT_21BX_BU_Think_FM_ThinkPad X13s Gen 1",
+      "baseboardProduct": "21BXCTO1WW"
+    },
+    {
+      "file": "sc8280xp-lenovo-thinkpad-x13s-21by.txt",
+      "manufacturer": "LENOVO",
+      "family": "ThinkPad X13s Gen 1",
+      "productName": "21BYS03Y00",
+      "productSku": "LENOVO_MT_21BY_BU_Think_FM_ThinkPad X13s Gen 1",
+      "baseboardProduct": "21BYS03Y00"
+    },
+    {
+      "file": "sc8280xp-lenovo-thinkpad-x13s-4810.txt",
+      "manufacturer": "LENOVO",
+      "family": "ThinkPad X13s Gen 1",
+      "productName": "4810QL0100",
+      "productSku": "LENOVO_MT_4810_BU_Think_FM_ThinkPad X13s Gen 1",
+      "baseboardProduct": "4810QL0100"
+    },
+    {
+      "file": "sc8280xp-microsoft-blackrock.txt",
+      "manufacturer": "Microsoft Corporation",
+      "family": "Surface",
+      "productName": "Windows Dev Kit 2023",
+      "productSku": "2043",
+      "baseboardProduct": "Windows Dev Kit 2023"
+    },
+    {
+      "file": "sc8280xp-microsoft-surface-pro-9-5G.txt",
+      "manufacturer": "Microsoft Corporation",
+      "family": "Surface",
+      "productName": "Surface Pro 9",
+      "productSku": "Surface_Pro_9_With_5G_1996",
+      "baseboardProduct": "Surface Pro 9"
+    },
+    {
+      "file": "sc8280xp-radxa-dragon-q8b.txt",
+      "manufacturer": "Radxa Computer Co., Ltd.",
+      "family": "Dragon",
+      "productName": "Radxa Dragon Q8B",
+      "productSku": "6",
+      "baseboardProduct": "Radxa Dragon Q8B"
+    },
+    {
+      "file": "sdm850-lenovo-yoga-c630.txt",
+      "manufacturer": "LENOVO",
+      "family": "YOGA C630-13Q50",
+      "productName": "81JL",
+      "productSku": "LENOVO_MT_81JL_BU_idea_FM_YOGA C630-13Q50",
+      "baseboardProduct": "LNVNB161216"
+    },
+    {
+      "file": "spacemit-k3-pico-itx.txt",
+      "manufacturer": "SpacemiT",
+      "family": "K3",
+      "productName": "k3-pico-itx",
+      "productSku": "MPK3",
+      "baseboardProduct": "k3-pico-itx"
+    },
+    {
+      "file": "x126100-lenovo-ideapad-slim3.txt",
+      "manufacturer": "LENOVO",
+      "family": "IdeaPad Slim 3 15Q8X10",
+      "productName": "83N3",
+      "productSku": "LENOVO_MT_83N3_BU_idea_FM_IdeaPad Slim 3 15Q8X10",
+      "baseboardProduct": "LNVNB161216"
+    },
+    {
+      "file": "x1e001de-devkit.txt",
+      "manufacturer": "Qualcomm",
+      "family": "SCP_HAMOA",
+      "productName": "Snapdragon-Devkit",
+      "productSku": "6"
+    },
+    {
+      "file": "x1e78100-acer-sfa14-11.txt",
+      "manufacturer": "Acer",
+      "family": "SFA14-11",
+      "productName": "SFA14-11",
+      "productSku": "6",
+      "baseboardProduct": "QX326 gen4"
+    },
+    {
+      "file": "x1e78100-lenovo-thinkpad-t14s-21n1.txt",
+      "manufacturer": "LENOVO",
+      "family": "ThinkPad T14s Gen 6",
+      "productName": "21N10001US",
+      "productSku": "LENOVO_MT_21N1_BU_Think_FM_ThinkPad T14s Gen 6",
+      "baseboardProduct": "21N10001US"
+    },
+    {
+      "file": "x1e78100-lenovo-thinkpad-t14s-21n2.txt",
+      "manufacturer": "LENOVO",
+      "family": "ThinkPad T14s Gen 6",
+      "productName": "21N2ZC5QUS",
+      "productSku": "LENOVO_MT_21N2_BU_Think_FM_ThinkPad T14s Gen 6",
+      "baseboardProduct": "21N2ZC5QUS"
+    },
+    {
+      "file": "x1e78100-medion-sprchrgd-14s1-elite.txt",
+      "manufacturer": "MEDION",
+      "family": "SPRCHRGD",
+      "productName": "14 S1 Elite",
+      "productSku": "ML-230007 40088830",
+      "baseboardProduct": "NM14QX4"
+    },
+    {
+      "file": "x1e80100-asus-vivobook-s15.txt",
+      "manufacturer": "ASUSTeK COMPUTER INC.",
+      "family": "ASUS Vivobook S 15",
+      "productName": "ASUS Vivobook S 15 S5507QA_S5507QAD",
+      "productSku": "(null)",
+      "baseboardProduct": "S5507QAD"
+    },
+    {
+      "file": "x1e80100-asus-zenbook-a14.txt",
+      "manufacturer": "ASUSTeK COMPUTER INC.",
+      "family": "ASUS Zenbook A14",
+      "productName": "ASUS Zenbook A14 UX3407RA_UX3407RA",
+      "productSku": "",
+      "baseboardProduct": "UX3407RA"
+    },
+    {
+      "file": "x1e80100-crd.txt",
+      "manufacturer": "Qualcomm",
+      "family": "SCP_HAMOA",
+      "productName": "CRD",
+      "productSku": "6"
+    },
+    {
+      "file": "x1e80100-dell-inspiron-14-plus-7441.txt",
+      "manufacturer": "Dell Inc.",
+      "family": "Inspiron",
+      "productName": "Inspiron 14 Plus 7441",
+      "productSku": "C86",
+      "baseboardProduct": "YWPR3"
+    },
+    {
+      "file": "x1e80100-dell-latitude-7455.txt",
+      "manufacturer": "Dell Inc.",
+      "family": "Latitude",
+      "productName": "Latitude 7455",
+      "productSku": "0C85",
+      "baseboardProduct": "0FK7MX"
+    },
+    {
+      "file": "x1e80100-dell-xps13-9345.txt",
+      "manufacturer": "Dell Inc.",
+      "family": "XPS",
+      "productName": "XPS 13 9345",
+      "productSku": "C69",
+      "baseboardProduct": "DXPNM"
+    },
+    {
+      "file": "x1e80100-honor-magicbook-art-14.txt",
+      "manufacturer": "HONOR",
+      "family": "HONOR MagicBook",
+      "productName": "MRO-XXX",
+      "productSku": "C233",
+      "baseboardProduct": "MRO-XXX-PCB"
+    },
+    {
+      "file": "x1e80100-hp-elitebook-ultra-g1q.txt",
+      "manufacturer": "HP",
+      "family": "103C_5336AN HP EliteBook Ultra",
+      "productName": "HP EliteBook Ultra G1q 14 inch Notebook AI PC",
+      "productSku": "A3LZ2AA#ABA",
+      "baseboardProduct": "8CBE"
+    },
+    {
+      "file": "x1e80100-hp-omnibook-x14.txt",
+      "manufacturer": "HP",
+      "family": "103C_5335M8 HP OmniBook X",
+      "productName": "HP OmniBook X Laptop 14-fe0xxx",
+      "productSku": "A3NY2EA#ABD",
+      "baseboardProduct": "8CBE"
+    },
+    {
+      "file": "x1e80100-lenovo-yoga-slim7x.txt",
+      "manufacturer": "LENOVO",
+      "family": "Yoga Slim 7 14Q8X9",
+      "productName": "83ED",
+      "productSku": "LENOVO_MT_83ED_BU_idea_FM_Yoga Slim 7 14Q8X9",
+      "baseboardProduct": "LNVNB161216"
+    },
+    {
+      "file": "x1e80100-microsoft-denali.txt",
+      "manufacturer": "Microsoft Corporation",
+      "family": "Surface",
+      "productName": "Microsoft Surface Pro, 11th Edition",
+      "productSku": "Surface_Pro_11th_Edition_2076",
+      "baseboardProduct": "Microsoft Surface Pro, 11th Edition"
+    },
+    {
+      "file": "x1e80100-microsoft-romulus13.txt",
+      "manufacturer": "Microsoft Corporation",
+      "family": "Surface",
+      "productName": "Microsoft Surface Laptop, 7th Edition",
+      "productSku": "Surface_Laptop_7th_Edition_2036",
+      "baseboardProduct": "Microsoft Surface Laptop, 7th Edition"
+    },
+    {
+      "file": "x1e80100-microsoft-romulus15.txt",
+      "manufacturer": "Microsoft Corporation",
+      "family": "Surface",
+      "productName": "Microsoft Surface Laptop, 7th Edition",
+      "productSku": "Surface_Laptop_7th_Edition_2037",
+      "baseboardProduct": "Microsoft Surface Laptop, 7th Edition"
+    },
+    {
+      "file": "x1p42100-acer-swift-go14-01.txt",
+      "manufacturer": "Acer",
+      "family": "Swift Go 14 AI",
+      "productName": "Swift SFG14-01",
+      "productSku": "",
+      "baseboardProduct": "Bluetang_SX1"
+    },
+    {
+      "file": "x1p42100-asus-vivobook-s15.txt",
+      "manufacturer": "ASUSTeK COMPUTER INC.",
+      "family": "ASUS Vivobook S 15",
+      "productName": "ASUS Vivobook S 15 S5507QA_S5507QA",
+      "productSku": "",
+      "baseboardProduct": "S5507QA"
+    },
+    {
+      "file": "x1p42100-asus-zenbook-a14.txt",
+      "manufacturer": "ASUSTeK COMPUTER INC.",
+      "family": "ASUS Zenbook A14",
+      "productName": "ASUS Zenbook A14 UX3407QA_UX3407QA",
+      "productSku": "",
+      "baseboardProduct": "UX3407QA"
+    },
+    {
+      "file": "x1p42100-hp-elitebook-6-g1q.txt",
+      "manufacturer": "HP",
+      "family": "103C_5336AN HP EliteBook",
+      "productName": "HP EliteBook 6 G1q 14 inch Notebook Next Gen AI PC",
+      "productSku": "X8VSKU6#ABA",
+      "baseboardProduct": "8E06"
+    },
+    {
+      "file": "x1p42100-hp-omnibook-x14.txt",
+      "manufacturer": "HP",
+      "family": "103C_5335M8 HP OmniBook X",
+      "productName": "HP OmniBook X Laptop 14-fe1xxx",
+      "productSku": "AP4R1EA#UUW",
+      "baseboardProduct": "8CCF"
+    },
+    {
+      "file": "x1p42100-lenovo-ideapad-5-2in1.txt",
+      "manufacturer": "LENOVO",
+      "family": "IdeaPad 5 2-in-1 14Q8X9",
+      "productName": "83GH",
+      "productSku": "LENOVO_MT_83GH_BU_idea_FM_IdeaPad 5 2-in-1 14Q8X9",
+      "baseboardProduct": "LNVNB161216"
+    },
+    {
+      "file": "x1p42100-lenovo-ideapad-slim-5.txt",
+      "manufacturer": "LENOVO",
+      "family": "IdeaPad Slim 5 14Q8X9",
+      "productName": "83HL",
+      "productSku": "LENOVO_MT_83HL_BU_idea_FM_IdeaPad Slim 5 14Q8X9",
+      "baseboardProduct": "LNVNB161216"
+    },
+    {
+      "file": "x1p42100-lenovo-thinkbook-16.txt",
+      "manufacturer": "LENOVO",
+      "family": "ThinkBook 16 G7 QOY",
+      "productName": "21NH",
+      "productSku": "LENOVO_MT_21NH_BU_idea_FM_ThinkBook 16 G7 QOY",
+      "baseboardProduct": "LNVNB161216"
+    },
+    {
+      "file": "x1p42100-microsoft-surface-pro-12in.txt",
+      "manufacturer": "Microsoft Corporation",
+      "family": "Surface",
+      "productName": "Surface Pro 12in 1st Ed with Snapdragon",
+      "productSku": "Surface_Pro_12in_1st_Ed_with_Snapdragon_2110",
+      "baseboardProduct": "Surface Pro 12in 1st Ed with Snapdragon"
+    },
+    {
+      "file": "x1p64100-acer-swift-sf14-11.txt",
+      "manufacturer": "Acer",
+      "family": "Swift 14 AI",
+      "productName": "Swift SF14-11",
+      "productSku": "",
+      "baseboardProduct": "Bluetang_SX1"
+    },
+    {
+      "file": "x1p64100-dell-latitude-5455.txt",
+      "manufacturer": "Dell Inc.",
+      "family": "Latitude",
+      "productName": "Latitude 5455",
+      "productSku": "C83",
+      "baseboardProduct": "KYDKV"
+    }
+  ],
+  "firmware": [
+    {
+      "path": "qcom/glymur/ASUSTeK/UX3407NA",
+      "files": [
+        "GLYMUR-ASUS-Zenbook-A14-UX3407NA-tplg.bin"
+      ]
+    },
+    {
+      "path": "qcom/glymur/ASUSTeK/UX3607OA",
+      "files": [
+        "GLYMUR-ASUS-Zenbook-A16-UX3607OA-tplg.bin"
+      ]
+    },
+    {
+      "path": "qcom/glymur/LENOVO/22A8",
+      "files": [
+        "Lenovo-ThinkPad-T14s-Gen-7-tplg.bin"
+      ]
+    },
+    {
+      "path": "qcom/sc8280xp/LENOVO/21BX",
+      "files": [
+        "adspr.jsn",
+        "adspua.jsn",
+        "audioreach-tplg.bin",
+        "battmgr.jsn",
+        "cdspr.jsn",
+        "qcadsp8280.mbn",
+        "qccdsp8280.mbn",
+        "qcdxkmsuc8280.mbn",
+        "qcslpi8280.mbn",
+        "qcvss8280.mbn"
+      ]
+    },
+    {
+      "path": "qcom/sc8280xp/radxa/dragon-q8b",
+      "files": [
+        "SC8280XP-Radxa-Dragon-Q8B-tplg.bin",
+        "qcadsp8280.mbn"
+      ]
+    },
+    {
+      "path": "qcom/x1e80100/ASUSTeK/vivobook-16",
+      "files": [
+        "X1E80100-ASUS-Vivobook-16-tplg.bin"
+      ]
+    },
+    {
+      "path": "qcom/x1e80100/ASUSTeK/vivobook-s15",
+      "files": [
+        "X1E80100-ASUS-Vivobook-S15-tplg.bin"
+      ]
+    },
+    {
+      "path": "qcom/x1e80100/ASUSTeK/zenbook-a14",
+      "files": [
+        "X1E80100-ASUS-Zenbook-A14-tplg.bin"
+      ]
+    },
+    {
+      "path": "qcom/x1e80100/dell/inspiron-14-plus-7441",
+      "files": [
+        "X1E80100-Dell-Inspiron-14p-7441-tplg.bin"
+      ]
+    },
+    {
+      "path": "qcom/x1e80100/dell/latitude-7455",
+      "files": [
+        "X1E80100-Dell-Latitude-7455-tplg.bin"
+      ]
+    },
+    {
+      "path": "qcom/x1e80100/dell/xps13-9345",
+      "files": [
+        "X1E80100-Dell-XPS-13-9345-tplg.bin",
+        "adsp_dtbs.elf",
+        "adspr.jsn",
+        "adsps.jsn",
+        "adspua.jsn",
+        "battmgr.jsn",
+        "cdsp_dtbs.elf",
+        "cdspr.jsn",
+        "qcadsp8380.mbn",
+        "qccdsp8380.mbn",
+        "qcdxkmsuc8380.mbn"
+      ]
+    },
+    {
+      "path": "qcom/x1e80100/hp/omnibook-x14",
+      "files": [
+        "X1E80100-HP-OMNIBOOK-X14-tplg.bin"
+      ]
+    },
+    {
+      "path": "qcom/x1e80100/LENOVO/21N1",
+      "files": [
+        "X1E80100-LENOVO-Thinkpad-T14s-tplg.bin",
+        "adsp_dtbs.elf",
+        "adspr.jsn",
+        "adsps.jsn",
+        "adspua.jsn",
+        "battmgr.jsn",
+        "cdsp_dtbs.elf",
+        "cdspr.jsn",
+        "qcadsp8380.mbn",
+        "qccdsp8380.mbn",
+        "qcdxkmsuc8380.mbn",
+        "qcvss8380.mbn"
+      ]
+    },
+    {
+      "path": "qcom/x1e80100/LENOVO/83ED",
+      "files": [
+        "X1E80100-LENOVO-Yoga-Slim7x-tplg.bin",
+        "adsp_dtbs.elf",
+        "adspr.jsn",
+        "adsps.jsn",
+        "adspua.jsn",
+        "battmgr.jsn",
+        "cdsp_dtbs.elf",
+        "cdspr.jsn",
+        "qcadsp8380.mbn",
+        "qcav1e8380.mbn",
+        "qccdsp8380.mbn",
+        "qcdxkmsuc8380.mbn",
+        "qcvss8380.mbn"
+      ]
+    },
+    {
+      "path": "qcom/x1e80100/LENOVO/91B6",
+      "files": [
+        "X1E80100-LENOVO-IdeaCentre-Mini-tplg.bin"
+      ]
+    }
+  ],
+  "acpiDumps": [
+    {
+      "folder": "acer-aspire-1",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-aspire-1"
+    },
+    {
+      "folder": "acer-gateway-gwtn133-1",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-gateway-gwtn133-1"
+    },
+    {
+      "folder": "acer-sfa14-11",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-sfa14-11"
+    },
+    {
+      "folder": "acer-spin-7-sp714-61na",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-spin-7-sp714-61na"
+    },
+    {
+      "folder": "apcsilmic-dot-1",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/apcsilmic-dot-1"
+    },
+    {
+      "folder": "asus-tp370ql",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-tp370ql"
+    },
+    {
+      "folder": "asus-vivobook-s-15",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-vivobook-s-15"
+    },
+    {
+      "folder": "asus-vivobook-s15-q5507",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-vivobook-s15-q5507"
+    },
+    {
+      "folder": "asus-vivobook-s15-s5507",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-vivobook-s15-s5507"
+    },
+    {
+      "folder": "asus-zenbook-a14-ux3407q",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-zenbook-a14-ux3407q"
+    },
+    {
+      "folder": "asus-zenbook-a16-ux3607oa",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-zenbook-a16-ux3607oa"
+    },
+    {
+      "folder": "dell-inspiron-14-3420",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-3420"
+    },
+    {
+      "folder": "dell-inspiron-14-5441-x1p-42-100",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-5441-x1p-42-100"
+    },
+    {
+      "folder": "dell-inspiron-14-7441-x1e-80-100",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-7441-x1e-80-100"
+    },
+    {
+      "folder": "dell-latitude-5455",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-latitude-5455"
+    },
+    {
+      "folder": "dell-latitude-7455",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-latitude-7455"
+    },
+    {
+      "folder": "dell-xps-9345",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-xps-9345"
+    },
+    {
+      "folder": "ecs-liva-qc710",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/ecs-liva-qc710"
+    },
+    {
+      "folder": "honor-mro-521",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/honor-mro-521"
+    },
+    {
+      "folder": "hp-elitebook-6-g1q",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-elitebook-6-g1q"
+    },
+    {
+      "folder": "hp-elitebook-ultra-g1q",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-elitebook-ultra-g1q"
+    },
+    {
+      "folder": "hp-envy-x2",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-envy-x2"
+    },
+    {
+      "folder": "hp-omnibook-5-14-he0xxx",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-omnibook-5-14-he0xxx"
+    },
+    {
+      "folder": "hp-omnibook-x14-fe0xxx",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-omnibook-x14-fe0xxx"
+    },
+    {
+      "folder": "huawei-matebooke-2019",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/huawei-matebooke-2019"
+    },
+    {
+      "folder": "huawei-matebooke-go",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/huawei-matebooke-go"
+    },
+    {
+      "folder": "lenovo-flex-5g",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-flex-5g"
+    },
+    {
+      "folder": "lenovo-ideacentre-01q8x10",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideacentre-01q8x10"
+    },
+    {
+      "folder": "lenovo-ideapad-5-2in1-83GH-14Q8X9",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideapad-5-2in1-83GH-14Q8X9"
+    },
+    {
+      "folder": "lenovo-ideapad-5-slim-14Q8X9",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideapad-5-slim-14Q8X9"
+    },
+    {
+      "folder": "lenovo-ideapad-5g-14q8x05",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideapad-5g-14q8x05"
+    },
+    {
+      "folder": "lenovo-ideapad-slim3x-15q8x10-WCN7850",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideapad-slim3x-15q8x10-WCN7850"
+    },
+    {
+      "folder": "lenovo-l10w",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-l10w"
+    },
+    {
+      "folder": "lenovo-miix-630",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-miix-630"
+    },
+    {
+      "folder": "lenovo-thinkbook-16-g7-qoy",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-thinkbook-16-g7-qoy"
+    },
+    {
+      "folder": "lenovo-thinkpad-t14s",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-thinkpad-t14s"
+    },
+    {
+      "folder": "lenovo-thinkpad-t14s-120hz-64gb",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-thinkpad-t14s-120hz-64gb"
+    },
+    {
+      "folder": "lenovo-thinkpad-x13s",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-thinkpad-x13s"
+    },
+    {
+      "folder": "lenovo-xiaoxin-14-q8x9",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-xiaoxin-14-q8x9"
+    },
+    {
+      "folder": "lenovo-yoga-c630",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-yoga-c630"
+    },
+    {
+      "folder": "lenovo-yoga-slim-7x",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-yoga-slim-7x"
+    },
+    {
+      "folder": "lenovo-yoga-slim-7x-14Q8Y11",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-yoga-slim-7x-14Q8Y11"
+    },
+    {
+      "folder": "medion-14-s1-elite-sprchrgd",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/medion-14-s1-elite-sprchrgd"
+    },
+    {
+      "folder": "medion-14-s1-sprchrgd",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/medion-14-s1-sprchrgd"
+    },
+    {
+      "folder": "microsoft-devkit-2023",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-devkit-2023"
+    },
+    {
+      "folder": "microsoft-surface-pro-11",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-11"
+    },
+    {
+      "folder": "microsoft-surface-pro-12-in",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-12-in"
+    },
+    {
+      "folder": "microsoft-surface-pro-9-5G",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-9-5G"
+    },
+    {
+      "folder": "microsoft-surface-prox",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-prox"
+    },
+    {
+      "folder": "microsoft-surface-romulus13_and_15",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-romulus13_and_15"
+    },
+    {
+      "folder": "qualcomm-snapdragon-dev-kit",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/qualcomm-snapdragon-dev-kit"
+    },
+    {
+      "folder": "samsung-galaxy-book-go",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxy-book-go"
+    },
+    {
+      "folder": "samsung-galaxy-book-go-5g",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxy-book-go-5g"
+    },
+    {
+      "folder": "samsung-galaxy-book-s",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxy-book-s"
+    },
+    {
+      "folder": "samsung-galaxybook2",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxybook2"
+    },
+    {
+      "folder": "samsung-galaxybook2-go",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxybook2-go"
+    },
+    {
+      "folder": "samsung-galaxybook4-edge",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxybook4-edge"
+    },
+    {
+      "folder": "tcl-book-14-go",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/tcl-book-14-go"
+    },
+    {
+      "folder": "xiaomi-book-s",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/xiaomi-book-s"
+    }
+  ]
+}
