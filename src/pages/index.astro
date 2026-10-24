@@ -14,7 +14,7 @@ const bars = [
   { label: 'Run Omarchy', value: summary.omarchyWorks, color: 'bg-emerald-400', note: `boot the ${status.omarchy.channel.toUpperCase()} image with nothing picked by hand` },
   { label: 'Device tree in Linux', value: summary.deviceTree, color: 'bg-sky-400', note: 'released or queued in linux-next' },
   { label: 'Hardware IDs in systemd', value: summary.ids, color: 'bg-violet-400', note: 'so an image picks the device tree by itself' },
-  { label: 'Firmware without Windows', value: summary.firmware, color: 'bg-amber-400', note: 'in linux-firmware or a known vendor download' },
+  { label: `Firmware without the laptop's Windows`, value: summary.firmware, color: 'bg-amber-400', note: 'in linux-firmware or a known vendor download' },
   { label: 'ACPI dump collected', value: summary.acpi, color: 'bg-rose-400', note: 'the starting point for a device tree' },
 ];
 
