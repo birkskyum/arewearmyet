@@ -11,7 +11,7 @@ const bars = [
   { label: 'Run Omarchy', value: summary.omarchyWorks, color: 'bg-emerald-400', note: `boot the ${status.omarchy.channel.toUpperCase()} image with nothing picked by hand` },
   { label: 'Device tree in Linux', value: summary.deviceTree, color: 'bg-sky-400', note: 'released or queued in linux-next' },
   { label: 'Hardware IDs in systemd', value: summary.ids, color: 'bg-violet-400', note: 'so an image picks the device tree by itself' },
-  { label: 'Firmware in linux-firmware', value: summary.firmware, color: 'bg-amber-400', note: `no copying from Windows` },
+  { label: 'Signed firmware in linux-firmware', value: summary.firmware, color: 'bg-amber-400', note: 'no copying from Windows' },
   { label: 'ACPI dump collected', value: summary.acpi, color: 'bg-rose-400', note: 'the starting point for a device tree' },
 ];
 
@@ -38,7 +38,7 @@ const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-1
 
     <section class="mt-10 rounded-xl bg-zinc-900 p-6 ring-1 ring-zinc-800">
       <p class="text-2xl font-semibold text-zinc-50">
-        {summary.omarchyWorks} of {summary.models} models run Omarchy
+        {summary.omarchyWorks} of {summary.models} Snapdragon X and X2 models run Omarchy
       </p>
       <p class="mt-1 text-sm text-zinc-400">
         Omarchy {status.omarchy.channel.toUpperCase()} ships linux-omarchy {status.omarchy.kernel} and systemd {status.omarchy.systemd}.
@@ -66,6 +66,7 @@ const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-1
         <button class={BUTTON} data-filter="generation" data-value="" aria-pressed="true">All</button>
         <button class={BUTTON} data-filter="generation" data-value="x1" aria-pressed="false">X</button>
         <button class={BUTTON} data-filter="generation" data-value="x2" aria-pressed="false">X2</button>
+        <button class={BUTTON} data-filter="generation" data-value="8cx" aria-pressed="false">8cx Gen 3</button>
         <span class="ml-2 text-sm text-zinc-500">Omarchy</span>
         <button class={BUTTON} data-filter="omarchy" data-value="" aria-pressed="true">All</button>
         <button class={BUTTON} data-filter="omarchy" data-value="Boots" aria-pressed="false">Boots</button>

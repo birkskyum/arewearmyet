@@ -26,7 +26,9 @@ type Model = {
 };
 
 const sources = JSON.parse(readFileSync('data/sources.json', 'utf8'));
-const models: Model[] = parse(readFileSync('data/models.yaml', 'utf8')).models;
+const list = parse(readFileSync('data/models.yaml', 'utf8'));
+const models: Model[] = list.models;
+const ignore: { ids?: string[]; firmware?: string[]; acpi?: string[] } = list.ignore ?? {};
 
 // An unquoted vendor,model inside { } is split at the comma by YAML, so catch it here
 for (const model of models) {
@@ -94,6 +96,8 @@ const acpiDumps: { folder: string; url: string }[] = sources.acpiDumps;
 const rows = models.map((model) => {
   const variants = (model.variants?.length ? model.variants : [{}]).map(variantStatus);
   const firmware = (model.firmware ?? []).map((path) => firmwareFolders.find((folder) => folder.path === path)).filter(Boolean) as typeof firmwareFolders;
+  // The signed DSP images are what a laptop can't do without; many folders only carry the open audio topology
+  const signed = firmware.some((folder) => folder.files.some((file) => /^qcadsp\d+\.mbn$/.test(file)));
   firmware.forEach((folder) => used.firmware.add(folder.path));
   const acpi = (model.acpi ?? []).map((folder) => acpiDumps.find((dump) => dump.folder === folder)).filter(Boolean) as typeof acpiDumps;
   acpi.forEach((dump) => used.acpi.add(dump.folder));
@@ -118,7 +122,7 @@ const rows = models.map((model) => {
       firstRelease,
       devicetreePosted: model.devicetree_posted ?? null,
       ids: idsState,
-      firmware: firmware.length ? 'linux-firmware' : model.firmware_download ? 'download' : 'missing',
+      firmware: signed ? 'linux-firmware' : model.firmware_download ? 'download' : firmware.length ? 'audio' : 'missing',
       firmwareDownload: model.firmware_download ?? null,
       firmwareFolders: firmware.map((folder) => folder.path),
       acpi: acpi.length ? 'collected' : 'missing',
@@ -143,9 +147,9 @@ const summary = {
 // Anything the sources know that no model claims yet, so the list can be completed
 const unmatched = {
   deviceTrees: deviceTrees.filter((dt) => !used.deviceTrees.has(dt.file) && !/(crd|iot|evk|qcp|qcb|som)/.test(dt.file)).map((dt) => ({ file: dt.file, model: dt.model, compatible: dt.compatible[0] })),
-  ids: systemdIds.filter((ids) => !used.ids.has(ids.file)).map((ids) => ({ file: ids.file, name: ids.name, compatible: ids.compatible })),
-  firmware: firmwareFolders.filter((folder) => !used.firmware.has(folder.path)).map((folder) => folder.path),
-  acpi: acpiDumps.filter((dump) => !used.acpi.has(dump.folder)).map((dump) => dump.folder),
+  ids: systemdIds.filter((ids) => !used.ids.has(ids.file) && !ignore.ids?.includes(ids.file)).map((ids) => ({ file: ids.file, name: ids.name, compatible: ids.compatible })),
+  firmware: firmwareFolders.filter((folder) => !used.firmware.has(folder.path) && !ignore.firmware?.includes(folder.path)).map((folder) => folder.path),
+  acpi: acpiDumps.filter((dump) => !used.acpi.has(dump.folder) && !ignore.acpi?.includes(dump.folder)).map((dump) => dump.folder),
 };
 
 mkdirSync('src/data', { recursive: true });

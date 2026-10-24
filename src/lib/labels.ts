@@ -43,6 +43,7 @@ export function idsCell(model: Model): Cell {
 export function firmwareCell(model: Model): Cell {
   if (model.upstream.firmware === 'linux-firmware') return { label: 'linux-firmware', tone: 'good', title: model.upstream.firmwareFolders.join(', ') };
   if (model.upstream.firmware === 'download') return { label: 'Vendor download', tone: 'close', title: `Not in linux-firmware, but the vendor's driver package has it`, href: model.upstream.firmwareDownload ?? undefined };
+  if (model.upstream.firmware === 'audio') return { label: 'Audio only', tone: 'close', title: `linux-firmware has its audio topology; the signed DSP and GPU files still come from Windows` };
   return { label: 'From Windows', tone: 'muted', title: `Not in linux-firmware; today it comes from the laptop's own Windows` };
 }
 
@@ -52,4 +53,4 @@ export function acpiCell(model: Model): Cell {
   return { label: 'Wanted', tone: 'wanted', title: 'A device tree is written from these, so this is the first thing to send' };
 }
 
-export const GENERATION: Record<string, string> = { x1: 'Snapdragon X', x2: 'Snapdragon X2', '8cx': 'Snapdragon 8cx' };
+export const GENERATION: Record<string, string> = { x1: 'Snapdragon X', x2: 'Snapdragon X2', '8cx': 'Snapdragon 8cx Gen 3' };

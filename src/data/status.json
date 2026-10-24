@@ -26,15 +26,975 @@
     ]
   },
   "summary": {
-    "models": 6,
-    "omarchyWorks": 2,
-    "omarchyManual": 0,
-    "deviceTree": 4,
-    "ids": 3,
-    "firmware": 2,
-    "acpi": 4
+    "models": 37,
+    "omarchyWorks": 15,
+    "omarchyManual": 1,
+    "deviceTree": 22,
+    "ids": 29,
+    "firmware": 3,
+    "acpi": 30
   },
   "models": [
+    {
+      "id": "asus-zenbook-a14-ux3407",
+      "vendor": "ASUS",
+      "name": "Zenbook A14",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2025,
+      "modelNumbers": [
+        "UX3407RA",
+        "UX3407QA"
+      ],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.17",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "audio",
+        "firmwareDownload": null,
+        "firmwareFolders": [
+          "qcom/x1e80100/ASUSTeK/zenbook-a14"
+        ],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-zenbook-a14-ux3407q"
+        ]
+      },
+      "variants": [
+        {
+          "model": "UX3407RA",
+          "chip": "X1E-78-100",
+          "compatible": "asus,zenbook-a14-ux3407ra",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1e80100-asus-zenbook-a14.dts",
+            "firstRelease": "v6.17",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1e80100-asus-zenbook-a14.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "asus,zenbook-a14-ux3407ra"
+            }
+          ]
+        },
+        {
+          "model": "UX3407QA OLED",
+          "chip": "X1P-42-100",
+          "compatible": "asus,zenbook-a14-ux3407qa-oled",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1p42100-asus-zenbook-a14.dts",
+            "firstRelease": "v6.17",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1e80100-asus-zenbook-a14-oled.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "asus,zenbook-a14-ux3407qa-oled"
+            }
+          ]
+        },
+        {
+          "model": "UX3407QA LCD",
+          "chip": "X1P-42-100",
+          "compatible": "asus,zenbook-a14-ux3407qa-lcd",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1p42100-asus-zenbook-a14-lcd.dts",
+            "firstRelease": "v6.19",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1p42100-asus-zenbook-a14.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "asus,zenbook-a14-ux3407qa-lcd"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "asus-zenbook-14-ux3480qa",
+      "vendor": "ASUS",
+      "name": "Zenbook 14 (2026)",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2026,
+      "modelNumbers": [
+        "UX3480QA"
+      ],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "missing",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "model": "UX3480QA",
+          "chip": "X1-26-100",
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": []
+        }
+      ]
+    },
+    {
+      "id": "asus-vivobook-s15",
+      "vendor": "ASUS",
+      "name": "Vivobook S 15",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2024,
+      "modelNumbers": [
+        "S5507QA",
+        "Q5507QA"
+      ],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.11",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "audio",
+        "firmwareDownload": null,
+        "firmwareFolders": [
+          "qcom/x1e80100/ASUSTeK/vivobook-s15"
+        ],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-vivobook-s-15",
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-vivobook-s15-q5507",
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-vivobook-s15-s5507"
+        ]
+      },
+      "variants": [
+        {
+          "model": "X Elite",
+          "chip": "X1E-78-100",
+          "compatible": "asus,vivobook-s15",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1e80100-asus-vivobook-s15.dts",
+            "firstRelease": "v6.11",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1e80100-asus-vivobook-s15.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "asus,vivobook-s15"
+            }
+          ]
+        },
+        {
+          "model": "X Plus",
+          "chip": "X1P-42-100",
+          "compatible": "asus,vivobook-s15-x1p4",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1p42100-asus-vivobook-s15.dts",
+            "firstRelease": "v7.1",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1p42100-asus-vivobook-s15.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "asus,vivobook-s15-x1p4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "asus-vivobook-16",
+      "vendor": "ASUS",
+      "name": "Vivobook 16",
+      "generation": "x1",
+      "form": "laptop",
+      "released": null,
+      "modelNumbers": [],
+      "notes": "linux-firmware has its audio topology, so a device tree exists somewhere out of tree.",
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "missing",
+        "firmware": "audio",
+        "firmwareDownload": null,
+        "firmwareFolders": [
+          "qcom/x1e80100/ASUSTeK/vivobook-16"
+        ],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": []
+        }
+      ]
+    },
+    {
+      "id": "asus-zenbook-a14-ux3407na",
+      "vendor": "ASUS",
+      "name": "Zenbook A14 (X2)",
+      "generation": "x2",
+      "form": "laptop",
+      "released": 2026,
+      "modelNumbers": [
+        "UX3407NA"
+      ],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "next",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "audio",
+        "firmwareDownload": null,
+        "firmwareFolders": [
+          "qcom/glymur/ASUSTeK/UX3407NA"
+        ],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "model": "UX3407NA",
+          "compatible": "asus,zenbook-a14-ux3407na",
+          "omarchy": "missing",
+          "deviceTree": {
+            "file": "glymur-asus-zenbook-a14-ux3407na.dts",
+            "firstRelease": null,
+            "inNext": true,
+            "inOmarchy": false
+          },
+          "ids": [
+            {
+              "file": "glymur-asus-zenbook-a14-ux3407na.json",
+              "firstRelease": "v262",
+              "inMain": true,
+              "matches": true,
+              "compatible": "asus,zenbook-a14-ux3407na"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "asus-zenbook-a16-ux3607oa",
+      "vendor": "ASUS",
+      "name": "Zenbook A16",
+      "generation": "x2",
+      "form": "laptop",
+      "released": 2026,
+      "modelNumbers": [
+        "UX3607OA"
+      ],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v7.3",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "audio",
+        "firmwareDownload": null,
+        "firmwareFolders": [
+          "qcom/glymur/ASUSTeK/UX3607OA"
+        ],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-zenbook-a16-ux3607oa"
+        ]
+      },
+      "variants": [
+        {
+          "model": "UX3607OA",
+          "compatible": "asus,zenbook-a16-ux3607oa",
+          "omarchy": "missing",
+          "deviceTree": {
+            "file": "glymur-asus-zenbook-a16-ux3607oa.dts",
+            "firstRelease": "v7.3",
+            "inNext": true,
+            "inOmarchy": false
+          },
+          "ids": [
+            {
+              "file": "glymur-asus-zenbook-a16-ux3607oa.json",
+              "firstRelease": "v262",
+              "inMain": true,
+              "matches": true,
+              "compatible": "asus,zenbook-a16-ux3607oa"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acer-swift-14-ai-sf14-11",
+      "vendor": "Acer",
+      "name": "Swift 14 AI",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2024,
+      "modelNumbers": [
+        "SF14-11"
+      ],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "model": "SF14-11",
+          "chip": "X1P-64-100",
+          "compatible": "acer,swift-sf14-11",
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": [
+            {
+              "file": "x1p64100-acer-swift-sf14-11.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "acer,swift-sf14-11"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acer-swift-sfa14-11",
+      "vendor": "Acer",
+      "name": "Swift 14 Go Pro AI",
+      "generation": "x1",
+      "form": "laptop",
+      "released": null,
+      "modelNumbers": [
+        "SFA14-11"
+      ],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-sfa14-11"
+        ]
+      },
+      "variants": [
+        {
+          "model": "SFA14-11",
+          "chip": "X1E-78-100",
+          "compatible": "acer,swift-sfa14-11",
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": [
+            {
+              "file": "x1e78100-acer-sfa14-11.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "acer,swift-sfa14-11"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acer-swift-go-14-ai-sfg14-01",
+      "vendor": "Acer",
+      "name": "Swift Go 14 AI",
+      "generation": "x1",
+      "form": "laptop",
+      "released": null,
+      "modelNumbers": [
+        "SFG14-01"
+      ],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "model": "SFG14-01",
+          "chip": "X1P-42-100",
+          "compatible": "acer,swift-go14-01",
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": [
+            {
+              "file": "x1p42100-acer-swift-go14-01.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "acer,swift-go14-01"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dell-xps-13-9345",
+      "vendor": "Dell",
+      "name": "XPS 13 9345",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2024,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.13",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "linux-firmware",
+        "firmwareDownload": null,
+        "firmwareFolders": [
+          "qcom/x1e80100/dell/xps13-9345"
+        ],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-xps-9345"
+        ]
+      },
+      "variants": [
+        {
+          "chip": "X1E-80-100",
+          "compatible": "dell,xps13-9345",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1e80100-dell-xps13-9345.dts",
+            "firstRelease": "v6.13",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1e80100-dell-xps13-9345.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "dell,xps13-9345"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dell-inspiron-14-plus-7441",
+      "vendor": "Dell",
+      "name": "Inspiron 14 Plus 7441",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2024,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.18",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "audio",
+        "firmwareDownload": null,
+        "firmwareFolders": [
+          "qcom/x1e80100/dell/inspiron-14-plus-7441"
+        ],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-7441-x1e-80-100"
+        ]
+      },
+      "variants": [
+        {
+          "chip": "X1E-80-100",
+          "compatible": "dell,inspiron-14-plus-7441",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1e80100-dell-inspiron-14-plus-7441.dts",
+            "firstRelease": "v6.18",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1e80100-dell-inspiron-14-plus-7441.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "dell,inspiron-14-plus-7441"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dell-inspiron-14-5441",
+      "vendor": "Dell",
+      "name": "Inspiron 14 5441",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2024,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "missing",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-5441-x1p-42-100"
+        ]
+      },
+      "variants": [
+        {
+          "chip": "X1P-42-100",
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": []
+        }
+      ]
+    },
+    {
+      "id": "dell-latitude-7455",
+      "vendor": "Dell",
+      "name": "Latitude 7455",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2024,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.18",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "audio",
+        "firmwareDownload": null,
+        "firmwareFolders": [
+          "qcom/x1e80100/dell/latitude-7455"
+        ],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-latitude-7455"
+        ]
+      },
+      "variants": [
+        {
+          "chip": "X1E-80-100",
+          "compatible": "dell,latitude-7455",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1e80100-dell-latitude-7455.dts",
+            "firstRelease": "v6.18",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1e80100-dell-latitude-7455.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "dell,latitude-7455"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dell-latitude-5455",
+      "vendor": "Dell",
+      "name": "Latitude 5455",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2024,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-latitude-5455"
+        ]
+      },
+      "variants": [
+        {
+          "chip": "X1P-64-100",
+          "compatible": "dell,latitude-5455",
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": [
+            {
+              "file": "x1p64100-dell-latitude-5455.json",
+              "firstRelease": "v262",
+              "inMain": true,
+              "matches": true,
+              "compatible": "dell,latitude-5455"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "honor-magicbook-art-14-snapdragon",
+      "vendor": "Honor",
+      "name": "MagicBook Art 14 Snapdragon",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2025,
+      "modelNumbers": [
+        "MRO-521"
+      ],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v7.3",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/honor-mro-521"
+        ]
+      },
+      "variants": [
+        {
+          "chip": "X1E-80-100",
+          "compatible": "honor,magicbook-art-14-snapdragon",
+          "omarchy": "missing",
+          "deviceTree": {
+            "file": "x1e80100-honor-magicbook-art-14.dts",
+            "firstRelease": "v7.3",
+            "inNext": true,
+            "inOmarchy": false
+          },
+          "ids": [
+            {
+              "file": "x1e80100-honor-magicbook-art-14.json",
+              "firstRelease": "v262",
+              "inMain": true,
+              "matches": true,
+              "compatible": "honor,magicbook-art-14-snapdragon"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hp-omnibook-x-14",
+      "vendor": "HP",
+      "name": "OmniBook X 14",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2024,
+      "modelNumbers": [
+        "14-fe0",
+        "14-fe1"
+      ],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.14",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "audio",
+        "firmwareDownload": null,
+        "firmwareFolders": [
+          "qcom/x1e80100/hp/omnibook-x14"
+        ],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-omnibook-x14-fe0xxx"
+        ]
+      },
+      "variants": [
+        {
+          "model": "14-fe0",
+          "chip": "X1E-78-100",
+          "compatible": "hp,omnibook-x14",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1e80100-hp-omnibook-x14.dts",
+            "firstRelease": "v6.14",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1e80100-hp-omnibook-x14.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "hp,omnibook-x14"
+            }
+          ]
+        },
+        {
+          "model": "14-fe1",
+          "chip": "X1P-42-100",
+          "compatible": "hp,omnibook-x14-fe1",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1p42100-hp-omnibook-x14.dts",
+            "firstRelease": "v6.18",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1p42100-hp-omnibook-x14.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "hp,omnibook-x14-fe1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hp-elitebook-ultra-g1q",
+      "vendor": "HP",
+      "name": "EliteBook Ultra G1q",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2024,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.16",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-elitebook-ultra-g1q"
+        ]
+      },
+      "variants": [
+        {
+          "chip": "X1E-78-100",
+          "compatible": "hp,elitebook-ultra-g1q",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1e80100-hp-elitebook-ultra-g1q.dts",
+            "firstRelease": "v6.16",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1e80100-hp-elitebook-ultra-g1q.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "hp,elitebook-ultra-g1q"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hp-elitebook-6-g1q",
+      "vendor": "HP",
+      "name": "EliteBook 6 G1q",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2025,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-elitebook-6-g1q"
+        ]
+      },
+      "variants": [
+        {
+          "chip": "X1P-42-100",
+          "compatible": "hp,elitebook-6-g1q",
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": [
+            {
+              "file": "x1p42100-hp-elitebook-6-g1q.json",
+              "firstRelease": "v262",
+              "inMain": true,
+              "matches": true,
+              "compatible": "hp,elitebook-6-g1q"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hp-omnibook-5-14",
+      "vendor": "HP",
+      "name": "OmniBook 5 14",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2025,
+      "modelNumbers": [
+        "14-he0"
+      ],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "missing",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-omnibook-5-14-he0xxx"
+        ]
+      },
+      "variants": [
+        {
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": []
+        }
+      ]
+    },
+    {
+      "id": "hp-elitebook-x-g2q",
+      "vendor": "HP",
+      "name": "EliteBook X G2q",
+      "generation": "x2",
+      "form": "laptop",
+      "released": 2026,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "next",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "compatible": "hp,elitebook-x-g2q",
+          "omarchy": "missing",
+          "deviceTree": {
+            "file": "glymur-hp-elitebook-x-g2q.dts",
+            "firstRelease": null,
+            "inNext": true,
+            "inOmarchy": false
+          },
+          "ids": [
+            {
+              "file": "glymur-hp-elitebook-x-g2q.json",
+              "firstRelease": "v262",
+              "inMain": true,
+              "matches": true,
+              "compatible": "hp,elitebook-x-g2q"
+            }
+          ]
+        }
+      ]
+    },
     {
       "id": "lenovo-yoga-slim-7x",
       "vendor": "Lenovo",
@@ -82,6 +1042,483 @@
               "inMain": true,
               "matches": true,
               "compatible": "lenovo,yoga-slim7x"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lenovo-yoga-slim-7x-gen-11",
+      "vendor": "Lenovo",
+      "name": "Yoga Slim 7x Gen 11",
+      "generation": "x2",
+      "form": "laptop",
+      "released": 2026,
+      "modelNumbers": [
+        "14Q8Y11"
+      ],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "next",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-yoga-slim-7x-14Q8Y11"
+        ]
+      },
+      "variants": [
+        {
+          "model": "14Q8Y11",
+          "compatible": "lenovo,yoga-slim7x-gen11",
+          "omarchy": "missing",
+          "deviceTree": {
+            "file": "glymur-lenovo-yoga-slim7x.dts",
+            "firstRelease": null,
+            "inNext": true,
+            "inOmarchy": false
+          },
+          "ids": [
+            {
+              "file": "glymur-lenovo-yoga-slim7x.json",
+              "firstRelease": "v262",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,yoga-slim7x-gen11"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lenovo-thinkpad-t14s-gen-6",
+      "vendor": "Lenovo",
+      "name": "ThinkPad T14s Gen 6",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2024,
+      "modelNumbers": [
+        "21N1"
+      ],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.12",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "linux-firmware",
+        "firmwareDownload": null,
+        "firmwareFolders": [
+          "qcom/x1e80100/LENOVO/21N1"
+        ],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-thinkpad-t14s",
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-thinkpad-t14s-120hz-64gb"
+        ]
+      },
+      "variants": [
+        {
+          "model": "LCD",
+          "chip": "X1E-78-100",
+          "compatible": "lenovo,thinkpad-t14s-lcd",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1e78100-lenovo-thinkpad-t14s.dts",
+            "firstRelease": "v6.12",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1e78100-lenovo-thinkpad-t14s-lcd.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,thinkpad-t14s-lcd"
+            },
+            {
+              "file": "x1e78100-lenovo-thinkpad-t14s.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,thinkpad-t14s-lcd"
+            }
+          ]
+        },
+        {
+          "model": "OLED",
+          "chip": "X1E-78-100",
+          "compatible": "lenovo,thinkpad-t14s-oled",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1e78100-lenovo-thinkpad-t14s-oled.dts",
+            "firstRelease": "v6.16",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1e78100-lenovo-thinkpad-t14s-oled.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,thinkpad-t14s-oled"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lenovo-thinkpad-t14s-gen-7",
+      "vendor": "Lenovo",
+      "name": "ThinkPad T14s Gen 7",
+      "generation": "x2",
+      "form": "laptop",
+      "released": 2026,
+      "modelNumbers": [
+        "22A8"
+      ],
+      "notes": "linux-firmware has its audio topology, so a device tree exists somewhere out of tree.",
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "missing",
+        "firmware": "audio",
+        "firmwareDownload": null,
+        "firmwareFolders": [
+          "qcom/glymur/LENOVO/22A8"
+        ],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": []
+        }
+      ]
+    },
+    {
+      "id": "lenovo-thinkbook-16-g7-qoy",
+      "vendor": "Lenovo",
+      "name": "ThinkBook 16 G7 QOY",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2024,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.18",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-thinkbook-16-g7-qoy"
+        ]
+      },
+      "variants": [
+        {
+          "chip": "X1P-64-100",
+          "compatible": "lenovo,thinkbook-16",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1p42100-lenovo-thinkbook-16.dts",
+            "firstRelease": "v6.18",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1p42100-lenovo-thinkbook-16.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,thinkbook-16"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lenovo-ideacentre-mini-01q8x10",
+      "vendor": "Lenovo",
+      "name": "IdeaCentre Mini x",
+      "generation": "x1",
+      "form": "desktop",
+      "released": 2025,
+      "modelNumbers": [
+        "01Q8X10",
+        "91B6"
+      ],
+      "notes": null,
+      "omarchy": "manual",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v7.1",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "audio",
+        "firmwareDownload": null,
+        "firmwareFolders": [
+          "qcom/x1e80100/LENOVO/91B6"
+        ],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideacentre-01q8x10"
+        ]
+      },
+      "variants": [
+        {
+          "model": "X Elite",
+          "chip": "X1E-78-100",
+          "compatible": "lenovo,ideacentre-mini-01q8x10",
+          "omarchy": "manual",
+          "deviceTree": {
+            "file": "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
+            "firstRelease": "v7.1",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": []
+        },
+        {
+          "model": "X Plus",
+          "chip": "X1P-42-100",
+          "compatible": "lenovo,purwa-ideacentre-mini-01q8x10",
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": [
+            {
+              "file": "purwa-lenovo-ideacentre-mini-01q8x10.json",
+              "firstRelease": "v262",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,purwa-ideacentre-mini-01q8x10"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lenovo-ideapad-slim-5x",
+      "vendor": "Lenovo",
+      "name": "IdeaPad Slim 5x",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2024,
+      "modelNumbers": [
+        "14Q8X9"
+      ],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideapad-5-slim-14Q8X9"
+        ]
+      },
+      "variants": [
+        {
+          "model": "OLED",
+          "chip": "X1P-42-100",
+          "compatible": "lenovo,ideapad-slim5x-oled",
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": [
+            {
+              "file": "x1p42100-lenovo-ideapad-slim-5-oled.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,ideapad-slim5x-oled"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lenovo-ideapad-5-2-in-1",
+      "vendor": "Lenovo",
+      "name": "IdeaPad 5 2-in-1",
+      "generation": "x1",
+      "form": "2-in-1",
+      "released": 2024,
+      "modelNumbers": [
+        "14Q8X9",
+        "83GH"
+      ],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideapad-5-2in1-83GH-14Q8X9"
+        ]
+      },
+      "variants": [
+        {
+          "chip": "X1P-42-100",
+          "compatible": "lenovo,ideapad-5-2in1",
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": [
+            {
+              "file": "x1p42100-lenovo-ideapad-5-2in1.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,ideapad-5-2in1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lenovo-ideapad-slim-3x",
+      "vendor": "Lenovo",
+      "name": "IdeaPad Slim 3x",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2025,
+      "modelNumbers": [
+        "15Q8X10"
+      ],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideapad-slim3x-15q8x10-WCN7850"
+        ]
+      },
+      "variants": [
+        {
+          "chip": "X1-26-100",
+          "compatible": "lenovo,ideapad-slim3",
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": [
+            {
+              "file": "x126100-lenovo-ideapad-slim3.json",
+              "firstRelease": "v262",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,ideapad-slim3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lenovo-xiaoxin-14-q8x9",
+      "vendor": "Lenovo",
+      "name": "Xiaoxin 14 (China)",
+      "generation": "x1",
+      "form": "laptop",
+      "released": null,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "missing",
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "missing",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-xiaoxin-14-q8x9"
+        ]
+      },
+      "variants": [
+        {
+          "omarchy": "missing",
+          "deviceTree": null,
+          "ids": []
+        }
+      ]
+    },
+    {
+      "id": "medion-sprchrgd-14-s1",
+      "vendor": "Medion",
+      "name": "SPRCHRGD 14 S1",
+      "generation": "x1",
+      "form": "laptop",
+      "released": 2024,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v7.0",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/medion-14-s1-elite-sprchrgd",
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/medion-14-s1-sprchrgd"
+        ]
+      },
+      "variants": [
+        {
+          "model": "S1 Elite",
+          "chip": "X1E-78-100",
+          "compatible": "medion,sprchrgd14s1",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1e80100-medion-sprchrgd-14-s1.dts",
+            "firstRelease": "v7.0",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1e78100-medion-sprchrgd-14s1-elite.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "medion,sprchrgd14s1"
             }
           ]
         }
@@ -194,83 +1631,139 @@
       ]
     },
     {
-      "id": "asus-zenbook-a14-ux3407na",
-      "vendor": "ASUS",
-      "name": "Zenbook A14 (X2)",
-      "generation": "x2",
+      "id": "microsoft-surface-laptop-7-13",
+      "vendor": "Microsoft",
+      "name": "Surface Laptop 7 (13.8\")",
+      "generation": "x1",
       "form": "laptop",
-      "released": 2026,
-      "modelNumbers": [
-        "UX3407NA"
-      ],
+      "released": 2024,
+      "modelNumbers": [],
       "notes": null,
-      "omarchy": "missing",
+      "omarchy": "works",
       "upstream": {
-        "deviceTree": "next",
-        "firstRelease": null,
+        "deviceTree": "released",
+        "firstRelease": "v6.12",
         "devicetreePosted": null,
         "ids": "listed",
-        "firmware": "linux-firmware",
+        "firmware": "missing",
         "firmwareDownload": null,
-        "firmwareFolders": [
-          "qcom/glymur/ASUSTeK/UX3407NA"
-        ],
-        "acpi": "missing",
-        "acpiUrls": []
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-romulus13_and_15"
+        ]
       },
       "variants": [
         {
-          "model": "UX3407NA",
-          "compatible": "asus,zenbook-a14-ux3407na",
-          "omarchy": "missing",
+          "compatible": "microsoft,romulus13",
+          "omarchy": "works",
           "deviceTree": {
-            "file": "glymur-asus-zenbook-a14-ux3407na.dts",
-            "firstRelease": null,
+            "file": "x1e80100-microsoft-romulus13.dts",
+            "firstRelease": "v6.12",
             "inNext": true,
-            "inOmarchy": false
+            "inOmarchy": true
           },
           "ids": [
             {
-              "file": "glymur-asus-zenbook-a14-ux3407na.json",
-              "firstRelease": "v262",
+              "file": "x1e80100-microsoft-romulus13.json",
+              "firstRelease": "v260",
               "inMain": true,
               "matches": true,
-              "compatible": "asus,zenbook-a14-ux3407na"
+              "compatible": "microsoft,romulus13"
             }
           ]
         }
       ]
     },
     {
-      "id": "asus-zenbook-14-ux3480qa",
-      "vendor": "ASUS",
-      "name": "Zenbook 14 (2026)",
+      "id": "microsoft-surface-laptop-7-15",
+      "vendor": "Microsoft",
+      "name": "Surface Laptop 7 (15\")",
       "generation": "x1",
       "form": "laptop",
-      "released": 2026,
-      "modelNumbers": [
-        "UX3480QA"
-      ],
+      "released": 2024,
+      "modelNumbers": [],
       "notes": null,
-      "omarchy": "missing",
+      "omarchy": "works",
       "upstream": {
-        "deviceTree": "missing",
-        "firstRelease": null,
+        "deviceTree": "released",
+        "firstRelease": "v6.12",
         "devicetreePosted": null,
-        "ids": "missing",
+        "ids": "listed",
         "firmware": "missing",
         "firmwareDownload": null,
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-romulus13_and_15"
+        ]
       },
       "variants": [
         {
-          "model": "UX3480QA",
-          "chip": "X1-26-100",
-          "omarchy": "missing",
-          "deviceTree": null,
-          "ids": []
+          "chip": "X1E-80-100",
+          "compatible": "microsoft,romulus15",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1e80100-microsoft-romulus15.dts",
+            "firstRelease": "v6.12",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1e80100-microsoft-romulus15.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "microsoft,romulus15"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qualcomm-snapdragon-dev-kit",
+      "vendor": "Qualcomm",
+      "name": "Snapdragon Dev Kit for Windows",
+      "generation": "x1",
+      "form": "devkit",
+      "released": 2024,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.14",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/qualcomm-snapdragon-dev-kit"
+        ]
+      },
+      "variants": [
+        {
+          "chip": "X1E-00-1DE",
+          "compatible": "qcom,x1e001de-devkit",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "x1e001de-devkit.dts",
+            "firstRelease": "v6.14",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "x1e001de-devkit.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "qcom,x1e001de-devkit"
+            }
+          ]
         }
       ]
     },
@@ -287,7 +1780,7 @@
       "upstream": {
         "deviceTree": "posted",
         "firstRelease": null,
-        "devicetreePosted": "https://lore.kernel.org/linux-arm-msm/",
+        "devicetreePosted": "https://lore.kernel.org/linux-arm-msm/?q=galaxy+book4+edge",
         "ids": "missing",
         "firmware": "missing",
         "firmwareDownload": null,
@@ -304,449 +1797,211 @@
           "ids": []
         }
       ]
+    },
+    {
+      "id": "lenovo-thinkpad-x13s",
+      "vendor": "Lenovo",
+      "name": "ThinkPad X13s",
+      "generation": "8cx",
+      "form": "laptop",
+      "released": 2022,
+      "modelNumbers": [
+        "21BX",
+        "21BY"
+      ],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.8",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "linux-firmware",
+        "firmwareDownload": null,
+        "firmwareFolders": [
+          "qcom/sc8280xp/LENOVO/21BX"
+        ],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-thinkpad-x13s"
+        ]
+      },
+      "variants": [
+        {
+          "compatible": "lenovo,thinkpad-x13s",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "sc8280xp-lenovo-thinkpad-x13s.dts",
+            "firstRelease": "v6.8",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "sc8280xp-lenovo-thinkpad-x13s-21bx.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,thinkpad-x13s"
+            },
+            {
+              "file": "sc8280xp-lenovo-thinkpad-x13s-21by.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,thinkpad-x13s"
+            },
+            {
+              "file": "sc8280xp-lenovo-thinkpad-x13s-4810.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,thinkpad-x13s"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "microsoft-surface-pro-9-5g",
+      "vendor": "Microsoft",
+      "name": "Surface Pro 9 5G",
+      "generation": "8cx",
+      "form": "2-in-1",
+      "released": 2022,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.13",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-9-5G"
+        ]
+      },
+      "variants": [
+        {
+          "compatible": "microsoft,arcata",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "sc8280xp-microsoft-arcata.dts",
+            "firstRelease": "v6.13",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "sc8280xp-microsoft-surface-pro-9-5G.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "microsoft,arcata"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "microsoft-windows-dev-kit-2023",
+      "vendor": "Microsoft",
+      "name": "Windows Dev Kit 2023",
+      "generation": "8cx",
+      "form": "devkit",
+      "released": 2022,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.14",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-devkit-2023"
+        ]
+      },
+      "variants": [
+        {
+          "compatible": "microsoft,blackrock",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "sc8280xp-microsoft-blackrock.dts",
+            "firstRelease": "v6.14",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "sc8280xp-microsoft-blackrock.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "microsoft,blackrock"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "huawei-matebook-e-go",
+      "vendor": "Huawei",
+      "name": "MateBook E Go",
+      "generation": "8cx",
+      "form": "2-in-1",
+      "released": 2022,
+      "modelNumbers": [],
+      "notes": null,
+      "omarchy": "works",
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.14",
+        "devicetreePosted": null,
+        "ids": "listed",
+        "firmware": "missing",
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/huawei-matebooke-go"
+        ]
+      },
+      "variants": [
+        {
+          "compatible": "huawei,gaokun3",
+          "omarchy": "works",
+          "deviceTree": {
+            "file": "sc8280xp-huawei-gaokun3.dts",
+            "firstRelease": "v6.14",
+            "inNext": true,
+            "inOmarchy": true
+          },
+          "ids": [
+            {
+              "file": "sc8280xp-huawei-gaokun3.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "huawei,gaokun3"
+            }
+          ]
+        }
+      ]
     }
   ],
   "unmatched": {
-    "deviceTrees": [
-      {
-        "file": "glymur-asus-zenbook-a16-ux3607oa.dts",
-        "model": "ASUS Zenbook A16 (UX3607OA)",
-        "compatible": "asus,zenbook-a16-ux3607oa"
-      },
-      {
-        "file": "glymur-hp-elitebook-x-g2q.dts",
-        "model": "HP EliteBook X G2q 14 AI",
-        "compatible": "hp,elitebook-x-g2q"
-      },
-      {
-        "file": "glymur-lenovo-yoga-slim7x.dts",
-        "model": "Lenovo Yoga Slim 7x Gen 11",
-        "compatible": "lenovo,yoga-slim7x-gen11"
-      },
-      {
-        "file": "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
-        "model": "Lenovo IdeaCentre Mini 01Q8X10",
-        "compatible": "lenovo,ideacentre-mini-01q8x10"
-      },
-      {
-        "file": "sc8280xp-huawei-gaokun3.dts",
-        "model": "Matebook E Go",
-        "compatible": "huawei,gaokun3"
-      },
-      {
-        "file": "sc8280xp-lenovo-thinkpad-x13s.dts",
-        "model": "Lenovo ThinkPad X13s",
-        "compatible": "lenovo,thinkpad-x13s"
-      },
-      {
-        "file": "sc8280xp-microsoft-arcata.dts",
-        "model": "Microsoft Surface Pro 9 5G",
-        "compatible": "microsoft,arcata"
-      },
-      {
-        "file": "sc8280xp-microsoft-blackrock.dts",
-        "model": "Windows Dev Kit 2023",
-        "compatible": "microsoft,blackrock"
-      },
-      {
-        "file": "x1e78100-lenovo-thinkpad-t14s-oled.dts",
-        "model": "Lenovo ThinkPad T14s Gen 6 (OLED)",
-        "compatible": "lenovo,thinkpad-t14s-oled"
-      },
-      {
-        "file": "x1e78100-lenovo-thinkpad-t14s.dts",
-        "model": "Lenovo ThinkPad T14s Gen 6 (LCD)",
-        "compatible": "lenovo,thinkpad-t14s-lcd"
-      },
-      {
-        "file": "x1e80100-asus-vivobook-s15.dts",
-        "model": "ASUS Vivobook S 15",
-        "compatible": "asus,vivobook-s15"
-      },
-      {
-        "file": "x1e80100-asus-zenbook-a14.dts",
-        "model": "ASUS Zenbook A14 (UX3407RA)",
-        "compatible": "asus,zenbook-a14-ux3407ra"
-      },
-      {
-        "file": "x1e80100-dell-inspiron-14-plus-7441.dts",
-        "model": "Dell Inspiron 14 Plus 7441",
-        "compatible": "dell,inspiron-14-plus-7441"
-      },
-      {
-        "file": "x1e80100-dell-latitude-7455.dts",
-        "model": "Dell Latitude 7455",
-        "compatible": "dell,latitude-7455"
-      },
-      {
-        "file": "x1e80100-dell-xps13-9345.dts",
-        "model": "Dell XPS 13 9345",
-        "compatible": "dell,xps13-9345"
-      },
-      {
-        "file": "x1e80100-honor-magicbook-art-14.dts",
-        "model": "HONOR MagicBook Art 14 Snapdragon",
-        "compatible": "honor,magicbook-art-14-snapdragon"
-      },
-      {
-        "file": "x1e80100-hp-elitebook-ultra-g1q.dts",
-        "model": "HP EliteBook Ultra G1q",
-        "compatible": "hp,elitebook-ultra-g1q"
-      },
-      {
-        "file": "x1e80100-hp-omnibook-x14.dts",
-        "model": "HP Omnibook X 14-fe0",
-        "compatible": "hp,omnibook-x14"
-      },
-      {
-        "file": "x1e80100-medion-sprchrgd-14-s1.dts",
-        "model": "Medion SPRCHRGD 14 S1",
-        "compatible": "medion,sprchrgd14s1"
-      },
-      {
-        "file": "x1e80100-microsoft-romulus13.dts",
-        "model": "Microsoft Surface Laptop 7 (13.8 inch)",
-        "compatible": "microsoft,romulus13"
-      },
-      {
-        "file": "x1e80100-microsoft-romulus15.dts",
-        "model": "Microsoft Surface Laptop 7 (15 inch)",
-        "compatible": "microsoft,romulus15"
-      },
-      {
-        "file": "x1p42100-asus-vivobook-s15.dts",
-        "model": "ASUS Vivobook S 15 X1P-42-100",
-        "compatible": "asus,vivobook-s15-x1p4"
-      },
-      {
-        "file": "x1p42100-asus-zenbook-a14-lcd.dts",
-        "model": "ASUS Zenbook A14 (UX3407QA, LCD)",
-        "compatible": "asus,zenbook-a14-ux3407qa-lcd"
-      },
-      {
-        "file": "x1p42100-asus-zenbook-a14.dts",
-        "model": "ASUS Zenbook A14 (UX3407QA)",
-        "compatible": "asus,zenbook-a14-ux3407qa-oled"
-      },
-      {
-        "file": "x1p42100-hp-omnibook-x14.dts",
-        "model": "HP Omnibook X 14-fe1",
-        "compatible": "hp,omnibook-x14-fe1"
-      },
-      {
-        "file": "x1p42100-lenovo-thinkbook-16.dts",
-        "model": "Lenovo ThinkBook 16 Gen 7 QOY",
-        "compatible": "lenovo,thinkbook-16"
-      }
-    ],
-    "ids": [
-      {
-        "file": "glymur-asus-zenbook-a16-ux3607oa.json",
-        "name": "ASUS Zenbook A16 UX3607OA",
-        "compatible": "asus,zenbook-a16-ux3607oa"
-      },
-      {
-        "file": "glymur-crd.json",
-        "name": "Qualcomm Technologies, Inc. Glymur CRD",
-        "compatible": "qcom,glymur-crd"
-      },
-      {
-        "file": "glymur-hp-elitebook-x-g2q.json",
-        "name": "HP 103C_5336AN HP EliteBook",
-        "compatible": "hp,elitebook-x-g2q"
-      },
-      {
-        "file": "glymur-lenovo-yoga-slim7x.json",
-        "name": "LENOVO Yoga Slim 7 14Q8Y11",
-        "compatible": "lenovo,yoga-slim7x-gen11"
-      },
-      {
-        "file": "msm8998-lenovo-miix-630-81f1.json",
-        "name": "LENOVO Miix 630",
-        "compatible": "lenovo,miix-630"
-      },
-      {
-        "file": "purwa-lenovo-ideacentre-mini-01q8x10.json",
-        "name": "LENOVO IdeaCentre Mini 01Q8X10 (Purwa)",
-        "compatible": "lenovo,purwa-ideacentre-mini-01q8x10"
-      },
-      {
-        "file": "sc7180-acer-aspire1.json",
-        "name": "Acer Aspire 1",
-        "compatible": "acer,aspire1"
-      },
-      {
-        "file": "sc7180-ecs-liva-qc710.json",
-        "name": "Elitegroup Computer Systems Co., LTD. SC7180",
-        "compatible": "ecs,liva-qc710"
-      },
-      {
-        "file": "sc8180x-lenovo-flex-5g-81xe.json",
-        "name": "LENOVO Yoga 5G 14Q8CX05",
-        "compatible": "lenovo,flex-5g"
-      },
-      {
-        "file": "sc8180x-lenovo-flex-5g-82ak.json",
-        "name": "LENOVO Flex 5G 14Q8CX05",
-        "compatible": "lenovo,flex-5g"
-      },
-      {
-        "file": "sc8280xp-huawei-gaokun3.json",
-        "name": "HUAWEI MateBook E",
-        "compatible": "huawei,gaokun3"
-      },
-      {
-        "file": "sc8280xp-lenovo-thinkpad-x13s-21bx.json",
-        "name": "LENOVO ThinkPad X13s Gen 1",
-        "compatible": "lenovo,thinkpad-x13s"
-      },
-      {
-        "file": "sc8280xp-lenovo-thinkpad-x13s-21by.json",
-        "name": "LENOVO ThinkPad X13s Gen 1",
-        "compatible": "lenovo,thinkpad-x13s"
-      },
-      {
-        "file": "sc8280xp-lenovo-thinkpad-x13s-4810.json",
-        "name": "LENOVO ThinkPad X13s Gen 1",
-        "compatible": "lenovo,thinkpad-x13s"
-      },
-      {
-        "file": "sc8280xp-microsoft-blackrock.json",
-        "name": "Microsoft Corporation Surface",
-        "compatible": "microsoft,blackrock"
-      },
-      {
-        "file": "sc8280xp-microsoft-surface-pro-9-5G.json",
-        "name": "Microsoft Corporation Surface",
-        "compatible": "microsoft,arcata"
-      },
-      {
-        "file": "sc8280xp-radxa-dragon-q8b.json",
-        "name": "Radxa Computer Co., Ltd. Dragon Q8B",
-        "compatible": "radxa,dragon-q8b"
-      },
-      {
-        "file": "sdm850-lenovo-yoga-c630.json",
-        "name": "LENOVO YOGA C630-13Q50",
-        "compatible": "lenovo,yoga-c630"
-      },
-      {
-        "file": "x126100-lenovo-ideapad-slim3.json",
-        "name": "LENOVO IdeaPad Slim 3 15Q8X10",
-        "compatible": "lenovo,ideapad-slim3"
-      },
-      {
-        "file": "x1e001de-devkit.json",
-        "name": "Qualcomm SCP_HAMOA",
-        "compatible": "qcom,x1e001de-devkit"
-      },
-      {
-        "file": "x1e78100-acer-sfa14-11.json",
-        "name": "Acer Swift 14 Go Pro AI",
-        "compatible": "acer,swift-sfa14-11"
-      },
-      {
-        "file": "x1e78100-lenovo-thinkpad-t14s-lcd.json",
-        "name": "LENOVO ThinkPad T14s Gen 6 (LCD)",
-        "compatible": "lenovo,thinkpad-t14s-lcd"
-      },
-      {
-        "file": "x1e78100-lenovo-thinkpad-t14s-oled.json",
-        "name": "LENOVO ThinkPad T14s Gen 6 (OLED)",
-        "compatible": "lenovo,thinkpad-t14s-oled"
-      },
-      {
-        "file": "x1e78100-lenovo-thinkpad-t14s.json",
-        "name": "LENOVO ThinkPad T14s Gen 6",
-        "compatible": "lenovo,thinkpad-t14s-lcd"
-      },
-      {
-        "file": "x1e78100-medion-sprchrgd-14s1-elite.json",
-        "name": "MEDION SPRCHRGD",
-        "compatible": "medion,sprchrgd14s1"
-      },
-      {
-        "file": "x1e80100-asus-vivobook-s15.json",
-        "name": "ASUSTeK COMPUTER INC. ASUS Vivobook S 15",
-        "compatible": "asus,vivobook-s15"
-      },
-      {
-        "file": "x1e80100-asus-zenbook-a14-oled.json",
-        "name": "ASUSTeK COMPUTER INC. ASUS Zenbook A14",
-        "compatible": "asus,zenbook-a14-ux3407qa-oled"
-      },
-      {
-        "file": "x1e80100-asus-zenbook-a14.json",
-        "name": "ASUSTeK COMPUTER INC. ASUS Zenbook A14",
-        "compatible": "asus,zenbook-a14-ux3407ra"
-      },
-      {
-        "file": "x1e80100-crd.json",
-        "name": "Qualcomm SCP_HAMOA",
-        "compatible": "qcom,x1e80100-crd"
-      },
-      {
-        "file": "x1e80100-dell-inspiron-14-plus-7441.json",
-        "name": "Dell Inc. Inspiron",
-        "compatible": "dell,inspiron-14-plus-7441"
-      },
-      {
-        "file": "x1e80100-dell-latitude-7455.json",
-        "name": "Dell Inc. Latitude",
-        "compatible": "dell,latitude-7455"
-      },
-      {
-        "file": "x1e80100-dell-xps13-9345.json",
-        "name": "Dell Inc. XPS",
-        "compatible": "dell,xps13-9345"
-      },
-      {
-        "file": "x1e80100-honor-magicbook-art-14.json",
-        "name": "HONOR MagicBook Art 14 Snapdragon",
-        "compatible": "honor,magicbook-art-14-snapdragon"
-      },
-      {
-        "file": "x1e80100-hp-elitebook-ultra-g1q.json",
-        "name": "HP 103C_5336AN HP EliteBook Ultra",
-        "compatible": "hp,elitebook-ultra-g1q"
-      },
-      {
-        "file": "x1e80100-hp-omnibook-x14.json",
-        "name": "HP 103C_5335M8 HP OmniBook X",
-        "compatible": "hp,omnibook-x14"
-      },
-      {
-        "file": "x1e80100-microsoft-romulus13.json",
-        "name": "Microsoft Corporation Surface",
-        "compatible": "microsoft,romulus13"
-      },
-      {
-        "file": "x1e80100-microsoft-romulus15.json",
-        "name": "Microsoft Corporation Surface",
-        "compatible": "microsoft,romulus15"
-      },
-      {
-        "file": "x1p42100-acer-swift-go14-01.json",
-        "name": "Acer Swift Go 14 AI",
-        "compatible": "acer,swift-go14-01"
-      },
-      {
-        "file": "x1p42100-asus-vivobook-s15.json",
-        "name": "ASUSTeK COMPUTER INC. ASUS Vivobook S 15",
-        "compatible": "asus,vivobook-s15-x1p4"
-      },
-      {
-        "file": "x1p42100-asus-zenbook-a14.json",
-        "name": "ASUSTeK COMPUTER INC. ASUS Zenbook A14",
-        "compatible": "asus,zenbook-a14-ux3407qa-lcd"
-      },
-      {
-        "file": "x1p42100-hp-elitebook-6-g1q.json",
-        "name": "HP 103C_5336AN HP EliteBook",
-        "compatible": "hp,elitebook-6-g1q"
-      },
-      {
-        "file": "x1p42100-hp-omnibook-x14.json",
-        "name": "HP 103C_5335M8 HP OmniBook X",
-        "compatible": "hp,omnibook-x14-fe1"
-      },
-      {
-        "file": "x1p42100-lenovo-ideapad-5-2in1.json",
-        "name": "LENOVO IdeaPad 5 2-in-1 14Q8X9",
-        "compatible": "lenovo,ideapad-5-2in1"
-      },
-      {
-        "file": "x1p42100-lenovo-ideapad-slim-5-oled.json",
-        "name": "LENOVO IdeaPad Slim 5 14Q8X9 (OLED)",
-        "compatible": "lenovo,ideapad-slim5x-oled"
-      },
-      {
-        "file": "x1p42100-lenovo-thinkbook-16.json",
-        "name": "LENOVO ThinkBook 16 G7 QOY",
-        "compatible": "lenovo,thinkbook-16"
-      },
-      {
-        "file": "x1p64100-acer-swift-sf14-11.json",
-        "name": "Acer Swift 14 AI",
-        "compatible": "acer,swift-sf14-11"
-      },
-      {
-        "file": "x1p64100-dell-latitude-5455.json",
-        "name": "Dell Inc. Latitude 5455",
-        "compatible": "dell,latitude-5455"
-      }
-    ],
-    "firmware": [
-      "qcom/glymur/ASUSTeK/UX3607OA",
-      "qcom/glymur/LENOVO/22A8",
-      "qcom/sc8280xp/LENOVO/21BX",
-      "qcom/sc8280xp/radxa/dragon-q8b",
-      "qcom/x1e80100/ASUSTeK/vivobook-16",
-      "qcom/x1e80100/ASUSTeK/vivobook-s15",
-      "qcom/x1e80100/ASUSTeK/zenbook-a14",
-      "qcom/x1e80100/dell/inspiron-14-plus-7441",
-      "qcom/x1e80100/dell/latitude-7455",
-      "qcom/x1e80100/dell/xps13-9345",
-      "qcom/x1e80100/hp/omnibook-x14",
-      "qcom/x1e80100/LENOVO/21N1",
-      "qcom/x1e80100/LENOVO/91B6"
-    ],
-    "acpi": [
-      "acer-aspire-1",
-      "acer-gateway-gwtn133-1",
-      "acer-sfa14-11",
-      "acer-spin-7-sp714-61na",
-      "apcsilmic-dot-1",
-      "asus-tp370ql",
-      "asus-vivobook-s-15",
-      "asus-vivobook-s15-q5507",
-      "asus-vivobook-s15-s5507",
-      "asus-zenbook-a14-ux3407q",
-      "asus-zenbook-a16-ux3607oa",
-      "dell-inspiron-14-3420",
-      "dell-inspiron-14-5441-x1p-42-100",
-      "dell-inspiron-14-7441-x1e-80-100",
-      "dell-latitude-5455",
-      "dell-latitude-7455",
-      "dell-xps-9345",
-      "ecs-liva-qc710",
-      "honor-mro-521",
-      "hp-elitebook-6-g1q",
-      "hp-elitebook-ultra-g1q",
-      "hp-envy-x2",
-      "hp-omnibook-5-14-he0xxx",
-      "hp-omnibook-x14-fe0xxx",
-      "huawei-matebooke-2019",
-      "huawei-matebooke-go",
-      "lenovo-flex-5g",
-      "lenovo-ideacentre-01q8x10",
-      "lenovo-ideapad-5-2in1-83GH-14Q8X9",
-      "lenovo-ideapad-5-slim-14Q8X9",
-      "lenovo-ideapad-5g-14q8x05",
-      "lenovo-ideapad-slim3x-15q8x10-WCN7850",
-      "lenovo-l10w",
-      "lenovo-miix-630",
-      "lenovo-thinkbook-16-g7-qoy",
-      "lenovo-thinkpad-t14s",
-      "lenovo-thinkpad-t14s-120hz-64gb",
-      "lenovo-thinkpad-x13s",
-      "lenovo-xiaoxin-14-q8x9",
-      "lenovo-yoga-c630",
-      "lenovo-yoga-slim-7x-14Q8Y11",
-      "medion-14-s1-elite-sprchrgd",
-      "medion-14-s1-sprchrgd",
-      "microsoft-devkit-2023",
-      "microsoft-surface-pro-9-5G",
-      "microsoft-surface-prox",
-      "microsoft-surface-romulus13_and_15",
-      "qualcomm-snapdragon-dev-kit",
-      "samsung-galaxy-book-go",
-      "samsung-galaxy-book-go-5g",
-      "samsung-galaxy-book-s",
-      "samsung-galaxybook2",
-      "samsung-galaxybook2-go",
-      "tcl-book-14-go",
-      "xiaomi-book-s"
-    ]
+    "deviceTrees": [],
+    "ids": [],
+    "firmware": [],
+    "acpi": []
   }
 }

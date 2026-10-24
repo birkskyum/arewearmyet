@@ -1,14 +1,213 @@
 # Every ARM PC model the board tracks. One entry per hardware model; variants
 # that Linux describes with separate device trees are listed inside it.
 #
+#   generation   x1 (Snapdragon X), x2 (Snapdragon X2) or 8cx (8cx Gen 3)
 #   compatible   the device tree's first compatible string, also for trees that
-#                are only posted or out of tree
+#                are only posted or out of tree; quote it
 #   ids          systemd hardware ID files to check even when they name a
 #                different compatible
 #   firmware     linux-firmware folders with this model's files
 #   acpi         aarch64-laptops/build misc/ folders with its ACPI dump
 
 models:
+  # ASUS
+  - id: asus-zenbook-a14-ux3407
+    vendor: ASUS
+    name: Zenbook A14
+    generation: x1
+    released: 2025
+    model_numbers: [UX3407RA, UX3407QA]
+    variants:
+      - { model: UX3407RA, chip: X1E-78-100, compatible: "asus,zenbook-a14-ux3407ra" }
+      - { model: UX3407QA OLED, chip: X1P-42-100, compatible: "asus,zenbook-a14-ux3407qa-oled" }
+      - { model: UX3407QA LCD, chip: X1P-42-100, compatible: "asus,zenbook-a14-ux3407qa-lcd" }
+    firmware: [qcom/x1e80100/ASUSTeK/zenbook-a14]
+    acpi: [asus-zenbook-a14-ux3407q]
+
+  - id: asus-zenbook-14-ux3480qa
+    vendor: ASUS
+    name: Zenbook 14 (2026)
+    generation: x1
+    released: 2026
+    model_numbers: [UX3480QA]
+    variants:
+      - { model: UX3480QA, chip: X1-26-100 }
+
+  - id: asus-vivobook-s15
+    vendor: ASUS
+    name: Vivobook S 15
+    generation: x1
+    released: 2024
+    model_numbers: [S5507QA, Q5507QA]
+    variants:
+      - { model: X Elite, chip: X1E-78-100, compatible: "asus,vivobook-s15" }
+      - { model: X Plus, chip: X1P-42-100, compatible: "asus,vivobook-s15-x1p4" }
+    firmware: [qcom/x1e80100/ASUSTeK/vivobook-s15]
+    acpi: [asus-vivobook-s-15, asus-vivobook-s15-q5507, asus-vivobook-s15-s5507]
+
+  - id: asus-vivobook-16
+    vendor: ASUS
+    name: Vivobook 16
+    generation: x1
+    firmware: [qcom/x1e80100/ASUSTeK/vivobook-16]
+    notes: linux-firmware has its audio topology, so a device tree exists somewhere out of tree.
+
+  - id: asus-zenbook-a14-ux3407na
+    vendor: ASUS
+    name: Zenbook A14 (X2)
+    generation: x2
+    released: 2026
+    model_numbers: [UX3407NA]
+    variants:
+      - { model: UX3407NA, compatible: "asus,zenbook-a14-ux3407na" }
+    firmware: [qcom/glymur/ASUSTeK/UX3407NA]
+
+  - id: asus-zenbook-a16-ux3607oa
+    vendor: ASUS
+    name: Zenbook A16
+    generation: x2
+    released: 2026
+    model_numbers: [UX3607OA]
+    variants:
+      - { model: UX3607OA, compatible: "asus,zenbook-a16-ux3607oa" }
+    firmware: [qcom/glymur/ASUSTeK/UX3607OA]
+    acpi: [asus-zenbook-a16-ux3607oa]
+
+  # Acer
+  - id: acer-swift-14-ai-sf14-11
+    vendor: Acer
+    name: Swift 14 AI
+    generation: x1
+    released: 2024
+    model_numbers: [SF14-11]
+    variants:
+      - { model: SF14-11, chip: X1P-64-100, compatible: "acer,swift-sf14-11" }
+
+  - id: acer-swift-sfa14-11
+    vendor: Acer
+    name: Swift 14 Go Pro AI
+    generation: x1
+    model_numbers: [SFA14-11]
+    variants:
+      - { model: SFA14-11, chip: X1E-78-100, compatible: "acer,swift-sfa14-11" }
+    acpi: [acer-sfa14-11]
+
+  - id: acer-swift-go-14-ai-sfg14-01
+    vendor: Acer
+    name: Swift Go 14 AI
+    generation: x1
+    model_numbers: [SFG14-01]
+    variants:
+      - { model: SFG14-01, chip: X1P-42-100, compatible: "acer,swift-go14-01" }
+
+  # Dell
+  - id: dell-xps-13-9345
+    vendor: Dell
+    name: XPS 13 9345
+    generation: x1
+    released: 2024
+    variants:
+      - { chip: X1E-80-100, compatible: "dell,xps13-9345" }
+    firmware: [qcom/x1e80100/dell/xps13-9345]
+    acpi: [dell-xps-9345]
+
+  - id: dell-inspiron-14-plus-7441
+    vendor: Dell
+    name: Inspiron 14 Plus 7441
+    generation: x1
+    released: 2024
+    variants:
+      - { chip: X1E-80-100, compatible: "dell,inspiron-14-plus-7441" }
+    firmware: [qcom/x1e80100/dell/inspiron-14-plus-7441]
+    acpi: [dell-inspiron-14-7441-x1e-80-100]
+
+  - id: dell-inspiron-14-5441
+    vendor: Dell
+    name: Inspiron 14 5441
+    generation: x1
+    released: 2024
+    variants:
+      - { chip: X1P-42-100 }
+    acpi: [dell-inspiron-14-5441-x1p-42-100]
+
+  - id: dell-latitude-7455
+    vendor: Dell
+    name: Latitude 7455
+    generation: x1
+    released: 2024
+    variants:
+      - { chip: X1E-80-100, compatible: "dell,latitude-7455" }
+    firmware: [qcom/x1e80100/dell/latitude-7455]
+    acpi: [dell-latitude-7455]
+
+  - id: dell-latitude-5455
+    vendor: Dell
+    name: Latitude 5455
+    generation: x1
+    released: 2024
+    variants:
+      - { chip: X1P-64-100, compatible: "dell,latitude-5455" }
+    acpi: [dell-latitude-5455]
+
+  # Honor
+  - id: honor-magicbook-art-14-snapdragon
+    vendor: Honor
+    name: MagicBook Art 14 Snapdragon
+    generation: x1
+    released: 2025
+    model_numbers: [MRO-521]
+    variants:
+      - { chip: X1E-80-100, compatible: "honor,magicbook-art-14-snapdragon" }
+    acpi: [honor-mro-521]
+
+  # HP
+  - id: hp-omnibook-x-14
+    vendor: HP
+    name: OmniBook X 14
+    generation: x1
+    released: 2024
+    model_numbers: [14-fe0, 14-fe1]
+    variants:
+      - { model: 14-fe0, chip: X1E-78-100, compatible: "hp,omnibook-x14" }
+      - { model: 14-fe1, chip: X1P-42-100, compatible: "hp,omnibook-x14-fe1" }
+    firmware: [qcom/x1e80100/hp/omnibook-x14]
+    acpi: [hp-omnibook-x14-fe0xxx]
+
+  - id: hp-elitebook-ultra-g1q
+    vendor: HP
+    name: EliteBook Ultra G1q
+    generation: x1
+    released: 2024
+    variants:
+      - { chip: X1E-78-100, compatible: "hp,elitebook-ultra-g1q" }
+    acpi: [hp-elitebook-ultra-g1q]
+
+  - id: hp-elitebook-6-g1q
+    vendor: HP
+    name: EliteBook 6 G1q
+    generation: x1
+    released: 2025
+    variants:
+      - { chip: X1P-42-100, compatible: "hp,elitebook-6-g1q" }
+    acpi: [hp-elitebook-6-g1q]
+
+  - id: hp-omnibook-5-14
+    vendor: HP
+    name: OmniBook 5 14
+    generation: x1
+    released: 2025
+    model_numbers: [14-he0]
+    acpi: [hp-omnibook-5-14-he0xxx]
+
+  - id: hp-elitebook-x-g2q
+    vendor: HP
+    name: EliteBook X G2q
+    generation: x2
+    released: 2026
+    variants:
+      - { compatible: "hp,elitebook-x-g2q" }
+
+  # Lenovo
   - id: lenovo-yoga-slim-7x
     vendor: Lenovo
     name: Yoga Slim 7x
@@ -20,6 +219,107 @@ models:
     firmware: [qcom/x1e80100/LENOVO/83ED]
     acpi: [lenovo-yoga-slim-7x]
 
+  - id: lenovo-yoga-slim-7x-gen-11
+    vendor: Lenovo
+    name: Yoga Slim 7x Gen 11
+    generation: x2
+    released: 2026
+    model_numbers: [14Q8Y11]
+    variants:
+      - { model: 14Q8Y11, compatible: "lenovo,yoga-slim7x-gen11" }
+    acpi: [lenovo-yoga-slim-7x-14Q8Y11]
+
+  - id: lenovo-thinkpad-t14s-gen-6
+    vendor: Lenovo
+    name: ThinkPad T14s Gen 6
+    generation: x1
+    released: 2024
+    model_numbers: [21N1]
+    variants:
+      - { model: LCD, chip: X1E-78-100, compatible: "lenovo,thinkpad-t14s-lcd" }
+      - { model: OLED, chip: X1E-78-100, compatible: "lenovo,thinkpad-t14s-oled" }
+    firmware: [qcom/x1e80100/LENOVO/21N1]
+    acpi: [lenovo-thinkpad-t14s, lenovo-thinkpad-t14s-120hz-64gb]
+
+  - id: lenovo-thinkpad-t14s-gen-7
+    vendor: Lenovo
+    name: ThinkPad T14s Gen 7
+    generation: x2
+    released: 2026
+    model_numbers: [22A8]
+    firmware: [qcom/glymur/LENOVO/22A8]
+    notes: linux-firmware has its audio topology, so a device tree exists somewhere out of tree.
+
+  - id: lenovo-thinkbook-16-g7-qoy
+    vendor: Lenovo
+    name: ThinkBook 16 G7 QOY
+    generation: x1
+    released: 2024
+    variants:
+      - { chip: X1P-64-100, compatible: "lenovo,thinkbook-16" }
+    acpi: [lenovo-thinkbook-16-g7-qoy]
+
+  - id: lenovo-ideacentre-mini-01q8x10
+    vendor: Lenovo
+    name: IdeaCentre Mini x
+    generation: x1
+    form: desktop
+    released: 2025
+    model_numbers: [01Q8X10, 91B6]
+    variants:
+      - { model: X Elite, chip: X1E-78-100, compatible: "lenovo,ideacentre-mini-01q8x10" }
+      - { model: X Plus, chip: X1P-42-100, compatible: "lenovo,purwa-ideacentre-mini-01q8x10" }
+    firmware: [qcom/x1e80100/LENOVO/91B6]
+    acpi: [lenovo-ideacentre-01q8x10]
+
+  - id: lenovo-ideapad-slim-5x
+    vendor: Lenovo
+    name: IdeaPad Slim 5x
+    generation: x1
+    released: 2024
+    model_numbers: [14Q8X9]
+    variants:
+      - { model: OLED, chip: X1P-42-100, compatible: "lenovo,ideapad-slim5x-oled" }
+    acpi: [lenovo-ideapad-5-slim-14Q8X9]
+
+  - id: lenovo-ideapad-5-2-in-1
+    vendor: Lenovo
+    name: IdeaPad 5 2-in-1
+    generation: x1
+    form: 2-in-1
+    released: 2024
+    model_numbers: [14Q8X9, 83GH]
+    variants:
+      - { chip: X1P-42-100, compatible: "lenovo,ideapad-5-2in1" }
+    acpi: [lenovo-ideapad-5-2in1-83GH-14Q8X9]
+
+  - id: lenovo-ideapad-slim-3x
+    vendor: Lenovo
+    name: IdeaPad Slim 3x
+    generation: x1
+    released: 2025
+    model_numbers: [15Q8X10]
+    variants:
+      - { chip: X1-26-100, compatible: "lenovo,ideapad-slim3" }
+    acpi: [lenovo-ideapad-slim3x-15q8x10-WCN7850]
+
+  - id: lenovo-xiaoxin-14-q8x9
+    vendor: Lenovo
+    name: Xiaoxin 14 (China)
+    generation: x1
+    acpi: [lenovo-xiaoxin-14-q8x9]
+
+  # Medion
+  - id: medion-sprchrgd-14-s1
+    vendor: Medion
+    name: SPRCHRGD 14 S1
+    generation: x1
+    released: 2024
+    variants:
+      - { model: S1 Elite, chip: X1E-78-100, compatible: "medion,sprchrgd14s1" }
+    acpi: [medion-14-s1-elite-sprchrgd, medion-14-s1-sprchrgd]
+
+  # Microsoft
   - id: microsoft-surface-pro-11
     vendor: Microsoft
     name: Surface Pro 11th Edition
@@ -41,29 +341,89 @@ models:
       - { chip: X1P-42-100, compatible: "microsoft,surface-pro-12in", ids: [x1p42100-microsoft-surface-pro-12in.json] }
     acpi: [microsoft-surface-pro-12-in]
 
-  - id: asus-zenbook-a14-ux3407na
-    vendor: ASUS
-    name: Zenbook A14 (X2)
-    generation: x2
-    released: 2026
-    model_numbers: [UX3407NA]
-    variants:
-      - { model: UX3407NA, compatible: "asus,zenbook-a14-ux3407na" }
-    firmware: [qcom/glymur/ASUSTeK/UX3407NA]
-
-  - id: asus-zenbook-14-ux3480qa
-    vendor: ASUS
-    name: Zenbook 14 (2026)
+  - id: microsoft-surface-laptop-7-13
+    vendor: Microsoft
+    name: Surface Laptop 7 (13.8")
     generation: x1
-    released: 2026
-    model_numbers: [UX3480QA]
+    released: 2024
     variants:
-      - { model: UX3480QA, chip: X1-26-100 }
+      - { compatible: "microsoft,romulus13" }
+    acpi: [microsoft-surface-romulus13_and_15]
 
+  - id: microsoft-surface-laptop-7-15
+    vendor: Microsoft
+    name: Surface Laptop 7 (15")
+    generation: x1
+    released: 2024
+    variants:
+      - { chip: X1E-80-100, compatible: "microsoft,romulus15" }
+    acpi: [microsoft-surface-romulus13_and_15]
+
+  # Qualcomm
+  - id: qualcomm-snapdragon-dev-kit
+    vendor: Qualcomm
+    name: Snapdragon Dev Kit for Windows
+    generation: x1
+    form: devkit
+    released: 2024
+    variants:
+      - { chip: X1E-00-1DE, compatible: "qcom,x1e001de-devkit" }
+    acpi: [qualcomm-snapdragon-dev-kit]
+
+  # Samsung
   - id: samsung-galaxy-book4-edge
     vendor: Samsung
     name: Galaxy Book4 Edge
     generation: x1
     released: 2024
-    devicetree_posted: https://lore.kernel.org/linux-arm-msm/
+    devicetree_posted: https://lore.kernel.org/linux-arm-msm/?q=galaxy+book4+edge
     acpi: [samsung-galaxybook4-edge]
+
+  # Snapdragon 8cx Gen 3, the generation before
+  - id: lenovo-thinkpad-x13s
+    vendor: Lenovo
+    name: ThinkPad X13s
+    generation: 8cx
+    released: 2022
+    model_numbers: [21BX, 21BY]
+    variants:
+      - { compatible: "lenovo,thinkpad-x13s" }
+    firmware: [qcom/sc8280xp/LENOVO/21BX]
+    acpi: [lenovo-thinkpad-x13s]
+
+  - id: microsoft-surface-pro-9-5g
+    vendor: Microsoft
+    name: Surface Pro 9 5G
+    generation: 8cx
+    form: 2-in-1
+    released: 2022
+    variants:
+      - { compatible: "microsoft,arcata" }
+    acpi: [microsoft-surface-pro-9-5G]
+
+  - id: microsoft-windows-dev-kit-2023
+    vendor: Microsoft
+    name: Windows Dev Kit 2023
+    generation: 8cx
+    form: devkit
+    released: 2022
+    variants:
+      - { compatible: "microsoft,blackrock" }
+    acpi: [microsoft-devkit-2023]
+
+  - id: huawei-matebook-e-go
+    vendor: Huawei
+    name: MateBook E Go
+    generation: 8cx
+    form: 2-in-1
+    released: 2022
+    variants:
+      - { compatible: "huawei,gaokun3" }
+    acpi: [huawei-matebooke-go]
+
+# Source entries the board leaves out on purpose: older Snapdragon chips that
+# Omarchy's image has no device trees for, and Qualcomm's reference boards.
+ignore:
+  ids: [glymur-crd.json, x1e80100-crd.json, msm8998-lenovo-miix-630-81f1.json, sc7180-acer-aspire1.json, sc7180-ecs-liva-qc710.json, sc8180x-lenovo-flex-5g-81xe.json, sc8180x-lenovo-flex-5g-82ak.json, sdm850-lenovo-yoga-c630.json, sc8280xp-radxa-dragon-q8b.json]
+  firmware: [qcom/sc8280xp/radxa/dragon-q8b]
+  acpi: [acer-aspire-1, acer-gateway-gwtn133-1, acer-spin-7-sp714-61na, apcsilmic-dot-1, asus-tp370ql, dell-inspiron-14-3420, ecs-liva-qc710, hp-envy-x2, huawei-matebooke-2019, lenovo-flex-5g, lenovo-ideapad-5g-14q8x05, lenovo-l10w, lenovo-miix-630, lenovo-yoga-c630, microsoft-surface-prox, samsung-galaxy-book-go, samsung-galaxy-book-go-5g, samsung-galaxy-book-s, samsung-galaxybook2, samsung-galaxybook2-go, tcl-book-14-go, xiaomi-book-s]
