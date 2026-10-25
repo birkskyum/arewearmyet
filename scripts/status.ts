@@ -26,6 +26,7 @@ type Model = {
   acpi?: string[];
   devicetree_posted?: string;
   ids_collected?: string;
+  boot?: 'android';
   notes?: string;
   reports?: Report[];
 };
@@ -148,7 +149,8 @@ const rows = models.map((model) => {
   const deviceTree = dts.length === 0 ? (model.devicetree_posted ? 'posted' : 'missing') : dts.some((dt) => dt.firstRelease) ? 'released' : 'next';
   const firstRelease = dts.map((dt) => dt.firstRelease).filter(Boolean).sort((a, b) => kernelRank(a) - kernelRank(b))[0] ?? null;
   // systemd's list first; otherwise IDs sent in through the board count as collected
-  const idsState = variants.some((v) => v.ids.some((entry) => entry.matches)) ? 'listed' : variants.some((v) => v.ids.length) ? 'mismatch' : model.ids_collected ? 'collected' : 'missing';
+  const android = model.boot === 'android';
+  const idsState = android ? 'not-needed' : variants.some((v) => v.ids.some((entry) => entry.matches)) ? 'listed' : variants.some((v) => v.ids.length) ? 'mismatch' : model.ids_collected ? 'collected' : 'missing';
 
   return {
     id: model.id,
@@ -171,15 +173,16 @@ const rows = models.map((model) => {
       ids: idsState,
       idsCollected: model.ids_collected ?? null,
       // What counts is getting the firmware without the laptop's own Windows
-      firmware: fw.state,
+      firmware: android ? 'android' : fw.state,
       firmwareMissing: fw.missing,
       firmwareAudioOnly: fw.state === 'windows' && firmware.length > 0,
       firmwareDownload: model.firmware_download ?? null,
       firmwareFolders: firmware.map((folder) => folder.path),
-      acpi: acpi.length ? 'collected' : 'missing',
+      acpi: android ? 'not-needed' : acpi.length ? 'collected' : 'missing',
       acpiUrls: acpi.map((dump) => dump.url),
     },
     variants,
+    boot: model.boot ?? 'uefi',
   };
 });
 
@@ -197,8 +200,10 @@ const summary = {
   deviceTree: count(current, (r) => r.upstream.deviceTree === 'released' || r.upstream.deviceTree === 'next'),
   ids: count(current, (r) => r.upstream.ids === 'listed'),
   firmware: count(current, (r) => r.upstream.firmware === 'linux-firmware' || r.upstream.firmware === 'download'),
+  // Hardware IDs and Windows firmware only apply to models that start through UEFI
+  uefiModels: count(current, (r) => r.boot !== 'android'),
   // A dump only matters until a model has a device tree
-  acpiNeeded: count(current, (r) => r.upstream.deviceTree !== 'released' && r.upstream.deviceTree !== 'next'),
+  acpiNeeded: count(current, (r) => r.boot !== 'android' && r.upstream.deviceTree !== 'released' && r.upstream.deviceTree !== 'next'),
   acpi: count(current, (r) => r.upstream.deviceTree !== 'released' && r.upstream.deviceTree !== 'next' && r.upstream.acpi === 'collected'),
 };
 

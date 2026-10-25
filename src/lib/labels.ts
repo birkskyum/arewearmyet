@@ -30,6 +30,7 @@ const STATES = {
     listed: { label: 'systemd 2xx', tone: 'good', meaning: `In systemd's list since that release, so an install image recognises the model.` },
     collected: { label: 'Collected', tone: 'close', meaning: `Its hardware IDs have been sent in, and still have to go into systemd's list.` },
     mismatch: { label: 'Mismatch', tone: 'close', meaning: `systemd's entry names a different device tree than the kernel's, so it never matches.` },
+    'not-needed': { label: 'Not needed', tone: 'muted', meaning: `It starts through Android's bootloader, which doesn't use systemd's hardware IDs.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: `Not in systemd's list yet.` },
   },
   firmware: {
@@ -38,6 +39,7 @@ const STATES = {
     'next-release': { label: 'Next release', tone: 'close', meaning: `Merged into linux-firmware, and coming with its next release.` },
     partial: { label: 'Partly', tone: 'close', meaning: 'linux-firmware has some of the files its device tree loads; the rest still come from Windows.' },
     windows: { label: 'Windows only', tone: 'close', meaning: `Copied from the laptop's own Windows today. A link to the vendor's driver download would cover laptops whose Windows is gone.` },
+    android: { label: 'In its own OS', tone: 'muted', meaning: `It comes without Windows; its firmware is in the operating system it ships with.` },
   },
   acpi: {
     collected: { label: 'Collected', tone: 'good', meaning: 'Its ACPI tables are in the aarch64-laptops collection.' },
@@ -111,6 +113,7 @@ export function idsCell(model: Model): Cell {
     return { ...listed, key: first ? `systemd-${release(first)}` : 'systemd-main' };
   }
   if (model.upstream.ids === 'collected') return cell(STATES.ids, 'collected', { href: model.upstream.idsCollected ?? undefined });
+  if (model.upstream.ids === 'not-needed') return cell(STATES.ids, 'not-needed');
   return cell(STATES.ids, model.upstream.ids === 'mismatch' ? 'mismatch' : 'wanted');
 }
 
@@ -128,6 +131,7 @@ export function firmwareCell(model: Model): Cell {
 
 export function acpiCell(model: Model): Cell {
   if (model.upstream.acpi === 'collected') return cell(STATES.acpi, 'collected', { href: model.upstream.acpiUrls[0] });
+  if (model.upstream.acpi === 'not-needed') return cell(STATES.acpi, 'notNeeded', { title: `It starts through Android's bootloader, which uses a device tree, not ACPI tables.` });
   return cell(STATES.acpi, hasUpstreamTree(model) ? 'notNeeded' : 'wanted');
 }
 

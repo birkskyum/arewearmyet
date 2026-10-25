@@ -27,17 +27,18 @@
     ]
   },
   "summary": {
-    "models": 83,
+    "models": 85,
     "nvidia": 17,
     "nvidiaWorks": 2,
     "nvidiaExpected": 7,
     "works": 2,
     "should": 9,
     "problems": 5,
-    "notYet": 67,
+    "notYet": 69,
     "deviceTree": 22,
     "ids": 29,
     "firmware": 2,
+    "uefiModels": 83,
     "acpiNeeded": 61,
     "acpi": 9
   },
@@ -87,7 +88,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "acer-aspire-16-ai-a16-11m",
@@ -135,7 +137,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "acer-aspire-lite-14-ai-al14-11m",
@@ -180,7 +183,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "acer-swift-14-ai-sf14-11",
@@ -240,7 +244,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "acer-swift-go-pro-ai-sfa14-11",
@@ -300,7 +305,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "acer-swift-go-14-ai-sfg14-01",
@@ -358,7 +364,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "acer-swift-spin-14-ai-sfsp14-q51t",
@@ -404,7 +411,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-proart-pz13-ht5306",
@@ -450,7 +458,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-v400-aio-vm441qa",
@@ -496,7 +505,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-v400-aio-vm471qa",
@@ -541,7 +551,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-vivobook-14-x1407qa",
@@ -588,7 +599,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-vivobook-16-x1607qa",
@@ -639,7 +651,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-vivobook-s15-s5507",
@@ -781,7 +794,8 @@
             }
           ]
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-vivobook-s14-s3407qa",
@@ -827,7 +841,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-vivobook-s14-s5408qa",
@@ -872,7 +887,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-vivobook-s14-flip-tp5408qa",
@@ -917,7 +933,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-vivobook-s16-s3607qa",
@@ -963,7 +980,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-vivobook-s16-s5608qa",
@@ -1008,7 +1026,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-vivobook-s16-flip-tp5608qa",
@@ -1053,7 +1072,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-zenbook-14-ux3480qa",
@@ -1101,7 +1121,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-zenbook-a14-ux3407",
@@ -1248,7 +1269,8 @@
           "outcome": "should",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-ascent-qn10",
@@ -1296,7 +1318,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-proart-pz14-ht7407",
@@ -1342,7 +1365,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-vivobook-s16-s3607na",
@@ -1388,7 +1412,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-zenbook-a14-ux3407na",
@@ -1462,7 +1487,8 @@
           "outcome": "newer",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "asus-zenbook-a16-ux3607oa",
@@ -1543,7 +1569,8 @@
           "outcome": "newer",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "dell-inspiron-14-5441",
@@ -1596,7 +1623,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "dell-inspiron-14-plus-7441",
@@ -1690,7 +1718,8 @@
             }
           ]
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "dell-latitude-5455",
@@ -1751,7 +1780,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "dell-latitude-7455",
@@ -1833,7 +1863,8 @@
           "outcome": "should",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "dell-xps-13-9345",
@@ -1910,7 +1941,56 @@
           "outcome": "should",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
+    },
+    {
+      "id": "dell-xps-googlebook",
+      "vendor": "Dell",
+      "name": "XPS Googlebook",
+      "generation": "x1",
+      "form": "laptop",
+      "released": "2026-10",
+      "modelNumbers": [
+        "DX13267",
+        "P212G"
+      ],
+      "chips": [
+        "X1E-80-100"
+      ],
+      "status": null,
+      "sources": [
+        "https://www.energystar.gov/productfinder/product/certified-computers/details/4689114",
+        "https://9to5google.com/2026/09/21/googlebook-launch/"
+      ],
+      "notes": "Starts like a Pixel, through Android's bootloader, so Omarchy's ARM image doesn't start on it. Reading the device tree Googlebook OS starts with is the first step, see omarchy discussion #16627.",
+      "outcome": "none",
+      "reports": [],
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "not-needed",
+        "idsCollected": null,
+        "firmware": "android",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "not-needed",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "android"
     },
     {
       "id": "dynabook-xd5",
@@ -1958,7 +2038,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "fujitsu-fmv-note-u-snapdragon",
@@ -2007,7 +2088,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "honor-magicbook-art-14-snapdragon",
@@ -2085,7 +2167,8 @@
           "outcome": "newer",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "hp-elitebook-6-g1q",
@@ -2147,7 +2230,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "hp-elitebook-ultra-g1q",
@@ -2225,7 +2309,55 @@
           "outcome": "should",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
+    },
+    {
+      "id": "hp-googlebook-14",
+      "vendor": "HP",
+      "name": "Googlebook 14",
+      "generation": "x1",
+      "form": "laptop",
+      "released": "2026-10",
+      "modelNumbers": [
+        "14c-cf0xxx"
+      ],
+      "chips": [
+        "X1E-80-100"
+      ],
+      "status": null,
+      "sources": [
+        "https://www.hp.com/au-en/shop/hp-googlebook-14c-cf0000qu-e25rhpa.html",
+        "https://www.energystar.gov/productfinder/product/certified-computers/details/4672974"
+      ],
+      "notes": "Starts like a Pixel, through Android's bootloader, so Omarchy's ARM image doesn't start on it. Reading the device tree Googlebook OS starts with is the first step, see omarchy discussion #16627.",
+      "outcome": "none",
+      "reports": [],
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "ids": "not-needed",
+        "idsCollected": null,
+        "firmware": "android",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwareFolders": [],
+        "acpi": "not-needed",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "android"
     },
     {
       "id": "hp-omnibook-3-14-hz0",
@@ -2271,7 +2403,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "hp-omnibook-3-16-bz0",
@@ -2317,7 +2450,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "hp-omnibook-3-16-ct0",
@@ -2363,7 +2497,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "hp-omnibook-5-14-he0",
@@ -2414,7 +2549,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "hp-omnibook-5-16-bf0",
@@ -2463,7 +2599,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "hp-omnibook-x-14-fe",
@@ -2583,7 +2720,8 @@
           "outcome": "should",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "hp-probook-4-g1q",
@@ -2630,7 +2768,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "hp-elitebook-6-g2q",
@@ -2677,7 +2816,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "hp-elitebook-x-g2q",
@@ -2757,7 +2897,8 @@
           "outcome": "newer",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "hp-omnibook-5-14-he1",
@@ -2803,7 +2944,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "hp-omnibook-5-16-bf1",
@@ -2848,7 +2990,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "hp-omnibook-ultra-14-kg0",
@@ -2897,7 +3040,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "hp-omnibook-x-14-kr",
@@ -2947,7 +3091,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "hp-omnibook-x-16-cp",
@@ -2996,7 +3141,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "humain-horizon",
@@ -3045,7 +3191,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "lenovo-ideacentre-mini-x-01q8x10",
@@ -3139,7 +3286,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "lenovo-ideapad-5x-2-in-1-14q8x9",
@@ -3199,7 +3347,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "lenovo-ideapad-slim-3x-15q8x10",
@@ -3259,7 +3408,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "lenovo-ideapad-slim-5x-14q8x9",
@@ -3322,7 +3472,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "lenovo-ideapad-vibe-14q8x12",
@@ -3368,7 +3519,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "lenovo-thinkbook-16-gen-7-qoy",
@@ -3444,7 +3596,8 @@
           "outcome": "should",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "lenovo-thinkcentre-neo-50q-qc",
@@ -3492,7 +3645,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "lenovo-thinkpad-t14s-gen-6-snapdragon",
@@ -3606,7 +3760,8 @@
           "outcome": "should",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "lenovo-yoga-slim-7x-14q8x9",
@@ -3696,7 +3851,8 @@
             }
           ]
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "lenovo-ideapad-5x-2-in-1-14q8y11",
@@ -3743,7 +3899,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "lenovo-ideapad-slim-5x-13q8y11",
@@ -3790,7 +3947,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "lenovo-ideapad-slim-5x-15q8y11",
@@ -3837,7 +3995,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "lenovo-thinkbook-14-gen-9-q8y",
@@ -3882,7 +4041,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "lenovo-thinkpad-t14s-gen-7-snapdragon",
@@ -3933,7 +4093,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "lenovo-yoga-slim-7x-14q8y11",
@@ -4010,7 +4171,8 @@
           "outcome": "newer",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "medion-sprchrgd-14-s1",
@@ -4093,7 +4255,8 @@
           "outcome": "should",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "microsoft-surface-laptop-7-13",
@@ -4181,7 +4344,8 @@
             }
           ]
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "microsoft-surface-laptop-7-15",
@@ -4269,7 +4433,8 @@
             }
           ]
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "microsoft-surface-laptop-13in-1st-edition",
@@ -4315,7 +4480,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "microsoft-surface-pro-11",
@@ -4432,7 +4598,8 @@
           "outcome": "manual",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "microsoft-surface-pro-12in-1st-edition",
@@ -4509,7 +4676,8 @@
           "outcome": "newer",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "microsoft-surface-laptop-13in-2nd-edition",
@@ -4556,7 +4724,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "microsoft-surface-laptop-8-13",
@@ -4605,7 +4774,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "microsoft-surface-laptop-8-15",
@@ -4653,7 +4823,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "microsoft-surface-pro-12in-2nd-edition",
@@ -4700,7 +4871,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "microsoft-surface-pro-12th-edition",
@@ -4751,7 +4923,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "qualcomm-snapdragon-dev-kit-for-windows",
@@ -4827,7 +5000,8 @@
           "outcome": "should",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "samsung-galaxy-book4-edge-15",
@@ -4877,7 +5051,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "samsung-galaxy-book4-edge-16",
@@ -4929,7 +5104,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "samsung-galaxy-book4-edge-14",
@@ -4995,7 +5171,8 @@
             }
           ]
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "samsung-galaxy-book5-edge-5g",
@@ -5041,7 +5218,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "samsung-galaxy-book6-edge-16",
@@ -5088,7 +5266,8 @@
           "outcome": "none",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "huawei-matebook-e-go",
@@ -5157,7 +5336,8 @@
           "outcome": "should",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "lenovo-thinkpad-x13s-gen-1",
@@ -5242,7 +5422,8 @@
           "outcome": "should",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "microsoft-surface-pro-9-5g",
@@ -5312,7 +5493,8 @@
           "outcome": "should",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     },
     {
       "id": "microsoft-windows-dev-kit-2023",
@@ -5382,7 +5564,8 @@
           "outcome": "should",
           "reports": []
         }
-      ]
+      ],
+      "boot": "uefi"
     }
   ],
   "nvidia": [

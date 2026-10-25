@@ -29,8 +29,8 @@ const nvidiaBar = [
 ];
 const upstreamBars = [
   { label: 'Device tree in Linux', value: summary.deviceTree, total: summary.models, color: 'bg-sky-400', note: 'released or queued in linux-next' },
-  { label: 'Hardware IDs in systemd', value: summary.ids, total: summary.models, color: 'bg-violet-400', note: 'so an image picks the device tree by itself' },
-  { label: `Firmware without the laptop's Windows`, value: summary.firmware, total: summary.models, color: 'bg-amber-400', note: `in linux-firmware's newest release or a known vendor download` },
+  { label: 'Hardware IDs in systemd', value: summary.ids, total: summary.uefiModels, color: 'bg-violet-400', note: 'so an image picks the device tree by itself' },
+  { label: `Firmware without the laptop's Windows`, value: summary.firmware, total: summary.uefiModels, color: 'bg-amber-400', note: `in linux-firmware's newest release or a known vendor download` },
   { label: 'ACPI dump collected', value: summary.acpi, total: summary.acpiNeeded, color: 'bg-rose-400', note: 'for the models still without a device tree' },
 ];
 

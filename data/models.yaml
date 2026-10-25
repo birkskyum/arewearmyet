@@ -12,6 +12,8 @@
 #   firmware_download  the vendor's driver page whose package has every firmware
 #                  file its device tree loads
 #   ids_collected  where its hardware IDs were sent, until they're in systemd
+#   boot           android when it starts through Android's bootloader, like a Pixel,
+#                  instead of UEFI; ACPI tables and hardware IDs don't apply then
 #   status         set when it was announced but isn't confirmed shipping
 #   reports        what owners saw on the current Omarchy release: state works
 #                  or problems, an optional variant, a short note and the month
@@ -428,6 +430,19 @@ models:
       - https://www.delltechnologies.com/asset/en-us/products/laptops-and-2-in-1s/technical-support/xps-13-9345-spec-sheet.pdf
       - https://www.notebookcheck.net/Dell-XPS-13-9345-Snapdragon-X-Elite-review-Undercutting-the-Intel-Core-Ultra-7.869106.0.html
 
+  - id: dell-xps-googlebook
+    vendor: "Dell"
+    name: "XPS Googlebook"
+    generation: x1
+    released: "2026-10"
+    chips: ["X1E-80-100"]
+    model_numbers: ["DX13267", "P212G"]
+    boot: android
+    notes: "Starts like a Pixel, through Android's bootloader, so Omarchy's ARM image doesn't start on it. Reading the device tree Googlebook OS starts with is the first step, see omarchy discussion #16627."
+    sources:
+      - https://www.energystar.gov/productfinder/product/certified-computers/details/4689114
+      - https://9to5google.com/2026/09/21/googlebook-launch/
+
 
   # Dynabook
   - id: dynabook-xd5
@@ -501,6 +516,19 @@ models:
     sources:
       - https://github.com/torvalds/linux/commit/afc48c680438da813e42407009707350c87f8c43
       - https://shop.teqex.co.uk/hp-elitebook-ultra-g1q8-14-inch-notebook-ai-pc-x1p-42-100-laptop-35-6-cm-14-touchscreen-2-2k-windows-11-pro-a37cket-abu.html
+
+  - id: hp-googlebook-14
+    vendor: "HP"
+    name: "Googlebook 14"
+    generation: x1
+    released: "2026-10"
+    chips: ["X1E-80-100"]
+    model_numbers: ["14c-cf0xxx"]
+    boot: android
+    notes: "Starts like a Pixel, through Android's bootloader, so Omarchy's ARM image doesn't start on it. Reading the device tree Googlebook OS starts with is the first step, see omarchy discussion #16627."
+    sources:
+      - https://www.hp.com/au-en/shop/hp-googlebook-14c-cf0000qu-e25rhpa.html
+      - https://www.energystar.gov/productfinder/product/certified-computers/details/4672974
 
   - id: hp-omnibook-3-14-hz0
     vendor: "HP"
@@ -1417,7 +1445,7 @@ nvidia:
 # Also left out: Qualcomm's internal reference designs and industrial boards,
 # the cancelled TUXEDO Elite 14, models announced but never confirmed shipping
 # (Tecno Megabook S14, HUMAIN Horizon Pro, Geekom QS1, Zenbook A16 UX3607QA),
-# and the HP and Dell Googlebooks, which run Google's own OS.
+
 ignore:
   ids: ["glymur-crd.json", "x1e80100-crd.json", "msm8998-lenovo-miix-630-81f1.json", "sc7180-acer-aspire1.json", "sc7180-ecs-liva-qc710.json", "sc8180x-lenovo-flex-5g-81xe.json", "sc8180x-lenovo-flex-5g-82ak.json", "sdm850-lenovo-yoga-c630.json", "sc8280xp-radxa-dragon-q8b.json"]
   firmware: ["qcom/sc8280xp/radxa/dragon-q8b"]
