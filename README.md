@@ -12,6 +12,14 @@ For every model in [`data/models.yaml`](data/models.yaml):
 - **Firmware**: whether every firmware file its device tree loads (its `firmware-name` lines) is in linux-firmware's newest release, merged for the next one, only partly there, or available as a known vendor download, so the laptop's own Windows isn't needed.
 - **ACPI dump**: whether the aarch64-laptops project has the model's ACPI tables, which a device tree is written from.
 
+## Sections
+
+Each section is a group of machines that one guide can help along:
+
+- **Snapdragon X and X2** (and the older 8cx Gen 3) start through UEFI and need a device tree, hardware IDs and firmware; owners help through the "Add your model" form, and later a tool that collects ACPI tables and firmware lists from Windows.
+- **Googlebooks with Snapdragon** (`boot: android`) start like a Pixel, through Android's bootloader; owners help by reading the device tree Googlebook OS starts with ([owner guide](https://github.com/omacom/omarchy/discussions/16627)).
+- **NVIDIA N1x and GB10** start through ACPI and need no device tree; owners help by reporting whether the ARM image boots.
+
 ## How the data flows
 
 1. `pnpm collect` reads the sources and writes `data/sources.json`: device trees in Linux releases (GitHub mirror of torvalds/linux) and linux-next (sparse clone from kernel.org), hardware IDs in systemd releases and Ubuntu's stubble, firmware folders in linux-firmware (GitLab API), ACPI dumps in aarch64-laptops/build, and the kernel and systemd versions in Omarchy's package channels. A GitHub token from `GITHUB_TOKEN` or `gh auth token` is used when present.

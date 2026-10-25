@@ -14,7 +14,9 @@
 #   ids_collected  where its hardware IDs were sent, until they're in systemd
 #   discussion     where owners work on it, when that's a separate thread
 #   boot           android when it starts through Android's bootloader, like a Pixel,
-#                  instead of UEFI; ACPI tables and hardware IDs don't apply then
+#                  instead of UEFI; those models get their own section, with
+#   bootloader     unlockable or locked, and
+#   linux_image    boots or none: whether a Linux image starts on it yet
 #   status         set when it was announced but isn't confirmed shipping
 #   reports        what owners saw on the current Omarchy release: state works
 #                  or problems, an optional variant, a short note and the month
@@ -439,6 +441,8 @@ models:
     chips: ["X1E-80-100"]
     model_numbers: ["DX13267", "P212G"]
     boot: android
+    bootloader: unlockable
+    linux_image: none
     discussion: "https://github.com/omacom/omarchy/discussions/16627"
     notes: "The first step is reading the device tree Googlebook OS starts with."
     sources:
@@ -527,6 +531,8 @@ models:
     chips: ["X1E-80-100"]
     model_numbers: ["14c-cf0xxx"]
     boot: android
+    bootloader: unlockable
+    linux_image: none
     discussion: "https://github.com/omacom/omarchy/discussions/16627"
     notes: "The first step is reading the device tree Googlebook OS starts with."
     sources:

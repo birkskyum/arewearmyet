@@ -27,18 +27,18 @@
     ]
   },
   "summary": {
-    "models": 85,
+    "models": 83,
     "nvidia": 17,
     "nvidiaWorks": 2,
     "nvidiaExpected": 7,
     "works": 2,
     "should": 9,
     "problems": 5,
-    "notYet": 69,
+    "notYet": 67,
     "deviceTree": 22,
     "ids": 29,
     "firmware": 2,
-    "uefiModels": 83,
+    "googlebooks": 2,
     "acpiNeeded": 61,
     "acpi": 9
   },
@@ -90,6 +90,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -140,6 +142,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -187,6 +191,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -249,6 +255,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -311,6 +319,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -371,6 +381,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -419,6 +431,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -467,6 +481,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -515,6 +531,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -562,6 +580,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -611,6 +631,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -664,6 +686,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -808,6 +832,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -856,6 +882,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -903,6 +931,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -950,6 +980,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -998,6 +1030,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -1045,6 +1079,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -1092,6 +1128,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -1142,6 +1180,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -1291,6 +1331,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -1341,6 +1383,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -1389,6 +1433,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -1437,6 +1483,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -1513,6 +1561,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -1596,6 +1646,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -1651,6 +1703,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -1747,6 +1801,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -1810,6 +1866,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -1894,6 +1952,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -1973,6 +2033,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -2001,14 +2063,14 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
-        "ids": "not-needed",
+        "ids": "missing",
         "idsCollected": null,
-        "firmware": "android",
+        "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
-        "acpi": "not-needed",
+        "acpi": "missing",
         "acpiUrls": []
       },
       "variants": [
@@ -2022,6 +2084,8 @@
         }
       ],
       "boot": "android",
+      "bootloader": "unlockable",
+      "linuxImage": "none",
       "discussion": "https://github.com/omacom/omarchy/discussions/16627"
     },
     {
@@ -2072,6 +2136,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -2123,6 +2189,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -2203,6 +2271,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -2267,6 +2337,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -2347,6 +2419,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -2374,14 +2448,14 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
-        "ids": "not-needed",
+        "ids": "missing",
         "idsCollected": null,
-        "firmware": "android",
+        "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwareFolders": [],
-        "acpi": "not-needed",
+        "acpi": "missing",
         "acpiUrls": []
       },
       "variants": [
@@ -2395,6 +2469,8 @@
         }
       ],
       "boot": "android",
+      "bootloader": "unlockable",
+      "linuxImage": "none",
       "discussion": "https://github.com/omacom/omarchy/discussions/16627"
     },
     {
@@ -2443,6 +2519,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -2491,6 +2569,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -2539,6 +2619,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -2592,6 +2674,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -2643,6 +2727,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -2765,6 +2851,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -2814,6 +2902,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -2863,6 +2953,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -2945,6 +3037,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -2993,6 +3087,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -3040,6 +3136,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -3091,6 +3189,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -3143,6 +3243,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -3194,6 +3296,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -3245,6 +3349,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -3341,6 +3447,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -3403,6 +3511,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -3465,6 +3575,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -3530,6 +3642,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -3578,6 +3692,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -3656,6 +3772,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -3706,6 +3824,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -3822,6 +3942,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -3914,6 +4036,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -3963,6 +4087,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -4012,6 +4138,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -4061,6 +4189,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -4108,6 +4238,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -4161,6 +4293,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -4240,6 +4374,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -4325,6 +4461,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -4415,6 +4553,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -4505,6 +4645,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -4553,6 +4695,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -4672,6 +4816,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -4751,6 +4897,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -4800,6 +4948,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -4851,6 +5001,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -4901,6 +5053,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -4950,6 +5104,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -5003,6 +5159,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -5081,6 +5239,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -5133,6 +5293,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -5187,6 +5349,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -5255,6 +5419,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -5303,6 +5469,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -5352,6 +5520,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -5423,6 +5593,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -5510,6 +5682,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -5582,6 +5756,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     },
     {
@@ -5654,6 +5830,8 @@
         }
       ],
       "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
       "discussion": null
     }
   ],

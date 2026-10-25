@@ -30,7 +30,6 @@ const STATES = {
     listed: { label: 'systemd 2xx', tone: 'good', meaning: `In systemd's list since that release, so an install image recognises the model.` },
     collected: { label: 'Collected', tone: 'close', meaning: `Its hardware IDs have been sent in, and still have to go into systemd's list.` },
     mismatch: { label: 'Mismatch', tone: 'close', meaning: `systemd's entry names a different device tree than the kernel's, so it never matches.` },
-    'not-needed': { label: 'Not needed', tone: 'muted', meaning: `It starts through Android's bootloader, which doesn't use systemd's hardware IDs.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: `Not in systemd's list yet.` },
   },
   firmware: {
@@ -39,7 +38,6 @@ const STATES = {
     'next-release': { label: 'Next release', tone: 'close', meaning: `Merged into linux-firmware, and coming with its next release.` },
     partial: { label: 'Partly', tone: 'close', meaning: 'linux-firmware has some of the files its device tree loads; the rest still come from Windows.' },
     windows: { label: 'Windows only', tone: 'close', meaning: `Copied from the laptop's own Windows today. A link to the vendor's driver download would cover laptops whose Windows is gone.` },
-    android: { label: 'In its own OS', tone: 'muted', meaning: `It comes without Windows; its firmware is in the operating system it ships with.` },
   },
   acpi: {
     collected: { label: 'Collected', tone: 'good', meaning: 'Its ACPI tables are in the aarch64-laptops collection.' },
@@ -56,12 +54,23 @@ const STATES = {
     omarchy: { label: `Omarchy's kernel`, tone: 'close', meaning: `Needs patches that Omarchy's kernel carries and Linux doesn't have yet.` },
     mainline: { label: 'Mainline', tone: 'good', meaning: 'Plain Linux supports it.' },
   },
+  googlebookOmarchy: {
+    works: { label: 'Boots', tone: 'good', meaning: 'An owner booted into Omarchy on it. Not every feature has to work yet.' },
+    problems: { label: 'Problems', tone: 'wanted', meaning: `An owner tried it and couldn't get to the Omarchy desktop.` },
+    notyet: { label: 'Not yet', tone: 'wanted', meaning: `Omarchy can't start on it yet: it needs a device tree and a Linux image for its Android-style bootloader.` },
+  },
+  bootloader: {
+    unlockable: { label: 'Unlockable', tone: 'good', meaning: 'Google lets owners unlock the bootloader to try another system. Unlocking wipes the laptop.' },
+    locked: { label: 'Locked', tone: 'wanted', meaning: 'The bootloader only starts the system it shipped with.' },
+  },
+  linuxImage: {
+    boots: { label: 'Boots', tone: 'good', meaning: 'A Linux image starts on it.' },
+    none: { label: 'None yet', tone: 'wanted', meaning: 'Nobody has built a Linux image that starts on it yet.' },
+  },
   announced: { label: 'Announced', tone: 'info', meaning: 'Announced by the vendor, but not confirmed in shops yet.' },
-  androidBoot: { label: 'Android boot', tone: 'info', meaning: `It starts like a Pixel, through Android's bootloader instead of UEFI, so Omarchy's ARM image doesn't start on it yet.` },
 } satisfies Record<string, Record<string, State> | State>;
 
 export const ANNOUNCED = STATES.announced as State;
-export const ANDROID_BOOT = STATES.androidBoot as State;
 
 type Group = { column: string; question: string; states: State[] };
 
@@ -71,6 +80,13 @@ export const LEGEND: Group[] = [
   { column: 'Hardware IDs', question: 'How an install image recognises the model and picks its device tree.', states: Object.values(STATES.ids) as State[] },
   { column: 'Firmware', question: `Signed files for its audio, sensor and graphics chips. Booting doesn't need them, but without them there's no sound, battery status, USB-C display, sensors or graphics acceleration. The goal is getting them without the laptop's own Windows.`, states: Object.values(STATES.firmware) as State[] },
   { column: 'ACPI dump', question: `The laptop's own hardware tables, which a device tree is written from.`, states: Object.values(STATES.acpi) as State[] },
+];
+
+export const GOOGLEBOOK_LEGEND: Group[] = [
+  { column: 'Omarchy', question: 'Has someone booted into Omarchy on it?', states: Object.values(STATES.googlebookOmarchy) as State[] },
+  { column: 'Device tree', question: 'The description of the hardware that Linux needs, the same work as for the other Snapdragon laptops.', states: Object.values(STATES.deviceTree) as State[] },
+  { column: 'Bootloader', question: 'Whether its Android-style bootloader lets owners start another system.', states: Object.values(STATES.bootloader) as State[] },
+  { column: 'Linux image', question: 'Whether a Linux image starts on it, the step before Omarchy can.', states: Object.values(STATES.linuxImage) as State[] },
 ];
 
 export const NVIDIA_LEGEND: Group[] = [
@@ -115,7 +131,6 @@ export function idsCell(model: Model): Cell {
     return { ...listed, key: first ? `systemd-${release(first)}` : 'systemd-main' };
   }
   if (model.upstream.ids === 'collected') return cell(STATES.ids, 'collected', { href: model.upstream.idsCollected ?? undefined });
-  if (model.upstream.ids === 'not-needed') return cell(STATES.ids, 'not-needed');
   return cell(STATES.ids, model.upstream.ids === 'mismatch' ? 'mismatch' : 'wanted');
 }
 
@@ -133,8 +148,20 @@ export function firmwareCell(model: Model): Cell {
 
 export function acpiCell(model: Model): Cell {
   if (model.upstream.acpi === 'collected') return cell(STATES.acpi, 'collected', { href: model.upstream.acpiUrls[0] });
-  if (model.upstream.acpi === 'not-needed') return cell(STATES.acpi, 'notNeeded', { title: `It starts through Android's bootloader, which uses a device tree, not ACPI tables.` });
   return cell(STATES.acpi, hasUpstreamTree(model) ? 'notNeeded' : 'wanted');
+}
+
+export function googlebookOmarchyCell(model: Model): Cell {
+  const reported = model.reports.some((r) => r.state === 'problems') ? 'problems' : model.reports.some((r) => r.state === 'works') ? 'works' : 'notyet';
+  return cell(STATES.googlebookOmarchy, reported);
+}
+
+export function bootloaderCell(model: Model): Cell {
+  return cell(STATES.bootloader, model.bootloader ?? 'locked');
+}
+
+export function linuxImageCell(model: Model): Cell {
+  return cell(STATES.linuxImage, model.linuxImage ?? 'none');
 }
 
 export function nvidiaOmarchyCell(model: NvidiaModel): Cell {
@@ -151,12 +178,18 @@ export const GENERATION: Record<string, string> = { x1: 'Snapdragon X', x2: 'Sna
 // "systemd 2xx" stand for any release, so their filter choices say so.
 const options = (group: Record<string, State>, skip?: string) => Object.entries(group).filter(([key]) => key !== skip).map(([key, state]) => ({ key, label: state.label, tone: state.tone }));
 // Device trees and hardware IDs offer each release that occurs, oldest first, before their other states
+const uefi = status.models.filter((model) => model.boot !== 'android');
+const googlebooks = status.models.filter((model) => model.boot === 'android');
 const releases = (cells: { key: string; label: string; rank: number }[], prefix: string) =>
   [...new Map(cells.filter((c) => c.key.startsWith(prefix)).sort((a, b) => a.rank - b.rank).map((c) => [c.key, { key: c.key, label: c.label, tone: 'good' as Tone }])).values()];
 export const FILTERS = {
   omarchy: options(STATES.omarchy),
-  'device-tree': [...releases(status.models.map(deviceTreeCell), 'linux-'), ...options(STATES.deviceTree, 'released')],
-  ids: [...releases(status.models.map(idsCell), 'systemd-'), ...options(STATES.ids, 'listed')],
+  'device-tree': [...releases(uefi.map(deviceTreeCell), 'linux-'), ...options(STATES.deviceTree, 'released')],
+  ids: [...releases(uefi.map(idsCell), 'systemd-'), ...options(STATES.ids, 'listed')],
+  googlebookOmarchy: options(STATES.googlebookOmarchy),
+  googlebookDeviceTree: [...releases(googlebooks.map(deviceTreeCell), 'linux-'), ...options(STATES.deviceTree, 'released')],
+  bootloader: options(STATES.bootloader),
+  linuxImage: options(STATES.linuxImage),
   firmware: options(STATES.firmware),
   acpi: options(STATES.acpi),
   nvidiaOmarchy: options(STATES.nvidiaOmarchy),

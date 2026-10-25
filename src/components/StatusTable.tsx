@@ -295,11 +295,6 @@ export default function StatusTable(props: Props) {
                             Announced
                           </span>
                         </Show>
-                        <Show when={model.androidBoot}>
-                          <span title={model.androidBoot!} class={`ml-1.5 align-middle ${PILL} ${TONE.info}`}>
-                            Android boot
-                          </span>
-                        </Show>
                       </div>
                       <div class="mt-0.5 text-xs text-zinc-500">{model.subtitle}</div>
                       <Show when={model.variants.length > 0}>

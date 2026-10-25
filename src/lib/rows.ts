@@ -1,7 +1,7 @@
 // Turns models into plain rows for the table island: every label, hover text and sort rank is
 // worked out here at build time, so the browser only receives what it shows
 import status from '../data/status.json';
-import { ANDROID_BOOT, ANNOUNCED, GENERATION, acpiCell, deviceTreeCell, firmwareCell, idsCell, nvidiaLinuxCell, nvidiaOmarchyCell, omarchyCell, type Cell, type Model, type NvidiaModel } from './labels';
+import { ANNOUNCED, GENERATION, acpiCell, bootloaderCell, deviceTreeCell, firmwareCell, googlebookOmarchyCell, idsCell, linuxImageCell, nvidiaLinuxCell, nvidiaOmarchyCell, omarchyCell, type Cell, type Model, type NvidiaModel } from './labels';
 
 export type CellData = Pick<Cell, 'key' | 'label' | 'tone' | 'title' | 'href' | 'rank'> | { key: string; text: string; rank: number };
 export type TableRow = {
@@ -10,7 +10,6 @@ export type TableRow = {
   name: string;
   href: string | null;
   announced: string | null;
-  androidBoot: string | null;
   discussion: string | null;
   subtitle: string;
   generation: string;
@@ -34,29 +33,49 @@ const VARIANT: Record<string, { tone: TableRow['variants'][number]['tone']; stat
   none: { tone: 'muted', state: 'no device tree' },
 };
 
+const modelRow = (model: Model, cells: Record<string, CellData>): TableRow => ({
+  id: model.id,
+  vendor: model.vendor,
+  name: model.name,
+  href: model.sources[0] ?? null,
+  announced: announcedTitle(model.status),
+  discussion: model.discussion,
+  subtitle: [GENERATION[model.generation], year(model.released), model.chips.join(', '), model.modelNumbers.slice(0, 3).join(', ')].filter(Boolean).join(' · '),
+  generation: model.generation,
+  outcome: (['works', 'should', 'problems'].includes(model.outcome) ? model.outcome : 'notyet') as TableRow['outcome'],
+  variants: model.variants.length > 1 ? model.variants.map((v) => ({ text: [v.model, v.chip].filter(Boolean).join(' · '), ...VARIANT[v.outcome] })) : [],
+  notes: model.notes,
+  search: [model.vendor, model.name, ...model.modelNumbers, ...model.chips, ...model.variants.map((v) => `${v.model ?? ''} ${v.chip ?? ''}`)].join(' ').toLowerCase(),
+  cells,
+});
+
+// Googlebooks start through Android's bootloader, so they get columns of their own
+export function googlebookRows(): TableRow[] {
+  return status.models
+    .filter((model: Model) => model.boot === 'android')
+    .map((model: Model) => ({
+      ...modelRow(model, {
+        omarchy: plain(googlebookOmarchyCell(model)),
+        'device-tree': plain(deviceTreeCell(model)),
+        bootloader: plain(bootloaderCell(model)),
+        image: plain(linuxImageCell(model)),
+      }),
+      variants: [],
+    }));
+}
+
 export function snapdragonRows(): TableRow[] {
-  return status.models.map((model: Model) => ({
-    id: model.id,
-    vendor: model.vendor,
-    name: model.name,
-    href: model.sources[0] ?? null,
-    announced: announcedTitle(model.status),
-    androidBoot: model.boot === 'android' ? ANDROID_BOOT.meaning : null,
-    discussion: model.discussion,
-    subtitle: [GENERATION[model.generation], year(model.released), model.chips.join(', '), model.modelNumbers.slice(0, 3).join(', ')].filter(Boolean).join(' · '),
-    generation: model.generation,
-    outcome: (['works', 'should', 'problems'].includes(model.outcome) ? model.outcome : 'notyet') as TableRow['outcome'],
-    variants: model.variants.length > 1 ? model.variants.map((v) => ({ text: [v.model, v.chip].filter(Boolean).join(' · '), ...VARIANT[v.outcome] })) : [],
-    notes: model.notes,
-    search: [model.vendor, model.name, ...model.modelNumbers, ...model.chips, ...model.variants.map((v) => `${v.model ?? ''} ${v.chip ?? ''}`)].join(' ').toLowerCase(),
-    cells: {
-      omarchy: plain(omarchyCell(model)),
-      'device-tree': plain(deviceTreeCell(model)),
-      ids: plain(idsCell(model)),
-      firmware: plain(firmwareCell(model)),
-      acpi: plain(acpiCell(model)),
-    },
-  }));
+  return status.models
+    .filter((model: Model) => model.boot !== 'android')
+    .map((model: Model) =>
+      modelRow(model, {
+        omarchy: plain(omarchyCell(model)),
+        'device-tree': plain(deviceTreeCell(model)),
+        ids: plain(idsCell(model)),
+        firmware: plain(firmwareCell(model)),
+        acpi: plain(acpiCell(model)),
+      }),
+    );
 }
 
 const NVIDIA_OUTCOME: Record<string, TableRow['outcome']> = { works: 'works', expected: 'should', problems: 'problems', untested: 'notyet' };
@@ -68,7 +87,6 @@ export function nvidiaRows(): TableRow[] {
     name: model.name,
     href: model.sources[0] ?? null,
     announced: announcedTitle(model.status),
-    androidBoot: null,
     discussion: null,
     subtitle: [GENERATION[model.generation], year(model.released)].filter(Boolean).join(' · '),
     generation: model.generation,
