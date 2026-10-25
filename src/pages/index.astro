@@ -5,7 +5,7 @@ import SplitBar from '../components/SplitBar.astro';
 import StatusTable from '../components/StatusTable';
 import OmarchyIcon from '../assets/omarchy-icon.svg';
 import status from '../data/status.json';
-import { ANNOUNCED, FILTERS, LEGEND, NVIDIA_LEGEND, TONE } from '../lib/labels';
+import { ANDROID_BOOT, ANNOUNCED, FILTERS, LEGEND, NVIDIA_LEGEND, TONE } from '../lib/labels';
 import { PILL } from '../lib/tones';
 import { nvidiaRows, snapdragonRows } from '../lib/rows';
 
@@ -47,6 +47,7 @@ const legendExtra = [
   { label: 'Red', tone: 'wanted' as const, meaning: 'Missing or failing, and where help counts most.' },
   { label: 'Grey', tone: 'muted' as const, meaning: 'Works another way today, or not needed.' },
   ANNOUNCED,
+  ANDROID_BOOT,
 ];
 
 const collected = new Date(status.collected).toISOString().slice(0, 10);

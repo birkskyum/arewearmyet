@@ -27,6 +27,7 @@ type Model = {
   devicetree_posted?: string;
   ids_collected?: string;
   boot?: 'android';
+  discussion?: string;
   notes?: string;
   reports?: Report[];
 };
@@ -183,6 +184,7 @@ const rows = models.map((model) => {
     },
     variants,
     boot: model.boot ?? 'uefi',
+    discussion: model.discussion ?? null,
   };
 });
 

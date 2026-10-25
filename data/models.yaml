@@ -12,6 +12,7 @@
 #   firmware_download  the vendor's driver page whose package has every firmware
 #                  file its device tree loads
 #   ids_collected  where its hardware IDs were sent, until they're in systemd
+#   discussion     where owners work on it, when that's a separate thread
 #   boot           android when it starts through Android's bootloader, like a Pixel,
 #                  instead of UEFI; ACPI tables and hardware IDs don't apply then
 #   status         set when it was announced but isn't confirmed shipping
@@ -438,7 +439,8 @@ models:
     chips: ["X1E-80-100"]
     model_numbers: ["DX13267", "P212G"]
     boot: android
-    notes: "Starts like a Pixel, through Android's bootloader, so Omarchy's ARM image doesn't start on it. Reading the device tree Googlebook OS starts with is the first step, see omarchy discussion #16627."
+    discussion: "https://github.com/omacom/omarchy/discussions/16627"
+    notes: "The first step is reading the device tree Googlebook OS starts with."
     sources:
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4689114
       - https://9to5google.com/2026/09/21/googlebook-launch/
@@ -525,7 +527,8 @@ models:
     chips: ["X1E-80-100"]
     model_numbers: ["14c-cf0xxx"]
     boot: android
-    notes: "Starts like a Pixel, through Android's bootloader, so Omarchy's ARM image doesn't start on it. Reading the device tree Googlebook OS starts with is the first step, see omarchy discussion #16627."
+    discussion: "https://github.com/omacom/omarchy/discussions/16627"
+    notes: "The first step is reading the device tree Googlebook OS starts with."
     sources:
       - https://www.hp.com/au-en/shop/hp-googlebook-14c-cf0000qu-e25rhpa.html
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4672974

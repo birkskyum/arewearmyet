@@ -295,6 +295,11 @@ export default function StatusTable(props: Props) {
                             Announced
                           </span>
                         </Show>
+                        <Show when={model.androidBoot}>
+                          <span title={model.androidBoot!} class={`ml-1.5 align-middle ${PILL} ${TONE.info}`}>
+                            Android boot
+                          </span>
+                        </Show>
                       </div>
                       <div class="mt-0.5 text-xs text-zinc-500">{model.subtitle}</div>
                       <Show when={model.variants.length > 0}>
@@ -308,8 +313,16 @@ export default function StatusTable(props: Props) {
                           </For>
                         </ul>
                       </Show>
-                      <Show when={model.notes}>
-                        <p class="mt-1.5 max-w-xs text-xs text-zinc-500">{model.notes}</p>
+                      <Show when={model.notes || model.discussion}>
+                        <p class="mt-1.5 max-w-xs text-xs text-zinc-500">
+                          {model.notes}
+                          <Show when={model.discussion}>
+                            {' '}
+                            <a href={model.discussion!} class="text-zinc-300 underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100">
+                              Owner guide
+                            </a>
+                          </Show>
+                        </p>
                       </Show>
                     </td>
                     <For each={props.columns}>

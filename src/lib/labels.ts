@@ -57,9 +57,11 @@ const STATES = {
     mainline: { label: 'Mainline', tone: 'good', meaning: 'Plain Linux supports it.' },
   },
   announced: { label: 'Announced', tone: 'info', meaning: 'Announced by the vendor, but not confirmed in shops yet.' },
+  androidBoot: { label: 'Android boot', tone: 'info', meaning: `It starts like a Pixel, through Android's bootloader instead of UEFI, so Omarchy's ARM image doesn't start on it yet.` },
 } satisfies Record<string, Record<string, State> | State>;
 
 export const ANNOUNCED = STATES.announced as State;
+export const ANDROID_BOOT = STATES.androidBoot as State;
 
 type Group = { column: string; question: string; states: State[] };
 

@@ -89,7 +89,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "acer-aspire-16-ai-a16-11m",
@@ -138,7 +139,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "acer-aspire-lite-14-ai-al14-11m",
@@ -184,7 +186,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "acer-swift-14-ai-sf14-11",
@@ -245,7 +248,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "acer-swift-go-pro-ai-sfa14-11",
@@ -306,7 +310,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "acer-swift-go-14-ai-sfg14-01",
@@ -365,7 +370,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "acer-swift-spin-14-ai-sfsp14-q51t",
@@ -412,7 +418,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-proart-pz13-ht5306",
@@ -459,7 +466,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-v400-aio-vm441qa",
@@ -506,7 +514,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-v400-aio-vm471qa",
@@ -552,7 +561,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-vivobook-14-x1407qa",
@@ -600,7 +610,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-vivobook-16-x1607qa",
@@ -652,7 +663,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-vivobook-s15-s5507",
@@ -795,7 +807,8 @@
           ]
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-vivobook-s14-s3407qa",
@@ -842,7 +855,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-vivobook-s14-s5408qa",
@@ -888,7 +902,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-vivobook-s14-flip-tp5408qa",
@@ -934,7 +949,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-vivobook-s16-s3607qa",
@@ -981,7 +997,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-vivobook-s16-s5608qa",
@@ -1027,7 +1044,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-vivobook-s16-flip-tp5608qa",
@@ -1073,7 +1091,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-zenbook-14-ux3480qa",
@@ -1122,7 +1141,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-zenbook-a14-ux3407",
@@ -1270,7 +1290,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-ascent-qn10",
@@ -1319,7 +1340,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-proart-pz14-ht7407",
@@ -1366,7 +1388,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-vivobook-s16-s3607na",
@@ -1413,7 +1436,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-zenbook-a14-ux3407na",
@@ -1488,7 +1512,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "asus-zenbook-a16-ux3607oa",
@@ -1570,7 +1595,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "dell-inspiron-14-5441",
@@ -1624,7 +1650,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "dell-inspiron-14-plus-7441",
@@ -1719,7 +1746,8 @@
           ]
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "dell-latitude-5455",
@@ -1781,7 +1809,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "dell-latitude-7455",
@@ -1864,7 +1893,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "dell-xps-13-9345",
@@ -1942,7 +1972,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "dell-xps-googlebook",
@@ -1963,7 +1994,7 @@
         "https://www.energystar.gov/productfinder/product/certified-computers/details/4689114",
         "https://9to5google.com/2026/09/21/googlebook-launch/"
       ],
-      "notes": "Starts like a Pixel, through Android's bootloader, so Omarchy's ARM image doesn't start on it. Reading the device tree Googlebook OS starts with is the first step, see omarchy discussion #16627.",
+      "notes": "The first step is reading the device tree Googlebook OS starts with.",
       "outcome": "none",
       "reports": [],
       "upstream": {
@@ -1990,7 +2021,8 @@
           "reports": []
         }
       ],
-      "boot": "android"
+      "boot": "android",
+      "discussion": "https://github.com/omacom/omarchy/discussions/16627"
     },
     {
       "id": "dynabook-xd5",
@@ -2039,7 +2071,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "fujitsu-fmv-note-u-snapdragon",
@@ -2089,7 +2122,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "honor-magicbook-art-14-snapdragon",
@@ -2168,7 +2202,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "hp-elitebook-6-g1q",
@@ -2231,7 +2266,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "hp-elitebook-ultra-g1q",
@@ -2310,7 +2346,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "hp-googlebook-14",
@@ -2330,7 +2367,7 @@
         "https://www.hp.com/au-en/shop/hp-googlebook-14c-cf0000qu-e25rhpa.html",
         "https://www.energystar.gov/productfinder/product/certified-computers/details/4672974"
       ],
-      "notes": "Starts like a Pixel, through Android's bootloader, so Omarchy's ARM image doesn't start on it. Reading the device tree Googlebook OS starts with is the first step, see omarchy discussion #16627.",
+      "notes": "The first step is reading the device tree Googlebook OS starts with.",
       "outcome": "none",
       "reports": [],
       "upstream": {
@@ -2357,7 +2394,8 @@
           "reports": []
         }
       ],
-      "boot": "android"
+      "boot": "android",
+      "discussion": "https://github.com/omacom/omarchy/discussions/16627"
     },
     {
       "id": "hp-omnibook-3-14-hz0",
@@ -2404,7 +2442,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "hp-omnibook-3-16-bz0",
@@ -2451,7 +2490,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "hp-omnibook-3-16-ct0",
@@ -2498,7 +2538,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "hp-omnibook-5-14-he0",
@@ -2550,7 +2591,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "hp-omnibook-5-16-bf0",
@@ -2600,7 +2642,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "hp-omnibook-x-14-fe",
@@ -2721,7 +2764,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "hp-probook-4-g1q",
@@ -2769,7 +2813,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "hp-elitebook-6-g2q",
@@ -2817,7 +2862,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "hp-elitebook-x-g2q",
@@ -2898,7 +2944,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "hp-omnibook-5-14-he1",
@@ -2945,7 +2992,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "hp-omnibook-5-16-bf1",
@@ -2991,7 +3039,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "hp-omnibook-ultra-14-kg0",
@@ -3041,7 +3090,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "hp-omnibook-x-14-kr",
@@ -3092,7 +3142,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "hp-omnibook-x-16-cp",
@@ -3142,7 +3193,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "humain-horizon",
@@ -3192,7 +3244,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "lenovo-ideacentre-mini-x-01q8x10",
@@ -3287,7 +3340,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "lenovo-ideapad-5x-2-in-1-14q8x9",
@@ -3348,7 +3402,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "lenovo-ideapad-slim-3x-15q8x10",
@@ -3409,7 +3464,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "lenovo-ideapad-slim-5x-14q8x9",
@@ -3473,7 +3529,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "lenovo-ideapad-vibe-14q8x12",
@@ -3520,7 +3577,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "lenovo-thinkbook-16-gen-7-qoy",
@@ -3597,7 +3655,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "lenovo-thinkcentre-neo-50q-qc",
@@ -3646,7 +3705,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "lenovo-thinkpad-t14s-gen-6-snapdragon",
@@ -3761,7 +3821,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "lenovo-yoga-slim-7x-14q8x9",
@@ -3852,7 +3913,8 @@
           ]
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "lenovo-ideapad-5x-2-in-1-14q8y11",
@@ -3900,7 +3962,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "lenovo-ideapad-slim-5x-13q8y11",
@@ -3948,7 +4011,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "lenovo-ideapad-slim-5x-15q8y11",
@@ -3996,7 +4060,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "lenovo-thinkbook-14-gen-9-q8y",
@@ -4042,7 +4107,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "lenovo-thinkpad-t14s-gen-7-snapdragon",
@@ -4094,7 +4160,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "lenovo-yoga-slim-7x-14q8y11",
@@ -4172,7 +4239,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "medion-sprchrgd-14-s1",
@@ -4256,7 +4324,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "microsoft-surface-laptop-7-13",
@@ -4345,7 +4414,8 @@
           ]
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "microsoft-surface-laptop-7-15",
@@ -4434,7 +4504,8 @@
           ]
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "microsoft-surface-laptop-13in-1st-edition",
@@ -4481,7 +4552,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "microsoft-surface-pro-11",
@@ -4599,7 +4671,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "microsoft-surface-pro-12in-1st-edition",
@@ -4677,7 +4750,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "microsoft-surface-laptop-13in-2nd-edition",
@@ -4725,7 +4799,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "microsoft-surface-laptop-8-13",
@@ -4775,7 +4850,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "microsoft-surface-laptop-8-15",
@@ -4824,7 +4900,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "microsoft-surface-pro-12in-2nd-edition",
@@ -4872,7 +4949,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "microsoft-surface-pro-12th-edition",
@@ -4924,7 +5002,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "qualcomm-snapdragon-dev-kit-for-windows",
@@ -5001,7 +5080,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "samsung-galaxy-book4-edge-15",
@@ -5052,7 +5132,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "samsung-galaxy-book4-edge-16",
@@ -5105,7 +5186,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "samsung-galaxy-book4-edge-14",
@@ -5172,7 +5254,8 @@
           ]
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "samsung-galaxy-book5-edge-5g",
@@ -5219,7 +5302,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "samsung-galaxy-book6-edge-16",
@@ -5267,7 +5351,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "huawei-matebook-e-go",
@@ -5337,7 +5422,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "lenovo-thinkpad-x13s-gen-1",
@@ -5423,7 +5509,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "microsoft-surface-pro-9-5g",
@@ -5494,7 +5581,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     },
     {
       "id": "microsoft-windows-dev-kit-2023",
@@ -5565,7 +5653,8 @@
           "reports": []
         }
       ],
-      "boot": "uefi"
+      "boot": "uefi",
+      "discussion": null
     }
   ],
   "nvidia": [
