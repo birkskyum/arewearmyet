@@ -28,6 +28,7 @@ const STATES = {
   },
   ids: {
     listed: { label: 'systemd 2xx', tone: 'good', meaning: `In systemd's list since that release, so an install image recognises the model.` },
+    collected: { label: 'Collected', tone: 'close', meaning: `Its hardware IDs have been sent in, and still have to go into systemd's list.` },
     mismatch: { label: 'Mismatch', tone: 'close', meaning: `systemd's entry names a different device tree than the kernel's, so it never matches.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: `Not in systemd's list yet.` },
   },
@@ -109,6 +110,7 @@ export function idsCell(model: Model): Cell {
     });
     return { ...listed, key: first ? `systemd-${release(first)}` : 'systemd-main' };
   }
+  if (model.upstream.ids === 'collected') return cell(STATES.ids, 'collected', { href: model.upstream.idsCollected ?? undefined });
   return cell(STATES.ids, model.upstream.ids === 'mismatch' ? 'mismatch' : 'wanted');
 }
 

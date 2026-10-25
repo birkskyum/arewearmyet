@@ -9,6 +9,9 @@
 #                  when they name a different compatible
 #   firmware       linux-firmware folders with this model's files
 #   acpi           aarch64-laptops/build misc/ folders with its ACPI dump
+#   firmware_download  the vendor's driver page whose package has every firmware
+#                  file its device tree loads
+#   ids_collected  where its hardware IDs were sent, until they're in systemd
 #   status         set when it was announced but isn't confirmed shipping
 #   reports        what owners saw on the current Omarchy release: state works
 #                  or problems, an optional variant, a short note and the month
@@ -1098,8 +1101,15 @@ models:
     released: "2024-06"
     chips: ["X1E-80-100"]
     model_numbers: ["NP940XMA", "NP944XMA", "NT940XMA"]
+    variants:
+      - { model: "NP944XMA", chip: "X1E-80-100", compatible: "samsung,galaxy-book4-edge-14" }
     acpi: ["samsung-galaxybook4-edge"]
-    devicetree_posted: "https://lore.kernel.org/linux-arm-msm/?q=galaxy+book4+edge"
+    firmware_download: "https://www.samsung.com/global/galaxybooks-downloadcenter/"
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
+    ids_collected: "https://github.com/birkskyum/arewearmyet/issues/1"
+    reports:
+      - { state: "problems", note: "The stock 4.5.0rc1 image resets in a loop, since it has no device tree for this model. With an owner's board package it installs and is in daily use on linux-omarchy 7.3 with the v8 device tree series.", checked: "2026-10" }
+    notes: "Wi-Fi needs a board-2.bin entry that linux-firmware doesn't have yet, and the speaker amps are WSA883x, not the WSA884x the v8 device tree names."
     sources:
       - https://www.notebookcheck.net/Samsung-releases-Galaxy-Book4-Edge-laptops-in-Snapdragon-X-Elite-X1E-80-100-and-X1E-84-100-variants-from-1-349-99.839723.0.html
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4510120/export/pdf

@@ -25,6 +25,7 @@ type Model = {
   firmware_download?: string;
   acpi?: string[];
   devicetree_posted?: string;
+  ids_collected?: string;
   notes?: string;
   reports?: Report[];
 };
@@ -146,7 +147,8 @@ const rows = models.map((model) => {
   const dts = variants.map((v) => v.deviceTree).filter(Boolean) as NonNullable<(typeof variants)[number]['deviceTree']>[];
   const deviceTree = dts.length === 0 ? (model.devicetree_posted ? 'posted' : 'missing') : dts.some((dt) => dt.firstRelease) ? 'released' : 'next';
   const firstRelease = dts.map((dt) => dt.firstRelease).filter(Boolean).sort((a, b) => kernelRank(a) - kernelRank(b))[0] ?? null;
-  const idsState = variants.some((v) => v.ids.some((entry) => entry.matches)) ? 'listed' : variants.some((v) => v.ids.length) ? 'mismatch' : 'missing';
+  // systemd's list first; otherwise IDs sent in through the board count as collected
+  const idsState = variants.some((v) => v.ids.some((entry) => entry.matches)) ? 'listed' : variants.some((v) => v.ids.length) ? 'mismatch' : model.ids_collected ? 'collected' : 'missing';
 
   return {
     id: model.id,
@@ -167,6 +169,7 @@ const rows = models.map((model) => {
       firstRelease,
       devicetreePosted: model.devicetree_posted ?? null,
       ids: idsState,
+      idsCollected: model.ids_collected ?? null,
       // What counts is getting the firmware without the laptop's own Windows
       firmware: fw.state,
       firmwareMissing: fw.missing,
