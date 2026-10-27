@@ -54,8 +54,12 @@ for (const model of models) {
 }
 
 const channel = sources.omarchy.channels.find((c: { name: string }) => c.name === OMARCHY_CHANNEL);
-const kernelBase = `v${channel.kernel.split('.').slice(0, 2).join('.')}`;
-const systemdRelease = `v${channel.systemd.split('.')[0]}`;
+// A package version is [epoch:]version-pkgrel, and 7.3-3 has no third number to cut off
+const upstreamVersion = (version: string) => version.replace(/^\d+:/, '').replace(/-[^-]*$/, '');
+const kernelBase = `v${upstreamVersion(channel.kernel).split('.').slice(0, 2).join('.')}`;
+const systemdRelease = `v${upstreamVersion(channel.systemd).split('.')[0]}`;
+if (!sources.kernelReleases.includes(kernelBase)) throw new Error(`Omarchy's ${OMARCHY_CHANNEL} kernel ${channel.kernel} is ${kernelBase}, which KERNEL_RELEASES in scripts/collect.ts doesn't list`);
+if (!sources.systemdReleases.includes(systemdRelease)) throw new Error(`Omarchy's ${OMARCHY_CHANNEL} systemd ${channel.systemd} is ${systemdRelease}, which SYSTEMD_RELEASES in scripts/collect.ts doesn't list`);
 
 // Release order, so "first in v6.15" can be compared with "Omarchy builds v7.2"
 const kernelRank = (release: string | null) => (release ? sources.kernelReleases.indexOf(release) : Infinity);

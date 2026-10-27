@@ -1,12 +1,12 @@
 {
-  "collected": "2026-10-24T21:54:36.688Z",
-  "linuxNext": "20261023",
+  "collected": "2026-10-27T08:13:54.743Z",
+  "linuxNext": "20261026",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "rc",
-    "kernel": "7.2.8-20",
+    "kernel": "7.3-3",
     "systemd": "262.1-1",
-    "kernelBase": "v7.2",
+    "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "channels": [
       {
@@ -16,12 +16,12 @@
       },
       {
         "name": "rc",
-        "kernel": "7.2.8-20",
+        "kernel": "7.3-3",
         "systemd": "262.1-1"
       },
       {
         "name": "edge",
-        "kernel": "7.2.8-23",
+        "kernel": "7.3-3",
         "systemd": "262.1-1"
       }
     ]
@@ -32,9 +32,9 @@
     "nvidiaWorks": 2,
     "nvidiaExpected": 7,
     "works": 2,
-    "should": 9,
+    "should": 11,
     "problems": 5,
-    "notYet": 67,
+    "notYet": 65,
     "deviceTree": 22,
     "ids": 29,
     "firmware": 2,
@@ -1586,7 +1586,7 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a16-ux3607oa.dts"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "upstream": {
         "deviceTree": "released",
@@ -1617,12 +1617,12 @@
         {
           "model": "UX3607OA",
           "compatible": "asus,zenbook-a16-ux3607oa",
-          "computed": "newer",
+          "computed": "should",
           "deviceTree": {
             "file": "glymur-asus-zenbook-a16-ux3607oa.dts",
             "firstRelease": "v7.3",
             "inNext": true,
-            "inOmarchy": false
+            "inOmarchy": true
           },
           "firmwareNeeded": [
             "qcom/glymur/ASUSTeK/UX3607OA/qcadsp8480.mbn",
@@ -1641,7 +1641,7 @@
               "compatible": "asus,zenbook-a16-ux3607oa"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -2213,7 +2213,7 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1e80100-honor-magicbook-art-14.dts"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "upstream": {
         "deviceTree": "released",
@@ -2242,12 +2242,12 @@
         {
           "chip": "X1E-80-100",
           "compatible": "honor,magicbook-art-14-snapdragon",
-          "computed": "newer",
+          "computed": "should",
           "deviceTree": {
             "file": "x1e80100-honor-magicbook-art-14.dts",
             "firstRelease": "v7.3",
             "inNext": true,
-            "inOmarchy": false
+            "inOmarchy": true
           },
           "firmwareNeeded": [
             "qcom/x1e80100/HONOR/MRO-XXX/qcdxkmsuc8380.mbn",
@@ -2266,7 +2266,7 @@
               "compatible": "honor,magicbook-art-14-snapdragon"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -4841,7 +4841,7 @@
         "https://learn.microsoft.com/en-us/surface/surface-system-sku-reference"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "manual",
       "reports": [],
       "upstream": {
         "deviceTree": "released",
@@ -4878,12 +4878,12 @@
               "compatible": "microsoft,sp12"
             }
           ],
-          "computed": "newer",
+          "computed": "manual",
           "deviceTree": {
             "file": "x1p42100-microsoft-sp12in.dts",
             "firstRelease": "v7.3",
             "inNext": true,
-            "inOmarchy": false
+            "inOmarchy": true
           },
           "firmwareNeeded": [
             "qcom/x1p42100/Microsoft/Surface12/qcdxkmsucpurwa.mbn",
@@ -4892,7 +4892,7 @@
             "qcom/x1p42100/Microsoft/Surface12/qccdsp8380.mbn",
             "qcom/x1p42100/Microsoft/Surface12/cdsp_dtbs.elf"
           ],
-          "outcome": "newer",
+          "outcome": "manual",
           "reports": []
         }
       ],

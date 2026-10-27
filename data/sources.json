@@ -1,5 +1,5 @@
 {
-  "collected": "2026-10-24T21:54:36.688Z",
+  "collected": "2026-10-27T08:13:54.743Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -26,7 +26,7 @@
     "v261",
     "v262"
   ],
-  "linuxNext": "20261023",
+  "linuxNext": "20261026",
   "deviceTrees": [
     {
       "file": "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -2751,12 +2751,12 @@
       },
       {
         "name": "rc",
-        "kernel": "7.2.8-20",
+        "kernel": "7.3-3",
         "systemd": "262.1-1"
       },
       {
         "name": "edge",
-        "kernel": "7.2.8-23",
+        "kernel": "7.3-3",
         "systemd": "262.1-1"
       }
     ],
