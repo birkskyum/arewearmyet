@@ -266,7 +266,13 @@ models:
     chips: ["X1-26-100"]
     model_numbers: ["UX3480QA"]
     variants:
-      - { model: "UX3480QA", chip: "X1-26-100" }
+      - { model: "UX3480QA", chip: "X1-26-100", compatible: "asus,zenbook-14-ux3480qa" }
+    firmware: ["qcom/x1p42100/ASUSTeK/zenbook-a14"]
+    firmware_download: "https://www.asus.com/supportonly/ux3480qa/helpdesk_download/"
+    ids_collected: "https://github.com/birkskyum/arewearmyet/issues/2"
+    reports:
+      - { state: "problems", note: "The stock 4.5.0rc1 image shows a black screen and resets, since it has no device tree for this model. With the device tree and patches from omarchy-pkgs #1634 and an owner's board package, it installs and runs on linux-omarchy 7.3.", checked: "2026-10" }
+    notes: "The device tree builds on the Zenbook A14 UX3407QA's and isn't posted to the kernel lists yet. The hardware IDs are proposed in ubuntu/stubble#96 and the ACPI tables in aarch64-laptops/build#178."
     sources:
       - https://www.asus.com/laptops/for-home/zenbook/asus-zenbook-14-ux3480-qualcomm/techspec/
       - https://www.windowscentral.com/hardware/laptops/asus-zenbook-14-snapdragon-x-2026-review
