@@ -1,5 +1,5 @@
 {
-  "collected": "2026-10-27T08:13:54.743Z",
+  "collected": "2026-10-28T11:25:41.466Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -26,7 +26,7 @@
     "v261",
     "v262"
   ],
-  "linuxNext": "20261026",
+  "linuxNext": "20261027",
   "deviceTrees": [
     {
       "file": "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -2756,10 +2756,20 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-3",
+        "kernel": "7.3-4",
         "systemd": "262.1-1"
       }
     ],
-    "kernelAddedDeviceTrees": []
+    "kernelAddedDeviceTrees": [
+      {
+        "file": "glymur-microsoft-surface-laptop8.dts",
+        "patch": "2384-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8.patch",
+        "model": "Microsoft Surface Laptop 8 (13.8in, Snapdragon X2 Elite)",
+        "compatible": [
+          "microsoft,surface-laptop8",
+          "qcom,mahua"
+        ]
+      }
+    ]
   }
 }
