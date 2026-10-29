@@ -1,6 +1,6 @@
 {
-  "collected": "2026-10-28T11:25:41.466Z",
-  "linuxNext": "20261027",
+  "collected": "2026-10-29T11:35:47.487Z",
+  "linuxNext": "20261028",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "rc",
@@ -21,7 +21,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-4",
+        "kernel": "7.3-5",
         "systemd": "262.1-1"
       }
     ]
