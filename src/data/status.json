@@ -42,8 +42,8 @@
     "idsComing": 3,
     "firmwareComing": 26,
     "googlebooks": 2,
-    "acpiNeeded": 36,
-    "acpi": 0
+    "acpi": 29,
+    "acpiWanted": 36
   },
   "models": [
     {

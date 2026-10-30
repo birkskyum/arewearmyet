@@ -32,7 +32,7 @@ const upstreamBars = [
   { label: 'Device tree in Linux', value: summary.deviceTree, coming: summary.deviceTreeComing, wanted: 0, total: summary.models, note: 'released or queued in linux-next' },
   { label: 'Hardware IDs in systemd', value: summary.ids, coming: summary.idsComing, wanted: 0, total: summary.models, note: 'so an image picks the device tree by itself' },
   { label: `Firmware without the laptop's Windows`, value: summary.firmware, coming: summary.firmwareComing, wanted: 0, total: summary.models, note: `in linux-firmware's newest release or a known vendor download` },
-  { label: 'ACPI dump collected', value: summary.acpi, coming: 0, wanted: summary.acpiNeeded - summary.acpi, total: summary.acpiNeeded, note: 'for the models with no device tree anywhere yet' },
+  { label: 'ACPI dumps collected', value: summary.acpi, coming: 0, wanted: summary.acpiWanted, total: summary.acpi + summary.acpiWanted, note: 'one is still wanted for each model with no device tree anywhere' },
 ];
 
 const snapdragonIds = ['omarchy', 'device-tree', 'ids', 'firmware', 'acpi'] as const;
