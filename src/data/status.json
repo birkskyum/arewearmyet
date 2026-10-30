@@ -5579,7 +5579,7 @@
         "https://www.notebookcheck.net/Microsoft-Surface-Laptop-8-13-8-Reviews-and-Specs.1336515.0.html",
         "https://www.cdw.com/product/microsoft-surface-laptop-for-business-8th-edition-copilot-pc-13.8/9186835"
       ],
-      "notes": null,
+      "notes": "Two device trees describe this laptop, both on the Mahua chip. Omarchy's kernel carries Jim Martin's, and Qualcomm posted its own to Linux under another name.",
       "outcome": "manual",
       "reports": [],
       "upstream": {
@@ -5602,7 +5602,7 @@
       },
       "variants": [
         {
-          "chip": "X2E-78-100",
+          "model": "Omarchy's tree",
           "compatible": "microsoft,surface-laptop8",
           "computed": "manual",
           "deviceTree": {
@@ -5620,7 +5620,7 @@
           "reports": []
         },
         {
-          "chip": "X2P-64-100",
+          "model": "Posted tree",
           "compatible": "microsoft,surface-laptop-8-13p8",
           "computed": "none",
           "deviceTree": null,
