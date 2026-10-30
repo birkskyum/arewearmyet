@@ -1,6 +1,6 @@
 # Are we ARM yet?
 
-Omarchy on ARM PCs, model by model: which ARM laptops and desktops run Omarchy today, and what each one still needs upstream.
+Linux on ARM PCs, model by model: which ARM laptops and desktops boot today, and what each one still needs upstream for every distro. Boot tests run on Omarchy, whose team keeps the board.
 
 ## What it tracks
 

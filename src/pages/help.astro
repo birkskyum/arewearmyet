@@ -16,11 +16,11 @@ const INLINE = 'rounded bg-zinc-800 px-1 py-0.5 text-[0.85em] text-zinc-200';
 const CASES = [
   { id: 'windows', title: 'Still on Windows', text: 'Share a hardware report' },
   { id: 'linux', title: 'Running Linux on it', text: 'Save the device tree it boots with' },
-  { id: 'test', title: 'Ready to test', text: 'Try Omarchy and tell us how far it got' },
+  { id: 'test', title: 'Ready to test', text: 'Try it and tell us how far it got' },
 ];
 ---
 
-<Layout title="Help a model get there · Are we ARM yet?" description="How owners of an ARM laptop help it get to Omarchy: a hardware report from Windows, the device tree it boots with on Linux, or a boot test.">
+<Layout title="Help a model get there · Are we ARM yet?" description="How owners of an ARM laptop help it run Linux: a hardware report from Windows, the device tree it boots with on Linux, or a boot test.">
   <main class="mx-auto max-w-4xl px-4 py-10 text-zinc-400 sm:px-6">
     <a href="/" class="flex items-center gap-3 text-zinc-300 hover:text-zinc-100">
       <OmarchyIcon class="h-8 w-8 text-[#9ece6a]" aria-hidden="true" />
@@ -92,7 +92,7 @@ sed -i '/serial-number/d' tree.dts</code></pre>
       <ol class={STEPS}>
         <li>Make an Omarchy USB stick. With Windows still on the laptop, the <a class={LINK} href={INSTALLER}>Omarchy Arm Installer</a> makes one and copies the laptop's firmware onto it from Windows' own drivers.</li>
         <li>Turn off Secure Boot, boot from the stick, and install, or just see how far it gets.</li>
-        <li>Open <a class={LINK} href={FORM}>Add your model</a> and choose how far Omarchy got. Say what didn't work, like sound, the battery status or an external screen.</li>
+        <li>Open <a class={LINK} href={FORM}>Add your model</a> and choose how far it got. Say what didn't work, like sound, the battery status or an external screen. If you run another distro on it, tell us how that does too.</li>
       </ol>
     </section>
 

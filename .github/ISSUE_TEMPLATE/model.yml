@@ -56,11 +56,18 @@ body:
       description: |
         If Linux already runs on it, with another model's device tree or your own, drag in the file from `dtc -I fs -O dts /sys/firmware/devicetree/base > tree.dts`, and say which tree you started from and what you changed.
 
+  - type: input
+    id: distro
+    attributes:
+      label: Distro
+      description: What you ran on it, if anything
+      placeholder: Omarchy RC, Ubuntu 26.10, Fedora 44
+
   - type: dropdown
     id: boots
     attributes:
-      label: Omarchy
-      description: If you tried the current Omarchy release on it
+      label: Booting
+      description: How far that distro got on it
       options:
         - Reached the desktop
         - Started, but didn't reach the desktop
