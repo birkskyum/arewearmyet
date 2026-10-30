@@ -6014,6 +6014,7 @@
       },
       "variants": [
         {
+          "compatible": "samsung,galaxy-book4-edge-16",
           "computed": "none",
           "deviceTree": null,
           "firmwareNeeded": [],
