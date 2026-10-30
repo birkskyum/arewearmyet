@@ -16,7 +16,7 @@ For every model in [`data/models.yaml`](data/models.yaml):
 
 Each section is a group of machines that one guide can help along:
 
-- **Snapdragon X and X2** (and the older 8cx Gen 3) start through UEFI and need a device tree, hardware IDs and firmware; owners help through the "Add your model" form, and later a tool that collects ACPI tables and firmware lists from Windows.
+- **Snapdragon X and X2** (and the older 8cx Gen 3) start through UEFI and need a device tree, hardware IDs and firmware; owners help through the "Add your model" form, with a hardware report from the [Omarchy Arm Installer](https://github.com/turbineBMW/omarchy-arm-installer) on Windows or the device tree they boot with on Linux.
 - **Googlebooks with Snapdragon** (`boot: android`) start like a Pixel, through Android's bootloader; owners help by reading the device tree Googlebook OS starts with ([owner guide](https://github.com/omacom/omarchy/discussions/16627)).
 - **NVIDIA N1x and GB10** start through ACPI and need no device tree; owners help by reporting whether the ARM image boots.
 

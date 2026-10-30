@@ -38,15 +38,40 @@ body:
     attributes:
       label: Hardware IDs
       description: |
-        On Linux, the output of `sudo fwupdtool hwids`. On Windows, the output of this in PowerShell, which shows the strings the IDs are made from:
+        Not needed with a hardware report. On Linux, the output of `sudo fwupdtool hwids`. On Windows, the output of this in PowerShell, which shows the strings the IDs are made from:
         `Get-CimInstance Win32_ComputerSystem | fl Manufacturer,Model,SystemFamily,SystemSKUNumber; Get-CimInstance Win32_BaseBoard | fl Manufacturer,Product; Get-CimInstance Win32_BIOS | fl Manufacturer,SMBIOSBIOSVersion,SystemBiosMajorVersion,SystemBiosMinorVersion; Get-CimInstance Win32_SystemEnclosure | fl ChassisTypes`
       render: text
+
+  - type: input
+    id: report
+    attributes:
+      label: Hardware report (Windows)
+      description: The link to the report the [Omarchy Arm Installer](https://github.com/turbineBMW/omarchy-arm-installer/releases/latest) filed in omarchy-hardware-reports. It holds the ACPI tables, hardware IDs and firmware list.
+      placeholder: https://github.com/turbineBMW/omarchy-hardware-reports/issues/1
+
+  - type: textarea
+    id: devicetree
+    attributes:
+      label: Device tree it boots with (Linux)
+      description: |
+        If Linux already runs on it, with another model's device tree or your own, drag in the file from `dtc -I fs -O dts /sys/firmware/devicetree/base > tree.dts`, and say which tree you started from and what you changed.
+
+  - type: dropdown
+    id: boots
+    attributes:
+      label: Omarchy
+      description: If you tried the current Omarchy release on it
+      options:
+        - Reached the desktop
+        - Started, but didn't reach the desktop
+        - Didn't start
+        - Haven't tried
 
   - type: textarea
     id: acpi
     attributes:
       label: ACPI tables (optional)
-      description: Only if you already have a dump. A tool that collects them for you is on its way. Leave out the `MSDM` table, which holds the Windows product key.
+      description: Only if you have a dump and no hardware report. Leave out the `MSDM` table, which holds the Windows product key.
 
   - type: input
     id: drivers

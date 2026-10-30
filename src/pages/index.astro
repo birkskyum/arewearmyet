@@ -60,6 +60,8 @@ const HELP = 'mt-2 max-w-3xl text-sm text-zinc-400';
 const collected = new Date(status.collected).toISOString().slice(0, 10);
 const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
 const REPO = 'https://github.com/birkskyum/arewearmyet';
+const INSTALLER = 'https://github.com/turbineBMW/omarchy-arm-installer/releases/latest';
+const REPORTS = 'https://github.com/turbineBMW/omarchy-hardware-reports';
 const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100';
 const HEADLINE = 'text-2xl font-semibold text-zinc-50';
 ---
@@ -124,7 +126,7 @@ const HEADLINE = 'text-2xl font-semibold text-zinc-50';
     <section class="mt-10 scroll-mt-6" id="snapdragon">
       <h2 class="text-xl font-semibold text-zinc-50">Snapdragon X and X2</h2>
       <p class={HELP}>
-        To help a model along, send its hardware IDs, its driver download and whether you can test boot images, through <a class={LINK} href={`${REPO}/issues/new?template=model.yml`}>Add your model</a>. A tool that collects ACPI tables and firmware lists from Windows is on its way.
+        To help a model along, send a hardware report from Windows, the device tree you boot with on Linux, or a boot test, as <a class={LINK} href="#help">Help a model get there</a> below explains.
       </p>
       <div class="mt-4">
         <Legend title="What the labels mean" groups={LEGEND} extra={legendExtra} />
@@ -179,10 +181,31 @@ const HEADLINE = 'text-2xl font-semibold text-zinc-50';
     <section class="mt-12 scroll-mt-6 rounded-xl bg-zinc-900 p-6 text-sm text-zinc-400 ring-1 ring-zinc-800" id="help">
       <h2 class="text-base font-semibold text-zinc-100">Help a model get there</h2>
       <p class="mt-2 max-w-3xl">
-        Own one of the models marked <span class={`${PILL} ${TONE.wanted}`}>Wanted</span>, or one that's missing from the list? Tell us its model, its hardware IDs and where its driver download is, and whether you can test boot images on it. An owner who can test is what gets a device tree finished.
+        Own one of the models marked <span class={`${PILL} ${TONE.wanted}`}>Wanted</span> or <span class={`${PILL} ${TONE.close}`}>Should boot</span>, or one that's missing from the list? A few minutes on it helps, and what you send ends up in the same place.
       </p>
-      <p class="mt-2 max-w-3xl">
-        Its ACPI tables and the list of its firmware files need a tool to collect, and one is on its way. Until then, a dump you already have is welcome too.
+      <ol class="mt-4 grid max-w-5xl gap-3 md:grid-cols-3">
+        <li class="min-w-0 rounded-lg bg-zinc-950/50 p-4 ring-1 ring-zinc-800">
+          <h3 class="font-medium text-zinc-200">Still on Windows</h3>
+          <p class="mt-1">
+            Run the <a class={LINK} href={INSTALLER}>Omarchy Arm Installer</a> as administrator and choose Share a hardware report. It collects the laptop's ACPI tables, hardware IDs and firmware list, takes out serial numbers, and files them in <a class={LINK} href={REPORTS}>omarchy-hardware-reports</a>. That's what a device tree is written from.
+          </p>
+        </li>
+        <li class="min-w-0 rounded-lg bg-zinc-950/50 p-4 ring-1 ring-zinc-800">
+          <h3 class="font-medium text-zinc-200">Already running Linux on it</h3>
+          <p class="mt-1">Save the device tree it boots with and its hardware IDs, and attach both to the form.</p>
+          <pre class="mt-2 overflow-x-auto rounded-md bg-zinc-950 p-2 text-xs text-zinc-300"><code>dtc -I fs -O dts /sys/firmware/devicetree/base &gt; tree.dts
+sudo fwupdtool hwids &gt; hwids.txt</code></pre>
+          <p class="mt-2 text-xs text-zinc-500"><code>dtc</code> is in the <code>dtc</code> package on Arch and <code>device-tree-compiler</code> on Debian and Ubuntu.</p>
+        </li>
+        <li class="min-w-0 rounded-lg bg-zinc-950/50 p-4 ring-1 ring-zinc-800">
+          <h3 class="font-medium text-zinc-200">It should boot already</h3>
+          <p class="mt-1">
+            Every piece is in place, but no owner has confirmed it. Boot the <a class={LINK} href="https://omarchy.org">Omarchy</a> RC image and tell us whether you reached the desktop and what didn't work.
+          </p>
+        </li>
+      </ol>
+      <p class="mt-4 max-w-3xl">
+        Don't attach firmware files. They belong to the vendor, so a link to the vendor's driver download is what helps.
       </p>
       <div class="mt-4 flex flex-wrap gap-3">
         <a href={`${REPO}/issues/new?template=model.yml`} class="rounded-md bg-zinc-100 px-3 py-1.5 font-medium text-zinc-900 hover:bg-white">Add your model</a>
