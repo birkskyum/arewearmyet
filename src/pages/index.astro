@@ -90,7 +90,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
         Boots means an owner reached the desktop on Omarchy {channel}, which ships linux-omarchy {status.omarchy.kernel} and systemd {status.omarchy.systemd}. Booting is the first goal; features like suspend and USB4 come next.
       </p>
       <div class="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 rounded-xl bg-[#9ece6a]/10 px-5 py-4 ring-1 ring-[#9ece6a]/40">
-        <p class="text-zinc-300"><strong class="font-semibold text-[#9ece6a]">Own an ARM laptop that isn't green yet?</strong> A few minutes of yours can get it to Omarchy.</p>
+        <p class="text-zinc-300"><strong class="font-semibold text-[#9ece6a]">Own an ARM laptop that isn't green yet?</strong> Help get it there. It only takes a few minutes.</p>
         <a href="/help" class="shrink-0 rounded-md bg-[#9ece6a] px-4 py-2 text-sm font-semibold text-zinc-950 hover:brightness-110">How to help</a>
       </div>
     </header>
@@ -108,9 +108,9 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
               <dd class="shrink-0 tabular-nums text-zinc-300">{bar.coming > 0 && <span class="text-zinc-500">{bar.coming} on its way · </span>}{bar.notNeeded > 0 && <span class="text-zinc-500">{bar.notNeeded} not needed · </span>}{bar.wanted > 0 && <span class="text-zinc-500">{bar.wanted} still wanted · </span>}{bar.value} / {bar.total}</dd>
             </div>
             <div class="mt-1.5 flex h-2 overflow-hidden rounded-full bg-zinc-800">
+              <div class="h-full bg-[repeating-linear-gradient(135deg,rgb(52_211_153/0.55)_0_3px,rgb(52_211_153/0.15)_3px_7px)]" style={`width: ${(100 * bar.notNeeded) / Math.max(bar.total, 1)}%`} data-tip-title={`Not needed: ${bar.notNeeded}`} data-tip={bar.label}></div>
               <div class="h-full bg-emerald-400" style={`width: ${(100 * bar.value) / Math.max(bar.total, 1)}%`} data-tip-title={`Done: ${bar.value}`} data-tip={bar.label}></div>
               <div class="h-full bg-amber-400" style={`width: ${(100 * bar.coming) / Math.max(bar.total, 1)}%`} data-tip-title={`On its way: ${bar.coming}`} data-tip={bar.label}></div>
-              <div class="h-full bg-zinc-600" style={`width: ${(100 * bar.notNeeded) / Math.max(bar.total, 1)}%`} data-tip-title={`Not needed: ${bar.notNeeded}`} data-tip={bar.label}></div>
             </div>
           </div>
         ))}
