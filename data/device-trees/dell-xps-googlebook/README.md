@@ -56,15 +56,16 @@ terms aren't established.
   `hamoa.dtsi` and none in this file.
 - On the laptop, an earlier build that started the ADSP early ran for a 120 s observation with
   the USB root filesystem mounted read-only.
-- In the latest build the ADSP and PMIC clients come up, then the GPU and display modules load,
-  and MSM DRM and the GPU firmware start. The panel shows up as an unknown `LGD 0x0804`, so
-  conservative timings are used. Waiting for graphics then times out after about 54 s, before
-  systemd hands off to the desktop. A display state and probe ordering problem is the leading
-  guess, but it isn't confirmed.
+- Later V20/V21 builds reach an interactive Omarchy/Hyprland desktop: the tester saw pixels,
+  moved the cursor and typed commands. The backlight is still extremely dim / apparently off;
+  software brightness values do not establish physical light output. WCN7850 is detected over
+  PCIe, but V21 exposes no wireless interface. See [V21 bring-up findings](BRINGUP-STATUS.md)
+  for selected observations, source-audit caveats and concrete questions for reviewers.
 
-None of this shows a working desktop, charging, audio, Wi-Fi, Bluetooth, suspend, an install to
-the internal drive, dual boot, or long-term reliability. The Wi-Fi, Bluetooth and DisplayPort
-nodes come from the HP tree and haven't been confirmed on the Dell.
+This is not yet a usable, stable desktop or a supported installation. Charging, audio, Wi-Fi
+association, Bluetooth, external DisplayPort, suspend, installation to the internal drive,
+dual boot and long-term reliability remain unqualified. The Wi-Fi, Bluetooth and DisplayPort
+nodes originate in the HP tree; PCI detection alone does not qualify their complete operation.
 
 ## The stock tree, for comparison
 
