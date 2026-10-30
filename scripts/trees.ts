@@ -3,7 +3,10 @@
 // in devicetree_files, with a SOURCE.md naming where each came from. device-trees/index.json lists them
 // for status.ts. A devicetree_files entry is a file URL, a path under data/device-trees/ for a tree sent in
 // to this repository, or a patch URL and #path to cut one new file out.
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { parse } from 'yaml';
 
 type Model = { id: string; vendor: string; name: string; devicetree_posted?: string; devicetree_out_of_tree?: string; devicetree_files?: string[] };
@@ -28,16 +31,24 @@ async function get(url: string) {
   }
 }
 
-// The device tree files a patch or mbox creates, by name
+// The device tree files a patch or mbox creates, by name. A patch stack or series can change a file again
+// after creating it, so every later section for that file is applied in order with patch(1).
 function newTrees(patch: string) {
   const trees = new Map<string, string>();
+  const dir = mkdtempSync(join(tmpdir(), 'trees-'));
   for (const section of patch.split(/^diff --git /m).slice(1)) {
     const path = section.match(/^\+\+\+ b\/(\S+)$/m)?.[1];
-    if (!path?.startsWith(DT_DIR) || !/\.dtsi?$/.test(path) || !/^--- \/dev\/null$/m.test(section)) continue;
-    const body = section.split(/^@@[^\n]*@@[^\n]*\n/m).slice(1).join('');
-    const lines = body.split('\n').filter((line) => line.startsWith('+')).map((line) => line.slice(1));
-    trees.set(path.slice(DT_DIR.length), lines.join('\n').replace(/\n*$/, '\n'));
+    if (!path?.startsWith(DT_DIR) || !/\.dtsi?$/.test(path)) continue;
+    const name = path.slice(DT_DIR.length);
+    if (!trees.has(name) && !/^--- \/dev\/null$/m.test(section)) continue;
+    try {
+      execFileSync('patch', ['-p1', '-s', '-f', '-d', dir], { input: 'diff --git ' + section, stdio: ['pipe', 'ignore', 'pipe'] });
+      trees.set(name, readFileSync(join(dir, path), 'utf8'));
+    } catch (error) {
+      console.warn(`${name}: a later change doesn't apply, keeping the version before it`);
+    }
   }
+  rmSync(dir, { recursive: true, force: true });
   return trees;
 }
 

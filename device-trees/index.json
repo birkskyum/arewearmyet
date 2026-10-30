@@ -10,7 +10,7 @@
   },
   "acer-swift-go-pro-ai-sfa14-11": {
     "state": "posted",
-    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261023180513.36417-3-kaipeng94@gmail.com/",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261030064149.14736-3-kaipeng94@gmail.com/",
     "files": [
       "series.mbox",
       "x1e78100-acer-sfa14-11.dts"

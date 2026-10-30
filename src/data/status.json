@@ -36,10 +36,10 @@
     "problems": 6,
     "notYet": 64,
     "deviceTree": 23,
-    "ids": 29,
+    "ids": 28,
     "firmware": 3,
     "deviceTreeComing": 24,
-    "idsComing": 3,
+    "idsComing": 4,
     "firmwareComing": 26,
     "googlebooks": 2,
     "acpi": 29,
@@ -299,10 +299,10 @@
       "upstream": {
         "deviceTree": "posted",
         "firstRelease": null,
-        "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261023180513.36417-3-kaipeng94@gmail.com/",
+        "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261030064149.14736-3-kaipeng94@gmail.com/",
         "devicetreeOutOfTree": null,
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/acer-swift-go-pro-ai-sfa14-11",
-        "ids": "listed",
+        "ids": "mismatch",
         "idsCollected": null,
         "firmware": "posted",
         "firmwareMissing": [],
@@ -319,19 +319,19 @@
         {
           "model": "SFA14-11",
           "chip": "X1E-78-100",
-          "compatible": "acer,swift-sfa14-11",
-          "computed": "none",
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "compatible": "acer,swift-go-sfa14-11",
           "ids": [
             {
               "file": "x1e78100-acer-sfa14-11.json",
               "firstRelease": "v260",
               "inMain": true,
-              "matches": true,
+              "matches": false,
               "compatible": "acer,swift-sfa14-11"
             }
           ],
+          "computed": "none",
+          "deviceTree": null,
+          "firmwareNeeded": [],
           "outcome": "none",
           "reports": []
         }

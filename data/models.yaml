@@ -90,9 +90,9 @@ models:
     chips: ["X1E-78-100"]
     model_numbers: ["SFA14-11"]
     variants:
-      - { model: "SFA14-11", chip: "X1E-78-100", compatible: "acer,swift-sfa14-11" }
+      - { model: "SFA14-11", chip: "X1E-78-100", compatible: "acer,swift-go-sfa14-11", ids: ["x1e78100-acer-sfa14-11.json"] }
     acpi: ["acer-sfa14-11"]
-    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261023180513.36417-3-kaipeng94@gmail.com/"
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261030064149.14736-3-kaipeng94@gmail.com/"
     firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1341"
     sources:
       - https://www.ithome.com/0/775/814.htm

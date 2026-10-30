@@ -1,45 +1,45 @@
-From patchwork Fri Oct 23 18:05:12 2026
+From patchwork Fri Oct 30 06:41:47 2026
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-Patchwork-Submitter: Kaipeng Zeng <kaipeng94@gmail.com>
-X-Patchwork-Id: 14911224
+X-Patchwork-Id: 14926619
 Authentication-Results: smtp.subspace.kernel.org;
- arc=none smtp.remote-ip=74.125.82.54
+ arc=none smtp.remote-ip=74.125.82.173
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792778868;
-	b=R+18KaKdOH3f7MZ6dcBSwbG0W3b4X4o+cJqQ8avENF+y9alreG15vLc+ZpOpWfQyBkNN
-	 hnB6uxSH/aaPqOB3yJrOk1t5YcJKsnoiLK8saBlQVD3rrRU3NY7ApBdUp37oDhHEOF79/
-	 wYWveDXB9teXPGM+zCVop2dH2InA7rwfUZ7RO5jZCPLMWmgRw2cmertjZPCU8NKJkJUv8
-	 0Rsv6llJJfK6OEj0j9RPUmcHMFK/XGYkbFrOW13fl+uUmpIb/Ikn/BMlTDNA/8NmjvBil
-	 ZsiUbRE+//w0hm1+nbH/+xRDOlwS2OElnu2vBCLuo9d1aK0eqeNS8lmyjeaKYjwjAoQ==
+	t=1793342638;
+	b=nXWpR0iTVjSWyB3Hiu/Mr2A0zIbKik/2FcPs9YeMkck6WK51EH5VeyM7bZLvt9Z7CVId
+	 WG3SHmSg76fHCKA21prbn5zJk06pVwOFsygOfEYrwNRJwXFZPNsLSyoEuyTjD7zYLzHgT
+	 TJWgRg3EOn6qpmiP6QNOB8QOoyPiTJQxlhPLCtbjex09g/8aieXwplr2AmkjtqC/Xr7hj
+	 lfCitR2uTUgecVDB9G9yt9QHWbO5Ogz2S44tJ2RjQXtl2FMiBJilDYfpe0LAXhrnN34QS
+	 RoVCK6TD4zV2h9272VJHVYPK5G2NErofXsMfbUrDmiifXKapKnTTf4Jf0wMOtHOjtKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792778868;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793342638;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
 	bh=J3XSfexUEQIihbbvfLU/6+xIU/w28QhcpSoaKqiT8+M=;
-	b=WX3iNg7VmPAQ1ywtmlKDqVLCykVxbVq/VKNhzux6Qp9me+yPd97Q2PDAhj4nninKfOxB
-	 pW1s4CTKON9fZ88wD0myFLWplRAoatmS0/UUeQ0vmApEAKbNDenmLcTQFECQZXprnf/5m
-	 UJ8CSKwB8EWACrFSOqyaZvXfyKbzuLIFTGalcDgGHdFJfH/iMPEezaAhqMPMFHq6jUb1B
-	 ARrTMEB2gDcRMIAWCgn5wsUrXo1FnDtpX4SFCPTHhgpIV73nx+I5Rza/iglFB2K7o9eiD
-	 MzZTTV7Z0KQB1P3Mj+28+oi124Mxux810Iehd/nGc3piXvSVzCn++0sgRU6X9P1rwKA==
+	b=LA3z84XE0u/h06dmWb7IwJPa33aj5Sdn7t6T3VDjAxrnC3EwE+YS2o7ZTnJK0J3uEuEL
+	 Uq6Qy1+6KPzvuztIJNcnhA0fy/vpk6j4lnx0fTEwW4LC5hHcPU9ZyhqoxsyzHWoomHxVX
+	 pgakQ9U2y9oiPGrOr9gZKgVFz7rNBbz4hyLH6migtvtKTqTILSnenft6rAUOGnBz0e37J
+	 0aSiw+gM3XwPMnz5XPdBsYlTt95dONGjsXPVUU951ZXsQA8HnU5vMbU/QRkqZtroXETU/
+	 hCqdJT0WvIxxUvveO7OaT4DzC90Ljew9CphvrsRfbdUAewIztaUDu/oZSZyM41RIPNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org;
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
 	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20251104 header.b=IpDukG6E;
-	arc=none smtp.remote-ip=74.125.82.54
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com
- [74.125.82.54])
+ header.s=20260707 header.b=JeeryRjE;
+	arc=none smtp.remote-ip=74.125.82.173
+Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com
+ [74.125.82.173])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest
  SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B01606A31A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Oct 2026 18:07:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 95B01606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BEAF606A31C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2026 06:43:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4BEAF606A31C
 Authentication-Results: smtp.subspace.kernel.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
@@ -47,54 +47,55 @@ Authentication-Results: smtp.subspace.kernel.org;
 Authentication-Results: smtp.subspace.kernel.org;
 	dkim=pass (2048-bit key,
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20251104 header.b=IpDukG6E
-Received: by mail-dl1-f54.google.com with SMTP id
- a92af1059eb24-19305bcb72cso753447c88.1
+ header.s=20260707 header.b=JeeryRjE
+Received: by mail-dy1-f173.google.com with SMTP id
+ 5a478bee46e88-353804b591eso639188eec.0
         for <linux-arm-msm@vger.kernel.org>;
- Fri, 23 Oct 2026 11:07:47 -0700 (PDT)
+ Thu, 29 Oct 2026 23:43:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792778867; x=1793383667;
+        d=gmail.com; s=20260707; t=1793342637; x=1793947437;
  darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
         bh=J3XSfexUEQIihbbvfLU/6+xIU/w28QhcpSoaKqiT8+M=;
-        b=IpDukG6Ecza4l9ficU4xJSei12/9cnvu/plig6HIPO8dWMC+GZnHt1DkJrofxFrtf0
-         uWXDETdXyZ9+55jsb5mw7KPKyS3tOFjlhQ9LYnD0ekveyEMPIjX+PNeTO7SVtFhAoKac
-         Hb5UzcL/1erhWsV4PXGeJ2N1Spqgx156bQ+a8zBCwUh53RQXuMUwUn0dxdCl5eFs3LoY
-         RbMlHKg3WUtIg1DMV4Of0xO+7ARSWX69LUFFnZR3WYpYuSMkux0cVwya1e0iNiHI/6wa
-         1ntuGPvnyIF73v4zF81e8ndWhUmQSGxov80XK5yZkCTNlfc4j/DhLP4Wn4Z548Gkk0HC
-         RG7w==
+        b=JeeryRjE/f5SWAdspU+P2cXzq6VlrJ9uZbNsl2Z3bMp9eugk4YUx3A6vk2Ih7llCbZ
+         xnOSmidWOPWclMfpnOU/zstPnq2onY9z/0sqQxrwW6C42jgnlocQbLsI6o65snWFWdcc
+         K7WkOdn+fQehSCJ0gfAcOTjVEU8fW4vLw/0gOzbJWqWeRHsRgdYsLIbUSq9VWDaC2bs+
+         Cvq8Dmkky5Gmdiajsk6xf+cFiPTrIIE28wLdGxyGf8U1pWk49R4w1sbUVPTim72G9IvB
+         BE91pPFk3TV1QPjLIwkmcSzR6L9/mYYfTOx7RBhFNdG+J5Lk0I/ht3yV7QtfZebwvFd+
+         zg1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792778867; x=1793383667;
+        d=1e100.net; s=20260707; t=1793342637; x=1793947437;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
         bh=J3XSfexUEQIihbbvfLU/6+xIU/w28QhcpSoaKqiT8+M=;
-        b=bUsvi9+XPBWEMH2qdePqpoaZlr6ZQzJw4i6MVYN/y7hV+UzgzrLkSHDj8HkguW3K9E
-         yUmOOCRB7RC7tY+CdytQp546OaaIj27zhVGOJXvYhTNqj4lTo2jzDOpXz+yuIXkAaaV1
-         mi0k74edYrOzXQLjHrbSztaB3SpHnyi0c0PuTSYN3xOvvI97TilG0FDw809ZZ6LC0XUm
-         ObiiYWhHnfujf5d+74oHrl7T3FKFZXJw+wvFgMldW4l+noo+UwAML2nNUQRORM6O3LDx
-         m0Pj0/2bHsc2ji9/k8FpZyrJYFUuAUXHVp0gi3LpnYbhFOqVjhKVwH8tQLPMiKjk4qnv
-         SnkQ==
-X-Gm-Message-State: AFq9FYKRdVw56iIB8/67RazdJwsup9KpR6PjryshnQ7XFeDIHGUBQ5hV
-	rWZOJ9ZULZI4ulryveVW1ei4+/DVI81BdD/QMQcgFGGLooNrM0ff0YH2
-X-Gm-Gg: AYBFou3mGglAYtL0k0h/xwkQ+CklVvb4PcU4kLHCjXA6Rld7usZijGEJ86c9tZuB/eV
-	zQrlzrSI57bv2tS6YKoPJju+G1MAuIIHn74gLlKgEusLP9+xH4r/m7q/bH8o5tr6pZoPh/YKR46
-	atTKmcRk3uFJs6JzHLN99L3fORv2IoQs4YEwQssVhyyfe8Uw3FbGBE7MX8p+rGDwrsqxUwu+Zmt
-	ZOdqfsp8t8cU54ztwSgnT7HR0KjFWyYmdGvB9d59Ot+TqrVfUU7IH8ZWwIUUi/p9IlDMysJTxrD
-	w3fspZZuffGmUcEAiNIS9xsEKPcupTXAvEH5OagDPI7pACVpt+yvdUSj5kfh5uTD8TavxipsH7x
-	agjLts5olKfKt0C+HA9j/646GHeFUs2jSG2sTIUEngD45GTB1zNc8+fI2MnEEtOghC3ciClGUrY
-	7KvyjkSu+fCVkU7+Iuvh1kkCzC+0zgAF0dxJwdI+P0DKeBnEAvXI/SS0NdfVapSUSZozu52q6AJ
-	KrUsPnu2Rx+Tm0Pzj1DElsHXFNG2Ao39IwVrSJlj+02xCPH56SiHTxCKRjQCI0=
-X-Received: by 2002:a05:7022:250b:b0:13b:3132:6e99 with SMTP id
- a92af1059eb24-195c5ad17e3mr6055983c88.20.1792778866606;
-        Fri, 23 Oct 2026 11:07:46 -0700 (PDT)
+        b=D9/ap4Ya0OVvuJSFhI6fr65WOeoK42ptQWBuFoDfJazJExXUiHGGkQJrtFi0MZ0aPZ
+         /rvT0tnWbBYNNH4Oy6RtA2yPRdEPXwqazGfoY0FSbio1cIIp4nBoogKwt1c5hq1FiCNZ
+         QGaEoHBXEYor/Few1j3I/emFo+XJgUlcOlcxW6E+zExTUdnYZeBmpCfaY+/+SYEqYqM0
+         UGBOCCUpFG2z6KPfK4SEZHF8d03lrf5p9GHtfZba0YtpTfcm8gFDgWyx+MnM7jx8q/Ji
+         9ADhuaJV7ExcjKabb7M2NN4pTQZcHCM5zUNG+ECpqYzTaGGA3+IPqkqKyICjbdH2DVmi
+         1KOA==
+X-Gm-Message-State: AFq9FYLZ6+ly8kHGtjDGQgA+elwnafmiamc3lKE6Kp7JmQBII85ECC/p
+	NGglQVEnullfpIQIJPXQ29asue6pjtx0ByztSBv+k2s+tFc/q9ua5iqH
+X-Gm-Gg: AYBFou2Zv3RgECp2NRC6IezUUGr4dHZDQ33to6pN2gv3tQgmpgoSWYqjwl7Y8yAB1b0
+	zbZgomqCyqsUat5Vj7Se37jEZZ7WraipV3rEJUV8n2UQ7cg2bEPhJkK98US7vgwsJ+H/vp7k5Hz
+	ENImkMdE9ZjLjVWOvyv/7hQThmOwCvVJorsu9Ex5zA7oegDTmVv9qfRpj4o1QeDdNGqxE6Knm9Y
+	8JXt/rZ3OdlTEgISaO/LxHpTp2PmnRgtHLhQkxyK8tx9JWsvbk0ULlpBPJV5Rv215PJvc1740Ho
+	Q6jFelNsUa7uZEqmN0zIpmNofBT8dPP6mcziA74DBolm41aDhYsU0jXqVcHG4rRb6R2Vj/iyoVF
+	LL3RP3VAAYPLGuRIPmhiQ4UCU0klY/vC80WTygX0dzndLupSvornYgCmLWQ/vCAAeiZjb3ICNgq
+	/ozfDUY10+6WOhl/uXK41YqP6I5UDB1CHG+9ReOWNYUUt2LiBNOchjQhbOY82mgueRMAxU7512n
+	HgRLWbVXk0otxNw2ftxk3dWzuiwqlzWcQcEX7rUSa5Nu+71HuBdETfdR3s/dt6+EVX5KW1N9xti
+	XSxoZ/x6+KtEBAAkFvN/PNHZVAAUyv+4pceV
+X-Received: by 2002:a05:7022:b047:20b0:16d:dd5c:4261 with SMTP id
+ a92af1059eb24-1ac5e6f4e87mr2052934c88.46.1793342637307;
+        Thu, 29 Oct 2026 23:43:57 -0700 (PDT)
 Received: from ada.lan (cwgw.codeweavers.com. [4.36.164.2])
         by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-19886f790e4sm326318c88.0.2026.10.23.11.07.42
+ a92af1059eb24-1ac1b38ac58sm4173902c88.23.2026.10.29.23.43.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2026 11:07:46 -0700 (PDT)
+        Thu, 29 Oct 2026 23:43:55 -0700 (PDT)
 From: Kaipeng Zeng <kaipeng94@gmail.com>
 To: devicetree@vger.kernel.org
 Cc: linux-arm-msm@vger.kernel.org,
@@ -106,13 +107,13 @@ Cc: linux-arm-msm@vger.kernel.org,
 	andersson@kernel.org,
 	Kaipeng Zeng <kaipeng94@gmail.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: [PATCH v5 1/2] dt-bindings: arm: qcom: Add Acer Swift Go Pro AI
+Subject: [PATCH v6 1/3] dt-bindings: arm: qcom: Add Acer Swift Go Pro AI
  (SFA14-11)
-Date: Sat, 24 Oct 2026 02:05:12 +0800
-Message-ID: <20261023180513.36417-2-kaipeng94@gmail.com>
+Date: Fri, 30 Oct 2026 14:41:47 +0800
+Message-ID: <20261030064149.14736-2-kaipeng94@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261023180513.36417-1-kaipeng94@gmail.com>
-References: <20261023180513.36417-1-kaipeng94@gmail.com>
+In-Reply-To: <20261030064149.14736-1-kaipeng94@gmail.com>
+References: <20261030064149.14736-1-kaipeng94@gmail.com>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Post: <mailto:linux-arm-msm@vger.kernel.org>
@@ -145,48 +146,48 @@ index 121ca557ce1e..027207758cab 100644
                - tuxedo,elite14gen1
            - const: qcom,x1e78100
 
-From patchwork Fri Oct 23 18:05:13 2026
+From patchwork Fri Oct 30 06:41:48 2026
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-Patchwork-Submitter: Kaipeng Zeng <kaipeng94@gmail.com>
-X-Patchwork-Id: 14911225
+X-Patchwork-Id: 14926620
 Authentication-Results: smtp.subspace.kernel.org;
- arc=none smtp.remote-ip=74.125.82.52
+ arc=none smtp.remote-ip=74.125.82.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792778885;
-	b=iMhSAwOPNSL54KXecSDjKQLPbsVcfESYXlRJ7Tq3gMPdNVFhWVbYFDzPVZ/qHQ3Yt2B8
-	 wsCtpL/h9EFiRZAIr9CtgOcTuo9IelUTkqy0rQKGHeikmJaR2LFCgtec9lGeabMOk/CdD
-	 DnMzHiAzFI37Oyh3cXYvnt9EaKrvwwMh/k/VYWiJgEI/QDfE1Au3fWAc4NJDtWrGqI7vQ
-	 b9f5o+pTzh5LGEF8DQQIdQkP17WVC1fbM470VBS9ss0K9eMxHG9jFzUhzinBOD4S2cVsc
-	 aiaYMk1A506TJ7OBooNWcXAodgGQAfj4DqT5ZtgjM1TKgwyTYHYcbMIzUosYBo/Bklg==
+	t=1793342655;
+	b=J/EBjB+bVNLFPqhQm/rCZ2spSobk3Y7swG/dgtSv283N4seNsghPHCEsJpHCoNpPILXG
+	 pWokPh8G6hoT45gGVI5lPJnHHN191/x6uAy/RAAgJlgPZL6M1EZ1JIhGLgu5Ia074SO1T
+	 B5owDYyJQfQjs5XUmVxGblkagc6tLXONhFTkvqfEjMlrBRxIVZ/E5RksO7iiJervnhFgb
+	 80nYJnvpJOtEaZG+EcCsnXBgwvJqfnbcLKqmrIoQMiLNP0yWDq+nUAzhGlbNiJ8dFc064
+	 AttioWpa87lIibmYx4cBxmp5o+3M7T0gBbvE36zI4gcHuLLQ5rFkyP40uXGBS6cwBDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792778885;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793342655;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=3tMGn26LbopGRVjhxf5N+zfuDU8x3Kf5gaNsnpJl7FY=;
-	b=rhPnKF9PraBJHNJFTZMR6K5IwkobdVVkWettfWGJLc0n+KCinz4esHOOGP6flnudDm/m
-	 vnH3uvTC/KQjGG//b4B1lTeFBXVoXQNf0PZViNHB3GASUxxtMp+bPQO/XtGX6I4nXSlVB
-	 p3M3d7K0h3cIut7/7njkEDptDJjCHDQOrL6MjYXTMFCni668vsJ95xuMyQECLl5UYrjOV
-	 gsOI1DIIFNc1NJRnXT5I1XauT9W7wXiCSrxXF4nOHew6q1umsC773PU7exmj7Ps26kyhH
-	 tVHuuA4QvsML6VRkT5wosrQlBD/8c19UBMGqD1dmUiNWDlODIiGG43O4vNN6aHxkUBA==
+	bh=9vMIxIB0YACZHssANGa+fc2SOJ0qxGOcri3YtWhtnL8=;
+	b=xTw/4SMkFaKldELIEIcqTXMvJlPMsN9iFjKPG9xcSYpDUO1/QK8GmaV18MwpD+kneYSK
+	 l2GKA+4QQ0cgBZsJDGERwnXLl2qPerxLm1MjOG+lwnb41wzsQ2xG5BPKS1yqapLt/Un8n
+	 0VSLvopAROyEpOYajyAJonfX0CXwGfkf9HNIGgR+c0LbRe/jeXkCjaKf229wT0fHVTui/
+	 MPIkeGyzLYArP3dk9zYEE+CdfsxsZp60yG5ITu43UTLJ+SuDCscBtWSQIDulLa2qEb8eZ
+	 Ci97za0VowVMWM8+t8ZRc4ExX9qfXBdthTVE/Xdz8nGZ79PSiwoNVrBXNA0lwPFRs/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org;
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
 	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20251104 header.b=mwOSOAck;
-	arc=none smtp.remote-ip=74.125.82.52
-Received: from mail-dl1-f52.google.com (mail-dl1-f52.google.com
- [74.125.82.52])
+ header.s=20260707 header.b=odLyvwTP;
+	arc=none smtp.remote-ip=74.125.82.46
+Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com
+ [74.125.82.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest
  SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E66C606A320
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Oct 2026 18:08:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2E66C606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43C5606A31C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2026 06:44:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A43C5606A31C
 Authentication-Results: smtp.subspace.kernel.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
@@ -194,54 +195,55 @@ Authentication-Results: smtp.subspace.kernel.org;
 Authentication-Results: smtp.subspace.kernel.org;
 	dkim=pass (2048-bit key,
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20251104 header.b=mwOSOAck
-Received: by mail-dl1-f52.google.com with SMTP id
- a92af1059eb24-15943c9c005so1478806c88.1
+ header.s=20260707 header.b=odLyvwTP
+Received: by mail-dl1-f46.google.com with SMTP id
+ a92af1059eb24-1931ff67a29so1100411c88.1
         for <linux-arm-msm@vger.kernel.org>;
- Fri, 23 Oct 2026 11:08:04 -0700 (PDT)
+ Thu, 29 Oct 2026 23:44:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792778883; x=1793383683;
+        d=gmail.com; s=20260707; t=1793342653; x=1793947453;
  darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=3tMGn26LbopGRVjhxf5N+zfuDU8x3Kf5gaNsnpJl7FY=;
-        b=mwOSOAckxGYq25Zx4lo2j6uH4HRVRc+1DqVHD9TGGPwTKsOuSq91B0R5slFfBo8Z2y
-         pi+J8j0qnGTkOQIjPNrAQUvtyZzk5VY1xa6bVjd6R+S6wnCq3aboYJgVDo0mPZmuFOad
-         afQrOlxV8GQMiFGuEfii6OyBRPwbeIJF3sz+cf7spEmotR0jOPJRrqB/ZVfMIv67JhcH
-         V8RZoSkyFr/MJzxlf/c9n5sfUPfzXPJmFi2PN7qHgF13+2hd5FTZo+tJSpojgn1GHeBs
-         VvZ4ntXIQX+XxjKfOfeRHQTIGS3gOcdfMm3Fj+C6VjrL00LzeELTjeiRIo/1iF61IB6b
-         +xTA==
+        bh=9vMIxIB0YACZHssANGa+fc2SOJ0qxGOcri3YtWhtnL8=;
+        b=odLyvwTPqK89VFHGcBP6xy/G1eLUpw0J9ePGuQ6DCZBPLzHACYPRVYAC6x2aUmyeHe
+         VizGADfJ3RcxoYz3aucx+WfIGv6DgO+N4QDX5uBj11pf8TuWS8oaeo5JJZYBkwpr8q7o
+         5BgHDbbC7zpI263Ynr3nbwY03BrL9LdQ8Q5DSK96WY3PC7/viLZz+wqx1TbQLvwxZ2Ta
+         9Sgo4K27DHSswn9489wJjlxLyyaPjTZ5DzHfaWNDr99masjo9xcSD42d8LzTiTVAYV+S
+         Vrv7B1rAKhCFZqgY2IVUGEbM5WXe9sjkYQLB0K8GO1TzXRoo+0ynWcz5MGCJ5J7EbjhJ
+         Ve4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792778883; x=1793383683;
+        d=1e100.net; s=20260707; t=1793342653; x=1793947453;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=3tMGn26LbopGRVjhxf5N+zfuDU8x3Kf5gaNsnpJl7FY=;
-        b=mhMDmizrc6OSS5W+6fDHkhuQMzn2DwAXHm086XagLe+vYryGZGRJdwfK/ecbsIGLf7
-         XQKDp2IV2j1JPM1Hd+g79jkkx235inmlnGNNu1T9JKg95doquB9VKnEmA+1wRCTRumwQ
-         mEtEDhvKj2hTPIzWmBmUulucVPFPkoI2kJDWiw2DSkpMiNcIXF/rdxJj+gNJhkW3/mIE
-         cs75+rtX7+tE7R12A+J4pGDLTIrgNSEiriivjzsqANmQLGqZDkRCf2kxyROjjrVeOhc8
-         CRipa402QRoebO+HCduBwl6obI2m5B/wjrgUKwlB4OTGQ+46ZXhd5QfxHNTOvQwRs7+q
-         S7iA==
-X-Gm-Message-State: AFq9FYItmeyN+q7llYnfziUiinF67fz740hqyfKHxhNrJOdczeDCqttV
-	HrBRunyrQ5qi0Sz5eH4KLQ2dF8J8cyFZHXaflB3bzDFswSLxSifekv29
-X-Gm-Gg: AYBFou1nOf81SXnIU6FRt863tWwITQxqL7l0kZtIdud2BtYGKVUZZYcmRGMDwb1zthS
-	goYCqoBp+iw9ubbO7Vc4GIWVYvUpkL/+LmD2gmEhhc7mvCsXmMcYPyVRSQ342aZPsaNBXKNkc0K
-	UYqXPhQiq8/YyG6gp9r3PsFI0yJdpqMQbMg77byiYWq6XkWymq1NEHA/tsGKHtirzQC1WOacQTc
-	lgOINc5LqwSU2AJeM1rt/mV68B/aofULQmGGzeF9G2iBt6VsLx8uxQ7JMUhmRLlQaCYdgEtD8Uz
-	wUADU4DFpd6AleiMgjazCLJbEy3hcng5QlRhOagfB3wwhMBhN4GVzLdlK0TeFaAtLeNhIjvN+s2
-	iLBIl4BoG5maDBiV3mXZP/uu/polHr9/JhtXuS3to4oFXCUxTikXmLmiLo7LYOVAZzRlIKMFnQf
-	LhUC+UrHmtBshtQWwRB3tuSF3WEDom20kqrkEJKkevU7yPK0SQJNvgx5VYxmBxfoZVIaQH6JjQt
-	wI6anarJojmoEzmtCI1m7of1AouFBAQukclCBI3lLgUA5e6HCVJT9YI1Vw4HUQ=
-X-Received: by 2002:a05:701b:418a:10b0:192:e5a8:6bae with SMTP id
- a92af1059eb24-195c6a34223mr4038150c88.40.1792778882918;
-        Fri, 23 Oct 2026 11:08:02 -0700 (PDT)
+        bh=9vMIxIB0YACZHssANGa+fc2SOJ0qxGOcri3YtWhtnL8=;
+        b=DzCAWLzhWMVqy3Y3kmSziB0mpNN4I54vX2AONAdjzhhAtfOAyHTmaPLN2M8tacZN+r
+         4VicQBGMba3cof7jwhBO5rlf8fuG7Mnuziznw9BjE5blBaMnKnRI7i2r3fr3xxsw+vLV
+         TBPlntoRNU04cOwZtWJO+lGeJquRNuIQfk26XDj59Kx0CGIlGweCQF3gMAHL0ZjUSNgK
+         1zxh49UTeuaCjPHZAEXsBXZkpkBBqD2gE/1wz37bbTCFSm2xh6vu3owXhH/eVdmzEDav
+         ISskg3DSJNTvEIRdWT7AZFUJtoFNIXGTNS3Qux2J6gnmyJvd9j/06Ttd/CPPU1gojANj
+         GNyg==
+X-Gm-Message-State: AFq9FYLkviMWsYl2X+HeUa32jJk9MS33N5+wDARmriR3htprOQ9shKwC
+	Yk+k6IlsPcx0FWwgEBOUcyJga/GRiv7Rt8VM/dKhGaPP/day4PvyAH6N
+X-Gm-Gg: AYBFou16y24InXUbNwX6lScOFH3x4t67gOs4es+SslMDCNa2s+cfD8CwxWpbPDfrk+7
+	hKK7ECc49kET6HPUk8bX5D6lJDNI3D3OaqJZZPnf54YNgXGym2kJJmQajEo4NkE+7CP8JSxD5Ox
+	Qkn2SrHnMfdtF+mGtd5Jc4DK2i5mjFFQhUed00XV3t2EdrSzAEgiUMv8IFtgsr1p4awWw7JL5u/
+	pkDLbw+nmCDkMYNlVc5XUBfLcXlRcSkzLO+6sD/8YdTUu562iInLyWOWduqEii5AM6GlflK/Y92
+	JmVW7BS8RXDxr93ILO00tbmAV4MNFgaA0KGmGm889nNLjoT247xRdVUhTB7WJeaoIAWWBE4+rfm
+	AjHLjplzgEePlW7UrWk4DVx1eXfcwAc7c23YqLXuH7h0rmtA8FdPMpWMf8MJtwRCRxOklHhpIgu
+	acgnm03DZza6/kIKnZNth5uWTDsTrMz5wQ5wpdzWir2oSbnnq9PIb89OFOELiTlt/fPkQX4v3sm
+	BAxVbTi+m8eWVlmO74DQEFWcsAZ/HUHcW5B2DbtWiVTSolgsZjtsAuqzWSa2wmREVIgLXnijyBl
+	220koQ+fUI30GfVaeyzQe+llBRk1qnB7L7MK
+X-Received: by 2002:a05:701b:428a:20b0:17b:fed6:7449 with SMTP id
+ a92af1059eb24-1ac5da7725fmr2113180c88.47.1793342652324;
+        Thu, 29 Oct 2026 23:44:12 -0700 (PDT)
 Received: from ada.lan (cwgw.codeweavers.com. [4.36.164.2])
         by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-19886f790e4sm326318c88.0.2026.10.23.11.07.58
+ a92af1059eb24-1ac1b38ac58sm4173902c88.23.2026.10.29.23.44.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2026 11:08:02 -0700 (PDT)
+        Thu, 29 Oct 2026 23:44:11 -0700 (PDT)
 From: Kaipeng Zeng <kaipeng94@gmail.com>
 To: devicetree@vger.kernel.org
 Cc: linux-arm-msm@vger.kernel.org,
@@ -252,13 +254,13 @@ Cc: linux-arm-msm@vger.kernel.org,
 	konradybcio@kernel.org,
 	andersson@kernel.org,
 	Kaipeng Zeng <kaipeng94@gmail.com>
-Subject: [PATCH v5 2/2] arm64: dts: qcom: Add support for Acer Swift Go Pro AI
+Subject: [PATCH v6 2/3] arm64: dts: qcom: Add support for Acer Swift Go Pro AI
  (SFA14-11)
-Date: Sat, 24 Oct 2026 02:05:13 +0800
-Message-ID: <20261023180513.36417-3-kaipeng94@gmail.com>
+Date: Fri, 30 Oct 2026 14:41:48 +0800
+Message-ID: <20261030064149.14736-3-kaipeng94@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261023180513.36417-1-kaipeng94@gmail.com>
-References: <20261023180513.36417-1-kaipeng94@gmail.com>
+In-Reply-To: <20261030064149.14736-1-kaipeng94@gmail.com>
+References: <20261030064149.14736-1-kaipeng94@gmail.com>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Post: <mailto:linux-arm-msm@vger.kernel.org>
@@ -288,8 +290,8 @@ Supported features:
 Signed-off-by: Kaipeng Zeng <kaipeng94@gmail.com>
 ---
  arch/arm64/boot/dts/qcom/Makefile             |    2 +
- .../boot/dts/qcom/x1e78100-acer-sfa14-11.dts  | 1541 +++++++++++++++++
- 2 files changed, 1543 insertions(+)
+ .../boot/dts/qcom/x1e78100-acer-sfa14-11.dts  | 1565 +++++++++++++++++
+ 2 files changed, 1567 insertions(+)
  create mode 100644 arch/arm64/boot/dts/qcom/x1e78100-acer-sfa14-11.dts
 
 diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
@@ -307,10 +309,10 @@ index 88230c4e00ea..142d8452e429 100644
  x1e78100-lenovo-thinkpad-t14s-oled-el2-dtbs	:= x1e78100-lenovo-thinkpad-t14s-oled.dtb x1-el2.dtbo
 diff --git a/arch/arm64/boot/dts/qcom/x1e78100-acer-sfa14-11.dts b/arch/arm64/boot/dts/qcom/x1e78100-acer-sfa14-11.dts
 new file mode 100644
-index 000000000000..5814cf3d000c
+index 000000000000..e56ae3bc8380
 --- /dev/null
 +++ b/arch/arm64/boot/dts/qcom/x1e78100-acer-sfa14-11.dts
-@@ -0,0 +1,1541 @@
+@@ -0,0 +1,1565 @@
 +// SPDX-License-Identifier: BSD-3-Clause
 +/*
 + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
@@ -365,11 +367,7 @@ index 000000000000..5814cf3d000c
 +
 +	backlight: backlight {
 +		compatible = "pwm-backlight";
-+
-+		pwms = <&pm8550_pwm 3 5000000>;
-+
-+		brightness-levels = <254 225 200 175 150 125 100 75 65 60 55>;
-+		default-brightness-level = <8>;
++		pwms = <&pm8550_pwm 3 500000>;
 +
 +		power-supply = <&vreg_edp_bl>;
 +	};
@@ -621,7 +619,7 @@ index 000000000000..5814cf3d000c
 +		pinctrl-0 = <&edp_reg_en>;
 +		pinctrl-names = "default";
 +
-+		regulator-always-on;
++		regulator-boot-on;
 +	};
 +
 +	vreg_edp_bl: regulator-edp-bl {
@@ -631,7 +629,12 @@ index 000000000000..5814cf3d000c
 +		regulator-min-microvolt = <3600000>;
 +		regulator-max-microvolt = <3600000>;
 +
-+		regulator-always-on;
++		gpio = <&pmc8380_3_gpios 10 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&edp_bl_reg_en>;
++		pinctrl-names = "default";
++
 +		regulator-boot-on;
 +	};
 +
@@ -1310,6 +1313,10 @@ index 000000000000..5814cf3d000c
 +
 +			backlight = <&backlight>;
 +
++			enable-gpios = <&pmc8380_3_gpios 4 GPIO_ACTIVE_HIGH>;
++			pinctrl-0 = <&edp_bl_en>;
++			pinctrl-names = "default";
++
 +			power-supply = <&vreg_edp_3p3>;
 +
 +			port {
@@ -1394,6 +1401,10 @@ index 000000000000..5814cf3d000c
 +	edp_bl_pwm: edp-bl-pwm-state {
 +		pins = "gpio8";
 +		function = "func1";
++		bias-disable;
++		input-disable;
++		output-enable;
++		output-low;
 +	};
 +
 +	rtmr0_default: rtmr0-reset-n-active-state {
@@ -1443,6 +1454,21 @@ index 000000000000..5814cf3d000c
 +		bias-disable;
 +		input-disable;
 +		output-enable;
++	};
++};
++
++&pmc8380_3_gpios {
++	edp_bl_en: edp-bl-en-state {
++		pins = "gpio4";
++		function = "normal";
++		power-source = <1>; /* 1.8V */
++		input-disable;
++		output-enable;
++	};
++
++	edp_bl_reg_en: edp-bl-reg-en-state {
++		pins = "gpio10";
++		function = "normal";
 +	};
 +};
 +
@@ -1852,3 +1878,149 @@ index 000000000000..5814cf3d000c
 +
 +	status = "okay";
 +};
+
+From patchwork Fri Oct 30 06:41:49 2026
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Patchwork-Submitter: Kaipeng Zeng <kaipeng94@gmail.com>
+X-Patchwork-Id: 14926621
+Authentication-Results: smtp.subspace.kernel.org;
+ arc=none smtp.remote-ip=74.125.82.54
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793342668;
+	b=bZEwogpEUaEVyJIgqN9F4t5CalZ8SPuRZsgzg+jUG9YkzY83pc5KIpxnASk8SZDAjQtj
+	 rQErLS7Rg4dMisz485Dj5iM9oeaKlFWq8CFYfE+jTFxkKFHF0GoXa/rksSQM1nrjeZVG3
+	 McHv/MN7Jb3hejKnrxtJcT0TTDNfD/vfrJ+11ANRfLCqC1Jspd8Hq5MV96zzIWBHX8864
+	 /R1USBbEOXUw/dqq5ntegsIY//8zSf1HxgL+kOYUbSPhttq8bPmEFMVL+s6vm2azpF+Uc
+	 K8pcA3oTm8Bsd09iBIZdRTRNSa+z/lSnOPxRc5JE9kT+ap0ce3zmDlhE5sChSu8Fogw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793342668;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=Tl6rc3WAxZp+WCBy7XVt8SwSQgu2t3lSHibD43bhBmU=;
+	b=PflMcTkOzEt7+3Xo/GbK5+f/fGgy+ozmfXWvbtTBf7vK/+10bVjmu7u8xjhMWEnWkKI4
+	 ouiSzoYwA3jBIa0IeXRh3+NbugaTaJWoaiUryqWHrDsUFDkqAdFie898FLCKf+orp9mff
+	 /hHZLNHPtC/LrrHdZhw2B4/ShzSjaVbCuQ7jiW25ZEXlFxZey405FdnKPNpn6MPcPljBs
+	 VsvXgpg5SwQl3ZX1bJwMXmPRXJ/03+x4qiz/B+3O6nphbB2NJ9Y8yxqh5GK6T1UqqL3fn
+	 a7hz7jkj/T0mq2KFnSSz5FDCJli+p4Yu8DFazYWZ5bhBQygUc/87wlOGurCjQyCs0jA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org;
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20260707 header.b=l6aOiKdf;
+	arc=none smtp.remote-ip=74.125.82.54
+Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com
+ [74.125.82.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest
+ SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DDBB606A31A
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Oct 2026 06:44:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6DDBB606A31A
+Authentication-Results: smtp.subspace.kernel.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+ spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key,
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20260707 header.b=l6aOiKdf
+Received: by mail-dl1-f54.google.com with SMTP id
+ a92af1059eb24-1846bc43c28so407702c88.0
+        for <linux-arm-msm@vger.kernel.org>;
+ Thu, 29 Oct 2026 23:44:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793342668; x=1793947468;
+ darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Tl6rc3WAxZp+WCBy7XVt8SwSQgu2t3lSHibD43bhBmU=;
+        b=l6aOiKdfh5XFeZiPLMgQFsiWOQZaspnVbO9s3wGBilkdw6HIvPsZG4QkxbZ2Cr/4e5
+         j8GuPaQGW5TjJZVGV0S+qXwvuX0495rstsLHg8WYRnWnYeW0esrhhN8u/zW/VuVyPJ+k
+         ga+Eagkq1xpofUHypYwE2yKq9BHbtTMexLizcCPkHv1UVG4ROVTsaA5OAyBiNeOBqdm7
+         juCLR/WG/eaW5fcTX9KS5N41SNjOU2oevXI08A+4jQuaScs9Xw0YhUSZcW9jqn0WDnI0
+         2zLvX652njLJQbXbWbmu2pPjhDteHUPXUk8694nMvzK/NZrs+uLc1aFcBDl6M/qGe/cJ
+         V43Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793342668; x=1793947468;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Tl6rc3WAxZp+WCBy7XVt8SwSQgu2t3lSHibD43bhBmU=;
+        b=WkqjoVh0Mxjby+3N9QqjM+1uzXm5bXb3hR3d4vj13+lWZMBJ9QEQPxtcy5gCxuq3h4
+         yKzbvL+HqsdzGLzuynkfMDbSsLEEtoJdNLvdsyuncLFfSTOtigeAXLjhblgY9U9uhmMM
+         nvQL8t+MGj+cvevt8HE0ZFtVNAc9bMZ+XNgBPftqG9b0iE+/H6/EZnRwFG0+QX0ns+Rj
+         9M5Jc17HpmRyjqUZ3wn+YICXoFEyGJXlhaa9UoZLaE1XUE/WnTCtHRH/DYsZZNIi+50J
+         dqe6pCsZ2N0uYk9cUN5PMR11mzUxUopnLMg7Qjm8JdSh0ePUPzvpeNy/e5lTdYBq1FLo
+         8JXA==
+X-Gm-Message-State: AFq9FYL+LuK3OVKDklmcZQ+0uzGZ8Af1gtBG7Bvtj1s7rsYiUCQbkmAg
+	mOvXFfpzi4F7RI1vHopqeIB8zybiwMVW3GXG8ihEFNMnmDqNzq1gne7t
+X-Gm-Gg: AYBFou1lZDmmCuyWatluG4ZIwxEgnXE42JUB0eRaaJ5TwmdCYxbspWGm5U4dCM/I1jI
+	UmotSm+6sZdNscSGMeSSFv7xdoIX7wGJm1AEpSqTSh93WQlzkAmL5hR/RzV6OxnxQTgtydVbxa7
+	10dPWQwcvRSPtnVPaPp+71Dcq6lVdEvxpmHqU1goeLD082GIjNKI1Izo8RO2e9HgU+bTA/PqI41
+	Gyj/NjgA7WRtTNcXqCdLjVMyUcj/JoRSDwKBZ+K2hGU8+RUWhhvf8DhfpVg2BDytjl3J3S+Jvfu
+	eGlMw5fxPZ5uNakz/5d5dhz3m2li7FqMGYQWKIutkaStipa8YtiTdiCg5ujjeJGSHYoVsNxcm4O
+	nqpKxQrZoJ7STB5sMXVTnaj71pjV40Eve3/6AZnNGN0vBBgBxwro7bNlfJcWRBpJU5+09nv0JZu
+	Q0+UftgTPbHEJlaMS97wNZheAMXgkm2VTOwTWhFDqDDNZhShF+y5BheB/xu8bwmZghdhkJ76luN
+	25mz0hxIng4m9m8cqZHK3e7OlbSC9quDvNV3CpJTi96F+WF0EdKyfEgIEMIadLVE/SNMF1O4Hlq
+	46aUd884X1I/bNIBtc9ld4wrVEF9oQkbY1r+
+X-Received: by 2002:a05:7022:158a:b0:185:869a:8c64 with SMTP id
+ a92af1059eb24-1ac56ca0239mr2183312c88.1.1793342667529;
+        Thu, 29 Oct 2026 23:44:27 -0700 (PDT)
+Received: from ada.lan (cwgw.codeweavers.com. [4.36.164.2])
+        by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1ac1b38ac58sm4173902c88.23.2026.10.29.23.44.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Oct 2026 23:44:27 -0700 (PDT)
+From: Kaipeng Zeng <kaipeng94@gmail.com>
+To: devicetree@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	conor+dt@kernel.org,
+	krzk+dt@kernel.org,
+	robh@kernel.org,
+	abelvesa@kernel.org,
+	konradybcio@kernel.org,
+	andersson@kernel.org,
+	Kaipeng Zeng <kaipeng94@gmail.com>
+Subject: [PATCH v6 3/3] firmware: qcom: scm: Allow QSEECOM on Acer Swift Go
+ Pro AI
+Date: Fri, 30 Oct 2026 14:41:49 +0800
+Message-ID: <20261030064149.14736-4-kaipeng94@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261030064149.14736-1-kaipeng94@gmail.com>
+References: <20261030064149.14736-1-kaipeng94@gmail.com>
+X-Mailing-List: linux-arm-msm@vger.kernel.org
+List-Id: <linux-arm-msm.vger.kernel.org>
+List-Post: <mailto:linux-arm-msm@vger.kernel.org>
+List-Help: <mailto:linux-arm-msm+help@vger.kernel.org>
+List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
+List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+List-Owner: <mailto:linux-arm-msm+owner@vger.kernel.org>
+Precedence: list
+MIME-Version: 1.0
+
+Add the Acer Swift Go Pro AI (SFA14-11) to the QSEECOM allowlist to
+enable UEFI variable access through uefisecapp.
+
+Signed-off-by: Kaipeng Zeng <kaipeng94@gmail.com>
+---
+ drivers/firmware/qcom/qcom_scm.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 43e250faea75..4552da4284ef 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -2225,6 +2225,7 @@ EXPORT_SYMBOL_GPL(qcom_scm_qseecom_app_send);
+  + any potential issues with this, only allow validated machines for now.
+  */
+ static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
++	{ .compatible = "acer,swift-go-sfa14-11" },
+ 	{ .compatible = "asus,vivobook-s15" },
+ 	{ .compatible = "asus,vivobook-s15-x1p4" },
+ 	{ .compatible = "asus,zenbook-a14-ux3407na" },

@@ -52,11 +52,7 @@
 
 	backlight: backlight {
 		compatible = "pwm-backlight";
-
-		pwms = <&pm8550_pwm 3 5000000>;
-
-		brightness-levels = <254 225 200 175 150 125 100 75 65 60 55>;
-		default-brightness-level = <8>;
+		pwms = <&pm8550_pwm 3 500000>;
 
 		power-supply = <&vreg_edp_bl>;
 	};
@@ -308,7 +304,7 @@
 		pinctrl-0 = <&edp_reg_en>;
 		pinctrl-names = "default";
 
-		regulator-always-on;
+		regulator-boot-on;
 	};
 
 	vreg_edp_bl: regulator-edp-bl {
@@ -318,7 +314,12 @@
 		regulator-min-microvolt = <3600000>;
 		regulator-max-microvolt = <3600000>;
 
-		regulator-always-on;
+		gpio = <&pmc8380_3_gpios 10 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+
+		pinctrl-0 = <&edp_bl_reg_en>;
+		pinctrl-names = "default";
+
 		regulator-boot-on;
 	};
 
@@ -997,6 +998,10 @@
 
 			backlight = <&backlight>;
 
+			enable-gpios = <&pmc8380_3_gpios 4 GPIO_ACTIVE_HIGH>;
+			pinctrl-0 = <&edp_bl_en>;
+			pinctrl-names = "default";
+
 			power-supply = <&vreg_edp_3p3>;
 
 			port {
@@ -1081,6 +1086,10 @@
 	edp_bl_pwm: edp-bl-pwm-state {
 		pins = "gpio8";
 		function = "func1";
+		bias-disable;
+		input-disable;
+		output-enable;
+		output-low;
 	};
 
 	rtmr0_default: rtmr0-reset-n-active-state {
@@ -1130,6 +1139,21 @@
 		bias-disable;
 		input-disable;
 		output-enable;
+	};
+};
+
+&pmc8380_3_gpios {
+	edp_bl_en: edp-bl-en-state {
+		pins = "gpio4";
+		function = "normal";
+		power-source = <1>; /* 1.8V */
+		input-disable;
+		output-enable;
+	};
+
+	edp_bl_reg_en: edp-bl-reg-en-state {
+		pins = "gpio10";
+		function = "normal";
 	};
 };
 
