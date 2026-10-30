@@ -24,6 +24,8 @@ const STATES = {
     released: { label: 'Linux 6.x', tone: 'good', meaning: 'In Linux since that release.' },
     next: { label: 'linux-next', tone: 'close', meaning: 'Accepted, and coming in the next Linux release.' },
     posted: { label: 'Posted', tone: 'close', meaning: 'Sent to the kernel mailing list, not accepted yet.' },
+    omarchy: { label: 'In Omarchy', tone: 'close', meaning: `Omarchy's kernel carries one, but it isn't in Linux yet.` },
+    'out-of-tree': { label: 'Out of tree', tone: 'close', meaning: 'Another kernel, such as Ubuntu\'s, carries one, but it hasn\'t been sent to Linux yet.' },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: `Doesn't exist yet.` },
   },
   ids: {
@@ -114,9 +116,11 @@ export function omarchyCell(model: Model): Cell {
 }
 
 export function deviceTreeCell(model: Model): Cell {
-  const { deviceTree, firstRelease, devicetreePosted } = model.upstream;
+  const { deviceTree, firstRelease, devicetreePosted, devicetreeOutOfTree } = model.upstream;
   if (deviceTree === 'released') return { ...cell(STATES.deviceTree, 'released', { label: `Linux ${release(firstRelease!)}`, title: `In Linux since ${release(firstRelease!)}.`, rank: releaseRank(firstRelease!) }), key: `linux-${release(firstRelease!)}` };
   if (deviceTree === 'posted') return cell(STATES.deviceTree, 'posted', { href: devicetreePosted ?? undefined });
+  if (deviceTree === 'omarchy') return cell(STATES.deviceTree, 'omarchy');
+  if (deviceTree === 'out-of-tree') return cell(STATES.deviceTree, 'out-of-tree', { href: devicetreeOutOfTree ?? undefined });
   return cell(STATES.deviceTree, deviceTree === 'next' ? 'next' : 'wanted');
 }
 

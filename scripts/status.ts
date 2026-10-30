@@ -25,6 +25,7 @@ type Model = {
   firmware_download?: string;
   acpi?: string[];
   devicetree_posted?: string;
+  devicetree_out_of_tree?: string;
   ids_collected?: string;
   boot?: 'android';
   bootloader?: 'unlockable' | 'locked';
@@ -76,7 +77,7 @@ function findDeviceTree(compatible: string | undefined) {
   if (!upstream && !added) return undefined;
   const dt = upstream ?? added!;
   const inOmarchy = Boolean(added) || kernelRank(dt.firstRelease) <= kernelRank(kernelBase);
-  return { file: dt.file, compatible: dt.compatible, firstRelease: upstream?.firstRelease ?? null, inNext: upstream?.inNext ?? false, inOmarchy, firmware: dt.firmware ?? [] };
+  return { file: dt.file, compatible: dt.compatible, firstRelease: upstream?.firstRelease ?? null, inNext: upstream?.inNext ?? false, upstream: Boolean(upstream), inOmarchy, firmware: dt.firmware ?? [] };
 }
 
 type Ids = { file: string; firstRelease: string | null; inMain: boolean; compatible: string; name: string };
@@ -100,7 +101,7 @@ function variantStatus(variant: Variant) {
   return {
     ...variant,
     computed,
-    deviceTree: dt ? { file: dt.file, firstRelease: dt.firstRelease, inNext: dt.inNext, inOmarchy: dt.inOmarchy } : null,
+    deviceTree: dt ? { file: dt.file, firstRelease: dt.firstRelease, inNext: dt.inNext, upstream: dt.upstream, inOmarchy: dt.inOmarchy } : null,
     firmwareNeeded: dt?.firmware ?? [],
     ids: ids.map((entry) => ({ file: entry.file, firstRelease: entry.firstRelease, inMain: entry.inMain, matches: compatibles.includes(entry.compatible), compatible: entry.compatible })),
   };
@@ -153,7 +154,13 @@ const rows = models.map((model) => {
   acpi.forEach((dump) => used.acpi.add(dump.folder));
 
   const dts = variants.map((v) => v.deviceTree).filter(Boolean) as NonNullable<(typeof variants)[number]['deviceTree']>[];
-  const deviceTree = dts.length === 0 ? (model.devicetree_posted ? 'posted' : 'missing') : dts.some((dt) => dt.firstRelease) ? 'released' : 'next';
+  // Closest to Linux first: released, queued, posted, then carried by Omarchy or by another kernel
+  const upstreamDts = dts.filter((dt) => dt.upstream);
+  const deviceTree = upstreamDts.length ? (upstreamDts.some((dt) => dt.firstRelease) ? 'released' : 'next')
+    : model.devicetree_posted ? 'posted'
+    : dts.length ? 'omarchy'
+    : model.devicetree_out_of_tree ? 'out-of-tree'
+    : 'missing';
   const firstRelease = dts.map((dt) => dt.firstRelease).filter(Boolean).sort((a, b) => kernelRank(a) - kernelRank(b))[0] ?? null;
   // systemd's list first; otherwise IDs sent in through the board count as collected
   const idsState = variants.some((v) => v.ids.some((entry) => entry.matches)) ? 'listed' : variants.some((v) => v.ids.length) ? 'mismatch' : model.ids_collected ? 'collected' : 'missing';
@@ -176,6 +183,7 @@ const rows = models.map((model) => {
       deviceTree,
       firstRelease,
       devicetreePosted: model.devicetree_posted ?? null,
+      devicetreeOutOfTree: model.devicetree_out_of_tree ?? null,
       ids: idsState,
       idsCollected: model.ids_collected ?? null,
       // What counts is getting the firmware without the laptop's own Windows

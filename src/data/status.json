@@ -1,6 +1,6 @@
 {
-  "collected": "2026-10-29T11:35:47.487Z",
-  "linuxNext": "20261028",
+  "collected": "2026-10-30T01:50:09.767Z",
+  "linuxNext": "20261029",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "rc",
@@ -21,7 +21,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-5",
+        "kernel": "7.3-6",
         "systemd": "262.1-1"
       }
     ]
@@ -35,11 +35,11 @@
     "should": 11,
     "problems": 6,
     "notYet": 64,
-    "deviceTree": 22,
+    "deviceTree": 23,
     "ids": 29,
     "firmware": 3,
     "googlebooks": 2,
-    "acpiNeeded": 61,
+    "acpiNeeded": 60,
     "acpi": 9
   },
   "models": [
@@ -69,6 +69,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -121,6 +122,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -170,6 +172,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -220,9 +223,10 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p64100-acer-swift-sf14-11.txt",
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -282,9 +286,10 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "posted",
         "firstRelease": null,
-        "devicetreePosted": null,
+        "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261023180513.36417-3-kaipeng94@gmail.com/",
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -346,9 +351,10 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-acer-swift-go14-01.json",
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -410,6 +416,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -460,6 +467,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -510,6 +518,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -559,6 +568,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -610,6 +620,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -663,6 +674,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -726,6 +738,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.11",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -765,6 +778,7 @@
             "file": "x1e80100-asus-vivobook-s15.dts",
             "firstRelease": "v6.11",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -802,6 +816,7 @@
             "file": "x1p42100-asus-vivobook-s15.dts",
             "firstRelease": "v7.1",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -861,6 +876,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -910,6 +926,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -959,6 +976,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -1009,6 +1027,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -1058,6 +1077,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -1107,6 +1127,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -1163,6 +1184,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "collected",
         "idsCollected": "https://github.com/birkskyum/arewearmyet/issues/2",
         "firmware": "download",
@@ -1226,6 +1248,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.17",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -1261,6 +1284,7 @@
             "file": "x1e80100-asus-zenbook-a14.dts",
             "firstRelease": "v6.17",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -1291,6 +1315,7 @@
             "file": "x1p42100-asus-zenbook-a14.dts",
             "firstRelease": "v6.17",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -1321,6 +1346,7 @@
             "file": "x1p42100-asus-zenbook-a14-lcd.dts",
             "firstRelease": "v6.19",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -1375,6 +1401,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -1425,6 +1452,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -1475,6 +1503,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -1526,6 +1555,7 @@
         "deviceTree": "next",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -1552,6 +1582,7 @@
             "file": "glymur-asus-zenbook-a14-ux3407na.dts",
             "firstRelease": null,
             "inNext": true,
+            "upstream": true,
             "inOmarchy": false
           },
           "firmwareNeeded": [
@@ -1605,6 +1636,7 @@
         "deviceTree": "released",
         "firstRelease": "v7.3",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -1635,6 +1667,7 @@
             "file": "glymur-asus-zenbook-a16-ux3607oa.dts",
             "firstRelease": "v7.3",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -1689,9 +1722,10 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "posted",
         "firstRelease": null,
-        "devicetreePosted": null,
+        "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260508050828.7442-1-adamszyma@wp.pl/",
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -1707,6 +1741,16 @@
       "variants": [
         {
           "chip": "X1P-42-100",
+          "computed": "none",
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "outcome": "none",
+          "reports": []
+        },
+        {
+          "chip": "X1P-64-100",
+          "compatible": "dell,inspiron-14-plus-5441",
           "computed": "none",
           "deviceTree": null,
           "firmwareNeeded": [],
@@ -1754,6 +1798,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.18",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -1784,6 +1829,7 @@
             "file": "x1e80100-dell-inspiron-14-plus-7441.dts",
             "firstRelease": "v6.18",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -1843,9 +1889,10 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p64100-dell-latitude-5455.txt",
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -1911,6 +1958,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.18",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -1941,6 +1989,7 @@
             "file": "x1e80100-dell-latitude-7455.dts",
             "firstRelease": "v6.18",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -1997,6 +2046,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.13",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "partial",
@@ -2022,6 +2072,7 @@
             "file": "x1e80100-dell-xps13-9345.dts",
             "firstRelease": "v6.13",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -2076,6 +2127,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -2128,6 +2180,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -2181,6 +2234,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -2232,6 +2286,7 @@
         "deviceTree": "released",
         "firstRelease": "v7.3",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -2260,6 +2315,7 @@
             "file": "x1e80100-honor-magicbook-art-14.dts",
             "firstRelease": "v7.3",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -2314,9 +2370,10 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "posted",
         "firstRelease": null,
-        "devicetreePosted": null,
+        "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261013-add-elitebook-6-dts-v1-2-f22e67fc7f9d@canonical.com/",
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -2382,6 +2439,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.16",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -2409,6 +2467,7 @@
             "file": "x1e80100-hp-elitebook-ultra-g1q.dts",
             "firstRelease": "v6.16",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -2461,6 +2520,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -2511,6 +2571,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -2561,6 +2622,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -2611,6 +2673,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -2664,6 +2727,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -2719,6 +2783,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -2776,6 +2841,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.14",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -2811,6 +2877,7 @@
             "file": "x1e80100-hp-omnibook-x14.dts",
             "firstRelease": "v6.14",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -2841,6 +2908,7 @@
             "file": "x1p42100-hp-omnibook-x14.dts",
             "firstRelease": "v6.18",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -2894,6 +2962,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -2945,6 +3014,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -3001,6 +3071,7 @@
         "deviceTree": "next",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -3026,6 +3097,7 @@
             "file": "glymur-hp-elitebook-x-g2q.dts",
             "firstRelease": null,
             "inNext": true,
+            "upstream": true,
             "inOmarchy": false
           },
           "firmwareNeeded": [
@@ -3079,6 +3151,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -3128,6 +3201,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -3178,9 +3252,10 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "posted",
         "firstRelease": null,
-        "devicetreePosted": null,
+        "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260830-x2-hp-omnibook-ship-v1-2-9feada71dc79@oss.qualcomm.com/",
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -3193,6 +3268,7 @@
       },
       "variants": [
         {
+          "compatible": "hp,omnibook-ultra-kg0xxx",
           "computed": "none",
           "deviceTree": null,
           "firmwareNeeded": [],
@@ -3235,6 +3311,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -3285,9 +3362,10 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "posted",
         "firstRelease": null,
-        "devicetreePosted": null,
+        "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261028191800.27829-3-jeff.roach0@gmail.com/",
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -3300,6 +3378,8 @@
       },
       "variants": [
         {
+          "model": "16-cp1",
+          "compatible": "hp,omnibook-x16-cp1",
           "computed": "none",
           "deviceTree": null,
           "firmwareNeeded": [],
@@ -3341,6 +3421,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -3394,6 +3475,7 @@
         "deviceTree": "released",
         "firstRelease": "v7.1",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -3425,6 +3507,7 @@
             "file": "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
             "firstRelease": "v7.1",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -3488,9 +3571,10 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p42100-lenovo-ideapad-5-2in1.txt",
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -3552,9 +3636,10 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x126100-lenovo-ideapad-slim3.txt",
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -3617,9 +3702,10 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "posted",
         "firstRelease": null,
-        "devicetreePosted": null,
+        "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260906-x1-ideapad-slim5x-v1-3-7ccffbe6bc4a@oldschoolsolutions.biz/",
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -3650,6 +3736,17 @@
               "compatible": "lenovo,ideapad-slim5x-oled"
             }
           ],
+          "outcome": "none",
+          "reports": []
+        },
+        {
+          "model": "LCD",
+          "chip": "X1P-42-100",
+          "compatible": "lenovo,ideapad-slim5x-lcd",
+          "computed": "none",
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
           "outcome": "none",
           "reports": []
         }
@@ -3684,6 +3781,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -3735,6 +3833,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.18",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -3762,6 +3861,7 @@
             "file": "x1p42100-lenovo-thinkbook-16.dts",
             "firstRelease": "v6.18",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -3816,6 +3916,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -3868,6 +3969,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.12",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "linux-firmware",
@@ -3893,6 +3995,7 @@
             "file": "x1e78100-lenovo-thinkpad-t14s.dts",
             "firstRelease": "v6.12",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -3931,6 +4034,7 @@
             "file": "x1e78100-lenovo-thinkpad-t14s-oled.dts",
             "firstRelease": "v6.16",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -3993,6 +4097,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.11",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "next-release",
@@ -4019,6 +4124,7 @@
             "file": "x1e80100-lenovo-yoga-slim7x.dts",
             "firstRelease": "v6.11",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -4079,6 +4185,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -4130,6 +4237,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -4181,6 +4289,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -4230,6 +4339,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -4277,16 +4387,22 @@
         "https://www.notebookcheck.net/Lenovo-releases-new-14-inch-ThinkPad-with-Snapdragon-X2-Elite-and-over-27-hours-battery-life.1345695.0.html"
       ],
       "notes": "linux-firmware has its audio topology, so a device tree exists somewhere out of tree.",
-      "outcome": "none",
+      "outcome": "newer",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "next",
         "firstRelease": null,
-        "devicetreePosted": null,
+        "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260929221821.505551-3-srinivas.kandagatla@oss.qualcomm.com/",
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
-        "firmwareMissing": [],
+        "firmwareMissing": [
+          "qcadsp8480.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8480.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": true,
         "firmwareDownload": null,
         "firmwareFolders": [
@@ -4297,11 +4413,24 @@
       },
       "variants": [
         {
-          "computed": "none",
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "model": "LCD",
+          "compatible": "lenovo,thinkpad-t14s-gen7-lcd",
+          "computed": "newer",
+          "deviceTree": {
+            "file": "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
+            "firstRelease": null,
+            "inNext": true,
+            "upstream": true,
+            "inOmarchy": false
+          },
+          "firmwareNeeded": [
+            "qcom/glymur/LENOVO/22A8/qcadsp8480.mbn",
+            "qcom/glymur/LENOVO/22A8/adsp_dtbs.elf",
+            "qcom/glymur/LENOVO/22A8/qccdsp8480.mbn",
+            "qcom/glymur/LENOVO/22A8/cdsp_dtbs.elf"
+          ],
           "ids": [],
-          "outcome": "none",
+          "outcome": "newer",
           "reports": []
         }
       ],
@@ -4339,6 +4468,7 @@
         "deviceTree": "next",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -4365,6 +4495,7 @@
             "file": "glymur-lenovo-yoga-slim7x.dts",
             "firstRelease": null,
             "inNext": true,
+            "upstream": true,
             "inOmarchy": false
           },
           "firmwareNeeded": [
@@ -4420,6 +4551,7 @@
         "deviceTree": "released",
         "firstRelease": "v7.0",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -4450,6 +4582,7 @@
             "file": "x1e80100-medion-sprchrgd-14-s1.dts",
             "firstRelease": "v7.0",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -4511,6 +4644,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.12",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -4537,6 +4671,7 @@
             "file": "x1e80100-microsoft-romulus13.dts",
             "firstRelease": "v6.12",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -4602,6 +4737,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.12",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -4629,6 +4765,7 @@
             "file": "x1e80100-microsoft-romulus15.dts",
             "firstRelease": "v6.12",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -4687,6 +4824,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -4749,6 +4887,7 @@
         "deviceTree": "released",
         "firstRelease": "v7.0",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -4777,6 +4916,7 @@
             "file": "x1e80100-microsoft-denali-oled.dts",
             "firstRelease": "v7.0",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -4814,6 +4954,7 @@
             "file": "x1p64100-microsoft-denali.dts",
             "firstRelease": "v7.0",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -4860,6 +5001,7 @@
         "deviceTree": "released",
         "firstRelease": "v7.3",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "mismatch",
         "idsCollected": null,
         "firmware": "windows",
@@ -4896,6 +5038,7 @@
             "file": "x1p42100-microsoft-sp12in.dts",
             "firstRelease": "v7.3",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -4940,6 +5083,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -4987,12 +5131,13 @@
         "https://www.cdw.com/product/microsoft-surface-laptop-for-business-8th-edition-copilot-pc-13.8/9186835"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "manual",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "posted",
         "firstRelease": null,
-        "devicetreePosted": null,
+        "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261027-mahua-surface-laptop-v2-3-7dd903a12d22@oss.qualcomm.com/",
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -5005,11 +5150,18 @@
       },
       "variants": [
         {
-          "computed": "none",
-          "deviceTree": null,
+          "compatible": "microsoft,surface-laptop8",
+          "computed": "manual",
+          "deviceTree": {
+            "file": "glymur-microsoft-surface-laptop8.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "inOmarchy": true
+          },
           "firmwareNeeded": [],
           "ids": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -5045,6 +5197,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -5096,6 +5249,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -5151,6 +5305,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -5202,6 +5357,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.14",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -5229,6 +5385,7 @@
             "file": "x1e001de-devkit.dts",
             "firstRelease": "v6.14",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -5282,9 +5439,10 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/patch-2-anatase.patch",
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -5340,7 +5498,8 @@
       "upstream": {
         "deviceTree": "posted",
         "firstRelease": null,
-        "devicetreePosted": "https://lore.kernel.org/linux-arm-msm/?q=galaxy+book4+edge",
+        "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/",
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -5400,6 +5559,7 @@
         "deviceTree": "posted",
         "firstRelease": null,
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/",
+        "devicetreeOutOfTree": null,
         "ids": "collected",
         "idsCollected": "https://github.com/birkskyum/arewearmyet/issues/1",
         "firmware": "download",
@@ -5461,6 +5621,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -5512,6 +5673,7 @@
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -5561,6 +5723,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.14",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -5585,6 +5748,7 @@
             "file": "sc8280xp-huawei-gaokun3.dts",
             "firstRelease": "v6.14",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -5636,6 +5800,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.8",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "linux-firmware",
@@ -5658,6 +5823,7 @@
             "file": "sc8280xp-lenovo-thinkpad-x13s.dts",
             "firstRelease": "v6.8",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -5724,6 +5890,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.13",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -5748,6 +5915,7 @@
             "file": "sc8280xp-microsoft-arcata.dts",
             "firstRelease": "v6.13",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [
@@ -5798,6 +5966,7 @@
         "deviceTree": "released",
         "firstRelease": "v6.14",
         "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
         "ids": "listed",
         "idsCollected": null,
         "firmware": "windows",
@@ -5822,6 +5991,7 @@
             "file": "sc8280xp-microsoft-blackrock.dts",
             "firstRelease": "v6.14",
             "inNext": true,
+            "upstream": true,
             "inOmarchy": true
           },
           "firmwareNeeded": [

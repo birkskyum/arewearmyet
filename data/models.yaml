@@ -12,6 +12,8 @@
 #   firmware_download  the vendor's driver page whose package has every firmware
 #                  file its device tree loads
 #   ids_collected  where its hardware IDs were sent, until they're in systemd
+#   devicetree_posted  the posted device tree patch, until it's accepted
+#   devicetree_out_of_tree  a kernel outside Linux that carries a device tree for it
 #   discussion     where owners work on it, when that's a separate thread
 #   boot           android when it starts through Android's bootloader, like a Pixel,
 #                  instead of UEFI; those models get their own section, with
@@ -67,6 +69,7 @@ models:
     model_numbers: ["SF14-11", "SF14-11T"]
     variants:
       - { model: "SF14-11", chip: "X1P-64-100", compatible: "acer,swift-sf14-11" }
+    devicetree_out_of_tree: "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p64100-acer-swift-sf14-11.txt"
     sources:
       - https://news.acer.com/acer-announces-its-first-ngai-pc-the-swift-14-ai-laptop
       - https://www.notebookcheck.net/Acer-Swift-14-AI-SF14-11.861026.0.html
@@ -82,6 +85,7 @@ models:
     variants:
       - { model: "SFA14-11", chip: "X1E-78-100", compatible: "acer,swift-sfa14-11" }
     acpi: ["acer-sfa14-11"]
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261023180513.36417-3-kaipeng94@gmail.com/"
     sources:
       - https://www.ithome.com/0/775/814.htm
       - https://github.com/systemd/systemd/blob/main/src/boot/hwids/aa64/x1e78100-acer-sfa14-11.json
@@ -96,6 +100,7 @@ models:
     model_numbers: ["SFG14-01"]
     variants:
       - { model: "SFG14-01", chip: "X1P-42-100", compatible: "acer,swift-go14-01" }
+    devicetree_out_of_tree: "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-acer-swift-go14-01.json"
     sources:
       - https://news.acer.com/acer-expands-its-copilot-pc-line-with-new-swift-14-ai-and-swift-go-14-ai-laptops
       - https://www.computerbase.de/artikel/notebooks/acer-swift-go-14-ai-snapdragon-x-plus-test.90425/
@@ -373,7 +378,9 @@ models:
     model_numbers: ["5441", "P190G", "P190G001"]
     variants:
       - { chip: "X1P-42-100" }
+      - { chip: "X1P-64-100", compatible: "dell,inspiron-14-plus-5441" }
     acpi: ["dell-inspiron-14-5441-x1p-42-100"]
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260508050828.7442-1-adamszyma@wp.pl/"
     sources:
       - https://www.notebookcheck.net/Dell-Inspiron-14-5441-now-available-for-899-with-new-Snapdragon-X-Plus-X1P-42-100-SoC.883655.0.html
       - https://dl.dell.com/content/manual20917790-inspiron-14-5441-owner-s-manual.pdf
@@ -405,6 +412,7 @@ models:
     variants:
       - { chip: "X1P-64-100", compatible: "dell,latitude-5455" }
     acpi: ["dell-latitude-5455"]
+    devicetree_out_of_tree: "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p64100-dell-latitude-5455.txt"
     sources:
       - https://www.delltechnologies.com/asset/en-us/products/laptops-and-2-in-1s/technical-support/latitude-5455-spec-sheet.pdf
       - https://www.notebookcheck.net/Dell-Latitude-5455-arrives-later-this-month-in-Snapdragon-X-Plus-X1P-64-100-and-X1P-42-100-options.883656.0.html
@@ -510,6 +518,7 @@ models:
     variants:
       - { chip: "X1P-42-100", compatible: "hp,elitebook-6-g1q" }
     acpi: ["hp-elitebook-6-g1q"]
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261013-add-elitebook-6-dts-v1-2-f22e67fc7f9d@canonical.com/"
     sources:
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4005529
       - https://www.thurrott.com/mobile/copilot-pc/329645/hp-elitebook-6-g1q-review
@@ -684,6 +693,9 @@ models:
     released: "2026-02"
     chips: ["X2E-90-100", "X2E-84-100", "X2P-64-100"]
     model_numbers: ["14-kg0xxx"]
+    variants:
+      - { compatible: "hp,omnibook-ultra-kg0xxx" }
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260830-x2-hp-omnibook-ship-v1-2-9feada71dc79@oss.qualcomm.com/"
     sources:
       - https://www.hp.com/au-en/shop/hp-omnibook-ultra-laptop-next-gen-ai-14-kg0017qu-d78gmpa.html
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4520421
@@ -708,6 +720,9 @@ models:
     released: "2026-07"
     chips: ["X2E-84-100", "X2P-42-100"]
     model_numbers: ["16-cp0xxx", "16-cp1xxx"]
+    variants:
+      - { model: "16-cp1", compatible: "hp,omnibook-x16-cp1" }
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261028191800.27829-3-jeff.roach0@gmail.com/"
     sources:
       - https://www.hp.com/au-en/shop/hp-omnibook-x-laptop-next-gen-ai-16-cp1000qu-d8cu5pa.html
       - https://support.hp.com/au-en/document/ish_14096181-14096226-16
@@ -758,6 +773,7 @@ models:
     variants:
       - { chip: "X1P-42-100", compatible: "lenovo,ideapad-5-2in1" }
     acpi: ["lenovo-ideapad-5-2in1-83GH-14Q8X9"]
+    devicetree_out_of_tree: "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p42100-lenovo-ideapad-5-2in1.txt"
     sources:
       - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_5_2_in_1_14Q8X9
       - https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-ideapad-5-2in1-83GH-14Q8X9
@@ -772,6 +788,7 @@ models:
     variants:
       - { chip: "X1-26-100", compatible: "lenovo,ideapad-slim3" }
     acpi: ["lenovo-ideapad-slim3x-15q8x10-WCN7850"]
+    devicetree_out_of_tree: "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x126100-lenovo-ideapad-slim3.txt"
     sources:
       - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Slim_3_15Q8X10
       - https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-ideapad-slim3x-15q8x10-WCN7850
@@ -785,7 +802,9 @@ models:
     model_numbers: ["14Q8X9", "83HL"]
     variants:
       - { model: "OLED", chip: "X1P-42-100", compatible: "lenovo,ideapad-slim5x-oled" }
+      - { model: "LCD", chip: "X1P-42-100", compatible: "lenovo,ideapad-slim5x-lcd" }
     acpi: ["lenovo-ideapad-5-slim-14Q8X9", "lenovo-xiaoxin-14-q8x9"]
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260906-x1-ideapad-slim5x-v1-3-7ccffbe6bc4a@oldschoolsolutions.biz/"
     sources:
       - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Slim_5_14Q8X9
       - https://www.ithome.com/0/799/284.htm
@@ -912,8 +931,11 @@ models:
     released: "2026-07"
     chips: ["X2E-80-100", "X2P-42-100"]
     model_numbers: ["22A7", "22A8"]
+    variants:
+      - { model: "LCD", compatible: "lenovo,thinkpad-t14s-gen7-lcd" }
     firmware: ["qcom/glymur/LENOVO/22A8"]
     notes: "linux-firmware has its audio topology, so a device tree exists somewhere out of tree."
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260929221821.505551-3-srinivas.kandagatla@oss.qualcomm.com/"
     sources:
       - https://psref.lenovo.com/Product/ThinkPad/ThinkPad_T14s_Gen_7_Snapdragon
       - https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/mahua-lenovo-thinkpad-t14s-gen7-lcd.dts
@@ -1052,6 +1074,9 @@ models:
     released: "2026-06"
     chips: ["X2P-64-100", "X2E-78-100"]
     model_numbers: ["2036", "2138"]
+    variants:
+      - { compatible: "microsoft,surface-laptop8" }
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261027-mahua-surface-laptop-v2-3-7dd903a12d22@oss.qualcomm.com/"
     sources:
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
       - https://www.notebookcheck.net/Microsoft-Surface-Laptop-8-13-8-Reviews-and-Specs.1336515.0.html
@@ -1120,6 +1145,7 @@ models:
     released: "2024-10"
     chips: ["X1P-42-100", "X1-26-100"]
     model_numbers: ["NP750XQA", "NT750XQA", "NP750XQB", "NT750XQB"]
+    devicetree_out_of_tree: "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/patch-2-anatase.patch"
     sources:
       - https://news.samsung.com/global/galaxy-book4-edge-samsungs-next-gen-ai-pc-now-available-with-15-inch-display
       - https://www.notebookcheck.net/Samsung-Galaxy-Book4-Edge-15.988764.0.html
@@ -1131,7 +1157,7 @@ models:
     released: "2024-06"
     chips: ["X1E-80-100", "X1E-84-100"]
     model_numbers: ["NP960XMA", "NP960XMB", "NP964XMA", "NT960XMA", "NT960XMB"]
-    devicetree_posted: "https://lore.kernel.org/linux-arm-msm/?q=galaxy+book4+edge"
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
     sources:
       - https://www.computerbase.de/2024-09/samsung-galaxy-book4-edge-x1e-84-10-test/
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4512701/export/pdf

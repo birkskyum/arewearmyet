@@ -12,7 +12,7 @@ import { join } from 'node:path';
 
 const KERNEL_RELEASES = ['v6.8', 'v6.9', 'v6.10', 'v6.11', 'v6.12', 'v6.13', 'v6.14', 'v6.15', 'v6.16', 'v6.17', 'v6.18', 'v6.19', 'v7.0', 'v7.1', 'v7.2', 'v7.3'];
 const SYSTEMD_RELEASES = ['v257', 'v258', 'v259', 'v260', 'v261', 'v262'];
-const DT_PATTERN = /^(x1|hamoa|purwa|glymur|sc8280xp).*\.dts$/;
+const DT_PATTERN = /^(x1|hamoa|purwa|glymur|mahua|sc8280xp).*\.dts$/;
 const DT_DIR = 'arch/arm64/boot/dts/qcom';
 const FIRMWARE_SOCS = ['x1e80100', 'x1p42100', 'glymur', 'sc8280xp'];
 // Omarchy's package channels: its own repository carries the kernel, its Arch Linux
