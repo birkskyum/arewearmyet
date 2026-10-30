@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ChipIcon from '../assets/chip-icon.svg';
+import GitHubIcon from '../assets/github-icon.svg';
 import { TONE } from '../lib/labels';
 import { PILL } from '../lib/tones';
 
@@ -22,10 +23,16 @@ const CASES = [
 
 <Layout title="Help a model get there · Are we ARM yet?" description="How owners of an ARM laptop help it run Linux: a hardware report from Windows, the device tree it boots with on Linux, or a boot test.">
   <main class="mx-auto max-w-4xl px-4 py-10 text-zinc-400 sm:px-6">
-    <a href="/" class="flex items-center gap-3 text-zinc-300 hover:text-zinc-100">
-      <ChipIcon class="h-8 w-8 text-[#9ece6a]" aria-hidden="true" />
-      <span class="font-semibold">Are we ARM yet?</span>
-    </a>
+    <div class="flex items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 text-zinc-300 hover:text-zinc-100">
+        <ChipIcon class="h-8 w-8 text-[#9ece6a]" aria-hidden="true" />
+        <span class="font-semibold">Are we ARM yet?</span>
+      </a>
+      <a href={REPO} class="flex shrink-0 items-center gap-2 rounded-md p-2 text-sm text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100 sm:px-3 sm:py-1.5" aria-label="Are we ARM yet? on GitHub">
+        <GitHubIcon class="h-5 w-5" aria-hidden="true" />
+        <span class="hidden sm:inline">GitHub</span>
+      </a>
+    </div>
 
     <h1 class="mt-8 text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">Help a model get there</h1>
     <p class="mt-4 text-lg">
