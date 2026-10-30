@@ -104,7 +104,7 @@ export default function StatusTable(props: Props) {
   // Every header: what it sorts by, and which column and choices its filter menu uses
   const headers = [
     { id: 'brand', header: 'Brand', question: 'Who makes it', filterColumn: 'brand', options: brands as Option[] },
-    { id: 'model', header: 'Model', question: 'The model and its variants', filterColumn: 'chip', options: props.chips },
+    { id: 'model', header: 'Model', question: 'The model and its variants', filterColumn: props.chips.length ? 'chip' : undefined, options: props.chips },
     ...props.columns.map((column) => ({ ...column, filterColumn: column.options ? column.id : undefined })),
   ];
 

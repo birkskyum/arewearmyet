@@ -13,6 +13,9 @@ const { summary } = status;
 const channel = status.omarchy.channel.toUpperCase();
 const byName = <T extends { vendor: string; name: string }>(a: T, b: T) => a.vendor.localeCompare(b.vendor) || a.name.localeCompare(b.name);
 const rows = snapdragonRows().sort(byName);
+// The 8cx Gen 3 machines are the generation before Snapdragon X, so they get their own table and stay out of the totals
+const current = rows.filter((row) => row.generation !== '8cx');
+const older = rows.filter((row) => row.generation === '8cx');
 const googlebooks = googlebookRows().sort(byName);
 const nvidia = nvidiaRows().sort((a, b) => a.generation.localeCompare(b.generation) || byName(a, b));
 
@@ -29,10 +32,10 @@ const nvidiaBar = [
   { label: 'Not tested', value: summary.nvidia - summary.nvidiaWorks - summary.nvidiaExpected, color: 'bg-zinc-600', title: 'Nobody has tried it yet.' },
 ];
 const upstreamBars = [
-  { label: 'Device tree in Linux', value: summary.deviceTree, coming: summary.deviceTreeComing, wanted: 0, total: summary.models, note: 'released or queued in linux-next' },
-  { label: 'Hardware IDs in systemd', value: summary.ids, coming: summary.idsComing, wanted: 0, total: summary.models, note: 'so an image picks the device tree by itself' },
-  { label: `Firmware without the laptop's Windows`, value: summary.firmware, coming: summary.firmwareComing, wanted: 0, total: summary.models, note: `in linux-firmware's newest release or a known vendor download` },
-  { label: 'ACPI dumps collected', value: summary.acpi, coming: 0, wanted: summary.acpiWanted, total: summary.acpi + summary.acpiWanted, note: 'one is still wanted for each model with no device tree anywhere' },
+  { label: 'Device tree in Linux', value: summary.deviceTree, coming: summary.deviceTreeComing, notNeeded: 0, wanted: 0, total: summary.models, note: 'released or queued in linux-next' },
+  { label: 'Hardware IDs in systemd', value: summary.ids, coming: summary.idsComing, notNeeded: 0, wanted: 0, total: summary.models, note: 'so an image picks the device tree by itself' },
+  { label: `Firmware without the laptop's Windows`, value: summary.firmware, coming: summary.firmwareComing, notNeeded: 0, wanted: 0, total: summary.models, note: `in linux-firmware's newest release or a known vendor download` },
+  { label: 'ACPI dumps collected', value: summary.acpi, coming: 0, notNeeded: summary.models - summary.acpi - summary.acpiWanted, wanted: summary.acpiWanted, total: summary.models, note: 'not needed once a model has a device tree, wanted for each one with none anywhere' },
 ];
 
 const snapdragonIds = ['omarchy', 'device-tree', 'ids', 'firmware', 'acpi'] as const;
@@ -76,6 +79,7 @@ const HEADLINE = 'text-2xl font-semibold text-zinc-50';
       <p class="mt-3 text-lg text-zinc-400">Omarchy on ARM PCs, model by model.</p>
       <nav class="mt-5 flex flex-wrap gap-2 text-sm">
         <a href="#snapdragon" class={NAV}>Snapdragon X and X2 <span class="text-zinc-500">{summary.models}</span></a>
+        <a href="#snapdragon-8cx" class={NAV}>Snapdragon 8cx Gen 3 <span class="text-zinc-500">{older.length}</span></a>
         <a href="#googlebooks" class={NAV}>Googlebooks <span class="text-zinc-500">{summary.googlebooks}</span></a>
         <a href="#nvidia" class={NAV}>NVIDIA N1x and GB10 <span class="text-zinc-500">{summary.nvidia}</span></a>
         <a href="#apple" class={NAV}>Apple Silicon</a>
@@ -100,11 +104,12 @@ const HEADLINE = 'text-2xl font-semibold text-zinc-50';
           <div>
             <div class="flex items-baseline justify-between gap-4 text-sm">
               <dt class="text-zinc-200">{bar.label} <span class="text-zinc-500">{bar.note}</span></dt>
-              <dd class="shrink-0 tabular-nums text-zinc-300">{bar.coming > 0 && <span class="text-zinc-500">{bar.coming} on its way · </span>}{bar.wanted > 0 && <span class="text-zinc-500">{bar.wanted} still wanted · </span>}{bar.value} / {bar.total}</dd>
+              <dd class="shrink-0 tabular-nums text-zinc-300">{bar.coming > 0 && <span class="text-zinc-500">{bar.coming} on its way · </span>}{bar.notNeeded > 0 && <span class="text-zinc-500">{bar.notNeeded} not needed · </span>}{bar.wanted > 0 && <span class="text-zinc-500">{bar.wanted} still wanted · </span>}{bar.value} / {bar.total}</dd>
             </div>
             <div class="mt-1.5 flex h-2 overflow-hidden rounded-full bg-zinc-800">
               <div class="h-full bg-emerald-400" style={`width: ${(100 * bar.value) / Math.max(bar.total, 1)}%`} title={`Done: ${bar.value}`}></div>
               <div class="h-full bg-amber-400" style={`width: ${(100 * bar.coming) / Math.max(bar.total, 1)}%`} title={`On its way: ${bar.coming}`}></div>
+              <div class="h-full bg-zinc-600" style={`width: ${(100 * bar.notNeeded) / Math.max(bar.total, 1)}%`} title={`Not needed: ${bar.notNeeded}`}></div>
             </div>
           </div>
         ))}
@@ -132,11 +137,21 @@ const HEADLINE = 'text-2xl font-semibold text-zinc-50';
       <div class="mt-4">
         <StatusTable
           client:load
-          rows={rows}
+          rows={current}
           columns={snapdragonColumns}
-          chips={[{ key: 'x1', label: 'Snapdragon X' }, { key: 'x2', label: 'Snapdragon X2' }, { key: '8cx', label: 'Snapdragon 8cx Gen 3' }]}
+          chips={[{ key: 'x1', label: 'Snapdragon X' }, { key: 'x2', label: 'Snapdragon X2' }]}
           urlPrefix=""
         />
+      </div>
+    </section>
+
+    <section class="mt-12 scroll-mt-6" id="snapdragon-8cx">
+      <h2 class="text-xl font-semibold text-zinc-50">Snapdragon 8cx Gen 3</h2>
+      <p class="mt-1 max-w-3xl text-sm text-zinc-400">
+        The generation before Snapdragon X. They need the same pieces and use the same labels, but aren't counted in the totals at the top.
+      </p>
+      <div class="mt-4">
+        <StatusTable client:load rows={older} columns={snapdragonColumns} chips={[]} urlPrefix="8cx-" />
       </div>
     </section>
 
