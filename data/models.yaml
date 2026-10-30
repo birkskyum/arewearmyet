@@ -287,6 +287,8 @@ models:
       - { model: "UX3480QA", chip: "X1-26-100", compatible: "asus,zenbook-14-ux3480qa" }
     firmware: ["qcom/x1p42100/ASUSTeK/zenbook-a14"]
     firmware_download: "https://www.asus.com/supportonly/ux3480qa/helpdesk_download/"
+    devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/1634"
+    devicetree_files: ["https://raw.githubusercontent.com/omacom/omarchy-pkgs/e6d64003c54ab3f98caa61d5fdfdda545162d38b/pkgbuilds/linux-omarchy-aarch64/2211-arm64-dts-qcom-Add-the-ASUS-Zenbook-14-UX3480QA.patch#x1p42100-asus-zenbook-14-ux3480qa.dts"]
     ids_collected: "https://github.com/birkskyum/arewearmyet/issues/2"
     reports:
       - { state: "problems", note: "The stock 4.5.0rc1 image shows a black screen and resets, since it has no device tree for this model. With the device tree and patches from omarchy-pkgs #1634 and an owner's board package, it installs and runs on linux-omarchy 7.3.", checked: "2026-10" }
@@ -360,6 +362,7 @@ models:
     variants:
       - { model: "UX3407NA", compatible: "asus,zenbook-a14-ux3407na" }
     firmware: ["qcom/glymur/ASUSTeK/UX3407NA"]
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1336"
     sources:
       - https://www.asus.com/laptops/for-home/zenbook/asus-zenbook-a14-ux3407/techspec/
       - https://www.notebookcheck.net/Asus-Zenbook-A14-Laptop-Review-Snapdragon-X2-Elite-against-the-MacBook-Air-M5.1261944.0.html
@@ -376,6 +379,7 @@ models:
       - { model: "UX3607OA", compatible: "asus,zenbook-a16-ux3607oa" }
     firmware: ["qcom/glymur/ASUSTeK/UX3607OA"]
     acpi: ["asus-zenbook-a16-ux3607oa"]
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1336"
     sources:
       - https://www.asus.com/laptops/for-home/zenbook/asus-zenbook-a16-ux3607/techspec/
       - https://www.howtogeek.com/the-first-snapdragon-x2-laptops-arrive-in-the-usheres-what-you-need-to-know/
@@ -687,6 +691,7 @@ models:
     model_numbers: ["HSN-I66C-4", "8E91"]
     variants:
       - { compatible: "hp,elitebook-x-g2q" }
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1333"
     sources:
       - https://www.notebookcheck.net/HP-unveils-EliteBook-X-G2q-and-EliteBook-X-G2x-enterprise-laptops-with-new-Qualcomm-and-AMD-CPUs.1196602.0.html
       - https://www.91mobiles.com/reviews/hp-elitebook-x-g2q-14-ai-review/

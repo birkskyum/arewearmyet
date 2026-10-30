@@ -25,6 +25,14 @@
       "x1-acer-swift-14.dtsi"
     ]
   },
+  "asus-zenbook-14-ux3480qa": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/1634",
+    "files": [
+      "SOURCE.md",
+      "x1p42100-asus-zenbook-14-ux3480qa.dts"
+    ]
+  },
   "dell-inspiron-14-5441": {
     "state": "posted",
     "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260508050828.7442-1-adamszyma@wp.pl/",

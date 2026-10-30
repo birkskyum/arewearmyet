@@ -38,9 +38,9 @@
     "deviceTree": 23,
     "ids": 29,
     "firmware": 3,
-    "deviceTreeComing": 15,
+    "deviceTreeComing": 16,
     "idsComing": 3,
-    "firmwareComing": 23,
+    "firmwareComing": 26,
     "googlebooks": 2,
     "acpiNeeded": 60,
     "acpi": 9
@@ -1209,11 +1209,11 @@
         }
       ],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/1634",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-zenbook-14-ux3480qa",
         "ids": "collected",
         "idsCollected": "https://github.com/birkskyum/arewearmyet/issues/2",
         "firmware": "download",
@@ -1586,16 +1586,11 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcadsp8480.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8480.mbn",
-          "cdsp_dtbs.elf"
-        ],
-        "firmwareAudioOnly": true,
+        "firmware": "posted",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1336",
         "firmwareFolders": [
           "qcom/glymur/ASUSTeK/UX3407NA"
         ],
@@ -1669,18 +1664,11 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcadsp8480.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8480.mbn",
-          "cdsp_dtbs.elf",
-          "soccp.mbn",
-          "soccp_dtb.mbn"
-        ],
-        "firmwareAudioOnly": true,
+        "firmware": "posted",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1336",
         "firmwareFolders": [
           "qcom/glymur/ASUSTeK/UX3607OA"
         ],
@@ -3118,18 +3106,11 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcadsp8480.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8480.mbn",
-          "cdsp_dtbs.elf",
-          "soccp.mbn",
-          "soccp_dtb.mbn"
-        ],
+        "firmware": "posted",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1333",
         "firmwareFolders": [],
         "acpi": "missing",
         "acpiUrls": []
