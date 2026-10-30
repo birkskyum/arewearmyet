@@ -15,8 +15,9 @@
 #   ids_collected  where its hardware IDs were sent, until they're in systemd
 #   devicetree_posted  the posted device tree patch, until it's accepted
 #   devicetree_out_of_tree  where a device tree for it lives outside Linux
-#   devicetree_files  that tree's files, a URL each, or a patch URL and #file to cut it
-#                  out; scripts/trees.ts copies posted and out-of-tree trees to device-trees/
+#   devicetree_files  that tree's files, a URL each, a path under data/device-trees/<id>/ for a
+#                  tree sent in to this repository, or a patch URL and #file to cut it out;
+#                  scripts/trees.ts copies posted and out-of-tree trees to device-trees/
 #   discussion     where owners work on it, when that's a separate thread
 #   boot           android when it starts through Android's bootloader, like a Pixel,
 #                  instead of UEFI; those models get their own section, with

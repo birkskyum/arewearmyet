@@ -1,7 +1,8 @@
 // Keeps a copy of every device tree the board links that isn't in Linux yet, in device-trees/<model id>/:
 // a posted series as its mbox plus the .dts and .dtsi files it adds, or the out-of-tree files a model lists
 // in devicetree_files, with a SOURCE.md naming where each came from. device-trees/index.json lists them
-// for status.ts. A devicetree_files entry is a file URL, or a patch URL and #path to cut one new file out.
+// for status.ts. A devicetree_files entry is a file URL, a path under data/device-trees/ for a tree sent in
+// to this repository, or a patch URL and #path to cut one new file out.
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { parse } from 'yaml';
 
@@ -65,7 +66,7 @@ async function outOfTree(model: Model, dir: string): Promise<Entry> {
       files.push(path);
     } else {
       const file = url.split('/').pop()!;
-      writeFileSync(`${dir}/${file}`, await get(url));
+      writeFileSync(`${dir}/${file}`, url.startsWith('https://') ? await get(url) : readFileSync(url, 'utf8'));
       files.push(file);
     }
   }
