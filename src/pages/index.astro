@@ -85,11 +85,14 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
         <a href="#googlebooks" class={NAV}>Googlebooks <span class="text-zinc-500">{googlebooks.length}</span></a>
         <a href="#nvidia" class={NAV}>NVIDIA N1x and GB10 <span class="text-zinc-500">{nvidia.length}</span></a>
         <a href="#apple" class={NAV}>Apple Silicon</a>
-        <a href="/help" class={NAV}>Help a model get there</a>
       </nav>
       <p class="mt-5 max-w-3xl text-sm text-zinc-400">
         Boots means an owner reached the desktop on Omarchy {channel}, which ships linux-omarchy {status.omarchy.kernel} and systemd {status.omarchy.systemd}. Booting is the first goal; features like suspend and USB4 come next.
       </p>
+      <div class="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 rounded-xl bg-zinc-900 px-5 py-4 ring-1 ring-zinc-800">
+        <p class="text-sm text-zinc-300"><strong class="font-semibold text-zinc-100">Own an ARM laptop that isn't green yet?</strong> A few minutes of yours can get it to Omarchy.</p>
+        <a href="/help" class="shrink-0 rounded-md bg-zinc-100 px-3 py-1.5 text-sm font-medium text-zinc-900 hover:bg-white">How to help</a>
+      </div>
     </header>
 
     <Family id="snapdragon" title="Snapdragon X and X2" parts={outcomeParts(current)} total={current.length}>
@@ -169,18 +172,6 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
       Apple Silicon Macs run Omarchy on top of Asahi Linux. <a class={LINK} href="https://asahilinux.org/docs/platform/feature-support/overview/">Asahi's feature support pages</a> track which models and features work.
     </p>
 
-    <section class="mt-12 scroll-mt-6 rounded-xl bg-zinc-900 p-6 text-sm text-zinc-400 ring-1 ring-zinc-800" id="help">
-      <h2 class="text-base font-semibold text-zinc-100">Help a model get there</h2>
-      <p class="mt-2 max-w-3xl">
-        Own one of the models marked <span class={`${PILL} ${TONE.wanted}`}>Wanted</span> or <span class={`${PILL} ${TONE.close}`}>Ready to test</span>, or one that's missing from the list? A hardware report from its Windows, the device tree it boots with on Linux, or a boot test each move it forward, and take a few minutes.
-      </p>
-      <div class="mt-4 flex flex-wrap gap-3">
-        <a href="/help" class="rounded-md bg-zinc-100 px-3 py-1.5 font-medium text-zinc-900 hover:bg-white">How to help</a>
-        <a href={`${REPO}/issues/new?template=model.yml`} class="rounded-md px-3 py-1.5 text-zinc-200 ring-1 ring-zinc-700 hover:bg-zinc-800">Add your model</a>
-        <a href={`${REPO}/blob/main/data/models.yaml`} class="rounded-md px-3 py-1.5 text-zinc-200 ring-1 ring-zinc-700 hover:bg-zinc-800">Edit the model list</a>
-      </div>
-    </section>
-
     <section class="mt-12 grid gap-8 text-sm text-zinc-400 sm:grid-cols-2">
       <div>
         <h2 class="text-base font-semibold text-zinc-100">What a model needs</h2>
@@ -198,6 +189,10 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
           <a class={LINK} href="https://github.com/aarch64-laptops/build/tree/HEAD/misc">aarch64-laptops</a>{' '}
           and <a class={LINK} href="https://github.com/omacom/omarchy-pkgs">Omarchy's packages</a>.
         </p>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <a href={`${REPO}/issues/new?template=model.yml`} class="rounded-md px-3 py-1.5 text-zinc-200 ring-1 ring-zinc-700 hover:bg-zinc-800">Add your model</a>
+          <a href={`${REPO}/blob/main/data/models.yaml`} class="rounded-md px-3 py-1.5 text-zinc-200 ring-1 ring-zinc-700 hover:bg-zinc-800">Edit the model list</a>
+        </div>
       </div>
     </section>
   </main>
