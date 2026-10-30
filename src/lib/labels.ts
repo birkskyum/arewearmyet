@@ -54,7 +54,7 @@ const STATES = {
     untested: { label: 'Not tested', tone: 'muted', meaning: 'Nobody has tried Omarchy on it yet.' },
   },
   nvidiaLinux: {
-    omarchy: { label: `Omarchy's kernel`, tone: 'close', meaning: `Needs patches that Omarchy's kernel carries and Linux doesn't have yet.` },
+    omarchy: { label: 'Not in Linux yet', tone: 'close', meaning: `Needs patches Linux doesn't have yet. Omarchy's kernel carries them.` },
     mainline: { label: 'Mainline', tone: 'good', meaning: 'Plain Linux supports it.' },
   },
   googlebookOmarchy: {
@@ -94,7 +94,7 @@ export const GOOGLEBOOK_LEGEND: Group[] = [
 
 export const NVIDIA_LEGEND: Group[] = [
   { column: 'Omarchy', question: 'Has someone booted into Omarchy on it?', states: Object.values(STATES.nvidiaOmarchy) as State[] },
-  { column: 'Linux', question: `Whether plain Linux runs it, or it needs Omarchy's kernel.`, states: Object.values(STATES.nvidiaLinux) as State[] },
+  { column: 'Linux', question: `Whether plain Linux runs it, or it needs patches Linux doesn't have yet.`, states: Object.values(STATES.nvidiaLinux) as State[] },
 ];
 
 // Ranks sort best first: a state's position in its group, or a release number within "done"
