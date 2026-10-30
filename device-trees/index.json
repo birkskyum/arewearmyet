@@ -25,6 +25,33 @@
       "x1-acer-swift-14.dtsi"
     ]
   },
+  "asus-proart-pz13-ht5306": {
+    "state": "out-of-tree",
+    "source": "https://github.com/agrucza/asus-proart-pz13-linux",
+    "files": [
+      "SOURCE.md",
+      "x1p42100-asus-proart-pz13.dts",
+      "x1-asus-proart-pz13.dtsi"
+    ]
+  },
+  "asus-vivobook-16-x1607qa": {
+    "state": "out-of-tree",
+    "source": "https://github.com/jglathe/linux_ms_dev_kit/blob/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100-asus-vivobook-16.dts",
+    "files": [
+      "SOURCE.md",
+      "x126100-asus-vivobook-16.dts",
+      "x126100-asus-vivobook-16.dtsi",
+      "x126100.dtsi"
+    ]
+  },
+  "asus-vivobook-s14-s3407qa": {
+    "state": "out-of-tree",
+    "source": "https://github.com/jonaslindeburg-svg/vivobook-s3407qa-linux",
+    "files": [
+      "SOURCE.md",
+      "x1p42100-asus-vivobook-s14.dts"
+    ]
+  },
   "asus-zenbook-14-ux3480qa": {
     "state": "out-of-tree",
     "source": "https://github.com/omacom/omarchy-pkgs/pull/1634",
@@ -58,6 +85,32 @@
       "x1p42100-hp-elitebook-6-g1q.dts"
     ]
   },
+  "hp-omnibook-3-14-hz0": {
+    "state": "out-of-tree",
+    "source": "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-3-oled.dts",
+    "files": [
+      "SOURCE.md",
+      "x1p42100-hp-omnibook-3-oled.dts",
+      "x1-hp-omnibook-3.dtsi"
+    ]
+  },
+  "hp-omnibook-5-14-he0": {
+    "state": "out-of-tree",
+    "source": "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-5.dts",
+    "files": [
+      "SOURCE.md",
+      "x1p42100-hp-omnibook-5.dts"
+    ]
+  },
+  "hp-omnibook-5-16-bf1": {
+    "state": "out-of-tree",
+    "source": "https://github.com/theflyingrahul/linux-hp-omnibook-5-glymur",
+    "files": [
+      "SOURCE.md",
+      "mahua-hp-omnibook-5-bf1xxx.dts",
+      "mahua-hp-omnibook-5-bf1xxx.dtsi"
+    ]
+  },
   "hp-omnibook-ultra-14-kg0": {
     "state": "posted",
     "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260830-x2-hp-omnibook-ship-v1-2-9feada71dc79@oss.qualcomm.com/",
@@ -74,21 +127,30 @@
       "mahua-hp-omnibook-x16.dts"
     ]
   },
+  "humain-horizon": {
+    "state": "out-of-tree",
+    "source": "https://github.com/playtron-os/humain-dtb",
+    "files": [
+      "SOURCE.md",
+      "glymur-crd.dts",
+      "glymur-crd.dtsi"
+    ]
+  },
   "lenovo-ideapad-5x-2-in-1-14q8x9": {
     "state": "out-of-tree",
-    "source": "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p42100-lenovo-ideapad-5-2in1.txt",
+    "source": "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-lenovo-ideapad-5-2in1.dts",
     "files": [
-      "SOURCE.md"
-    ],
-    "note": "No public source of the tree found yet, only the link above."
+      "SOURCE.md",
+      "x1p42100-lenovo-ideapad-5-2in1.dts"
+    ]
   },
   "lenovo-ideapad-slim-3x-15q8x10": {
     "state": "out-of-tree",
-    "source": "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x126100-lenovo-ideapad-slim3.txt",
+    "source": "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x126100-lenovo-ideapad-slim3.dts",
     "files": [
-      "SOURCE.md"
-    ],
-    "note": "No public source of the tree found yet, only the link above."
+      "SOURCE.md",
+      "x126100-lenovo-ideapad-slim3.dts"
+    ]
   },
   "lenovo-ideapad-slim-5x-14q8x9": {
     "state": "posted",
@@ -106,6 +168,14 @@
     "files": [
       "series.mbox",
       "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts"
+    ]
+  },
+  "microsoft-surface-laptop-13in-1st-edition": {
+    "state": "out-of-tree",
+    "source": "https://github.com/kairunjp/Surface-Laptop-for-Business-13in-1st-Ed-with-Snapdragon-Linux",
+    "files": [
+      "SOURCE.md",
+      "surface-laptop-13-typec.dts"
     ]
   },
   "microsoft-surface-laptop-8-13": {

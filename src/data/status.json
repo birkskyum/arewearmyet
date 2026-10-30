@@ -38,7 +38,7 @@
     "deviceTree": 23,
     "ids": 29,
     "firmware": 3,
-    "deviceTreeComing": 16,
+    "deviceTreeComing": 24,
     "idsComing": 3,
     "firmwareComing": 26,
     "googlebooks": 2,
@@ -481,11 +481,11 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/agrucza/asus-proart-pz13-linux",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-proart-pz13-ht5306",
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -499,6 +499,8 @@
       },
       "variants": [
         {
+          "chip": "X1P-42-100",
+          "compatible": "asus,proart-pz13-ht5306qa",
           "computed": "none",
           "deviceTree": null,
           "firmwareNeeded": [],
@@ -636,7 +638,7 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-14-x1407q/techspec/",
         "https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html"
       ],
-      "notes": null,
+      "notes": "Owners boot it with the X Plus Vivobook S 15's device tree or a patched Zenbook A14 one.",
       "outcome": "none",
       "reports": [],
       "upstream": {
@@ -692,15 +694,15 @@
         "https://eshop.asus.com/us/90nb15z1-m00590-asus-vivobook-16-x1607qa-copilot-pc.html",
         "https://github.com/linux-msm/audioreach-topology/commit/744161325eba0fca72436f8d98576d9d4f7e87de"
       ],
-      "notes": "linux-firmware has its audio topology, so a device tree exists somewhere out of tree.",
+      "notes": null,
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/jglathe/linux_ms_dev_kit/blob/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100-asus-vivobook-16.dts",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-vivobook-16-x1607qa",
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -716,6 +718,8 @@
       },
       "variants": [
         {
+          "chip": "X1-26-100",
+          "compatible": "asus,vivobook-x16",
           "computed": "none",
           "deviceTree": null,
           "firmwareNeeded": [],
@@ -889,11 +893,11 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/jonaslindeburg-svg/vivobook-s3407qa-linux",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-vivobook-s14-s3407qa",
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -907,6 +911,8 @@
       },
       "variants": [
         {
+          "chip": "X1-26-100",
+          "compatible": "asus,vivobook-s14-s3407qa",
           "computed": "none",
           "deviceTree": null,
           "firmwareNeeded": [],
@@ -1042,7 +1048,7 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s3607q/techspec/",
         "https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/"
       ],
-      "notes": null,
+      "notes": "Owners boot it with the X Plus Vivobook S 15's device tree, with gaps.",
       "outcome": "none",
       "reports": [],
       "upstream": {
@@ -2594,11 +2600,11 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-3-oled.dts",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-3-14-hz0",
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -2612,6 +2618,8 @@
       },
       "variants": [
         {
+          "chip": "X1-26-100",
+          "compatible": "hp,omnibook-3-oled",
           "computed": "none",
           "deviceTree": null,
           "firmwareNeeded": [],
@@ -2756,11 +2764,11 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-5.dts",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-5-14-he0",
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -2776,6 +2784,8 @@
       },
       "variants": [
         {
+          "chip": "X1P-42-100",
+          "compatible": "hp,omnibook-5",
           "computed": "none",
           "deviceTree": null,
           "firmwareNeeded": [],
@@ -2810,7 +2820,7 @@
         "https://www.notebookcheck.net/HP-OmniBook-5-NGAI-16-fb0000.1190138.0.html",
         "https://www.thurrott.com/mobile/copilot-pc/328237/hp-omnibook-5-16-review-its-a-snapdragon-miracle"
       ],
-      "notes": null,
+      "notes": "Owners run the OmniBook 5 14's out-of-tree device tree on it.",
       "outcome": "none",
       "reports": [],
       "upstream": {
@@ -2982,7 +2992,7 @@
         "https://www.hp.com/au-en/shop/hp-probook-4-g1q-14-inch-notebook-next-gen-ai-pc-bx2e6pt.html",
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-probook-4-g1q"
       ],
-      "notes": null,
+      "notes": "Owners report Ubuntu booting on it with the X Plus OmniBook X 14's device tree.",
       "outcome": "none",
       "reports": [],
       "upstream": {
@@ -3226,11 +3236,11 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/theflyingrahul/linux-hp-omnibook-5-glymur",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-5-16-bf1",
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -3244,6 +3254,8 @@
       },
       "variants": [
         {
+          "chip": "X2P-64-100",
+          "compatible": "hp,omnibook-5-16-bf1xxx",
           "computed": "none",
           "deviceTree": null,
           "firmwareNeeded": [],
@@ -3450,15 +3462,15 @@
         "https://www.humain.com/en/horizon.html",
         "https://www.digitaltrends.com/computing/humain-horizon-ultra-ai-pc-unveiled-with-snapdragon-x2-elite-and-on-device-ai/"
       ],
-      "notes": null,
+      "notes": "Its out-of-tree device tree is the Glymur reference board's with fixes for this machine, and keeps the reference board's compatible.",
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/playtron-os/humain-dtb",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/humain-horizon",
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -3607,7 +3619,7 @@
         "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p42100-lenovo-ideapad-5-2in1.txt",
+        "devicetreeOutOfTree": "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-lenovo-ideapad-5-2in1.dts",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/lenovo-ideapad-5x-2-in-1-14q8x9",
         "ids": "listed",
         "idsCollected": null,
@@ -3674,7 +3686,7 @@
         "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x126100-lenovo-ideapad-slim3.txt",
+        "devicetreeOutOfTree": "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x126100-lenovo-ideapad-slim3.dts",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/lenovo-ideapad-slim-3x-15q8x10",
         "ids": "listed",
         "idsCollected": null,
@@ -4864,11 +4876,11 @@
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/kairunjp/Surface-Laptop-for-Business-13in-1st-Ed-with-Snapdragon-Linux",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/microsoft-surface-laptop-13in-1st-edition",
         "ids": "missing",
         "idsCollected": null,
         "firmware": "windows",
@@ -4882,6 +4894,8 @@
       },
       "variants": [
         {
+          "chip": "X1P-42-100",
+          "compatible": "microsoft,surface-laptop-13-2095",
           "computed": "none",
           "deviceTree": null,
           "firmwareNeeded": [],

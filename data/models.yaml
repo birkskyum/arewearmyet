@@ -139,6 +139,12 @@ models:
     released: "2024-09"
     chips: ["X1P-42-100"]
     model_numbers: ["HT5306QA"]
+    variants:
+      - { chip: "X1P-42-100", compatible: "asus,proart-pz13-ht5306qa" }
+    devicetree_out_of_tree: "https://github.com/agrucza/asus-proart-pz13-linux"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/agrucza/asus-proart-pz13-linux/71c27d312a0e7650870bb9a3e1c2306a975c0e1a/dts/x1p42100-asus-proart-pz13.dts"
+      - "https://raw.githubusercontent.com/agrucza/asus-proart-pz13-linux/71c27d312a0e7650870bb9a3e1c2306a975c0e1a/dts/x1-asus-proart-pz13.dtsi"
     sources:
       - https://www.asus.com/laptops/for-creators/proart/proart-pz13-ht5306/techspec/
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-proart-pz13
@@ -173,6 +179,7 @@ models:
     released: "2025-01"
     chips: ["X1-26-100"]
     model_numbers: ["X1407QA", "A1407QA"]
+    notes: "Owners boot it with the X Plus Vivobook S 15's device tree or a patched Zenbook A14 one."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-14-x1407q/techspec/
       - https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html
@@ -184,8 +191,14 @@ models:
     released: "2025-01"
     chips: ["X1-26-100"]
     model_numbers: ["X1607QA", "F1607QA", "A1607QA"]
+    variants:
+      - { chip: "X1-26-100", compatible: "asus,vivobook-x16" }
     firmware: ["qcom/x1e80100/ASUSTeK/vivobook-16"]
-    notes: "linux-firmware has its audio topology, so a device tree exists somewhere out of tree."
+    devicetree_out_of_tree: "https://github.com/jglathe/linux_ms_dev_kit/blob/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100-asus-vivobook-16.dts"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100-asus-vivobook-16.dts"
+      - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100-asus-vivobook-16.dtsi"
+      - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100.dtsi"
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-16-x1607q/techspec/
       - https://eshop.asus.com/us/90nb15z1-m00590-asus-vivobook-16-x1607qa-copilot-pc.html
@@ -219,6 +232,11 @@ models:
     released: "2025-01"
     chips: ["X1-26-100"]
     model_numbers: ["S3407QA"]
+    variants:
+      - { chip: "X1-26-100", compatible: "asus,vivobook-s14-s3407qa" }
+    devicetree_out_of_tree: "https://github.com/jonaslindeburg-svg/vivobook-s3407qa-linux"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/jonaslindeburg-svg/vivobook-s3407qa-linux/a9b964ee371675a8c1e5e23ea7c8da00f2178dfd/dts/x1p42100-asus-vivobook-s14.dts"
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s14-s3407q/techspec/
       - https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/
@@ -251,6 +269,7 @@ models:
     released: "2025"
     chips: ["X1-26-100"]
     model_numbers: ["S3607QA"]
+    notes: "Owners boot it with the X Plus Vivobook S 15's device tree, with gaps."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s3607q/techspec/
       - https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/
@@ -591,6 +610,12 @@ models:
     released: "2026-01"
     chips: ["X1-26-100"]
     model_numbers: ["14-hz0xxx"]
+    variants:
+      - { chip: "X1-26-100", compatible: "hp,omnibook-3-oled" }
+    devicetree_out_of_tree: "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-3-oled.dts"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-3-oled.dts"
+      - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1-hp-omnibook-3.dtsi"
     sources:
       - https://www.hp.com/au-en/shop/hp-omnibook-3-laptop-next-gen-ai-14-hz0062qu-dz4m3pa.html
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4520692
@@ -624,7 +649,12 @@ models:
     released: "2025-05"
     chips: ["X1P-42-100", "X1-26-100"]
     model_numbers: ["14-he0xxx", "14-he0"]
+    variants:
+      - { chip: "X1P-42-100", compatible: "hp,omnibook-5" }
     acpi: ["hp-omnibook-5-14-he0xxx"]
+    devicetree_out_of_tree: "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-5.dts"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-5.dts"
     sources:
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4021617
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-omnibook-5
@@ -637,6 +667,7 @@ models:
     released: "2025-06"
     chips: ["X1P-42-100", "X1-26-100"]
     model_numbers: ["16-bf0xxx", "16-fb0xxx"]
+    notes: "Owners run the OmniBook 5 14's out-of-tree device tree on it."
     sources:
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4439453
       - https://www.notebookcheck.net/HP-OmniBook-5-NGAI-16-fb0000.1190138.0.html
@@ -667,6 +698,7 @@ models:
     released: "2025-05"
     chips: ["X1-26-100", "X1P-42-100"]
     model_numbers: ["HSN-Q42C"]
+    notes: "Owners report Ubuntu booting on it with the X Plus OmniBook X 14's device tree."
     sources:
       - https://www.hp.com/au-en/shop/hp-probook-4-g1q-14-inch-notebook-next-gen-ai-pc-bx2e6pt.html
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-probook-4-g1q
@@ -715,6 +747,12 @@ models:
     released: "2026-10"
     chips: ["X2P-64-100"]
     model_numbers: ["16-bf1xxx"]
+    variants:
+      - { chip: "X2P-64-100", compatible: "hp,omnibook-5-16-bf1xxx" }
+    devicetree_out_of_tree: "https://github.com/theflyingrahul/linux-hp-omnibook-5-glymur"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/theflyingrahul/linux-hp-omnibook-5-glymur/2d54a5a3a239fdf78f748e64bfe60a21eef2026a/dts/qcom/mahua-hp-omnibook-5-bf1xxx.dts"
+      - "https://raw.githubusercontent.com/theflyingrahul/linux-hp-omnibook-5-glymur/2d54a5a3a239fdf78f748e64bfe60a21eef2026a/dts/qcom/mahua-hp-omnibook-5-bf1xxx.dtsi"
     sources:
       - https://www.notebookcheck.net/HP-releases-new-16-inch-laptop-with-Snapdragon-X2-Plus-and-over-30-hours-battery-life.1414570.0.html
 
@@ -771,6 +809,11 @@ models:
     released: "2026-09"
     chips: ["X2E-80-100", "X2E-88-100"]
     model_numbers: ["Horizon", "Horizon Ultra"]
+    devicetree_out_of_tree: "https://github.com/playtron-os/humain-dtb"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/playtron-os/humain-dtb/608eb397ba05ca892eec2c25ccdbae627308cbe7/glymur-crd.dts"
+      - "https://raw.githubusercontent.com/playtron-os/humain-dtb/608eb397ba05ca892eec2c25ccdbae627308cbe7/glymur-crd.dtsi"
+    notes: "Its out-of-tree device tree is the Glymur reference board's with fixes for this machine, and keeps the reference board's compatible."
     sources:
       - https://www.qualcomm.com/news/releases/2026/08/qualcomm-and-humain-unveil-horizon-ultra-ai-pc-at-leap-2026--bri
       - https://www.humain.com/en/horizon.html
@@ -808,7 +851,9 @@ models:
     variants:
       - { chip: "X1P-42-100", compatible: "lenovo,ideapad-5-2in1" }
     acpi: ["lenovo-ideapad-5-2in1-83GH-14Q8X9"]
-    devicetree_out_of_tree: "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p42100-lenovo-ideapad-5-2in1.txt"
+    devicetree_out_of_tree: "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-lenovo-ideapad-5-2in1.dts"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-lenovo-ideapad-5-2in1.dts"
     sources:
       - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_5_2_in_1_14Q8X9
       - https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-ideapad-5-2in1-83GH-14Q8X9
@@ -823,7 +868,9 @@ models:
     variants:
       - { chip: "X1-26-100", compatible: "lenovo,ideapad-slim3" }
     acpi: ["lenovo-ideapad-slim3x-15q8x10-WCN7850"]
-    devicetree_out_of_tree: "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x126100-lenovo-ideapad-slim3.txt"
+    devicetree_out_of_tree: "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x126100-lenovo-ideapad-slim3.dts"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x126100-lenovo-ideapad-slim3.dts"
     sources:
       - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Slim_3_15Q8X10
       - https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-ideapad-slim3x-15q8x10-WCN7850
@@ -1054,6 +1101,11 @@ models:
     released: "2025-05"
     chips: ["X1P-42-100"]
     model_numbers: ["2095"]
+    variants:
+      - { chip: "X1P-42-100", compatible: "microsoft,surface-laptop-13-2095" }
+    devicetree_out_of_tree: "https://github.com/kairunjp/Surface-Laptop-for-Business-13in-1st-Ed-with-Snapdragon-Linux"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/kairunjp/Surface-Laptop-for-Business-13in-1st-Ed-with-Snapdragon-Linux/3d52bdac42b40b5f9294c75bc1c5af1d371fa422/device-tree/base/surface-laptop-13-typec.dts"
     sources:
       - https://blogs.windows.com/devices/2025/05/06/introducing-all-new-surface-copilot-pcs-the-surface-pro-12-inch-and-surface-laptop-13-inch/
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference

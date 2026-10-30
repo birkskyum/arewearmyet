@@ -37,6 +37,8 @@ jobs:
       - name: Copy the device trees not in Linux yet
         if: github.event_name != 'push'
         run: pnpm trees
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - run: pnpm status
 
