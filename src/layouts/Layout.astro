@@ -24,5 +24,60 @@ const { title, description } = Astro.props;
   </head>
   <body class="min-h-screen bg-zinc-950 text-zinc-200 antialiased">
     <slot />
+    <script>
+      // One tooltip for every page: anything with data-tip shows it at once on hover or focus, with
+      // data-tip-title as its heading, below the element or above it when the window has no room
+      const tip = document.createElement('div');
+      tip.setAttribute('role', 'tooltip');
+      tip.className = 'pointer-events-none fixed z-50 max-w-xs rounded-lg bg-zinc-800 px-3 py-2 text-xs leading-5 text-zinc-300 opacity-0 shadow-xl ring-1 ring-zinc-700 transition-opacity duration-75';
+      document.body.append(tip);
+      let current: HTMLElement | null = null;
+
+      const show = (element: HTMLElement) => {
+        current = element;
+        tip.replaceChildren();
+        if (element.dataset.tipTitle) {
+          const heading = document.createElement('div');
+          heading.className = 'font-medium text-zinc-100';
+          heading.textContent = element.dataset.tipTitle;
+          tip.append(heading);
+        }
+        tip.append(document.createTextNode(element.dataset.tip ?? ''));
+        const box = element.getBoundingClientRect();
+        const left = Math.min(Math.max(8, box.left + box.width / 2 - tip.offsetWidth / 2), window.innerWidth - tip.offsetWidth - 8);
+        const below = box.bottom + 6;
+        tip.style.left = `${left}px`;
+        tip.style.top = `${below + tip.offsetHeight > window.innerHeight - 8 ? box.top - tip.offsetHeight - 6 : below}px`;
+        tip.classList.replace('opacity-0', 'opacity-100');
+      };
+      const hide = () => {
+        current = null;
+        tip.classList.replace('opacity-100', 'opacity-0');
+      };
+      const target = (event: Event) => (event.target instanceof Element ? event.target.closest<HTMLElement>('[data-tip]') : null);
+
+      document.addEventListener('pointerover', (event) => {
+        const element = target(event);
+        if (element !== current) element ? show(element) : hide();
+      });
+      document.addEventListener('focusin', (event) => {
+        const element = target(event);
+        element ? show(element) : hide();
+      });
+      document.addEventListener('focusout', hide);
+      window.addEventListener('scroll', hide, { capture: true, passive: true });
+
+      // A link to a section that's folded away opens it
+      const reveal = () => {
+        const element = location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
+        let opened = false;
+        for (let node = element; node; node = node.parentElement) {
+          if (node instanceof HTMLDetailsElement && !node.open) opened = node.open = true;
+        }
+        if (opened) element?.scrollIntoView();
+      };
+      window.addEventListener('hashchange', reveal);
+      reveal();
+    </script>
   </body>
 </html>

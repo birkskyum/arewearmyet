@@ -1,0 +1,31 @@
+---
+// A family of machines: its name and how many boot into Omarchy stay in view, and the rest folds away
+import SplitBar from './SplitBar.astro';
+
+interface Props {
+  id: string;
+  title: string;
+  parts: { label: string; value: number; color: string; title: string }[];
+  total: number;
+}
+
+const { id, title, parts, total } = Astro.props;
+---
+
+<details id={id} open class="group mt-12 scroll-mt-6 border-t border-zinc-800 pt-8">
+  <summary class="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+    <div class="flex items-center justify-between gap-4">
+      <h2 class="text-xl font-semibold text-zinc-50">{title} <span class="font-normal text-zinc-500">{total}</span></h2>
+      <span class="inline-flex items-center gap-1 text-xs text-zinc-400 group-hover:text-zinc-200">
+        <span class="group-open:hidden">Show</span><span class="hidden group-open:inline">Hide</span>
+        <svg class="h-4 w-4 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.17l3.71-3.94a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd" /></svg>
+      </span>
+    </div>
+    <div class="mt-4">
+      <SplitBar parts={parts} total={total} caption={`${parts[0].value} of ${total} boot into Omarchy`} />
+    </div>
+  </summary>
+  <div class="mt-6">
+    <slot />
+  </div>
+</details>

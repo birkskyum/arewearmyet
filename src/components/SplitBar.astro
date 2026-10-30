@@ -1,24 +1,25 @@
 ---
-// One bar split into outcomes, with a key above it; used for both chip families
+// One bar split into outcomes, with a key above it and a caption on the right; every family has one
 interface Props {
   parts: { label: string; value: number; color: string; title: string }[];
   total: number;
+  caption?: string;
 }
 
 const { parts, total } = Astro.props;
-const done = parts[0].value;
+const caption = Astro.props.caption ?? `${parts[0].value} / ${total}`;
 ---
 
-<div class="flex items-baseline justify-between gap-4 text-sm">
+<div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm">
   <span class="flex flex-wrap gap-x-4 gap-y-1 text-zinc-200">
     {parts.map((part) => (
-      <span class="inline-flex items-center gap-1.5" title={part.title}><span class={`h-2 w-2 rounded-full ${part.color}`}></span>{part.label} <span class="text-zinc-500">{part.value}</span></span>
+      <span class="inline-flex items-center gap-1.5" data-tip={part.title} data-tip-title={part.label}><span class={`h-2 w-2 rounded-full ${part.color}`}></span>{part.label} <span class="text-zinc-500">{part.value}</span></span>
     ))}
   </span>
-  <span class="tabular-nums text-zinc-300">{done} / {total}</span>
+  <span class="tabular-nums text-zinc-300">{caption}</span>
 </div>
 <div class="mt-1.5 flex h-2 overflow-hidden rounded-full bg-zinc-800">
   {parts.map((part) => (
-    <div class={`h-full ${part.color}`} style={`width: ${(100 * part.value) / Math.max(total, 1)}%`} title={`${part.label}: ${part.value}`}></div>
+    <div class={`h-full ${part.color}`} style={`width: ${(100 * part.value) / Math.max(total, 1)}%`} data-tip={part.title} data-tip-title={`${part.label}: ${part.value}`}></div>
   ))}
 </div>

@@ -56,14 +56,13 @@ const ICON_BUTTON = 'inline-flex items-center gap-0.5 rounded px-1 py-0.5 text-z
 function Pill(props: { cell: CellData; column: string }) {
   const cell = props.cell;
   if ('text' in cell) return <span class="text-xs text-zinc-400">{cell.text}</span>;
-  const title = `${props.column}: ${cell.title}`;
   const classes = `${PILL} ${TONE[cell.tone]}`;
   return cell.href ? (
-    <a href={cell.href} title={title} class={`${classes} hover:brightness-125`}>
+    <a href={cell.href} data-tip={cell.title} data-tip-title={props.column} class={`${classes} hover:brightness-125`}>
       {cell.label}
     </a>
   ) : (
-    <span title={title} class={classes}>
+    <span data-tip={cell.title} data-tip-title={props.column} class={classes}>
       {cell.label}
     </span>
   );
@@ -212,7 +211,7 @@ export default function StatusTable(props: Props) {
                     menu.style.left = `${Math.max(8, Math.min(rect.left, innerWidth - 272))}px`;
                   };
                   return (
-                    <th class={header.id === 'brand' ? 'px-4 py-3 font-medium' : 'px-3 py-3 font-medium'} title={header.question} aria-sort={direction() === 'asc' ? 'ascending' : direction() === 'desc' ? 'descending' : 'none'}>
+                    <th class={header.id === 'brand' ? 'px-4 py-3 font-medium' : 'px-3 py-3 font-medium'} data-tip={header.question} data-tip-title={header.header} aria-sort={direction() === 'asc' ? 'ascending' : direction() === 'desc' ? 'descending' : 'none'}>
                       <span class="inline-flex items-center gap-1">
                         <button type="button" class="inline-flex items-center gap-1 uppercase tracking-wide hover:text-zinc-100" onClick={table.getColumn(header.id)!.getToggleSortingHandler()} data-sort={header.id}>
                           {header.header}
@@ -299,7 +298,7 @@ export default function StatusTable(props: Props) {
                           model.name
                         )}
                         <Show when={model.announced}>
-                          <span title={model.announced!} class={`ml-1.5 align-middle ${PILL} ${TONE.info}`}>
+                          <span data-tip={model.announced!} class={`ml-1.5 align-middle ${PILL} ${TONE.info}`}>
                             Announced
                           </span>
                         </Show>
