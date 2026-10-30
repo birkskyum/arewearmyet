@@ -40,7 +40,7 @@
     "firmware": 3,
     "deviceTreeComing": 24,
     "idsComing": 4,
-    "firmwareComing": 9,
+    "firmwareComing": 26,
     "googlebooks": 2,
     "acpi": 29,
     "acpiWanted": 36
@@ -304,11 +304,11 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/acer-swift-go-pro-ai-sfa14-11",
         "ids": "mismatch",
         "idsCollected": null,
-        "firmware": "windows",
+        "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1341",
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
@@ -756,7 +756,7 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1p42100-asus-vivobook-s15.dts",
         "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1e80100-asus-vivobook-s15.txt"
       ],
-      "notes": null,
+      "notes": "The linux-firmware merge request has the X Elite model's files only. ASUS sells both chips as S5507QA, so which package carries the X Plus model's signed files isn't clear yet.",
       "outcome": "problems",
       "reports": [
         {
@@ -773,24 +773,11 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8380.mbn",
-          "qcvss8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf",
-          "qcdxkmsucpurwa.mbn",
-          "qcvss8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
-        "firmwareAudioOnly": true,
+        "firmware": "posted",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1336",
         "firmwareFolders": [
           "qcom/x1e80100/ASUSTeK/vivobook-s15"
         ],
@@ -1301,22 +1288,11 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf",
-          "qcdxkmsucpurwa.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
-        "firmwareAudioOnly": true,
+        "firmware": "posted",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1336",
         "firmwareFolders": [
           "qcom/x1e80100/ASUSTeK/zenbook-a14"
         ],
@@ -1616,16 +1592,11 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcadsp8480.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8480.mbn",
-          "cdsp_dtbs.elf"
-        ],
-        "firmwareAudioOnly": true,
+        "firmware": "posted",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1336",
         "firmwareFolders": [
           "qcom/glymur/ASUSTeK/UX3407NA"
         ],
@@ -1699,18 +1670,11 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcadsp8480.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8480.mbn",
-          "cdsp_dtbs.elf",
-          "soccp.mbn",
-          "soccp_dtb.mbn"
-        ],
-        "firmwareAudioOnly": true,
+        "firmware": "posted",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1336",
         "firmwareFolders": [
           "qcom/glymur/ASUSTeK/UX3607OA"
         ],
@@ -1790,11 +1754,11 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/dell-inspiron-14-5441",
         "ids": "missing",
         "idsCollected": null,
-        "firmware": "windows",
+        "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1331",
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
@@ -1865,18 +1829,11 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8380.mbn",
-          "qcvss8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
-        "firmwareAudioOnly": true,
+        "firmware": "posted",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1331",
         "firmwareFolders": [
           "qcom/x1e80100/dell/inspiron-14-plus-7441"
         ],
@@ -2029,18 +1986,11 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8380.mbn",
-          "qcvss8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
-        "firmwareAudioOnly": true,
+        "firmware": "posted",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1331",
         "firmwareFolders": [
           "qcom/x1e80100/dell/latitude-7455"
         ],
@@ -2119,13 +2069,11 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
-        "firmware": "partial",
-        "firmwareMissing": [
-          "qcvss8380.mbn"
-        ],
+        "firmware": "posted",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1331",
         "firmwareFolders": [
           "qcom/x1e80100/dell/xps13-9345"
         ],
@@ -2368,7 +2316,7 @@
         "https://www.notebookcheck.net/Honor-MagicBook-Art-14-Snapdragon-released-in-Europe-with-free-tablet-and-earbuds.929574.0.html",
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1e80100-honor-magicbook-art-14.dts"
       ],
-      "notes": null,
+      "notes": "Honor's driver download has no compute DSP firmware, so the linux-firmware merge request leaves those two files out.",
       "outcome": "should",
       "reports": [],
       "upstream": {
@@ -2379,18 +2327,11 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8380.mbn",
-          "qcvss8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "posted",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1337",
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
@@ -4682,18 +4623,11 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8380.mbn",
-          "qcvss8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "posted",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1338",
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
@@ -4777,17 +4711,11 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "posted",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1335",
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
@@ -4872,17 +4800,11 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "posted",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1335",
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
@@ -5028,17 +4950,11 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtb.mbn",
-          "qccdsp8380.mbn",
-          "cdsp_dtb.mbn"
-        ],
+        "firmware": "posted",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1335",
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
@@ -5144,17 +5060,11 @@
         "devicetreeArchive": null,
         "ids": "mismatch",
         "idsCollected": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsucpurwa.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "posted",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1335",
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
@@ -5284,11 +5194,11 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/microsoft-surface-laptop-8-13",
         "ids": "missing",
         "idsCollected": null,
-        "firmware": "windows",
+        "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1335",
         "firmwareFolders": [],
         "acpi": "missing",
         "acpiUrls": []
@@ -5658,11 +5568,11 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/samsung-galaxy-book4-edge-16",
         "ids": "missing",
         "idsCollected": null,
-        "firmware": "windows",
+        "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1334",
         "firmwareFolders": [],
         "acpi": "missing",
         "acpiUrls": []
@@ -5724,7 +5634,7 @@
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": "https://www.samsung.com/global/galaxybooks-downloadcenter/",
-        "firmwarePosted": null,
+        "firmwarePosted": "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1334",
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
