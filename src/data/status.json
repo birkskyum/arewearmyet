@@ -1,5 +1,5 @@
 {
-  "collected": "2026-10-30T16:00:08.571Z",
+  "collected": "2026-10-30T16:13:55.561Z",
   "linuxNext": "20261030",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -6064,9 +6064,9 @@
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/",
         "devicetreeOutOfTree": null,
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/samsung-galaxy-book4-edge-14",
-        "ids": "collected",
+        "ids": "posted",
         "idsCollected": "https://github.com/birkskyum/arewearmyet/issues/1",
-        "idsStubble": null,
+        "idsStubble": "https://github.com/ubuntu/stubble/pull/98",
         "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -6087,7 +6087,13 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
-          "stubble": [],
+          "stubble": [
+            {
+              "file": "x1e80100-samsung-galaxy-book4-edge-14.json",
+              "state": "open",
+              "url": "https://github.com/ubuntu/stubble/pull/98"
+            }
+          ],
           "outcome": "problems",
           "reports": [
             {
