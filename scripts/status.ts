@@ -231,9 +231,9 @@ const summary = {
   firmwareComing: count(current, (r) => r.upstream.firmware === 'next-release' || r.upstream.firmware === 'posted'),
   // Hardware IDs and Windows firmware only apply to models that start through UEFI
   googlebooks: count(rows, (r) => r.boot === 'android'),
-  // A dump only matters until a model has a device tree
-  acpiNeeded: count(current, (r) => r.upstream.deviceTree !== 'released' && r.upstream.deviceTree !== 'next'),
-  acpi: count(current, (r) => r.upstream.deviceTree !== 'released' && r.upstream.deviceTree !== 'next' && r.upstream.acpi === 'collected'),
+  // A dump only matters while no device tree exists for a model anywhere, posted or out of tree included
+  acpiNeeded: count(current, (r) => r.upstream.deviceTree === 'missing'),
+  acpi: count(current, (r) => r.upstream.deviceTree === 'missing' && r.upstream.acpi === 'collected'),
 };
 
 // Anything the sources know that no model claims yet, so the list can be completed

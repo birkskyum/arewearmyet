@@ -107,7 +107,6 @@ const releaseRank = (tag: string) => {
   const [major, minor] = release(tag).split('.').map(Number);
   return major * 100 + (minor || 0);
 };
-const hasUpstreamTree = (model: Model) => model.upstream.deviceTree === 'released' || model.upstream.deviceTree === 'next';
 const reportNotes = (reports: { note: string; variant?: string }[]) => reports.map((r) => (r.variant ? `${r.variant}: ${r.note}` : r.note)).join(' ');
 
 export function omarchyCell(model: Model): Cell {
@@ -156,7 +155,7 @@ export function firmwareCell(model: Model): Cell {
 
 export function acpiCell(model: Model): Cell {
   if (model.upstream.acpi === 'collected') return cell(STATES.acpi, 'collected', { href: model.upstream.acpiUrls[0] });
-  return cell(STATES.acpi, hasUpstreamTree(model) ? 'notNeeded' : 'wanted');
+  return cell(STATES.acpi, model.upstream.deviceTree === 'missing' ? 'wanted' : 'notNeeded');
 }
 
 export function googlebookOmarchyCell(model: Model): Cell {

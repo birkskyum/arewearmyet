@@ -29,10 +29,10 @@ const nvidiaBar = [
   { label: 'Not tested', value: summary.nvidia - summary.nvidiaWorks - summary.nvidiaExpected, color: 'bg-zinc-600', title: 'Nobody has tried it yet.' },
 ];
 const upstreamBars = [
-  { label: 'Device tree in Linux', value: summary.deviceTree, coming: summary.deviceTreeComing, total: summary.models, note: 'released or queued in linux-next' },
-  { label: 'Hardware IDs in systemd', value: summary.ids, coming: summary.idsComing, total: summary.models, note: 'so an image picks the device tree by itself' },
-  { label: `Firmware without the laptop's Windows`, value: summary.firmware, coming: summary.firmwareComing, total: summary.models, note: `in linux-firmware's newest release or a known vendor download` },
-  { label: 'ACPI dump collected', value: summary.acpi, coming: 0, total: summary.acpiNeeded, note: 'for the models still without a device tree' },
+  { label: 'Device tree in Linux', value: summary.deviceTree, coming: summary.deviceTreeComing, wanted: 0, total: summary.models, note: 'released or queued in linux-next' },
+  { label: 'Hardware IDs in systemd', value: summary.ids, coming: summary.idsComing, wanted: 0, total: summary.models, note: 'so an image picks the device tree by itself' },
+  { label: `Firmware without the laptop's Windows`, value: summary.firmware, coming: summary.firmwareComing, wanted: 0, total: summary.models, note: `in linux-firmware's newest release or a known vendor download` },
+  { label: 'ACPI dump collected', value: summary.acpi, coming: 0, wanted: summary.acpiNeeded - summary.acpi, total: summary.acpiNeeded, note: 'for the models with no device tree anywhere yet' },
 ];
 
 const snapdragonIds = ['omarchy', 'device-tree', 'ids', 'firmware', 'acpi'] as const;
@@ -100,7 +100,7 @@ const HEADLINE = 'text-2xl font-semibold text-zinc-50';
           <div>
             <div class="flex items-baseline justify-between gap-4 text-sm">
               <dt class="text-zinc-200">{bar.label} <span class="text-zinc-500">{bar.note}</span></dt>
-              <dd class="shrink-0 tabular-nums text-zinc-300">{bar.coming > 0 && <span class="text-zinc-500">{bar.coming} on its way · </span>}{bar.value} / {bar.total}</dd>
+              <dd class="shrink-0 tabular-nums text-zinc-300">{bar.coming > 0 && <span class="text-zinc-500">{bar.coming} on its way · </span>}{bar.wanted > 0 && <span class="text-zinc-500">{bar.wanted} still wanted · </span>}{bar.value} / {bar.total}</dd>
             </div>
             <div class="mt-1.5 flex h-2 overflow-hidden rounded-full bg-zinc-800">
               <div class="h-full bg-emerald-400" style={`width: ${(100 * bar.value) / Math.max(bar.total, 1)}%`} title={`Done: ${bar.value}`}></div>
