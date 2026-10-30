@@ -13,7 +13,9 @@
 #                  file its device tree loads
 #   ids_collected  where its hardware IDs were sent, until they're in systemd
 #   devicetree_posted  the posted device tree patch, until it's accepted
-#   devicetree_out_of_tree  a kernel outside Linux that carries a device tree for it
+#   devicetree_out_of_tree  where a device tree for it lives outside Linux
+#   devicetree_files  that tree's files, a URL each, or a patch URL and #file to cut it
+#                  out; scripts/trees.ts copies posted and out-of-tree trees to device-trees/
 #   discussion     where owners work on it, when that's a separate thread
 #   boot           android when it starts through Android's bootloader, like a Pixel,
 #                  instead of UEFI; those models get their own section, with
@@ -70,6 +72,9 @@ models:
     variants:
       - { model: "SF14-11", chip: "X1P-64-100", compatible: "acer,swift-sf14-11" }
     devicetree_out_of_tree: "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p64100-acer-swift-sf14-11.txt"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/delphix/linux-kernel-generic/develop/arch/arm64/boot/dts/qcom/x1p64100-acer-swift-sf14-11.dts"
+      - "https://raw.githubusercontent.com/delphix/linux-kernel-generic/develop/arch/arm64/boot/dts/qcom/x1-acer-swift-14.dtsi"
     sources:
       - https://news.acer.com/acer-announces-its-first-ngai-pc-the-swift-14-ai-laptop
       - https://www.notebookcheck.net/Acer-Swift-14-AI-SF14-11.861026.0.html
@@ -101,6 +106,9 @@ models:
     variants:
       - { model: "SFG14-01", chip: "X1P-42-100", compatible: "acer,swift-go14-01" }
     devicetree_out_of_tree: "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-acer-swift-go14-01.json"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/delphix/linux-kernel-generic/develop/arch/arm64/boot/dts/qcom/x1p42100-acer-swift-go14-01.dts"
+      - "https://raw.githubusercontent.com/delphix/linux-kernel-generic/develop/arch/arm64/boot/dts/qcom/x1-acer-swift-14.dtsi"
     sources:
       - https://news.acer.com/acer-expands-its-copilot-pc-line-with-new-swift-14-ai-and-swift-go-14-ai-laptops
       - https://www.computerbase.de/artikel/notebooks/acer-swift-go-14-ai-snapdragon-x-plus-test.90425/
@@ -413,6 +421,8 @@ models:
       - { chip: "X1P-64-100", compatible: "dell,latitude-5455" }
     acpi: ["dell-latitude-5455"]
     devicetree_out_of_tree: "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p64100-dell-latitude-5455.txt"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/3thanRam/DELL-Latitude-5455-Ubuntu/main/x1p64100-dell-latitude-5455.dts"
     sources:
       - https://www.delltechnologies.com/asset/en-us/products/laptops-and-2-in-1s/technical-support/latitude-5455-spec-sheet.pdf
       - https://www.notebookcheck.net/Dell-Latitude-5455-arrives-later-this-month-in-Snapdragon-X-Plus-X1P-64-100-and-X1P-42-100-options.883656.0.html
@@ -1146,6 +1156,9 @@ models:
     chips: ["X1P-42-100", "X1-26-100"]
     model_numbers: ["NP750XQA", "NT750XQA", "NP750XQB", "NT750XQB"]
     devicetree_out_of_tree: "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/patch-2-anatase.patch"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/anatase-org/kernel-anatase/anatase-7.0/patch-2-anatase.patch#x1p42100-samsung-galaxy-book4-edge-15.dts"
+      - "https://raw.githubusercontent.com/anatase-org/kernel-anatase/anatase-7.0/patch-2-anatase.patch#x1-samsung-galaxy-book4-edge.dtsi"
     sources:
       - https://news.samsung.com/global/galaxy-book4-edge-samsungs-next-gen-ai-pc-now-available-with-15-inch-display
       - https://www.notebookcheck.net/Samsung-Galaxy-Book4-Edge-15.988764.0.html

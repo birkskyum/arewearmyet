@@ -38,6 +38,9 @@ type Report = { state: 'works' | 'problems'; variant?: string; note: string; che
 
 const sources = JSON.parse(readFileSync('data/sources.json', 'utf8'));
 const list = parse(readFileSync('data/models.yaml', 'utf8'));
+// Copies of trees not in Linux yet, made by scripts/trees.ts
+const archived: Record<string, unknown> = (() => { try { return JSON.parse(readFileSync('device-trees/index.json', 'utf8')); } catch { return {}; } })();
+const ARCHIVE = 'https://github.com/birkskyum/arewearmyet/tree/main/device-trees/';
 const models: Model[] = list.models;
 const ignore: { ids?: string[]; firmware?: string[]; acpi?: string[] } = list.ignore ?? {};
 
@@ -184,6 +187,7 @@ const rows = models.map((model) => {
       firstRelease,
       devicetreePosted: model.devicetree_posted ?? null,
       devicetreeOutOfTree: model.devicetree_out_of_tree ?? null,
+      devicetreeArchive: archived[model.id] ? ARCHIVE + model.id : null,
       ids: idsState,
       idsCollected: model.ids_collected ?? null,
       // What counts is getting the firmware without the laptop's own Windows

@@ -1,0 +1,140 @@
+{
+  "acer-swift-14-ai-sf14-11": {
+    "state": "out-of-tree",
+    "source": "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p64100-acer-swift-sf14-11.txt",
+    "files": [
+      "SOURCE.md",
+      "x1p64100-acer-swift-sf14-11.dts",
+      "x1-acer-swift-14.dtsi"
+    ]
+  },
+  "acer-swift-go-pro-ai-sfa14-11": {
+    "state": "posted",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261023180513.36417-3-kaipeng94@gmail.com/",
+    "files": [
+      "series.mbox",
+      "x1e78100-acer-sfa14-11.dts"
+    ]
+  },
+  "acer-swift-go-14-ai-sfg14-01": {
+    "state": "out-of-tree",
+    "source": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-acer-swift-go14-01.json",
+    "files": [
+      "SOURCE.md",
+      "x1p42100-acer-swift-go14-01.dts",
+      "x1-acer-swift-14.dtsi"
+    ]
+  },
+  "dell-inspiron-14-5441": {
+    "state": "posted",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260508050828.7442-1-adamszyma@wp.pl/",
+    "files": [
+      "series.mbox",
+      "x1p64100-dell-inspiron-14-plus-5441.dts"
+    ]
+  },
+  "dell-latitude-5455": {
+    "state": "out-of-tree",
+    "source": "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p64100-dell-latitude-5455.txt",
+    "files": [
+      "SOURCE.md",
+      "x1p64100-dell-latitude-5455.dts"
+    ]
+  },
+  "hp-elitebook-6-g1q": {
+    "state": "posted",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261013-add-elitebook-6-dts-v1-2-f22e67fc7f9d@canonical.com/",
+    "files": [
+      "series.mbox",
+      "x1-hp-elitebook-6-g1q.dtsi",
+      "x1p42100-hp-elitebook-6-g1q.dts"
+    ]
+  },
+  "hp-omnibook-ultra-14-kg0": {
+    "state": "posted",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260830-x2-hp-omnibook-ship-v1-2-9feada71dc79@oss.qualcomm.com/",
+    "files": [
+      "series.mbox",
+      "glymur-hp-omnibook-ultra-kg0xxx.dts"
+    ]
+  },
+  "hp-omnibook-x-16-cp": {
+    "state": "posted",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261028191800.27829-3-jeff.roach0@gmail.com/",
+    "files": [
+      "series.mbox",
+      "mahua-hp-omnibook-x16.dts"
+    ]
+  },
+  "lenovo-ideapad-5x-2-in-1-14q8x9": {
+    "state": "out-of-tree",
+    "source": "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p42100-lenovo-ideapad-5-2in1.txt",
+    "files": [
+      "SOURCE.md"
+    ],
+    "note": "No public source of the tree found yet, only the link above."
+  },
+  "lenovo-ideapad-slim-3x-15q8x10": {
+    "state": "out-of-tree",
+    "source": "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x126100-lenovo-ideapad-slim3.txt",
+    "files": [
+      "SOURCE.md"
+    ],
+    "note": "No public source of the tree found yet, only the link above."
+  },
+  "lenovo-ideapad-slim-5x-14q8x9": {
+    "state": "posted",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260906-x1-ideapad-slim5x-v1-3-7ccffbe6bc4a@oldschoolsolutions.biz/",
+    "files": [
+      "series.mbox",
+      "x1p42100-lenovo-ideapad-slim5x-lcd.dts",
+      "x1p42100-lenovo-ideapad-slim5x-oled.dts",
+      "x1p42100-lenovo-ideapad-slim5x.dtsi"
+    ]
+  },
+  "lenovo-thinkpad-t14s-gen-7-snapdragon": {
+    "state": "posted",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260929221821.505551-3-srinivas.kandagatla@oss.qualcomm.com/",
+    "files": [
+      "series.mbox",
+      "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts"
+    ]
+  },
+  "microsoft-surface-laptop-8-13": {
+    "state": "posted",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261027-mahua-surface-laptop-v2-3-7dd903a12d22@oss.qualcomm.com/",
+    "files": [
+      "series.mbox",
+      "mahua-microsoft-surface-laptop-8-13p8.dts"
+    ]
+  },
+  "samsung-galaxy-book4-edge-15": {
+    "state": "out-of-tree",
+    "source": "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/patch-2-anatase.patch",
+    "files": [
+      "SOURCE.md",
+      "x1p42100-samsung-galaxy-book4-edge-15.dts",
+      "x1-samsung-galaxy-book4-edge.dtsi"
+    ]
+  },
+  "samsung-galaxy-book4-edge-16": {
+    "state": "posted",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/",
+    "files": [
+      "series.mbox",
+      "x1-samsung-galaxy-book4-edge.dtsi",
+      "x1e80100-samsung-galaxy-book4-edge-14.dts",
+      "x1e84100-samsung-galaxy-book4-edge-16.dts"
+    ]
+  },
+  "samsung-galaxy-book4-edge-14": {
+    "state": "posted",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/",
+    "files": [
+      "series.mbox",
+      "x1-samsung-galaxy-book4-edge.dtsi",
+      "x1e80100-samsung-galaxy-book4-edge-14.dts",
+      "x1e84100-samsung-galaxy-book4-edge-16.dts"
+    ]
+  }
+}

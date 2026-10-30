@@ -34,13 +34,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Copy the device trees not in Linux yet
+        if: github.event_name != 'push'
+        run: pnpm trees
+
       - run: pnpm status
 
       # Commit only when something besides the collection time changed
       - name: Commit changed data
         if: github.event_name != 'push'
         run: |
-          git add data/sources.json src/data/status.json
+          git add data/sources.json src/data/status.json device-trees
           if git diff --cached -U0 | grep -E '^[+-] ' | grep -vqE '"collected"'; then
             git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Refresh the data'
             git push

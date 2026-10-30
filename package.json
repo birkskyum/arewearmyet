@@ -12,7 +12,8 @@
     "astro": "astro",
     "collect": "node scripts/collect.ts",
     "status": "node scripts/status.ts",
-    "deploy": "astro build && wrangler deploy"
+    "deploy": "astro build && wrangler deploy",
+    "trees": "node scripts/trees.ts"
   },
   "dependencies": {
     "@astrojs/solid-js": "^7.1.1",
