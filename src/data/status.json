@@ -1,6 +1,6 @@
 {
-  "collected": "2026-10-30T14:25:55.535Z",
-  "linuxNext": "20261029",
+  "collected": "2026-10-30T16:00:08.571Z",
+  "linuxNext": "20261030",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "rc",
@@ -39,7 +39,7 @@
     "ids": 28,
     "firmware": 3,
     "deviceTreeComing": 24,
-    "idsComing": 4,
+    "idsComing": 6,
     "firmwareComing": 26,
     "googlebooks": 2,
     "acpi": 29,
@@ -76,6 +76,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -91,6 +92,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -131,6 +133,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -146,6 +149,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -183,6 +187,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -198,6 +203,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -239,6 +245,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/acer-swift-14-ai-sf14-11",
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -263,6 +270,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "acer,swift-sf14-11"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1p64100-acer-swift-sf14-11.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p64100-acer-swift-sf14-11.json"
             }
           ],
           "outcome": "none",
@@ -304,6 +318,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/acer-swift-go-pro-ai-sfa14-11",
         "ids": "mismatch",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -332,6 +347,7 @@
           "computed": "none",
           "deviceTree": null,
           "firmwareNeeded": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -371,6 +387,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/acer-swift-go-14-ai-sfg14-01",
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -395,6 +412,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "acer,swift-go14-01"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1p42100-acer-swift-go14-01.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-acer-swift-go14-01.json"
             }
           ],
           "outcome": "none",
@@ -435,6 +459,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -450,6 +475,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -488,6 +514,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-proart-pz13-ht5306",
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -505,6 +532,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -543,6 +571,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -558,6 +587,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -595,6 +625,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -610,6 +641,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -649,6 +681,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -664,6 +697,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -705,6 +739,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-vivobook-16-x1607qa",
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": true,
@@ -724,6 +759,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -773,6 +809,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -819,6 +856,13 @@
               "compatible": "asus,vivobook-s15"
             }
           ],
+          "stubble": [
+            {
+              "file": "x1e80100-asus-vivobook-s15.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-asus-vivobook-s15.json"
+            }
+          ],
           "outcome": "problems",
           "reports": [
             {
@@ -856,6 +900,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "asus,vivobook-s15-x1p4"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1p42100-asus-vivobook-s15.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-asus-vivobook-s15.json"
             }
           ],
           "outcome": "problems",
@@ -902,6 +953,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-vivobook-s14-s3407qa",
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -919,6 +971,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -956,6 +1009,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -971,6 +1025,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -1008,6 +1063,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -1023,6 +1079,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -1061,6 +1118,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -1076,6 +1134,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -1113,6 +1172,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -1128,6 +1188,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -1165,6 +1226,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -1180,6 +1242,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -1222,8 +1285,9 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/1634",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-zenbook-14-ux3480qa",
-        "ids": "collected",
+        "ids": "posted",
         "idsCollected": "https://github.com/birkskyum/arewearmyet/issues/2",
+        "idsStubble": "https://github.com/ubuntu/stubble/pull/96",
         "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -1242,6 +1306,13 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [
+            {
+              "file": "x1p42100-asus-zenbook-14-ux3480qa.json",
+              "state": "open",
+              "url": "https://github.com/ubuntu/stubble/pull/96"
+            }
+          ],
           "outcome": "problems",
           "reports": [
             {
@@ -1290,6 +1361,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -1333,6 +1405,13 @@
               "compatible": "asus,zenbook-a14-ux3407ra"
             }
           ],
+          "stubble": [
+            {
+              "file": "x1e80100-asus-zenbook-a14.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-asus-zenbook-a14.json"
+            }
+          ],
           "outcome": "should",
           "reports": []
         },
@@ -1365,6 +1444,13 @@
               "compatible": "asus,zenbook-a14-ux3407qa-oled"
             }
           ],
+          "stubble": [
+            {
+              "file": "x1e80100-asus-zenbook-a14-oled.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-asus-zenbook-a14-oled.json"
+            }
+          ],
           "outcome": "should",
           "reports": []
         },
@@ -1395,6 +1481,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "asus,zenbook-a14-ux3407qa-lcd"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1p42100-asus-zenbook-a14.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-asus-zenbook-a14.json"
             }
           ],
           "outcome": "should",
@@ -1437,6 +1530,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -1452,6 +1546,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -1490,6 +1585,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -1505,6 +1601,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -1543,6 +1640,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -1558,6 +1656,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -1597,6 +1696,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -1634,6 +1734,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "asus,zenbook-a14-ux3407na"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "glymur-asus-zenbook-a14-ux3407na.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-asus-zenbook-a14-ux3407na.json"
             }
           ],
           "outcome": "newer",
@@ -1676,6 +1783,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -1717,6 +1825,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "asus,zenbook-a16-ux3607oa"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "glymur-asus-zenbook-a16-ux3607oa.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-asus-zenbook-a16-ux3607oa.json"
             }
           ],
           "outcome": "should",
@@ -1761,6 +1876,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/dell-inspiron-14-5441",
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -1779,6 +1895,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         },
@@ -1789,6 +1906,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -1836,6 +1954,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -1877,6 +1996,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "dell,inspiron-14-plus-7441"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1e80100-dell-inspiron-14-plus-7441.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-dell-inspiron-14-plus-7441.json"
             }
           ],
           "outcome": "problems",
@@ -1926,6 +2052,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/dell-latitude-5455",
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -1951,6 +2078,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "dell,latitude-5455"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1p64100-dell-latitude-5455.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p64100-dell-latitude-5455.json"
             }
           ],
           "outcome": "none",
@@ -1994,6 +2128,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -2037,6 +2172,13 @@
               "compatible": "dell,latitude-7455"
             }
           ],
+          "stubble": [
+            {
+              "file": "x1e80100-dell-latitude-7455.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-dell-latitude-7455.json"
+            }
+          ],
           "outcome": "should",
           "reports": []
         }
@@ -2078,6 +2220,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -2119,6 +2262,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "dell,xps13-9345"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1e80100-dell-xps13-9345.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-dell-xps13-9345.json"
             }
           ],
           "outcome": "should",
@@ -2166,6 +2316,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -2181,6 +2332,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "problems",
           "reports": [
             {
@@ -2227,6 +2379,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -2242,6 +2395,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -2283,6 +2437,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -2298,6 +2453,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -2337,6 +2493,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -2376,6 +2533,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "honor,magicbook-art-14-snapdragon"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1e80100-honor-magicbook-art-14.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-honor-magicbook-art-14.json"
             }
           ],
           "outcome": "should",
@@ -2420,6 +2584,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-elitebook-6-g1q",
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -2445,6 +2610,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "hp,elitebook-6-g1q"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1p42100-hp-elitebook-6-g1q.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-hp-elitebook-6-g1q.json"
             }
           ],
           "outcome": "none",
@@ -2488,6 +2660,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -2528,6 +2701,13 @@
               "compatible": "hp,elitebook-ultra-g1q"
             }
           ],
+          "stubble": [
+            {
+              "file": "x1e80100-hp-elitebook-ultra-g1q.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-hp-elitebook-ultra-g1q.json"
+            }
+          ],
           "outcome": "should",
           "reports": []
         }
@@ -2566,6 +2746,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -2581,6 +2762,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -2619,6 +2801,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-3-14-hz0",
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -2636,6 +2819,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -2674,6 +2858,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -2689,6 +2874,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -2727,6 +2913,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -2742,6 +2929,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -2783,6 +2971,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-5-14-he0",
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -2802,6 +2991,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -2843,6 +3033,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -2858,6 +3049,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -2903,6 +3095,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -2946,6 +3139,13 @@
               "compatible": "hp,omnibook-x14"
             }
           ],
+          "stubble": [
+            {
+              "file": "x1e80100-hp-omnibook-x14.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-hp-omnibook-x14.json"
+            }
+          ],
           "outcome": "should",
           "reports": []
         },
@@ -2976,6 +3176,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "hp,omnibook-x14-fe1"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1p42100-hp-omnibook-x14.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-hp-omnibook-x14.json"
             }
           ],
           "outcome": "should",
@@ -3017,6 +3224,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3032,6 +3240,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -3071,6 +3280,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3086,6 +3296,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -3130,6 +3341,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3166,6 +3378,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "hp,elitebook-x-g2q"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "glymur-hp-elitebook-x-g2q.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-hp-elitebook-x-g2q.json"
             }
           ],
           "outcome": "newer",
@@ -3206,6 +3425,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3221,6 +3441,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -3258,6 +3479,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-5-16-bf1",
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3275,6 +3497,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -3316,6 +3539,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-ultra-14-kg0",
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3332,6 +3556,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -3374,6 +3599,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3389,6 +3615,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -3430,6 +3657,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-x-16-cp",
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3447,6 +3675,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -3488,6 +3717,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/humain-horizon",
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3503,6 +3733,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -3544,6 +3775,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3580,6 +3812,7 @@
             "qcom/x1e80100/LENOVO/91B6/cdsp_dtbs.elf"
           ],
           "ids": [],
+          "stubble": [],
           "outcome": "manual",
           "reports": []
         },
@@ -3597,6 +3830,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "lenovo,purwa-ideacentre-mini-01q8x10"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "purwa-lenovo-ideacentre-mini-01q8x10.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/purwa-lenovo-ideacentre-mini-01q8x10.json"
             }
           ],
           "outcome": "none",
@@ -3639,6 +3879,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/lenovo-ideapad-5x-2-in-1-14q8x9",
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3664,6 +3905,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "lenovo,ideapad-5-2in1"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1p42100-lenovo-ideapad-5-2in1.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-lenovo-ideapad-5-2in1.json"
             }
           ],
           "outcome": "none",
@@ -3706,6 +3954,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/lenovo-ideapad-slim-3x-15q8x10",
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3731,6 +3980,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "lenovo,ideapad-slim3"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x126100-lenovo-ideapad-slim3.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x126100-lenovo-ideapad-slim3.json"
             }
           ],
           "outcome": "none",
@@ -3774,6 +4030,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/lenovo-ideapad-slim-5x-14q8x9",
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3803,6 +4060,13 @@
               "compatible": "lenovo,ideapad-slim5x-oled"
             }
           ],
+          "stubble": [
+            {
+              "file": "x1p42100-lenovo-ideapad-slim-5-oled.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-lenovo-ideapad-slim-5-oled.json"
+            }
+          ],
           "outcome": "none",
           "reports": []
         },
@@ -3814,6 +4078,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -3852,6 +4117,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3867,6 +4133,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -3906,6 +4173,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [
           "qcdxkmsucpurwa.mbn",
@@ -3952,6 +4220,13 @@
               "compatible": "lenovo,thinkbook-16"
             }
           ],
+          "stubble": [
+            {
+              "file": "x1p42100-lenovo-thinkbook-16.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-lenovo-thinkbook-16.json"
+            }
+          ],
           "outcome": "should",
           "reports": []
         }
@@ -3992,6 +4267,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -4007,6 +4283,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -4047,6 +4324,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "linux-firmware",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -4099,6 +4377,18 @@
               "compatible": "lenovo,thinkpad-t14s-lcd"
             }
           ],
+          "stubble": [
+            {
+              "file": "x1e78100-lenovo-thinkpad-t14s-lcd.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e78100-lenovo-thinkpad-t14s-lcd.json"
+            },
+            {
+              "file": "x1e78100-lenovo-thinkpad-t14s.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e78100-lenovo-thinkpad-t14s.json"
+            }
+          ],
           "outcome": "should",
           "reports": []
         },
@@ -4130,6 +4420,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "lenovo,thinkpad-t14s-oled"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1e78100-lenovo-thinkpad-t14s-oled.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e78100-lenovo-thinkpad-t14s-oled.json"
             }
           ],
           "outcome": "should",
@@ -4179,6 +4476,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "next-release",
         "firmwareMissing": [
           "cdsp_dtbs.elf"
@@ -4223,6 +4521,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "lenovo,yoga-slim7x"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1e80100-lenovo-yoga-slim7x.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-lenovo-yoga-slim7x.json"
             }
           ],
           "outcome": "works",
@@ -4270,6 +4575,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -4285,6 +4591,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -4324,6 +4631,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -4339,6 +4647,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -4378,6 +4687,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -4393,6 +4703,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -4430,6 +4741,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -4445,6 +4757,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -4484,8 +4797,9 @@
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260929221821.505551-3-srinivas.kandagatla@oss.qualcomm.com/",
         "devicetreeOutOfTree": null,
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/lenovo-thinkpad-t14s-gen-7-snapdragon",
-        "ids": "missing",
+        "ids": "ubuntu",
         "idsCollected": null,
+        "idsStubble": "https://github.com/ubuntu/stubble/blob/main/hwids/json/mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -4517,6 +4831,13 @@
             "qcom/glymur/LENOVO/22A8/cdsp_dtbs.elf"
           ],
           "ids": [],
+          "stubble": [
+            {
+              "file": "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/mahua-lenovo-thinkpad-t14s-gen7-lcd.json"
+            }
+          ],
           "outcome": "newer",
           "reports": []
         }
@@ -4559,6 +4880,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [
           "qcadsp8480.mbn",
@@ -4603,6 +4925,13 @@
               "compatible": "lenovo,yoga-slim7x-gen11"
             }
           ],
+          "stubble": [
+            {
+              "file": "glymur-lenovo-yoga-slim7x.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-lenovo-yoga-slim7x.json"
+            }
+          ],
           "outcome": "newer",
           "reports": []
         }
@@ -4645,6 +4974,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -4686,6 +5016,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "medion,sprchrgd14s1"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1e78100-medion-sprchrgd-14s1-elite.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e78100-medion-sprchrgd-14s1-elite.json"
             }
           ],
           "outcome": "should",
@@ -4734,6 +5071,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -4771,6 +5109,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "microsoft,romulus13"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1e80100-microsoft-romulus13.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-microsoft-romulus13.json"
             }
           ],
           "outcome": "problems",
@@ -4824,6 +5169,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -4862,6 +5208,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "microsoft,romulus15"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1e80100-microsoft-romulus15.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-microsoft-romulus15.json"
             }
           ],
           "outcome": "problems",
@@ -4908,6 +5261,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/microsoft-surface-laptop-13in-1st-edition",
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -4925,6 +5279,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -4975,6 +5330,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -5016,6 +5372,13 @@
               "compatible": "microsoft,denali-oled"
             }
           ],
+          "stubble": [
+            {
+              "file": "x1e80100-microsoft-denali.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-microsoft-denali.json"
+            }
+          ],
           "outcome": "works",
           "reports": [
             {
@@ -5047,6 +5410,7 @@
             "qcom/x1e80100/microsoft/Denali/cdsp_dtb.mbn"
           ],
           "ids": [],
+          "stubble": [],
           "outcome": "manual",
           "reports": []
         }
@@ -5087,6 +5451,7 @@
         "devicetreeArchive": null,
         "ids": "mismatch",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -5127,6 +5492,7 @@
             "qcom/x1p42100/Microsoft/Surface12/qccdsp8380.mbn",
             "qcom/x1p42100/Microsoft/Surface12/cdsp_dtbs.elf"
           ],
+          "stubble": [],
           "outcome": "manual",
           "reports": []
         }
@@ -5166,6 +5532,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -5181,6 +5548,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -5220,8 +5588,9 @@
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261027-mahua-surface-laptop-v2-3-7dd903a12d22@oss.qualcomm.com/",
         "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2384-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/microsoft-surface-laptop-8-13",
-        "ids": "missing",
+        "ids": "posted",
         "idsCollected": null,
+        "idsStubble": "https://github.com/ubuntu/stubble/pull/97",
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -5246,6 +5615,7 @@
           },
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "manual",
           "reports": []
         },
@@ -5256,6 +5626,13 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [
+            {
+              "file": "mahua-microsoft-surface-laptop-8-13p8.json",
+              "state": "open",
+              "url": "https://github.com/ubuntu/stubble/pull/97"
+            }
+          ],
           "outcome": "none",
           "reports": []
         }
@@ -5296,6 +5673,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -5311,6 +5689,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -5350,6 +5729,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -5365,6 +5745,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -5408,6 +5789,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -5423,6 +5805,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -5462,6 +5845,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [
           "qcdxkmsuc8380.mbn",
@@ -5508,6 +5892,13 @@
               "compatible": "qcom,x1e001de-devkit"
             }
           ],
+          "stubble": [
+            {
+              "file": "x1e001de-devkit.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e001de-devkit.json"
+            }
+          ],
           "outcome": "should",
           "reports": []
         }
@@ -5550,6 +5941,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/samsung-galaxy-book4-edge-15",
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -5565,6 +5957,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -5609,6 +6002,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/samsung-galaxy-book4-edge-16",
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -5624,6 +6018,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -5671,6 +6066,7 @@
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/samsung-galaxy-book4-edge-14",
         "ids": "collected",
         "idsCollected": "https://github.com/birkskyum/arewearmyet/issues/1",
+        "idsStubble": null,
         "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -5691,6 +6087,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "problems",
           "reports": [
             {
@@ -5735,6 +6132,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -5750,6 +6148,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -5789,6 +6188,7 @@
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -5804,6 +6204,7 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
@@ -5841,6 +6242,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [
           "qcdxkmsuc8280.mbn",
@@ -5882,6 +6284,13 @@
               "compatible": "huawei,gaokun3"
             }
           ],
+          "stubble": [
+            {
+              "file": "sc8280xp-huawei-gaokun3.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8280xp-huawei-gaokun3.json"
+            }
+          ],
           "outcome": "should",
           "reports": []
         }
@@ -5921,6 +6330,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "linux-firmware",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -5976,6 +6386,23 @@
               "compatible": "lenovo,thinkpad-x13s"
             }
           ],
+          "stubble": [
+            {
+              "file": "sc8280xp-lenovo-thinkpad-x13s-21bx.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8280xp-lenovo-thinkpad-x13s-21bx.json"
+            },
+            {
+              "file": "sc8280xp-lenovo-thinkpad-x13s-21by.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8280xp-lenovo-thinkpad-x13s-21by.json"
+            },
+            {
+              "file": "sc8280xp-lenovo-thinkpad-x13s-4810.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8280xp-lenovo-thinkpad-x13s-4810.json"
+            }
+          ],
           "outcome": "should",
           "reports": []
         }
@@ -6014,6 +6441,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [
           "qcdxkmsuc8280.mbn",
@@ -6055,6 +6483,13 @@
               "compatible": "microsoft,arcata"
             }
           ],
+          "stubble": [
+            {
+              "file": "sc8280xp-microsoft-surface-pro-9-5G.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8280xp-microsoft-surface-pro-9-5G.json"
+            }
+          ],
           "outcome": "should",
           "reports": []
         }
@@ -6093,6 +6528,7 @@
         "devicetreeArchive": null,
         "ids": "listed",
         "idsCollected": null,
+        "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [
           "qcdxkmsuc8280.mbn",
@@ -6132,6 +6568,13 @@
               "inMain": true,
               "matches": true,
               "compatible": "microsoft,blackrock"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "sc8280xp-microsoft-blackrock.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8280xp-microsoft-blackrock.json"
             }
           ],
           "outcome": "should",

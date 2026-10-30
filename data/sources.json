@@ -1,5 +1,5 @@
 {
-  "collected": "2026-10-30T14:25:55.535Z",
+  "collected": "2026-10-30T16:00:08.571Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -26,7 +26,7 @@
     "v261",
     "v262"
   ],
-  "linuxNext": "20261029",
+  "linuxNext": "20261030",
   "deviceTrees": [
     {
       "file": "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -1799,404 +1799,431 @@
   ],
   "stubble": [
     {
-      "file": "glymur-asus-zenbook-a14-ux3407na.txt",
-      "manufacturer": "ASUS",
-      "family": "Zenbook A14",
-      "productName": "Zenbook A14 UX3407NA",
-      "productSku": "",
-      "baseboardProduct": "UX3407NA"
+      "file": "glymur-asus-zenbook-a14-ux3407na.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-asus-zenbook-a14-ux3407na.json",
+      "name": "ASUS Zenbook A14 UX3407NA",
+      "compatible": "asus,zenbook-a14-ux3407na"
     },
     {
-      "file": "glymur-asus-zenbook-a16-ux3607oa.txt"
+      "file": "glymur-asus-zenbook-a16-ux3607oa.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-asus-zenbook-a16-ux3607oa.json",
+      "name": "ASUS Zenbook A16 UX3607OA",
+      "compatible": "asus,zenbook-a16-ux3607oa"
     },
     {
-      "file": "glymur-crd.txt",
-      "manufacturer": "Qualcomm",
-      "family": "X2000094",
-      "productName": "CRD",
-      "productSku": "6"
+      "file": "glymur-crd.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-crd.json",
+      "name": "Qualcomm Technologies, Inc. Glymur CRD",
+      "compatible": "qcom,glymur-crd"
     },
     {
-      "file": "glymur-hp-elitebook-x-g2q.txt",
-      "manufacturer": "HP",
-      "family": "103C_5336AN HP EliteBook",
-      "productName": "HP EliteBook X G2q 14 inch Notebook Next Gen AI PC",
-      "productSku": "1234567#ABA",
-      "baseboardProduct": "8E91"
+      "file": "glymur-hp-elitebook-x-g2q.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-hp-elitebook-x-g2q.json",
+      "name": "HP 103C_5336AN HP EliteBook",
+      "compatible": "hp,elitebook-x-g2q"
     },
     {
-      "file": "glymur-lenovo-yoga-slim7x.txt",
-      "manufacturer": "LENOVO",
-      "family": "Yoga Slim 7 14Q8Y11",
-      "productName": "83QR",
-      "productSku": "LENOVO_MT_83QR_BU_idea_FM_Yoga Slim 7 14Q8Y11",
-      "baseboardProduct": "LNVNB161216"
+      "file": "glymur-lenovo-yoga-slim7x.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-lenovo-yoga-slim7x.json",
+      "name": "LENOVO Yoga Slim 7 14Q8Y11",
+      "compatible": "lenovo,yoga-slim7x-gen11"
     },
     {
-      "file": "mahua-lenovo-thinkpad-t14s-gen7-lcd.txt",
-      "manufacturer": "LENOVO",
-      "family": "ThinkPad T14s Gen 7",
-      "productName": "22A8S0070G",
-      "productSku": "LENOVO_MT_22A8_BU_Think_FM_ThinkPad T14s Gen 7",
-      "baseboardProduct": "22A8S0070G"
+      "file": "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
+      "name": "LENOVO ThinkPad T14s Gen 7",
+      "compatible": "lenovo,thinkpad-t14s-gen7-lcd"
     },
     {
-      "file": "msm8998-lenovo-miix-630-81f1.txt",
-      "manufacturer": "LENOVO",
-      "family": "Miix 630",
-      "productName": "81F1",
-      "productSku": "LENOVO_MT_81F1_BU_idea_FM_Miix 630",
-      "baseboardProduct": "LNVNB161216"
+      "file": "msm8998-lenovo-miix-630-81f1.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/msm8998-lenovo-miix-630-81f1.json",
+      "name": "LENOVO Miix 630",
+      "compatible": "lenovo,miix-630"
     },
     {
-      "file": "purwa-lenovo-ideacentre-mini-01q8x10.txt",
-      "manufacturer": "LENOVO",
-      "family": "IdeaCentre Mini 01Q8X10",
-      "productName": "91B6001CUK",
-      "productSku": "LENOVO_MT_91B6_BU_Lenovo_FM_IdeaCentre Mini 01Q8X10",
-      "baseboardProduct": "3796"
+      "file": "purwa-lenovo-ideacentre-mini-01q8x10.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/purwa-lenovo-ideacentre-mini-01q8x10.json",
+      "name": "LENOVO IdeaCentre Mini 01Q8X10 (Purwa)",
+      "compatible": "lenovo,purwa-ideacentre-mini-01q8x10"
     },
     {
-      "file": "sc7180-acer-aspire1.txt",
-      "manufacturer": "Acer",
-      "family": "Aspire 1",
-      "productName": "Aspire A114-61",
-      "productSku": "",
-      "baseboardProduct": "Daisy_7C"
+      "file": "sc7180-acer-aspire1.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc7180-acer-aspire1.json",
+      "name": "Acer Aspire 1",
+      "compatible": "acer,aspire1"
     },
     {
-      "file": "sc7180-ecs-liva-qc710.txt",
-      "manufacturer": "Elitegroup Computer Systems Co., LTD.",
-      "family": "SC7180",
-      "productName": "QC710",
-      "productSku": "6",
-      "baseboardProduct": "QC710"
+      "file": "sc7180-ecs-liva-qc710.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc7180-ecs-liva-qc710.json",
+      "name": "Elitegroup Computer Systems Co., LTD. SC7180",
+      "compatible": "ecs,liva-qc710"
     },
     {
-      "file": "sc8180x-lenovo-flex-5g-81xe.txt",
-      "manufacturer": "LENOVO",
-      "family": "Yoga 5G 14Q8CX05",
-      "productName": "81XE",
-      "productSku": "LENOVO_MT_81XE_BU_idea_FM_Yoga 5G 14Q8CX05",
-      "baseboardProduct": "LNVNB161216"
+      "file": "sc8180x-lenovo-flex-5g-81xe.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8180x-lenovo-flex-5g-81xe.json",
+      "name": "LENOVO Yoga 5G 14Q8CX05",
+      "compatible": "lenovo,flex-5g"
     },
     {
-      "file": "sc8180x-lenovo-flex-5g-82ak.txt",
-      "manufacturer": "LENOVO",
-      "family": "Flex 5G 14Q8CX05",
-      "productName": "82AK",
-      "productSku": "LENOVO_MT_82AK_BU_idea_FM_Flex 5G 14Q8CX05",
-      "baseboardProduct": "LNVNB161216"
+      "file": "sc8180x-lenovo-flex-5g-82ak.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8180x-lenovo-flex-5g-82ak.json",
+      "name": "LENOVO Flex 5G 14Q8CX05",
+      "compatible": "lenovo,flex-5g"
     },
     {
-      "file": "sc8280xp-huawei-gaokun3.txt",
-      "manufacturer": "HUAWEI",
-      "family": "MateBook E",
-      "productName": "GK-W7X",
-      "productSku": "C233",
-      "baseboardProduct": "GK-W7X-PCB"
+      "file": "sc8280xp-huawei-gaokun3.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8280xp-huawei-gaokun3.json",
+      "name": "HUAWEI MateBook E",
+      "compatible": "huawei,gaokun3"
     },
     {
-      "file": "sc8280xp-lenovo-thinkpad-x13s-21bx.txt",
-      "manufacturer": "LENOVO",
-      "family": "ThinkPad X13s Gen 1",
-      "productName": "21BXCTO1WW",
-      "productSku": "LENOVO_MT_21BX_BU_Think_FM_ThinkPad X13s Gen 1",
-      "baseboardProduct": "21BXCTO1WW"
+      "file": "sc8280xp-lenovo-thinkpad-x13s-21bx.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8280xp-lenovo-thinkpad-x13s-21bx.json",
+      "name": "LENOVO ThinkPad X13s Gen 1",
+      "compatible": "lenovo,thinkpad-x13s"
     },
     {
-      "file": "sc8280xp-lenovo-thinkpad-x13s-21by.txt",
-      "manufacturer": "LENOVO",
-      "family": "ThinkPad X13s Gen 1",
-      "productName": "21BYS03Y00",
-      "productSku": "LENOVO_MT_21BY_BU_Think_FM_ThinkPad X13s Gen 1",
-      "baseboardProduct": "21BYS03Y00"
+      "file": "sc8280xp-lenovo-thinkpad-x13s-21by.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8280xp-lenovo-thinkpad-x13s-21by.json",
+      "name": "LENOVO ThinkPad X13s Gen 1",
+      "compatible": "lenovo,thinkpad-x13s"
     },
     {
-      "file": "sc8280xp-lenovo-thinkpad-x13s-4810.txt",
-      "manufacturer": "LENOVO",
-      "family": "ThinkPad X13s Gen 1",
-      "productName": "4810QL0100",
-      "productSku": "LENOVO_MT_4810_BU_Think_FM_ThinkPad X13s Gen 1",
-      "baseboardProduct": "4810QL0100"
+      "file": "sc8280xp-lenovo-thinkpad-x13s-4810.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8280xp-lenovo-thinkpad-x13s-4810.json",
+      "name": "LENOVO ThinkPad X13s Gen 1",
+      "compatible": "lenovo,thinkpad-x13s"
     },
     {
-      "file": "sc8280xp-microsoft-blackrock.txt",
-      "manufacturer": "Microsoft Corporation",
-      "family": "Surface",
-      "productName": "Windows Dev Kit 2023",
-      "productSku": "2043",
-      "baseboardProduct": "Windows Dev Kit 2023"
+      "file": "sc8280xp-microsoft-blackrock.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8280xp-microsoft-blackrock.json",
+      "name": "Microsoft Corporation Surface",
+      "compatible": "microsoft,blackrock"
     },
     {
-      "file": "sc8280xp-microsoft-surface-pro-9-5G.txt",
-      "manufacturer": "Microsoft Corporation",
-      "family": "Surface",
-      "productName": "Surface Pro 9",
-      "productSku": "Surface_Pro_9_With_5G_1996",
-      "baseboardProduct": "Surface Pro 9"
+      "file": "sc8280xp-microsoft-surface-pro-9-5G.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8280xp-microsoft-surface-pro-9-5G.json",
+      "name": "Microsoft Corporation Surface",
+      "compatible": "microsoft,arcata"
     },
     {
-      "file": "sc8280xp-radxa-dragon-q8b.txt",
-      "manufacturer": "Radxa Computer Co., Ltd.",
-      "family": "Dragon",
-      "productName": "Radxa Dragon Q8B",
-      "productSku": "6",
-      "baseboardProduct": "Radxa Dragon Q8B"
+      "file": "sc8280xp-radxa-dragon-q8b.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8280xp-radxa-dragon-q8b.json",
+      "name": "Radxa Computer Co., Ltd. Dragon Q8B",
+      "compatible": "radxa,dragon-q8b"
     },
     {
-      "file": "sdm850-lenovo-yoga-c630.txt",
-      "manufacturer": "LENOVO",
-      "family": "YOGA C630-13Q50",
-      "productName": "81JL",
-      "productSku": "LENOVO_MT_81JL_BU_idea_FM_YOGA C630-13Q50",
-      "baseboardProduct": "LNVNB161216"
+      "file": "sdm850-lenovo-yoga-c630.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sdm850-lenovo-yoga-c630.json",
+      "name": "LENOVO YOGA C630-13Q50",
+      "compatible": "lenovo,yoga-c630"
     },
     {
-      "file": "spacemit-k3-pico-itx.txt",
-      "manufacturer": "SpacemiT",
-      "family": "K3",
-      "productName": "k3-pico-itx",
-      "productSku": "MPK3",
-      "baseboardProduct": "k3-pico-itx"
+      "file": "spacemit-k3-pico-itx.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/spacemit-k3-pico-itx.json",
+      "name": "SpacemiT K3 Pico-ITX",
+      "compatible": "spacemit,k3-pico-itx"
     },
     {
-      "file": "x126100-lenovo-ideapad-slim3.txt",
-      "manufacturer": "LENOVO",
-      "family": "IdeaPad Slim 3 15Q8X10",
-      "productName": "83N3",
-      "productSku": "LENOVO_MT_83N3_BU_idea_FM_IdeaPad Slim 3 15Q8X10",
-      "baseboardProduct": "LNVNB161216"
+      "file": "x126100-lenovo-ideapad-slim3.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x126100-lenovo-ideapad-slim3.json",
+      "name": "LENOVO IdeaPad Slim 3 15Q8X10",
+      "compatible": "lenovo,ideapad-slim3"
     },
     {
-      "file": "x1e001de-devkit.txt",
-      "manufacturer": "Qualcomm",
-      "family": "SCP_HAMOA",
-      "productName": "Snapdragon-Devkit",
-      "productSku": "6"
+      "file": "x1e001de-devkit.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e001de-devkit.json",
+      "name": "Qualcomm SCP_HAMOA",
+      "compatible": "qcom,x1e001de-devkit"
     },
     {
-      "file": "x1e78100-acer-sfa14-11.txt",
-      "manufacturer": "Acer",
-      "family": "SFA14-11",
-      "productName": "SFA14-11",
-      "productSku": "6",
-      "baseboardProduct": "QX326 gen4"
+      "file": "x1e78100-acer-sfa14-11.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e78100-acer-sfa14-11.json",
+      "name": "Acer Swift 14 Go Pro AI",
+      "compatible": "acer,swift-sfa14-11"
     },
     {
-      "file": "x1e78100-lenovo-thinkpad-t14s-21n1.txt",
-      "manufacturer": "LENOVO",
-      "family": "ThinkPad T14s Gen 6",
-      "productName": "21N10001US",
-      "productSku": "LENOVO_MT_21N1_BU_Think_FM_ThinkPad T14s Gen 6",
-      "baseboardProduct": "21N10001US"
+      "file": "x1e78100-lenovo-thinkpad-t14s-lcd.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e78100-lenovo-thinkpad-t14s-lcd.json",
+      "name": "LENOVO ThinkPad T14s Gen 6 (LCD)",
+      "compatible": "lenovo,thinkpad-t14s-lcd"
     },
     {
-      "file": "x1e78100-lenovo-thinkpad-t14s-21n2.txt",
-      "manufacturer": "LENOVO",
-      "family": "ThinkPad T14s Gen 6",
-      "productName": "21N2ZC5QUS",
-      "productSku": "LENOVO_MT_21N2_BU_Think_FM_ThinkPad T14s Gen 6",
-      "baseboardProduct": "21N2ZC5QUS"
+      "file": "x1e78100-lenovo-thinkpad-t14s-oled.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e78100-lenovo-thinkpad-t14s-oled.json",
+      "name": "LENOVO ThinkPad T14s Gen 6 (OLED)",
+      "compatible": "lenovo,thinkpad-t14s-oled"
     },
     {
-      "file": "x1e78100-medion-sprchrgd-14s1-elite.txt",
-      "manufacturer": "MEDION",
-      "family": "SPRCHRGD",
-      "productName": "14 S1 Elite",
-      "productSku": "ML-230007 40088830",
-      "baseboardProduct": "NM14QX4"
+      "file": "x1e78100-lenovo-thinkpad-t14s.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e78100-lenovo-thinkpad-t14s.json",
+      "name": "LENOVO ThinkPad T14s Gen 6",
+      "compatible": "lenovo,thinkpad-t14s-lcd"
     },
     {
-      "file": "x1e80100-asus-vivobook-s15.txt",
-      "manufacturer": "ASUSTeK COMPUTER INC.",
-      "family": "ASUS Vivobook S 15",
-      "productName": "ASUS Vivobook S 15 S5507QA_S5507QAD",
-      "productSku": "(null)",
-      "baseboardProduct": "S5507QAD"
+      "file": "x1e78100-medion-sprchrgd-14s1-elite.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e78100-medion-sprchrgd-14s1-elite.json",
+      "name": "MEDION SPRCHRGD",
+      "compatible": "medion,sprchrgd14s1"
     },
     {
-      "file": "x1e80100-asus-zenbook-a14.txt",
-      "manufacturer": "ASUSTeK COMPUTER INC.",
-      "family": "ASUS Zenbook A14",
-      "productName": "ASUS Zenbook A14 UX3407RA_UX3407RA",
-      "productSku": "",
-      "baseboardProduct": "UX3407RA"
+      "file": "x1e80100-asus-vivobook-s15.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-asus-vivobook-s15.json",
+      "name": "ASUSTeK COMPUTER INC. ASUS Vivobook S 15",
+      "compatible": "asus,vivobook-s15"
     },
     {
-      "file": "x1e80100-crd.txt",
-      "manufacturer": "Qualcomm",
-      "family": "SCP_HAMOA",
-      "productName": "CRD",
-      "productSku": "6"
+      "file": "x1e80100-asus-zenbook-a14-oled.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-asus-zenbook-a14-oled.json",
+      "name": "ASUSTeK COMPUTER INC. ASUS Zenbook A14",
+      "compatible": "asus,zenbook-a14-ux3407qa-oled"
     },
     {
-      "file": "x1e80100-dell-inspiron-14-plus-7441.txt",
-      "manufacturer": "Dell Inc.",
-      "family": "Inspiron",
-      "productName": "Inspiron 14 Plus 7441",
-      "productSku": "C86",
-      "baseboardProduct": "YWPR3"
+      "file": "x1e80100-asus-zenbook-a14.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-asus-zenbook-a14.json",
+      "name": "ASUSTeK COMPUTER INC. ASUS Zenbook A14",
+      "compatible": "asus,zenbook-a14-ux3407ra"
     },
     {
-      "file": "x1e80100-dell-latitude-7455.txt",
-      "manufacturer": "Dell Inc.",
-      "family": "Latitude",
-      "productName": "Latitude 7455",
-      "productSku": "0C85",
-      "baseboardProduct": "0FK7MX"
+      "file": "x1e80100-crd.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-crd.json",
+      "name": "Qualcomm SCP_HAMOA",
+      "compatible": "qcom,x1e80100-crd"
     },
     {
-      "file": "x1e80100-dell-xps13-9345.txt",
-      "manufacturer": "Dell Inc.",
-      "family": "XPS",
-      "productName": "XPS 13 9345",
-      "productSku": "C69",
-      "baseboardProduct": "DXPNM"
+      "file": "x1e80100-dell-inspiron-14-plus-7441.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-dell-inspiron-14-plus-7441.json",
+      "name": "Dell Inc. Inspiron",
+      "compatible": "dell,inspiron-14-plus-7441"
     },
     {
-      "file": "x1e80100-honor-magicbook-art-14.txt",
-      "manufacturer": "HONOR",
-      "family": "HONOR MagicBook",
-      "productName": "MRO-XXX",
-      "productSku": "C233",
-      "baseboardProduct": "MRO-XXX-PCB"
+      "file": "x1e80100-dell-latitude-7455.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-dell-latitude-7455.json",
+      "name": "Dell Inc. Latitude",
+      "compatible": "dell,latitude-7455"
     },
     {
-      "file": "x1e80100-hp-elitebook-ultra-g1q.txt",
-      "manufacturer": "HP",
-      "family": "103C_5336AN HP EliteBook Ultra",
-      "productName": "HP EliteBook Ultra G1q 14 inch Notebook AI PC",
-      "productSku": "A3LZ2AA#ABA",
-      "baseboardProduct": "8CBE"
+      "file": "x1e80100-dell-xps13-9345.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-dell-xps13-9345.json",
+      "name": "Dell Inc. XPS",
+      "compatible": "dell,xps13-9345"
     },
     {
-      "file": "x1e80100-hp-omnibook-x14.txt",
-      "manufacturer": "HP",
-      "family": "103C_5335M8 HP OmniBook X",
-      "productName": "HP OmniBook X Laptop 14-fe0xxx",
-      "productSku": "A3NY2EA#ABD",
-      "baseboardProduct": "8CBE"
+      "file": "x1e80100-honor-magicbook-art-14.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-honor-magicbook-art-14.json",
+      "name": "HONOR MagicBook Art 14 Snapdragon",
+      "compatible": "honor,magicbook-art-14-snapdragon"
     },
     {
-      "file": "x1e80100-lenovo-yoga-slim7x.txt",
-      "manufacturer": "LENOVO",
-      "family": "Yoga Slim 7 14Q8X9",
-      "productName": "83ED",
-      "productSku": "LENOVO_MT_83ED_BU_idea_FM_Yoga Slim 7 14Q8X9",
-      "baseboardProduct": "LNVNB161216"
+      "file": "x1e80100-hp-elitebook-ultra-g1q.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-hp-elitebook-ultra-g1q.json",
+      "name": "HP 103C_5336AN HP EliteBook Ultra",
+      "compatible": "hp,elitebook-ultra-g1q"
     },
     {
-      "file": "x1e80100-microsoft-denali.txt",
-      "manufacturer": "Microsoft Corporation",
-      "family": "Surface",
-      "productName": "Microsoft Surface Pro, 11th Edition",
-      "productSku": "Surface_Pro_11th_Edition_2076",
-      "baseboardProduct": "Microsoft Surface Pro, 11th Edition"
+      "file": "x1e80100-hp-omnibook-x14.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-hp-omnibook-x14.json",
+      "name": "HP 103C_5335M8 HP OmniBook X",
+      "compatible": "hp,omnibook-x14"
     },
     {
-      "file": "x1e80100-microsoft-romulus13.txt",
-      "manufacturer": "Microsoft Corporation",
-      "family": "Surface",
-      "productName": "Microsoft Surface Laptop, 7th Edition",
-      "productSku": "Surface_Laptop_7th_Edition_2036",
-      "baseboardProduct": "Microsoft Surface Laptop, 7th Edition"
+      "file": "x1e80100-lenovo-yoga-slim7x.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-lenovo-yoga-slim7x.json",
+      "name": "LENOVO Yoga Slim 7 14Q8X9",
+      "compatible": "lenovo,yoga-slim7x"
     },
     {
-      "file": "x1e80100-microsoft-romulus15.txt",
-      "manufacturer": "Microsoft Corporation",
-      "family": "Surface",
-      "productName": "Microsoft Surface Laptop, 7th Edition",
-      "productSku": "Surface_Laptop_7th_Edition_2037",
-      "baseboardProduct": "Microsoft Surface Laptop, 7th Edition"
+      "file": "x1e80100-microsoft-denali.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-microsoft-denali.json",
+      "name": "Microsoft Corporation Surface",
+      "compatible": "microsoft,denali-oled"
     },
     {
-      "file": "x1p42100-acer-swift-go14-01.txt",
-      "manufacturer": "Acer",
-      "family": "Swift Go 14 AI",
-      "productName": "Swift SFG14-01",
-      "productSku": "",
-      "baseboardProduct": "Bluetang_SX1"
+      "file": "x1e80100-microsoft-romulus13.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-microsoft-romulus13.json",
+      "name": "Microsoft Corporation Surface",
+      "compatible": "microsoft,romulus13"
     },
     {
-      "file": "x1p42100-asus-vivobook-s15.txt",
-      "manufacturer": "ASUSTeK COMPUTER INC.",
-      "family": "ASUS Vivobook S 15",
-      "productName": "ASUS Vivobook S 15 S5507QA_S5507QA",
-      "productSku": "",
-      "baseboardProduct": "S5507QA"
+      "file": "x1e80100-microsoft-romulus15.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-microsoft-romulus15.json",
+      "name": "Microsoft Corporation Surface",
+      "compatible": "microsoft,romulus15"
     },
     {
-      "file": "x1p42100-asus-zenbook-a14.txt",
-      "manufacturer": "ASUSTeK COMPUTER INC.",
-      "family": "ASUS Zenbook A14",
-      "productName": "ASUS Zenbook A14 UX3407QA_UX3407QA",
-      "productSku": "",
-      "baseboardProduct": "UX3407QA"
+      "file": "x1p42100-acer-swift-go14-01.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-acer-swift-go14-01.json",
+      "name": "Acer Swift Go 14 AI",
+      "compatible": "acer,swift-go14-01"
     },
     {
-      "file": "x1p42100-hp-elitebook-6-g1q.txt",
-      "manufacturer": "HP",
-      "family": "103C_5336AN HP EliteBook",
-      "productName": "HP EliteBook 6 G1q 14 inch Notebook Next Gen AI PC",
-      "productSku": "X8VSKU6#ABA",
-      "baseboardProduct": "8E06"
+      "file": "x1p42100-asus-vivobook-s15.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-asus-vivobook-s15.json",
+      "name": "ASUSTeK COMPUTER INC. ASUS Vivobook S 15",
+      "compatible": "asus,vivobook-s15-x1p4"
     },
     {
-      "file": "x1p42100-hp-omnibook-x14.txt",
-      "manufacturer": "HP",
-      "family": "103C_5335M8 HP OmniBook X",
-      "productName": "HP OmniBook X Laptop 14-fe1xxx",
-      "productSku": "AP4R1EA#UUW",
-      "baseboardProduct": "8CCF"
+      "file": "x1p42100-asus-zenbook-a14.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-asus-zenbook-a14.json",
+      "name": "ASUSTeK COMPUTER INC. ASUS Zenbook A14",
+      "compatible": "asus,zenbook-a14-ux3407qa-lcd"
     },
     {
-      "file": "x1p42100-lenovo-ideapad-5-2in1.txt",
-      "manufacturer": "LENOVO",
-      "family": "IdeaPad 5 2-in-1 14Q8X9",
-      "productName": "83GH",
-      "productSku": "LENOVO_MT_83GH_BU_idea_FM_IdeaPad 5 2-in-1 14Q8X9",
-      "baseboardProduct": "LNVNB161216"
+      "file": "x1p42100-hp-elitebook-6-g1q.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-hp-elitebook-6-g1q.json",
+      "name": "HP 103C_5336AN HP EliteBook",
+      "compatible": "hp,elitebook-6-g1q"
     },
     {
-      "file": "x1p42100-lenovo-ideapad-slim-5.txt",
-      "manufacturer": "LENOVO",
-      "family": "IdeaPad Slim 5 14Q8X9",
-      "productName": "83HL",
-      "productSku": "LENOVO_MT_83HL_BU_idea_FM_IdeaPad Slim 5 14Q8X9",
-      "baseboardProduct": "LNVNB161216"
+      "file": "x1p42100-hp-omnibook-x14.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-hp-omnibook-x14.json",
+      "name": "HP 103C_5335M8 HP OmniBook X",
+      "compatible": "hp,omnibook-x14-fe1"
     },
     {
-      "file": "x1p42100-lenovo-thinkbook-16.txt",
-      "manufacturer": "LENOVO",
-      "family": "ThinkBook 16 G7 QOY",
-      "productName": "21NH",
-      "productSku": "LENOVO_MT_21NH_BU_idea_FM_ThinkBook 16 G7 QOY",
-      "baseboardProduct": "LNVNB161216"
+      "file": "x1p42100-lenovo-ideapad-5-2in1.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-lenovo-ideapad-5-2in1.json",
+      "name": "LENOVO IdeaPad 5 2-in-1 14Q8X9",
+      "compatible": "lenovo,ideapad-5-2in1"
     },
     {
-      "file": "x1p42100-microsoft-surface-pro-12in.txt",
-      "manufacturer": "Microsoft Corporation",
-      "family": "Surface",
-      "productName": "Surface Pro 12in 1st Ed with Snapdragon",
-      "productSku": "Surface_Pro_12in_1st_Ed_with_Snapdragon_2110",
-      "baseboardProduct": "Surface Pro 12in 1st Ed with Snapdragon"
+      "file": "x1p42100-lenovo-ideapad-slim-5-oled.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-lenovo-ideapad-slim-5-oled.json",
+      "name": "LENOVO IdeaPad Slim 5 14Q8X9 (OLED)",
+      "compatible": "lenovo,ideapad-slim5x-oled"
     },
     {
-      "file": "x1p64100-acer-swift-sf14-11.txt",
-      "manufacturer": "Acer",
-      "family": "Swift 14 AI",
-      "productName": "Swift SF14-11",
-      "productSku": "",
-      "baseboardProduct": "Bluetang_SX1"
+      "file": "x1p42100-lenovo-thinkbook-16.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-lenovo-thinkbook-16.json",
+      "name": "LENOVO ThinkBook 16 G7 QOY",
+      "compatible": "lenovo,thinkbook-16"
     },
     {
-      "file": "x1p64100-dell-latitude-5455.txt",
-      "manufacturer": "Dell Inc.",
-      "family": "Latitude",
-      "productName": "Latitude 5455",
-      "productSku": "C83",
-      "baseboardProduct": "KYDKV"
+      "file": "x1p42100-microsoft-surface-pro-12in.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-microsoft-surface-pro-12in.json",
+      "name": "Microsoft Corporation Surface",
+      "compatible": "microsoft,sp12"
+    },
+    {
+      "file": "x1p64100-acer-swift-sf14-11.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p64100-acer-swift-sf14-11.json",
+      "name": "Acer Swift 14 AI",
+      "compatible": "acer,swift-sf14-11"
+    },
+    {
+      "file": "x1p64100-dell-latitude-5455.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p64100-dell-latitude-5455.json",
+      "name": "Dell Inc. Latitude 5455",
+      "compatible": "dell,latitude-5455"
+    },
+    {
+      "file": "mahua-microsoft-surface-laptop-8-13p8.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/97",
+      "name": "Microsoft Corporation Surface",
+      "compatible": "microsoft,surface-laptop-8-13p8"
+    },
+    {
+      "file": "x1p42100-asus-zenbook-14-ux3480qa.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/96",
+      "name": "ASUS Zenbook 14 UX3480QA",
+      "compatible": "asus,zenbook-14-ux3480qa"
+    },
+    {
+      "file": "x1e78100-acer-sfa14-11.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/88",
+      "name": "Acer Swift 14 AI",
+      "compatible": "acer,sfa14-11"
+    },
+    {
+      "file": "sc8280xp-radxa-dragon-q8b.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/78",
+      "name": "Radxa Computer Co., Ltd. Dragon Q8B",
+      "compatible": "radxa,dragon-q8b"
+    },
+    {
+      "file": "sky1-radxa-orion-o6.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/54",
+      "name": "Radxa Computer (Shenzhen) Co., Ltd. Orion O6",
+      "compatible": "radxa,orion-o6"
+    },
+    {
+      "file": "qcs6490-radxa-dragon-q6a.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/46",
+      "name": "Radxa Computer Co., Ltd. Dragon Q6A",
+      "compatible": "radxa,dragon-q6a"
+    },
+    {
+      "file": "vek280evalrevb-amd-xilinx-versal.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/22",
+      "name": "xlnx xlnx,versal-vek280",
+      "compatible": "xlnx,versal-vek280-revB"
+    },
+    {
+      "file": "rockchip-rk3588-orangepi-5b.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/17",
+      "name": "Shenzhen Xunlong Software Co., Ltd. OrangePi 5B",
+      "compatible": "rockchip,rk3588-orangepi-5b"
     }
   ],
   "firmwareRelease": "20261019",

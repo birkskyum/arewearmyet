@@ -128,12 +128,19 @@ async function collectHardwareIds() {
     systemd.push({ file, firstRelease: firstRelease.get(file) ?? null, inMain: mainNames.includes(file), name: entry.name, compatible: entry.compatible, hwids: entry.hwids });
   }
 
-  // stubble keeps the SMBIOS strings each entry was made from, next to the IDs
+  // systemd copies its list in batches from Ubuntu's stubble, so an entry merged there or open as a pull
+  // request there is on its way
   const stubble = [];
-  for (const file of (await listDir('ubuntu/stubble', 'main', 'hwids/txt')) ?? []) {
-    const text = await raw('ubuntu/stubble', 'main', `hwids/txt/${file}`);
-    const field = (key: string) => text.match(new RegExp(`^${key}: (.*)$`, 'm'))?.[1]?.trim();
-    stubble.push({ file, manufacturer: field('Manufacturer'), family: field('Family'), productName: field('ProductName'), productSku: field('ProductSku'), baseboardProduct: field('BaseboardProduct') });
+  for (const file of (await listDir('ubuntu/stubble', 'main', 'hwids/json')) ?? []) {
+    const entry = JSON.parse(await raw('ubuntu/stubble', 'main', `hwids/json/${file}`));
+    stubble.push({ file, state: 'merged', url: `https://github.com/ubuntu/stubble/blob/main/hwids/json/${file}`, name: entry.name, compatible: entry.compatible });
+  }
+  for (const pull of (await github('repos/ubuntu/stubble/pulls?state=open&per_page=100')) ?? []) {
+    for (const change of (await github(`repos/ubuntu/stubble/pulls/${pull.number}/files?per_page=100`)) ?? []) {
+      if (!/^hwids\/json\/[^/]+\.json$/.test(change.filename) || change.status === 'removed') continue;
+      const entry = JSON.parse(await raw(pull.head.repo?.full_name ?? 'ubuntu/stubble', pull.head.sha, change.filename));
+      stubble.push({ file: change.filename.split('/').pop(), state: 'open', url: pull.html_url, name: entry.name, compatible: entry.compatible });
+    }
   }
   return { systemd, stubble };
 }

@@ -88,6 +88,8 @@ function findDeviceTree(compatible: string | undefined) {
 
 type Ids = { file: string; firstRelease: string | null; inMain: boolean; compatible: string; name: string };
 const systemdIds: Ids[] = sources.systemd;
+type Stubble = { file: string; state: 'merged' | 'open'; url: string; name: string; compatible: string };
+const stubbleIds: Stubble[] = sources.stubble;
 
 const used = { deviceTrees: new Set<string>(), ids: new Set<string>(), firmware: new Set<string>(), acpi: new Set<string>() };
 
@@ -110,6 +112,7 @@ function variantStatus(variant: Variant) {
     deviceTree: dt ? { file: dt.file, firstRelease: dt.firstRelease, inNext: dt.inNext, upstream: dt.upstream, inOmarchy: dt.inOmarchy, patch: dt.patch } : null,
     firmwareNeeded: dt?.firmware ?? [],
     ids: ids.map((entry) => ({ file: entry.file, firstRelease: entry.firstRelease, inMain: entry.inMain, matches: compatibles.includes(entry.compatible), compatible: entry.compatible })),
+    stubble: stubbleIds.filter((entry) => compatibles.includes(entry.compatible)).map(({ file, state, url }) => ({ file, state, url })),
   };
 }
 
@@ -171,8 +174,15 @@ const rows = models.map((model) => {
     : 'missing';
   const omarchyPatch = dts.find((dt) => dt.patch)?.patch;
   const firstRelease = dts.map((dt) => dt.firstRelease).filter(Boolean).sort((a, b) => kernelRank(a) - kernelRank(b))[0] ?? null;
-  // systemd's list first; otherwise IDs sent in through the board count as collected
-  const idsState = variants.some((v) => v.ids.some((entry) => entry.matches)) ? 'listed' : variants.some((v) => v.ids.length) ? 'mismatch' : model.ids_collected ? 'collected' : 'missing';
+  // systemd's list first, then merged into stubble or open as a pull request there; otherwise IDs sent in
+  // through the board count as collected
+  const stubble = variants.flatMap((v) => v.stubble);
+  const stubbleEntry = stubble.find((entry) => entry.state === 'merged') ?? stubble[0];
+  const idsState = variants.some((v) => v.ids.some((entry) => entry.matches)) ? 'listed'
+    : stubbleEntry ? (stubbleEntry.state === 'merged' ? 'ubuntu' : 'posted')
+    : variants.some((v) => v.ids.length) ? 'mismatch'
+    : model.ids_collected ? 'collected'
+    : 'missing';
 
   return {
     id: model.id,
@@ -196,6 +206,7 @@ const rows = models.map((model) => {
       devicetreeArchive: archived[model.id] ? ARCHIVE + model.id : null,
       ids: idsState,
       idsCollected: model.ids_collected ?? null,
+      idsStubble: idsState === 'ubuntu' || idsState === 'posted' ? stubbleEntry!.url : null,
       // What counts is getting the firmware without the laptop's own Windows
       firmware: fw.state,
       firmwareMissing: fw.missing,
@@ -230,7 +241,7 @@ const summary = {
   firmware: count(current, (r) => r.upstream.firmware === 'linux-firmware' || r.upstream.firmware === 'download'),
   // On its way: posted or carried elsewhere, sent in, or merged for the next release
   deviceTreeComing: count(current, (r) => r.upstream.deviceTree === 'posted' || r.upstream.deviceTree === 'out-of-tree'),
-  idsComing: count(current, (r) => r.upstream.ids === 'collected' || r.upstream.ids === 'mismatch'),
+  idsComing: count(current, (r) => ['ubuntu', 'posted', 'collected', 'mismatch'].includes(r.upstream.ids)),
   firmwareComing: count(current, (r) => r.upstream.firmware === 'next-release' || r.upstream.firmware === 'posted'),
   // Hardware IDs and Windows firmware only apply to models that start through UEFI
   googlebooks: count(rows, (r) => r.boot === 'android'),
