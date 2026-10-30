@@ -11,6 +11,7 @@
 #   acpi           aarch64-laptops/build misc/ folders with its ACPI dump
 #   firmware_download  the vendor's driver page whose package has every firmware
 #                  file its device tree loads
+#   firmware_posted  the linux-firmware merge request adding its files, until it's merged
 #   ids_collected  where its hardware IDs were sent, until they're in systemd
 #   devicetree_posted  the posted device tree patch, until it's accepted
 #   devicetree_out_of_tree  where a device tree for it lives outside Linux
@@ -91,6 +92,7 @@ models:
       - { model: "SFA14-11", chip: "X1E-78-100", compatible: "acer,swift-sfa14-11" }
     acpi: ["acer-sfa14-11"]
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261023180513.36417-3-kaipeng94@gmail.com/"
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1341"
     sources:
       - https://www.ithome.com/0/775/814.htm
       - https://github.com/systemd/systemd/blob/main/src/boot/hwids/aa64/x1e78100-acer-sfa14-11.json
@@ -200,8 +202,10 @@ models:
       - { model: "X Plus", chip: "X1P-42-100", compatible: "asus,vivobook-s15-x1p4" }
     firmware: ["qcom/x1e80100/ASUSTeK/vivobook-s15"]
     acpi: ["asus-vivobook-s-15", "asus-vivobook-s15-q5507", "asus-vivobook-s15-s5507"]
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1336"
     reports:
       - { state: "problems", note: "Two owners report the screen going dark after the boot menu on the RC image.", checked: "2026-10" }
+    notes: "The linux-firmware merge request has the X Elite model's files only. ASUS sells both chips as S5507QA, so which package carries the X Plus model's signed files isn't clear yet."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s-15-s5507/techspec/
       - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1p42100-asus-vivobook-s15.dts
@@ -303,6 +307,7 @@ models:
       - { model: "UX3407QA LCD", chip: "X1P-42-100", compatible: "asus,zenbook-a14-ux3407qa-lcd" }
     firmware: ["qcom/x1e80100/ASUSTeK/zenbook-a14"]
     acpi: ["asus-zenbook-a14-ux3407q"]
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1336"
     sources:
       - https://www.asus.com/laptops/for-home/zenbook/asus-zenbook-a14-ux3407/techspec/
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-zenbook-a14
@@ -389,6 +394,7 @@ models:
       - { chip: "X1P-64-100", compatible: "dell,inspiron-14-plus-5441" }
     acpi: ["dell-inspiron-14-5441-x1p-42-100"]
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260508050828.7442-1-adamszyma@wp.pl/"
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1331"
     sources:
       - https://www.notebookcheck.net/Dell-Inspiron-14-5441-now-available-for-899-with-new-Snapdragon-X-Plus-X1P-42-100-SoC.883655.0.html
       - https://dl.dell.com/content/manual20917790-inspiron-14-5441-owner-s-manual.pdf
@@ -404,6 +410,7 @@ models:
       - { chip: "X1E-80-100", compatible: "dell,inspiron-14-plus-7441" }
     firmware: ["qcom/x1e80100/dell/inspiron-14-plus-7441"]
     acpi: ["dell-inspiron-14-7441-x1e-80-100"]
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1331"
     reports:
       - { state: "problems", note: "The screen goes dark after install since the image moved to Omarchy's own kernel.", checked: "2026-10" }
     sources:
@@ -438,6 +445,7 @@ models:
       - { chip: "X1E-80-100", compatible: "dell,latitude-7455" }
     firmware: ["qcom/x1e80100/dell/latitude-7455"]
     acpi: ["dell-latitude-7455"]
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1331"
     sources:
       - https://www.delltechnologies.com/asset/en-us/products/laptops-and-2-in-1s/technical-support/dell-latitude-7455-spec-sheet.pdf
       - https://dl.dell.com/content/manual6242485-latitude-7455-owner-s-manual.pdf
@@ -453,6 +461,7 @@ models:
       - { chip: "X1E-80-100", compatible: "dell,xps13-9345" }
     firmware: ["qcom/x1e80100/dell/xps13-9345"]
     acpi: ["dell-xps-9345"]
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1331"
     sources:
       - https://www.delltechnologies.com/asset/en-us/products/laptops-and-2-in-1s/technical-support/xps-13-9345-spec-sheet.pdf
       - https://www.notebookcheck.net/Dell-XPS-13-9345-Snapdragon-X-Elite-review-Undercutting-the-Intel-Core-Ultra-7.869106.0.html
@@ -511,6 +520,8 @@ models:
     variants:
       - { chip: "X1E-80-100", compatible: "honor,magicbook-art-14-snapdragon" }
     acpi: ["honor-mro-521"]
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1337"
+    notes: "Honor's driver download has no compute DSP firmware, so the linux-firmware merge request leaves those two files out."
     sources:
       - https://www.honor.com/cn/shop/product/10086978403812.html
       - https://www.notebookcheck.net/Honor-MagicBook-Art-14-Snapdragon-released-in-Europe-with-free-tablet-and-earbuds.929574.0.html
@@ -529,6 +540,7 @@ models:
       - { chip: "X1P-42-100", compatible: "hp,elitebook-6-g1q" }
     acpi: ["hp-elitebook-6-g1q"]
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261013-add-elitebook-6-dts-v1-2-f22e67fc7f9d@canonical.com/"
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1333"
     sources:
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4005529
       - https://www.thurrott.com/mobile/copilot-pc/329645/hp-elitebook-6-g1q-review
@@ -544,6 +556,7 @@ models:
     variants:
       - { chip: "X1E-78-100", compatible: "hp,elitebook-ultra-g1q" }
     acpi: ["hp-elitebook-ultra-g1q"]
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1333"
     sources:
       - https://github.com/torvalds/linux/commit/afc48c680438da813e42407009707350c87f8c43
       - https://shop.teqex.co.uk/hp-elitebook-ultra-g1q8-14-inch-notebook-ai-pc-x1p-42-100-laptop-35-6-cm-14-touchscreen-2-2k-windows-11-pro-a37cket-abu.html
@@ -634,6 +647,7 @@ models:
       - { model: "14-fe1", chip: "X1P-42-100", compatible: "hp,omnibook-x14-fe1" }
     firmware: ["qcom/x1e80100/hp/omnibook-x14"]
     acpi: ["hp-omnibook-x14-fe0xxx"]
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1333"
     sources:
       - https://www.hp.com/au-en/shop/hp-omnibook-x-laptop-14-fe0000qu-a42h8par.html
       - https://liliputing.com/hp-introduces-a-cheaper-omnibook-x-14-inch-laptop-with-an-8-core-snapdragon-plus-processor/
@@ -706,6 +720,7 @@ models:
     variants:
       - { compatible: "hp,omnibook-ultra-kg0xxx" }
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260830-x2-hp-omnibook-ship-v1-2-9feada71dc79@oss.qualcomm.com/"
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1333"
     sources:
       - https://www.hp.com/au-en/shop/hp-omnibook-ultra-laptop-next-gen-ai-14-kg0017qu-d78gmpa.html
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4520421
@@ -733,6 +748,7 @@ models:
     variants:
       - { model: "16-cp1", compatible: "hp,omnibook-x16-cp1" }
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261028191800.27829-3-jeff.roach0@gmail.com/"
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1333"
     sources:
       - https://www.hp.com/au-en/shop/hp-omnibook-x-laptop-next-gen-ai-16-cp1000qu-d8cu5pa.html
       - https://support.hp.com/au-en/document/ish_14096181-14096226-16
@@ -767,6 +783,7 @@ models:
       - { model: "X Plus", chip: "X1P-42-100", compatible: "lenovo,purwa-ideacentre-mini-01q8x10" }
     firmware: ["qcom/x1e80100/LENOVO/91B6"]
     acpi: ["lenovo-ideacentre-01q8x10"]
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1332"
     sources:
       - https://psref.lenovo.com/Product/IdeaCentre/IdeaCentre_Mini_01Q8X10
       - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/hamoa-lenovo-ideacentre-mini-01q8x10.dts
@@ -944,8 +961,8 @@ models:
     variants:
       - { model: "LCD", compatible: "lenovo,thinkpad-t14s-gen7-lcd" }
     firmware: ["qcom/glymur/LENOVO/22A8"]
-    notes: "linux-firmware has its audio topology, so a device tree exists somewhere out of tree."
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260929221821.505551-3-srinivas.kandagatla@oss.qualcomm.com/"
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1332"
     sources:
       - https://psref.lenovo.com/Product/ThinkPad/ThinkPad_T14s_Gen_7_Snapdragon
       - https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/mahua-lenovo-thinkpad-t14s-gen7-lcd.dts
@@ -978,6 +995,7 @@ models:
     variants:
       - { model: "S1 Elite", chip: "X1E-78-100", compatible: "medion,sprchrgd14s1" }
     acpi: ["medion-14-s1-elite-sprchrgd", "medion-14-s1-sprchrgd"]
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1338"
     sources:
       - https://www.notebookcheck.net/Medion-SPRCHRGD-14-S1-Elite-review-A-stylish-Snapdragon-ultraportable-with-bags-of-stamina.873557.0.html
       - https://www.discounto.de/Angebot/SPRCHRGD-14-S1-MD62695-35-56-cm-14-Notebook-16-GB-RAM-512-GB-SSD-Qualcomm-Snapdragon-X-Plus-Windows-11-2880-x-1800-Aufloesung-10131081/
@@ -995,6 +1013,7 @@ models:
     variants:
       - { compatible: "microsoft,romulus13" }
     acpi: ["microsoft-surface-romulus13_and_15"]
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1335"
     reports:
       - { state: "problems", note: "The screen stays dark after install; the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.", checked: "2026-10" }
     sources:
@@ -1012,6 +1031,7 @@ models:
     variants:
       - { chip: "X1E-80-100", compatible: "microsoft,romulus15" }
     acpi: ["microsoft-surface-romulus13_and_15"]
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1335"
     reports:
       - { state: "problems", note: "The screen stays dark after install; the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.", checked: "2026-10" }
     sources:
@@ -1042,6 +1062,7 @@ models:
       - { model: "OLED", chip: "X1E-80-100", compatible: "microsoft,denali-oled" }
       - { model: "LCD", chip: "X1P-64-100", compatible: "microsoft,denali-lcd" }
     acpi: ["microsoft-surface-pro-11"]
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1335"
     reports:
       - { state: "works", variant: "OLED", note: "Boots on Omarchy's kernel; suspend, both cameras, pen and touch work.", checked: "2026-10" }
     sources:
@@ -1060,6 +1081,7 @@ models:
     variants:
       - { chip: "X1P-42-100", compatible: "microsoft,surface-pro-12in", ids: ["x1p42100-microsoft-surface-pro-12in.json"] }
     acpi: ["microsoft-surface-pro-12-in"]
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1335"
     sources:
       - https://learn.microsoft.com/en-us/surface/tech-specs/surface-pro-copilot-plus-pc-12inch-tech-specs
       - https://www.notebookcheck.net/Finally-a-silent-Snapdragon-2-in-1-Microsoft-Surface-Pro-12-review.1041342.0.html
@@ -1087,6 +1109,7 @@ models:
     variants:
       - { compatible: "microsoft,surface-laptop8" }
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261027-mahua-surface-laptop-v2-3-7dd903a12d22@oss.qualcomm.com/"
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1335"
     sources:
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
       - https://www.notebookcheck.net/Microsoft-Surface-Laptop-8-13-8-Reviews-and-Specs.1336515.0.html
@@ -1171,6 +1194,7 @@ models:
     chips: ["X1E-80-100", "X1E-84-100"]
     model_numbers: ["NP960XMA", "NP960XMB", "NP964XMA", "NT960XMA", "NT960XMB"]
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1334"
     sources:
       - https://www.computerbase.de/2024-09/samsung-galaxy-book4-edge-x1e-84-10-test/
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4512701/export/pdf
@@ -1188,10 +1212,11 @@ models:
     acpi: ["samsung-galaxybook4-edge"]
     firmware_download: "https://www.samsung.com/global/galaxybooks-downloadcenter/"
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
+    firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1334"
     ids_collected: "https://github.com/birkskyum/arewearmyet/issues/1"
     reports:
       - { state: "problems", note: "The stock 4.5.0rc1 image resets in a loop, since it has no device tree for this model. With an owner's board package it installs and is in daily use on linux-omarchy 7.3 with the v8 device tree series.", checked: "2026-10" }
-    notes: "Wi-Fi needs a board-2.bin entry that linux-firmware doesn't have yet, and the speaker amps are WSA883x, not the WSA884x the v8 device tree names."
+    notes: "The speaker amps are WSA883x, not the WSA884x the v8 device tree names."
     sources:
       - https://www.notebookcheck.net/Samsung-releases-Galaxy-Book4-Edge-laptops-in-Snapdragon-X-Elite-X1E-80-100-and-X1E-84-100-variants-from-1-349-99.839723.0.html
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4510120/export/pdf

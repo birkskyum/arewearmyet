@@ -38,6 +38,7 @@ const STATES = {
     'linux-firmware': { label: 'linux-firmware', tone: 'good', meaning: `Every file its device tree loads ships in linux-firmware's newest release, so nothing has to be copied.` },
     download: { label: 'Vendor download', tone: 'good', meaning: `The vendor's driver download has it, so it works even after Windows is wiped.` },
     'next-release': { label: 'Next release', tone: 'close', meaning: `Merged into linux-firmware, and coming with its next release.` },
+    posted: { label: 'Posted', tone: 'close', meaning: 'Sent to linux-firmware as a merge request, not merged yet.' },
     partial: { label: 'Partly', tone: 'close', meaning: 'linux-firmware has some of the files its device tree loads; the rest still come from Windows.' },
     windows: { label: 'Windows only', tone: 'close', meaning: `Copied from the laptop's own Windows today. A link to the vendor's driver download would cover laptops whose Windows is gone.` },
   },
@@ -147,8 +148,10 @@ export function firmwareCell(model: Model): Cell {
     key === 'next-release' ? ` The release after ${status.firmwareRelease} adds ${missing.join(', ')}.` :
     key === 'partial' ? ` Still missing: ${missing.join(', ')}.` :
     key === 'linux-firmware' ? ` Checked against release ${status.firmwareRelease}.` :
+    key === 'download' && model.upstream.firmwarePosted ? ' Also sent to linux-firmware as a merge request.' :
     model.upstream.firmwareAudioOnly ? ' linux-firmware already has its audio setup file.' : '';
-  return cell(STATES.firmware, key, { title: meaning + detail, href: key === 'download' ? (model.upstream.firmwareDownload ?? undefined) : undefined });
+  const href = key === 'download' ? model.upstream.firmwareDownload : key === 'posted' ? model.upstream.firmwarePosted : null;
+  return cell(STATES.firmware, key, { title: meaning + detail, href: href ?? undefined });
 }
 
 export function acpiCell(model: Model): Cell {
