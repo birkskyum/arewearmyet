@@ -1,0 +1,119 @@
+---
+import Layout from '../layouts/Layout.astro';
+import OmarchyIcon from '../assets/omarchy-icon.svg';
+import { TONE } from '../lib/labels';
+import { PILL } from '../lib/tones';
+
+const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
+const REPO = 'https://github.com/birkskyum/arewearmyet';
+const FORM = `${REPO}/issues/new?template=model.yml`;
+const INSTALLER = 'https://github.com/turbineBMW/omarchy-arm-installer/releases/latest';
+const REPORTS = 'https://github.com/turbineBMW/omarchy-hardware-reports';
+const CARD = 'rounded-xl bg-zinc-900 p-6 ring-1 ring-zinc-800 scroll-mt-6';
+const STEPS = 'mt-4 list-decimal space-y-3 pl-5 marker:text-zinc-500';
+const CODE = 'mt-2 overflow-x-auto rounded-md bg-zinc-950 p-3 text-xs text-zinc-300';
+const INLINE = 'rounded bg-zinc-800 px-1 py-0.5 text-[0.85em] text-zinc-200';
+const CASES = [
+  { id: 'windows', title: 'Still on Windows', text: 'Share a hardware report' },
+  { id: 'linux', title: 'Running Linux on it', text: 'Save the device tree it boots with' },
+  { id: 'test', title: 'It should boot already', text: 'Try Omarchy and tell us how far it got' },
+];
+---
+
+<Layout title="Help a model get there · Are we ARM yet?" description="How owners of an ARM laptop help it get to Omarchy: a hardware report from Windows, the device tree it boots with on Linux, or a boot test.">
+  <main class="mx-auto max-w-4xl px-4 py-10 text-zinc-400 sm:px-6">
+    <a href="/" class="flex items-center gap-3 text-zinc-300 hover:text-zinc-100">
+      <OmarchyIcon class="h-8 w-8 text-[#9ece6a]" aria-hidden="true" />
+      <span class="font-semibold">Are we ARM yet?</span>
+    </a>
+
+    <h1 class="mt-8 text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">Help a model get there</h1>
+    <p class="mt-4 text-lg">
+      Every Snapdragon laptop needs a device tree that describes its hardware to Linux, its hardware IDs so a boot image picks that tree by itself, and its firmware. Writing a device tree takes a developer, but it's written from what's on your laptop, and it's finished by someone testing it on the real hardware.
+    </p>
+    <p class="mt-3">
+      If your laptop is marked <span class={`${PILL} ${TONE.wanted}`}>Wanted</span> or <span class={`${PILL} ${TONE.close}`}>Should boot</span> on the board, or isn't on it at all, pick the case that fits. Each takes a few minutes, and all of them end in the same form.
+    </p>
+
+    <nav class="mt-6 grid gap-3 sm:grid-cols-3">
+      {CASES.map((c) => (
+        <a href={`#${c.id}`} class="rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800 hover:bg-zinc-800">
+          <span class="block font-medium text-zinc-100">{c.title}</span>
+          <span class="mt-1 block text-sm">{c.text}</span>
+        </a>
+      ))}
+    </nav>
+
+    <section id="windows" class={`mt-10 ${CARD}`}>
+      <h2 class="text-xl font-semibold text-zinc-100">Your laptop still has Windows</h2>
+      <p class="mt-2">
+        The <a class={LINK} href={INSTALLER}>Omarchy Arm Installer</a> reads the laptop from its own Windows and writes a hardware report with the ACPI and SMBIOS tables Windows uses to describe the hardware, its hardware IDs, every device with its driver and resources, and a list of the firmware files in its drivers. A device tree is written from exactly that. Serial numbers and other personal details are taken out, and no firmware files go into the report.
+      </p>
+      <ol class={STEPS}>
+        <li>Download <code class={INLINE}>OmarchyArmInstaller.exe</code> from the <a class={LINK} href={INSTALLER}>installer's latest release</a>. It's a pre-release, so expect rough edges.</li>
+        <li>Right-click it and choose Run as administrator, which it needs to read the firmware tables.</li>
+        <li>Choose Share a hardware report. If Linux doesn't know the laptop yet, the installer offers it by itself.</li>
+        <li>Choose Collect the report. The zip lands in Downloads, next to a list of what was taken out of it.</li>
+        <li>Choose Open the form. The model and its hardware IDs are filled in already. Drag the zip in, add a link to the vendor's driver page if you know it, and submit. Reports are public in <a class={LINK} href={REPORTS}>omarchy-hardware-reports</a>.</li>
+      </ol>
+      <p class="mt-4">If you can test boot images on the laptop later, say so in the report. An owner who can test is what gets a device tree finished.</p>
+    </section>
+
+    <section id="linux" class={`mt-6 ${CARD}`}>
+      <h2 class="text-xl font-semibold text-zinc-100">You already run Linux on it</h2>
+      <p class="mt-2">
+        If Linux boots on it, with another model's device tree or one you patched, the tree it boots with is the best start for its own. The kernel keeps a copy of it you can save.
+      </p>
+      <ol class={STEPS}>
+        <li>
+          Install the device tree compiler and fwupd.
+          <pre class={CODE}><code>sudo pacman -S dtc fwupd                     # Arch, Omarchy
+sudo apt install device-tree-compiler fwupd  # Debian, Ubuntu
+sudo dnf install dtc fwupd                   # Fedora</code></pre>
+        </li>
+        <li>
+          Save the device tree the laptop booted with, without its serial number. Warnings from <code class={INLINE}>dtc</code> are normal.
+          <pre class={CODE}><code>dtc -I fs -O dts /sys/firmware/devicetree/base &gt; tree.dts
+sed -i '/serial-number/d' tree.dts</code></pre>
+        </li>
+        <li>
+          Save its hardware IDs.
+          <pre class={CODE}><code>sudo fwupdtool hwids &gt; hwids.txt</code></pre>
+        </li>
+        <li>Open <a class={LINK} href={FORM}>Add your model</a>, drag in both files, and say which device tree you started from and what you changed. A patch or a link to your branch is even better.</li>
+      </ol>
+    </section>
+
+    <section id="test" class={`mt-6 ${CARD}`}>
+      <h2 class="text-xl font-semibold text-zinc-100">It should boot already</h2>
+      <p class="mt-2">
+        A model marked <span class={`${PILL} ${TONE.close}`}>Should boot</span> has every piece in place, with a device tree in Linux, hardware IDs in systemd and its firmware. Nobody has confirmed it on the real hardware yet.
+      </p>
+      <ol class={STEPS}>
+        <li>Make an Omarchy USB stick. With Windows still on the laptop, the <a class={LINK} href={INSTALLER}>Omarchy Arm Installer</a> makes one and copies the laptop's firmware onto it from Windows' own drivers.</li>
+        <li>Turn off Secure Boot, boot from the stick, and install, or just see how far it gets.</li>
+        <li>Open <a class={LINK} href={FORM}>Add your model</a> and choose how far Omarchy got. Say what didn't work, like sound, the battery status or an external screen.</li>
+      </ol>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-base font-semibold text-zinc-200">Please don't send</h2>
+      <ul class="mt-2 list-disc space-y-1 pl-5 marker:text-zinc-600">
+        <li>Firmware files. They belong to the vendor, so only the vendor can put them in linux-firmware. A link to the vendor's driver download is what helps.</li>
+        <li>Serial numbers, or the <code class={INLINE}>MSDM</code> ACPI table, which holds the Windows product key. The installer leaves both out.</li>
+      </ul>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="text-base font-semibold text-zinc-200">What happens next</h2>
+      <p class="mt-2">
+        Reports and device trees go to the people writing trees for these laptops. The board shows each step as it lands, from a tree out of tree to one posted to the kernel list and then in a Linux release. When there's something to try on your laptop, we'll ask in your issue.
+      </p>
+    </section>
+
+    <div class="mt-10 flex flex-wrap gap-3 text-sm">
+      <a href={FORM} class="rounded-md bg-zinc-100 px-3 py-1.5 font-medium text-zinc-900 hover:bg-white">Add your model</a>
+      <a href="/" class="rounded-md px-3 py-1.5 text-zinc-200 ring-1 ring-zinc-700 hover:bg-zinc-800">Back to the board</a>
+    </div>
+  </main>
+</Layout>
