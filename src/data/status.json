@@ -38,6 +38,9 @@
     "deviceTree": 23,
     "ids": 29,
     "firmware": 3,
+    "deviceTreeComing": 15,
+    "idsComing": 3,
+    "firmwareComing": 23,
     "googlebooks": 2,
     "acpiNeeded": 60,
     "acpi": 9

@@ -225,6 +225,10 @@ const summary = {
   deviceTree: count(current, (r) => r.upstream.deviceTree === 'released' || r.upstream.deviceTree === 'next'),
   ids: count(current, (r) => r.upstream.ids === 'listed'),
   firmware: count(current, (r) => r.upstream.firmware === 'linux-firmware' || r.upstream.firmware === 'download'),
+  // On its way: posted or carried elsewhere, sent in, or merged for the next release
+  deviceTreeComing: count(current, (r) => ['posted', 'omarchy', 'out-of-tree'].includes(r.upstream.deviceTree)),
+  idsComing: count(current, (r) => r.upstream.ids === 'collected' || r.upstream.ids === 'mismatch'),
+  firmwareComing: count(current, (r) => r.upstream.firmware === 'next-release' || r.upstream.firmware === 'posted'),
   // Hardware IDs and Windows firmware only apply to models that start through UEFI
   googlebooks: count(rows, (r) => r.boot === 'android'),
   // A dump only matters until a model has a device tree
