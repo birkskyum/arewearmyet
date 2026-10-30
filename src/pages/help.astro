@@ -16,7 +16,7 @@ const INLINE = 'rounded bg-zinc-800 px-1 py-0.5 text-[0.85em] text-zinc-200';
 const CASES = [
   { id: 'windows', title: 'Still on Windows', text: 'Share a hardware report' },
   { id: 'linux', title: 'Running Linux on it', text: 'Save the device tree it boots with' },
-  { id: 'test', title: 'It should boot already', text: 'Try Omarchy and tell us how far it got' },
+  { id: 'test', title: 'Ready to test', text: 'Try Omarchy and tell us how far it got' },
 ];
 ---
 
@@ -32,7 +32,7 @@ const CASES = [
       Every Snapdragon laptop needs a device tree that describes its hardware to Linux, its hardware IDs so a boot image picks that tree by itself, and its firmware. Writing a device tree takes a developer, but it's written from what's on your laptop, and it's finished by someone testing it on the real hardware.
     </p>
     <p class="mt-3">
-      If your laptop is marked <span class={`${PILL} ${TONE.wanted}`}>Wanted</span> or <span class={`${PILL} ${TONE.close}`}>Should boot</span> on the board, or isn't on it at all, pick the case that fits. Each takes a few minutes, and all of them end in the same form.
+      If your laptop is marked <span class={`${PILL} ${TONE.wanted}`}>Wanted</span> or <span class={`${PILL} ${TONE.close}`}>Ready to test</span> on the board, or isn't on it at all, pick the case that fits. Each takes a few minutes, and all of them end in the same form.
     </p>
 
     <nav class="mt-6 grid gap-3 sm:grid-cols-3">
@@ -85,9 +85,9 @@ sed -i '/serial-number/d' tree.dts</code></pre>
     </section>
 
     <section id="test" class={`mt-6 ${CARD}`}>
-      <h2 class="text-xl font-semibold text-zinc-100">It should boot already</h2>
+      <h2 class="text-xl font-semibold text-zinc-100">It's ready to test</h2>
       <p class="mt-2">
-        A model marked <span class={`${PILL} ${TONE.close}`}>Should boot</span> has every piece in place, with a device tree in Linux, hardware IDs in systemd and its firmware. Nobody has confirmed it on the real hardware yet.
+        A model marked <span class={`${PILL} ${TONE.close}`}>Ready to test</span> has every piece in place, with a device tree in Linux, hardware IDs in systemd and its firmware. Nobody has confirmed it on the real hardware yet.
       </p>
       <ol class={STEPS}>
         <li>Make an Omarchy USB stick. With Windows still on the laptop, the <a class={LINK} href={INSTALLER}>Omarchy Arm Installer</a> makes one and copies the laptop's firmware onto it from Windows' own drivers.</li>
