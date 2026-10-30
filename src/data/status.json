@@ -1,5 +1,5 @@
 {
-  "collected": "2026-10-30T01:50:09.767Z",
+  "collected": "2026-10-30T14:25:55.535Z",
   "linuxNext": "20261029",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -21,7 +21,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-6",
+        "kernel": "7.3-7",
         "systemd": "262.1-1"
       }
     ]
