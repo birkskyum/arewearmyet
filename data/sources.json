@@ -1,5 +1,5 @@
 {
-  "collected": "2026-10-30T16:13:55.561Z",
+  "collected": "2026-10-30T16:24:44.833Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -2168,6 +2168,13 @@
       "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p64100-dell-latitude-5455.json",
       "name": "Dell Inc. Latitude 5455",
       "compatible": "dell,latitude-5455"
+    },
+    {
+      "file": "x1p42100-microsoft-surface-pro-12in.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/99",
+      "name": "Microsoft Corporation Surface",
+      "compatible": "microsoft,surface-pro-12in"
     },
     {
       "file": "x1e80100-samsung-galaxy-book4-edge-14.json",

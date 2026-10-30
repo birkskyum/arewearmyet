@@ -1,5 +1,5 @@
 {
-  "collected": "2026-10-30T16:13:55.561Z",
+  "collected": "2026-10-30T16:24:44.833Z",
   "linuxNext": "20261030",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -5449,9 +5449,9 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": null,
         "devicetreeArchive": null,
-        "ids": "mismatch",
+        "ids": "posted",
         "idsCollected": null,
-        "idsStubble": null,
+        "idsStubble": "https://github.com/ubuntu/stubble/pull/99",
         "firmware": "posted",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -5492,7 +5492,13 @@
             "qcom/x1p42100/Microsoft/Surface12/qccdsp8380.mbn",
             "qcom/x1p42100/Microsoft/Surface12/cdsp_dtbs.elf"
           ],
-          "stubble": [],
+          "stubble": [
+            {
+              "file": "x1p42100-microsoft-surface-pro-12in.json",
+              "state": "open",
+              "url": "https://github.com/ubuntu/stubble/pull/99"
+            }
+          ],
           "outcome": "manual",
           "reports": []
         }
