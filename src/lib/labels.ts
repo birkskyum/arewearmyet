@@ -161,7 +161,9 @@ export function acpiCell(model: Model): Cell {
 
 export function googlebookOmarchyCell(model: Model): Cell {
   const reported = model.reports.some((r) => r.state === 'problems') ? 'problems' : model.reports.some((r) => r.state === 'works') ? 'works' : 'notyet';
-  return cell(STATES.googlebookOmarchy, reported);
+  const meaning = STATES.googlebookOmarchy[reported].meaning;
+  const notes = reportNotes(model.reports);
+  return cell(STATES.googlebookOmarchy, reported, { title: notes ? `${meaning} ${notes}` : meaning });
 }
 
 export function bootloaderCell(model: Model): Cell {

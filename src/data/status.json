@@ -2142,9 +2142,15 @@
         "https://www.energystar.gov/productfinder/product/certified-computers/details/4689114",
         "https://9to5google.com/2026/09/21/googlebook-launch/"
       ],
-      "notes": "The first step is reading the device tree Googlebook OS starts with.",
-      "outcome": "none",
-      "reports": [],
+      "notes": "Its Android device name is mica. Googlebook OS doesn't let the adb shell read its device tree or firmware without root, and its device tree isn't public yet.",
+      "outcome": "problems",
+      "reports": [
+        {
+          "state": "problems",
+          "note": "Linux 7.2 with a device tree written for it starts from the unlocked bootloader's boot-from-external-drive menu and runs from USB. With the full Omarchy stack the GPU and the panel come up, but it doesn't reach the desktop yet. The logs stop when the audio DSP starts.",
+          "checked": "2026-10"
+        }
+      ],
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2168,13 +2174,19 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
-          "outcome": "none",
-          "reports": []
+          "outcome": "problems",
+          "reports": [
+            {
+              "state": "problems",
+              "note": "Linux 7.2 with a device tree written for it starts from the unlocked bootloader's boot-from-external-drive menu and runs from USB. With the full Omarchy stack the GPU and the panel come up, but it doesn't reach the desktop yet. The logs stop when the audio DSP starts.",
+              "checked": "2026-10"
+            }
+          ]
         }
       ],
       "boot": "android",
       "bootloader": "unlockable",
-      "linuxImage": "none",
+      "linuxImage": "boots",
       "discussion": "https://github.com/omacom/omarchy/discussions/16627"
     },
     {
