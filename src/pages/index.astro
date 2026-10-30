@@ -46,7 +46,7 @@ const upstreamBars = [
 const snapdragonIds = ['omarchy', 'device-tree', 'ids', 'firmware', 'acpi'] as const;
 const snapdragonColumns = LEGEND.map((group, i) => ({ id: snapdragonIds[i], header: group.column, question: group.question, options: FILTERS[snapdragonIds[i]] }));
 const nvidiaColumns = [
-  { id: 'omarchy', header: 'Omarchy', question: NVIDIA_LEGEND[0].question, options: FILTERS.nvidiaOmarchy },
+  { id: 'omarchy', header: 'Boots', question: NVIDIA_LEGEND[0].question, options: FILTERS.nvidiaOmarchy },
   { id: 'linux', header: 'Linux', question: NVIDIA_LEGEND[1].question, options: FILTERS.nvidiaLinux },
   { id: 'notes', header: 'Notes', question: 'What else to know' },
 ];

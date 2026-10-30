@@ -1,5 +1,5 @@
 ---
-// A family of machines: its name and how many boot into Omarchy stay in view, and the rest folds away
+// A family of machines: its name and how many boot to the desktop stay in view, and the rest folds away
 import SplitBar from './SplitBar.astro';
 
 interface Props {
@@ -22,7 +22,7 @@ const { id, title, parts, total } = Astro.props;
       </span>
     </div>
     <div class="mt-4">
-      <SplitBar parts={parts} total={total} caption={`${parts[0].value} of ${total} boot into Omarchy`} />
+      <SplitBar parts={parts} total={total} caption={`${parts[0].value} of ${total} boot to the desktop`} />
     </div>
   </summary>
   <div class="mt-6">

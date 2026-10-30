@@ -59,7 +59,7 @@ const STATES = {
   googlebookOmarchy: {
     works: { label: 'Boots', tone: 'good', meaning: 'An owner booted into Omarchy on it. Not every feature has to work yet.' },
     problems: { label: 'Problems', tone: 'wanted', meaning: `An owner tried it and couldn't get to the Omarchy desktop.` },
-    notyet: { label: 'Not yet', tone: 'wanted', meaning: `Omarchy can't start on it yet: it needs a device tree and a Linux image for its Android-style bootloader.` },
+    notyet: { label: 'Not yet', tone: 'wanted', meaning: `Nothing starts on it yet. It needs a device tree and a Linux image for its Android-style bootloader.` },
   },
   bootloader: {
     unlockable: { label: 'Unlockable', tone: 'good', meaning: 'Google lets owners unlock the bootloader to try another system. Unlocking wipes the laptop.' },
@@ -77,7 +77,7 @@ export const ANNOUNCED = STATES.announced as State;
 type Group = { column: string; question: string; states: State[] };
 
 export const LEGEND: Group[] = [
-  { column: 'Omarchy', question: `Does it boot into Omarchy's current release? That's the first goal for every model; features like suspend and USB4 come next.`, states: Object.values(STATES.omarchy) as State[] },
+  { column: 'Boots', question: `Has an owner reached the desktop on it? Tested on Omarchy so far, and reports from any distro are welcome. Booting is the first goal for every model; features like suspend and USB4 come next.`, states: Object.values(STATES.omarchy) as State[] },
   { column: 'Device tree', question: 'The description of the hardware that Linux needs for each model.', states: Object.values(STATES.deviceTree) as State[] },
   { column: 'Hardware IDs', question: 'How an install image recognises the model and picks its device tree.', states: Object.values(STATES.ids) as State[] },
   { column: 'Firmware', question: `Signed files for its audio, sensor and graphics chips. Booting doesn't need them, but without them there's no sound, battery status, USB-C display, sensors or graphics acceleration. The goal is getting them without the laptop's own Windows.`, states: Object.values(STATES.firmware) as State[] },
@@ -85,14 +85,14 @@ export const LEGEND: Group[] = [
 ];
 
 export const GOOGLEBOOK_LEGEND: Group[] = [
-  { column: 'Omarchy', question: 'Has someone booted into Omarchy on it?', states: Object.values(STATES.googlebookOmarchy) as State[] },
+  { column: 'Boots', question: 'Has an owner reached the desktop on it? Tested on Omarchy so far.', states: Object.values(STATES.googlebookOmarchy) as State[] },
   { column: 'Device tree', question: 'The description of the hardware that Linux needs, the same work as for the other Snapdragon laptops.', states: Object.values(STATES.deviceTree) as State[] },
   { column: 'Bootloader', question: 'Whether its Android-style bootloader lets owners start another system.', states: Object.values(STATES.bootloader) as State[] },
   { column: 'Linux image', question: 'Whether a Linux image starts on it, the step before Omarchy can.', states: Object.values(STATES.linuxImage) as State[] },
 ];
 
 export const NVIDIA_LEGEND: Group[] = [
-  { column: 'Omarchy', question: 'Has someone booted into Omarchy on it?', states: Object.values(STATES.nvidiaOmarchy) as State[] },
+  { column: 'Boots', question: 'Has someone reached the desktop on it? Tested on Omarchy so far, and reports from any distro are welcome.', states: Object.values(STATES.nvidiaOmarchy) as State[] },
   { column: 'Linux', question: `Whether plain Linux runs it, or it needs patches Linux doesn't have yet.`, states: Object.values(STATES.nvidiaLinux) as State[] },
 ];
 
