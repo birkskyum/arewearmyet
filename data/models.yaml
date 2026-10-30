@@ -1167,7 +1167,8 @@ models:
     chips: ["X2P-64-100", "X2E-78-100"]
     model_numbers: ["2036", "2138"]
     variants:
-      - { compatible: "microsoft,surface-laptop8" }
+      - { chip: "X2E-78-100", compatible: "microsoft,surface-laptop8" }
+      - { chip: "X2P-64-100", compatible: "microsoft,surface-laptop-8-13p8" }
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261027-mahua-surface-laptop-v2-3-7dd903a12d22@oss.qualcomm.com/"
     firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1335"
     sources:

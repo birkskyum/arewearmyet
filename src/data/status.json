@@ -5233,6 +5233,7 @@
       },
       "variants": [
         {
+          "chip": "X2E-78-100",
           "compatible": "microsoft,surface-laptop8",
           "computed": "manual",
           "deviceTree": {
@@ -5246,6 +5247,16 @@
           "firmwareNeeded": [],
           "ids": [],
           "outcome": "manual",
+          "reports": []
+        },
+        {
+          "chip": "X2P-64-100",
+          "compatible": "microsoft,surface-laptop-8-13p8",
+          "computed": "none",
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "outcome": "none",
           "reports": []
         }
       ],
