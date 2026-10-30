@@ -1,0 +1,779 @@
+// SPDX-License-Identifier: BSD-3-Clause
+// Adapted from ericman2001 HP port; Dell runtime DT is wiring authority.
+// SPDX-License-Identifier: BSD-3-Clause
+
+
+/dts-v1/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+
+#include "hamoa.dtsi"
+#include "hamoa-pmics.dtsi"
+
+
+/delete-node/ &adsp_rpc_remote_heap_mem;
+/delete-node/ &tz_stat_mem;
+
+/delete-node/ &xbl_tmp_buffer_mem;
+
+/ {
+	model = "Dell XPS Googlebook Mica USB experiment";
+	compatible = "google,mica", "qcom,x1e80100";
+
+	aliases {
+		serial1 = &uart14;
+	};
+
+	vreg_tp_3p3: regulator-touchpad {
+		compatible = "regulator-fixed";
+
+		regulator-name = "VREG_TP_3P3";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+
+		gpio = <&tlmm 36 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+
+		pinctrl-0 = <&tpad_vdd_en>;
+		pinctrl-names = "default";
+
+		
+		regulator-always-on;
+		regulator-boot-on;
+	};
+
+	vreg_ts_3p3: regulator-touchscreen {
+		compatible = "regulator-fixed";
+
+		regulator-name = "VREG_TS_3P3";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+
+		gpio = <&tlmm 88 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+		startup-delay-us = <150000>;
+
+		pinctrl-0 = <&ts_vdd_en>;
+		pinctrl-names = "default";
+
+		regulator-always-on;
+	};
+
+	vreg_wcn_3p3: regulator-wcn-3p3 {
+		compatible = "regulator-fixed";
+
+		regulator-name = "VREG_WCN_3P3";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+
+		gpio = <&tlmm 214 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+
+		pinctrl-0 = <&wcn_sw_en>;
+		pinctrl-names = "default";
+
+		regulator-boot-on;
+	};
+
+	
+	vreg_wcn_0p95: regulator-wcn-0p95 {
+		compatible = "regulator-fixed";
+
+		regulator-name = "VREG_WCN_0P95";
+		regulator-min-microvolt = <950000>;
+		regulator-max-microvolt = <950000>;
+
+		vin-supply = <&vreg_wcn_3p3>;
+	};
+
+	vreg_wcn_1p9: regulator-wcn-1p9 {
+		compatible = "regulator-fixed";
+
+		regulator-name = "VREG_WCN_1P9";
+		regulator-min-microvolt = <1900000>;
+		regulator-max-microvolt = <1900000>;
+
+		vin-supply = <&vreg_wcn_3p3>;
+	};
+
+	wcn7850-pmu {
+		compatible = "qcom,wcn7850-pmu";
+
+		vdd-supply = <&vreg_wcn_0p95>;
+		vddio-supply = <&vreg_l15b_1p8>;
+		vddaon-supply = <&vreg_wcn_0p95>;
+		vdddig-supply = <&vreg_wcn_0p95>;
+		vddrfa1p2-supply = <&vreg_wcn_1p9>;
+		vddrfa1p8-supply = <&vreg_wcn_1p9>;
+
+		wlan-enable-gpios = <&tlmm 117 GPIO_ACTIVE_HIGH>;
+		bt-enable-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
+
+		pinctrl-0 = <&wcn_wlan_bt_en>;
+		pinctrl-names = "default";
+
+		regulators {
+			vreg_pmu_rfa_cmn: ldo0 {
+				regulator-name = "vreg_pmu_rfa_cmn";
+			};
+
+			vreg_pmu_aon_0p59: ldo1 {
+				regulator-name = "vreg_pmu_aon_0p59";
+			};
+
+			vreg_pmu_wlcx_0p8: ldo2 {
+				regulator-name = "vreg_pmu_wlcx_0p8";
+			};
+
+			vreg_pmu_wlmx_0p85: ldo3 {
+				regulator-name = "vreg_pmu_wlmx_0p85";
+			};
+
+			vreg_pmu_btcmx_0p85: ldo4 {
+				regulator-name = "vreg_pmu_btcmx_0p85";
+			};
+
+			vreg_pmu_rfa_0p8: ldo5 {
+				regulator-name = "vreg_pmu_rfa_0p8";
+			};
+
+			vreg_pmu_rfa_1p2: ldo6 {
+				regulator-name = "vreg_pmu_rfa_1p2";
+			};
+
+			vreg_pmu_rfa_1p8: ldo7 {
+				regulator-name = "vreg_pmu_rfa_1p8";
+			};
+
+			vreg_pmu_pcie_0p9: ldo8 {
+				regulator-name = "vreg_pmu_pcie_0p9";
+			};
+
+			vreg_pmu_pcie_1p8: ldo9 {
+				regulator-name = "vreg_pmu_pcie_1p8";
+			};
+		};
+	};
+
+	
+	pmic-glink {
+		compatible = "qcom,x1e80100-pmic-glink",
+			     "qcom,sm8550-pmic-glink",
+			     "qcom,pmic-glink";
+		#address-cells = <1>;
+		#size-cells = <0>;
+	};
+
+	vreg_edp_3p3: regulator-edp-3p3 {
+		compatible = "regulator-fixed";
+
+		regulator-name = "VREG_EDP_3P3";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+
+		gpio = <&tlmm 70 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+
+		pinctrl-0 = <&edp_reg_en>;
+		pinctrl-names = "default";
+
+		regulator-boot-on;
+	};
+
+	vreg_nvme: regulator-nvme {
+        status = "disabled";
+		compatible = "regulator-fixed";
+
+		regulator-name = "VREG_NVME_3P3";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+
+		gpio = <&tlmm 18 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+		startup-delay-us = <40000>;
+
+		pinctrl-0 = <&nvme_reg_en>;
+		pinctrl-names = "default";
+
+		regulator-boot-on;
+	};
+
+
+
+	reserved-memory {
+		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap@82000000 {
+			reg = <0x0 0x82000000 0x0 0x800000>;
+			no-map;
+		};
+
+		tz_stat_mem: tz-stat@82800000 {
+			reg = <0x0 0x82800000 0x0 0x100000>;
+			no-map;
+		};
+
+		
+		wlan-msa@85380000 {
+			reg = <0x0 0x85380000 0x0 0xc00000>;
+			no-map;
+		};
+
+		
+		splash-region@e4800000 {
+			reg = <0x0 0xe4800000 0x0 0x21c0000>;
+			no-map;
+		};
+	};
+};
+
+
+&apps_rsc {
+	regulators-0 {
+		compatible = "qcom,pm8550-rpmh-regulators";
+		qcom,pmic-id = "b";
+
+		
+		vreg_l1b_1p8: ldo1 {
+			regulator-name = "vreg_l1b_1p8";
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+			regulator-always-on;
+		};
+
+		
+		vreg_l12b_1p2: ldo12 {
+            regulator-name = "vreg_l12b_1p2";
+            regulator-min-microvolt = <1200000>;
+            regulator-max-microvolt = <1200000>;
+            regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+            regulator-always-on;
+        };
+        vreg_l15b_1p8: ldo15 {
+			regulator-name = "vreg_l15b_1p8";
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+			regulator-always-on;
+		};
+	};
+
+	
+	regulators-1 {
+		compatible = "qcom,pmc8380-rpmh-regulators";
+		qcom,pmic-id = "e";
+
+		vreg_l3e_1p2: ldo3 {
+			regulator-name = "vreg_l3e_1p2";
+			regulator-min-microvolt = <1200000>;
+			regulator-max-microvolt = <1200000>;
+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+			regulator-always-on;
+		};
+	};
+
+	regulators-2 {
+		compatible = "qcom,pm8550ve-rpmh-regulators";
+		qcom,pmic-id = "i";
+
+		vreg_l3i_0p8: ldo3 {
+			regulator-name = "vreg_l3i_0p8";
+			regulator-min-microvolt = <880000>;
+			regulator-max-microvolt = <920000>;
+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+			regulator-always-on;
+		};
+	};
+
+	
+	regulators-3 {
+		compatible = "qcom,pm8550ve-rpmh-regulators";
+		qcom,pmic-id = "j";
+
+		vreg_l2j_1p2: ldo2 {
+			regulator-name = "vreg_l2j_1p2";
+			regulator-min-microvolt = <1256000>;
+			regulator-max-microvolt = <1256000>;
+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+			regulator-always-on;
+		};
+
+		vreg_l3j_0p8: ldo3 {
+			regulator-name = "vreg_l3j_0p8";
+			regulator-min-microvolt = <880000>;
+			regulator-max-microvolt = <920000>;
+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+			regulator-always-on;
+		};
+	};
+};
+
+&apss_watchdog {
+	status = "okay";
+};
+
+&gpi_dma0 {
+	status = "okay";
+};
+
+&gpi_dma1 {
+	status = "okay";
+};
+
+&i2c0 {
+	clock-frequency = <400000>;
+
+	status = "okay";
+
+	touchpad@2c {
+		compatible = "hid-over-i2c";
+		reg = <0x2c>;
+
+		hid-descr-addr = <0x20>;
+		reset-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
+		interrupts-extended = <&tlmm 3 IRQ_TYPE_LEVEL_LOW>;
+
+		vdd-supply = <&vreg_l12b_1p2>;
+		vddl-supply = <&vreg_tp_3p3>;
+
+		pinctrl-0 = <&tpad_default>;
+		pinctrl-names = "default";
+
+		wakeup-source;
+	};
+};
+
+&i2c8 {
+	clock-frequency = <400000>;
+
+	status = "okay";
+
+	touchscreen@10 {
+		compatible = "hid-over-i2c";
+		reg = <0x10>;
+
+		hid-descr-addr = <0x0>;
+		interrupts-extended = <&tlmm 51 IRQ_TYPE_LEVEL_LOW>;
+
+		reset-gpios = <&tlmm 48 GPIO_ACTIVE_LOW>;
+		post-reset-deassert-delay-ms = <160>;
+
+		vdd-supply = <&vreg_l15b_1p8>;
+        vddl-supply = <&vreg_ts_3p3>;
+
+		pinctrl-0 = <&ts_default>;
+		pinctrl-names = "default";
+	};
+};
+
+&gpu {
+	status = "okay";
+};
+
+
+&gpu_zap_shader {
+	status = "disabled";
+};
+
+&mdss {
+	status = "okay";
+};
+
+
+&mdss_dp3 {
+	/delete-property/ #sound-dai-cells;
+
+	pinctrl-0 = <&edp0_hpd_default>;
+	pinctrl-names = "default";
+
+	status = "okay";
+
+	aux-bus {
+		panel {
+			compatible = "edp-panel";
+			backlight = <&mica_backlight>;
+			power-supply = <&vreg_edp_3p3>;
+
+			
+
+			port {
+				edp_panel_in: endpoint {
+					remote-endpoint = <&mdss_dp3_out>;
+				};
+			};
+		};
+	};
+};
+
+&mdss_dp3_out {
+	data-lanes = <0 1 2 3>;
+	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
+
+	remote-endpoint = <&edp_panel_in>;
+};
+
+&mdss_dp3_phy {
+	vdda-phy-supply = <&vreg_l3j_0p8>;
+	vdda-pll-supply = <&vreg_l2j_1p2>;
+
+	status = "okay";
+};
+
+
+
+&pcie4 {
+	/delete-property/ msi-map;
+	iommu-map = <0 &pcie_smmu 0x40000 0x10000>;
+
+	pinctrl-0 = <&pcie4_default>;
+	pinctrl-names = "default";
+
+	status = "okay";
+};
+
+&pcie4_phy {
+	vdda-phy-supply = <&vreg_l3i_0p8>;
+	vdda-pll-supply = <&vreg_l3e_1p2>;
+
+	status = "okay";
+};
+
+&pcie4_port0 {
+	reset-gpios = <&tlmm 146 GPIO_ACTIVE_LOW>;
+	wake-gpios = <&tlmm 148 GPIO_ACTIVE_LOW>;
+
+	wifi@0 {
+		compatible = "pci17cb,1107";
+		reg = <0x10000 0x0 0x0 0x0 0x0>;
+
+		vddaon-supply = <&vreg_pmu_aon_0p59>;
+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
+		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
+		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
+	};
+};
+
+&pcie6a {
+	/delete-property/ msi-map;
+	iommu-map = <0 &pcie_smmu 0x60000 0x10000>;
+
+	vddpe-3v3-supply = <&vreg_nvme>;
+
+	pinctrl-0 = <&pcie6a_default>;
+	pinctrl-names = "default";
+
+	status = "disabled";
+};
+
+&pcie6a_phy {
+	status = "disabled";
+};
+
+&pcie6a_port0 {
+	reset-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>;
+	wake-gpios = <&tlmm 154 GPIO_ACTIVE_LOW>;
+};
+
+&pcie_smmu {
+	status = "okay";
+};
+
+&qupv3_0 {
+	status = "okay";
+};
+
+&qupv3_1 {
+	status = "okay";
+};
+
+&spi13 {
+	status = "okay";
+
+	cros_ec: ec@0 {
+		compatible = "google,cros-ec-spi";
+		reg = <0>;
+		interrupts-extended = <&tlmm 66 IRQ_TYPE_LEVEL_LOW>;
+		pinctrl-0 = <&ap_ec_int_l>;
+		pinctrl-names = "default";
+		spi-max-frequency = <3000000>;
+		wakeup-source;
+
+		keyboard-controller {
+			compatible = "google,cros-ec-keyb";
+			keypad,num-rows = <8>;
+			keypad,num-columns = <18>;
+			google,needs-ghost-filter;
+			
+			linux,keymap = <0x30030 0x50031 0x60059 0x8000d 0x90066 0xa0064 0x1001d0 0x1010001 0x1030022 0x1060023 0x1080028 0x10b000e 0x10c005c 0x10e001d 0x201000f 0x2030014 0x205001b 0x2060015 0x208001a 0x209006f 0x20c0068 0x211007c 0x300007d 0x3010029 0x3030006 0x304001f 0x306000c 0x3080007 0x309008e 0x30b002b 0x30c005e 0x30e0061 0x401001e 0x4020020 0x4030021 0x4050025 0x4060024 0x4080027 0x4090026 0x40b001c 0x40c006b 0x5010002 0x5020033 0x5030034 0x5040035 0x505002e 0x5060039 0x507002a 0x508002d 0x509002f 0x50b0032 0x50c006d 0x601002c 0x6020004 0x6030005 0x6040003 0x6050009 0x606000b 0x6080008 0x609000a 0x60b006c 0x60c006a 0x60d0038 0x60f0247 0x611002b 0x7010016 0x7020017 0x7030018 0x7040019 0x7050010 0x7060011 0x7070036 0x7080012 0x7090013 0x70b0067 0x70c0069 0x7110056 0x60f0255 0x40a01d0 0xb006f 0x2070056 0x20a007c 0x60a002b 0x2009e 0x30200ac 0x2020078 0x1020174 0x4040063 0x20400e0 0x10400e1 0x20b00e4 0x10900f8 0x40071 0x10072 0x1050073 0x305024a 0x802003b 0xb02003c 0xa02003d 0x902003e 0xc04003f 0xa040040 0x9040041 0xa0b0042 0x9090043 0x8040044 0x8010057 0x9050058 0xb0500b7 0xe0f003a 0x90b006f 0xf0c0066 0xe0c006b 0xf0b0068 0xe0b006d 0x4024a 0x10071 0x1050072 0x3050073>;
+		};
+	};
+};
+
+&pmc8380_3_gpios {
+	edp_bl_en: edp-bl-en-state {
+		pins = "gpio4";
+		function = "normal";
+		power-source = <1>; 
+		input-disable;
+		output-enable;
+	};
+};
+
+
+&remoteproc_adsp {
+	firmware-name = "qcom/x1e80100/google/mica/adsp.mdt",
+			"qcom/x1e80100/google/mica/adsp_dtb.mdt";
+	iommus = <&apps_smmu 0x1000 0x80>;
+
+	status = "okay";
+};
+
+&smb2360_0 {
+	status = "okay";
+};
+
+&smb2360_1 {
+	status = "okay";
+};
+
+
+
+&uart14 {
+	status = "okay";
+
+	bluetooth {
+		compatible = "qcom,wcn7850-bt";
+		max-speed = <3200000>;
+
+		vddaon-supply = <&vreg_pmu_aon_0p59>;
+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
+	};
+};
+
+&usb_1_ss0_hsphy {
+	phys = <&smb2360_0_eusb2_repeater>;
+
+	status = "okay";
+};
+
+&usb_1_ss0 {
+	phys = <&usb_1_ss0_hsphy>;
+	phy-names = "usb2-phy";
+	maximum-speed = "high-speed";
+	qcom,select-utmi-as-pipe-clk;
+	dr_mode = "host";
+
+	status = "okay";
+};
+
+&usb_1_ss1_hsphy {
+	phys = <&smb2360_1_eusb2_repeater>;
+
+	status = "okay";
+};
+
+&usb_1_ss1 {
+	phys = <&usb_1_ss1_hsphy>;
+	phy-names = "usb2-phy";
+	maximum-speed = "high-speed";
+	qcom,select-utmi-as-pipe-clk;
+	dr_mode = "host";
+
+	status = "okay";
+};
+
+
+&gic_its {
+	status = "disabled";
+};
+
+
+&sbsa_watchdog {
+	status = "disabled";
+};
+
+
+&tlmm {
+	gpio-reserved-ranges = <34 2>, 
+			       <44 4>; 
+
+	ap_ec_int_l: ap-ec-int-l-state {
+		pins = "gpio66";
+		function = "gpio";
+		bias-disable;
+	};
+
+	nvme_reg_en: nvme-reg-en-state {
+		pins = "gpio18";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-disable;
+	};
+
+	tpad_default: tpad-default-state {
+		int-n-pins {
+			pins = "gpio3";
+			function = "gpio";
+			bias-disable;
+		};
+
+		en-pins {
+			pins = "gpio2";
+			function = "gpio";
+			bias-disable;
+		};
+	};
+
+	tpad_vdd_en: tpad-vdd-en-state {
+		pins = "gpio36";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-disable;
+	};
+
+	ts_default: ts-default-state {
+		int-n-pins {
+			pins = "gpio51";
+			function = "gpio";
+			bias-disable;
+		};
+
+		reset-n-pins {
+			pins = "gpio48";
+			function = "gpio";
+			drive-strength = <2>;
+			bias-disable;
+		};
+
+		
+		report-en-pins {
+			pins = "gpio89";
+			function = "gpio";
+			drive-strength = <2>;
+			bias-disable;
+			output-low;
+		};
+	};
+
+	ts_vdd_en: ts-vdd-en-state {
+		pins = "gpio88";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-disable;
+	};
+
+	edp_reg_en: edp-reg-en-state {
+		pins = "gpio70";
+		function = "gpio";
+		drive-strength = <16>;
+		bias-disable;
+	};
+
+	pcie4_default: pcie4-default-state {
+		clkreq-n-pins {
+			pins = "gpio147";
+			function = "pcie4_clk";
+			drive-strength = <2>;
+			bias-pull-up;
+		};
+
+		perst-n-pins {
+			pins = "gpio146";
+			function = "gpio";
+			drive-strength = <2>;
+			bias-pull-down;
+		};
+
+		wake-n-pins {
+			pins = "gpio148";
+			function = "gpio";
+			drive-strength = <2>;
+			bias-pull-up;
+		};
+	};
+
+	wcn_sw_en: wcn-sw-en-state {
+		pins = "gpio214";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-disable;
+	};
+
+	wcn_wlan_bt_en: wcn-wlan-bt-en-state {
+		pins = "gpio116", "gpio117";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-disable;
+	};
+
+	pcie6a_default: pcie6a-default-state {
+		clkreq-n-pins {
+			pins = "gpio153";
+			function = "pcie6a_clk";
+			drive-strength = <2>;
+			bias-pull-up;
+		};
+
+		perst-n-pins {
+			pins = "gpio152";
+			function = "gpio";
+			drive-strength = <2>;
+			bias-pull-down;
+		};
+
+		wake-n-pins {
+			pins = "gpio154";
+			function = "gpio";
+			drive-strength = <2>;
+			bias-pull-up;
+		};
+	};
+};
+
+/ {
+    vreg_bl_3p3: regulator-backlight {
+        compatible = "regulator-fixed";
+        regulator-name = "MICA_BL_PWR";
+        regulator-min-microvolt = <3300000>;
+        regulator-max-microvolt = <3300000>;
+        gpio = <&pmc8380_3_gpios 10 GPIO_ACTIVE_HIGH>;
+        enable-active-high;
+        regulator-boot-on;
+    };
+    mica_backlight: backlight {
+        compatible = "pwm-backlight";
+        pwms = <&pmk8550_pwm 0 270000>;
+        power-supply = <&vreg_bl_3p3>;
+        enable-gpios = <&pmc8380_3_gpios 4 GPIO_ACTIVE_HIGH>;
+        brightness-levels = <0 16 32 64 96 128 160 192 224 255>;
+        default-brightness-level = <6>;
+    };
+};
+// GPIO10's supply bank is not specified in Dell's runtime tree. Preserve
+// firmware pin configuration rather than guessing a PMIC power-source.
+&pmk8550_pwm {
+    status = "okay";
+    pinctrl-names = "default";
+    pinctrl-0 = <&mica_edp_pwm>;
+};
+&pmk8550_gpios {
+    mica_edp_pwm: mica-edp-pwm-state {
+        pins = "gpio5";
+        function = "func3";
+        power-source = <0>;
+        input-disable;
+        output-enable;
+        bias-disable;
+    };
+};
