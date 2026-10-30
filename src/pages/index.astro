@@ -44,11 +44,12 @@ const upstreamBars = [
   { label: `Firmware without the laptop's Windows`, value: summary.firmware, coming: summary.firmwareComing, wanted: 0, total: summary.models, note: `in linux-firmware's newest release or a known vendor download` },
 ];
 
-const snapdragonIds = ['omarchy', 'device-tree', 'ids', 'firmware', 'acpi'] as const;
+// Left to right in the order a model gets there, with booting last
+const snapdragonIds = ['acpi', 'device-tree', 'ids', 'firmware', 'omarchy'] as const;
 const snapdragonColumns = LEGEND.map((group, i) => ({ id: snapdragonIds[i], header: group.column, question: group.question, options: FILTERS[snapdragonIds[i]] }));
 const nvidiaColumns = [
-  { id: 'omarchy', header: 'Boots', question: NVIDIA_LEGEND[0].question, options: FILTERS.nvidiaOmarchy },
-  { id: 'linux', header: 'Linux', question: NVIDIA_LEGEND[1].question, options: FILTERS.nvidiaLinux },
+  { id: 'linux', header: 'Linux', question: NVIDIA_LEGEND[0].question, options: FILTERS.nvidiaLinux },
+  { id: 'omarchy', header: 'Boots', question: NVIDIA_LEGEND[1].question, options: FILTERS.nvidiaOmarchy },
   { id: 'notes', header: 'Notes', question: 'What else to know' },
 ];
 const legendExtra = [
@@ -59,10 +60,10 @@ const legendExtra = [
   ANNOUNCED,
 ];
 const googlebookColumns = GOOGLEBOOK_LEGEND.map((group, i) => ({
-  id: ['omarchy', 'device-tree', 'bootloader', 'image'][i],
+  id: ['bootloader', 'device-tree', 'image', 'omarchy'][i],
   header: group.column,
   question: group.question,
-  options: [FILTERS.googlebookOmarchy, FILTERS.googlebookDeviceTree, FILTERS.bootloader, FILTERS.linuxImage][i],
+  options: [FILTERS.bootloader, FILTERS.googlebookDeviceTree, FILTERS.linuxImage, FILTERS.googlebookOmarchy][i],
 }));
 const HELP = 'mt-2 max-w-3xl text-sm text-zinc-400';
 
