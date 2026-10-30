@@ -799,7 +799,8 @@
             "firstRelease": "v6.11",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/ASUSTeK/vivobook-s15/qcdxkmsuc8380.mbn",
@@ -837,7 +838,8 @@
             "firstRelease": "v7.1",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1p42100/ASUSTeK/vivobook-s15/qcdxkmsucpurwa.mbn",
@@ -1312,7 +1314,8 @@
             "firstRelease": "v6.17",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/ASUSTeK/zenbook-a14/qcdxkmsuc8380.mbn",
@@ -1343,7 +1346,8 @@
             "firstRelease": "v6.17",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn",
@@ -1374,7 +1378,8 @@
             "firstRelease": "v6.19",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn",
@@ -1613,7 +1618,8 @@
             "firstRelease": null,
             "inNext": true,
             "upstream": true,
-            "inOmarchy": false
+            "inOmarchy": false,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/glymur/ASUSTeK/UX3407NA/qcadsp8480.mbn",
@@ -1693,7 +1699,8 @@
             "firstRelease": "v7.3",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/glymur/ASUSTeK/UX3607OA/qcadsp8480.mbn",
@@ -1852,7 +1859,8 @@
             "firstRelease": "v6.18",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/dell/inspiron-14-plus-7441/qcdxkmsuc8380.mbn",
@@ -2009,7 +2017,8 @@
             "firstRelease": "v6.18",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/dell/latitude-7455/qcdxkmsuc8380.mbn",
@@ -2092,7 +2101,8 @@
             "firstRelease": "v6.13",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/dell/xps13-9345/qcdxkmsuc8380.mbn",
@@ -2348,7 +2358,8 @@
             "firstRelease": "v7.3",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/HONOR/MRO-XXX/qcdxkmsuc8380.mbn",
@@ -2498,7 +2509,8 @@
             "firstRelease": "v6.16",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/hp/elitebook-ultra-g1q/qcdxkmsuc8380.mbn",
@@ -2915,7 +2927,8 @@
             "firstRelease": "v6.14",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/hp/omnibook-x14/qcdxkmsuc8380.mbn",
@@ -2946,7 +2959,8 @@
             "firstRelease": "v6.18",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1p42100/hp/omnibook-x14/qcdxkmsucpurwa.mbn",
@@ -3134,7 +3148,8 @@
             "firstRelease": null,
             "inNext": true,
             "upstream": true,
-            "inOmarchy": false
+            "inOmarchy": false,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/glymur/hp/elitebook-x-g2q/qcadsp8480.mbn",
@@ -3553,7 +3568,8 @@
             "firstRelease": "v7.1",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/LENOVO/91B6/qcvss8380.mbn",
@@ -3917,7 +3933,8 @@
             "firstRelease": "v6.18",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1p42100/LENOVO/21NH/qcdxkmsucpurwa.mbn",
@@ -4055,7 +4072,8 @@
             "firstRelease": "v6.12",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/LENOVO/21N1/qcdxkmsuc8380.mbn",
@@ -4094,7 +4112,8 @@
             "firstRelease": "v6.16",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/LENOVO/21N1/qcdxkmsuc8380.mbn",
@@ -4186,7 +4205,8 @@
             "firstRelease": "v6.11",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/LENOVO/83ED/qcdxkmsuc8380.mbn",
@@ -4487,7 +4507,8 @@
             "firstRelease": null,
             "inNext": true,
             "upstream": true,
-            "inOmarchy": false
+            "inOmarchy": false,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/glymur/LENOVO/22A8/qcadsp8480.mbn",
@@ -4564,7 +4585,8 @@
             "firstRelease": null,
             "inNext": true,
             "upstream": true,
-            "inOmarchy": false
+            "inOmarchy": false,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/glymur/LENOVO/83QR/qcadsp8480.mbn",
@@ -4646,7 +4668,8 @@
             "firstRelease": "v7.0",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/Medion/sprchrgd-14-s1/qcdxkmsuc8380.mbn",
@@ -4731,7 +4754,8 @@
             "firstRelease": "v6.12",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
@@ -4821,7 +4845,8 @@
             "firstRelease": "v6.12",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
@@ -4972,7 +4997,8 @@
             "firstRelease": "v7.0",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
@@ -5010,7 +5036,8 @@
             "firstRelease": "v7.0",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
@@ -5090,7 +5117,8 @@
             "firstRelease": "v7.3",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1p42100/Microsoft/Surface12/qcdxkmsucpurwa.mbn",
@@ -5190,7 +5218,7 @@
         "deviceTree": "posted",
         "firstRelease": null,
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261027-mahua-surface-laptop-v2-3-7dd903a12d22@oss.qualcomm.com/",
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2384-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/microsoft-surface-laptop-8-13",
         "ids": "missing",
         "idsCollected": null,
@@ -5212,7 +5240,8 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": "2384-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -5449,7 +5478,8 @@
             "firstRelease": "v6.14",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/x1e80100/Thundercomm/DEVKIT/qcdxkmsuc8380.mbn",
@@ -5824,7 +5854,8 @@
             "firstRelease": "v6.14",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/sc8280xp/HUAWEI/gaokun3/qcdxkmsuc8280.mbn",
@@ -5901,7 +5932,8 @@
             "firstRelease": "v6.8",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn",
@@ -5995,7 +6027,8 @@
             "firstRelease": "v6.13",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcdxkmsuc8280.mbn",
@@ -6073,7 +6106,8 @@
             "firstRelease": "v6.14",
             "inNext": true,
             "upstream": true,
-            "inOmarchy": true
+            "inOmarchy": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/sc8280xp/microsoft/blackrock/qcdxkmsuc8280.mbn",
