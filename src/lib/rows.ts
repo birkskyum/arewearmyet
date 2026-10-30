@@ -17,6 +17,8 @@ export type TableRow = {
   variants: { text: string; tone: 'good' | 'close' | 'wanted' | 'muted'; state: string }[];
   notes: string | null;
   search: string;
+  // Model number series a full product number starts with, like 14-fe0 for 14-fe0013dx or 83ED for 83ED0049US
+  prefixes: string[];
   cells: Record<string, CellData>;
 };
 
@@ -46,6 +48,7 @@ const modelRow = (model: Model, cells: Record<string, CellData>): TableRow => ({
   variants: model.variants.length > 1 ? model.variants.map((v) => ({ text: [v.model, v.chip].filter(Boolean).join(' · '), ...VARIANT[v.outcome] })) : [],
   notes: model.notes,
   search: [model.vendor, model.name, ...model.modelNumbers, ...model.chips, ...model.variants.map((v) => `${v.model ?? ''} ${v.chip ?? ''}`)].join(' ').toLowerCase(),
+  prefixes: model.modelNumbers.map((number) => number.toLowerCase().replace(/x{2,}$/, '')).filter((prefix) => prefix.length >= 4),
   cells,
 });
 
@@ -94,6 +97,7 @@ export function nvidiaRows(): TableRow[] {
     variants: [],
     notes: null,
     search: `${model.vendor} ${model.name}`.toLowerCase(),
+    prefixes: [],
     cells: {
       omarchy: plain(nvidiaOmarchyCell(model)),
       linux: plain(nvidiaLinuxCell(model)),

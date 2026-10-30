@@ -12,7 +12,6 @@ import {
   createFilteredRowModel,
   createSortedRowModel,
   createTable,
-  filterFn_includesString,
   rowSortingFeature,
   sortFn_alphanumeric,
   tableFeatures,
@@ -41,13 +40,14 @@ const features = tableFeatures({
   sortedRowModel: createSortedRowModel(),
   facetedRowModel: createFacetedRowModel(),
   facetedUniqueValues: createFacetedUniqueValues(),
-  filterFns: { includesString: filterFn_includesString },
   sortFns: { alphanumeric: sortFn_alphanumeric },
 });
 
 type Row = { original: TableRow; getValue: (id: string) => unknown };
 // A row passes when its value is one of the ticked choices
 const inSet = (row: Row, id: string, value: unknown) => !Array.isArray(value) || value.length === 0 || value.includes(row.getValue(id));
+// The search box matches any part of a row's text, or a full product number that starts with one of its series
+const bySearch = (row: Row, _id: string, value: unknown) => typeof value !== 'string' || !value || row.original.search.includes(value) || row.original.prefixes.some((prefix) => value.startsWith(prefix));
 const byRank = (a: Row, b: Row, id: string) => (a.original.cells[id]?.rank ?? Infinity) - (b.original.cells[id]?.rank ?? Infinity);
 
 const VARIANT_TONE = { good: 'text-emerald-400', close: 'text-amber-400', wanted: 'text-rose-400', muted: 'text-zinc-500' };
@@ -77,7 +77,7 @@ export default function StatusTable(props: Props) {
     helper.accessor('generation', { id: 'chip', filterFn: inSet }),
     // Status columns filter and count by state, and sort best first by rank
     ...props.columns.map((column) => helper.accessor((row) => row.cells[column.id]?.key ?? '', { id: column.id, header: column.header, filterFn: inSet, sortFn: byRank, sortDescFirst: false })),
-    helper.accessor('search', { id: 'q', filterFn: 'includesString' }),
+    helper.accessor('search', { id: 'q', filterFn: bySearch }),
   ]);
 
   const [sorting, setSorting] = createSignal<SortingState>([]);
@@ -171,11 +171,19 @@ export default function StatusTable(props: Props) {
       <div class="flex flex-wrap items-center gap-3">
         <input
           type="search"
-          placeholder="Search models"
+          placeholder="Search by name or model number"
           value={query()}
           onInput={(event) => setQuery(event.currentTarget.value.trim().toLowerCase())}
-          class="w-64 rounded-md bg-zinc-900 px-3 py-1.5 text-sm text-zinc-100 ring-1 ring-zinc-700 placeholder:text-zinc-500 focus:outline-none focus:ring-zinc-400"
+          class="w-72 rounded-md bg-zinc-900 px-3 py-1.5 text-sm text-zinc-100 ring-1 ring-zinc-700 placeholder:text-zinc-500 focus:outline-none focus:ring-zinc-400"
         />
+        <details class="relative text-sm text-zinc-500">
+          <summary class="cursor-pointer list-none hover:text-zinc-300">Where's my model number?</summary>
+          <div class="absolute left-0 z-20 mt-2 w-80 max-w-[calc(100vw-2rem)] rounded-md bg-zinc-900 p-3 text-zinc-300 shadow-lg ring-1 ring-zinc-700">
+            <p>It's on the sticker underneath. In Windows, open System Information and look at System Model and System SKU. On Linux, run</p>
+            <pre class="mt-2 overflow-x-auto rounded bg-zinc-950 p-2 text-xs">{"cat /sys/class/dmi/id/product_name\ncat /sys/class/dmi/id/product_sku"}</pre>
+            <p class="mt-2">A full number like <span class="whitespace-nowrap">83ED0049US</span> or <span class="whitespace-nowrap">14-fe0013dx</span> finds its series.</p>
+          </div>
+        </details>
         <span class="text-sm text-zinc-500">Filter and sort from the column headers.</span>
         <Show when={filtering()}>
           <button type="button" onClick={() => setFilters([])} class="rounded-md px-2.5 py-1 text-sm text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800" data-clear>
