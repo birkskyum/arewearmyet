@@ -38,6 +38,7 @@ models:
     released: "2025-06"
     chips: ["X1-26-100"]
     model_numbers: ["A14-11M", "A14-11MT"]
+    ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/1"
     sources:
       - https://news.acer.com/acer-expands-aspire-ai-series-with-six-new-copilot-pcs-powered-by-next-gen-processors
       - https://www.notebookcheck.net/Acer-Aspire-14-AI-A14-11M.1173609.0.html
@@ -49,6 +50,7 @@ models:
     released: "2025-06"
     chips: ["X1-26-100"]
     model_numbers: ["A16-11M", "A16-11MT"]
+    ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/3"
     sources:
       - https://news.acer.com/acer-expands-aspire-ai-series-with-six-new-copilot-pcs-powered-by-next-gen-processors
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/acer-aspire-16-ai
@@ -269,6 +271,7 @@ models:
     released: "2025"
     chips: ["X1-26-100"]
     model_numbers: ["S3607QA"]
+    ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/2"
     notes: "Owners boot it with the X Plus Vivobook S 15's device tree, with gaps."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s3607q/techspec/
