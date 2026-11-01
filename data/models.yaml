@@ -597,11 +597,14 @@ models:
     released: "2026-10"
     chips: ["X1E-80-100"]
     model_numbers: ["14c-cf0xxx"]
+    variants:
+      - { chip: "X1E-80-100", compatible: "google,quartz" }
+    devicetree_out_of_tree: "https://github.com/ericman2001/hp-googlebook-linux"
     boot: android
     bootloader: unlockable
-    linux_image: none
+    linux_image: boots
     discussion: "https://github.com/omacom/omarchy/discussions/16627"
-    notes: "The first step is reading the device tree Googlebook OS starts with."
+    notes: "A community tree runs mainline Linux from the second boot slot and leaves Googlebook OS on the first. Nearly everything works, with kernel patches for the keyboard, the audio DSP and suspend. The internal mics click now and then, and battery time estimates come out about 8 times too short."
     sources:
       - https://www.hp.com/au-en/shop/hp-googlebook-14c-cf0000qu-e25rhpa.html
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4672974

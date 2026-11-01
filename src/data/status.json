@@ -2735,14 +2735,14 @@
         "https://www.hp.com/au-en/shop/hp-googlebook-14c-cf0000qu-e25rhpa.html",
         "https://www.energystar.gov/productfinder/product/certified-computers/details/4672974"
       ],
-      "notes": "The first step is reading the device tree Googlebook OS starts with.",
+      "notes": "A community tree runs mainline Linux from the second boot slot and leaves Googlebook OS on the first. Nearly everything works, with kernel patches for the keyboard, the audio DSP and suspend. The internal mics click now and then, and battery time estimates come out about 8 times too short.",
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/ericman2001/hp-googlebook-linux",
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
@@ -2758,6 +2758,8 @@
       },
       "variants": [
         {
+          "chip": "X1E-80-100",
+          "compatible": "google,quartz",
           "computed": "none",
           "deviceTree": null,
           "firmwareNeeded": [],
@@ -2769,7 +2771,7 @@
       ],
       "boot": "android",
       "bootloader": "unlockable",
-      "linuxImage": "none",
+      "linuxImage": "boots",
       "discussion": "https://github.com/omacom/omarchy/discussions/16627"
     },
     {
