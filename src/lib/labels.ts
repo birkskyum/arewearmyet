@@ -44,7 +44,7 @@ const STATES = {
     windows: { label: 'Windows only', tone: 'close', meaning: `Copied from the laptop's own Windows today. A link to the vendor's driver download would cover laptops whose Windows is gone.` },
   },
   acpi: {
-    collected: { label: 'Collected', tone: 'good', meaning: 'Its ACPI tables are in the aarch64-laptops collection.' },
+    collected: { label: 'Collected', tone: 'good', meaning: `Its ACPI tables are in the aarch64-laptops collection or an owner's hardware report.` },
     notNeeded: { label: 'Not needed', tone: 'muted', meaning: 'It already has a device tree.' },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: 'The first thing to send for a model without a device tree.' },
   },

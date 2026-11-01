@@ -1,5 +1,5 @@
 {
-  "collected": "2026-10-30T16:24:44.833Z",
+  "collected": "2026-11-01T02:56:12.760Z",
   "linuxNext": "20261030",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -42,8 +42,8 @@
     "idsComing": 9,
     "firmwareComing": 26,
     "googlebooks": 2,
-    "acpi": 29,
-    "acpiWanted": 36
+    "acpi": 32,
+    "acpiWanted": 33
   },
   "models": [
     {
@@ -83,8 +83,10 @@
         "firmwareDownload": null,
         "firmwarePosted": null,
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/acer/aspire-a14-11m"
+        ]
       },
       "variants": [
         {
@@ -140,8 +142,10 @@
         "firmwareDownload": null,
         "firmwarePosted": null,
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/acer/aspire-a16-11m"
+        ]
       },
       "variants": [
         {
@@ -1125,8 +1129,10 @@
         "firmwareDownload": null,
         "firmwarePosted": null,
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/asustek-computer-inc/asus-vivobook-s-16-s3607qa-s3607qa"
+        ]
       },
       "variants": [
         {

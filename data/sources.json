@@ -1,5 +1,5 @@
 {
-  "collected": "2026-10-30T16:24:44.833Z",
+  "collected": "2026-11-01T02:56:12.760Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -2809,6 +2809,18 @@
     {
       "folder": "xiaomi-book-s",
       "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/xiaomi-book-s"
+    },
+    {
+      "folder": "hardware-reports/acer/aspire-a14-11m",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/acer/aspire-a14-11m"
+    },
+    {
+      "folder": "hardware-reports/acer/aspire-a16-11m",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/acer/aspire-a16-11m"
+    },
+    {
+      "folder": "hardware-reports/asustek-computer-inc/asus-vivobook-s-16-s3607qa-s3607qa",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/asustek-computer-inc/asus-vivobook-s-16-s3607qa-s3607qa"
     }
   ],
   "omarchy": {

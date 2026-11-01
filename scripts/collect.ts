@@ -219,11 +219,20 @@ async function collectOmarchy() {
   return { channels, kernelAddedDeviceTrees: omarchyKernelDeviceTrees() };
 }
 
+// ACPI dumps from aarch64-laptops, by misc/ folder, and from the ARM installer's hardware reports, by
+// reports/<vendor>/<model> folder as hardware-reports/<vendor>/<model>, since one model can get several reports
 async function collectAcpiDumps() {
-  const tree = await github('repos/aarch64-laptops/build/git/trees/HEAD?recursive=1');
-  const paths: string[] = tree.tree.map((entry: { path: string }) => entry.path);
-  const folders = new Set(paths.filter((path) => /^misc\/[^/]+\/.*dsdt\.(dat|bin|aml)$/i.test(path)).map((path) => path.split('/')[1]));
-  return [...folders].sort().map((folder) => ({ folder, url: `https://github.com/aarch64-laptops/build/tree/HEAD/misc/${folder}` }));
+  const [laptops, reports] = await Promise.all([
+    github('repos/aarch64-laptops/build/git/trees/HEAD?recursive=1'),
+    github('repos/turbineBMW/omarchy-hardware-reports/git/trees/HEAD?recursive=1'),
+  ]);
+  const paths = (tree: { tree: { path: string }[] }) => tree.tree.map((entry) => entry.path);
+  const misc = new Set(paths(laptops).filter((path) => /^misc\/[^/]+\/.*dsdt\.(dat|bin|aml)$/i.test(path)).map((path) => path.split('/')[1]));
+  const reported = new Set(paths(reports).map((path) => path.match(/^reports\/([^/]+\/[^/]+)\/[^/]+\/acpi\/dsdt\.(dat|bin|aml)$/i)?.[1]).filter(Boolean) as string[]);
+  return [
+    ...[...misc].sort().map((folder) => ({ folder, url: `https://github.com/aarch64-laptops/build/tree/HEAD/misc/${folder}` })),
+    ...[...reported].sort().map((model) => ({ folder: `hardware-reports/${model}`, url: `https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/${model}` })),
+  ];
 }
 
 const [kernel, hardwareIds, firmware, acpiDumps, omarchy] = await Promise.all([collectDeviceTrees(), collectHardwareIds(), collectFirmware(), collectAcpiDumps(), collectOmarchy()]);

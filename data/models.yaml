@@ -8,7 +8,8 @@
 #                  out of tree; ids are systemd hardware ID files to check even
 #                  when they name a different compatible
 #   firmware       linux-firmware folders with this model's files
-#   acpi           aarch64-laptops/build misc/ folders with its ACPI dump
+#   acpi           aarch64-laptops/build misc/ folders with its ACPI dump, or
+#                  hardware-reports/<vendor>/<model> for the ARM installer's reports
 #   firmware_download  the vendor's driver page whose package has every firmware
 #                  file its device tree loads
 #   firmware_posted  the linux-firmware merge request adding its files, until it's merged
@@ -38,6 +39,7 @@ models:
     released: "2025-06"
     chips: ["X1-26-100"]
     model_numbers: ["A14-11M", "A14-11MT"]
+    acpi: ["hardware-reports/acer/aspire-a14-11m"]
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/1"
     sources:
       - https://news.acer.com/acer-expands-aspire-ai-series-with-six-new-copilot-pcs-powered-by-next-gen-processors
@@ -50,6 +52,7 @@ models:
     released: "2025-06"
     chips: ["X1-26-100"]
     model_numbers: ["A16-11M", "A16-11MT"]
+    acpi: ["hardware-reports/acer/aspire-a16-11m"]
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/3"
     sources:
       - https://news.acer.com/acer-expands-aspire-ai-series-with-six-new-copilot-pcs-powered-by-next-gen-processors
@@ -271,6 +274,7 @@ models:
     released: "2025"
     chips: ["X1-26-100"]
     model_numbers: ["S3607QA"]
+    acpi: ["hardware-reports/asustek-computer-inc/asus-vivobook-s-16-s3607qa-s3607qa"]
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/2"
     notes: "Owners boot it with the X Plus Vivobook S 15's device tree, with gaps."
     sources:
