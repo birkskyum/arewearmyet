@@ -219,8 +219,9 @@ async function collectOmarchy() {
   return { channels, kernelAddedDeviceTrees: omarchyKernelDeviceTrees() };
 }
 
-// ACPI dumps from aarch64-laptops, by misc/ folder, and from the ARM installer's hardware reports, by
-// reports/<vendor>/<model> folder as hardware-reports/<vendor>/<model>, since one model can get several reports
+// ACPI dumps from aarch64-laptops, by misc/ folder, from the ARM installer's hardware reports, by
+// reports/<vendor>/<model> folder as hardware-reports/<vendor>/<model>, since one model can get several reports,
+// and from this repository's acpi/<folder> as arewearmyet/<folder>, for dumps sent elsewhere but not merged yet
 async function collectAcpiDumps() {
   const [laptops, reports] = await Promise.all([
     github('repos/aarch64-laptops/build/git/trees/HEAD?recursive=1'),
@@ -232,6 +233,8 @@ async function collectAcpiDumps() {
   return [
     ...[...misc].sort().map((folder) => ({ folder, url: `https://github.com/aarch64-laptops/build/tree/HEAD/misc/${folder}` })),
     ...[...reported].sort().map((model) => ({ folder: `hardware-reports/${model}`, url: `https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/${model}` })),
+    ...(existsSync('acpi') ? readdirSync('acpi').filter((folder) => existsSync(join('acpi', folder, 'dsdt.dat'))).sort() : [])
+      .map((folder) => ({ folder: `arewearmyet/${folder}`, url: `https://github.com/birkskyum/arewearmyet/tree/main/acpi/${folder}` })),
   ];
 }
 

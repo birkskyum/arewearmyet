@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-01T02:56:12.760Z",
+  "collected": "2026-11-01T03:14:52.847Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -2821,6 +2821,10 @@
     {
       "folder": "hardware-reports/asustek-computer-inc/asus-vivobook-s-16-s3607qa-s3607qa",
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/asustek-computer-inc/asus-vivobook-s-16-s3607qa-s3607qa"
+    },
+    {
+      "folder": "arewearmyet/asus-ascent-qn10",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/asus-ascent-qn10"
     }
   ],
   "omarchy": {

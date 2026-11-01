@@ -8,8 +8,9 @@
 #                  out of tree; ids are systemd hardware ID files to check even
 #                  when they name a different compatible
 #   firmware       linux-firmware folders with this model's files
-#   acpi           aarch64-laptops/build misc/ folders with its ACPI dump, or
-#                  hardware-reports/<vendor>/<model> for the ARM installer's reports
+#   acpi           aarch64-laptops/build misc/ folders with its ACPI dump,
+#                  hardware-reports/<vendor>/<model> for the ARM installer's reports, or
+#                  arewearmyet/<folder> for a dump kept in acpi/ until it's merged elsewhere
 #   firmware_download  the vendor's driver page whose package has every firmware
 #                  file its device tree loads
 #   firmware_posted  the linux-firmware merge request adding its files, until it's merged
@@ -350,6 +351,7 @@ models:
     released: "2026-06"
     chips: ["X2E-88-100"]
     model_numbers: ["QN10", "90MS03E2-M000B0"]
+    acpi: ["arewearmyet/asus-ascent-qn10"]
     sources:
       - https://www.asus.com/displays-desktops/mini-pcs/ascent-series/asus-ascent-qn10/techspec/
       - https://eshop.asus.com/us/90ms03e2-m000b0-asus-ascent-qn10.html

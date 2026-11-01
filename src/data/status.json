@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-01T02:56:12.760Z",
+  "collected": "2026-11-01T03:14:52.847Z",
   "linuxNext": "20261030",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -42,8 +42,8 @@
     "idsComing": 9,
     "firmwareComing": 26,
     "googlebooks": 2,
-    "acpi": 32,
-    "acpiWanted": 33
+    "acpi": 33,
+    "acpiWanted": 32
   },
   "models": [
     {
@@ -1543,8 +1543,10 @@
         "firmwareDownload": null,
         "firmwarePosted": null,
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/asus-ascent-qn10"
+        ]
       },
       "variants": [
         {
