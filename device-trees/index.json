@@ -85,6 +85,14 @@
       "x1p42100-hp-elitebook-6-g1q.dts"
     ]
   },
+  "hp-googlebook-14": {
+    "state": "out-of-tree",
+    "source": "https://github.com/ericman2001/hp-googlebook-linux",
+    "files": [
+      "SOURCE.md"
+    ],
+    "note": "No public source of the tree found yet, only the link above."
+  },
   "hp-omnibook-3-14-hz0": {
     "state": "out-of-tree",
     "source": "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-3-oled.dts",

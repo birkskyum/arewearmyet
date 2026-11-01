@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-01T03:14:52.847Z",
+  "collected": "2026-11-01T11:54:19.588Z",
   "linuxNext": "20261030",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -2751,7 +2751,7 @@
         "firstRelease": null,
         "devicetreePosted": null,
         "devicetreeOutOfTree": "https://github.com/ericman2001/hp-googlebook-linux",
-        "devicetreeArchive": null,
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-googlebook-14",
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
