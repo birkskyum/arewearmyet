@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-01T11:54:19.588Z",
+  "collected": "2026-11-01T17:49:10.706Z",
   "linuxNext": "20261030",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -38,7 +38,7 @@
     "deviceTree": 23,
     "ids": 28,
     "firmware": 3,
-    "deviceTreeComing": 24,
+    "deviceTreeComing": 26,
     "idsComing": 9,
     "firmwareComing": 26,
     "googlebooks": 2,
@@ -65,14 +65,14 @@
         "https://news.acer.com/acer-expands-aspire-ai-series-with-six-new-copilot-pcs-powered-by-next-gen-processors",
         "https://www.notebookcheck.net/Acer-Aspire-14-AI-A14-11M.1173609.0.html"
       ],
-      "notes": null,
+      "notes": "A draft device tree, written from owners' hardware reports. It shares almost everything with the Aspire 16's, which an owner booted on Ubuntu's live USB, but nobody has tried it on an Aspire 14 yet.",
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://gist.github.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1",
         "devicetreeArchive": null,
         "ids": "collected",
         "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/1",
@@ -90,6 +90,8 @@
       },
       "variants": [
         {
+          "chip": "X1-26-100",
+          "compatible": "acer,aspire-a14-11m",
           "computed": "none",
           "deviceTree": null,
           "firmwareNeeded": [],
@@ -124,14 +126,14 @@
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/acer-aspire-16-ai",
         "https://www.pcmag.com/reviews/acer-aspire-16-ai"
       ],
-      "notes": null,
+      "notes": "A draft device tree, written from owners' hardware reports. An owner booted it on Ubuntu's live USB in November 2026, with the screen, keyboard, disk, USB, battery and Bluetooth working. Wi-Fi needs a board file copied from Windows, since linux-firmware has none for its card.",
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://gist.github.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1",
         "devicetreeArchive": null,
         "ids": "collected",
         "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/3",
@@ -149,6 +151,8 @@
       },
       "variants": [
         {
+          "chip": "X1-26-100",
+          "compatible": "acer,aspire-a16-11m",
           "computed": "none",
           "deviceTree": null,
           "firmwareNeeded": [],
