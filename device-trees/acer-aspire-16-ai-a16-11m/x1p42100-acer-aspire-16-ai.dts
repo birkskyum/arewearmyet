@@ -1,0 +1,36 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Acer Aspire 16 AI (A16-11M). DRAFT, untested.
+ */
+
+/dts-v1/;
+
+#include "x1p42100-acer-aspire-ai.dtsi"
+
+/ {
+	model = "Acer Aspire 16 AI (A16-11M)";
+	/*
+	 * "lenovo,thinkpad-t14s" is not this laptop. It is on qcom_scm's list of
+	 * machines allowed to use EFI variables, which the installer needs to set
+	 * up the boot entry. Drop it once the kernel lists this laptop itself.
+	 */
+	compatible = "acer,aspire-a16-11m", "lenovo,thinkpad-t14s", "qcom,x1p42100";
+};
+
+&gpu_zap_shader {
+	firmware-name = "qcom/x1p42100/ACER/A16-11M/qcdxkmsucpurwa.mbn";
+};
+
+&remoteproc_adsp {
+	firmware-name = "qcom/x1p42100/ACER/A16-11M/qcadsp8380.mbn",
+			"qcom/x1p42100/ACER/A16-11M/adsp_dtbs.elf";
+
+	status = "okay";
+};
+
+&remoteproc_cdsp {
+	firmware-name = "qcom/x1p42100/ACER/A16-11M/qccdsp8380.mbn",
+			"qcom/x1p42100/ACER/A16-11M/cdsp_dtbs.elf";
+
+	status = "okay";
+};

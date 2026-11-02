@@ -143,6 +143,32 @@ for (const folder of sourceFolders) {
     if (sourced.has(target)) sourced.add(`${folder.path}/${link.name}`);
   }
 }
+// Trees outside Linux are only known through their copies in device-trees/, so the files they load
+// come from the firmware-name lines there: in the .dts naming one of the model's compatibles (a series
+// can add trees for several models) and the files it includes
+function archivedFirmware(id: string, compatibles: string[]): string[] {
+  const entry = archived[id] as { files?: string[] } | undefined;
+  const files = new Map<string, string>();
+  for (const file of entry?.files ?? []) {
+    if (/\.dtsi?$/.test(file)) files.set(file, readFileSync(`device-trees/${id}/${file}`, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, ''));
+  }
+  const boards = [...files.keys()].filter((file) => file.endsWith('.dts'));
+  const own = boards.filter((file) => compatibles.some((compatible) => files.get(file)!.includes(`"${compatible}"`)));
+  const todo = own.length ? own : boards;
+  const seen = new Set<string>();
+  const names = new Set<string>();
+  while (todo.length) {
+    const file = todo.pop()!;
+    if (seen.has(file) || !files.has(file)) continue;
+    seen.add(file);
+    const text = files.get(file)!;
+    for (const include of text.matchAll(/#include\s+"([^"]+)"/g)) todo.push(include[1]);
+    for (const line of text.matchAll(/firmware-name\s*=\s*([^;]*);/g)) {
+      for (const name of line[1].matchAll(/"([^"]+)"/g)) names.add(name[1]);
+    }
+  }
+  return [...names];
+}
 const anchor = (path: string) => `/firmware/#${path.replaceAll('/', '-')}`;
 function sourcesDownload(id: string, needed: string[]): string | undefined {
   if (needed.length) {
@@ -183,7 +209,8 @@ const rows = models.map((model) => {
     return { ...status, outcome: outcome(status.computed, own), reports: own };
   });
   const firmware = (model.firmware ?? []).map((path) => firmwareFolders.find((folder) => folder.path === path)).filter(Boolean) as typeof firmwareFolders;
-  const needed = [...new Set(variants.flatMap((v) => v.firmwareNeeded))];
+  const fromTrees = [...new Set(variants.flatMap((v) => v.firmwareNeeded))];
+  const needed = fromTrees.length ? fromTrees : archivedFirmware(model.id, (model.variants ?? []).map((v: Variant) => v.compatible).filter(Boolean) as string[]);
   const download = model.firmware_download ?? sourcesDownload(model.id, needed);
   const fw = firmwareState(needed, firmware, download, model.firmware_posted);
   firmware.forEach((folder) => used.firmware.add(folder.path));

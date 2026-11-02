@@ -44,6 +44,9 @@ models:
       - { chip: "X1-26-100", compatible: "acer,aspire-a14-11m" }
     acpi: ["hardware-reports/acer/aspire-a14-11m"]
     devicetree_out_of_tree: "https://gist.github.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1"
+    devicetree_files:
+      - "https://gist.githubusercontent.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1/raw/x1p42100-acer-aspire-14-ai.dts"
+      - "https://gist.githubusercontent.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1/raw/x1p42100-acer-aspire-ai.dtsi"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/1"
     notes: "A draft device tree, written from owners' hardware reports. It shares almost everything with the Aspire 16's, which an owner booted on Ubuntu's live USB, but nobody has tried it on an Aspire 14 yet."
     sources:
@@ -61,6 +64,9 @@ models:
       - { chip: "X1-26-100", compatible: "acer,aspire-a16-11m" }
     acpi: ["hardware-reports/acer/aspire-a16-11m"]
     devicetree_out_of_tree: "https://gist.github.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1"
+    devicetree_files:
+      - "https://gist.githubusercontent.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1/raw/x1p42100-acer-aspire-16-ai.dts"
+      - "https://gist.githubusercontent.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1/raw/x1p42100-acer-aspire-ai.dtsi"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/3"
     notes: "A draft device tree, written from owners' hardware reports. An owner booted it on Ubuntu's live USB in November 2026, with the screen, keyboard, disk, USB, battery and Bluetooth working. Wi-Fi needs a board file copied from Windows, since linux-firmware has none for its card."
     sources:
@@ -288,6 +294,10 @@ models:
       - { model: "LCD", chip: "X1-26-100", compatible: "asus,vivobook-s16-s3607qa-lcd" }
     acpi: ["hardware-reports/asustek-computer-inc/asus-vivobook-s-16-s3607qa-s3607qa"]
     devicetree_out_of_tree: "https://gist.github.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3"
+    devicetree_files:
+      - "https://gist.githubusercontent.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3/raw/x1p42100-asus-vivobook-s16.dts"
+      - "https://gist.githubusercontent.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3/raw/x1p42100-asus-vivobook-s16-lcd.dts"
+      - "https://gist.githubusercontent.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3/raw/x1p42100-asus-vivobook-s16.dtsi"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/2"
     notes: "A draft device tree, written from two owners' hardware reports, in an OLED and an LCD version. Nobody has booted it yet. Owners boot it with the X Plus Vivobook S 15's device tree, with gaps."
     sources:
@@ -366,6 +376,8 @@ models:
       - { chip: "X2E-88-100", compatible: "asus,ascent-qn10" }
     acpi: ["arewearmyet/asus-ascent-qn10"]
     devicetree_out_of_tree: "https://gist.github.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce"
+    devicetree_files:
+      - "https://gist.githubusercontent.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce/raw/glymur-asus-ascent-qn10.dts"
     notes: "A draft device tree, written from its ACPI tables on the Zenbook A16's, whose firmware describes the same power, USB and PCIe wiring. Nobody has booted it yet. Ethernet and HDMI are the likeliest gaps."
     sources:
       - https://www.asus.com/displays-desktops/mini-pcs/ascent-series/asus-ascent-qn10/techspec/

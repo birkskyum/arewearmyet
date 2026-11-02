@@ -3,17 +3,19 @@
     "state": "out-of-tree",
     "source": "https://gist.github.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1",
     "files": [
-      "SOURCE.md"
-    ],
-    "note": "No public source of the tree found yet, only the link above."
+      "SOURCE.md",
+      "x1p42100-acer-aspire-14-ai.dts",
+      "x1p42100-acer-aspire-ai.dtsi"
+    ]
   },
   "acer-aspire-16-ai-a16-11m": {
     "state": "out-of-tree",
     "source": "https://gist.github.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1",
     "files": [
-      "SOURCE.md"
-    ],
-    "note": "No public source of the tree found yet, only the link above."
+      "SOURCE.md",
+      "x1p42100-acer-aspire-16-ai.dts",
+      "x1p42100-acer-aspire-ai.dtsi"
+    ]
   },
   "acer-swift-14-ai-sf14-11": {
     "state": "out-of-tree",
@@ -72,9 +74,11 @@
     "state": "out-of-tree",
     "source": "https://gist.github.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3",
     "files": [
-      "SOURCE.md"
-    ],
-    "note": "No public source of the tree found yet, only the link above."
+      "SOURCE.md",
+      "x1p42100-asus-vivobook-s16.dts",
+      "x1p42100-asus-vivobook-s16-lcd.dts",
+      "x1p42100-asus-vivobook-s16.dtsi"
+    ]
   },
   "asus-zenbook-14-ux3480qa": {
     "state": "out-of-tree",
@@ -88,9 +92,9 @@
     "state": "out-of-tree",
     "source": "https://gist.github.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce",
     "files": [
-      "SOURCE.md"
-    ],
-    "note": "No public source of the tree found yet, only the link above."
+      "SOURCE.md",
+      "glymur-asus-ascent-qn10.dts"
+    ]
   },
   "dell-inspiron-14-5441": {
     "state": "posted",

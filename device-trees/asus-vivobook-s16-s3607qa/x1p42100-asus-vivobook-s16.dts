@@ -1,0 +1,22 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * ASUS Vivobook S 16 (S3607QA) with the Samsung ATNA60KJ01 OLED panel.
+ * DRAFT, untested.
+ */
+
+/dts-v1/;
+
+#include "x1p42100-asus-vivobook-s16.dtsi"
+
+/ {
+	model = "ASUS Vivobook S 16 (S3607QA)";
+	compatible = "asus,vivobook-s16-s3607qa-oled", "asus,vivobook-s16-s3607qa", "qcom,x1p42100";
+};
+
+&panel {
+	compatible = "samsung,atna60kj01", "samsung,atna33xc20";
+	enable-gpios = <&pmc8380_3_gpios 4 GPIO_ACTIVE_HIGH>;
+
+	pinctrl-0 = <&edp_bl_en>;
+	pinctrl-names = "default";
+};
