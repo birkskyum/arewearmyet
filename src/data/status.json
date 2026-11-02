@@ -2312,11 +2312,11 @@
         "https://9to5google.com/2026/09/21/googlebook-launch/"
       ],
       "notes": "Its Android device name is mica. The community tree is adapted from the HP Googlebook 14's, with the Dell wiring taken from the stock tree in Google's recovery image. It leaves the internal drive off, so it only runs from USB for now.",
-      "outcome": "problems",
+      "outcome": "works",
       "reports": [
         {
-          "state": "problems",
-          "note": "Linux 7.2 with a device tree written for it starts from the unlocked bootloader's boot-from-external-drive menu and runs from USB. With the full Omarchy stack it reaches the desktop, but the backlight stays very dim and Wi-Fi doesn't come up yet.",
+          "state": "works",
+          "note": "Boots into the Omarchy desktop from USB, on Linux 7.2 with a device tree written for it, started from the unlocked bootloader's boot-from-external-drive menu. The backlight stays very dim, Wi-Fi doesn't come up yet, and the internal drive is left off.",
           "checked": "2026-10"
         }
       ],
@@ -2347,11 +2347,11 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "problems",
+          "outcome": "works",
           "reports": [
             {
-              "state": "problems",
-              "note": "Linux 7.2 with a device tree written for it starts from the unlocked bootloader's boot-from-external-drive menu and runs from USB. With the full Omarchy stack it reaches the desktop, but the backlight stays very dim and Wi-Fi doesn't come up yet.",
+              "state": "works",
+              "note": "Boots into the Omarchy desktop from USB, on Linux 7.2 with a device tree written for it, started from the unlocked bootloader's boot-from-external-drive menu. The backlight stays very dim, Wi-Fi doesn't come up yet, and the internal drive is left off.",
               "checked": "2026-10"
             }
           ]
