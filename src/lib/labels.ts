@@ -61,6 +61,7 @@ const STATES = {
   googlebookOmarchy: {
     works: { label: 'Boots', tone: 'good', meaning: 'An owner booted into Omarchy on it. Not every feature has to work yet.' },
     problems: { label: 'Problems', tone: 'wanted', meaning: `An owner tried it and couldn't get to the Omarchy desktop.` },
+    untested: { label: 'Not tested', tone: 'muted', meaning: 'A Linux image starts on it, but nobody has tried Omarchy on it yet.' },
     notyet: { label: 'Not yet', tone: 'wanted', meaning: `Nothing starts on it yet. It needs a device tree and a Linux image for its Android-style bootloader.` },
   },
   bootloader: {
@@ -68,7 +69,7 @@ const STATES = {
     locked: { label: 'Locked', tone: 'wanted', meaning: 'The bootloader only starts the system it shipped with.' },
   },
   linuxImage: {
-    boots: { label: 'Boots', tone: 'good', meaning: 'A Linux image starts on it.' },
+    boots: { label: 'Starts', tone: 'good', meaning: 'A Linux image starts on it.' },
     none: { label: 'None yet', tone: 'wanted', meaning: 'Nobody has built a Linux image that starts on it yet.' },
   },
   announced: { label: 'Announced', tone: 'info', meaning: 'Announced by the vendor, but not confirmed in shops yet.' },
@@ -160,7 +161,7 @@ export function acpiCell(model: Model): Cell {
 }
 
 export function googlebookOmarchyCell(model: Model): Cell {
-  const reported = model.reports.some((r) => r.state === 'problems') ? 'problems' : model.reports.some((r) => r.state === 'works') ? 'works' : 'notyet';
+  const reported = model.reports.some((r) => r.state === 'problems') ? 'problems' : model.reports.some((r) => r.state === 'works') ? 'works' : model.linuxImage === 'boots' ? 'untested' : 'notyet';
   const meaning = STATES.googlebookOmarchy[reported].meaning;
   const notes = reportNotes(model.reports);
   return cell(STATES.googlebookOmarchy, reported, { title: notes ? `${meaning} ${notes}` : meaning });
