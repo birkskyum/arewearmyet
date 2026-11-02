@@ -131,6 +131,30 @@ const firmwareFolders: { path: string; files: string[] }[] = sources.firmware;
 const firmwareReleased = new Set<string>(sources.firmwareReleased);
 const firmwareMain = new Set<string>(sources.firmwareMain);
 
+// data/firmware-sources.yaml lists the makers' downloads holding the firmware linux-firmware doesn't
+// ship yet. A model has a vendor download when every file its device tree loads is in linux-firmware
+// or in one of them; without a device tree, when every file of its folders there is in one.
+type SourceFolder = { path: string; models: string[]; files?: { name: string; from: unknown[] }[]; links?: { name: string; target: string }[] };
+const sourceFolders: SourceFolder[] = parse(readFileSync('data/firmware-sources.yaml', 'utf8')).folders;
+const sourced = new Set(sourceFolders.flatMap((folder) => (folder.files ?? []).filter((file) => file.from.length).map((file) => `${folder.path}/${file.name}`)));
+for (const folder of sourceFolders) {
+  for (const link of folder.links ?? []) {
+    const target = new URL(link.target, `file:///${folder.path}/${link.name}`).pathname.slice(1);
+    if (sourced.has(target)) sourced.add(`${folder.path}/${link.name}`);
+  }
+}
+const anchor = (path: string) => `/firmware/#${path.replaceAll('/', '-')}`;
+function sourcesDownload(id: string, needed: string[]): string | undefined {
+  if (needed.length) {
+    const fromMaker = needed.filter((file) => sourced.has(file));
+    if (!fromMaker.length || !needed.every((file) => firmwareMain.has(file) || sourced.has(file))) return undefined;
+    return anchor(fromMaker[0].slice(0, fromMaker[0].lastIndexOf('/')));
+  }
+  const folders = sourceFolders.filter((folder) => folder.models.includes(id));
+  if (!folders.length || folders.some((folder) => (folder.files ?? []).some((file) => !file.from.length))) return undefined;
+  return anchor(folders[0].path);
+}
+
 // Firmware counts as there when every file the device tree loads is in linux-firmware: in its
 // newest release, which distributions ship, or already merged for the next one. Models without a
 // device tree fall back to their folder having the signed audio DSP image. A vendor download works
@@ -159,7 +183,9 @@ const rows = models.map((model) => {
     return { ...status, outcome: outcome(status.computed, own), reports: own };
   });
   const firmware = (model.firmware ?? []).map((path) => firmwareFolders.find((folder) => folder.path === path)).filter(Boolean) as typeof firmwareFolders;
-  const fw = firmwareState([...new Set(variants.flatMap((v) => v.firmwareNeeded))], firmware, model.firmware_download, model.firmware_posted);
+  const needed = [...new Set(variants.flatMap((v) => v.firmwareNeeded))];
+  const download = model.firmware_download ?? sourcesDownload(model.id, needed);
+  const fw = firmwareState(needed, firmware, download, model.firmware_posted);
   firmware.forEach((folder) => used.firmware.add(folder.path));
   const acpi = (model.acpi ?? []).map((folder) => acpiDumps.find((dump) => dump.folder === folder)).filter(Boolean) as typeof acpiDumps;
   acpi.forEach((dump) => used.acpi.add(dump.folder));
@@ -211,7 +237,7 @@ const rows = models.map((model) => {
       firmware: fw.state,
       firmwareMissing: fw.missing,
       firmwareAudioOnly: fw.state === 'windows' && firmware.length > 0,
-      firmwareDownload: model.firmware_download ?? null,
+      firmwareDownload: download ?? null,
       firmwarePosted: model.firmware_posted ?? null,
       firmwareFolders: firmware.map((folder) => folder.path),
       acpi: acpi.length ? 'collected' : 'missing',
