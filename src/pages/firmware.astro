@@ -1,0 +1,104 @@
+---
+import { parse } from 'yaml';
+import Layout from '../layouts/Layout.astro';
+import ChipIcon from '../assets/chip-icon.svg';
+import GitHubIcon from '../assets/github-icon.svg';
+import sourcesRaw from '../../data/firmware-sources.yaml?raw';
+import modelsRaw from '../../data/models.yaml?raw';
+
+type Source = { package: string; member: string };
+type File = { name: string; size?: number; sha256?: string; from: Source[]; note?: string };
+type Folder = { path: string; models: string[]; files?: File[]; links?: { name: string; target: string }[] };
+type Package = { id: string; maker: string; title: string; url: string; page?: string; size: number; sha256: string; fetched: string; note?: string };
+
+const sources = parse(sourcesRaw) as { folders: Folder[]; packages: Package[] };
+const models = (parse(modelsRaw) as { models: { id: string; vendor: string; name: string }[] }).models;
+const modelName = new Map(models.map((m) => [m.id, `${m.vendor} ${m.name}`]));
+const packages = new Map(sources.packages.map((p) => [p.id, p]));
+
+const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
+const REPO = 'https://github.com/birkskyum/arewearmyet';
+const CARD = 'rounded-xl bg-zinc-900 p-5 ring-1 ring-zinc-800';
+const INLINE = 'rounded bg-zinc-800 px-1 py-0.5 text-[0.85em] text-zinc-200';
+const mb = (bytes: number) => `${Math.round(bytes / 1048576)} MB`;
+
+// The packages a folder's files come from, the one covering the most files first.
+function downloads(folder: Folder): Package[] {
+  const count = new Map<string, number>();
+  for (const file of folder.files ?? []) for (const s of file.from) count.set(s.package, (count.get(s.package) ?? 0) + 1);
+  return [...count.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([id]) => packages.get(id)!);
+}
+
+const folders = [...sources.folders].sort((a, b) => (modelName.get(a.models[0]) ?? a.path).localeCompare(modelName.get(b.models[0]) ?? b.path));
+const fileCount = sources.folders.reduce((n, f) => n + (f.files?.length ?? 0), 0);
+---
+
+<Layout title="Firmware from the makers · Are we ARM yet?" description="Where each Snapdragon laptop's own firmware can be downloaded from its maker, with the file inside the package and its checksum, for every distro.">
+  <main class="mx-auto max-w-4xl px-4 py-10 text-zinc-400 sm:px-6">
+    <div class="flex items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 text-zinc-300 hover:text-zinc-100">
+        <ChipIcon class="h-8 w-8 text-[#9ece6a]" aria-hidden="true" />
+        <span class="font-semibold">Are we ARM yet?</span>
+      </a>
+      <a href={REPO} class="flex shrink-0 items-center gap-2 rounded-md p-2 text-sm text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100 sm:px-3 sm:py-1.5" aria-label="Are we ARM yet? on GitHub">
+        <GitHubIcon class="h-5 w-5" aria-hidden="true" />
+        <span class="hidden sm:inline">GitHub</span>
+      </a>
+    </div>
+
+    <h1 class="mt-8 text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">Firmware from the makers</h1>
+    <p class="mt-4 text-lg">
+      Most Snapdragon laptops load signed firmware for their audio and compute DSPs and their GPU that linux-firmware doesn't ship yet. Their makers publish it inside their Windows driver packages. This list says which package holds each file, where inside it, and each file's checksum, so you or your distro can get it from the maker even after Windows is gone. Nothing here is firmware, only links and checksums.
+    </p>
+    <p class="mt-4">
+      {sources.folders.length} firmware folders, {fileCount} files, from {sources.packages.length} maker downloads. Tools can read the same list as <a class={LINK} href="/firmware-sources.json">firmware-sources.json</a>; it's kept in <a class={LINK} href={`${REPO}/blob/main/data/firmware-sources.yaml`}>data/firmware-sources.yaml</a>. Packages unpack with 7-Zip, except Lenovo's (<code class={INLINE}>innoextract</code>) and Microsoft's MSIs (<code class={INLINE}>msiextract</code>). ASUS's are executables with a 7-Zip archive appended.
+    </p>
+
+    <div class="mt-8 space-y-4">
+      {folders.map((folder) => (
+        <section class={CARD} id={folder.path.replaceAll('/', '-')}>
+          <h2 class="text-base font-semibold text-zinc-100">{folder.models.map((id) => modelName.get(id) ?? id).join(', ')}</h2>
+          <p class="mt-1 text-xs"><code class={INLINE}>/usr/lib/firmware/{folder.path}/</code></p>
+          {downloads(folder).length > 0 && (
+            <ul class="mt-3 space-y-1 text-sm">
+              {downloads(folder).map((p) => (
+                <li>
+                  <a class={LINK} href={p.page ?? p.url}>{p.maker}: {p.title}</a> <span class="text-zinc-500">({mb(p.size)})</span>
+                  {p.note && <span class="block text-xs text-zinc-500">{p.note}</span>}
+                </li>
+              ))}
+            </ul>
+          )}
+          {(folder.files ?? []).filter((f) => f.from.length === 0).map((f) => (
+            <p class="mt-2 text-sm text-amber-300/90"><code class={INLINE}>{f.name}</code>: {f.note}</p>
+          ))}
+          {folder.links && folder.links.length > 0 && (
+            <p class="mt-2 text-sm">Some names point at another folder's files, as linux-firmware links them. {folder.links.map((l) => <code class={`${INLINE} mr-1`}>{l.name} → {l.target}</code>)}</p>
+          )}
+          {folder.files && folder.files.length > 0 && (
+            <details class="mt-3 text-xs">
+              <summary class="cursor-pointer text-zinc-300">{folder.files.length} files with their checksums</summary>
+              <div class="mt-2 overflow-x-auto">
+                <table class="w-full text-left">
+                  <tbody>
+                    {folder.files.map((f) => (
+                      <tr class="border-t border-zinc-800 align-top">
+                        <td class="py-1 pr-3 text-zinc-200">{f.name}</td>
+                        <td class="py-1 pr-3 font-mono" title={f.sha256}>{f.sha256?.slice(0, 16)}…</td>
+                        <td class="py-1 text-zinc-500">{f.from[0] ? <span title={f.from[0].member}>{packages.get(f.from[0].package)?.maker}: {f.from[0].member.split('/').at(-1)}</span> : 'not in a download'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </details>
+          )}
+        </section>
+      ))}
+    </div>
+
+    <div class="mt-10 flex flex-wrap gap-3 text-sm">
+      <a href="/" class="rounded-md px-3 py-1.5 text-zinc-200 ring-1 ring-zinc-700 hover:bg-zinc-800">Back to the board</a>
+    </div>
+  </main>
+</Layout>

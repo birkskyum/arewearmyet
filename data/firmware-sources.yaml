@@ -1,0 +1,1422 @@
+# Where each Snapdragon laptop's own firmware can be had from its maker, for the files
+# linux-firmware doesn't ship yet. Nothing here is firmware: every entry is a download link and
+# checksums, so a tool on any distro can fetch the maker's package (or take a copy the owner
+# downloaded), check it and install the files where the device tree loads them. The same list is
+# served as /firmware-sources.json.
+#
+# folders     one per firmware folder a device tree loads files from, under /usr/lib/firmware
+#   models    the board's model ids whose device trees use it
+#   files     name, size and SHA-256 of each file the device tree loads, and every package it
+#             was found in, with its member path (archives inside the package joined with !/).
+#             A file with no package has a note on where it comes from instead
+#   links     names that are links to another file, as linux-firmware's WHENCE writes them
+# packages    the maker downloads: title, url, the maker's page when the url changes per version,
+#             size and SHA-256 as fetched, the date it was fetched, and a note when fetching it
+#             needs care
+#
+# Packages unpack with 7-Zip, except Lenovo's (innoextract) and Microsoft's MSIs (msiextract).
+# ASUS's are executables with a 7-Zip archive appended. The files were matched byte for byte to
+# the ones in the linux-firmware merge requests the board links.
+
+folders:
+  - path: "qcom/glymur/ASUSTeK/UX3407NA"
+    models: ["asus-zenbook-a14-ux3407na"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 225080
+        sha256: "7906466c734b2f360d48cf086f80b6e04d84e9b02255c74545aa28d5df1e932c"
+        from:
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsp_dtbs.elf" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 513
+        sha256: "66ce8531efb7979d234e0f0eabbe18d038ac97da771a8a194f613df8f0724e81"
+        from:
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspr.jsn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 515
+        sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
+        from:
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 703
+        sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
+        from:
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 69432
+        sha256: "9bee104a48d4aac647287d6c1454df170c1cff7158a2352711fd1e2163ea6d1d"
+        from:
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/NPU/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/NPU/qcnspmcdm8480/cdsp_dtbs.elf" }
+      - name: "qcadsp8480.mbn"
+        size: 19867608
+        sha256: "67b4e129d4d60fccd05d85be3754168f46535549a03a3627c598d634e73df49d"
+        from:
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/qcadsp8480.mbn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/qcadsp8480.mbn" }
+      - name: "qccdsp8480.mbn"
+        size: 3252504
+        sha256: "acf13d29288d283793f418a36650e8a261eed927d30de109a59cb2210f458794"
+        from:
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/NPU/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/NPU/qcnspmcdm8480/qccdsp8480.mbn" }
+  - path: "qcom/glymur/ASUSTeK/UX3607OA"
+    models: ["asus-zenbook-a16-ux3607oa"]
+    files:
+      - name: "soccp.mbn"
+        size: 2212072
+        sha256: "f661017eb76a5fd4b0995c8316d6b467d900c3a34d43f2ee2857556864df9da7"
+        from: []
+        note: "The laptop's own boot firmware loads it before Linux; no driver package carries it."
+      - name: "soccp_dtb.mbn"
+        size: 98104
+        sha256: "ec005001c5d220ff0a45dd4c3d097b2326d22964ae075218339cc335707d0ff2"
+        from: []
+        note: "The laptop's own boot firmware loads it before Linux; no driver package carries it."
+      - name: "soccpr.jsn"
+        size: 261
+        sha256: "e6b053e996f2d6b933f41bd6dffe4a5ba3c09ec594675febee04c944b3780d6a"
+        from:
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_soccp8480/soccpr.jsn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_soccp8480/soccpr.jsn" }
+    links:
+      - { name: "adsp_dtbs.elf", target: "../UX3407NA/adsp_dtbs.elf" }
+      - { name: "adspr.jsn", target: "../UX3407NA/adspr.jsn" }
+      - { name: "adsps.jsn", target: "../UX3407NA/adsps.jsn" }
+      - { name: "adspua.jsn", target: "../UX3407NA/adspua.jsn" }
+      - { name: "cdsp_dtbs.elf", target: "../UX3407NA/cdsp_dtbs.elf" }
+      - { name: "qcadsp8480.mbn", target: "../UX3407NA/qcadsp8480.mbn" }
+      - { name: "qccdsp8480.mbn", target: "../UX3407NA/qccdsp8480.mbn" }
+  - path: "qcom/glymur/LENOVO/22A8"
+    models: ["lenovo-thinkpad-t14s-gen-7-snapdragon"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 225080
+        sha256: "694ae22f6832eda33b9c97fad02daea8197f4a0474d6d3b031b26caafdd121f6"
+        from:
+          - { package: "lenovo-n4pqq02w", member: "code$GetExtractPath$/N4PQQ02W/N4PQC20W/Core_drivers/qcsubsys_ext_adsp8480/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "lenovo-n42qq22w", member: "code$GetExtractPath$/N42QQ22W/N42QG16W/Core_drivers/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "lenovo-n4pqq02w", member: "code$GetExtractPath$/N4PQQ02W/N4PQC20W/Core_drivers/qcsubsys_ext_adsp8480/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "lenovo-n42qq22w", member: "code$GetExtractPath$/N42QQ22W/N42QG16W/Core_drivers/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "lenovo-n4pqq02w", member: "code$GetExtractPath$/N4PQQ02W/N4PQC20W/Core_drivers/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "lenovo-u9corhdus14lcfc", member: "code$GetExtractPath$/Drivers/Mini8800_adsp/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "lenovo-n42qq22w", member: "code$GetExtractPath$/N42QQ22W/N42QG16W/Core_drivers/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "lenovo-n4pqq02w", member: "code$GetExtractPath$/N4PQQ02W/N4PQC20W/Core_drivers/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "lenovo-u9corhdus14lcfc", member: "code$GetExtractPath$/Drivers/Mini8800_adsp/adspua.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 69432
+        sha256: "9bee104a48d4aac647287d6c1454df170c1cff7158a2352711fd1e2163ea6d1d"
+        from:
+          - { package: "lenovo-n4pqq02w", member: "code$GetExtractPath$/N4PQQ02W/N4PQC20W/Core_drivers/qcnspmcdm8480/cdsp_dtbs.elf" }
+      - name: "qcadsp8480.mbn"
+        size: 19810264
+        sha256: "2563e5a1907b97bb055c0d65f4e0a96d19ed026f9d0f9155942d9752b3ac6c3a"
+        from:
+          - { package: "lenovo-n4pqq02w", member: "code$GetExtractPath$/N4PQQ02W/N4PQC20W/Core_drivers/qcsubsys_ext_adsp8480/qcadsp8480.mbn" }
+      - name: "qccdsp8480.mbn"
+        size: 3252504
+        sha256: "acf13d29288d283793f418a36650e8a261eed927d30de109a59cb2210f458794"
+        from:
+          - { package: "lenovo-n4pqq02w", member: "code$GetExtractPath$/N4PQQ02W/N4PQC20W/Core_drivers/qcnspmcdm8480/qccdsp8480.mbn" }
+  - path: "qcom/glymur/hp/elitebook-x-g2q"
+    models: ["hp-elitebook-x-g2q"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 225080
+        sha256: "54f79cdd520c97bef533c1f66c13eaa4c4d95d641b3d4c73c034179ae8c641b8"
+        from:
+          - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 513
+        sha256: "66ce8531efb7979d234e0f0eabbe18d038ac97da771a8a194f613df8f0724e81"
+        from:
+          - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspr.jsn" }
+          - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adspr.jsn" }
+          - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 515
+        sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
+        from:
+          - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adsps.jsn" }
+          - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adsps.jsn" }
+          - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 703
+        sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
+        from:
+          - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspua.jsn" }
+          - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adspua.jsn" }
+          - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspua.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 69432
+        sha256: "0de06fca0ce8778beaae9122bc40ebf8c4e3a6b241be47e8e89725dac87cdc64"
+        from:
+          - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcnspmcdm8480/cdsp_dtbs.elf" }
+      - name: "qcadsp8480.mbn"
+        size: 16856808
+        sha256: "b32480d27477005210226aac08300d528115807a8c4bc62f9f94e017d57d3ee1"
+        from:
+          - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/qcadsp8480.mbn" }
+      - name: "qccdsp8480.mbn"
+        size: 3252504
+        sha256: "0685ab4a9d319ca2d306e4be6c95208b76d180d98a412b866a46b925dd72ec86"
+        from:
+          - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcnspmcdm8480/qccdsp8480.mbn" }
+      - name: "soccp.mbn"
+        size: 2253032
+        sha256: "8b7595e767117f30d48f3e9f2deefecb15efbb2662de61d28c661c97517d68cf"
+        from: []
+        note: "HP's BIOS update (XZ-compressed in the capsule), not a driver package."
+      - name: "soccp_dtb.mbn"
+        size: 102200
+        sha256: "cf7185c31e8449394061e29dcbcc8d74bdd4c599de57077953f457da38f5cebc"
+        from: []
+        note: "HP's BIOS update (XZ-compressed in the capsule), not a driver package."
+      - name: "soccpr.jsn"
+        size: 261
+        sha256: "e6b053e996f2d6b933f41bd6dffe4a5ba3c09ec594675febee04c944b3780d6a"
+        from:
+          - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_soccp8480/soccpr.jsn" }
+          - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_soccp8480/soccpr.jsn" }
+          - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_soccp8480/soccpr.jsn" }
+  - path: "qcom/glymur/hp/omnibook-ultra-14-kg0xxx"
+    models: ["hp-omnibook-ultra-14-kg0"]
+    links:
+      - { name: "adsp_dtbs.elf", target: "../omnibook-x16/adsp_dtbs.elf" }
+      - { name: "adspr.jsn", target: "../omnibook-x16/adspr.jsn" }
+      - { name: "adsps.jsn", target: "../omnibook-x16/adsps.jsn" }
+      - { name: "adspua.jsn", target: "../omnibook-x16/adspua.jsn" }
+      - { name: "cdsp_dtbs.elf", target: "../omnibook-x16/cdsp_dtbs.elf" }
+      - { name: "qcadsp8480.mbn", target: "../omnibook-x16/qcadsp8480.mbn" }
+      - { name: "qccdsp8480.mbn", target: "../omnibook-x16/qccdsp8480.mbn" }
+  - path: "qcom/glymur/hp/omnibook-x16"
+    models: ["hp-omnibook-x-16-cp"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 225080
+        sha256: "c1a69fe37eaff8759b22738f4d4b8e046e7b07fbccdfdc76554f0fa6b412b981"
+        from:
+          - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adsp_dtbs.elf" }
+          - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 513
+        sha256: "66ce8531efb7979d234e0f0eabbe18d038ac97da771a8a194f613df8f0724e81"
+        from:
+          - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspr.jsn" }
+          - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adspr.jsn" }
+          - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 515
+        sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
+        from:
+          - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adsps.jsn" }
+          - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adsps.jsn" }
+          - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 703
+        sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
+        from:
+          - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspua.jsn" }
+          - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adspua.jsn" }
+          - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspua.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 69432
+        sha256: "9bee104a48d4aac647287d6c1454df170c1cff7158a2352711fd1e2163ea6d1d"
+        from:
+          - { package: "hp-sp172895", member: "src/Driver/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "hp-sp174082", member: "src/Driver/qcnspmcdm8480/cdsp_dtbs.elf" }
+      - name: "qcadsp8480.mbn"
+        size: 21432280
+        sha256: "0b68b188aac54f7beecb3234c19e794092864a4690aafea20bf379643305bf93"
+        from:
+          - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/qcadsp8480.mbn" }
+          - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/qcadsp8480.mbn" }
+      - name: "qccdsp8480.mbn"
+        size: 3252504
+        sha256: "acf13d29288d283793f418a36650e8a261eed927d30de109a59cb2210f458794"
+        from:
+          - { package: "hp-sp172895", member: "src/Driver/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "hp-sp174082", member: "src/Driver/qcnspmcdm8480/qccdsp8480.mbn" }
+  - path: "qcom/glymur/microsoft/mahua"
+    models: ["microsoft-surface-laptop-8-13", "microsoft-surface-laptop-8-15"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 225080
+        sha256: "0e311aa8ce32f182a9401a1dbcab81a22a1db21106f1660aa5797fe2c590f24c"
+        from:
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspua.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 69432
+        sha256: "dfd345ab5ee9dba7fc7d717a35a3b9bb96f195a1d2cde18af41be1945d8599db"
+        from:
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
+      - name: "qcadsp8480.mbn"
+        size: 20645848
+        sha256: "617a7a8ec5cd27f09cb6b5d7b7e07dff38e4c6f0869851f55e62aa257802aa26"
+        from:
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/qcadsp8480.mbn" }
+      - name: "qccdsp8480.mbn"
+        size: 3252504
+        sha256: "2798125b8458d47b4e1adbd3ae2451fdb20ee6add9ea4dc6211c96d96210a2b9"
+        from:
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
+  - path: "qcom/x1e80100/ACER/SFA14-11"
+    models: ["acer-swift-go-pro-ai-sfa14-11"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 40760
+        sha256: "21b3c65409d8ed4f7d660f8d706c6018ec680cd3dffe2fd31631feeef4d131d6"
+        from: []
+        note: "Only in Acer's Other Drivers package 2.0, which Acer no longer serves; copy it from the laptop's Windows."
+      - name: "adspr.jsn"
+        size: 670
+        sha256: "549bb9c8e32dc6253d0d0ddde2ce5c26f75f8333d3e55861f297e169a9f3e5c0"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "medion-drv-s30-14s1-elite-wx", member: "qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 515
+        sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
+        from:
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adsps.jsn" }
+          - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adsps.jsn" }
+          - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "medion-drv-s30-14s1-elite-wx", member: "qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 703
+        sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
+        from:
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspua.jsn" }
+          - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adspua.jsn" }
+          - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "medion-drv-s30-14s1-elite-wx", member: "qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 516
+        sha256: "be8c6fba330908e4683fb6282761cb08485a302d6a66e09721e102e342f27236"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/battmgr.jsn" }
+          - { package: "medion-drv-s30-14s1-elite-wx", member: "qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 24376
+        sha256: "99cf5af4c2503e94fd4f7f65ddf529d9d8ecd20fee293d22c1f049069942b453"
+        from:
+          - { package: "medion-drv-s30-14s1-elite-wx", member: "qcsubsys_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 513
+        sha256: "6d01cd7dce745204d5de20efe57e2511149ca2a5b48ee562fbedefda573ca465"
+        from:
+          - { package: "medion-drv-s30-14s1-elite-wx", member: "qcsubsys_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 21805400
+        sha256: "06ab48b24edcaf698c5e0690c7874ed487add997694730986eec3f428ddc66df"
+        from: []
+        note: "Only in Acer's Other Drivers package 2.0, which Acer no longer serves; copy it from the laptop's Windows."
+      - name: "qccdsp8380.mbn"
+        size: 2990504
+        sha256: "d3877b0cadf55b67dd77610fc7082175cb8e862a96e019553aa4b399d10eac51"
+        from:
+          - { package: "medion-drv-s30-14s1-elite-wx", member: "qcsubsys_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsuc8380.mbn"
+        size: 12088
+        sha256: "063054b8723be0cb16b0699816267b247f17213a5ba36b81d6de5c101abe7bc0"
+        from:
+          - { package: "medion-drv-s30-14s1-elite-wx", member: "qcdx8380/qcdxkmsuc8380.mbn" }
+      - name: "qcvss8380.mbn"
+        size: 2306664
+        sha256: "3804756fc5e1d372ac1cc438714a3a5d952d8f6d24dab77b01a4a23b6e9a3eed"
+        from:
+          - { package: "medion-drv-s30-14s1-elite-wx", member: "qcdx8380/qcvss8380.mbn" }
+  - path: "qcom/x1e80100/ASUSTeK/vivobook-s15"
+    models: ["asus-vivobook-s15-s5507"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "4cf6f9eb7a4e5cf78481af0e8787ea61b6ac1d8ea72d5ce9785a72e02adda04d"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adspr.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adsps.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adspua.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/battmgr.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/battmgr.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "1e0535bd2a8adcd14d6079ffa99f6fce5c6561d4759a60f6076dcfbaa4437f8a"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 21879224
+        sha256: "4ddea417cedc2eb965f3e6559ca92ea1a112c4c3bd8b901ddb5eca06d50970f7"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3174824
+        sha256: "4387fa1a234aacbff50f8a215b96536d17c4b25b6b798392e15a162e4adcd7a0"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsuc8380.mbn"
+        size: 12088
+        sha256: "10ac12861f2b12154f055928033a407f37fb9d87967e6d0cc0636a277f007932"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/GFX/qcdx8380/qcdxkmsuc8380.mbn" }
+      - name: "qcvss8380.mbn"
+        size: 2314856
+        sha256: "d81f81727c6b51fd760e842e77377f83375c5163c4965cab50d5c5c6cb74ec4a"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+  - path: "qcom/x1e80100/ASUSTeK/zenbook-a14"
+    models: ["asus-zenbook-a14-ux3407"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "120cb824c03bf3b531a1efc6ef8fed2c9edfb7c5d7178ee76f5754efca2a87da"
+        from:
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adspr.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adsps.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adspua.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/battmgr.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/battmgr.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "664758a227f38043cb5fc21ad56154e57449a759e703d3b1d84b41c8ce138914"
+        from:
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22342024
+        sha256: "537f48ff493a779163cdff068eea4a4d3c93f9b4585a146bbebb91b57ee4d9fa"
+        from:
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3174824
+        sha256: "3df4de099b23df0969c172fa2660e02c1ba4e1b5c280eb0198a89194f400d875"
+        from:
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsuc8380.mbn"
+        size: 12088
+        sha256: "f2f6dd1d7b2dc6e8019f85d9a17a16bb3bc3605fb0bebc632ec615c1b404b86b"
+        from:
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcdx8380/qcdxkmsuc8380.mbn" }
+  - path: "qcom/x1e80100/HONOR/MRO-XXX"
+    models: ["honor-magicbook-art-14-snapdragon"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "50f69be96f44e735daee31432e0d6d5455d943b440de0f16386bdeb3c6391320"
+        from:
+          - { package: "honor-audio-1.0.4047.7214", member: "Software/HONOR MagicBook Art 14 Snapdragon_Audio_1.0.4047.7214.zip!/Audio_1.0.4047.7214.exe!/Audio_1.0.4047.7214.exe!/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "qcadsp8380.mbn"
+        size: 21977528
+        sha256: "544fc0a4ade82c207c450c42f1baa70864ce46aaa2425979a0bff6974af74994"
+        from:
+          - { package: "honor-audio-1.0.4047.7214", member: "Software/HONOR MagicBook Art 14 Snapdragon_Audio_1.0.4047.7214.zip!/Audio_1.0.4047.7214.exe!/Audio_1.0.4047.7214.exe!/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qcdxkmsuc8380.mbn"
+        size: 12088
+        sha256: "255d848d194d825b21413fbb02e87cb45c2557d1e7de2d5ce15c77eb5c659bdc"
+        from:
+          - { package: "honor-graphics-31.0.105.0", member: "Software/MagicBook Art 14_Graphics_31.0.105.0.zip!/Graphics_31.0.105.0.exe!/Graphics_31.0.105.0.exe!/qcdx8380/qcdxkmsuc8380.mbn" }
+      - name: "qcvss8380.mbn"
+        size: 2318952
+        sha256: "e00a8cda55661446425169d8286c9f00ad66f610b7376f6fb8165f6e1c93b24a"
+        from:
+          - { package: "honor-graphics-31.0.105.0", member: "Software/MagicBook Art 14_Graphics_31.0.105.0.zip!/Graphics_31.0.105.0.exe!/Graphics_31.0.105.0.exe!/qcdx8380/qcvss8380.mbn" }
+  - path: "qcom/x1e80100/LENOVO/21N1"
+    models: ["lenovo-thinkpad-t14s-gen-6-snapdragon"]
+    files:
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "93941f040da14b8305d39579686d886706d22954a538b03da676c1aaa191797f"
+        from:
+          - { package: "lenovo-n42qq22w", member: "code$GetExtractPath$/N42QQ22W/N42QG16W/Core_drivers/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "4a67a03367f2eff2f8a0e867ca25d2bf2fcd5aee3e41e2c9f436c804e257c789"
+        from:
+          - { package: "lenovo-n42qq22w", member: "code$GetExtractPath$/N42QQ22W/N42QG16W/Core_drivers/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+  - path: "qcom/x1e80100/LENOVO/91B6"
+    models: ["lenovo-ideacentre-mini-x-01q8x10"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "45a3e59073735da7bab8cf3eaa9afaacd36093ab1c2b603255a95091127df020"
+        from:
+          - { package: "lenovo-u9corhdus14lcfc", member: "code$GetExtractPath$/Drivers/Mini8800_adsp/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 534
+        sha256: "4b9566fcfdc1656c38d8158d79db6964e9c4b57a6e42b46241e8d63aabc42d8d"
+        from:
+          - { package: "lenovo-u9corhdus14lcfc", member: "code$GetExtractPath$/Drivers/Mini8800_adsp/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "lenovo-n42qq22w", member: "code$GetExtractPath$/N42QQ22W/N42QG16W/Core_drivers/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "lenovo-n4pqq02w", member: "code$GetExtractPath$/N4PQQ02W/N4PQC20W/Core_drivers/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "lenovo-u9corhdus14lcfc", member: "code$GetExtractPath$/Drivers/Mini8800_adsp/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "lenovo-n42qq22w", member: "code$GetExtractPath$/N42QQ22W/N42QG16W/Core_drivers/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "lenovo-n4pqq02w", member: "code$GetExtractPath$/N4PQQ02W/N4PQC20W/Core_drivers/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "lenovo-u9corhdus14lcfc", member: "code$GetExtractPath$/Drivers/Mini8800_adsp/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "lenovo-n42qq22w", member: "code$GetExtractPath$/N42QQ22W/N42QG16W/Core_drivers/qcsubsys_ext_adsp8380/battmgr.jsn" }
+          - { package: "lenovo-u9corhdus14lcfc", member: "code$GetExtractPath$/Drivers/Mini8800_adsp/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "8880a7a2252e7951b1bc7c14869c8c37062583ba26b21fee6194c593e3447a7e"
+        from:
+          - { package: "lenovo-u9corhdus14lcfc", member: "code$GetExtractPath$/Drivers/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "lenovo-n42qq22w", member: "code$GetExtractPath$/N42QQ22W/N42QG16W/Core_drivers/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "lenovo-u9corhdus14lcfc", member: "code$GetExtractPath$/Drivers/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22268296
+        sha256: "e1f325b81fe8b2b4e40f8a5756a16fa2f5aaeebdee98430d44cf64d914d2b56e"
+        from:
+          - { package: "lenovo-u9corhdus14lcfc", member: "code$GetExtractPath$/Drivers/Mini8800_adsp/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "8a4465f747dbf43441fdba7d5c0312057d2cd1bb1e42cb4833d9ebdb7253388e"
+        from:
+          - { package: "lenovo-u9corhdus14lcfc", member: "code$GetExtractPath$/Drivers/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsuc8380.mbn"
+        size: 12088
+        sha256: "f5141e366522a7cdd9a698b96107e981bbe3e639f80e1470e6a189e52e184e25"
+        from:
+          - { package: "lenovo-u9corhdus14lcfc", member: "code$GetExtractPath$/Drivers/qcdx8380/qcdxkmsuc8380.mbn" }
+      - name: "qcvss8380.mbn"
+        size: 2318952
+        sha256: "038eb5dbb5c350eaca53961f49055b1a2ee0913969ab7bf9b677fe12201dceb9"
+        from:
+          - { package: "lenovo-u9corhdus14lcfc", member: "code$GetExtractPath$/Drivers/qcdx8380/qcvss8380.mbn" }
+  - path: "qcom/x1e80100/Medion/sprchrgd-14-s1"
+    models: ["medion-sprchrgd-14-s1"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 40760
+        sha256: "d7a5e0f29bf1f9d215b080a8420f5aab5fe0e370d5a6192ab7d7bac61dd63e23"
+        from:
+          - { package: "medion-drv-s30-14s1-elite-wx", member: "qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "cdsp_dtbs.elf"
+        size: 24376
+        sha256: "99cf5af4c2503e94fd4f7f65ddf529d9d8ecd20fee293d22c1f049069942b453"
+        from:
+          - { package: "medion-drv-s30-14s1-elite-wx", member: "qcsubsys_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "qcadsp8380.mbn"
+        size: 21805400
+        sha256: "a8d004cbf1095ddecd8a0aba0ae2cccb8951f19560778a0152ea615d4d43bcce"
+        from:
+          - { package: "medion-drv-s30-14s1-elite-wx", member: "qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 2990504
+        sha256: "d3877b0cadf55b67dd77610fc7082175cb8e862a96e019553aa4b399d10eac51"
+        from:
+          - { package: "medion-drv-s30-14s1-elite-wx", member: "qcsubsys_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsuc8380.mbn"
+        size: 12088
+        sha256: "063054b8723be0cb16b0699816267b247f17213a5ba36b81d6de5c101abe7bc0"
+        from:
+          - { package: "medion-drv-s30-14s1-elite-wx", member: "qcdx8380/qcdxkmsuc8380.mbn" }
+      - name: "qcvss8380.mbn"
+        size: 2306664
+        sha256: "3804756fc5e1d372ac1cc438714a3a5d952d8f6d24dab77b01a4a23b6e9a3eed"
+        from:
+          - { package: "medion-drv-s30-14s1-elite-wx", member: "qcdx8380/qcvss8380.mbn" }
+  - path: "qcom/x1e80100/SAMSUNG/galaxy-book4-edge"
+    models: ["samsung-galaxy-book4-edge-14", "samsung-galaxy-book4-edge-16"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "d1e1c65ef72248c9bc5beab16594340340dde34331406d19cf96c6690e0c3582"
+        from:
+          - { package: "samsung-basw-a4231a01-1063", member: "Chipset/qcsubsys_ext_adsp_ss8380/adsp_dtbs.elf" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "b8d18cbc6d955721bb73efa732c66f4d7978554f6a5e699f131c6bd35fa1fcbd"
+        from:
+          - { package: "samsung-basw-a4231a01-1063", member: "Chipset/qcsubsys_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "qcadsp8380.mbn"
+        size: 19884280
+        sha256: "99155b4cb309dc3d873a4fd617c0da12161f6c6d25a07b35ff47f95342ec5b64"
+        from:
+          - { package: "samsung-basw-a4231a01-1063", member: "Chipset/qcsubsys_ext_adsp_ss8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3072424
+        sha256: "4c1a9028ff3c8eb942a2cf5a7c8ed13182098ea022f1bd9f31f728c0b1d453de"
+        from:
+          - { package: "samsung-basw-a4231a01-1063", member: "Chipset/qcsubsys_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsuc8380.mbn"
+        size: 12088
+        sha256: "a3a75134e11f2d4eed88288c38f533cc66a3a5f8e13d2317238d79acb9417cd3"
+        from:
+          - { package: "samsung-basw-a4231a01-1063", member: "Graphics/qcdx8380_ss/qcdxkmsuc8380.mbn" }
+  - path: "qcom/x1e80100/dell/inspiron-14-plus-5441"
+    models: ["dell-inspiron-14-5441"]
+    links:
+      - { name: "adsp_dtbs.elf", target: "../inspiron-14-plus-7441/adsp_dtbs.elf" }
+      - { name: "adspr.jsn", target: "../inspiron-14-plus-7441/adspr.jsn" }
+      - { name: "adsps.jsn", target: "../inspiron-14-plus-7441/adsps.jsn" }
+      - { name: "adspua.jsn", target: "../inspiron-14-plus-7441/adspua.jsn" }
+      - { name: "battmgr.jsn", target: "../inspiron-14-plus-7441/battmgr.jsn" }
+      - { name: "cdsp_dtbs.elf", target: "../inspiron-14-plus-7441/cdsp_dtbs.elf" }
+      - { name: "cdspr.jsn", target: "../inspiron-14-plus-7441/cdspr.jsn" }
+      - { name: "qcadsp8380.mbn", target: "../inspiron-14-plus-7441/qcadsp8380.mbn" }
+      - { name: "qccdsp8380.mbn", target: "../inspiron-14-plus-7441/qccdsp8380.mbn" }
+      - { name: "qcdxkmsuc8380.mbn", target: "../inspiron-14-plus-7441/qcdxkmsuc8380.mbn" }
+      - { name: "qcvss8380.mbn", target: "../inspiron-14-plus-7441/qcvss8380.mbn" }
+  - path: "qcom/x1e80100/dell/inspiron-14-plus-7441"
+    models: ["dell-inspiron-14-plus-7441"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 72408
+        sha256: "a619c578fd609e29ed6c2bee324e7a2a99d447cd526718e59e09bdeed4047cff"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 670
+        sha256: "549bb9c8e32dc6253d0d0ddde2ce5c26f75f8333d3e55861f297e169a9f3e5c0"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 515
+        sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 703
+        sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 516
+        sha256: "be8c6fba330908e4683fb6282761cb08485a302d6a66e09721e102e342f27236"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "8eaa1bae6e3b4df0f2d42aa7fcaab324269e6ba7e83de32ce453e239d8acfe2d"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22500696
+        sha256: "b8be5ec108ce2552df82730ea94f507eb84845f925a427b78cda85916ea2eb28"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "352fb65e5578995919b782716de3ff033a1e8c97ebe65d795506d2347ab8b9c7"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsuc8380.mbn"
+        size: 12088
+        sha256: "f42fd3c7581650dacae1682db1a2b0c9e07b0237d17cdcc27efb85767b319e2c"
+        from:
+          - { package: "dell-2chk7", member: "16299/Drivers/MUP/qcdx8380/qcdxkmsuc8380.mbn" }
+          - { package: "dell-j8gpp", member: "16299/Drivers/Drivers/qcdx8380/qcdxkmsuc8380.mbn" }
+      - name: "qcvss8380.mbn"
+        size: 2327144
+        sha256: "38b88f6050459e03e6c3b8c160bb3b3b09312c9e30ce9edca5103b943f928f71"
+        from:
+          - { package: "dell-2chk7", member: "16299/Drivers/MUP/qcdx8380/qcvss8380.mbn" }
+          - { package: "dell-j8gpp", member: "16299/Drivers/Drivers/qcdx8380/qcvss8380.mbn" }
+  - path: "qcom/x1e80100/dell/latitude-7455"
+    models: ["dell-latitude-7455"]
+    links:
+      - { name: "adsp_dtbs.elf", target: "../inspiron-14-plus-7441/adsp_dtbs.elf" }
+      - { name: "adspr.jsn", target: "../inspiron-14-plus-7441/adspr.jsn" }
+      - { name: "adsps.jsn", target: "../inspiron-14-plus-7441/adsps.jsn" }
+      - { name: "adspua.jsn", target: "../inspiron-14-plus-7441/adspua.jsn" }
+      - { name: "battmgr.jsn", target: "../inspiron-14-plus-7441/battmgr.jsn" }
+      - { name: "cdsp_dtbs.elf", target: "../inspiron-14-plus-7441/cdsp_dtbs.elf" }
+      - { name: "cdspr.jsn", target: "../inspiron-14-plus-7441/cdspr.jsn" }
+      - { name: "qcadsp8380.mbn", target: "../inspiron-14-plus-7441/qcadsp8380.mbn" }
+      - { name: "qccdsp8380.mbn", target: "../inspiron-14-plus-7441/qccdsp8380.mbn" }
+      - { name: "qcdxkmsuc8380.mbn", target: "../inspiron-14-plus-7441/qcdxkmsuc8380.mbn" }
+      - { name: "qcvss8380.mbn", target: "../inspiron-14-plus-7441/qcvss8380.mbn" }
+  - path: "qcom/x1e80100/dell/xps13-9345"
+    models: ["dell-xps-13-9345"]
+    files:
+      - name: "qcvss8380.mbn"
+        size: 2327144
+        sha256: "38b88f6050459e03e6c3b8c160bb3b3b09312c9e30ce9edca5103b943f928f71"
+        from:
+          - { package: "dell-2chk7", member: "16299/Drivers/MUP/qcdx8380/qcvss8380.mbn" }
+          - { package: "dell-j8gpp", member: "16299/Drivers/Drivers/qcdx8380/qcvss8380.mbn" }
+  - path: "qcom/x1e80100/hp/elitebook-ultra-g1q"
+    models: ["hp-elitebook-ultra-g1q"]
+    links:
+      - { name: "adsp_dtbs.elf", target: "../omnibook-x14/adsp_dtbs.elf" }
+      - { name: "adspr.jsn", target: "../omnibook-x14/adspr.jsn" }
+      - { name: "adsps.jsn", target: "../omnibook-x14/adsps.jsn" }
+      - { name: "adspua.jsn", target: "../omnibook-x14/adspua.jsn" }
+      - { name: "battmgr.jsn", target: "../omnibook-x14/battmgr.jsn" }
+      - { name: "cdsp_dtbs.elf", target: "../omnibook-x14/cdsp_dtbs.elf" }
+      - { name: "cdspr.jsn", target: "../omnibook-x14/cdspr.jsn" }
+      - { name: "qcadsp8380.mbn", target: "../omnibook-x14/qcadsp8380.mbn" }
+      - { name: "qccdsp8380.mbn", target: "../omnibook-x14/qccdsp8380.mbn" }
+      - { name: "qcdxkmsuc8380.mbn", target: "../omnibook-x14/qcdxkmsuc8380.mbn" }
+  - path: "qcom/x1e80100/hp/omnibook-x14"
+    models: ["hp-omnibook-x-14-fe"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "1f24638d329d0e48984ff082f27ad7011164f7675ed5a7d7e8bd09fa4bdb1b69"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adspr.jsn" }
+          - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adspr.jsn" }
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adsps.jsn" }
+          - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adsps.jsn" }
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adspua.jsn" }
+          - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adspua.jsn" }
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/battmgr.jsn" }
+          - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/battmgr.jsn" }
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "93941f040da14b8305d39579686d886706d22954a538b03da676c1aaa191797f"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdsp_dtbs.elf" }
+          - { package: "hp-sp171529", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdspr.jsn" }
+          - { package: "hp-sp171529", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdspr.jsn" }
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22169992
+        sha256: "76c3cbd74e5ec14f51e80623d3292450caf0a5ceb8b3430774f68cb22ad34f71"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "4a67a03367f2eff2f8a0e867ca25d2bf2fcd5aee3e41e2c9f436c804e257c789"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/qccdsp8380.mbn" }
+          - { package: "hp-sp171529", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/qccdsp8380.mbn" }
+      - name: "qcdxkmsuc8380.mbn"
+        size: 12088
+        sha256: "294a5b6fdb5878b7424661d5826bebdd22c997ea5193ca20c53f5a005c24d5f6"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/qcdx8380/qcdxkmsuc8380.mbn" }
+  - path: "qcom/x1e80100/microsoft"
+    models: ["microsoft-surface-laptop-7-13", "microsoft-surface-laptop-7-15", "microsoft-surface-pro-11"]
+    files:
+      - name: "qcdxkmsuc8380.mbn"
+        size: 12088
+        sha256: "c89711a60240f29cb5df13f7b904642b78b7d9d6e614473751f7bf4049fab137"
+        from:
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/qcdx/qcdxkmsuc8380.mbn" }
+  - path: "qcom/x1e80100/microsoft/Denali"
+    models: ["microsoft-surface-pro-11"]
+    files:
+      - name: "adsp_dtb.mbn"
+        size: 73528
+        sha256: "544bd795cb06cf8dee8119ede2a667f01066b2f1b9e4348f1772d080e2026ff4"
+        from:
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/battmgr.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/battmgr.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/battmgr.jsn" }
+      - name: "cdsp_dtb.mbn"
+        size: 40760
+        sha256: "93941f040da14b8305d39579686d886706d22954a538b03da676c1aaa191797f"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdsp_dtbs.elf" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdspr.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdspr.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22092168
+        sha256: "921870a839ee2aba647b04598d62ed96f3d2d5dfbb2499fc842f9a6ff0e0da13"
+        from:
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "4a67a03367f2eff2f8a0e867ca25d2bf2fcd5aee3e41e2c9f436c804e257c789"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
+  - path: "qcom/x1e80100/microsoft/Romulus"
+    models: ["microsoft-surface-laptop-7-13", "microsoft-surface-laptop-7-15"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "b03f066e2645dbe35a33a08a91312842f5cee3676cac3e111f1f3dabd1cf4e9e"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/battmgr.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/battmgr.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "93941f040da14b8305d39579686d886706d22954a538b03da676c1aaa191797f"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdsp_dtbs.elf" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdspr.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdspr.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 21940664
+        sha256: "3a0240f9a1c0c43b657959b1bf10433a1a9793eb5c4af9f6beff8644c174f5a0"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "4a67a03367f2eff2f8a0e867ca25d2bf2fcd5aee3e41e2c9f436c804e257c789"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
+  - path: "qcom/x1p42100/ASUSTeK/zenbook-a14"
+    models: ["asus-zenbook-a14-ux3407", "asus-zenbook-14-ux3480qa"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 77624
+        sha256: "9b3245b184ffc8414d9ac7ca501e20ce95eb5fb9bf4c18a9499c0052e1eba27a"
+        from:
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adspr.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adsps.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adspua.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/battmgr.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/battmgr.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "d2e81a2430ec9474aa46558a9568262b7fde3ae31bdc523028306454fb11d3b0"
+        from:
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22530488
+        sha256: "7542e84611c797cb04d4fd83491dcf929db763d8784816847d40b906dae1a035"
+        from:
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "e7f15a411d59f0aa91cadf3dec0366cd916af240c956731577c53a40d8343e64"
+        from:
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "5b8b1ea1de11b9acc74fdd4919aa4aeac924520e4b11cf27782c593640e11e44"
+        from:
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcdx8380/qcdxkmsucpurwa.mbn" }
+  - path: "qcom/x1p42100/Microsoft/Surface12"
+    models: ["microsoft-surface-pro-12in-1st-edition"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "7c5cf943fd9008b50a526479e02f7316989905679a152e1f9e97853ef3ed155a"
+        from:
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/battmgr.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/battmgr.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "c1e3cdeee17e61ee5f9426fef78e5e35eaf9fdd49d3d39b9bd82dcad04c71647"
+        from:
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdspr.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdspr.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22092168
+        sha256: "2ad8b1e3557070f04cb37ba920ea6b937a60a18be3d5952dd340ff5296411898"
+        from:
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "4d2aa10aa60245177ca253d4a8f7ee15c0a0390e877efec29fa25c7d4b725568"
+        from:
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "de957e0a25c2a42f417f8e95ccf1cbdfeed5a4a6d77a84e215389b8b78fc8bf4"
+        from:
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/qcdx8380/qcdxkmsucpurwa.mbn" }
+  - path: "qcom/x1p42100/hp/elitebook-6-g1q"
+    models: ["hp-elitebook-6-g1q"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "85aaa33c1e94fbb143a4883d751b066d0f6cbcd1aeb8b409fcdfa167314d2a1f"
+        from:
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adspr.jsn" }
+          - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adspr.jsn" }
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adsps.jsn" }
+          - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adsps.jsn" }
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adspua.jsn" }
+          - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adspua.jsn" }
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/battmgr.jsn" }
+          - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/battmgr.jsn" }
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "c1e3cdeee17e61ee5f9426fef78e5e35eaf9fdd49d3d39b9bd82dcad04c71647"
+        from:
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdspr.jsn" }
+          - { package: "hp-sp171529", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdspr.jsn" }
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22313352
+        sha256: "4510081e62c036be29183d70bd5f5eac85934f09e55096caf36899b39cde4956"
+        from:
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "4d2aa10aa60245177ca253d4a8f7ee15c0a0390e877efec29fa25c7d4b725568"
+        from:
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "de957e0a25c2a42f417f8e95ccf1cbdfeed5a4a6d77a84e215389b8b78fc8bf4"
+        from:
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcdx8380/qcdxkmsucpurwa.mbn" }
+  - path: "qcom/x1p42100/hp/omnibook-x14"
+    models: ["hp-omnibook-x-14-fe"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "136d8ea42840e7bb45411c4ef1175f5b85898944399c8d44111eb1dae7d72d06"
+        from:
+          - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adspr.jsn" }
+          - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adspr.jsn" }
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adsps.jsn" }
+          - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adsps.jsn" }
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adspua.jsn" }
+          - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adspua.jsn" }
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/battmgr.jsn" }
+          - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/battmgr.jsn" }
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "93941f040da14b8305d39579686d886706d22954a538b03da676c1aaa191797f"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdsp_dtbs.elf" }
+          - { package: "hp-sp171529", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdspr.jsn" }
+          - { package: "hp-sp171529", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdspr.jsn" }
+          - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22169992
+        sha256: "709a6117714bf67c3e0c220adde45b390c1ad090ef3aee736bc39f79ff95c714"
+        from:
+          - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "4a67a03367f2eff2f8a0e867ca25d2bf2fcd5aee3e41e2c9f436c804e257c789"
+        from:
+          - { package: "hp-sp171528", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/qccdsp8380.mbn" }
+          - { package: "hp-sp171529", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "d937f9f15aed83fbb4f9066937cbb3f25174a8e6bb2d2475a960124cfd8fdb79"
+        from:
+          - { package: "hp-sp171529", member: "src/Driver/qcdx8380/qcdxkmsucpurwa.mbn" }
+
+packages:
+  - id: "asus-socpackage-43699"
+    maker: "ASUS"
+    title: "S5507QA V1.318.7800.0"
+    url: "https://dlcdnets.asus.com/pub/ASUS/nb/Image/Driver/DriverPackage/43699/SOCPackage_forWebSite_Qualcomm_Z_V1.318.7800.0_43699_1.exe"
+    size: 176803760
+    sha256: "7d8fa75780fe2a2fd90882ac7c4dcca21152ba3cd4eb33183bfa6c72f4f20801"
+    fetched: "2026-11-02"
+  - id: "asus-socpackage-48168"
+    maker: "ASUS"
+    title: "UX3407RA V1.312.8100.0"
+    url: "https://dlcdnets.asus.com/pub/ASUS/nb/Image/Driver/DriverPackage/48168/SOCPackage_forWebSite_Qualcomm_Z_V1.312.8100.0_48168.exe"
+    size: 375072688
+    sha256: "ce4593e948157ede6d936bec0db03b09bcbb39c3b11fab5d89c52b8954e72fde"
+    fetched: "2026-11-02"
+  - id: "asus-socpackage-50096"
+    maker: "ASUS"
+    title: "UX3407QA V1.315.8800.0"
+    url: "https://dlcdnets.asus.com/pub/ASUS/nb/Image/Driver/DriverPackage/50096/SOCPackage_forWebSite_Qualcomm_Z_V1.315.8800.0_50096.exe"
+    size: 390565296
+    sha256: "a4da90754407bd0348c507fc97989459c20c90be39023ca11068072306ad722d"
+    fetched: "2026-11-02"
+  - id: "asus-socpackage-50616"
+    maker: "ASUS"
+    title: "UX3607OA V1.312.4500.0"
+    url: "https://dlcdnets.asus.com/pub/ASUS/nb/Image/Driver/DriverPackage/50616/SOCPackage_forWebSite_Qualcomm_Z_V1.312.4500.0_50616.exe"
+    size: 413880752
+    sha256: "e8f2389ac5d4dfd30a1a8481ec3c1e282f24baea2898414351d0b6eb1fa8a0b3"
+    fetched: "2026-11-02"
+  - id: "asus-socpackage-51123"
+    maker: "ASUS"
+    title: "UX3407NA V1.315.4500.0"
+    url: "https://dlcdnets.asus.com/pub/ASUS/nb/Image/Driver/DriverPackage/51123/SOCPackage_forWebSite_Qualcomm_Z_V1.315.4500.0_51123.exe"
+    size: 412863920
+    sha256: "e4449d2616b7fdd53b54a2c7f3f0779608914b5203047e74dec7156d77eed886"
+    fetched: "2026-11-02"
+  - id: "dell-10wkv"
+    maker: "Dell"
+    title: "Qualcomm Chipset Driver 10WKV"
+    url: "https://dl.dell.com/FOLDER15092611M/1/Qualcomm-Chipset-Driver_10WKV_WINARM64_2.1.0.26_A14.EXE"
+    size: 72520312
+    sha256: "660911449915890acc94cfb49e23361ab7842f465d8eb94ce7fbaae8647bcfd2"
+    fetched: "2026-11-02"
+    note: "dl.dell.com turns away clients that don't send a browser user agent."
+  - id: "dell-2chk7"
+    maker: "Dell"
+    title: "Qualcomm Adreno X1-85/X1-45 Graphics Driver 2CHK7"
+    url: "https://dl.dell.com/FOLDER14982355M/1/Qualcomm-Adreno-X1-85-X1-45-Graphics-Driver_2CHK7_WINARM64_31.0.170.0_A11.EXE"
+    size: 75097792
+    sha256: "c6daba34013c69cc7331dfd3d1be7eb10e8765f0d082ed1091e9dad8d46f4191"
+    fetched: "2026-11-02"
+    note: "dl.dell.com turns away clients that don't send a browser user agent."
+  - id: "dell-j8gpp"
+    maker: "Dell"
+    title: "Qualcomm Adreno X1-85/X1-45 Graphics Driver J8GPP"
+    url: "https://dl.dell.com/FOLDER14976029M/1/Qualcomm-Adreno-X1-85-X1-45-Graphics-Driver_J8GPP_WINARM64_31.0.170.0_A14.EXE"
+    size: 75114784
+    sha256: "85f3c0fb10930c247f543752dbf12bffb33f7c5acaa1a7720d15252e4867f4a0"
+    fetched: "2026-11-02"
+    note: "dl.dell.com turns away clients that don't send a browser user agent."
+  - id: "honor-audio-1.0.4047.7214"
+    maker: "Honor"
+    title: "Honor MagicBook Art 14 Audio 1.0.4047.7214"
+    url: "https://iknow-dl.service.hihonor.com/ctkbfm/servlet/download/downloadServlet/H4sIAAAAAAAAAD2Qy2rDMBBFf6VobYysp5VV3UiGLtIUktJlGFtyKupHkO2apvTfawc3y3M5MHPvDxp7F47fF4c2iKAI2W5qVxQzVr52L9AsmI3Wdw9JjGOGmYwlSdgp96GZILj46i-r_QrDx2ynipaytJJWtmRQuEIJwissmXMUrEpnu_DXZzurh_3jO8aYKiWXuAwOBt-1R7-cxRHq_bmFYQy3J4wwOdHbLNVG063AT1IYzrEkSitCDMUUJywVnKeJYJKaxOgEyzzjnGsul4YTDC7sIHzmNZzRph3rOkIuhC7s-js3UGbWBtf3_8kX1N6-3ccawuhuFdaxDnv0-wfaOzlBTQEAAA%3D%3D.zip"
+    size: 77812359
+    sha256: "295cf48ded3af3a4b01745e3cbef8443fd5f55a9544ddb2495c892d646351545"
+    fetched: "2026-11-02"
+    note: "A signed link from Honor's support downloads for the MagicBook Art 14 (MRO-521)."
+  - id: "honor-graphics-31.0.105.0"
+    maker: "Honor"
+    title: "Honor MagicBook Art 14 Graphics 31.0.105.0"
+    url: "https://iknow-dl.service.hihonor.com/ctkbfm/servlet/download/downloadServlet/H4sIAAAAAAAAAD2Qy06DUBCGX8WcdUPOwAGmXcnVuKg1aY1LM5SxPZFbBpBY47sLpnb5_fkyl_9bjT3L4atjtVGuWqmynZorBjO-24qfqF7wQag722N_54GjHdC-o99yK_VEws7Fdlf7mYbzbBcuaGITYgG-8RiQCkTPI2IwQMyzXdjLYzmr-939q9baBBDoOT4K02Db5mCXtXqlentqaBhlOSKJdB66cQqQebGBcI1ZiH6KJsAw0wZyxMiP8yhzTQSJiZIUdeYmgG4er33M5vkTDSxbko-8opPaNGNVrRSLtLLtb1zTMSpL4b7_Tz6psuXLraxBRv574VrWfqd-fgEsXniSTQEAAA%3D%3D.zip"
+    size: 77330303
+    sha256: "0dff4264700e8d22fdd8651a34d563a40a309936771147a4287c40ef4d7de95d"
+    fetched: "2026-11-02"
+    note: "A signed link from Honor's support downloads for the MagicBook Art 14 (MRO-521)."
+  - id: "hp-sp171528"
+    maker: "HP"
+    title: "Qualcomm Driver Pack sp171528"
+    url: "https://ftp.hp.com/pub/softpaq/sp171501-172000/sp171528.exe"
+    size: 464534032
+    sha256: "3937fa23b6cf28fae5161d1aa717043b4fcb119300e7478a76405a6617460978"
+    fetched: "2026-11-02"
+  - id: "hp-sp171529"
+    maker: "HP"
+    title: "Qualcomm Driver Pack sp171529"
+    url: "https://ftp.hp.com/pub/softpaq/sp171501-172000/sp171529.exe"
+    size: 455298456
+    sha256: "d73e829080f4a40a879f5bb3ba1db92296f5b592af8dacc45b4bb0f46eb0b32f"
+    fetched: "2026-11-02"
+  - id: "hp-sp172895"
+    maker: "HP"
+    title: "Qualcomm Driver Pack sp172895"
+    url: "https://ftp.hp.com/pub/softpaq/sp172501-173000/sp172895.exe"
+    size: 491544232
+    sha256: "f1830ac304bf8b6717bb424100880001a8d6bac18c66e981d4853df19d5f8463"
+    fetched: "2026-11-02"
+  - id: "hp-sp174046"
+    maker: "HP"
+    title: "Qualcomm BSP Software Pack sp174046"
+    url: "https://ftp.hp.com/pub/softpaq/sp174001-174500/sp174046.exe"
+    size: 435888536
+    sha256: "f2ac41c45ae121ed8d14c532c018ac12e46c83c880c672f21d7a563786395723"
+    fetched: "2026-11-02"
+  - id: "hp-sp174082"
+    maker: "HP"
+    title: "sp174082"
+    url: "https://ftp.hp.com/pub/softpaq/sp174001-174500/sp174082.exe"
+    size: 454396368
+    sha256: "98fe80a7588e1c3cc4a460726c9907e28a1fd6e5f18669d9187554804002c7dd"
+    fetched: "2026-11-02"
+  - id: "hp-sp174694"
+    maker: "HP"
+    title: "Qualcomm BSP Software Pack sp174694"
+    url: "https://ftp.hp.com/pub/softpaq/sp174501-175000/sp174694.exe"
+    size: 506669432
+    sha256: "bfbfd3321339f663ee56977917646265262ef9c5468d5f292ee679b1e2d28b2d"
+    fetched: "2026-11-02"
+  - id: "lenovo-n42qq22w"
+    maker: "Lenovo"
+    title: "Qualcomm Integrated System Software and Firmware Package 1.0.0.22"
+    url: "https://download.lenovo.com/pccbbs/mobiles/n42qq22w.exe"
+    size: 192328456
+    sha256: "3d5b2ace6cc1e7805b557a764bc004477a80f8cd678e63c4e5f78d7255ec616e"
+    fetched: "2026-11-02"
+  - id: "lenovo-n4pqq02w"
+    maker: "Lenovo"
+    title: "Qualcomm Integrated System Software and Firmware Package 1.0.0.2"
+    url: "https://download.lenovo.com/pccbbs/mobiles/n4pqq02w.exe"
+    size: 208574360
+    sha256: "ef833926fd9d739c53d6c79e8d819e27047f09267985b682a0ccd21d143dd3f4"
+    fetched: "2026-11-02"
+  - id: "lenovo-u9corhdus14lcfc"
+    maker: "Lenovo"
+    title: "Qualcomm platform Driver package BSP8300/8900"
+    url: "https://download.lenovo.com/pccbbs/desktop/u9corhdus14lcfc.exe"
+    size: 160729976
+    sha256: "8eec6ef5040c6076af95bdc0d53f9510e41f18f6cf0a5f3abcfb8d88275e1b4d"
+    fetched: "2026-11-02"
+  - id: "medion-drv-s30-14s1-elite-wx"
+    maker: "Medion"
+    title: "Windows driver package"
+    url: "https://cdn.medion.com/downloads/treiber/drv_s30_14s1_elite_wx.zip"
+    size: 221115373
+    sha256: "97db3a55900067eedc715fdbf68eb8e910fa6b147baade541b908aa9cf5bfe92"
+    fetched: "2026-11-02"
+  - id: "microsoft-surfacelaptop7"
+    maker: "Microsoft"
+    title: "Surface Laptop 7th Edition"
+    url: "https://download.microsoft.com/download/b7ca2c3f-d320-4795-be0f-529a0117abb4/SurfaceLaptop7_ARM_Win11_26100_26.091.9400.0.msi"
+    page: "https://www.microsoft.com/en-us/download/details.aspx?id=106120"
+    size: 524234752
+    sha256: "0917d206fb35278b4df4be980240318475300f3a130a86edac836519059a453d"
+    fetched: "2026-11-02"
+    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+  - id: "microsoft-surfacelaptop8withsnapdragon"
+    maker: "Microsoft"
+    title: "Surface Laptop 8th Edition with Snapdragon"
+    url: "https://download.microsoft.com/download/912431b4-2920-4990-8b62-50b573263fda/SurfaceLaptop8withSnapdragon_Win11_28000_26.091.10521.0.msi"
+    page: "https://www.microsoft.com/en-us/download/details.aspx?id=108705"
+    size: 693526528
+    sha256: "e888288deb0e5f25322a118d2b36522df06b25bd56be952cd6fb7b6ffb4f20a0"
+    fetched: "2026-11-02"
+    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+  - id: "microsoft-surfacepro-12in-1st-edition"
+    maker: "Microsoft"
+    title: "Surface Pro 12-inch"
+    url: "https://download.microsoft.com/download/3f42130f-64d6-4a85-8a18-ec1b70f5ef82/SurfacePro_12in_1st_Edition_Win11_26100_26.080.5703.0.msi"
+    page: "https://www.microsoft.com/en-us/download/details.aspx?id=108199"
+    size: 532025344
+    sha256: "99481ae6b407672b4422066abca92b3b521869b34af1fa5124b702bfa6824f0c"
+    fetched: "2026-11-02"
+    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+  - id: "microsoft-surfacepro11"
+    maker: "Microsoft"
+    title: "Surface Pro 11th Edition"
+    url: "https://download.microsoft.com/download/92821b24-203a-4ce5-9a3a-5df3160a2fe3/SurfacePro11_ARM_Win11_26100_26.094.41119.0.msi"
+    page: "https://www.microsoft.com/en-us/download/details.aspx?id=106119"
+    size: 647004160
+    sha256: "8b299016027a4a87f50cf168f69ca1fb8dedc9a0612fcd6cff89b9bc64135ec2"
+    fetched: "2026-11-02"
+    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+  - id: "samsung-basw-a4231a01-1063"
+    maker: "Samsung"
+    title: "Windows Driver Pack"
+    url: "https://downloadcenter.samsung.com/content/DR/202411/20241106081449539/BASW-A4231A01_1063.zip"
+    size: 499831458
+    sha256: "f8694548a45d46b1c07eb0dc3dbfea0d58c532f300c84dc4906815a63875c6b9"
+    fetched: "2026-11-02"
