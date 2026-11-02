@@ -359,7 +359,11 @@ models:
     released: "2026-06"
     chips: ["X2E-88-100"]
     model_numbers: ["QN10", "90MS03E2-M000B0"]
+    variants:
+      - { chip: "X2E-88-100", compatible: "asus,ascent-qn10" }
     acpi: ["arewearmyet/asus-ascent-qn10"]
+    devicetree_out_of_tree: "https://gist.github.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce"
+    notes: "A draft device tree, written from its ACPI tables on the Zenbook A16's, whose firmware describes the same power, USB and PCIe wiring. Nobody has booted it yet. Ethernet and HDMI are the likeliest gaps."
     sources:
       - https://www.asus.com/displays-desktops/mini-pcs/ascent-series/asus-ascent-qn10/techspec/
       - https://eshop.asus.com/us/90ms03e2-m000b0-asus-ascent-qn10.html
