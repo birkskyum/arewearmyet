@@ -3,6 +3,7 @@ import { parse } from 'yaml';
 import Layout from '../layouts/Layout.astro';
 import ChipIcon from '../assets/chip-icon.svg';
 import GitHubIcon from '../assets/github-icon.svg';
+import ExportButton from '../components/ExportButton';
 import sourcesRaw from '../../data/firmware-sources.yaml?raw';
 import modelsRaw from '../../data/models.yaml?raw';
 
@@ -31,6 +32,21 @@ function downloads(folder: Folder): Package[] {
 
 const folders = [...sources.folders].sort((a, b) => (modelName.get(a.models[0]) ?? a.path).localeCompare(modelName.get(b.models[0]) ?? b.path));
 const fileCount = sources.folders.reduce((n, f) => n + (f.files?.length ?? 0), 0);
+
+// The spreadsheet download: one row per file, with the package that has it first and any others after
+const exportHeader = ['Models', 'Folder', 'File', 'Size (bytes)', 'SHA-256', 'Maker', 'Package', 'Path in the package', 'Download', 'Page', 'Also in', 'Note'];
+const exportRows = folders.flatMap((folder) => {
+  const names = folder.models.map((id) => modelName.get(id) ?? id).join(', ');
+  const dir = `/usr/lib/firmware/${folder.path}`;
+  return [
+    ...(folder.files ?? []).map((f) => {
+      const [first, ...rest] = f.from;
+      const p = first ? packages.get(first.package) : undefined;
+      return [names, dir, f.name, f.size ?? null, f.sha256 ?? null, p?.maker ?? null, p?.title ?? null, first?.member ?? null, p?.url ?? null, p?.page ?? null, rest.map((s) => packages.get(s.package)?.title ?? s.package).join('; ') || null, f.note ?? p?.note ?? null];
+    }),
+    ...(folder.links ?? []).map((l) => [names, dir, l.name, null, null, null, null, null, null, null, null, `Links to ${l.target}`]),
+  ];
+});
 ---
 
 <Layout title="Firmware from the makers · Are we ARM yet?" description="Where each Snapdragon laptop's own firmware can be downloaded from its maker, with the file inside the package and its checksum, for every distro.">
@@ -54,7 +70,11 @@ const fileCount = sources.folders.reduce((n, f) => n + (f.files?.length ?? 0), 0
       {sources.folders.length} firmware folders, {fileCount} files, from {sources.packages.length} maker downloads. Tools can read the same list as <a class={LINK} href="/firmware-sources.json">firmware-sources.json</a>; it's kept in <a class={LINK} href={`${REPO}/blob/main/data/firmware-sources.yaml`}>data/firmware-sources.yaml</a>. Packages unpack with 7-Zip, except Lenovo's (<code class={INLINE}>innoextract</code>) and Microsoft's MSIs (<code class={INLINE}>msiextract</code>). ASUS's are executables with a 7-Zip archive appended, and the SoC control processor images in HP's and ASUS's packages are XZ-compressed inside their BIOS images.
     </p>
 
-    <div class="mt-8 space-y-4">
+    <div class="mt-6">
+      <ExportButton client:visible name="arewearmyet-firmware" title="Firmware from the makers" header={exportHeader} rows={exportRows} />
+    </div>
+
+    <div class="mt-6 space-y-4">
       {folders.map((folder) => (
         <section class={CARD} id={folder.path.replaceAll('/', '-')}>
           <h2 class="text-base font-semibold text-zinc-100">{folder.models.map((id) => modelName.get(id) ?? id).join(', ')}</h2>

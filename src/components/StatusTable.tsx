@@ -20,6 +20,7 @@ import {
 } from '@tanstack/solid-table';
 import { PILL, TONE, type Tone } from '../lib/tones';
 import type { CellData, TableRow } from '../lib/rows';
+import ExportButton from './ExportButton';
 
 type Option = { key: string; label: string; tone?: Tone };
 type Column = { id: string; header: string; question: string; options?: Option[] };
@@ -30,6 +31,9 @@ type Props = {
   chips: Option[];
   // Prefix for this table's address parameters; leave out to keep the view out of the address
   urlPrefix?: string;
+  // The spreadsheet download's file name (without date and extension) and sheet name
+  exportName: string;
+  exportTitle: string;
 };
 
 const features = tableFeatures({
@@ -49,6 +53,8 @@ const inSet = (row: Row, id: string, value: unknown) => !Array.isArray(value) ||
 // The search box matches any part of a row's text, or a full product number that starts with one of its series
 const bySearch = (row: Row, _id: string, value: unknown) => typeof value !== 'string' || !value || row.original.search.includes(value) || row.original.prefixes.some((prefix) => value.startsWith(prefix));
 const byRank = (a: Row, b: Row, id: string) => (a.original.cells[id]?.rank ?? Infinity) - (b.original.cells[id]?.rank ?? Infinity);
+// A status cell as the table shows it
+const cellText = (cell: CellData | undefined) => (!cell ? null : 'text' in cell ? cell.text || null : cell.label);
 
 const VARIANT_TONE = { good: 'text-emerald-400', close: 'text-amber-400', wanted: 'text-rose-400', muted: 'text-zinc-500' };
 const ICON_BUTTON = 'inline-flex items-center gap-0.5 rounded px-1 py-0.5 text-zinc-500 hover:bg-zinc-800 hover:text-zinc-100';
@@ -114,6 +120,18 @@ export default function StatusTable(props: Props) {
   const setQuery = (value: string) => setFilters((current) => [...current.filter((filter) => filter.id !== 'q'), ...(value ? [{ id: 'q', value }] : [])]);
   const counts = (id: string) => table.getColumn(id)?.getFacetedUniqueValues() ?? new Map<unknown, number>();
   const shown = () => table.getRowModel().rows.length;
+  // The spreadsheet holds the rows the table shows, in its order, with the labels it shows
+  const exportHeader = () => ['Brand', 'Model', 'Details', ...props.columns.map((column) => column.header), 'Variants', 'Notes', 'Link'];
+  const exportRows = () =>
+    table.getRowModel().rows.map(({ original: model }) => [
+      model.vendor,
+      model.name,
+      model.subtitle || null,
+      ...props.columns.map((column) => cellText(model.cells[column.id])),
+      model.variants.map((variant) => `${variant.text}: ${variant.state}`).join('; ') || null,
+      model.notes,
+      model.href,
+    ]);
   const filtering = () => filters().length > 0;
 
   // An open menu stays under its filter button when the page scrolls or resizes, or the columns
@@ -192,6 +210,7 @@ export default function StatusTable(props: Props) {
         <span class="ml-auto text-sm tabular-nums text-zinc-500" data-count>
           {shown()} of {props.rows.length}
         </span>
+        <ExportButton name={props.exportName} title={props.exportTitle} header={exportHeader()} rows={exportRows()} />
       </div>
 
       <div class="mt-4 overflow-x-auto rounded-xl ring-1 ring-zinc-800">

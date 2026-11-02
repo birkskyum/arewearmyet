@@ -132,6 +132,8 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
           columns={snapdragonColumns}
           chips={[{ key: 'x1', label: 'Snapdragon X' }, { key: 'x2', label: 'Snapdragon X2' }]}
           urlPrefix=""
+          exportName="arewearmyet-snapdragon-x"
+          exportTitle="Snapdragon X and X2"
         />
       </div>
     </Family>
@@ -141,7 +143,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
         The generation before Snapdragon X. They need the same pieces and use the same labels as the models above.
       </p>
       <div class="mt-4">
-        <StatusTable client:load rows={older} columns={snapdragonColumns} chips={[]} urlPrefix="8cx-" />
+        <StatusTable client:load rows={older} columns={snapdragonColumns} chips={[]} urlPrefix="8cx-" exportName="arewearmyet-snapdragon-8cx" exportTitle="Snapdragon 8cx Gen 3" />
       </div>
     </Family>
 
@@ -156,7 +158,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
         <Legend title="What the labels mean" groups={GOOGLEBOOK_LEGEND} />
       </div>
       <div class="mt-4">
-        <StatusTable client:load rows={googlebooks} columns={googlebookColumns} chips={[{ key: 'x1', label: 'Snapdragon X' }, { key: 'x2', label: 'Snapdragon X2' }]} urlPrefix="googlebook-" />
+        <StatusTable client:load rows={googlebooks} columns={googlebookColumns} chips={[{ key: 'x1', label: 'Snapdragon X' }, { key: 'x2', label: 'Snapdragon X2' }]} urlPrefix="googlebook-" exportName="arewearmyet-googlebooks" exportTitle="Googlebooks with Snapdragon" />
       </div>
     </Family>
 
@@ -171,7 +173,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
         <Legend title="What the labels mean" groups={NVIDIA_LEGEND} />
       </div>
       <div class="mt-4">
-        <StatusTable client:load rows={nvidia} columns={nvidiaColumns} chips={[{ key: 'n1x', label: 'NVIDIA N1x' }, { key: 'gb10', label: 'NVIDIA GB10' }]} urlPrefix="nvidia-" />
+        <StatusTable client:load rows={nvidia} columns={nvidiaColumns} chips={[{ key: 'n1x', label: 'NVIDIA N1x' }, { key: 'gb10', label: 'NVIDIA GB10' }]} urlPrefix="nvidia-" exportName="arewearmyet-nvidia" exportTitle="NVIDIA N1x and GB10" />
       </div>
     </Family>
 
