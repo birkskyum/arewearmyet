@@ -962,6 +962,124 @@ folders:
         from:
           - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
+  - path: "qcom/x1p42100/ACER/A14-11M"
+    models: ["acer-aspire-14-ai-a14-11m"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "cc50f6e817b2c7d262f618299bd3b049d099791e3beb594927ca893213803f01"
+        from:
+          - { package: "acer-a14-11m-adsp-2.0.9100.0001", member: "ADSP_Qualcomm_2.0.9100.0001_W11ARM64/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+          - { package: "acer-a14-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 670
+        sha256: "549bb9c8e32dc6253d0d0ddde2ce5c26f75f8333d3e55861f297e169a9f3e5c0"
+        from:
+          - { package: "acer-a14-11m-adsp-2.0.9100.0001", member: "ADSP_Qualcomm_2.0.9100.0001_W11ARM64/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "acer-a14-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 515
+        sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
+        from:
+          - { package: "acer-a14-11m-adsp-2.0.9100.0001", member: "ADSP_Qualcomm_2.0.9100.0001_W11ARM64/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "acer-a14-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 703
+        sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
+        from:
+          - { package: "acer-a14-11m-adsp-2.0.9100.0001", member: "ADSP_Qualcomm_2.0.9100.0001_W11ARM64/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "acer-a14-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 516
+        sha256: "be8c6fba330908e4683fb6282761cb08485a302d6a66e09721e102e342f27236"
+        from:
+          - { package: "acer-a14-11m-adsp-2.0.9100.0001", member: "ADSP_Qualcomm_2.0.9100.0001_W11ARM64/qcsubsys_ext_adsp8380/battmgr.jsn" }
+          - { package: "acer-a14-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "c1e3cdeee17e61ee5f9426fef78e5e35eaf9fdd49d3d39b9bd82dcad04c71647"
+        from:
+          - { package: "acer-a14-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "acer-a14-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22296968
+        sha256: "c0d6fb5d0fa0cdb7e6d1057a5065a889afead5cd412f852dd74a49f04cfb0469"
+        from:
+          - { package: "acer-a14-11m-adsp-2.0.9100.0001", member: "ADSP_Qualcomm_2.0.9100.0001_W11ARM64/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+          - { package: "acer-a14-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "4d2aa10aa60245177ca253d4a8f7ee15c0a0390e877efec29fa25c7d4b725568"
+        from:
+          - { package: "acer-a14-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "de957e0a25c2a42f417f8e95ccf1cbdfeed5a4a6d77a84e215389b8b78fc8bf4"
+        from:
+          - { package: "acer-a14-11m-multimedia-driver-31.0.152.0", member: "Base Driver_Qualcomm_31.0.152.0_W11ARM64_(MultiMedia Driver)/qcdx8380/qcdxkmsucpurwa.mbn" }
+  - path: "qcom/x1p42100/ACER/A16-11M"
+    models: ["acer-aspire-16-ai-a16-11m"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "cc50f6e817b2c7d262f618299bd3b049d099791e3beb594927ca893213803f01"
+        from:
+          - { package: "acer-a16-11m-adsp-2.0.9100.0001", member: "ADSP_Qualcomm_2.0.9100.0001_W11ARM64/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+          - { package: "acer-a16-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 670
+        sha256: "549bb9c8e32dc6253d0d0ddde2ce5c26f75f8333d3e55861f297e169a9f3e5c0"
+        from:
+          - { package: "acer-a16-11m-adsp-2.0.9100.0001", member: "ADSP_Qualcomm_2.0.9100.0001_W11ARM64/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "acer-a16-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 515
+        sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
+        from:
+          - { package: "acer-a16-11m-adsp-2.0.9100.0001", member: "ADSP_Qualcomm_2.0.9100.0001_W11ARM64/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "acer-a16-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 703
+        sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
+        from:
+          - { package: "acer-a16-11m-adsp-2.0.9100.0001", member: "ADSP_Qualcomm_2.0.9100.0001_W11ARM64/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "acer-a16-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 516
+        sha256: "be8c6fba330908e4683fb6282761cb08485a302d6a66e09721e102e342f27236"
+        from:
+          - { package: "acer-a16-11m-adsp-2.0.9100.0001", member: "ADSP_Qualcomm_2.0.9100.0001_W11ARM64/qcsubsys_ext_adsp8380/battmgr.jsn" }
+          - { package: "acer-a16-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "c1e3cdeee17e61ee5f9426fef78e5e35eaf9fdd49d3d39b9bd82dcad04c71647"
+        from:
+          - { package: "acer-a16-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "acer-a16-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22296968
+        sha256: "c0d6fb5d0fa0cdb7e6d1057a5065a889afead5cd412f852dd74a49f04cfb0469"
+        from:
+          - { package: "acer-a16-11m-adsp-2.0.9100.0001", member: "ADSP_Qualcomm_2.0.9100.0001_W11ARM64/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+          - { package: "acer-a16-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "4d2aa10aa60245177ca253d4a8f7ee15c0a0390e877efec29fa25c7d4b725568"
+        from:
+          - { package: "acer-a16-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "de957e0a25c2a42f417f8e95ccf1cbdfeed5a4a6d77a84e215389b8b78fc8bf4"
+        from:
+          - { package: "acer-a16-11m-multimedia-driver-31.0.152.0", member: "Base Driver_Qualcomm_31.0.152.0_W11ARM64_(MultiMedia Driver)/qcdx8380/qcdxkmsucpurwa.mbn" }
   - path: "qcom/x1p42100/ASUSTeK/proart-pz13"
     models: ["asus-proart-pz13-ht5306"]
     files:
@@ -1406,6 +1524,60 @@ folders:
           - { package: "hp-sp171529", member: "src/Driver/qcdx8380/qcdxkmsucpurwa.mbn" }
 
 packages:
+  - id: "acer-a14-11m-adsp-2.0.9100.0001"
+    maker: "Acer"
+    title: "ADSP driver 2.0.9100.0001 for the A14-11M"
+    url: "https://global-download.acer.com/GDFiles/Driver/ADSP/ADSP_Qualcomm_2.0.9100.0001_W11ARM64_A.zip?acerid=639237636264860172&Step1=&Step2=&Step3=ASPIRE%20A14-11M&OS=ALL&LC=en&BC=ACER&SC=PA_6"
+    page: "https://www.acer.com/us-en/support/product-support/A14-11M"
+    size: 19202731
+    sha256: "ac267ad6536c14e4f4e1b0b32fedeeb5f33c7faab708895fdbfcd774483fda25"
+    fetched: "2026-11-02"
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+  - id: "acer-a14-11m-multimedia-driver-31.0.152.0"
+    maker: "Acer"
+    title: "MultiMedia driver 31.0.152.0 for the A14-11M"
+    url: "https://global-download.acer.com/GDFiles/Driver/Base%20Driver/Base%20Driver_Qualcomm_31.0.152.0_W11ARM64_A.zip?acerid=639237637552439111&Step1=&Step2=&Step3=ASPIRE%20A14-11M&OS=ALL&LC=en&BC=ACER&SC=PA_6"
+    page: "https://www.acer.com/us-en/support/product-support/A14-11M"
+    size: 177979898
+    sha256: "fe25905fe9b011bb6f924961d9caa03db9af85246bd0c9cff7bed8efa7cea7ea"
+    fetched: "2026-11-02"
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+  - id: "acer-a14-11m-qualcomm-base-driver-0.9100.1"
+    maker: "Acer"
+    title: "Qualcomm Base Driver 0.9100.1 for the A14-11M"
+    url: "https://global-download.acer.com/GDFiles/Driver/Base%20Driver/Base%20Driver_Qualcomm_0.9100.1_W11ARM64_A.zip?acerid=639237639394999800&Step1=&Step2=&Step3=ASPIRE%20A14-11M&OS=ALL&LC=en&BC=ACER&SC=PA_6"
+    page: "https://www.acer.com/us-en/support/product-support/A14-11M"
+    size: 187365743
+    sha256: "fed4d588c12caee23bc0a733a41232227cc329fa0e408be14522cadbd777312b"
+    fetched: "2026-11-02"
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+  - id: "acer-a16-11m-adsp-2.0.9100.0001"
+    maker: "Acer"
+    title: "ADSP driver 2.0.9100.0001 for the A16-11M"
+    url: "https://global-download.acer.com/GDFiles/Driver/ADSP/ADSP_Qualcomm_2.0.9100.0001_W11ARM64_A.zip?acerid=639240899067747808&Step1=&Step2=&Step3=ASPIRE%20A16-11M&OS=ALL&LC=en&BC=ACER&SC=PA_6"
+    page: "https://www.acer.com/us-en/support/product-support/A16-11M"
+    size: 19202731
+    sha256: "2e707e21f4afc80e5c5160575230595b915e5d9f38e248cf948303e089998810"
+    fetched: "2026-11-02"
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+  - id: "acer-a16-11m-multimedia-driver-31.0.152.0"
+    maker: "Acer"
+    title: "MultiMedia driver 31.0.152.0 for the A16-11M"
+    url: "https://global-download.acer.com/GDFiles/Driver/Base%20Driver/Base%20Driver_Qualcomm_31.0.152.0_W11ARM64_A.zip?acerid=639240900297209757&Step1=&Step2=&Step3=ASPIRE%20A16-11M&OS=ALL&LC=en&BC=ACER&SC=PA_6"
+    page: "https://www.acer.com/us-en/support/product-support/A16-11M"
+    size: 177979898
+    sha256: "e0450e73a8c5709d5d1604bd42eba61496276809591ead1739a3c2fcf8f6da86"
+    fetched: "2026-11-02"
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+  - id: "acer-a16-11m-qualcomm-base-driver-0.9100.1"
+    maker: "Acer"
+    title: "Qualcomm Base Driver 0.9100.1 for the A16-11M"
+    url: "https://global-download.acer.com/GDFiles/Driver/Base%20Driver/Base%20Driver_Qualcomm_0.9100.1_W11ARM64_A.zip?acerid=639240902299708134&Step1=&Step2=&Step3=ASPIRE%20A16-11M&OS=ALL&LC=en&BC=ACER&SC=PA_6"
+    page: "https://www.acer.com/us-en/support/product-support/A16-11M"
+    size: 187365743
+    sha256: "a0244eb84019a5ee0fe6edb411440116b1a2b3420f8a5f587a4663050a95f91c"
+    fetched: "2026-11-02"
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
   - id: "acer-others-acer-2.0-w11x64-a"
     maker: "Acer"
     title: "Other Drivers 2.0 package for the SFA14-11"
