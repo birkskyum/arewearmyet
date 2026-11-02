@@ -284,7 +284,8 @@ models:
     chips: ["X1-26-100"]
     model_numbers: ["S3607QA"]
     variants:
-      - { chip: "X1-26-100", compatible: "asus,vivobook-s16-s3607qa" }
+      - { model: "OLED", chip: "X1-26-100", compatible: "asus,vivobook-s16-s3607qa-oled" }
+      - { model: "LCD", chip: "X1-26-100", compatible: "asus,vivobook-s16-s3607qa-lcd" }
     acpi: ["hardware-reports/asustek-computer-inc/asus-vivobook-s-16-s3607qa-s3607qa"]
     devicetree_out_of_tree: "https://gist.github.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/2"
@@ -692,6 +693,8 @@ models:
     released: "2025-06"
     chips: ["X1P-42-100", "X1-26-100"]
     model_numbers: ["16-bf0xxx", "16-fb0xxx"]
+    variants:
+      - { chip: "X1P-42-100", compatible: "hp,omnibook-5" }
     ids_collected: "https://bugs.launchpad.net/ubuntu-concept/+bug/2169090"
     notes: "Owners run the OmniBook 5 14's out-of-tree device tree on it."
     sources:
