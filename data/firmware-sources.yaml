@@ -11,8 +11,9 @@
 #             A file with no package has a note on where it comes from instead
 #   links     names that are links to another file, as linux-firmware's WHENCE writes them
 # packages    the maker downloads: title, url, the maker's page when the url changes per version,
-#             size and SHA-256 as fetched, the date it was fetched, and a note when fetching it
-#             needs care
+#             size and SHA-256 as fetched, the date it was fetched, a note when fetching it
+#             needs care, and manual: true when the url is a page the download has to be started
+#             from by hand
 #
 # Packages unpack with 7-Zip, except Lenovo's (innoextract) and Microsoft's MSIs (msiextract).
 # ASUS's are executables with a 7-Zip archive appended. A member ending in !xz@N is an XZ stream
@@ -1228,6 +1229,7 @@ packages:
     sha256: "3c955be4bbfcfc64d556b0073dc19af38db75d35292e18acec3bd49781db5df0"
     fetched: "2026-11-02"
     note: "Acer's file links only work with the parameters its support page adds, so start the Other Drivers 2.0 download from this page."
+    manual: true
   - id: "asus-socpackage-43699"
     maker: "ASUS"
     title: "S5507QA V1.318.7800.0"
