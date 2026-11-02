@@ -158,6 +158,7 @@ models:
     devicetree_files:
       - "https://raw.githubusercontent.com/agrucza/asus-proart-pz13-linux/71c27d312a0e7650870bb9a3e1c2306a975c0e1a/dts/x1p42100-asus-proart-pz13.dts"
       - "https://raw.githubusercontent.com/agrucza/asus-proart-pz13-linux/71c27d312a0e7650870bb9a3e1c2306a975c0e1a/dts/x1-asus-proart-pz13.dtsi"
+    ids_collected: "https://bugs.launchpad.net/ubuntu-concept/+bug/2115514"
     sources:
       - https://www.asus.com/laptops/for-creators/proart/proart-pz13-ht5306/techspec/
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-proart-pz13
@@ -212,6 +213,7 @@ models:
       - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100-asus-vivobook-16.dts"
       - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100-asus-vivobook-16.dtsi"
       - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100.dtsi"
+    ids_collected: "https://github.com/ubuntu/stubble/pull/100"
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-16-x1607q/techspec/
       - https://eshop.asus.com/us/90nb15z1-m00590-asus-vivobook-16-x1607qa-copilot-pc.html
@@ -677,6 +679,7 @@ models:
     devicetree_out_of_tree: "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-5.dts"
     devicetree_files:
       - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-5.dts"
+    ids_collected: "https://github.com/aarch64-laptops/build/blob/master/misc/hp-omnibook-5-14-he0xxx/HWiNFO-ARM64.LOG"
     sources:
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4021617
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-omnibook-5
@@ -689,6 +692,7 @@ models:
     released: "2025-06"
     chips: ["X1P-42-100", "X1-26-100"]
     model_numbers: ["16-bf0xxx", "16-fb0xxx"]
+    ids_collected: "https://bugs.launchpad.net/ubuntu-concept/+bug/2169090"
     notes: "Owners run the OmniBook 5 14's out-of-tree device tree on it."
     sources:
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4439453
@@ -775,6 +779,7 @@ models:
     devicetree_files:
       - "https://raw.githubusercontent.com/theflyingrahul/linux-hp-omnibook-5-glymur/2d54a5a3a239fdf78f748e64bfe60a21eef2026a/dts/qcom/mahua-hp-omnibook-5-bf1xxx.dts"
       - "https://raw.githubusercontent.com/theflyingrahul/linux-hp-omnibook-5-glymur/2d54a5a3a239fdf78f748e64bfe60a21eef2026a/dts/qcom/mahua-hp-omnibook-5-bf1xxx.dtsi"
+    ids_collected: "https://github.com/theflyingrahul/linux-hp-omnibook-5-glymur/blob/main/captures/2026-09-29-edp-display-working/journalctl-k-b.txt"
     sources:
       - https://www.notebookcheck.net/HP-releases-new-16-inch-laptop-with-Snapdragon-X2-Plus-and-over-30-hours-battery-life.1414570.0.html
 
@@ -817,6 +822,7 @@ models:
       - { model: "16-cp1", compatible: "hp,omnibook-x16-cp1" }
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261028191800.27829-3-jeff.roach0@gmail.com/"
     firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1333"
+    ids_collected: "https://bugs.launchpad.net/ubuntu-concept/+bug/2170451"
     sources:
       - https://www.hp.com/au-en/shop/hp-omnibook-x-laptop-next-gen-ai-16-cp1000qu-d8cu5pa.html
       - https://support.hp.com/au-en/document/ish_14096181-14096226-16
@@ -1123,6 +1129,7 @@ models:
     devicetree_out_of_tree: "https://github.com/kairunjp/Surface-Laptop-for-Business-13in-1st-Ed-with-Snapdragon-Linux"
     devicetree_files:
       - "https://raw.githubusercontent.com/kairunjp/Surface-Laptop-for-Business-13in-1st-Ed-with-Snapdragon-Linux/3d52bdac42b40b5f9294c75bc1c5af1d371fa422/device-tree/base/surface-laptop-13-typec.dts"
+    ids_collected: "https://bugs.launchpad.net/ubuntu-concept/+bug/2115909"
     sources:
       - https://blogs.windows.com/devices/2025/05/06/introducing-all-new-surface-copilot-pcs-the-surface-pro-12-inch-and-surface-laptop-13-inch/
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
