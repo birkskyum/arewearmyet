@@ -94,6 +94,44 @@ folders:
       - { name: "cdsp_dtbs.elf", target: "../UX3407NA/cdsp_dtbs.elf" }
       - { name: "qcadsp8480.mbn", target: "../UX3407NA/qcadsp8480.mbn" }
       - { name: "qccdsp8480.mbn", target: "../UX3407NA/qccdsp8480.mbn" }
+  - path: "qcom/glymur/HP/omnibook-5-16-bf1xxx"
+    models: ["hp-omnibook-5-16-bf1"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 225080
+        sha256: "c1a69fe37eaff8759b22738f4d4b8e046e7b07fbccdfdc76554f0fa6b412b981"
+        from:
+          - { package: "hp-sp173974", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 513
+        sha256: "66ce8531efb7979d234e0f0eabbe18d038ac97da771a8a194f613df8f0724e81"
+        from:
+          - { package: "hp-sp173974", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 515
+        sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
+        from:
+          - { package: "hp-sp173974", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 703
+        sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
+        from:
+          - { package: "hp-sp173974", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspua.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 69432
+        sha256: "9bee104a48d4aac647287d6c1454df170c1cff7158a2352711fd1e2163ea6d1d"
+        from:
+          - { package: "hp-sp173974", member: "src/Driver/qcnspmcdm8480/cdsp_dtbs.elf" }
+      - name: "qcadsp8480.mbn"
+        size: 21432280
+        sha256: "0b68b188aac54f7beecb3234c19e794092864a4690aafea20bf379643305bf93"
+        from:
+          - { package: "hp-sp173974", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/qcadsp8480.mbn" }
+      - name: "qccdsp8480.mbn"
+        size: 3252504
+        sha256: "acf13d29288d283793f418a36650e8a261eed927d30de109a59cb2210f458794"
+        from:
+          - { package: "hp-sp173974", member: "src/Driver/qcnspmcdm8480/qccdsp8480.mbn" }
   - path: "qcom/glymur/LENOVO/22A8"
     models: ["lenovo-thinkpad-t14s-gen-7-snapdragon"]
     files:
@@ -1564,6 +1602,59 @@ folders:
         sha256: "de957e0a25c2a42f417f8e95ccf1cbdfeed5a4a6d77a84e215389b8b78fc8bf4"
         from:
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcdx8380/qcdxkmsucpurwa.mbn" }
+  - path: "qcom/x1p42100/hp/omnibook-5"
+    models: ["hp-omnibook-5-14-he0", "hp-omnibook-5-16-bf0"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "65d545429dc8cc58860799e5006373cc140884d1a8ea1fbb0b78861533f15404"
+        from:
+          - { package: "hp-sp173598", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "hp-sp173598", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "hp-sp173598", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "hp-sp173598", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "hp-sp173598", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "8880a7a2252e7951b1bc7c14869c8c37062583ba26b21fee6194c593e3447a7e"
+        from:
+          - { package: "hp-sp173598", member: "src/OSPart/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "hp-sp173598", member: "src/OSPart/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22325640
+        sha256: "bfd20acacaa2c4323650652a25db0e0a4ad01ed98e46c269c6850569d4e8421d"
+        from:
+          - { package: "hp-sp173598", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "8a4465f747dbf43441fdba7d5c0312057d2cd1bb1e42cb4833d9ebdb7253388e"
+        from:
+          - { package: "hp-sp173598", member: "src/OSPart/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "63d53b1908d2c053099680e4403b410a3f59f18ecd395586bb3d2ed33a86fea6"
+        from:
+          - { package: "hp-sp173598", member: "src/OSPart/qcdx8380/qcdxkmsucpurwa.mbn" }
   - path: "qcom/x1p42100/hp/omnibook-x14"
     models: ["hp-omnibook-x-14-fe"]
     files:
@@ -1864,6 +1955,20 @@ packages:
     url: "https://ftp.hp.com/pub/softpaq/sp172501-173000/sp172895.exe"
     size: 491544232
     sha256: "f1830ac304bf8b6717bb424100880001a8d6bac18c66e981d4853df19d5f8463"
+    fetched: "2026-11-02"
+  - id: "hp-sp173598"
+    maker: "HP"
+    title: "Qualcomm Driver Pack sp173598"
+    url: "https://ftp.hp.com/pub/softpaq/sp173501-174000/sp173598.exe"
+    size: 240118272
+    sha256: "920af92f223626a568d0c66ef5c0439efb5876937a515d9acf74dba35b1a2dd8"
+    fetched: "2026-11-02"
+  - id: "hp-sp173974"
+    maker: "HP"
+    title: "Qualcomm Driver Pack sp173974"
+    url: "https://ftp.hp.com/pub/softpaq/sp173501-174000/sp173974.exe"
+    size: 482639176
+    sha256: "a65b78efb4ac44579622376f2bb6996e2fcdc6e878a81ec4386a672eddb82321"
     fetched: "2026-11-02"
   - id: "hp-sp174046"
     maker: "HP"
