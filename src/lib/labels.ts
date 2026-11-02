@@ -30,7 +30,7 @@ const STATES = {
   ids: {
     listed: { label: 'systemd 2xx', tone: 'good', meaning: `In systemd's list since that release, so an install image recognises the model.` },
     ubuntu: { label: 'In Ubuntu', tone: 'close', meaning: `In the list of Ubuntu's stubble, which systemd copies its list from in batches. Not in systemd yet.` },
-    posted: { label: 'Posted', tone: 'close', meaning: `Sent to Ubuntu's stubble as a pull request, not merged yet. systemd copies its list from there.` },
+    posted: { label: 'Stubble PR', tone: 'close', meaning: `A pull request adding its hardware IDs is open on Ubuntu's stubble, which systemd copies its list from in batches.` },
     collected: { label: 'Collected', tone: 'close', meaning: `Its hardware IDs have been sent in, and still have to go to Ubuntu's stubble, which systemd copies its list from.` },
     mismatch: { label: 'Mismatch', tone: 'close', meaning: `systemd's entry names a different device tree than the kernel's, so it never matches.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: `Not in systemd's list yet.` },
