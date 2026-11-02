@@ -68,6 +68,14 @@
       "x1p42100-asus-vivobook-s14.dts"
     ]
   },
+  "asus-vivobook-s16-s3607qa": {
+    "state": "out-of-tree",
+    "source": "https://gist.github.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3",
+    "files": [
+      "SOURCE.md"
+    ],
+    "note": "No public source of the tree found yet, only the link above."
+  },
   "asus-zenbook-14-ux3480qa": {
     "state": "out-of-tree",
     "source": "https://github.com/omacom/omarchy-pkgs/pull/1634",
@@ -75,6 +83,14 @@
       "SOURCE.md",
       "x1p42100-asus-zenbook-14-ux3480qa.dts"
     ]
+  },
+  "asus-ascent-qn10": {
+    "state": "out-of-tree",
+    "source": "https://gist.github.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce",
+    "files": [
+      "SOURCE.md"
+    ],
+    "note": "No public source of the tree found yet, only the link above."
   },
   "dell-inspiron-14-5441": {
     "state": "posted",

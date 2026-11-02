@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-02T13:37:24.920Z",
+  "collected": "2026-11-02T21:53:47.796Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -26,7 +26,7 @@
     "v261",
     "v262"
   ],
-  "linuxNext": "20261030",
+  "linuxNext": "20261102",
   "deviceTrees": [
     {
       "file": "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -2168,6 +2168,69 @@
       "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p64100-dell-latitude-5455.json",
       "name": "Dell Inc. Latitude 5455",
       "compatible": "dell,latitude-5455"
+    },
+    {
+      "file": "x1p42100-microsoft-surface-laptop-13.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/108",
+      "name": "Microsoft Surface Laptop 13in 1st Ed",
+      "compatible": "microsoft,surface-laptop-13-2095"
+    },
+    {
+      "file": "mahua-hp-omnibook-x16.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/107",
+      "name": "HP OmniBook X 16-cp1",
+      "compatible": "hp,omnibook-x16-cp1"
+    },
+    {
+      "file": "mahua-hp-omnibook-5-bf1xxx.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/106",
+      "name": "HP OmniBook 5 16-bf1",
+      "compatible": "hp,omnibook-5-16-bf1xxx"
+    },
+    {
+      "file": "x1p42100-hp-omnibook-5.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/105",
+      "name": "HP OmniBook 5 14-he0 and 16-bf0",
+      "compatible": "hp,omnibook-5"
+    },
+    {
+      "file": "x1p42100-asus-proart-pz13.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/104",
+      "name": "ASUS ProArt PZ13 HT5306QA",
+      "compatible": "asus,proart-pz13-ht5306qa"
+    },
+    {
+      "file": "x1p42100-asus-vivobook-s16-lcd.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/103",
+      "name": "ASUS Vivobook S 16 S3607QA (LCD)",
+      "compatible": "asus,vivobook-s16-s3607qa-lcd"
+    },
+    {
+      "file": "x1p42100-asus-vivobook-s16.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/103",
+      "name": "ASUS Vivobook S 16 S3607QA (OLED)",
+      "compatible": "asus,vivobook-s16-s3607qa-oled"
+    },
+    {
+      "file": "x1p42100-acer-aspire-16-ai.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/102",
+      "name": "Acer Aspire 16 AI A16-11M",
+      "compatible": "acer,aspire-a16-11m"
+    },
+    {
+      "file": "x1p42100-acer-aspire-14-ai.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/101",
+      "name": "Acer Aspire 14 AI A14-11M",
+      "compatible": "acer,aspire-a14-11m"
     },
     {
       "file": "x1p42100-asus-vivobook-16.json",

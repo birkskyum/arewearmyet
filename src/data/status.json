@@ -1,6 +1,6 @@
 {
-  "collected": "2026-11-02T13:37:24.920Z",
-  "linuxNext": "20261030",
+  "collected": "2026-11-02T21:53:47.796Z",
+  "linuxNext": "20261102",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "rc",
@@ -71,9 +71,9 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": "https://gist.github.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/acer-aspire-14-ai-a14-11m",
-        "ids": "collected",
+        "ids": "posted",
         "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/1",
-        "idsStubble": null,
+        "idsStubble": "https://github.com/ubuntu/stubble/pull/101",
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -93,7 +93,13 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
-          "stubble": [],
+          "stubble": [
+            {
+              "file": "x1p42100-acer-aspire-14-ai.json",
+              "state": "open",
+              "url": "https://github.com/ubuntu/stubble/pull/101"
+            }
+          ],
           "outcome": "none",
           "reports": []
         }
@@ -132,9 +138,9 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": "https://gist.github.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/acer-aspire-16-ai-a16-11m",
-        "ids": "collected",
+        "ids": "posted",
         "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/3",
-        "idsStubble": null,
+        "idsStubble": "https://github.com/ubuntu/stubble/pull/102",
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -154,7 +160,13 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
-          "stubble": [],
+          "stubble": [
+            {
+              "file": "x1p42100-acer-aspire-16-ai.json",
+              "state": "open",
+              "url": "https://github.com/ubuntu/stubble/pull/102"
+            }
+          ],
           "outcome": "none",
           "reports": []
         }
@@ -517,9 +529,9 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": "https://github.com/agrucza/asus-proart-pz13-linux",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-proart-pz13-ht5306",
-        "ids": "collected",
+        "ids": "posted",
         "idsCollected": "https://bugs.launchpad.net/ubuntu-concept/+bug/2115514",
-        "idsStubble": null,
+        "idsStubble": "https://github.com/ubuntu/stubble/pull/104",
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -537,7 +549,13 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
-          "stubble": [],
+          "stubble": [
+            {
+              "file": "x1p42100-asus-proart-pz13.json",
+              "state": "open",
+              "url": "https://github.com/ubuntu/stubble/pull/104"
+            }
+          ],
           "outcome": "none",
           "reports": []
         }
@@ -1138,7 +1156,7 @@
         "firstRelease": null,
         "devicetreePosted": null,
         "devicetreeOutOfTree": "https://gist.github.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3",
-        "devicetreeArchive": null,
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-vivobook-s16-s3607qa",
         "ids": "collected",
         "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/2",
         "idsStubble": null,
@@ -1554,7 +1572,7 @@
         "firstRelease": null,
         "devicetreePosted": null,
         "devicetreeOutOfTree": "https://gist.github.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce",
-        "devicetreeArchive": null,
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-ascent-qn10",
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
@@ -3011,9 +3029,9 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-5.dts",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-5-14-he0",
-        "ids": "collected",
+        "ids": "posted",
         "idsCollected": "https://github.com/aarch64-laptops/build/blob/master/misc/hp-omnibook-5-14-he0xxx/HWiNFO-ARM64.LOG",
-        "idsStubble": null,
+        "idsStubble": "https://github.com/ubuntu/stubble/pull/105",
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3033,7 +3051,13 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
-          "stubble": [],
+          "stubble": [
+            {
+              "file": "x1p42100-hp-omnibook-5.json",
+              "state": "open",
+              "url": "https://github.com/ubuntu/stubble/pull/105"
+            }
+          ],
           "outcome": "none",
           "reports": []
         }
@@ -3519,9 +3543,9 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": "https://github.com/theflyingrahul/linux-hp-omnibook-5-glymur",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-5-16-bf1",
-        "ids": "collected",
+        "ids": "posted",
         "idsCollected": "https://github.com/theflyingrahul/linux-hp-omnibook-5-glymur/blob/main/captures/2026-09-29-edp-display-working/journalctl-k-b.txt",
-        "idsStubble": null,
+        "idsStubble": "https://github.com/ubuntu/stubble/pull/106",
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3539,7 +3563,13 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
-          "stubble": [],
+          "stubble": [
+            {
+              "file": "mahua-hp-omnibook-5-bf1xxx.json",
+              "state": "open",
+              "url": "https://github.com/ubuntu/stubble/pull/106"
+            }
+          ],
           "outcome": "none",
           "reports": []
         }
@@ -3697,9 +3727,9 @@
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261028191800.27829-3-jeff.roach0@gmail.com/",
         "devicetreeOutOfTree": null,
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-x-16-cp",
-        "ids": "collected",
+        "ids": "posted",
         "idsCollected": "https://bugs.launchpad.net/ubuntu-concept/+bug/2170451",
-        "idsStubble": null,
+        "idsStubble": "https://github.com/ubuntu/stubble/pull/107",
         "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3717,7 +3747,13 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
-          "stubble": [],
+          "stubble": [
+            {
+              "file": "mahua-hp-omnibook-x16.json",
+              "state": "open",
+              "url": "https://github.com/ubuntu/stubble/pull/107"
+            }
+          ],
           "outcome": "none",
           "reports": []
         }
@@ -5301,9 +5337,9 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": "https://github.com/kairunjp/Surface-Laptop-for-Business-13in-1st-Ed-with-Snapdragon-Linux",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/microsoft-surface-laptop-13in-1st-edition",
-        "ids": "collected",
+        "ids": "posted",
         "idsCollected": "https://bugs.launchpad.net/ubuntu-concept/+bug/2115909",
-        "idsStubble": null,
+        "idsStubble": "https://github.com/ubuntu/stubble/pull/108",
         "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -5321,7 +5357,13 @@
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
-          "stubble": [],
+          "stubble": [
+            {
+              "file": "x1p42100-microsoft-surface-laptop-13.json",
+              "state": "open",
+              "url": "https://github.com/ubuntu/stubble/pull/108"
+            }
+          ],
           "outcome": "none",
           "reports": []
         }
