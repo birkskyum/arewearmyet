@@ -1224,12 +1224,12 @@ packages:
   - id: "acer-others-acer-2.0-w11x64-a"
     maker: "Acer"
     title: "Other Drivers 2.0 package for the SFA14-11"
-    url: "https://www.acer.com/us-en/support/product-support/SFA14-11"
+    url: "https://global-download.acer.com/GDFiles/Driver/Others/Others_Acer_2.0_W11x64_A.zip?acerid=639005191616021898&Step1=&Step2=&Step3=SWIFT%20SFA14-11&OS=ALL&LC=en&BC=ACER&SC=PA_6"
+    page: "https://www.acer.com/us-en/support/product-support/SFA14-11"
     size: 246293766
     sha256: "3c955be4bbfcfc64d556b0073dc19af38db75d35292e18acec3bd49781db5df0"
     fetched: "2026-11-02"
-    note: "Acer's file links only work with the parameters its support page adds, so start the Other Drivers 2.0 download from this page."
-    manual: true
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
   - id: "asus-socpackage-43699"
     maker: "ASUS"
     title: "S5507QA V1.318.7800.0"
