@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-01T17:49:10.706Z",
+  "collected": "2026-11-02T13:37:24.920Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -2170,6 +2170,13 @@
       "compatible": "dell,latitude-5455"
     },
     {
+      "file": "x1p42100-asus-vivobook-16.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/100",
+      "name": "ASUSTeK COMPUTER INC. ASUS Vivobook 16",
+      "compatible": "asus,vivobook-s15-x1p4"
+    },
+    {
       "file": "x1p42100-microsoft-surface-pro-12in.json",
       "state": "open",
       "url": "https://github.com/ubuntu/stubble/pull/99",
@@ -2841,7 +2848,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-7",
+        "kernel": "7.3-9",
         "systemd": "262.1-1"
       }
     ],
