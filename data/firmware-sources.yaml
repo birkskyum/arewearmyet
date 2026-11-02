@@ -872,6 +872,64 @@ folders:
         from:
           - { package: "dell-2chk7", member: "16299/Drivers/MUP/qcdx8380/qcvss8380.mbn" }
           - { package: "dell-j8gpp", member: "16299/Drivers/Drivers/qcdx8380/qcvss8380.mbn" }
+  - path: "qcom/x1e80100/dell/latitude-5455"
+    models: ["dell-latitude-5455"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 72408
+        sha256: "d94dabc6cdb9282d0bca40c9eab09b6477d4dac2d68dc37d294fff2b41e08d89"
+        from:
+          - { package: "dell-drc2v", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 670
+        sha256: "549bb9c8e32dc6253d0d0ddde2ce5c26f75f8333d3e55861f297e169a9f3e5c0"
+        from:
+          - { package: "dell-drc2v", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 515
+        sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
+        from:
+          - { package: "dell-drc2v", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 703
+        sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
+        from:
+          - { package: "dell-drc2v", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 516
+        sha256: "be8c6fba330908e4683fb6282761cb08485a302d6a66e09721e102e342f27236"
+        from:
+          - { package: "dell-drc2v", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "93941f040da14b8305d39579686d886706d22954a538b03da676c1aaa191797f"
+        from:
+          - { package: "dell-drc2v", member: "16299/Drivers/arm64/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "dell-drc2v", member: "16299/Drivers/arm64/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22316328
+        sha256: "9864843193c371cd9ef537ff521687c58795a73fcaf8c53e9b3961903273875d"
+        from:
+          - { package: "dell-drc2v", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "4a67a03367f2eff2f8a0e867ca25d2bf2fcd5aee3e41e2c9f436c804e257c789"
+        from:
+          - { package: "dell-drc2v", member: "16299/Drivers/arm64/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsuc8380.mbn"
+        size: 12088
+        sha256: "950f17eb439326548cba20603b30cda653d612d1564feb397ddbd92987f0e8ac"
+        from:
+          - { package: "dell-5njdy", member: "16299/Drivers/MUP/qcdx8380/qcdxkmsuc8380.mbn" }
+      - name: "qcvss8380.mbn"
+        size: 2323048
+        sha256: "d52c28872ebbaf8087a30bf196d15ee24839fd62a2d91b605edfa73c09bbd8d4"
+        from:
+          - { package: "dell-5njdy", member: "16299/Drivers/MUP/qcdx8380/qcvss8380.mbn" }
   - path: "qcom/x1e80100/dell/latitude-7455"
     models: ["dell-latitude-7455"]
     links:
@@ -1909,6 +1967,22 @@ packages:
     url: "https://dl.dell.com/FOLDER14982355M/1/Qualcomm-Adreno-X1-85-X1-45-Graphics-Driver_2CHK7_WINARM64_31.0.170.0_A11.EXE"
     size: 75097792
     sha256: "c6daba34013c69cc7331dfd3d1be7eb10e8765f0d082ed1091e9dad8d46f4191"
+    fetched: "2026-11-02"
+    note: "dl.dell.com turns away clients that don't send a browser user agent."
+  - id: "dell-5njdy"
+    maker: "Dell"
+    title: "Qualcomm Adreno X1-85/X1-45 Graphics Driver 5NJDY"
+    url: "https://dl.dell.com/FOLDER14321292M/1/Qualcomm-Adreno-X1-85-X1-45-Graphics-Driver_5NJDY_WINARM64_31.0.148.0_A09.EXE"
+    size: 76522664
+    sha256: "6dffdacc16b8cce59eb40ca8d72b49b53ba49966b6b64afef09b02315416776b"
+    fetched: "2026-11-02"
+    note: "dl.dell.com turns away clients that don't send a browser user agent."
+  - id: "dell-drc2v"
+    maker: "Dell"
+    title: "Qualcomm Chipset Driver DRC2V"
+    url: "https://dl.dell.com/FOLDER14261861M/1/Qualcomm-Chipset-Driver_DRC2V_WINARM64_2.1.0.24_A12.EXE"
+    size: 54699200
+    sha256: "b241c88078d887516920b3fadbde8f53e871cb8721c37c69544a00b28d99df55"
     fetched: "2026-11-02"
     note: "dl.dell.com turns away clients that don't send a browser user agent."
   - id: "dell-j8gpp"
