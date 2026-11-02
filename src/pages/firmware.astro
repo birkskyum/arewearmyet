@@ -51,7 +51,7 @@ const fileCount = sources.folders.reduce((n, f) => n + (f.files?.length ?? 0), 0
       Most Snapdragon laptops load signed firmware for their audio and compute DSPs and their GPU that linux-firmware doesn't ship yet. Their makers publish it inside their Windows driver packages. This list says which package holds each file, where inside it, and each file's checksum, so you or your distro can get it from the maker even after Windows is gone. Nothing here is firmware, only links and checksums.
     </p>
     <p class="mt-4">
-      {sources.folders.length} firmware folders, {fileCount} files, from {sources.packages.length} maker downloads. Tools can read the same list as <a class={LINK} href="/firmware-sources.json">firmware-sources.json</a>; it's kept in <a class={LINK} href={`${REPO}/blob/main/data/firmware-sources.yaml`}>data/firmware-sources.yaml</a>. Packages unpack with 7-Zip, except Lenovo's (<code class={INLINE}>innoextract</code>) and Microsoft's MSIs (<code class={INLINE}>msiextract</code>). ASUS's are executables with a 7-Zip archive appended.
+      {sources.folders.length} firmware folders, {fileCount} files, from {sources.packages.length} maker downloads. Tools can read the same list as <a class={LINK} href="/firmware-sources.json">firmware-sources.json</a>; it's kept in <a class={LINK} href={`${REPO}/blob/main/data/firmware-sources.yaml`}>data/firmware-sources.yaml</a>. Packages unpack with 7-Zip, except Lenovo's (<code class={INLINE}>innoextract</code>) and Microsoft's MSIs (<code class={INLINE}>msiextract</code>). ASUS's are executables with a 7-Zip archive appended, and the SoC control processor images in HP's and ASUS's packages are XZ-compressed inside their BIOS images.
     </p>
 
     <div class="mt-8 space-y-4">
