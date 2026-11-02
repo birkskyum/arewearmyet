@@ -89,7 +89,7 @@ const exportRows = folders.flatMap((folder) => {
               ))}
             </ul>
           )}
-          {(folder.files ?? []).filter((f) => f.from.length === 0).map((f) => (
+          {(folder.files ?? []).filter((f) => f.note).map((f) => (
             <p class="mt-2 text-sm text-amber-300/90"><code class={INLINE}>{f.name}</code>: {f.note}</p>
           ))}
           {folder.links && folder.links.length > 0 && (
