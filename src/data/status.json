@@ -37,7 +37,7 @@
     "notYet": 64,
     "deviceTree": 51,
     "ids": 44,
-    "firmware": 35,
+    "firmware": 36,
     "googlebooks": 2,
     "acpi": 33,
     "acpiWanted": 32
@@ -263,16 +263,10 @@
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x1e80100-ACER-SF14-11",
         "firmwarePosted": null,
         "firmwareFolders": [],
         "acpi": "missing",
