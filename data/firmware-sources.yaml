@@ -962,6 +962,191 @@ folders:
         from:
           - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
+  - path: "qcom/x1p42100/ASUSTeK/proart-pz13"
+    models: ["asus-proart-pz13-ht5306"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "bb77120f5f6e545cc5387f8b41f950f00b8200be3e8b58240046489fe51328a7"
+        from:
+          - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "1e0535bd2a8adcd14d6079ffa99f6fce5c6561d4759a60f6076dcfbaa4437f8a"
+        from:
+          - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22329736
+        sha256: "c0dd5c1a6da54fb5f5bf0a1c4087423b68b80d19f45026cff53f79b3637be430"
+        from:
+          - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3174824
+        sha256: "4387fa1a234aacbff50f8a215b96536d17c4b25b6b798392e15a162e4adcd7a0"
+        from:
+          - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "f9342cb44a79f5abdd1f0ae888c6c3df8e60f28a6c3a5077591369268d1b5c0a"
+        from:
+          - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcdx8380/qcdxkmsucpurwa.mbn" }
+  - path: "qcom/x1p42100/ASUSTeK/vivobook-s14"
+    models: ["asus-vivobook-s14-s3407qa"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "4efd01feefccc344874cc8d4d3600231310d228216fa16a8740ac5fcc5357ced"
+        from:
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/battmgr.jsn" }
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "d2e81a2430ec9474aa46558a9568262b7fde3ae31bdc523028306454fb11d3b0"
+        from:
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22075832
+        sha256: "5799e03a04e0f66dfec6a6230abd13dc742e6bb347d509e86d826382749c2b8b"
+        from:
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "e7f15a411d59f0aa91cadf3dec0366cd916af240c956731577c53a40d8343e64"
+        from:
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "5b8b1ea1de11b9acc74fdd4919aa4aeac924520e4b11cf27782c593640e11e44"
+        from:
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+  - path: "qcom/x1p42100/ASUSTeK/vivobook-s16"
+    models: ["asus-vivobook-s16-s3607qa"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "4efd01feefccc344874cc8d4d3600231310d228216fa16a8740ac5fcc5357ced"
+        from:
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/battmgr.jsn" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "d2e81a2430ec9474aa46558a9568262b7fde3ae31bdc523028306454fb11d3b0"
+        from:
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22075832
+        sha256: "5799e03a04e0f66dfec6a6230abd13dc742e6bb347d509e86d826382749c2b8b"
+        from:
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "e7f15a411d59f0aa91cadf3dec0366cd916af240c956731577c53a40d8343e64"
+        from:
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "5b8b1ea1de11b9acc74fdd4919aa4aeac924520e4b11cf27782c593640e11e44"
+        from:
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+      - name: "qcvss8380.mbn"
+        size: 2323048
+        sha256: "2e37684e8c84b7d945396da24c295c3267e97087a537386bb10ad1fa5ef85ebc"
+        from:
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
   - path: "qcom/x1p42100/ASUSTeK/zenbook-a14"
     models: ["asus-zenbook-a14-ux3407", "asus-zenbook-14-ux3480qa"]
     files:
@@ -1237,12 +1422,33 @@ packages:
     size: 176803760
     sha256: "7d8fa75780fe2a2fd90882ac7c4dcca21152ba3cd4eb33183bfa6c72f4f20801"
     fetched: "2026-11-02"
+  - id: "asus-socpackage-43841"
+    maker: "ASUS"
+    title: "HT5306QA V1.311.7800.0"
+    url: "https://dlcdnets.asus.com/pub/ASUS/nb/Image/Driver/DriverPackage/43841/SOCPackage_forWebSite_Qualcomm_Z_V1.311.7800.0_43841_1.exe"
+    size: 179490224
+    sha256: "25c191e84302979ab3510568e2616f9d7b5111a720e23457e86d7c044aa62d6d"
+    fetched: "2026-11-02"
   - id: "asus-socpackage-48168"
     maker: "ASUS"
     title: "UX3407RA V1.312.8100.0"
     url: "https://dlcdnets.asus.com/pub/ASUS/nb/Image/Driver/DriverPackage/48168/SOCPackage_forWebSite_Qualcomm_Z_V1.312.8100.0_48168.exe"
     size: 375072688
     sha256: "ce4593e948157ede6d936bec0db03b09bcbb39c3b11fab5d89c52b8954e72fde"
+    fetched: "2026-11-02"
+  - id: "asus-socpackage-50069"
+    maker: "ASUS"
+    title: "S3407QA V1.311.8800.0"
+    url: "https://dlcdnets.asus.com/pub/ASUS/nb/Image/Driver/DriverPackage/50069/SOCPackage_forWebSite_Qualcomm_Z_V1.311.8800.0_50069.exe"
+    size: 386742704
+    sha256: "ebb9d7094af88def949eeca8ba6ca8e7bf49c8d2f73e11f40079b13c2c298842"
+    fetched: "2026-11-02"
+  - id: "asus-socpackage-50070"
+    maker: "ASUS"
+    title: "S3607QA V1.311.8800.0"
+    url: "https://dlcdnets.asus.com/pub/ASUS/nb/Image/Driver/DriverPackage/50070/SOCPackage_forWebSite_Qualcomm_Z_V1.311.8800.0_50070.exe"
+    size: 386755504
+    sha256: "99238c153e34dd330ff840c9a3ea94e10e7e158aaf7dfe2d27711652e00182a2"
     fetched: "2026-11-02"
   - id: "asus-socpackage-50096"
     maker: "ASUS"
