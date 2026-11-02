@@ -262,13 +262,11 @@ const summary = {
   should: count(current, (r) => r.outcome === 'should'),
   problems: count(current, (r) => r.outcome === 'problems'),
   notYet: count(current, (r) => ['manual', 'newer', 'none'].includes(r.outcome)),
-  deviceTree: count(current, (r) => r.upstream.deviceTree === 'released' || r.upstream.deviceTree === 'next'),
-  ids: count(current, (r) => r.upstream.ids === 'listed'),
-  firmware: count(current, (r) => r.upstream.firmware === 'linux-firmware' || r.upstream.firmware === 'download'),
-  // On its way: posted or carried elsewhere, sent in, or merged for the next release
-  deviceTreeComing: count(current, (r) => r.upstream.deviceTree === 'posted' || r.upstream.deviceTree === 'out-of-tree'),
-  idsComing: count(current, (r) => ['ubuntu', 'posted', 'collected', 'mismatch'].includes(r.upstream.ids)),
-  firmwareComing: count(current, (r) => r.upstream.firmware === 'next-release' || r.upstream.firmware === 'posted'),
+  // What we have to run each model, wherever it is: a device tree in Linux or out of tree, hardware IDs
+  // listed or sent in, and firmware we can get without the machine's own Windows
+  deviceTree: count(current, (r) => r.upstream.deviceTree !== 'missing'),
+  ids: count(current, (r) => r.upstream.ids !== 'missing'),
+  firmware: count(current, (r) => ['linux-firmware', 'next-release', 'download', 'posted'].includes(r.upstream.firmware)),
   // Hardware IDs and Windows firmware only apply to models that start through UEFI
   googlebooks: count(rows, (r) => r.boot === 'android'),
   // Every dump collected counts, also once its model has a device tree; one is still wanted while a model

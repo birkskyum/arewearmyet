@@ -281,9 +281,12 @@ models:
     released: "2025"
     chips: ["X1-26-100"]
     model_numbers: ["S3607QA"]
+    variants:
+      - { chip: "X1-26-100", compatible: "asus,vivobook-s16-s3607qa" }
     acpi: ["hardware-reports/asustek-computer-inc/asus-vivobook-s-16-s3607qa-s3607qa"]
+    devicetree_out_of_tree: "https://gist.github.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/2"
-    notes: "Owners boot it with the X Plus Vivobook S 15's device tree, with gaps."
+    notes: "A draft device tree, written from two owners' hardware reports, in an OLED and an LCD version. Nobody has booted it yet. Owners boot it with the X Plus Vivobook S 15's device tree, with gaps."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s3607q/techspec/
       - https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/

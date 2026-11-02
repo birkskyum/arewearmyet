@@ -35,12 +35,9 @@
     "should": 11,
     "problems": 6,
     "notYet": 64,
-    "deviceTree": 23,
-    "ids": 28,
-    "firmware": 27,
-    "deviceTreeComing": 26,
-    "idsComing": 9,
-    "firmwareComing": 1,
+    "deviceTree": 50,
+    "ids": 37,
+    "firmware": 28,
     "googlebooks": 2,
     "acpi": 33,
     "acpiWanted": 32
@@ -1133,14 +1130,14 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s3607q/techspec/",
         "https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/"
       ],
-      "notes": "Owners boot it with the X Plus Vivobook S 15's device tree, with gaps.",
+      "notes": "A draft device tree, written from two owners' hardware reports, in an OLED and an LCD version. Nobody has booted it yet. Owners boot it with the X Plus Vivobook S 15's device tree, with gaps.",
       "outcome": "none",
       "reports": [],
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://gist.github.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3",
         "devicetreeArchive": null,
         "ids": "collected",
         "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/2",
@@ -1158,6 +1155,8 @@
       },
       "variants": [
         {
+          "chip": "X1-26-100",
+          "compatible": "asus,vivobook-s16-s3607qa",
           "computed": "none",
           "deviceTree": null,
           "firmwareNeeded": [],
