@@ -23,7 +23,7 @@ const STATES = {
   deviceTree: {
     released: { label: 'Linux 6.x', tone: 'good', meaning: 'In Linux since that release.' },
     next: { label: 'linux-next', tone: 'close', meaning: 'Accepted, and coming in the next Linux release.' },
-    posted: { label: 'Posted', tone: 'close', meaning: 'Sent to the kernel mailing list, not accepted yet.' },
+    posted: { label: 'Kernel patch', tone: 'close', meaning: 'Sent to the Linux kernel mailing list as a patch, not accepted yet.' },
     'out-of-tree': { label: 'Out of tree', tone: 'close', meaning: 'One exists outside Linux, in Omarchy\'s kernel, Ubuntu\'s kernel or a community repository, but it hasn\'t been sent there yet.' },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: `Doesn't exist yet.` },
   },
@@ -39,7 +39,7 @@ const STATES = {
     'linux-firmware': { label: 'linux-firmware', tone: 'good', meaning: `Every file its device tree loads ships in linux-firmware's newest release, so nothing has to be copied.` },
     download: { label: 'Vendor download', tone: 'good', meaning: `The vendor's driver download has it, so it works even after Windows is wiped.` },
     'next-release': { label: 'Next release', tone: 'close', meaning: `Merged into linux-firmware, and coming with its next release.` },
-    posted: { label: 'Posted', tone: 'close', meaning: 'Sent to linux-firmware as a merge request, not merged yet.' },
+    posted: { label: 'linux-firmware MR', tone: 'close', meaning: 'A merge request with its files is open on linux-firmware, not merged yet.' },
     partial: { label: 'Partly', tone: 'close', meaning: 'linux-firmware has some of the files its device tree loads; the rest still come from Windows.' },
     windows: { label: 'Windows only', tone: 'close', meaning: `Copied from the laptop's own Windows today. A link to the vendor's driver download would cover laptops whose Windows is gone.` },
   },
