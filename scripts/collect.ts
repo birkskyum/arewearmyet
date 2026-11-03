@@ -35,8 +35,22 @@ function githubToken(): string | undefined {
 
 const token = githubToken();
 
+// GitHub's API and raw hosts answer the odd request with a 5xx, so a server
+// error or a dropped connection is tried again before the run gives up.
+async function fetchRetrying(url: string, init: RequestInit = {}): Promise<Response> {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      const response = await fetch(url, init);
+      if (response.status < 500 || attempt === 3) return response;
+    } catch (error) {
+      if (attempt === 3) throw error;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 2000 * attempt));
+  }
+}
+
 async function getJson(url: string, headers: Record<string, string> = {}): Promise<any> {
-  const response = await fetch(url, { headers });
+  const response = await fetchRetrying(url, { headers });
   if (response.status === 404) return undefined;
   if (!response.ok) throw new Error(`${response.status} ${url}`);
   return response.json();
@@ -49,7 +63,7 @@ function github(path: string): Promise<any> {
 }
 
 async function raw(repo: string, ref: string, path: string): Promise<string> {
-  const response = await fetch(`https://raw.githubusercontent.com/${repo}/${ref}/${path}`);
+  const response = await fetchRetrying(`https://raw.githubusercontent.com/${repo}/${ref}/${path}`);
   if (!response.ok) throw new Error(`${response.status} ${repo}@${ref}:${path}`);
   return response.text();
 }
@@ -157,7 +171,7 @@ async function firmwareFiles(ref: string): Promise<string[]> {
       files.push(...batch.filter((entry) => entry.type === 'blob').map((entry) => entry.path));
     }
   }
-  const whence = await (await fetch(`https://gitlab.com/kernel-firmware/linux-firmware/-/raw/${ref}/WHENCE`)).text();
+  const whence = await (await fetchRetrying(`https://gitlab.com/kernel-firmware/linux-firmware/-/raw/${ref}/WHENCE`)).text();
   const links = [...whence.matchAll(/^Link: (qcom\/\S+) ->/gm)].map((m) => m[1]).filter((path) => FIRMWARE_SOCS.some((soc) => path.startsWith(`qcom/${soc}/`)));
   return [...new Set([...files, ...links])].sort();
 }
@@ -176,7 +190,7 @@ async function collectFirmware() {
 
 // The version of a package in a pacman repository database, or undefined if it isn't there
 async function packageVersion(dbUrl: string, name: string): Promise<string | undefined> {
-  const response = await fetch(dbUrl);
+  const response = await fetchRetrying(dbUrl);
   if (!response.ok) return undefined;
   const file = join(tmpdir(), `arewearmyet-${Buffer.from(dbUrl).toString('base64url')}.db`);
   writeFileSync(file, Buffer.from(await response.arrayBuffer()));
