@@ -60,7 +60,8 @@ const STATES = {
     nobody: { label: 'Nobody has one', tone: 'wanted', meaning: `No device tree, no ACPI dump and no owner report, so nobody we know has one. The machine itself would give its tables, tree, hardware IDs, firmware and the boot test.` },
     untested: { label: 'Tree untested', tone: 'wanted', meaning: `Its device tree was written from an owner's ACPI tables, without the machine, and nobody has booted it yet. An owner booting it, or the machine, confirms it.` },
     problems: { label: 'Would help', tone: 'close', meaning: `Owners report problems and nobody on the team has one, so each fix waits on a round trip with an owner.` },
-    owners: { label: 'Owners have it', tone: 'muted', meaning: `Someone with the machine wrote its tree or sent its tables, so owners can test it.` },
+    linux: { label: 'Linux community', tone: 'muted', meaning: `Someone in the wider Linux community has one: its tree is in Linux or a posted patch, an owner keeps one in their own repository, or its tables are in aarch64-laptops. They can test it, but it takes reaching them first.` },
+    omarchy: { label: 'Omarchy community', tone: 'muted', meaning: `Someone in Omarchy's community has one: they reported on an Omarchy release, sent a hardware report from its installer tool or its hardware IDs, or work on it in an Omarchy discussion. We can ask them to test.` },
     team: { label: 'Team has one', tone: 'good', meaning: 'Someone on the Omarchy team has one.' },
   },
   omarchyIds: {

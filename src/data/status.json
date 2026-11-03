@@ -632,7 +632,8 @@
       "nobody": 32,
       "untested": 2,
       "problems": 3,
-      "owners": 40,
+      "linux": 32,
+      "omarchy": 8,
       "team": 6
     },
     "ahead": {
@@ -817,7 +818,7 @@
       "notes": "A draft device tree, written from owners' hardware reports. An owner booted it on Ubuntu's live USB in November 2026, with the screen, keyboard, disk, USB, battery and Bluetooth working. Wi-Fi needs a board file copied from Windows, since linux-firmware has none for its card.",
       "outcome": "newer",
       "reports": [],
-      "machine": "owners",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -1007,7 +1008,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -1113,7 +1114,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -1216,7 +1217,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -1406,7 +1407,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -1761,7 +1762,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -2050,7 +2051,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -2309,7 +2310,7 @@
       "notes": "A draft device tree, written from two owners' hardware reports, in an OLED and an LCD version. An owner booted the OLED version on Ubuntu's live USB in November 2026, with the screen, keyboard, touchpad, Bluetooth, USB, HDMI and disk working. Wi-Fi needs board data that linux-firmware doesn't have yet.",
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -2725,7 +2726,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -3198,7 +3199,7 @@
       "notes": null,
       "outcome": "newer",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -3317,7 +3318,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "rc",
         "deviceTreePull": null,
@@ -3437,7 +3438,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -3682,7 +3683,7 @@
       "notes": null,
       "outcome": "newer",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -3796,7 +3797,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -3919,7 +3920,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -4048,7 +4049,7 @@
           "checked": "2026-10"
         }
       ],
-      "machine": "owners",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -4320,7 +4321,7 @@
       "notes": "Honor's driver download has no compute DSP firmware, so those two files still come from the laptop's own Windows.",
       "outcome": "should",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "rc",
         "deviceTreePull": null,
@@ -4445,7 +4446,7 @@
       "notes": null,
       "outcome": "newer",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -4559,7 +4560,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -4676,7 +4677,7 @@
       "notes": "A community tree runs mainline Linux from the second boot slot and leaves Googlebook OS on the first. Nearly everything works, with kernel patches for the keyboard, the audio DSP and suspend. The internal mics click now and then, and battery time estimates come out about 8 times too short.",
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -4763,7 +4764,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -5027,7 +5028,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -5229,7 +5230,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -5569,7 +5570,7 @@
       "notes": null,
       "outcome": "newer",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -5765,7 +5766,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -5865,7 +5866,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -6047,7 +6048,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -6147,7 +6148,7 @@
       "notes": "Its out-of-tree device tree is the Glymur reference board's with fixes for this machine, and keeps the reference board's compatible.",
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -6243,7 +6244,7 @@
       "notes": null,
       "outcome": "manual",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -6382,7 +6383,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -6493,7 +6494,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -6605,7 +6606,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -6818,7 +6819,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -7026,7 +7027,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -7680,7 +7681,7 @@
       "notes": null,
       "outcome": "newer",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -7794,7 +7795,7 @@
       "notes": null,
       "outcome": "newer",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -7916,7 +7917,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -8296,7 +8297,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -8560,7 +8561,7 @@
       "notes": null,
       "outcome": "manual",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "rc",
         "deviceTreePull": null,
@@ -9164,7 +9165,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -9287,7 +9288,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -9385,7 +9386,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -9760,7 +9761,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -9875,7 +9876,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -10013,7 +10014,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -10127,7 +10128,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "owners",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,

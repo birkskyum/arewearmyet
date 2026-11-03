@@ -288,13 +288,17 @@ function outOfBox(pieces: Record<'deviceTree' | 'ids' | 'firmware', Piece>) {
 
 // Where getting the machine to the team would help: nobody we know has one (no tree, no tables, no report),
 // its tree was written without it and nobody has booted it, or owners report problems the team can't
-// reproduce. Otherwise owners have one to test with, or the team does.
-function machineNeed(model: Model, reports: Report[], deviceTree: string, acpi: boolean) {
+// reproduce. Otherwise someone in Omarchy's community has one (a report on Omarchy, a hardware report from
+// its installer tool, hardware IDs sent in here or an Omarchy discussion), someone in the wider Linux
+// community does (a tree in Linux, a posted patch, an owner's repository or an aarch64-laptops dump), or
+// the team does.
+function machineNeed(model: Model, reports: Report[], deviceTree: string, acpi: string[]) {
   if (model.team_has_one) return 'team';
-  if (deviceTree === 'missing' && !acpi && !reports.length) return 'nobody';
+  if (deviceTree === 'missing' && !acpi.length && !reports.length) return 'nobody';
   if (model.devicetree_untested && !reports.some((r) => r.state === 'works')) return 'untested';
   if (reports.some((r) => r.state === 'problems')) return 'problems';
-  return 'owners';
+  const omarchyCommunity = reports.length > 0 || acpi.some((folder) => folder.startsWith('hardware-reports/')) || Boolean(model.ids_collected) || Boolean(model.discussion?.includes('omacom/omarchy'));
+  return omarchyCommunity ? 'omarchy' : 'linux';
 }
 
 const rows = models.map((model) => {
@@ -370,7 +374,7 @@ const rows = models.map((model) => {
     notes: model.notes ?? null,
     outcome: best(variants.map((v) => v.outcome)),
     reports,
-    machine: machineNeed(model, reports, deviceTree, acpi.length > 0),
+    machine: machineNeed(model, reports, deviceTree, model.acpi ?? []),
     omarchy,
     outOfBox: outOfBox(pieces),
     upstream: {
@@ -426,7 +430,7 @@ const summary = {
   acpi: count(current, (r) => r.upstream.acpi === 'collected'),
   acpiWanted: count(current, (r) => r.upstream.deviceTree === 'missing' && r.upstream.acpi !== 'collected'),
   outOfBox: Object.fromEntries(['stable', 'rc', 'edge', 'pr', 'carry', 'needs-deviceTree', 'needs-ids', 'needs-firmware'].map((state) => [state, count(current, (r) => r.outOfBox.state === state)])),
-  machine: Object.fromEntries(['nobody', 'untested', 'problems', 'owners', 'team'].map((need) => [need, count(current, (r) => r.machine === need)])),
+  machine: Object.fromEntries(['nobody', 'untested', 'problems', 'linux', 'omarchy', 'team'].map((need) => [need, count(current, (r) => r.machine === need)])),
   // How far Omarchy is ahead: each piece in an Omarchy channel, against the releases of Linux, systemd
   // and linux-firmware that any distro can ship, and all three together
   ahead: (() => {
