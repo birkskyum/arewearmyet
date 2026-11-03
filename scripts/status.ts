@@ -128,16 +128,18 @@ function variantStatus(variant: Variant) {
   const dt = findDeviceTree(variant.compatible);
   if (dt) used.deviceTrees.add(dt.file);
   const compatibles = dt?.compatible ?? (variant.compatible ? [variant.compatible] : []);
+  // systemd-stub compares a hardware ID entry only with a tree's first compatible
+  const picked = compatibles[0];
   const named = (variant.ids ?? []).map((file) => systemdIds.find((ids) => ids.file === file)).filter((ids): ids is Ids => Boolean(ids));
   const byCompatible = systemdIds.filter((ids) => compatibles.includes(ids.compatible));
   const ids = [...new Set([...named, ...byCompatible])];
   ids.forEach((entry) => used.ids.add(entry.file));
   // The first channel whose kernel ships the tree, and whose hardware IDs pick it
   const treeChannel = dt ? CHANNELS.find((name) => dt.files.some((file) => shipped[name].trees.has(file))) ?? null : null;
-  const idsChannel = CHANNELS.find((name) => compatibles.some((compatible) => shipped[name].ids.has(compatible))) ?? null;
+  const idsChannel = picked ? CHANNELS.find((name) => shipped[name].ids.has(picked)) ?? null : null;
   const treeCompatible = variant.compatible ? [variant.compatible] : compatibles;
   const treePull = treeChannel ? undefined : pulls.find((pull) => pull.deviceTrees.some((tree) => tree.compatible.some((compatible) => treeCompatible.includes(compatible))));
-  const idsPull = idsChannel ? undefined : pulls.find((pull) => pull.ids.some((entry) => compatibles.includes(entry.compatible) || treeCompatible.includes(entry.compatible)));
+  const idsPull = idsChannel ? undefined : pulls.find((pull) => pull.ids.some((entry) => entry.compatible === picked));
 
   // Omarchy should boot a model when the kernel of the channel people install has its device tree and
   // the hardware IDs there pick it
@@ -153,8 +155,8 @@ function variantStatus(variant: Variant) {
     idsPull: pullRef(idsPull),
     deviceTree: dt ? { file: dt.file, firstRelease: dt.firstRelease, inNext: dt.inNext, upstream: dt.upstream, patch: dt.patch } : null,
     firmwareNeeded: dt?.firmware ?? [],
-    ids: ids.map((entry) => ({ file: entry.file, firstRelease: entry.firstRelease, inMain: entry.inMain, matches: compatibles.includes(entry.compatible), compatible: entry.compatible })),
-    stubble: stubbleIds.filter((entry) => compatibles.includes(entry.compatible)).map(({ file, state, url }) => ({ file, state, url })),
+    ids: ids.map((entry) => ({ file: entry.file, firstRelease: entry.firstRelease, inMain: entry.inMain, matches: entry.compatible === picked, compatible: entry.compatible })),
+    stubble: stubbleIds.filter((entry) => entry.compatible === picked).map(({ file, state, url }) => ({ file, state, url })),
   };
 }
 
