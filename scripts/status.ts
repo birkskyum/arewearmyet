@@ -400,6 +400,16 @@ const summary = {
       firmware: (r: Row) => r.upstream.firmwareUpstream === 'released',
     };
     const pieces = ['deviceTree', 'ids', 'firmware'] as const;
+    // Omarchy's count split into what it has from upstream and what it adds, and what upstream has that it lacks
+    const split = (ours: (r: Row) => boolean, theirs: (r: Row) => boolean, open: (r: Row) => boolean, channels?: Record<string, number>) => ({
+      omarchy: count(current, ours),
+      fromUpstream: count(current, (r) => ours(r) && theirs(r)),
+      added: count(current, (r) => ours(r) && !theirs(r)),
+      missing: count(current, (r) => theirs(r) && !ours(r)),
+      pull: count(current, open),
+      upstream: count(current, theirs),
+      ...(channels ? { channels } : {}),
+    });
     const byChannel = (piece: (typeof pieces)[number]) =>
       Object.fromEntries(CHANNELS.map((name) => [name, count(current, (r) => channelRank(piece === 'firmware' ? r.omarchy.firmwareChannel : r.omarchy[piece]) <= channelRank(name))]));
     // Not shipped yet, but an open omarchy-pkgs pull request adds it
@@ -409,12 +419,12 @@ const summary = {
       firmware: (r: Row) => r.omarchy.firmware === 'pr',
     };
     return {
-      ...Object.fromEntries(pieces.map((piece) => [piece, { omarchy: count(current, omarchy[piece]), pull: count(current, pull[piece]), upstream: count(current, upstream[piece]), channels: byChannel(piece) }])),
-      all: {
-        omarchy: count(current, (r) => pieces.every((piece) => omarchy[piece](r))),
-        pull: count(current, (r) => pieces.every((piece) => omarchy[piece](r) || pull[piece](r)) && pieces.some((piece) => pull[piece](r))),
-        upstream: count(current, (r) => pieces.every((piece) => upstream[piece](r))),
-      },
+      ...Object.fromEntries(pieces.map((piece) => [piece, split(omarchy[piece], upstream[piece], pull[piece], byChannel(piece))])),
+      all: split(
+        (r) => pieces.every((piece) => omarchy[piece](r)),
+        (r) => pieces.every((piece) => upstream[piece](r)),
+        (r) => pieces.every((piece) => omarchy[piece](r) || pull[piece](r)) && pieces.some((piece) => pull[piece](r)),
+      ),
     };
   })(),
 };

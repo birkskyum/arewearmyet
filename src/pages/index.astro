@@ -41,11 +41,13 @@ const nvidiaParts = outcomeParts(nvidia, { should: { title: 'Same platform as a 
 const { ahead } = summary;
 const channelNote = (channels: Record<string, number>) => `Stable ${channels.stable}, RC ${channels.rc}, edge ${channels.edge}.`;
 const aheadRows = [
-  { label: 'Device tree', omarchy: ahead.deviceTree.omarchy, pull: ahead.deviceTree.pull, upstream: ahead.deviceTree.upstream, ours: `In Omarchy's kernel. ${channelNote(ahead.deviceTree.channels)}`, theirs: 'In a Linux release.' },
-  { label: 'Hardware IDs', omarchy: ahead.ids.omarchy, pull: ahead.ids.pull, upstream: ahead.ids.upstream, ours: `Picked by Omarchy's systemd or its kernel's own IDs. ${channelNote(ahead.ids.channels)}`, theirs: 'In a systemd release.' },
-  { label: 'Firmware', omarchy: ahead.firmware.omarchy, pull: ahead.firmware.pull, upstream: ahead.firmware.upstream, ours: `Every file in Omarchy's packages. ${channelNote(ahead.firmware.channels)}`, theirs: 'Every file in a linux-firmware release.' },
-  { label: 'All three', omarchy: ahead.all.omarchy, pull: ahead.all.pull, upstream: ahead.all.upstream, ours: 'Device tree, hardware IDs and firmware, all in Omarchy.', theirs: 'All three in the releases.' },
+  { label: 'Device tree', ...ahead.deviceTree, ours: `Trees Omarchy's kernel adds. ${channelNote(ahead.deviceTree.channels)}`, theirs: 'In a Linux release.' },
+  { label: 'Hardware IDs', ...ahead.ids, ours: `IDs Omarchy's kernel adds, or systemd's that only Omarchy's systemd has. ${channelNote(ahead.ids.channels)}`, theirs: 'In a systemd release.' },
+  { label: 'Firmware', ...ahead.firmware, ours: `Firmware Omarchy packages. ${channelNote(ahead.firmware.channels)}`, theirs: 'Every file in a linux-firmware release.' },
+  { label: 'All three', ...ahead.all, ours: 'Device tree, hardware IDs and firmware, all in Omarchy, where upstream lacks at least one.', theirs: 'All three in the releases.' },
 ];
+// Upstream's colour, striped, for the part of Omarchy's bar that upstream has too
+const STRIPES = 'bg-[repeating-linear-gradient(-45deg,var(--color-sky-400)_0_3px,color-mix(in_oklab,var(--color-sky-400)_30%,transparent)_3px_6px)]';
 const width = (value: number) => `width: ${(100 * value) / Math.max(summary.models, 1)}%`;
 
 // Left to right in the order a model gets there, with booting last
@@ -116,18 +118,19 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
         To help a model along, send a hardware report from Windows, the device tree you boot with on Linux, or a boot test, as <a class={LINK} href="/help">Help a model get there</a> explains.
       </p>
       <h3 class="mt-6 text-sm font-semibold text-zinc-200">How far ahead Omarchy is</h3>
-      <p class="mt-1 max-w-3xl text-sm text-zinc-400">Models with each piece in Omarchy, on any channel, against the releases of Linux, systemd and linux-firmware. The amber part is in an open pull request on <a class={LINK} href="https://github.com/omacom/omarchy-pkgs/pulls">omarchy-pkgs</a>.</p>
+      <p class="mt-1 max-w-3xl text-sm text-zinc-400">Models with each piece in Omarchy, on any channel, against the releases of Linux, systemd and linux-firmware. On Omarchy's bar the striped part comes from upstream, the green part is what Omarchy adds, and the amber part is in an open pull request on <a class={LINK} href="https://github.com/omacom/omarchy-pkgs/pulls">omarchy-pkgs</a>.</p>
       <dl class="mt-4 grid gap-x-8 gap-y-5 sm:grid-cols-2">
         {aheadRows.map((row) => (
           <div>
             <div class="flex items-baseline justify-between gap-4 text-sm">
               <dt class="font-medium text-zinc-200">{row.label}</dt>
-              <dd class={`shrink-0 tabular-nums ${row.omarchy > row.upstream ? 'text-[#9ece6a]' : 'text-zinc-500'}`}>{row.omarchy > row.upstream ? `${row.omarchy - row.upstream} ahead` : row.omarchy === row.upstream ? 'even' : `${row.upstream - row.omarchy} behind`}</dd>
+              <dd class={`shrink-0 tabular-nums ${row.added > 0 ? 'text-[#9ece6a]' : 'text-zinc-500'}`}>{[row.added > 0 ? `${row.added} ahead` : 'even', row.missing > 0 ? `${row.missing} behind` : ''].filter(Boolean).join(', ')}</dd>
             </div>
             <div class="mt-2 grid grid-cols-[5rem_1fr_5.5rem] items-center gap-x-3 gap-y-1.5 text-xs">
               <span class="text-zinc-300">Omarchy</span>
               <div class="flex h-2 overflow-hidden rounded-full bg-zinc-800">
-                <div class="h-full bg-emerald-400" style={width(row.omarchy)} data-tip-title={`Omarchy: ${row.omarchy} of ${summary.models}`} data-tip={row.ours}></div>
+                <div class={`h-full ${STRIPES}`} style={width(row.fromUpstream)} data-tip-title={`From upstream: ${row.fromUpstream}`} data-tip="What Omarchy ships that the upstream releases have too."></div>
+                <div class="h-full bg-emerald-400" style={width(row.added)} data-tip-title={`Omarchy adds: ${row.added}`} data-tip={row.ours}></div>
                 <div class="h-full bg-amber-400" style={width(row.pull)} data-tip-title={`Open pull requests: ${row.pull} more`} data-tip="Not shipped yet, but an open pull request on omarchy-pkgs adds it."></div>
               </div>
               <span class="tabular-nums text-zinc-300">{row.omarchy}{row.pull > 0 && <span class="text-amber-300"> +{row.pull}</span>} <span class="text-zinc-500">/ {summary.models}</span></span>

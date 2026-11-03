@@ -621,6 +621,9 @@
     "ahead": {
       "deviceTree": {
         "omarchy": 24,
+        "fromUpstream": 19,
+        "added": 5,
+        "missing": 0,
         "pull": 1,
         "upstream": 19,
         "channels": {
@@ -631,6 +634,9 @@
       },
       "ids": {
         "omarchy": 30,
+        "fromUpstream": 28,
+        "added": 2,
+        "missing": 0,
         "pull": 2,
         "upstream": 28,
         "channels": {
@@ -641,6 +647,9 @@
       },
       "firmware": {
         "omarchy": 1,
+        "fromUpstream": 1,
+        "added": 0,
+        "missing": 0,
         "pull": 35,
         "upstream": 1,
         "channels": {
@@ -651,6 +660,9 @@
       },
       "all": {
         "omarchy": 1,
+        "fromUpstream": 1,
+        "added": 0,
+        "missing": 0,
         "pull": 17,
         "upstream": 1
       }
