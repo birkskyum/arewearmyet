@@ -46,6 +46,16 @@ const STATES = {
     elsewhere: { label: 'Not carried', tone: 'close', meaning: `One exists, in a newer Linux, a posted patch or out of tree, but Omarchy's kernel doesn't carry it yet. Whoever wrote it had the machine, unless the Machine column says the tree is untested.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: `Doesn't exist yet. An ACPI dump is what one gets written from.` },
   },
+  outOfBox: {
+    stable: { label: 'On stable', tone: 'good', meaning: `A fresh install from Omarchy's stable channel has its device tree, hardware IDs and firmware.` },
+    rc: { label: 'On RC', tone: 'good', meaning: `A fresh install from Omarchy's RC channel has its device tree, hardware IDs and firmware.` },
+    edge: { label: 'On edge', tone: 'good', meaning: `A fresh install from Omarchy's edge channel, the nightly image, has its device tree, hardware IDs and firmware.` },
+    pr: { label: 'After PRs', tone: 'close', meaning: 'Every piece Omarchy still lacks is in an open pull request on omarchy-pkgs.' },
+    carry: { label: 'Needs carrying', tone: 'close', meaning: `Every piece exists, but Omarchy doesn't carry all of them yet.` },
+    'needs-deviceTree': { label: 'Needs a tree', tone: 'wanted', meaning: 'Nobody has written its device tree yet.' },
+    'needs-ids': { label: 'Needs IDs', tone: 'wanted', meaning: `Nobody has sent its hardware IDs yet, so an install image can't pick its device tree.` },
+    'needs-firmware': { label: 'Needs firmware', tone: 'wanted', meaning: `Its firmware has only turned up in Windows so far, so the installer copies it from the laptop's own Windows.` },
+  },
   machine: {
     nobody: { label: 'Nobody has one', tone: 'wanted', meaning: `No device tree, no ACPI dump and no owner report, so nobody we know has one. The machine itself would give its tables, tree, hardware IDs, firmware and the boot test.` },
     untested: { label: 'Tree untested', tone: 'wanted', meaning: `Its device tree was written from an owner's ACPI tables, without the machine, and nobody has booted it yet. An owner booting it, or the machine, confirms it.` },
@@ -120,6 +130,7 @@ const BOOTS_GROUP: Group = { column: 'Boots', question: `Has an owner reached th
 
 // The Omarchy view: what Omarchy's packages ship today
 export const OMARCHY_LEGEND: Group[] = [
+  { column: 'Out of the box', question: 'Whether a fresh Omarchy install has everything it needs, and if not, what it still lacks.', states: Object.values(STATES.outOfBox) as State[] },
   ACPI_GROUP,
   { column: 'Device tree', question: `The description of the hardware that Linux needs for each model, in Omarchy's kernel.`, states: Object.values(STATES.omarchyTree) as State[] },
   { column: 'Hardware IDs', question: `How Omarchy's install image recognises the model and picks its device tree.`, states: Object.values(STATES.omarchyIds) as State[] },
@@ -224,6 +235,24 @@ export function upstreamFirmwareCell(model: Model): Cell {
   return cell(STATES.upstreamFirmware, key, { title: STATES.upstreamFirmware[key].meaning + detail, href: key === 'posted' ? model.upstream.firmwarePosted ?? undefined : undefined });
 }
 
+// "Device tree: open PR #1634. Firmware: in a maker's download." for each piece a fresh install still lacks
+const PIECE_NAMES = { deviceTree: 'Device tree', ids: 'Hardware IDs', firmware: 'Firmware' } as const;
+export function outOfBoxCell(model: Model): Cell {
+  const { state, pieces, missing } = model.outOfBox;
+  const pulls = { deviceTree: model.omarchy.deviceTreePull, ids: model.omarchy.idsPull, firmware: model.omarchy.firmwarePull };
+  const where = (piece: keyof typeof PIECE_NAMES) => {
+    const value = pieces[piece];
+    if (value === 'pr') return `open PR #${pulls[piece]?.number}`;
+    if (value === 'elsewhere') return piece === 'firmware' ? `in a maker's download or on its way to linux-firmware` : 'exists, not carried';
+    if (value === 'none') return piece === 'firmware' ? 'only in Windows' : 'nobody has it yet';
+    return `on ${value}`;
+  };
+  const detail = (missing as (keyof typeof PIECE_NAMES)[]).map((piece) => `${PIECE_NAMES[piece]}: ${where(piece)}.`).join(' ');
+  const key = state as keyof typeof STATES.outOfBox;
+  const pull = state === 'pr' ? (missing as (keyof typeof PIECE_NAMES)[]).map((piece) => pulls[piece]).find(Boolean) : null;
+  return cell(STATES.outOfBox, key, { title: [STATES.outOfBox[key].meaning, detail].filter(Boolean).join(' '), href: pull?.url });
+}
+
 export function machineCell(model: Model): Cell {
   return cell(STATES.machine, model.machine);
 }
@@ -279,6 +308,7 @@ export const FILTERS = {
   hwids: options(STATES.omarchyIds),
   fw: options(STATES.omarchyFirmware),
   machine: options(STATES.machine),
+  ootb: options(STATES.outOfBox),
   acpi: options(STATES.acpi),
   nvidiaOmarchy: options(STATES.nvidiaOmarchy),
   nvidiaLinux: options(STATES.nvidiaLinux),

@@ -271,6 +271,21 @@ function omarchyFirmware(files: string[], download?: string) {
 
 const acpiDumps: { folder: string; url: string }[] = sources.acpiDumps;
 
+// Whether a fresh install works out of the box: all three pieces on a channel (named by the least stable
+// one it takes), once open pull requests land, once Omarchy carries pieces that exist elsewhere, or the
+// first piece nobody has yet
+type Piece = Channel | 'pr' | 'elsewhere' | 'none';
+function outOfBox(pieces: Record<'deviceTree' | 'ids' | 'firmware', Piece>) {
+  const values = Object.values(pieces);
+  const missing = (Object.keys(pieces) as (keyof typeof pieces)[]).filter((piece) => !CHANNELS.includes(pieces[piece] as Channel));
+  const state = values.every((value) => CHANNELS.includes(value as Channel))
+    ? CHANNELS[Math.max(...values.map((value) => CHANNELS.indexOf(value as Channel)))]
+    : values.includes('none') ? `needs-${missing.find((piece) => pieces[piece] === 'none')}`
+    : values.includes('elsewhere') ? 'carry'
+    : 'pr';
+  return { state, pieces, missing };
+}
+
 // Where getting the machine to the team would help: nobody we know has one (no tree, no tables, no report),
 // its tree was written without it and nobody has booted it, or owners report problems the team can't
 // reproduce. Otherwise owners have one to test with, or the team does.
@@ -322,6 +337,25 @@ const rows = models.map((model) => {
     : model.ids_collected ? 'collected'
     : 'missing';
 
+  // What Omarchy's channels ship for it, each piece by the most stable channel that has it
+  const omarchy = {
+    deviceTree: mostStable(variants.map((v) => v.treeChannel)),
+    deviceTreePull: variants.map((v) => v.treePull).find(Boolean) ?? null,
+    ids: mostStable(variants.map((v) => v.idsChannel)),
+    idsPull: variants.map((v) => v.idsPull).find(Boolean) ?? null,
+    firmware: omarchyFw.state,
+    firmwareChannel: omarchyFw.channel,
+    firmwarePackages: omarchyFw.packages,
+    firmwarePull: omarchyFw.pull,
+  };
+  // Each piece: the channel that ships it, an open pull request, somewhere else Omarchy could take it from,
+  // or nowhere yet
+  const pieces = {
+    deviceTree: omarchy.deviceTree ?? (omarchy.deviceTreePull ? 'pr' : deviceTree !== 'missing' ? 'elsewhere' : 'none'),
+    ids: omarchy.ids ?? (omarchy.idsPull ? 'pr' : idsState !== 'missing' ? 'elsewhere' : 'none'),
+    firmware: omarchy.firmwareChannel ?? (omarchy.firmware === 'pr' ? 'pr' : download || ['next-release', 'posted'].includes(firmwareUpstream.state) ? 'elsewhere' : 'none'),
+  };
+
   return {
     id: model.id,
     vendor: model.vendor,
@@ -337,17 +371,8 @@ const rows = models.map((model) => {
     outcome: best(variants.map((v) => v.outcome)),
     reports,
     machine: machineNeed(model, reports, deviceTree, acpi.length > 0),
-    // What Omarchy's channels ship for it, each piece by the most stable channel that has it
-    omarchy: {
-      deviceTree: mostStable(variants.map((v) => v.treeChannel)),
-      deviceTreePull: variants.map((v) => v.treePull).find(Boolean) ?? null,
-      ids: mostStable(variants.map((v) => v.idsChannel)),
-      idsPull: variants.map((v) => v.idsPull).find(Boolean) ?? null,
-      firmware: omarchyFw.state,
-      firmwareChannel: omarchyFw.channel,
-      firmwarePackages: omarchyFw.packages,
-      firmwarePull: omarchyFw.pull,
-    },
+    omarchy,
+    outOfBox: outOfBox(pieces),
     upstream: {
       deviceTree,
       firstRelease,
@@ -400,6 +425,7 @@ const summary = {
   // has no device tree anywhere, posted or out of tree included
   acpi: count(current, (r) => r.upstream.acpi === 'collected'),
   acpiWanted: count(current, (r) => r.upstream.deviceTree === 'missing' && r.upstream.acpi !== 'collected'),
+  outOfBox: Object.fromEntries(['stable', 'rc', 'edge', 'pr', 'carry', 'needs-deviceTree', 'needs-ids', 'needs-firmware'].map((state) => [state, count(current, (r) => r.outOfBox.state === state)])),
   machine: Object.fromEntries(['nobody', 'untested', 'problems', 'owners', 'team'].map((need) => [need, count(current, (r) => r.machine === need)])),
   // How far Omarchy is ahead: each piece in an Omarchy channel, against the releases of Linux, systemd
   // and linux-firmware that any distro can ship, and all three together

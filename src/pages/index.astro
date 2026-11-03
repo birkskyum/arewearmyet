@@ -48,10 +48,14 @@ const aheadRows = [
 ];
 // Upstream's colour, striped, for the part of Omarchy's bar that upstream has too
 const STRIPES = 'bg-[repeating-linear-gradient(-45deg,var(--color-sky-400)_0_3px,color-mix(in_oklab,var(--color-sky-400)_30%,transparent)_3px_6px)]';
+// Out of the box on any channel, and the filter that shows those
+const ootb = summary.outOfBox;
+const ootbDone = ootb.stable + ootb.rc + ootb.edge;
+const OOTB_DONE = 'stable,rc,edge';
 const width = (value: number) => `width: ${(100 * value) / Math.max(summary.models, 1)}%`;
 
 // Left to right in the order a model gets there, with booting last
-const omarchyIds = ['acpi', 'tree', 'hwids', 'fw', 'omarchy', 'machine'] as const;
+const omarchyIds = ['ootb', 'acpi', 'tree', 'hwids', 'fw', 'omarchy', 'machine'] as const;
 const upstreamIds = ['device-tree', 'ids', 'firmware'] as const;
 const snapdragonViews = [
   { id: 'omarchy', label: 'Omarchy', question: `What Omarchy's packages ship today, by the most stable channel that has it.`, columns: OMARCHY_LEGEND.map((group, i) => ({ id: omarchyIds[i], header: group.column, question: group.question, options: FILTERS[omarchyIds[i]] })) },
@@ -115,6 +119,9 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
 
     <Family id="snapdragon" title="Snapdragon X and X2" total={current.length}>
       <p class="max-w-3xl text-sm text-zinc-400">
+        <a class={LINK} href={`/?ootb=${OOTB_DONE}#snapdragon`}>{ootbDone} {ootbDone === 1 ? 'works' : 'work'} out of the box</a> on Omarchy today, <a class={LINK} href="/?ootb=pr#snapdragon">{ootb.pr} more once open pull requests land</a> and <a class={LINK} href="/?ootb=carry#snapdragon">{ootb.carry} once Omarchy carries pieces that exist elsewhere</a>. The others still need <a class={LINK} href="/?ootb=needs-deviceTree#snapdragon">a device tree ({ootb['needs-deviceTree']})</a>, <a class={LINK} href="/?ootb=needs-ids#snapdragon">hardware IDs ({ootb['needs-ids']})</a> or <a class={LINK} href="/?ootb=needs-firmware#snapdragon">firmware from outside Windows ({ootb['needs-firmware']})</a>.
+      </p>
+      <p class="mt-2 max-w-3xl text-sm text-zinc-400">
         <a class={LINK} href="/?omarchy=should#snapdragon">{summary.should} models are ready to test</a> on Omarchy {channel}, and owners have confirmed {summary.works} boot to the desktop and reported problems on {summary.problems}. A machine for the team would help most for the <a class={LINK} href="/?machine=nobody#snapdragon">{summary.machine.nobody} models nobody we know has</a>, the <a class={LINK} href="/?machine=problems#snapdragon">{summary.machine.problems} with problems the team can't reproduce</a> and the <a class={LINK} href="/?machine=untested#snapdragon">{summary.machine.untested} whose tree nobody has booted</a>. Every other device tree was written or booted by someone with the machine. To help a model along, send a hardware report from Windows, the device tree you boot with on Linux, or a boot test, as <a class={LINK} href="/help">Help a model get there</a> explains.
       </p>
       <h3 class="mt-6 text-sm font-semibold text-zinc-200">How far ahead Omarchy is</h3>

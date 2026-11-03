@@ -618,6 +618,16 @@
     "googlebooks": 2,
     "acpi": 33,
     "acpiWanted": 32,
+    "outOfBox": {
+      "stable": 1,
+      "rc": 0,
+      "edge": 0,
+      "pr": 17,
+      "carry": 17,
+      "needs-deviceTree": 32,
+      "needs-ids": 8,
+      "needs-firmware": 8
+    },
     "machine": {
       "nobody": 32,
       "untested": 2,
@@ -717,6 +727,17 @@
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
       },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "edge",
+          "ids": "edge",
+          "firmware": "pr"
+        },
+        "missing": [
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "out-of-tree",
         "firstRelease": null,
@@ -811,6 +832,17 @@
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
       },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "edge",
+          "ids": "edge",
+          "firmware": "pr"
+        },
+        "missing": [
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "out-of-tree",
         "firstRelease": null,
@@ -898,6 +930,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -976,6 +1021,18 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -1071,6 +1128,19 @@
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
       },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "elsewhere",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "posted",
         "firstRelease": null,
@@ -1161,6 +1231,18 @@
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
       },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "out-of-tree",
         "firstRelease": null,
@@ -1250,6 +1332,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -1325,6 +1420,19 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "elsewhere",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -1406,6 +1514,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -1476,6 +1597,19 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "missing",
@@ -1549,6 +1683,19 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "missing",
@@ -1624,6 +1771,19 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-firmware",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "elsewhere",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -1721,6 +1881,17 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "released",
@@ -1894,6 +2065,19 @@
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
       },
+      "outOfBox": {
+        "state": "needs-ids",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "none",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "out-of-tree",
         "firstRelease": null,
@@ -1967,6 +2151,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2037,6 +2234,19 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "missing",
@@ -2113,6 +2323,19 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "elsewhere",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -2218,6 +2441,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2288,6 +2524,19 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "missing",
@@ -2374,6 +2623,19 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "pr",
+          "ids": "pr",
+          "firmware": "elsewhere"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -2477,6 +2739,17 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "released",
@@ -2669,6 +2942,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-ids",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "out-of-tree",
         "firstRelease": null,
@@ -2752,6 +3038,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -2823,6 +3122,19 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "missing",
@@ -2900,6 +3212,18 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "next",
@@ -3003,6 +3327,17 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "rc",
+          "ids": "stable",
+          "firmware": "elsewhere"
+        },
+        "missing": [
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "released",
@@ -3117,6 +3452,19 @@
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
       },
+      "outOfBox": {
+        "state": "needs-ids",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "none",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "posted",
         "firstRelease": null,
@@ -3219,6 +3567,17 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "released",
@@ -3338,6 +3697,17 @@
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
       },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "edge",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "out-of-tree",
         "firstRelease": null,
@@ -3440,6 +3810,17 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "released",
@@ -3552,6 +3933,17 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "released",
@@ -3667,6 +4059,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-ids",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "out-of-tree",
         "firstRelease": null,
@@ -3752,6 +4157,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -3827,6 +4245,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -3899,6 +4330,17 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-firmware",
+        "pieces": {
+          "deviceTree": "rc",
+          "ids": "stable",
+          "firmware": "none"
+        },
+        "missing": [
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "released",
@@ -4018,6 +4460,17 @@
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
       },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "edge",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "posted",
         "firstRelease": null,
@@ -4121,6 +4574,17 @@
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
       },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.16",
@@ -4223,6 +4687,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-ids",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "out-of-tree",
         "firstRelease": null,
@@ -4301,6 +4778,19 @@
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
       },
+      "outOfBox": {
+        "state": "needs-ids",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "none",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "out-of-tree",
         "firstRelease": null,
@@ -4375,6 +4865,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -4446,6 +4949,19 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "missing",
@@ -4525,6 +5041,19 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "elsewhere",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -4610,6 +5139,19 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "elsewhere",
+          "firmware": "elsewhere"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "missing",
@@ -4701,6 +5243,17 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "released",
@@ -4850,6 +5403,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -4922,6 +5488,19 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "missing",
@@ -5000,6 +5579,18 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "stable",
+          "firmware": "elsewhere"
+        },
+        "missing": [
+          "deviceTree",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "next",
@@ -5101,6 +5692,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -5175,6 +5779,19 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "elsewhere",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -5263,6 +5880,19 @@
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
       },
+      "outOfBox": {
+        "state": "needs-ids",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "none",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "posted",
         "firstRelease": null,
@@ -5339,6 +5969,19 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "missing",
@@ -5418,6 +6061,19 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "elsewhere",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "posted",
@@ -5501,6 +6157,19 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-ids",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -5588,6 +6257,17 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "released",
@@ -5713,6 +6393,18 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-firmware",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "stable",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "out-of-tree",
         "firstRelease": null,
@@ -5811,6 +6503,18 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-firmware",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "stable",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -5911,6 +6615,18 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-firmware",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "stable",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "posted",
@@ -6027,6 +6743,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -6099,6 +6828,17 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-firmware",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "none"
+        },
+        "missing": [
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "released",
@@ -6210,6 +6950,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -6285,6 +7038,15 @@
           "linux-firmware-qcom"
         ],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "stable",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "stable"
+        },
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -6457,6 +7219,17 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "elsewhere"
+        },
+        "missing": [
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.11",
@@ -6574,6 +7347,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -6646,6 +7432,19 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "missing",
@@ -6720,6 +7519,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -6790,6 +7602,19 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "missing",
@@ -6869,6 +7694,19 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "elsewhere",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "next",
@@ -6966,6 +7804,18 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-firmware",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "stable",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "next",
@@ -7080,6 +7930,17 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "released",
@@ -7197,6 +8058,17 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "released",
@@ -7316,6 +8188,17 @@
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
       },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.12",
@@ -7428,6 +8311,19 @@
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
       },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "elsewhere",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "out-of-tree",
         "firstRelease": null,
@@ -7523,6 +8419,17 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "pr"
+        },
+        "missing": [
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "released",
@@ -7672,6 +8579,18 @@
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
       },
+      "outOfBox": {
+        "state": "pr",
+        "pieces": {
+          "deviceTree": "rc",
+          "ids": "pr",
+          "firmware": "pr"
+        },
+        "missing": [
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v7.3",
@@ -7779,6 +8698,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -7861,6 +8793,18 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "edge",
+          "ids": "elsewhere",
+          "firmware": "pr"
+        },
+        "missing": [
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "posted",
@@ -7969,6 +8913,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "elsewhere"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -8041,6 +8998,19 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "missing",
@@ -8119,6 +9089,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -8191,6 +9174,17 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-firmware",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "none"
+        },
+        "missing": [
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "released",
@@ -8304,6 +9298,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-ids",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "out-of-tree",
         "firstRelease": null,
@@ -8393,6 +9400,19 @@
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
       },
+      "outOfBox": {
+        "state": "needs-ids",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "none",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "posted",
         "firstRelease": null,
@@ -8478,6 +9498,19 @@
           "number": 2037,
           "title": "Add OEM firmware packages for 33 Snapdragon X machines"
         }
+      },
+      "outOfBox": {
+        "state": "carry",
+        "pieces": {
+          "deviceTree": "elsewhere",
+          "ids": "elsewhere",
+          "firmware": "pr"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "posted",
@@ -8568,6 +9601,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -8641,6 +9687,19 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
@@ -8711,6 +9770,17 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-firmware",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "none"
+        },
+        "missing": [
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "released",
@@ -8817,6 +9887,15 @@
           "linux-firmware-qcom"
         ],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "stable",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "stable"
+        },
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -8945,6 +10024,17 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
+      "outOfBox": {
+        "state": "needs-firmware",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "none"
+        },
+        "missing": [
+          "firmware"
+        ]
+      },
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v6.13",
@@ -9047,6 +10137,17 @@
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-firmware",
+        "pieces": {
+          "deviceTree": "stable",
+          "ids": "stable",
+          "firmware": "none"
+        },
+        "missing": [
+          "firmware"
+        ]
       },
       "upstream": {
         "deviceTree": "released",
