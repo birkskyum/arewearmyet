@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-03T22:55:14.535Z",
+  "collected": "2026-11-03T23:31:14.166Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -3568,12 +3568,116 @@
     ],
     "pulls": [
       {
-        "number": 2075,
-        "title": "linux-omarchy-aarch64: ship the Surface Pro 12in's hardware IDs under its upstream compatible",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2075",
+        "number": 2091,
+        "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
         "draft": true,
-        "deviceTrees": [],
+        "deviceTrees": [
+          {
+            "file": "glymur-hp-elitebook-x-g2q.dts",
+            "model": "HP EliteBook X G2q 14 AI",
+            "compatible": [
+              "hp,elitebook-x-g2q",
+              "qcom,glymur"
+            ]
+          },
+          {
+            "file": "glymur-lenovo-yoga-slim7x.dts",
+            "model": "Lenovo Yoga Slim 7x Gen 11",
+            "compatible": [
+              "lenovo,yoga-slim7x-gen11",
+              "qcom,glymur"
+            ]
+          },
+          {
+            "file": "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
+            "model": "Lenovo ThinkPad T14s Gen 7 (LCD)",
+            "compatible": [
+              "lenovo,thinkpad-t14s-gen7-lcd",
+              "lenovo,thinkpad-t14s-gen7",
+              "qcom,mahua"
+            ]
+          },
+          {
+            "file": "mahua-hp-omnibook-x16.dts",
+            "model": "HP OmniBook X 16-cp1",
+            "compatible": [
+              "hp,omnibook-x16-cp1",
+              "qcom,mahua"
+            ]
+          },
+          {
+            "file": "x1e78100-acer-sfa14-11.dts",
+            "model": "Acer Swift Go Pro AI (SFA14-11)",
+            "compatible": [
+              "acer,swift-go-sfa14-11",
+              "qcom,x1e78100",
+              "qcom,x1e80100"
+            ]
+          },
+          {
+            "file": "x1e80100-samsung-galaxy-book4-edge-14.dts",
+            "model": "Samsung Galaxy Book4 Edge (14 inch)",
+            "compatible": [
+              "samsung,galaxy-book4-edge-14",
+              "samsung,galaxy-book4-edge",
+              "qcom,x1e80100"
+            ]
+          },
+          {
+            "file": "x1e84100-samsung-galaxy-book4-edge-16.dts",
+            "model": "Samsung Galaxy Book4 Edge (16 inch)",
+            "compatible": [
+              "samsung,galaxy-book4-edge-16",
+              "samsung,galaxy-book4-edge",
+              "qcom,x1e80100"
+            ]
+          },
+          {
+            "file": "x1p42100-lenovo-ideapad-slim5x-lcd.dts",
+            "model": "Lenovo IdeaPad Slim 5x 14Q8X9 (LCD)",
+            "compatible": [
+              "lenovo,ideapad-slim5x-lcd",
+              "lenovo,ideapad-5",
+              "qcom,x1p42100"
+            ]
+          },
+          {
+            "file": "x1p42100-lenovo-ideapad-slim5x-oled.dts",
+            "model": "Lenovo IdeaPad Slim 5x 14Q8X9 (OLED)",
+            "compatible": [
+              "lenovo,ideapad-slim5x-oled",
+              "lenovo,ideapad-5",
+              "qcom,x1p42100"
+            ]
+          },
+          {
+            "file": "x1p64100-dell-inspiron-14-plus-5441.dts",
+            "model": "Dell Inspiron 14 Plus 5441",
+            "compatible": [
+              "dell,inspiron-14-plus-5441",
+              "qcom,x1p64100",
+              "qcom,x1e80100"
+            ]
+          }
+        ],
         "ids": [
+          {
+            "file": "mahua-hp-omnibook-x16.json",
+            "compatible": "hp,omnibook-x16-cp1"
+          },
+          {
+            "file": "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
+            "compatible": "lenovo,thinkpad-t14s-gen7-lcd"
+          },
+          {
+            "file": "x1e78100-acer-sfa14-11.json",
+            "compatible": "acer,swift-go-sfa14-11"
+          },
+          {
+            "file": "x1e80100-samsung-galaxy-book4-edge-14.json",
+            "compatible": "samsung,galaxy-book4-edge-14"
+          },
           {
             "file": "x1p42100-microsoft-surface-pro-12in.json",
             "compatible": "microsoft,surface-pro-12in"

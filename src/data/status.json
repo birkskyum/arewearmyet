@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-03T22:55:14.535Z",
+  "collected": "2026-11-03T23:31:14.166Z",
   "linuxNext": "20261103",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -622,8 +622,8 @@
       "stable": 1,
       "rc": 0,
       "edge": 0,
-      "pr": 19,
-      "carry": 15,
+      "pr": 23,
+      "carry": 11,
       "needs-deviceTree": 32,
       "needs-ids": 8,
       "needs-firmware": 8
@@ -642,8 +642,8 @@
         "fromUpstream": 19,
         "added": 7,
         "missing": 0,
-        "pull": 1,
-        "available": 24,
+        "pull": 10,
+        "available": 15,
         "upstream": 19,
         "channels": {
           "stable": 16,
@@ -656,8 +656,8 @@
         "fromUpstream": 28,
         "added": 2,
         "missing": 0,
-        "pull": 2,
-        "available": 12,
+        "pull": 6,
+        "available": 8,
         "upstream": 28,
         "channels": {
           "stable": 28,
@@ -684,8 +684,8 @@
         "fromUpstream": 1,
         "added": 0,
         "missing": 0,
-        "pull": 19,
-        "available": 15,
+        "pull": 23,
+        "available": 11,
         "upstream": 1
       }
     }
@@ -1122,9 +1122,17 @@
       "machine": "linux",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+          "number": 2091,
+          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+        },
         "ids": null,
-        "idsPull": null,
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+          "number": 2091,
+          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+        },
         "firmware": "pr",
         "firmwareChannel": null,
         "firmwarePackages": [],
@@ -1135,10 +1143,10 @@
         }
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "pr",
         "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "elsewhere",
+          "deviceTree": "pr",
+          "ids": "pr",
           "firmware": "pr"
         },
         "missing": [
@@ -1186,8 +1194,16 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+            "number": 2091,
+            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+            "number": 2091,
+            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "stubble": [],
@@ -3451,7 +3467,11 @@
       "machine": "linux",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+          "number": 2091,
+          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+        },
         "ids": null,
         "idsPull": null,
         "firmware": "pr",
@@ -3466,7 +3486,7 @@
       "outOfBox": {
         "state": "needs-ids",
         "pieces": {
-          "deviceTree": "elsewhere",
+          "deviceTree": "pr",
           "ids": "none",
           "firmware": "pr"
         },
@@ -3519,7 +3539,11 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
-          "treePull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+            "number": 2091,
+            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          },
           "idsPull": null,
           "deviceTree": null,
           "firmwareNeeded": [],
@@ -5583,7 +5607,11 @@
       "machine": "linux",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+          "number": 2091,
+          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+        },
         "ids": "stable",
         "idsPull": null,
         "firmware": "download",
@@ -5594,7 +5622,7 @@
       "outOfBox": {
         "state": "carry",
         "pieces": {
-          "deviceTree": "elsewhere",
+          "deviceTree": "pr",
           "ids": "stable",
           "firmware": "elsewhere"
         },
@@ -5629,7 +5657,11 @@
           "computed": "newer",
           "treeChannel": null,
           "idsChannel": "stable",
-          "treePull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+            "number": 2091,
+            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          },
           "idsPull": null,
           "deviceTree": {
             "file": "glymur-hp-elitebook-x-g2q.dts",
@@ -6061,9 +6093,17 @@
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+          "number": 2091,
+          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+        },
         "ids": null,
-        "idsPull": null,
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+          "number": 2091,
+          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+        },
         "firmware": "pr",
         "firmwareChannel": null,
         "firmwarePackages": [],
@@ -6074,10 +6114,10 @@
         }
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "pr",
         "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "elsewhere",
+          "deviceTree": "pr",
+          "ids": "pr",
           "firmware": "pr"
         },
         "missing": [
@@ -6113,8 +6153,16 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+            "number": 2091,
+            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+            "number": 2091,
+            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
@@ -6619,7 +6667,11 @@
       "machine": "linux",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+          "number": 2091,
+          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+        },
         "ids": "stable",
         "idsPull": null,
         "firmware": "windows",
@@ -6630,7 +6682,7 @@
       "outOfBox": {
         "state": "needs-firmware",
         "pieces": {
-          "deviceTree": "elsewhere",
+          "deviceTree": "pr",
           "ids": "stable",
           "firmware": "none"
         },
@@ -6677,7 +6729,11 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": "stable",
-          "treePull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+            "number": 2091,
+            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          },
           "idsPull": null,
           "deviceTree": null,
           "firmwareNeeded": [],
@@ -6707,7 +6763,11 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
-          "treePull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+            "number": 2091,
+            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          },
           "idsPull": null,
           "deviceTree": null,
           "firmwareNeeded": [],
@@ -7694,9 +7754,17 @@
       "machine": "linux",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+          "number": 2091,
+          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+        },
         "ids": null,
-        "idsPull": null,
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+          "number": 2091,
+          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+        },
         "firmware": "pr",
         "firmwareChannel": null,
         "firmwarePackages": [],
@@ -7707,10 +7775,10 @@
         }
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "pr",
         "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "elsewhere",
+          "deviceTree": "pr",
+          "ids": "pr",
           "firmware": "pr"
         },
         "missing": [
@@ -7748,8 +7816,16 @@
           "computed": "newer",
           "treeChannel": null,
           "idsChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+            "number": 2091,
+            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+            "number": 2091,
+            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          },
           "deviceTree": {
             "file": "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
             "firstRelease": null,
@@ -7808,7 +7884,11 @@
       "machine": "linux",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+          "number": 2091,
+          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+        },
         "ids": "stable",
         "idsPull": null,
         "firmware": "windows",
@@ -7819,7 +7899,7 @@
       "outOfBox": {
         "state": "needs-firmware",
         "pieces": {
-          "deviceTree": "elsewhere",
+          "deviceTree": "pr",
           "ids": "stable",
           "firmware": "none"
         },
@@ -7862,7 +7942,11 @@
           "computed": "newer",
           "treeChannel": null,
           "idsChannel": "stable",
-          "treePull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+            "number": 2091,
+            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          },
           "idsPull": null,
           "deviceTree": {
             "file": "glymur-lenovo-yoga-slim7x.dts",
@@ -8577,9 +8661,9 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2075",
-          "number": 2075,
-          "title": "linux-omarchy-aarch64: ship the Surface Pro 12in's hardware IDs under its upstream compatible"
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+          "number": 2091,
+          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
         },
         "firmware": "pr",
         "firmwareChannel": null,
@@ -8642,9 +8726,9 @@
           "idsChannel": null,
           "treePull": null,
           "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2075",
-            "number": 2075,
-            "title": "linux-omarchy-aarch64: ship the Surface Pro 12in's hardware IDs under its upstream compatible"
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+            "number": 2091,
+            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
           },
           "deviceTree": {
             "file": "x1p42100-microsoft-sp12in.dts",
@@ -9399,7 +9483,11 @@
       "machine": "linux",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+          "number": 2091,
+          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+        },
         "ids": null,
         "idsPull": null,
         "firmware": "pr",
@@ -9414,7 +9502,7 @@
       "outOfBox": {
         "state": "needs-ids",
         "pieces": {
-          "deviceTree": "elsewhere",
+          "deviceTree": "pr",
           "ids": "none",
           "firmware": "pr"
         },
@@ -9450,7 +9538,11 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
-          "treePull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+            "number": 2091,
+            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          },
           "idsPull": null,
           "deviceTree": null,
           "firmwareNeeded": [],
@@ -9498,9 +9590,17 @@
       "machine": "team",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+          "number": 2091,
+          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+        },
         "ids": null,
-        "idsPull": null,
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+          "number": 2091,
+          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+        },
         "firmware": "pr",
         "firmwareChannel": null,
         "firmwarePackages": [],
@@ -9511,10 +9611,10 @@
         }
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "pr",
         "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "elsewhere",
+          "deviceTree": "pr",
+          "ids": "pr",
           "firmware": "pr"
         },
         "missing": [
@@ -9553,8 +9653,16 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+            "number": 2091,
+            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
+            "number": 2091,
+            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
