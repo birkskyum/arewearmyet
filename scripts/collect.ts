@@ -75,10 +75,12 @@ async function listDir(repo: string, ref: string, path: string): Promise<string[
   return entries?.map((entry: { name: string }) => entry.name);
 }
 
-// The root node's model and compatible strings of a device tree source
+// The root node's model and compatible strings of a device tree source: the first ones after "/ {", however
+// they are indented, since some trees indent with spaces
 function parseDts(source: string): { model?: string; compatible: string[] } {
-  const model = source.match(/^\tmodel\s*=\s*"([^"]+)"/m)?.[1];
-  const compatibleList = source.match(/^\tcompatible\s*=\s*([^;]+);/m)?.[1] ?? '';
+  const root = source.slice(Math.max(0, source.search(/^\/ \{/m)));
+  const model = root.match(/^[ \t]+model\s*=\s*"([^"]+)"/m)?.[1];
+  const compatibleList = root.match(/^[ \t]+compatible\s*=\s*([^;]+);/m)?.[1] ?? '';
   return { model, compatible: [...compatibleList.matchAll(/"([^"]+)"/g)].map((m) => m[1]) };
 }
 
