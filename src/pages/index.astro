@@ -113,9 +113,9 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
       </div>
     </header>
 
-    <Family id="snapdragon" title="Snapdragon X and X2" parts={outcomeParts(current)} total={current.length}>
+    <Family id="snapdragon" title="Snapdragon X and X2" total={current.length}>
       <p class="max-w-3xl text-sm text-zinc-400">
-        To help a model along, send a hardware report from Windows, the device tree you boot with on Linux, or a boot test, as <a class={LINK} href="/help">Help a model get there</a> explains.
+        <a class={LINK} href="/?omarchy=should#snapdragon">{summary.should} models are ready to test</a> on Omarchy {channel}, and owners have confirmed {summary.works} boot to the desktop and reported problems on {summary.problems}. To help a model along, send a hardware report from Windows, the device tree you boot with on Linux, or a boot test, as <a class={LINK} href="/help">Help a model get there</a> explains.
       </p>
       <h3 class="mt-6 text-sm font-semibold text-zinc-200">How far ahead Omarchy is</h3>
       <p class="mt-1 max-w-3xl text-sm text-zinc-400">Models with each piece in Omarchy, on any channel, against the releases of Linux, systemd and linux-firmware. On Omarchy's bar the striped part comes from upstream, the green part is what Omarchy adds, the amber part is in an open pull request on <a class={LINK} href="https://github.com/omacom/omarchy-pkgs/pulls">omarchy-pkgs</a>, and the grey part exists elsewhere but Omarchy doesn't carry it yet.</p>
@@ -165,7 +165,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
       </div>
     </Family>
 
-    <Family id="snapdragon-8cx" title="Snapdragon 8cx Gen 3" parts={outcomeParts(older)} total={older.length}>
+    <Family id="snapdragon-8cx" title="Snapdragon 8cx Gen 3" total={older.length}>
       <p class="max-w-3xl text-sm text-zinc-400">
         The generation before Snapdragon X. They need the same pieces and use the same views and labels as the models above.
       </p>
