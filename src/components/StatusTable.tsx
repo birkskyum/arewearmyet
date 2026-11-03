@@ -144,6 +144,21 @@ export default function StatusTable(props: Props) {
       model.href,
     ]);
   const filtering = () => filters().length > 0;
+  // The active filters as the bar above the table names them: the column, and each ticked choice with its pill
+  const filterLabel: Record<string, string> = { brand: 'Brand', chip: 'Chip' };
+  const activeFilters = () =>
+    filters()
+      .filter((filter) => filter.id !== 'q')
+      .map((filter) => {
+        const header = headers().find((h) => h.filterColumn === filter.id);
+        const keys = (filter.value as string[]) ?? [];
+        const options = (header?.options ?? []) as Option[];
+        return {
+          id: filter.id,
+          column: filterLabel[filter.id] ?? header?.header ?? filter.id,
+          choices: keys.map((key) => options.find((option) => option.key === key) ?? { key, label: key }),
+        };
+      });
 
   // Switching views drops the filters and sorting on columns the new view doesn't have
   const switchView = (id: string) => {
@@ -247,16 +262,45 @@ export default function StatusTable(props: Props) {
           </div>
         </details>
         <span class="text-sm text-zinc-500">Filter and sort from the column headers.</span>
-        <Show when={filtering()}>
-          <button type="button" onClick={() => setFilters([])} class="rounded-md px-2.5 py-1 text-sm text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800" data-clear>
-            Clear filters
-          </button>
-        </Show>
-        <span class="ml-auto text-sm tabular-nums text-zinc-500" data-count>
+        <span class={`ml-auto text-sm tabular-nums ${filtering() ? 'font-medium text-sky-300' : 'text-zinc-500'}`} data-count>
           {shown()} of {props.rows.length}
         </span>
         <ExportButton name={props.exportName} title={props.exportTitle} header={exportHeader()} rows={exportRows()} />
       </div>
+
+      <Show when={filtering()}>
+        <div class="mt-3 flex flex-wrap items-center gap-2 rounded-lg bg-sky-400/10 px-3 py-2 text-sm ring-1 ring-sky-400/40" data-active-filters>
+          <span class="font-medium text-sky-200">
+            Showing {shown()} of {props.rows.length}, filtered by
+          </span>
+          <For each={activeFilters()}>
+            {(filter) => (
+              <span class="inline-flex items-center gap-1.5 rounded-md bg-zinc-900 py-0.5 pl-2 pr-1 ring-1 ring-zinc-700">
+                <span class="text-xs text-zinc-400">{filter.column}</span>
+                <For each={filter.choices.filter((choice) => choice.tone)}>{(choice) => <span class={`${PILL} ${TONE[choice.tone!]}`}>{choice.label}</span>}</For>
+                <Show when={filter.choices.some((choice) => !choice.tone)}>
+                  <span class="text-zinc-200">{filter.choices.filter((choice) => !choice.tone).map((choice) => choice.label).join(', ')}</span>
+                </Show>
+                <button type="button" aria-label={`Remove the ${filter.column} filter`} class="rounded px-1 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100" onClick={() => setSelected(filter.id, [])} data-remove-filter={filter.id}>
+                  ×
+                </button>
+              </span>
+            )}
+          </For>
+          <Show when={query()}>
+            <span class="inline-flex items-center gap-1.5 rounded-md bg-zinc-900 py-0.5 pl-2 pr-1 ring-1 ring-zinc-700">
+              <span class="text-xs text-zinc-400">Search</span>
+              <span class="text-zinc-200">{query()}</span>
+              <button type="button" aria-label="Clear the search" class="rounded px-1 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100" onClick={() => setQuery('')}>
+                ×
+              </button>
+            </span>
+          </Show>
+          <button type="button" onClick={() => setFilters([])} class="ml-auto rounded-md px-2.5 py-1 text-sm text-sky-100 ring-1 ring-sky-400/50 hover:bg-sky-400/20" data-clear>
+            Clear all
+          </button>
+        </div>
+      </Show>
 
       <div class="mt-4 overflow-x-auto rounded-xl ring-1 ring-zinc-800">
         <table class="w-full text-left text-sm">
@@ -275,7 +319,7 @@ export default function StatusTable(props: Props) {
                     menu.style.left = `${Math.max(8, Math.min(rect.left, innerWidth - 272))}px`;
                   };
                   return (
-                    <th class={header.id === 'brand' ? 'px-4 py-3 font-medium' : 'px-3 py-3 font-medium'} data-tip={header.question} data-tip-title={header.header} aria-sort={direction() === 'asc' ? 'ascending' : direction() === 'desc' ? 'descending' : 'none'}>
+                    <th class={`${header.id === 'brand' ? 'px-4 py-3 font-medium' : 'px-3 py-3 font-medium'} ${header.filterColumn && selected(header.filterColumn).length ? 'bg-sky-400/10 text-sky-200' : ''}`} data-tip={header.question} data-tip-title={header.header} aria-sort={direction() === 'asc' ? 'ascending' : direction() === 'desc' ? 'descending' : 'none'}>
                       <span class="inline-flex items-center gap-1">
                         <button type="button" class="inline-flex items-center gap-1 uppercase tracking-wide hover:text-zinc-100" onClick={table.getColumn(header.id)!.getToggleSortingHandler()} data-sort={header.id}>
                           {header.header}
