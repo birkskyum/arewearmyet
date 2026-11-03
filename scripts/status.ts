@@ -399,14 +399,22 @@ const summary = {
       ids: (r: Row) => r.variants.some((v) => v.ids.some((entry) => entry.matches && entry.firstRelease)),
       firmware: (r: Row) => r.upstream.firmwareUpstream === 'released',
     };
+    // Exists elsewhere, but Omarchy doesn't carry it yet and no pull request adds it: a tree in Linux, linux-next,
+    // a posted patch or out of tree, hardware IDs anywhere, firmware in a maker's download or on its way to linux-firmware
+    const available = {
+      deviceTree: (r: Row) => !omarchy.deviceTree(r) && !pull.deviceTree(r) && r.upstream.deviceTree !== 'missing',
+      ids: (r: Row) => !omarchy.ids(r) && !pull.ids(r) && r.upstream.ids !== 'missing',
+      firmware: (r: Row) => !omarchy.firmware(r) && !pull.firmware(r) && (r.upstream.firmwareDownload !== null || ['next-release', 'posted'].includes(r.upstream.firmwareUpstream)),
+    };
     const pieces = ['deviceTree', 'ids', 'firmware'] as const;
     // Omarchy's count split into what it has from upstream and what it adds, and what upstream has that it lacks
-    const split = (ours: (r: Row) => boolean, theirs: (r: Row) => boolean, open: (r: Row) => boolean, channels?: Record<string, number>) => ({
+    const split = (ours: (r: Row) => boolean, theirs: (r: Row) => boolean, open: (r: Row) => boolean, elsewhere: (r: Row) => boolean, channels?: Record<string, number>) => ({
       omarchy: count(current, ours),
       fromUpstream: count(current, (r) => ours(r) && theirs(r)),
       added: count(current, (r) => ours(r) && !theirs(r)),
       missing: count(current, (r) => theirs(r) && !ours(r)),
       pull: count(current, open),
+      available: count(current, elsewhere),
       upstream: count(current, theirs),
       ...(channels ? { channels } : {}),
     });
@@ -419,11 +427,12 @@ const summary = {
       firmware: (r: Row) => r.omarchy.firmware === 'pr',
     };
     return {
-      ...Object.fromEntries(pieces.map((piece) => [piece, split(omarchy[piece], upstream[piece], pull[piece], byChannel(piece))])),
+      ...Object.fromEntries(pieces.map((piece) => [piece, split(omarchy[piece], upstream[piece], pull[piece], available[piece], byChannel(piece))])),
       all: split(
         (r) => pieces.every((piece) => omarchy[piece](r)),
         (r) => pieces.every((piece) => upstream[piece](r)),
         (r) => pieces.every((piece) => omarchy[piece](r) || pull[piece](r)) && pieces.some((piece) => pull[piece](r)),
+        (r) => pieces.every((piece) => omarchy[piece](r) || pull[piece](r) || available[piece](r)) && pieces.some((piece) => available[piece](r)),
       ),
     };
   })(),

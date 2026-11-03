@@ -625,6 +625,7 @@
         "added": 5,
         "missing": 0,
         "pull": 1,
+        "available": 26,
         "upstream": 19,
         "channels": {
           "stable": 16,
@@ -638,6 +639,7 @@
         "added": 2,
         "missing": 0,
         "pull": 2,
+        "available": 12,
         "upstream": 28,
         "channels": {
           "stable": 28,
@@ -651,6 +653,7 @@
         "added": 0,
         "missing": 0,
         "pull": 35,
+        "available": 6,
         "upstream": 1,
         "channels": {
           "stable": 1,
@@ -664,6 +667,7 @@
         "added": 0,
         "missing": 0,
         "pull": 17,
+        "available": 17,
         "upstream": 1
       }
     }
