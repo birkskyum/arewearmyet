@@ -32,6 +32,8 @@ type Model = {
   bootloader?: 'unlockable' | 'locked';
   linux_image?: 'boots' | 'none';
   discussion?: string;
+  team_has_one?: boolean;
+  devicetree_untested?: boolean;
   notes?: string;
   reports?: Report[];
 };
@@ -269,6 +271,17 @@ function omarchyFirmware(files: string[], download?: string) {
 
 const acpiDumps: { folder: string; url: string }[] = sources.acpiDumps;
 
+// Where getting the machine to the team would help: nobody we know has one (no tree, no tables, no report),
+// its tree was written without it and nobody has booted it, or owners report problems the team can't
+// reproduce. Otherwise owners have one to test with, or the team does.
+function machineNeed(model: Model, reports: Report[], deviceTree: string, acpi: boolean) {
+  if (model.team_has_one) return 'team';
+  if (deviceTree === 'missing' && !acpi && !reports.length) return 'nobody';
+  if (model.devicetree_untested && !reports.some((r) => r.state === 'works')) return 'untested';
+  if (reports.some((r) => r.state === 'problems')) return 'problems';
+  return 'owners';
+}
+
 const rows = models.map((model) => {
   const reports = model.reports ?? [];
   const variants = (model.variants?.length ? model.variants : [{}]).map((variant: Variant) => {
@@ -323,6 +336,7 @@ const rows = models.map((model) => {
     notes: model.notes ?? null,
     outcome: best(variants.map((v) => v.outcome)),
     reports,
+    machine: machineNeed(model, reports, deviceTree, acpi.length > 0),
     // What Omarchy's channels ship for it, each piece by the most stable channel that has it
     omarchy: {
       deviceTree: mostStable(variants.map((v) => v.treeChannel)),
@@ -386,6 +400,7 @@ const summary = {
   // has no device tree anywhere, posted or out of tree included
   acpi: count(current, (r) => r.upstream.acpi === 'collected'),
   acpiWanted: count(current, (r) => r.upstream.deviceTree === 'missing' && r.upstream.acpi !== 'collected'),
+  machine: Object.fromEntries(['nobody', 'untested', 'problems', 'owners', 'team'].map((need) => [need, count(current, (r) => r.machine === need)])),
   // How far Omarchy is ahead: each piece in an Omarchy channel, against the releases of Linux, systemd
   // and linux-firmware that any distro can ship, and all three together
   ahead: (() => {

@@ -21,6 +21,9 @@
 #                  tree sent in to this repository, or a patch URL and #file to cut it out;
 #                  scripts/trees.ts copies posted and out-of-tree trees to device-trees/
 #   discussion     where owners work on it, when that's a separate thread
+#   team_has_one   true when someone on the Omarchy team has the machine
+#   devicetree_untested  true while its tree was written without the machine and nobody
+#                  has booted it on this model yet
 #   boot           android when it starts through Android's bootloader, like a Pixel,
 #                  instead of UEFI; those models get their own section, with
 #   bootloader     unlockable or locked, and
@@ -37,6 +40,7 @@ models:
     vendor: "Acer"
     name: "Aspire 14 AI"
     generation: x1
+    devicetree_untested: true
     released: "2025-06"
     chips: ["X1-26-100"]
     model_numbers: ["A14-11M", "A14-11MT"]
@@ -299,7 +303,7 @@ models:
       - "https://gist.githubusercontent.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3/raw/x1p42100-asus-vivobook-s16-lcd.dts"
       - "https://gist.githubusercontent.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3/raw/x1p42100-asus-vivobook-s16.dtsi"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/2"
-    notes: "A draft device tree, written from two owners' hardware reports, in an OLED and an LCD version. Nobody has booted it yet. Owners boot it with the X Plus Vivobook S 15's device tree, with gaps."
+    notes: "A draft device tree, written from two owners' hardware reports, in an OLED and an LCD version. An owner booted the OLED version on Ubuntu's live USB in November 2026, with the screen, keyboard, touchpad, Bluetooth, USB, HDMI and disk working. Wi-Fi needs board data that linux-firmware doesn't have yet."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s3607q/techspec/
       - https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/
@@ -329,6 +333,7 @@ models:
     vendor: "ASUS"
     name: "Zenbook 14 (2026)"
     generation: x1
+    team_has_one: true
     released: "2026"
     chips: ["X1-26-100"]
     model_numbers: ["UX3480QA"]
@@ -368,6 +373,7 @@ models:
     vendor: "ASUS"
     name: "Ascent QN10"
     generation: x2
+    devicetree_untested: true
     form: desktop
     released: "2026-06"
     chips: ["X2E-88-100"]
@@ -460,6 +466,7 @@ models:
     vendor: "Dell"
     name: "Inspiron 14 Plus 7441"
     generation: x1
+    team_has_one: true
     released: "2024-06"
     chips: ["X1E-80-100", "X1P-64-100"]
     model_numbers: ["7441", "P190G", "P190G001"]
@@ -990,6 +997,7 @@ models:
     vendor: "Lenovo"
     name: "Yoga Slim 7x"
     generation: x1
+    team_has_one: true
     released: "2024-06"
     chips: ["X1E-78-100", "X1P-64-100"]
     model_numbers: ["14Q8X9", "83ED"]
@@ -1153,6 +1161,7 @@ models:
     vendor: "Microsoft"
     name: "Surface Pro 11th Edition"
     generation: x1
+    team_has_one: true
     form: tablet
     released: "2024-06"
     chips: ["X1P-64-100", "X1E-80-100"]
@@ -1200,6 +1209,7 @@ models:
     vendor: "Microsoft"
     name: "Surface Laptop 8 (13.8\")"
     generation: x2
+    team_has_one: true
     released: "2026-06"
     chips: ["X2P-64-100", "X2E-78-100"]
     model_numbers: ["2036", "2138"]
@@ -1303,6 +1313,7 @@ models:
     vendor: "Samsung"
     name: "Galaxy Book4 Edge 14"
     generation: x1
+    team_has_one: true
     released: "2024-06"
     chips: ["X1E-80-100"]
     model_numbers: ["NP940XMA", "NP944XMA", "NT940XMA"]

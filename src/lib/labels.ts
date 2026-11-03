@@ -43,8 +43,15 @@ const STATES = {
     rc: { label: 'RC', tone: 'good', meaning: `Omarchy's RC kernel ships it (linux-omarchy ${channelKernel('rc')}), the one the current install image has.` },
     edge: { label: 'Edge', tone: 'good', meaning: `Omarchy's edge kernel ships it (linux-omarchy ${channelKernel('edge')}), the one the nightly image has.` },
     pr: { label: 'Open PR', tone: 'close', meaning: `An open pull request on omarchy-pkgs adds it to Omarchy's kernel.` },
-    elsewhere: { label: 'Not carried', tone: 'close', meaning: `One exists, in a newer Linux, a posted patch or out of tree, but Omarchy's kernel doesn't carry it yet.` },
+    elsewhere: { label: 'Not carried', tone: 'close', meaning: `One exists, in a newer Linux, a posted patch or out of tree, but Omarchy's kernel doesn't carry it yet. Whoever wrote it had the machine, unless the Machine column says the tree is untested.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: `Doesn't exist yet. An ACPI dump is what one gets written from.` },
+  },
+  machine: {
+    nobody: { label: 'Nobody has one', tone: 'wanted', meaning: `No device tree, no ACPI dump and no owner report, so nobody we know has one. The machine itself would give its tables, tree, hardware IDs, firmware and the boot test.` },
+    untested: { label: 'Tree untested', tone: 'wanted', meaning: `Its device tree was written from an owner's ACPI tables, without the machine, and nobody has booted it yet. An owner booting it, or the machine, confirms it.` },
+    problems: { label: 'Would help', tone: 'close', meaning: `Owners report problems and nobody on the team has one, so each fix waits on a round trip with an owner.` },
+    owners: { label: 'Owners have it', tone: 'muted', meaning: `Someone with the machine wrote its tree or sent its tables, so owners can test it.` },
+    team: { label: 'Team has one', tone: 'good', meaning: 'Someone on the Omarchy team has one.' },
   },
   omarchyIds: {
     stable: { label: 'Stable', tone: 'good', meaning: `Omarchy's stable channel recognises it and picks its device tree, through systemd's list or the IDs Omarchy's kernel adds.` },
@@ -118,6 +125,7 @@ export const OMARCHY_LEGEND: Group[] = [
   { column: 'Hardware IDs', question: `How Omarchy's install image recognises the model and picks its device tree.`, states: Object.values(STATES.omarchyIds) as State[] },
   { column: 'Firmware', question: `Signed files for its audio, sensor and graphics chips, in Omarchy's packages. Booting doesn't need them, but without them there's no sound, battery status, USB-C display, sensors or graphics acceleration.`, states: Object.values(STATES.omarchyFirmware) as State[] },
   BOOTS_GROUP,
+  { column: 'Machine', question: 'Where getting the machine to the Omarchy team would help most.', states: Object.values(STATES.machine) as State[] },
 ];
 
 // The upstream view: what Linux, systemd and linux-firmware have, which every distro gets
@@ -216,6 +224,10 @@ export function upstreamFirmwareCell(model: Model): Cell {
   return cell(STATES.upstreamFirmware, key, { title: STATES.upstreamFirmware[key].meaning + detail, href: key === 'posted' ? model.upstream.firmwarePosted ?? undefined : undefined });
 }
 
+export function machineCell(model: Model): Cell {
+  return cell(STATES.machine, model.machine);
+}
+
 export function acpiCell(model: Model): Cell {
   if (model.upstream.acpi === 'collected') return cell(STATES.acpi, 'collected', { href: model.upstream.acpiUrls[0] });
   return cell(STATES.acpi, model.upstream.deviceTree === 'missing' ? 'wanted' : 'notNeeded');
@@ -266,6 +278,7 @@ export const FILTERS = {
   tree: options(STATES.omarchyTree),
   hwids: options(STATES.omarchyIds),
   fw: options(STATES.omarchyFirmware),
+  machine: options(STATES.machine),
   acpi: options(STATES.acpi),
   nvidiaOmarchy: options(STATES.nvidiaOmarchy),
   nvidiaLinux: options(STATES.nvidiaLinux),

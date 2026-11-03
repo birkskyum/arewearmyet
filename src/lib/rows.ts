@@ -1,7 +1,7 @@
 // Turns models into plain rows for the table island: every label, hover text and sort rank is
 // worked out here at build time, so the browser only receives what it shows
 import status from '../data/status.json';
-import { ANNOUNCED, GENERATION, acpiCell, bootloaderCell, deviceTreeCell, googlebookOmarchyCell, idsCell, linuxImageCell, nvidiaLinuxCell, nvidiaOmarchyCell, omarchyCell, omarchyFirmwareCell, omarchyIdsCell, omarchyTreeCell, upstreamFirmwareCell, type Cell, type Model, type NvidiaModel } from './labels';
+import { ANNOUNCED, GENERATION, acpiCell, bootloaderCell, deviceTreeCell, googlebookOmarchyCell, idsCell, linuxImageCell, machineCell, nvidiaLinuxCell, nvidiaOmarchyCell, omarchyCell, omarchyFirmwareCell, omarchyIdsCell, omarchyTreeCell, upstreamFirmwareCell, type Cell, type Model, type NvidiaModel } from './labels';
 
 export type CellData = Pick<Cell, 'key' | 'label' | 'tone' | 'title' | 'href' | 'rank'> | { key: string; text: string; rank: number };
 export type TableRow = {
@@ -78,6 +78,7 @@ export function snapdragonRows(): TableRow[] {
         hwids: plain(omarchyIdsCell(model)),
         fw: plain(omarchyFirmwareCell(model)),
         omarchy: plain(omarchyCell(model)),
+        machine: plain(machineCell(model)),
         // The upstream view
         'device-tree': plain(deviceTreeCell(model)),
         ids: plain(idsCell(model)),
