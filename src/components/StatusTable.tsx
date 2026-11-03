@@ -24,9 +24,13 @@ import ExportButton from './ExportButton';
 
 type Option = { key: string; label: string; tone?: Tone };
 type Column = { id: string; header: string; question: string; options?: Option[] };
+// A set of status columns the table can switch to, like what Omarchy ships or what's upstream
+type View = { id: string; label: string; question: string; columns: Column[] };
 type Props = {
   rows: TableRow[];
-  columns: Column[];
+  // One set of status columns, or several views to switch between, the first one shown by default
+  columns?: Column[];
+  views?: View[];
   // Filter choices for the Model column, by chip generation
   chips: Option[];
   // Prefix for this table's address parameters; leave out to keep the view out of the address
@@ -75,13 +79,19 @@ function Pill(props: { cell: CellData; column: string }) {
 }
 
 export default function StatusTable(props: Props) {
+  const views: View[] = props.views ?? [{ id: 'default', label: '', question: '', columns: props.columns ?? [] }];
+  const [viewId, setViewId] = createSignal(views[0].id);
+  const view = () => views.find((v) => v.id === viewId()) ?? views[0];
+  const statusColumns = () => view().columns;
+  // Every view's columns exist in the table, so a view switch keeps sorting and counting in one place
+  const allColumns = [...new Map(views.flatMap((v) => v.columns).map((column) => [column.id, column])).values()];
   const helper = createColumnHelper<typeof features, TableRow>();
   const columns = helper.columns([
     helper.accessor('vendor', { id: 'brand', header: 'Brand', sortFn: 'alphanumeric', filterFn: inSet }),
     helper.accessor('name', { id: 'model', header: 'Model', sortFn: 'alphanumeric' }),
     helper.accessor('generation', { id: 'chip', filterFn: inSet }),
     // Status columns filter and count by state, and sort best first by rank
-    ...props.columns.map((column) => helper.accessor((row) => row.cells[column.id]?.key ?? '', { id: column.id, header: column.header, filterFn: inSet, sortFn: byRank, sortDescFirst: false })),
+    ...allColumns.map((column) => helper.accessor((row) => row.cells[column.id]?.key ?? '', { id: column.id, header: column.header, filterFn: inSet, sortFn: byRank, sortDescFirst: false })),
     helper.accessor('search', { id: 'q', filterFn: bySearch }),
   ]);
 
@@ -107,11 +117,12 @@ export default function StatusTable(props: Props) {
 
   const brands = [...new Set(props.rows.map((row) => row.vendor))].sort().map((vendor) => ({ key: vendor, label: vendor }));
   // Every header: what it sorts by, and which column and choices its filter menu uses
-  const headers = [
+  const fixedHeaders = [
     { id: 'brand', header: 'Brand', question: 'Who makes it', filterColumn: 'brand', options: brands as Option[] },
     { id: 'model', header: 'Model', question: 'The model and its variants', filterColumn: props.chips.length ? 'chip' : undefined, options: props.chips },
-    ...props.columns.map((column) => ({ ...column, filterColumn: column.options ? column.id : undefined })),
   ];
+  const headerFor = (column: Column) => ({ ...column, filterColumn: column.options ? column.id : undefined });
+  const headers = () => [...fixedHeaders, ...statusColumns().map(headerFor)];
 
   const selected = (id: string) => (filters().find((filter) => filter.id === id)?.value as string[] | undefined) ?? [];
   const setSelected = (id: string, keys: string[]) => setFilters((current) => [...current.filter((filter) => filter.id !== id), ...(keys.length ? [{ id, value: keys }] : [])]);
@@ -121,18 +132,29 @@ export default function StatusTable(props: Props) {
   const counts = (id: string) => table.getColumn(id)?.getFacetedUniqueValues() ?? new Map<unknown, number>();
   const shown = () => table.getRowModel().rows.length;
   // The spreadsheet holds the rows the table shows, in its order, with the labels it shows
-  const exportHeader = () => ['Brand', 'Model', 'Details', ...props.columns.map((column) => column.header), 'Variants', 'Notes', 'Link'];
+  const exportHeader = () => ['Brand', 'Model', 'Details', ...statusColumns().map((column) => column.header), 'Variants', 'Notes', 'Link'];
   const exportRows = () =>
     table.getRowModel().rows.map(({ original: model }) => [
       model.vendor,
       model.name,
       model.subtitle || null,
-      ...props.columns.map((column) => cellText(model.cells[column.id])),
+      ...statusColumns().map((column) => cellText(model.cells[column.id])),
       model.variants.map((variant) => `${variant.text}: ${variant.state}`).join('; ') || null,
       model.notes,
       model.href,
     ]);
   const filtering = () => filters().length > 0;
+
+  // Switching views drops the filters and sorting on columns the new view doesn't have
+  const switchView = (id: string) => {
+    const kept = new Set(['brand', 'chip', 'q', ...(views.find((v) => v.id === id)?.columns ?? []).map((column) => column.id)]);
+    setFilters((current) => current.filter((filter) => kept.has(filter.id)));
+    setSorting((current) => current.filter((sort) => kept.has(sort.id) || sort.id === 'model'));
+    setViewId(id);
+  };
+  // A page section marked data-views shows the legend of the view in use
+  let root!: HTMLDivElement;
+  onMount(() => createEffect(() => root.closest('[data-views]')?.setAttribute('data-view', viewId())));
 
   // An open menu stays under its filter button when the page scrolls or resizes, or the columns
   // change width after filtering; it closes once the button is off screen
@@ -164,8 +186,10 @@ export default function StatusTable(props: Props) {
   onMount(() => {
     if (props.urlPrefix === undefined) return;
     const prefix = props.urlPrefix;
-    const ids = headers.map((header) => header.filterColumn).filter(Boolean) as string[];
+    const ids = [...fixedHeaders, ...allColumns.map(headerFor)].map((header) => header.filterColumn).filter(Boolean) as string[];
     const params = new URLSearchParams(location.search);
+    const fromAddress = params.get(prefix + 'view');
+    if (fromAddress && views.some((v) => v.id === fromAddress)) setViewId(fromAddress);
     setFilters([
       ...ids.filter((id) => params.get(prefix + id)).map((id) => ({ id, value: params.get(prefix + id)!.split(',') })),
       ...(params.get(prefix + 'q') ? [{ id: 'q', value: params.get(prefix + 'q')!.toLowerCase() }] : []),
@@ -174,7 +198,8 @@ export default function StatusTable(props: Props) {
     if (sort) setSorting([{ id: sort.replace(/^-/, ''), desc: sort.startsWith('-') }]);
     createEffect(() => {
       const next = new URLSearchParams(location.search);
-      for (const key of [...ids, 'q', 'sort']) next.delete(prefix + key);
+      for (const key of [...ids, 'q', 'sort', 'view']) next.delete(prefix + key);
+      if (viewId() !== views[0].id) next.set(prefix + 'view', viewId());
       for (const filter of filters()) next.set(prefix + filter.id, Array.isArray(filter.value) ? filter.value.join(',') : String(filter.value));
       const [first] = sorting();
       if (first) next.set(prefix + 'sort', `${first.desc ? '-' : ''}${first.id}`);
@@ -184,8 +209,28 @@ export default function StatusTable(props: Props) {
   });
 
   return (
-    <div>
+    <div ref={root}>
       <div class="flex flex-wrap items-center gap-3">
+        <Show when={views.length > 1}>
+          <div class="inline-flex rounded-lg bg-zinc-900 p-0.5 ring-1 ring-zinc-700" role="tablist" aria-label="View">
+            <For each={views}>
+              {(v) => (
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={viewId() === v.id}
+                  onClick={() => switchView(v.id)}
+                  data-tip={v.question}
+                  data-tip-title={v.label}
+                  data-view-button={v.id}
+                  class={`rounded-md px-3 py-1 text-sm font-medium ${viewId() === v.id ? 'bg-zinc-100 text-zinc-900' : 'text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100'}`}
+                >
+                  {v.label}
+                </button>
+              )}
+            </For>
+          </div>
+        </Show>
         <input
           type="search"
           placeholder="Search by name or model number"
@@ -217,7 +262,7 @@ export default function StatusTable(props: Props) {
         <table class="w-full text-left text-sm">
           <thead class="bg-zinc-900 text-xs uppercase tracking-wide text-zinc-400">
             <tr>
-              <For each={headers}>
+              <For each={headers()}>
                 {(header) => {
                   const direction = () => (sorting()[0]?.id === header.id ? (sorting()[0].desc ? 'desc' : 'asc') : null);
                   const menuId = `${props.urlPrefix || 'table-'}filter-${header.id}`;
@@ -346,7 +391,7 @@ export default function StatusTable(props: Props) {
                         </p>
                       </Show>
                     </td>
-                    <For each={props.columns}>
+                    <For each={statusColumns()}>
                       {(column) => (
                         <td class="px-3 py-3">
                           <Pill cell={model.cells[column.id]} column={column.header} />

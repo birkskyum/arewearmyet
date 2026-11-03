@@ -1,7 +1,7 @@
 // Turns models into plain rows for the table island: every label, hover text and sort rank is
 // worked out here at build time, so the browser only receives what it shows
 import status from '../data/status.json';
-import { ANNOUNCED, GENERATION, acpiCell, bootloaderCell, deviceTreeCell, firmwareCell, googlebookOmarchyCell, idsCell, linuxImageCell, nvidiaLinuxCell, nvidiaOmarchyCell, omarchyCell, type Cell, type Model, type NvidiaModel } from './labels';
+import { ANNOUNCED, GENERATION, acpiCell, bootloaderCell, deviceTreeCell, googlebookOmarchyCell, idsCell, linuxImageCell, nvidiaLinuxCell, nvidiaOmarchyCell, omarchyCell, omarchyFirmwareCell, omarchyIdsCell, omarchyTreeCell, upstreamFirmwareCell, type Cell, type Model, type NvidiaModel } from './labels';
 
 export type CellData = Pick<Cell, 'key' | 'label' | 'tone' | 'title' | 'href' | 'rank'> | { key: string; text: string; rank: number };
 export type TableRow = {
@@ -72,11 +72,16 @@ export function snapdragonRows(): TableRow[] {
     .filter((model: Model) => model.boot !== 'android')
     .map((model: Model) =>
       modelRow(model, {
+        // The Omarchy view
+        acpi: plain(acpiCell(model)),
+        tree: plain(omarchyTreeCell(model)),
+        hwids: plain(omarchyIdsCell(model)),
+        fw: plain(omarchyFirmwareCell(model)),
         omarchy: plain(omarchyCell(model)),
+        // The upstream view
         'device-tree': plain(deviceTreeCell(model)),
         ids: plain(idsCell(model)),
-        firmware: plain(firmwareCell(model)),
-        acpi: plain(acpiCell(model)),
+        firmware: plain(upstreamFirmwareCell(model)),
       }),
     );
 }

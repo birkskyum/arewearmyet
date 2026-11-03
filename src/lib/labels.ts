@@ -7,9 +7,11 @@ export type NvidiaModel = (typeof status.nvidia)[number];
 
 // A label as the legend shows it; cells reuse its text as their hover title and sort by rank
 type State = { label: string; tone: Tone; meaning: string };
+type Channel = 'stable' | 'rc' | 'edge';
 export type Cell = State & { key: string; title: string; href?: string; rank: number };
 
 const kernel = status.omarchy.kernelBase.replace(/^v/, '');
+const channelKernel = (name: string) => status.omarchy.channels.find((c) => c.name === name)?.kernel ?? '';
 
 const STATES = {
   omarchy: {
@@ -17,7 +19,7 @@ const STATES = {
     should: { label: 'Ready to test', tone: 'close', meaning: `Omarchy's kernel has its device tree and the install image picks it by itself, but no owner has confirmed it boots yet.` },
     problems: { label: 'Problems', tone: 'wanted', meaning: `An owner couldn't get to the Omarchy desktop on the current release without a workaround.` },
     manual: { label: 'Not recognised', tone: 'close', meaning: `Omarchy's kernel has its device tree, but the install image doesn't recognise this model, because systemd has no hardware IDs for it. Its hardware IDs would fix that.` },
-    newer: { label: 'Newer kernel', tone: 'close', meaning: `Linux has its device tree, but Omarchy's kernel (${kernel}) doesn't yet. It's ready to test once Omarchy moves to a newer kernel.` },
+    newer: { label: 'Newer kernel', tone: 'close', meaning: `Its device tree is in Omarchy's edge kernel or a newer Linux, but not in the RC kernel (${status.omarchy.kernel}) yet. It's ready to test once the RC gets it.` },
     none: { label: 'No device tree', tone: 'wanted', meaning: `Nobody has written a device tree for it yet, so Linux can't start on it.` },
   },
   deviceTree: {
@@ -35,13 +37,40 @@ const STATES = {
     mismatch: { label: 'Mismatch', tone: 'close', meaning: `systemd's entry names a different device tree than the kernel's, so it never matches.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: `Not in systemd's list yet.` },
   },
-  firmware: {
-    'linux-firmware': { label: 'linux-firmware', tone: 'good', meaning: `Every file its device tree loads ships in linux-firmware's newest release, so nothing has to be copied.` },
-    download: { label: 'Vendor download', tone: 'good', meaning: `The vendor's driver download has it, so it works even after Windows is wiped.` },
-    'next-release': { label: 'Next release', tone: 'close', meaning: `Merged into linux-firmware, and coming with its next release.` },
-    posted: { label: 'linux-firmware MR', tone: 'close', meaning: 'A merge request with its files is open on linux-firmware, not merged yet.' },
-    partial: { label: 'Partly', tone: 'close', meaning: 'linux-firmware has some of the files its device tree loads; the rest still come from Windows.' },
-    windows: { label: 'Windows only', tone: 'close', meaning: `Copied from the laptop's own Windows today. A link to the vendor's driver download would cover laptops whose Windows is gone.` },
+  // The Omarchy view: what Omarchy's packages ship, by the most stable channel that has it
+  omarchyTree: {
+    stable: { label: 'Stable', tone: 'good', meaning: `Omarchy's stable kernel ships it (linux-omarchy ${channelKernel('stable')}).` },
+    rc: { label: 'RC', tone: 'good', meaning: `Omarchy's RC kernel ships it (linux-omarchy ${channelKernel('rc')}), the one the current install image has.` },
+    edge: { label: 'Edge', tone: 'good', meaning: `Omarchy's edge kernel ships it (linux-omarchy ${channelKernel('edge')}), the one the nightly image has.` },
+    pr: { label: 'Open PR', tone: 'close', meaning: `An open pull request on omarchy-pkgs adds it to Omarchy's kernel.` },
+    elsewhere: { label: 'Not carried', tone: 'close', meaning: `One exists, in a newer Linux, a posted patch or out of tree, but Omarchy's kernel doesn't carry it yet.` },
+    wanted: { label: 'Wanted', tone: 'wanted', meaning: `Doesn't exist yet. An ACPI dump is what one gets written from.` },
+  },
+  omarchyIds: {
+    stable: { label: 'Stable', tone: 'good', meaning: `Omarchy's stable channel recognises it and picks its device tree, through systemd's list or the IDs Omarchy's kernel adds.` },
+    rc: { label: 'RC', tone: 'good', meaning: `Omarchy's RC channel recognises it and picks its device tree, through systemd's list or the IDs Omarchy's kernel adds.` },
+    edge: { label: 'Edge', tone: 'good', meaning: `Omarchy's edge channel recognises it and picks its device tree, through systemd's list or the IDs Omarchy's kernel adds.` },
+    pr: { label: 'Open PR', tone: 'close', meaning: `An open pull request on omarchy-pkgs adds its hardware IDs to Omarchy's kernel.` },
+    elsewhere: { label: 'Not carried', tone: 'close', meaning: `Its hardware IDs exist, in a newer systemd, Ubuntu's stubble or sent in here, but Omarchy doesn't carry them yet.` },
+    mismatch: { label: 'Mismatch', tone: 'close', meaning: `systemd's entry names a different device tree than the kernel's, so it never matches.` },
+    wanted: { label: 'Wanted', tone: 'wanted', meaning: `Nobody has sent its hardware IDs yet.` },
+  },
+  omarchyFirmware: {
+    stable: { label: 'Stable', tone: 'good', meaning: `Every file its device tree loads is in Omarchy's stable packages, from linux-firmware or the maker's own package.` },
+    rc: { label: 'RC', tone: 'good', meaning: `Every file its device tree loads is in Omarchy's RC packages, from linux-firmware or the maker's own package.` },
+    edge: { label: 'Edge', tone: 'good', meaning: `Every file its device tree loads is in Omarchy's edge packages, from linux-firmware or the maker's own package.` },
+    pr: { label: 'Open PR', tone: 'close', meaning: `An open pull request on omarchy-pkgs packages the maker's files.` },
+    partial: { label: 'Partly', tone: 'close', meaning: `Omarchy's packages have some of the files its device tree loads. The installer copies the rest from Windows.` },
+    download: { label: 'Not packaged', tone: 'close', meaning: `The maker's driver download has it, but Omarchy doesn't package it yet. Until then the installer copies it from Windows.` },
+    windows: { label: 'From Windows', tone: 'close', meaning: `Omarchy's installer copies it from the laptop's own Windows. Nobody has found it in a maker's download yet.` },
+  },
+  // The upstream view of firmware: linux-firmware on its own
+  upstreamFirmware: {
+    released: { label: 'Released', tone: 'good', meaning: `Every file its device tree loads is in linux-firmware's newest release (${status.firmwareRelease}).` },
+    'next-release': { label: 'Next release', tone: 'close', meaning: 'Merged into linux-firmware, and coming with its next release.' },
+    posted: { label: 'MR open', tone: 'close', meaning: 'A merge request with its files is open on linux-firmware, not merged yet.' },
+    partial: { label: 'Partly', tone: 'close', meaning: 'linux-firmware has some of the files its device tree loads.' },
+    missing: { label: 'Missing', tone: 'wanted', meaning: `linux-firmware doesn't have its files. It takes them only when the maker submits or signs them off.` },
   },
   acpi: {
     collected: { label: 'Collected', tone: 'good', meaning: `Its ACPI tables are in the aarch64-laptops collection, an owner's hardware report or this board's copy of a dump not merged there yet.` },
@@ -79,12 +108,23 @@ export const ANNOUNCED = STATES.announced as State;
 
 type Group = { column: string; question: string; states: State[] };
 
-export const LEGEND: Group[] = [
-  { column: 'ACPI dump', question: `The laptop's own hardware tables, which a device tree is written from.`, states: Object.values(STATES.acpi) as State[] },
-  { column: 'Device tree', question: 'The description of the hardware that Linux needs for each model.', states: Object.values(STATES.deviceTree) as State[] },
-  { column: 'Hardware IDs', question: 'How an install image recognises the model and picks its device tree.', states: Object.values(STATES.ids) as State[] },
-  { column: 'Firmware', question: `Signed files for its audio, sensor and graphics chips. Booting doesn't need them, but without them there's no sound, battery status, USB-C display, sensors or graphics acceleration. The goal is getting them without the laptop's own Windows.`, states: Object.values(STATES.firmware) as State[] },
-  { column: 'Boots', question: `Has an owner reached the desktop on it? Tested on Omarchy so far, and reports from any distro are welcome. Booting is the first goal for every model; features like suspend and USB4 come next.`, states: Object.values(STATES.omarchy) as State[] },
+const ACPI_GROUP: Group = { column: 'ACPI dump', question: `The laptop's own hardware tables, which a device tree is written from.`, states: Object.values(STATES.acpi) as State[] };
+const BOOTS_GROUP: Group = { column: 'Boots', question: `Has an owner reached the desktop on it? Tested on Omarchy so far, and reports from any distro are welcome. Booting is the first goal for every model; features like suspend and USB4 come next.`, states: Object.values(STATES.omarchy) as State[] };
+
+// The Omarchy view: what Omarchy's packages ship today
+export const OMARCHY_LEGEND: Group[] = [
+  ACPI_GROUP,
+  { column: 'Device tree', question: `The description of the hardware that Linux needs for each model, in Omarchy's kernel.`, states: Object.values(STATES.omarchyTree) as State[] },
+  { column: 'Hardware IDs', question: `How Omarchy's install image recognises the model and picks its device tree.`, states: Object.values(STATES.omarchyIds) as State[] },
+  { column: 'Firmware', question: `Signed files for its audio, sensor and graphics chips, in Omarchy's packages. Booting doesn't need them, but without them there's no sound, battery status, USB-C display, sensors or graphics acceleration.`, states: Object.values(STATES.omarchyFirmware) as State[] },
+  BOOTS_GROUP,
+];
+
+// The upstream view: what Linux, systemd and linux-firmware have, which every distro gets
+export const UPSTREAM_LEGEND: Group[] = [
+  { column: 'Linux', question: 'Its device tree in Linux itself.', states: Object.values(STATES.deviceTree) as State[] },
+  { column: 'systemd', question: `Its hardware IDs in systemd's list, which boot images pick the device tree from.`, states: Object.values(STATES.ids) as State[] },
+  { column: 'linux-firmware', question: 'Its firmware files in linux-firmware.', states: Object.values(STATES.upstreamFirmware) as State[] },
 ];
 
 export const GOOGLEBOOK_LEGEND: Group[] = [
@@ -141,18 +181,39 @@ export function idsCell(model: Model): Cell {
   return cell(STATES.ids, model.upstream.ids === 'mismatch' ? 'mismatch' : 'wanted');
 }
 
-export function firmwareCell(model: Model): Cell {
-  const key = model.upstream.firmware;
-  const meaning = (STATES.firmware[key as keyof typeof STATES.firmware] as State).meaning;
-  const missing = model.upstream.firmwareMissing;
-  const detail =
-    key === 'next-release' ? ` The release after ${status.firmwareRelease} adds ${missing.join(', ')}.` :
-    key === 'partial' ? ` Still missing: ${missing.join(', ')}.` :
-    key === 'linux-firmware' ? ` Checked against release ${status.firmwareRelease}.` :
-    key === 'download' && model.upstream.firmwarePosted ? ' Also sent to linux-firmware as a merge request.' :
-    model.upstream.firmwareAudioOnly ? ' linux-firmware already has its audio setup file.' : '';
-  const href = key === 'download' ? model.upstream.firmwareDownload : key === 'posted' ? model.upstream.firmwarePosted : null;
-  return cell(STATES.firmware, key, { title: meaning + detail, href: href ?? undefined });
+// "#2037: Add OEM firmware packages" after a state's meaning, for cells that link to a pull request
+const pullTitle = (meaning: string, pull: { number: number; title: string } | null) => (pull ? `${meaning} #${pull.number}: ${pull.title}.` : meaning);
+
+export function omarchyTreeCell(model: Model): Cell {
+  const { deviceTree, deviceTreePull } = model.omarchy;
+  if (deviceTree) return cell(STATES.omarchyTree, deviceTree);
+  if (deviceTreePull) return cell(STATES.omarchyTree, 'pr', { href: deviceTreePull.url, title: pullTitle(STATES.omarchyTree.pr.meaning, deviceTreePull) });
+  if (model.upstream.deviceTree === 'missing') return cell(STATES.omarchyTree, 'wanted');
+  return cell(STATES.omarchyTree, 'elsewhere', { href: deviceTreeCell(model).href });
+}
+
+export function omarchyIdsCell(model: Model): Cell {
+  const { ids, idsPull } = model.omarchy;
+  if (ids) return cell(STATES.omarchyIds, ids);
+  if (idsPull) return cell(STATES.omarchyIds, 'pr', { href: idsPull.url, title: pullTitle(STATES.omarchyIds.pr.meaning, idsPull) });
+  if (model.upstream.ids === 'mismatch') return cell(STATES.omarchyIds, 'mismatch');
+  if (model.upstream.ids === 'missing') return cell(STATES.omarchyIds, 'wanted');
+  return cell(STATES.omarchyIds, 'elsewhere', { href: idsCell(model).href });
+}
+
+export function omarchyFirmwareCell(model: Model): Cell {
+  const { firmware, firmwareChannel, firmwarePackages, firmwarePull } = model.omarchy;
+  if (firmwareChannel) return cell(STATES.omarchyFirmware, firmwareChannel, { title: `${STATES.omarchyFirmware[firmwareChannel as Channel].meaning} Packages: ${firmwarePackages.join(', ')}.` });
+  if (firmware === 'pr') return cell(STATES.omarchyFirmware, 'pr', { href: firmwarePull?.url, title: pullTitle(STATES.omarchyFirmware.pr.meaning, firmwarePull) });
+  if (firmware === 'download') return cell(STATES.omarchyFirmware, 'download', { href: model.upstream.firmwareDownload ?? undefined });
+  return cell(STATES.omarchyFirmware, firmware === 'partial' ? 'partial' : 'windows');
+}
+
+export function upstreamFirmwareCell(model: Model): Cell {
+  const key = model.upstream.firmwareUpstream as keyof typeof STATES.upstreamFirmware;
+  const missing = model.upstream.firmwareUpstreamMissing;
+  const detail = key === 'next-release' ? ` The release after ${status.firmwareRelease} adds ${missing.join(', ')}.` : key === 'partial' ? ` Still missing: ${missing.join(', ')}.` : '';
+  return cell(STATES.upstreamFirmware, key, { title: STATES.upstreamFirmware[key].meaning + detail, href: key === 'posted' ? model.upstream.firmwarePosted ?? undefined : undefined });
 }
 
 export function acpiCell(model: Model): Cell {
@@ -201,7 +262,10 @@ export const FILTERS = {
   googlebookDeviceTree: [...releases(googlebooks.map(deviceTreeCell), 'linux-'), ...options(STATES.deviceTree, 'released')],
   bootloader: options(STATES.bootloader),
   linuxImage: options(STATES.linuxImage),
-  firmware: options(STATES.firmware),
+  firmware: options(STATES.upstreamFirmware),
+  tree: options(STATES.omarchyTree),
+  hwids: options(STATES.omarchyIds),
+  fw: options(STATES.omarchyFirmware),
   acpi: options(STATES.acpi),
   nvidiaOmarchy: options(STATES.nvidiaOmarchy),
   nvidiaLinux: options(STATES.nvidiaLinux),

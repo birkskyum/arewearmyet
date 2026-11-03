@@ -6,7 +6,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { parse } from 'yaml';
 
 // The channel whose image people install today
-const OMARCHY_CHANNEL = 'rc';
+const OMARCHY_CHANNEL = 'rc' as const;
 
 type Variant = { model?: string; chip?: string; display?: string; compatible?: string; ids?: string[] };
 type Model = {
@@ -70,7 +70,6 @@ if (!sources.systemdReleases.includes(systemdRelease)) throw new Error(`Omarchy'
 // Where Omarchy's kernel keeps the device trees it adds on top of a Linux release
 const OMARCHY_PATCHES = 'https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/';
 const kernelRank = (release: string | null) => (release ? sources.kernelReleases.indexOf(release) : Infinity);
-const systemdRank = (release: string | null) => (release ? sources.systemdReleases.indexOf(release) : Infinity);
 
 type DeviceTree = { file: string; firstRelease: string | null; inNext: boolean; model?: string; compatible: string[]; firmware?: string[]; patch?: string };
 const deviceTrees: DeviceTree[] = sources.deviceTrees;
@@ -82,8 +81,9 @@ function findDeviceTree(compatible: string | undefined) {
   const added = omarchyAdded.find((dt) => dt.compatible.includes(compatible));
   if (!upstream && !added) return undefined;
   const dt = upstream ?? added!;
-  const inOmarchy = Boolean(added) || kernelRank(dt.firstRelease) <= kernelRank(kernelBase);
-  return { file: dt.file, compatible: dt.compatible, firstRelease: upstream?.firstRelease ?? null, inNext: upstream?.inNext ?? false, upstream: Boolean(upstream), inOmarchy, firmware: dt.firmware ?? [], patch: upstream ? null : added?.patch ?? null };
+  // Omarchy's kernel may carry a tree under its own file name before Linux takes it
+  const files = [...new Set([upstream?.file, added?.file].filter(Boolean) as string[])];
+  return { file: dt.file, files, compatible: dt.compatible, firstRelease: upstream?.firstRelease ?? null, inNext: upstream?.inNext ?? false, upstream: Boolean(upstream), firmware: dt.firmware ?? [], patch: upstream ? null : added?.patch ?? null };
 }
 
 type Ids = { file: string; firstRelease: string | null; inMain: boolean; compatible: string; name: string };
@@ -93,6 +93,35 @@ const stubbleIds: Stubble[] = sources.stubble;
 
 const used = { deviceTrees: new Set<string>(), ids: new Set<string>(), firmware: new Set<string>(), acpi: new Set<string>() };
 
+// What each Omarchy channel ships, read from its packages' file lists, most stable channel first: the
+// device trees in its kernel, the compatibles that systemd's hardware IDs and the kernel's own pick,
+// and every firmware file with the package it comes in
+const CHANNELS = ['stable', 'rc', 'edge'] as const;
+type Channel = (typeof CHANNELS)[number];
+type ChannelSource = { name: string; kernel: string | null; systemd: string | null; deviceTrees: string[]; hwids: string[]; carriedIds: string[]; firmware: Record<string, string[]> };
+const carriedIds: { file: string; name: string; compatible: string }[] = sources.omarchy.carriedIds ?? [];
+const shipped = Object.fromEntries(
+  CHANNELS.map((name) => {
+    const source: ChannelSource | undefined = sources.omarchy.channels.find((c: ChannelSource) => c.name === name);
+    const compatibles = [
+      ...(source?.hwids ?? []).map((file) => systemdIds.find((ids) => ids.file === file)?.compatible),
+      ...(source?.carriedIds ?? []).map((file) => carriedIds.find((ids) => ids.file === file)?.compatible),
+    ];
+    return [name, {
+      trees: new Set(source?.deviceTrees ?? []),
+      ids: new Set(compatibles.filter(Boolean) as string[]),
+      firmware: new Map(Object.entries(source?.firmware ?? {}).flatMap(([pkg, files]) => files.map((file) => [file, pkg] as const))),
+    }];
+  }),
+) as Record<Channel, { trees: Set<string>; ids: Set<string>; firmware: Map<string, string> }>;
+const channelRank = (name: Channel | null) => (name ? CHANNELS.indexOf(name) : Infinity);
+const mostStable = (names: (Channel | null)[]) => [...names].filter(Boolean).sort((a, b) => channelRank(a) - channelRank(b))[0] ?? null;
+
+// Open omarchy-pkgs pull requests that would add a device tree, hardware IDs or firmware files
+type Pull = { number: number; title: string; url: string; draft: boolean; deviceTrees: { file: string; compatible: string[] }[]; ids: { file: string; compatible: string }[]; firmware: string[] };
+const pulls: Pull[] = sources.omarchy.pulls ?? [];
+const pullRef = (pull: Pull | undefined) => (pull ? { url: pull.url, number: pull.number, title: pull.title } : null);
+
 function variantStatus(variant: Variant) {
   const dt = findDeviceTree(variant.compatible);
   if (dt) used.deviceTrees.add(dt.file);
@@ -101,15 +130,26 @@ function variantStatus(variant: Variant) {
   const byCompatible = systemdIds.filter((ids) => compatibles.includes(ids.compatible));
   const ids = [...new Set([...named, ...byCompatible])];
   ids.forEach((entry) => used.ids.add(entry.file));
-  const matching = ids.filter((entry) => compatibles.includes(entry.compatible));
-  const idsInOmarchy = matching.some((entry) => systemdRank(entry.firstRelease) <= systemdRank(systemdRelease));
+  // The first channel whose kernel ships the tree, and whose hardware IDs pick it
+  const treeChannel = dt ? CHANNELS.find((name) => dt.files.some((file) => shipped[name].trees.has(file))) ?? null : null;
+  const idsChannel = CHANNELS.find((name) => compatibles.some((compatible) => shipped[name].ids.has(compatible))) ?? null;
+  const treeCompatible = variant.compatible ? [variant.compatible] : compatibles;
+  const treePull = treeChannel ? undefined : pulls.find((pull) => pull.deviceTrees.some((tree) => tree.compatible.some((compatible) => treeCompatible.includes(compatible))));
+  const idsPull = idsChannel ? undefined : pulls.find((pull) => pull.ids.some((entry) => compatibles.includes(entry.compatible) || treeCompatible.includes(entry.compatible)));
 
-  // Omarchy should boot a model when its kernel has the device tree and systemd's list picks it
-  const computed = dt?.inOmarchy ? (idsInOmarchy ? 'should' : 'manual') : dt ? 'newer' : 'none';
+  // Omarchy should boot a model when the kernel of the channel people install has its device tree and
+  // the hardware IDs there pick it
+  const treeHere = channelRank(treeChannel) <= channelRank(OMARCHY_CHANNEL);
+  const idsHere = channelRank(idsChannel) <= channelRank(OMARCHY_CHANNEL);
+  const computed = treeHere ? (idsHere ? 'should' : 'manual') : dt ? 'newer' : 'none';
   return {
     ...variant,
     computed,
-    deviceTree: dt ? { file: dt.file, firstRelease: dt.firstRelease, inNext: dt.inNext, upstream: dt.upstream, inOmarchy: dt.inOmarchy, patch: dt.patch } : null,
+    treeChannel,
+    idsChannel,
+    treePull: pullRef(treePull),
+    idsPull: pullRef(idsPull),
+    deviceTree: dt ? { file: dt.file, firstRelease: dt.firstRelease, inNext: dt.inNext, upstream: dt.upstream, patch: dt.patch } : null,
     firmwareNeeded: dt?.firmware ?? [],
     ids: ids.map((entry) => ({ file: entry.file, firstRelease: entry.firstRelease, inMain: entry.inMain, matches: compatibles.includes(entry.compatible), compatible: entry.compatible })),
     stubble: stubbleIds.filter((entry) => compatibles.includes(entry.compatible)).map(({ file, state, url }) => ({ file, state, url })),
@@ -199,6 +239,34 @@ function firmwareState(needed: string[], folders: { path: string; files: string[
   if (needed.length && missingMain.length < needed.length) return { state: 'partial', missing: missingMain.map(name) };
   return { state: 'windows', missing: missingMain.map(name) };
 }
+
+// Upstream on its own: whether linux-firmware has every file, in a release, merged for the next one,
+// sent as a merge request, partly, or not at all
+function upstreamFirmware(files: string[], posted?: string) {
+  const name = (file: string) => file.split('/').pop()!;
+  if (files.length && files.every((file) => firmwareReleased.has(file))) return { state: 'released', missing: [] as string[] };
+  if (files.length && files.every((file) => firmwareMain.has(file))) return { state: 'next-release', missing: files.filter((file) => !firmwareReleased.has(file)).map(name) };
+  if (posted) return { state: 'posted', missing: [] as string[] };
+  if (files.some((file) => firmwareMain.has(file))) return { state: 'partial', missing: files.filter((file) => !firmwareMain.has(file)).map(name) };
+  return { state: 'missing', missing: [] as string[] };
+}
+
+// In Omarchy: the first channel whose packages hold every file, from linux-firmware or a maker's package.
+// Otherwise an open pull request that adds the rest, some of the files, a maker's download it could
+// package, or the laptop's own Windows.
+function omarchyFirmware(files: string[], download?: string) {
+  for (const name of CHANNELS) {
+    if (files.length && files.every((file) => shipped[name].firmware.has(file))) {
+      return { state: 'shipped', channel: name as Channel, packages: [...new Set(files.map((file) => shipped[name].firmware.get(file)!))].sort(), pull: null };
+    }
+  }
+  const newest = shipped[CHANNELS[CHANNELS.length - 1]];
+  const pull = files.length ? pulls.find((p) => files.every((file) => newest.firmware.has(file) || p.firmware.includes(file))) : undefined;
+  if (pull) return { state: 'pr', channel: null, packages: [] as string[], pull: pullRef(pull) };
+  const state = files.some((file) => newest.firmware.has(file)) ? 'partial' : download ? 'download' : 'windows';
+  return { state, channel: null, packages: [] as string[], pull: null };
+}
+
 const acpiDumps: { folder: string; url: string }[] = sources.acpiDumps;
 
 const rows = models.map((model) => {
@@ -213,6 +281,10 @@ const rows = models.map((model) => {
   const needed = fromTrees.length ? fromTrees : archivedFirmware(model.id, (model.variants ?? []).map((v: Variant) => v.compatible).filter(Boolean) as string[]);
   const download = model.firmware_download ?? sourcesDownload(model.id, needed);
   const fw = firmwareState(needed, firmware, download, model.firmware_posted);
+  // Models without a device tree fall back to their folder's signed audio DSP image, as firmwareState does
+  const fwFiles = needed.length ? needed : firmware.flatMap((folder) => folder.files.filter((file) => /^qcadsp\d+\.mbn$/.test(file)).map((file) => `${folder.path}/${file}`));
+  const omarchyFw = omarchyFirmware(fwFiles, download);
+  const firmwareUpstream = upstreamFirmware(fwFiles, model.firmware_posted);
   firmware.forEach((folder) => used.firmware.add(folder.path));
   const acpi = (model.acpi ?? []).map((folder) => acpiDumps.find((dump) => dump.folder === folder)).filter(Boolean) as typeof acpiDumps;
   acpi.forEach((dump) => used.acpi.add(dump.folder));
@@ -251,6 +323,17 @@ const rows = models.map((model) => {
     notes: model.notes ?? null,
     outcome: best(variants.map((v) => v.outcome)),
     reports,
+    // What Omarchy's channels ship for it, each piece by the most stable channel that has it
+    omarchy: {
+      deviceTree: mostStable(variants.map((v) => v.treeChannel)),
+      deviceTreePull: variants.map((v) => v.treePull).find(Boolean) ?? null,
+      ids: mostStable(variants.map((v) => v.idsChannel)),
+      idsPull: variants.map((v) => v.idsPull).find(Boolean) ?? null,
+      firmware: omarchyFw.state,
+      firmwareChannel: omarchyFw.channel,
+      firmwarePackages: omarchyFw.packages,
+      firmwarePull: omarchyFw.pull,
+    },
     upstream: {
       deviceTree,
       firstRelease,
@@ -266,6 +349,8 @@ const rows = models.map((model) => {
       firmwareAudioOnly: fw.state === 'windows' && firmware.length > 0,
       firmwareDownload: download ?? null,
       firmwarePosted: model.firmware_posted ?? null,
+      firmwareUpstream: firmwareUpstream.state,
+      firmwareUpstreamMissing: firmwareUpstream.missing,
       firmwareFolders: firmware.map((folder) => folder.path),
       acpi: acpi.length ? 'collected' : 'missing',
       acpiUrls: acpi.map((dump) => dump.url),
@@ -279,6 +364,7 @@ const rows = models.map((model) => {
 });
 
 const count = <T>(items: T[], test: (item: T) => boolean) => items.filter(test).length;
+type Row = (typeof rows)[number];
 const current = rows.filter((row) => row.generation !== '8cx' && row.boot !== 'android');
 const summary = {
   models: current.length,
@@ -300,6 +386,37 @@ const summary = {
   // has no device tree anywhere, posted or out of tree included
   acpi: count(current, (r) => r.upstream.acpi === 'collected'),
   acpiWanted: count(current, (r) => r.upstream.deviceTree === 'missing' && r.upstream.acpi !== 'collected'),
+  // How far Omarchy is ahead: each piece in an Omarchy channel, against the releases of Linux, systemd
+  // and linux-firmware that any distro can ship, and all three together
+  ahead: (() => {
+    const omarchy = {
+      deviceTree: (r: Row) => r.omarchy.deviceTree !== null,
+      ids: (r: Row) => r.omarchy.ids !== null,
+      firmware: (r: Row) => r.omarchy.firmwareChannel !== null,
+    };
+    const upstream = {
+      deviceTree: (r: Row) => r.upstream.deviceTree === 'released',
+      ids: (r: Row) => r.variants.some((v) => v.ids.some((entry) => entry.matches && entry.firstRelease)),
+      firmware: (r: Row) => r.upstream.firmwareUpstream === 'released',
+    };
+    const pieces = ['deviceTree', 'ids', 'firmware'] as const;
+    const byChannel = (piece: (typeof pieces)[number]) =>
+      Object.fromEntries(CHANNELS.map((name) => [name, count(current, (r) => channelRank(piece === 'firmware' ? r.omarchy.firmwareChannel : r.omarchy[piece]) <= channelRank(name))]));
+    // Not shipped yet, but an open omarchy-pkgs pull request adds it
+    const pull = {
+      deviceTree: (r: Row) => !omarchy.deviceTree(r) && r.omarchy.deviceTreePull !== null,
+      ids: (r: Row) => !omarchy.ids(r) && r.omarchy.idsPull !== null,
+      firmware: (r: Row) => r.omarchy.firmware === 'pr',
+    };
+    return {
+      ...Object.fromEntries(pieces.map((piece) => [piece, { omarchy: count(current, omarchy[piece]), pull: count(current, pull[piece]), upstream: count(current, upstream[piece]), channels: byChannel(piece) }])),
+      all: {
+        omarchy: count(current, (r) => pieces.every((piece) => omarchy[piece](r))),
+        pull: count(current, (r) => pieces.every((piece) => omarchy[piece](r) || pull[piece](r)) && pieces.some((piece) => pull[piece](r))),
+        upstream: count(current, (r) => pieces.every((piece) => upstream[piece](r))),
+      },
+    };
+  })(),
 };
 
 // Anything the sources know that no model claims yet, so the list can be completed

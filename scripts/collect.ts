@@ -6,7 +6,7 @@
 // dumps collected by the aarch64-laptops project.
 
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -15,13 +15,15 @@ const SYSTEMD_RELEASES = ['v257', 'v258', 'v259', 'v260', 'v261', 'v262'];
 const DT_PATTERN = /^(x1|hamoa|purwa|glymur|mahua|sc8280xp).*\.dts$/;
 const DT_DIR = 'arch/arm64/boot/dts/qcom';
 const FIRMWARE_SOCS = ['x1e80100', 'x1p42100', 'glymur', 'sc8280xp'];
-// Omarchy's package channels: its own repository carries the kernel, its Arch Linux
-// ARM mirror carries systemd, whose hardware ID list decides which device tree boots
+// Omarchy's package channels: its own repository carries the kernel and the makers' firmware
+// packages, its Arch Linux ARM mirror carries systemd, whose hardware ID list decides which device
+// tree boots, and linux-firmware. Their files databases list what each package installs.
 const OMARCHY_CHANNELS = [
-  { name: 'stable', packages: 'https://pkgs.omarchy.org/stable/aarch64/omarchy.db', core: 'https://arm-stable-mirror.omarchy.org/aarch64/core/core.db' },
-  { name: 'rc', packages: 'https://pkgs.omarchy.org/rc/aarch64/omarchy.db', core: 'https://arm-rc-mirror.omarchy.org/aarch64/core/core.db' },
-  { name: 'edge', packages: 'https://pkgs.omarchy.org/edge/aarch64/omarchy.db', core: 'https://arm-mirror.omarchy.org/aarch64/core/core.db' },
+  { name: 'stable', packages: 'https://pkgs.omarchy.org/stable/aarch64/omarchy.files', core: 'https://arm-stable-mirror.omarchy.org/aarch64/core/core.files' },
+  { name: 'rc', packages: 'https://pkgs.omarchy.org/rc/aarch64/omarchy.files', core: 'https://arm-rc-mirror.omarchy.org/aarch64/core/core.files' },
+  { name: 'edge', packages: 'https://pkgs.omarchy.org/edge/aarch64/omarchy.files', core: 'https://arm-mirror.omarchy.org/aarch64/core/core.files' },
 ];
+const OMARCHY_PKGS = 'omacom/omarchy-pkgs';
 const OMARCHY_KERNEL_RECIPE = 'pkgbuilds/linux-omarchy-aarch64';
 
 function githubToken(): string | undefined {
@@ -188,19 +190,70 @@ async function collectFirmware() {
   return { release, firmwareMain: main, firmwareReleased: released, folders: folders.sort((a, b) => a.path.localeCompare(b.path)) };
 }
 
-// The version of a package in a pacman repository database, or undefined if it isn't there
-async function packageVersion(dbUrl: string, name: string): Promise<string | undefined> {
+// A pacman repository's files database, unpacked into a folder per package (<name>-<version>)
+// that holds its desc and files lists
+async function repository(dbUrl: string): Promise<string | undefined> {
   const response = await fetchRetrying(dbUrl);
   if (!response.ok) return undefined;
-  const file = join(tmpdir(), `arewearmyet-${Buffer.from(dbUrl).toString('base64url')}.db`);
+  const id = Buffer.from(dbUrl).toString('base64url');
+  const file = join(tmpdir(), `arewearmyet-${id}.files`);
+  const dir = join(tmpdir(), `arewearmyet-${id}`);
   writeFileSync(file, Buffer.from(await response.arrayBuffer()));
-  const entries = execFileSync('tar', ['-tf', file], { encoding: 'utf8', maxBuffer: 64 << 20 }).split('\n');
-  const match = entries.map((entry) => entry.match(new RegExp(`^${name}-(\\d[^/]*)/$`))).find(Boolean);
-  return match?.[1];
+  rmSync(dir, { recursive: true, force: true });
+  mkdirSync(dir, { recursive: true });
+  execFileSync('tar', ['-xf', file, '-C', dir]);
+  return dir;
 }
 
-// Device trees the linux-omarchy recipe adds on top of the Linux release it builds
-function omarchyKernelDeviceTrees() {
+type Package = { name: string; version: string; files: string[] };
+
+function packages(dir: string | undefined): Package[] {
+  if (!dir) return [];
+  return readdirSync(dir).map((folder) => {
+    const field = (text: string, key: string) => text.match(new RegExp(`^%${key}%\n([^\n]+)`, 'm'))?.[1] ?? '';
+    const desc = readFileSync(join(dir, folder, 'desc'), 'utf8');
+    const files = existsSync(join(dir, folder, 'files')) ? readFileSync(join(dir, folder, 'files'), 'utf8').split('\n').filter((line) => line && !line.startsWith('%') && !line.endsWith('/')) : [];
+    return { name: field(desc, 'NAME'), version: field(desc, 'VERSION'), files };
+  });
+}
+
+// What a channel ships for Snapdragon PCs: the device trees in its kernel, the hardware ID files
+// in systemd and the ones the kernel package adds, and every Qualcomm laptop firmware file by the
+// package it comes in, under the name the kernel asks for
+function channelContents(repo: Package[], core: Package[]) {
+  const kernel = repo.find((pkg) => pkg.name === 'linux-omarchy');
+  const systemd = core.find((pkg) => pkg.name === 'systemd');
+  const names = (files: string[] | undefined, pattern: RegExp) => (files ?? []).map((path) => path.match(pattern)?.[1]).filter((name): name is string => Boolean(name)).sort();
+  const firmware: Record<string, string[]> = {};
+  for (const pkg of [...repo, ...core.filter((pkg) => pkg.name.startsWith('linux-firmware'))]) {
+    const files = names(pkg.files, new RegExp(`^usr/lib/firmware/(qcom/(?:${FIRMWARE_SOCS.join('|')})/.+?)(?:\\.zst|\\.xz)?$`));
+    if (files.length) firmware[pkg.name] = files;
+  }
+  return {
+    kernel: kernel?.version ?? null,
+    systemd: systemd?.version ?? null,
+    deviceTrees: names(kernel?.files, /^boot\/dtbs\/linux-omarchy\/qcom\/([^/]+)\.dtb$/).map((name) => `${name}.dts`).filter((file) => DT_PATTERN.test(file)),
+    hwids: names(systemd?.files, /^usr\/lib\/systemd\/boot\/hwids\/aa64\/([^/]+\.json)$/),
+    carriedIds: names(kernel?.files, /^usr\/lib\/systemd\/boot\/hwids\/aa64\/linux-omarchy\/([^/]+\.json)$/),
+    firmware,
+  };
+}
+
+// The device trees a kernel patch adds: a new file shows up as a section from /dev/null to b/<path>
+function patchDeviceTrees(text: string) {
+  const trees = [];
+  for (const section of text.split(/^diff --git /m)) {
+    const file = section.match(/^--- \/dev\/null\n\+\+\+ b\/arch\/arm64\/boot\/dts\/qcom\/(\S+)$/m)?.[1];
+    if (!file || !DT_PATTERN.test(file)) continue;
+    const source = section.split('\n').filter((line) => line.startsWith('+') && !line.startsWith('+++')).map((line) => line.slice(1)).join('\n');
+    trees.push({ file, ...parseDts(source) });
+  }
+  return trees;
+}
+
+// Device trees the linux-omarchy recipe adds on top of the Linux release it builds, and the hardware
+// ID files it installs next to systemd's
+function omarchyKernelRecipe() {
   const dir = join(tmpdir(), 'arewearmyet-omarchy-pkgs');
   if (existsSync(join(dir, '.git'))) {
     execFileSync('git', ['-C', dir, 'fetch', '-q', '--depth', '1', 'origin', 'master'], { stdio: 'inherit' });
@@ -212,25 +265,64 @@ function omarchyKernelDeviceTrees() {
   const recipe = join(dir, OMARCHY_KERNEL_RECIPE);
   const added = [];
   for (const patch of readdirSync(recipe).filter((name) => name.endsWith('.patch')).sort()) {
-    // A new file shows up in a patch as a section from /dev/null to b/<path>
-    for (const section of readFileSync(join(recipe, patch), 'utf8').split(/^diff --git /m)) {
-      const file = section.match(/^--- \/dev\/null\n\+\+\+ b\/arch\/arm64\/boot\/dts\/qcom\/(\S+)$/m)?.[1];
-      if (!file || !DT_PATTERN.test(file)) continue;
-      const source = section.split('\n').filter((line) => line.startsWith('+') && !line.startsWith('+++')).map((line) => line.slice(1)).join('\n');
-      added.push({ file, patch, ...parseDts(source) });
+    added.push(...patchDeviceTrees(readFileSync(join(recipe, patch), 'utf8')).map((dt) => ({ ...dt, patch })));
+  }
+  const ids = readdirSync(recipe).filter((name) => name.endsWith('.json')).sort().map((file) => {
+    const entry = JSON.parse(readFileSync(join(recipe, file), 'utf8'));
+    return { file, name: entry.name, compatible: entry.compatible };
+  });
+  return { added, ids };
+}
+
+// Open pull requests on omarchy-pkgs that add what a model needs: a kernel patch with its device tree,
+// a hardware ID file for the kernel package, or a maker's firmware package, by the files it installs
+async function collectOmarchyPulls() {
+  const pulls: any[] = [];
+  for (let page = 1; ; page++) {
+    const batch = (await github(`repos/${OMARCHY_PKGS}/pulls?state=open&per_page=100&page=${page}`)) ?? [];
+    pulls.push(...batch);
+    if (batch.length < 100) break;
+  }
+  const found = [];
+  for (const pull of pulls) {
+    const repo = pull.head.repo?.full_name;
+    if (!repo) continue;
+    const changes: { filename: string; status: string }[] = [];
+    for (let page = 1; ; page++) {
+      const batch = (await github(`repos/${OMARCHY_PKGS}/pulls/${pull.number}/files?per_page=100&page=${page}`)) ?? [];
+      changes.push(...batch);
+      if (batch.length < 100) break;
+    }
+    const deviceTrees = [];
+    const ids = [];
+    const firmware: string[] = [];
+    for (const { filename, status } of changes) {
+      if (status === 'removed') continue;
+      if (filename.startsWith(`${OMARCHY_KERNEL_RECIPE}/`) && /(dts|arm64-qcom).*\.patch$/i.test(filename)) {
+        deviceTrees.push(...patchDeviceTrees(await raw(repo, pull.head.sha, filename)));
+      } else if (filename.startsWith(`${OMARCHY_KERNEL_RECIPE}/`) && filename.endsWith('.json')) {
+        const entry = JSON.parse(await raw(repo, pull.head.sha, filename));
+        ids.push({ file: filename.split('/').pop(), compatible: entry.compatible });
+      } else if (/^pkgbuilds\/[^/]+-firmware\/PKGBUILD$/.test(filename)) {
+        const recipe = await raw(repo, pull.head.sha, filename);
+        firmware.push(...[...recipe.matchAll(/"\$fw"\/'(qcom\/[^']+)'/g)].map((m) => m[1]));
+      }
+    }
+    if (deviceTrees.length || ids.length || firmware.length) {
+      found.push({ number: pull.number, title: pull.title, url: pull.html_url, draft: pull.draft, deviceTrees, ids, firmware: [...new Set(firmware)].sort() });
     }
   }
-  return added;
+  return found;
 }
 
 async function collectOmarchy() {
   const channels = [];
   for (const channel of OMARCHY_CHANNELS) {
-    const kernel = await packageVersion(channel.packages, 'linux-omarchy');
-    const systemd = await packageVersion(channel.core, 'systemd');
-    channels.push({ name: channel.name, kernel: kernel ?? null, systemd: systemd ?? null });
+    const [repo, core] = await Promise.all([repository(channel.packages), repository(channel.core)]);
+    channels.push({ name: channel.name, ...channelContents(packages(repo), packages(core)) });
   }
-  return { channels, kernelAddedDeviceTrees: omarchyKernelDeviceTrees() };
+  const recipe = omarchyKernelRecipe();
+  return { channels, kernelAddedDeviceTrees: recipe.added, carriedIds: recipe.ids, pulls: await collectOmarchyPulls() };
 }
 
 // ACPI dumps from aarch64-laptops, by misc/ folder, from the ARM installer's hardware reports, by
@@ -259,4 +351,4 @@ writeFileSync(
   'data/sources.json',
   JSON.stringify({ collected: new Date().toISOString(), kernelReleases: KERNEL_RELEASES, systemdReleases: SYSTEMD_RELEASES, ...kernel, ...hardwareIds, firmwareRelease: firmware.release, firmware: firmware.folders, firmwareMain: firmware.firmwareMain, firmwareReleased: firmware.firmwareReleased, acpiDumps, omarchy }, null, 2) + '\n',
 );
-console.log(`Omarchy ${omarchy.channels.map((c) => `${c.name} ${c.kernel}/${c.systemd}`).join(', ')}, recipe device trees ${omarchy.kernelAddedDeviceTrees.length}; device trees ${kernel.deviceTrees.length}, systemd IDs ${hardwareIds.systemd.length}, stubble ${hardwareIds.stubble.length}, firmware folders ${firmware.folders.length} (release ${firmware.release}), ACPI dumps ${acpiDumps.length}`);
+console.log(`Omarchy ${omarchy.channels.map((c) => `${c.name} ${c.kernel}/${c.systemd} (${c.deviceTrees.length} trees, ${c.hwids.length}+${c.carriedIds.length} IDs, ${Object.values(c.firmware).flat().length} firmware files)`).join(', ')}, recipe device trees ${omarchy.kernelAddedDeviceTrees.length}, open PRs ${omarchy.pulls.map((pull) => `#${pull.number}`).join(' ')}; device trees ${kernel.deviceTrees.length}, systemd IDs ${hardwareIds.systemd.length}, stubble ${hardwareIds.stubble.length}, firmware folders ${firmware.folders.length} (release ${firmware.release}), ACPI dumps ${acpiDumps.length}`);
