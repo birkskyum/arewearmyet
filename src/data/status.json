@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-04T17:40:25.667Z",
+  "collected": "2026-11-04T22:40:18.140Z",
   "linuxNext": "20261104",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -388,12 +388,14 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-13",
+        "kernel": "7.3-14",
         "systemd": "262.1-1",
         "deviceTrees": [
+          "glymur-asus-zenbook-a14-ux3407na.dts",
           "glymur-asus-zenbook-a16-ux3607oa.dts",
           "glymur-crd.dts",
           "glymur-hp-elitebook-x-g2q.dts",
+          "glymur-hp-omnibook-ultra-kg0xxx.dts",
           "glymur-lenovo-yoga-slim7x.dts",
           "glymur-microsoft-surface-laptop8.dts",
           "hamoa-iot-evk.dts",
@@ -499,6 +501,7 @@
           "x1p64100-dell-latitude-5455.json"
         ],
         "carriedIds": [
+          "glymur-hp-omnibook-ultra-kg0xxx.json",
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
           "x1e78100-acer-sfa14-11.json",
@@ -508,6 +511,159 @@
           "x1p42100-microsoft-surface-pro-12in.json"
         ],
         "firmware": {
+          "acer-aspire-14-ai-firmware": [
+            "qcom/x1p42100/ACER/A14-11M/adsp_dtbs.elf",
+            "qcom/x1p42100/ACER/A14-11M/adspr.jsn",
+            "qcom/x1p42100/ACER/A14-11M/adsps.jsn",
+            "qcom/x1p42100/ACER/A14-11M/adspua.jsn",
+            "qcom/x1p42100/ACER/A14-11M/battmgr.jsn",
+            "qcom/x1p42100/ACER/A14-11M/cdsp_dtbs.elf",
+            "qcom/x1p42100/ACER/A14-11M/cdspr.jsn",
+            "qcom/x1p42100/ACER/A14-11M/qcadsp8380.mbn",
+            "qcom/x1p42100/ACER/A14-11M/qccdsp8380.mbn",
+            "qcom/x1p42100/ACER/A14-11M/qcdxkmsucpurwa.mbn"
+          ],
+          "acer-aspire-16-ai-firmware": [
+            "qcom/x1p42100/ACER/A16-11M/adsp_dtbs.elf",
+            "qcom/x1p42100/ACER/A16-11M/adspr.jsn",
+            "qcom/x1p42100/ACER/A16-11M/adsps.jsn",
+            "qcom/x1p42100/ACER/A16-11M/adspua.jsn",
+            "qcom/x1p42100/ACER/A16-11M/battmgr.jsn",
+            "qcom/x1p42100/ACER/A16-11M/cdsp_dtbs.elf",
+            "qcom/x1p42100/ACER/A16-11M/cdspr.jsn",
+            "qcom/x1p42100/ACER/A16-11M/qcadsp8380.mbn",
+            "qcom/x1p42100/ACER/A16-11M/qccdsp8380.mbn",
+            "qcom/x1p42100/ACER/A16-11M/qcdxkmsucpurwa.mbn"
+          ],
+          "acer-swift-14-ai-firmware": [
+            "qcom/x1e80100/ACER/SF14-11/adsp_dtbs.elf",
+            "qcom/x1e80100/ACER/SF14-11/adspr.jsn",
+            "qcom/x1e80100/ACER/SF14-11/adsps.jsn",
+            "qcom/x1e80100/ACER/SF14-11/adspua.jsn",
+            "qcom/x1e80100/ACER/SF14-11/battmgr.jsn",
+            "qcom/x1e80100/ACER/SF14-11/cdsp_dtbs.elf",
+            "qcom/x1e80100/ACER/SF14-11/cdspr.jsn",
+            "qcom/x1e80100/ACER/SF14-11/qcadsp8380.mbn",
+            "qcom/x1e80100/ACER/SF14-11/qccdsp8380.mbn",
+            "qcom/x1e80100/ACER/SF14-11/qcdxkmsuc8380.mbn"
+          ],
+          "acer-swift-14-go-pro-ai-firmware": [
+            "qcom/x1e80100/ACER/SFA14-11/adsp_dtbs.elf",
+            "qcom/x1e80100/ACER/SFA14-11/adspr.jsn",
+            "qcom/x1e80100/ACER/SFA14-11/adsps.jsn",
+            "qcom/x1e80100/ACER/SFA14-11/adspua.jsn",
+            "qcom/x1e80100/ACER/SFA14-11/battmgr.jsn",
+            "qcom/x1e80100/ACER/SFA14-11/cdsp_dtbs.elf",
+            "qcom/x1e80100/ACER/SFA14-11/cdspr.jsn",
+            "qcom/x1e80100/ACER/SFA14-11/qcadsp8380.mbn",
+            "qcom/x1e80100/ACER/SFA14-11/qccdsp8380.mbn",
+            "qcom/x1e80100/ACER/SFA14-11/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/ACER/SFA14-11/qcvss8380.mbn"
+          ],
+          "acer-swift-go-14-firmware": [
+            "qcom/x1e80100/ACER/SFG14-01/adsp_dtbs.elf",
+            "qcom/x1e80100/ACER/SFG14-01/adspr.jsn",
+            "qcom/x1e80100/ACER/SFG14-01/adsps.jsn",
+            "qcom/x1e80100/ACER/SFG14-01/adspua.jsn",
+            "qcom/x1e80100/ACER/SFG14-01/battmgr.jsn",
+            "qcom/x1e80100/ACER/SFG14-01/cdsp_dtbs.elf",
+            "qcom/x1e80100/ACER/SFG14-01/cdspr.jsn",
+            "qcom/x1e80100/ACER/SFG14-01/qcadsp8380.mbn",
+            "qcom/x1e80100/ACER/SFG14-01/qccdsp8380.mbn",
+            "qcom/x1e80100/ACER/SFG14-01/qcdxkmsuc8380.mbn"
+          ],
+          "asus-proart-pz13-firmware": [
+            "qcom/x1p42100/ASUSTeK/proart-pz13/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/proart-pz13/adspr.jsn",
+            "qcom/x1p42100/ASUSTeK/proart-pz13/adsps.jsn",
+            "qcom/x1p42100/ASUSTeK/proart-pz13/adspua.jsn",
+            "qcom/x1p42100/ASUSTeK/proart-pz13/battmgr.jsn",
+            "qcom/x1p42100/ASUSTeK/proart-pz13/cdsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/proart-pz13/cdspr.jsn",
+            "qcom/x1p42100/ASUSTeK/proart-pz13/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/proart-pz13/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/proart-pz13/qcdxkmsucpurwa.mbn"
+          ],
+          "asus-vivobook-s14-firmware": [
+            "qcom/x1p42100/ASUSTeK/vivobook-s14/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/vivobook-s14/adspr.jsn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s14/adsps.jsn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s14/adspua.jsn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s14/battmgr.jsn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s14/cdsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/vivobook-s14/cdspr.jsn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s14/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s14/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s14/qcdxkmsucpurwa.mbn"
+          ],
+          "asus-vivobook-s15-firmware": [
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/adsp_dtbs.elf",
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/adspr.jsn",
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/adsps.jsn",
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/adspua.jsn",
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/battmgr.jsn",
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/cdsp_dtbs.elf",
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/cdspr.jsn",
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/qcadsp8380.mbn",
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/qccdsp8380.mbn",
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/qcvss8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/adspr.jsn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/adsps.jsn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/adspua.jsn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/battmgr.jsn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/cdsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/cdspr.jsn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s15/qcvss8380.mbn"
+          ],
+          "asus-vivobook-s16-firmware": [
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/adspr.jsn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/adsps.jsn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/adspua.jsn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/battmgr.jsn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/cdsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/cdspr.jsn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/qcvss8380.mbn"
+          ],
+          "asus-zenbook-a14-firmware": [
+            "qcom/x1e80100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+            "qcom/x1e80100/ASUSTeK/zenbook-a14/adspr.jsn",
+            "qcom/x1e80100/ASUSTeK/zenbook-a14/adsps.jsn",
+            "qcom/x1e80100/ASUSTeK/zenbook-a14/adspua.jsn",
+            "qcom/x1e80100/ASUSTeK/zenbook-a14/battmgr.jsn",
+            "qcom/x1e80100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf",
+            "qcom/x1e80100/ASUSTeK/zenbook-a14/cdspr.jsn",
+            "qcom/x1e80100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+            "qcom/x1e80100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+            "qcom/x1e80100/ASUSTeK/zenbook-a14/qcdxkmsuc8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/adspr.jsn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/adsps.jsn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/adspua.jsn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/battmgr.jsn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/cdspr.jsn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn"
+          ],
+          "asus-zenbook-a14-x2-firmware": [
+            "qcom/glymur/ASUSTeK/UX3407NA/adsp_dtbs.elf",
+            "qcom/glymur/ASUSTeK/UX3407NA/adspr.jsn",
+            "qcom/glymur/ASUSTeK/UX3407NA/adsps.jsn",
+            "qcom/glymur/ASUSTeK/UX3407NA/adspua.jsn",
+            "qcom/glymur/ASUSTeK/UX3407NA/cdsp_dtbs.elf",
+            "qcom/glymur/ASUSTeK/UX3407NA/qcadsp8480.mbn",
+            "qcom/glymur/ASUSTeK/UX3407NA/qccdsp8480.mbn"
+          ],
           "asus-zenbook-a16-audio": [
             "qcom/glymur/GLYMUR-ASUS-Zenbook-A16-UX3607OA-tplg.bin"
           ],
@@ -516,6 +672,244 @@
             "qcom/glymur/ASUSTeK/UX3607OA/cdsp_dtbs.elf",
             "qcom/glymur/ASUSTeK/UX3607OA/qcadsp8480.mbn",
             "qcom/glymur/ASUSTeK/UX3607OA/qccdsp8480.mbn"
+          ],
+          "dell-inspiron-14-5441-firmware": [
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/adsp_dtbs.elf",
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/adspr.jsn",
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/adsps.jsn",
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/adspua.jsn",
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/battmgr.jsn",
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/cdsp_dtbs.elf",
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/cdspr.jsn",
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/qcadsp8380.mbn",
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/qccdsp8380.mbn",
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/qcvss8380.mbn"
+          ],
+          "dell-inspiron-14-plus-7441-firmware": [
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/adsp_dtbs.elf",
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/adspr.jsn",
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/adsps.jsn",
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/adspua.jsn",
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/battmgr.jsn",
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/cdsp_dtbs.elf",
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/cdspr.jsn",
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/qcadsp8380.mbn",
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/qccdsp8380.mbn",
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/qcvss8380.mbn"
+          ],
+          "dell-latitude-5455-firmware": [
+            "qcom/x1e80100/dell/latitude-5455/adsp_dtbs.elf",
+            "qcom/x1e80100/dell/latitude-5455/adspr.jsn",
+            "qcom/x1e80100/dell/latitude-5455/adsps.jsn",
+            "qcom/x1e80100/dell/latitude-5455/adspua.jsn",
+            "qcom/x1e80100/dell/latitude-5455/battmgr.jsn",
+            "qcom/x1e80100/dell/latitude-5455/cdsp_dtbs.elf",
+            "qcom/x1e80100/dell/latitude-5455/cdspr.jsn",
+            "qcom/x1e80100/dell/latitude-5455/qcadsp8380.mbn",
+            "qcom/x1e80100/dell/latitude-5455/qccdsp8380.mbn",
+            "qcom/x1e80100/dell/latitude-5455/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/dell/latitude-5455/qcvss8380.mbn"
+          ],
+          "dell-latitude-7455-firmware": [
+            "qcom/x1e80100/dell/latitude-7455/adsp_dtbs.elf",
+            "qcom/x1e80100/dell/latitude-7455/adspr.jsn",
+            "qcom/x1e80100/dell/latitude-7455/adsps.jsn",
+            "qcom/x1e80100/dell/latitude-7455/adspua.jsn",
+            "qcom/x1e80100/dell/latitude-7455/battmgr.jsn",
+            "qcom/x1e80100/dell/latitude-7455/cdsp_dtbs.elf",
+            "qcom/x1e80100/dell/latitude-7455/cdspr.jsn",
+            "qcom/x1e80100/dell/latitude-7455/qcadsp8380.mbn",
+            "qcom/x1e80100/dell/latitude-7455/qccdsp8380.mbn",
+            "qcom/x1e80100/dell/latitude-7455/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/dell/latitude-7455/qcvss8380.mbn"
+          ],
+          "dell-xps-13-9345-firmware": [
+            "qcom/x1e80100/dell/xps13-9345/qcvss8380.mbn"
+          ],
+          "honor-magicbook-art-14-firmware": [
+            "qcom/x1e80100/HONOR/MRO-XXX/adsp_dtbs.elf",
+            "qcom/x1e80100/HONOR/MRO-XXX/qcadsp8380.mbn",
+            "qcom/x1e80100/HONOR/MRO-XXX/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/HONOR/MRO-XXX/qcvss8380.mbn"
+          ],
+          "hp-elitebook-6-g1q-firmware": [
+            "qcom/x1p42100/hp/elitebook-6-g1q/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/elitebook-6-g1q/adspr.jsn",
+            "qcom/x1p42100/hp/elitebook-6-g1q/adsps.jsn",
+            "qcom/x1p42100/hp/elitebook-6-g1q/adspua.jsn",
+            "qcom/x1p42100/hp/elitebook-6-g1q/battmgr.jsn",
+            "qcom/x1p42100/hp/elitebook-6-g1q/cdsp_dtbs.elf",
+            "qcom/x1p42100/hp/elitebook-6-g1q/cdspr.jsn",
+            "qcom/x1p42100/hp/elitebook-6-g1q/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/elitebook-6-g1q/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/elitebook-6-g1q/qcdxkmsucpurwa.mbn"
+          ],
+          "hp-elitebook-ultra-g1q-firmware": [
+            "qcom/x1e80100/hp/elitebook-ultra-g1q/adsp_dtbs.elf",
+            "qcom/x1e80100/hp/elitebook-ultra-g1q/adspr.jsn",
+            "qcom/x1e80100/hp/elitebook-ultra-g1q/adsps.jsn",
+            "qcom/x1e80100/hp/elitebook-ultra-g1q/adspua.jsn",
+            "qcom/x1e80100/hp/elitebook-ultra-g1q/battmgr.jsn",
+            "qcom/x1e80100/hp/elitebook-ultra-g1q/cdsp_dtbs.elf",
+            "qcom/x1e80100/hp/elitebook-ultra-g1q/cdspr.jsn",
+            "qcom/x1e80100/hp/elitebook-ultra-g1q/qcadsp8380.mbn",
+            "qcom/x1e80100/hp/elitebook-ultra-g1q/qccdsp8380.mbn",
+            "qcom/x1e80100/hp/elitebook-ultra-g1q/qcdxkmsuc8380.mbn"
+          ],
+          "hp-elitebook-x-g2q-firmware": [
+            "qcom/glymur/hp/elitebook-x-g2q/adsp_dtbs.elf",
+            "qcom/glymur/hp/elitebook-x-g2q/adspr.jsn",
+            "qcom/glymur/hp/elitebook-x-g2q/adsps.jsn",
+            "qcom/glymur/hp/elitebook-x-g2q/adspua.jsn",
+            "qcom/glymur/hp/elitebook-x-g2q/cdsp_dtbs.elf",
+            "qcom/glymur/hp/elitebook-x-g2q/qcadsp8480.mbn",
+            "qcom/glymur/hp/elitebook-x-g2q/qccdsp8480.mbn",
+            "qcom/glymur/hp/elitebook-x-g2q/soccpr.jsn"
+          ],
+          "hp-omnibook-5-16-bf1-firmware": [
+            "qcom/glymur/HP/omnibook-5-16-bf1xxx/adsp_dtbs.elf",
+            "qcom/glymur/HP/omnibook-5-16-bf1xxx/adspr.jsn",
+            "qcom/glymur/HP/omnibook-5-16-bf1xxx/adsps.jsn",
+            "qcom/glymur/HP/omnibook-5-16-bf1xxx/adspua.jsn",
+            "qcom/glymur/HP/omnibook-5-16-bf1xxx/cdsp_dtbs.elf",
+            "qcom/glymur/HP/omnibook-5-16-bf1xxx/qcadsp8480.mbn",
+            "qcom/glymur/HP/omnibook-5-16-bf1xxx/qccdsp8480.mbn"
+          ],
+          "hp-omnibook-5-firmware": [
+            "qcom/x1p42100/hp/omnibook-5/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-5/adspr.jsn",
+            "qcom/x1p42100/hp/omnibook-5/adsps.jsn",
+            "qcom/x1p42100/hp/omnibook-5/adspua.jsn",
+            "qcom/x1p42100/hp/omnibook-5/battmgr.jsn",
+            "qcom/x1p42100/hp/omnibook-5/cdsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-5/cdspr.jsn",
+            "qcom/x1p42100/hp/omnibook-5/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-5/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-5/qcdxkmsucpurwa.mbn"
+          ],
+          "hp-omnibook-ultra-14-firmware": [
+            "qcom/glymur/hp/omnibook-ultra-14-kg0xxx/adsp_dtbs.elf",
+            "qcom/glymur/hp/omnibook-ultra-14-kg0xxx/adspr.jsn",
+            "qcom/glymur/hp/omnibook-ultra-14-kg0xxx/adsps.jsn",
+            "qcom/glymur/hp/omnibook-ultra-14-kg0xxx/adspua.jsn",
+            "qcom/glymur/hp/omnibook-ultra-14-kg0xxx/cdsp_dtbs.elf",
+            "qcom/glymur/hp/omnibook-ultra-14-kg0xxx/qcadsp8480.mbn",
+            "qcom/glymur/hp/omnibook-ultra-14-kg0xxx/qccdsp8480.mbn"
+          ],
+          "hp-omnibook-x14-firmware": [
+            "qcom/x1e80100/hp/omnibook-x14/adsp_dtbs.elf",
+            "qcom/x1e80100/hp/omnibook-x14/adspr.jsn",
+            "qcom/x1e80100/hp/omnibook-x14/adsps.jsn",
+            "qcom/x1e80100/hp/omnibook-x14/adspua.jsn",
+            "qcom/x1e80100/hp/omnibook-x14/battmgr.jsn",
+            "qcom/x1e80100/hp/omnibook-x14/cdsp_dtbs.elf",
+            "qcom/x1e80100/hp/omnibook-x14/cdspr.jsn",
+            "qcom/x1e80100/hp/omnibook-x14/qcadsp8380.mbn",
+            "qcom/x1e80100/hp/omnibook-x14/qccdsp8380.mbn",
+            "qcom/x1e80100/hp/omnibook-x14/qcdxkmsuc8380.mbn",
+            "qcom/x1p42100/hp/omnibook-x14/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-x14/adspr.jsn",
+            "qcom/x1p42100/hp/omnibook-x14/adsps.jsn",
+            "qcom/x1p42100/hp/omnibook-x14/adspua.jsn",
+            "qcom/x1p42100/hp/omnibook-x14/battmgr.jsn",
+            "qcom/x1p42100/hp/omnibook-x14/cdsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-x14/cdspr.jsn",
+            "qcom/x1p42100/hp/omnibook-x14/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-x14/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-x14/qcdxkmsucpurwa.mbn"
+          ],
+          "hp-omnibook-x16-firmware": [
+            "qcom/glymur/hp/omnibook-x16/adsp_dtbs.elf",
+            "qcom/glymur/hp/omnibook-x16/adspr.jsn",
+            "qcom/glymur/hp/omnibook-x16/adsps.jsn",
+            "qcom/glymur/hp/omnibook-x16/adspua.jsn",
+            "qcom/glymur/hp/omnibook-x16/cdsp_dtbs.elf",
+            "qcom/glymur/hp/omnibook-x16/qcadsp8480.mbn",
+            "qcom/glymur/hp/omnibook-x16/qccdsp8480.mbn"
+          ],
+          "lenovo-ideacentre-mini-x-firmware": [
+            "qcom/x1e80100/LENOVO/91B6/adsp_dtbs.elf",
+            "qcom/x1e80100/LENOVO/91B6/adspr.jsn",
+            "qcom/x1e80100/LENOVO/91B6/adsps.jsn",
+            "qcom/x1e80100/LENOVO/91B6/adspua.jsn",
+            "qcom/x1e80100/LENOVO/91B6/battmgr.jsn",
+            "qcom/x1e80100/LENOVO/91B6/cdsp_dtbs.elf",
+            "qcom/x1e80100/LENOVO/91B6/cdspr.jsn",
+            "qcom/x1e80100/LENOVO/91B6/qcadsp8380.mbn",
+            "qcom/x1e80100/LENOVO/91B6/qccdsp8380.mbn",
+            "qcom/x1e80100/LENOVO/91B6/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/LENOVO/91B6/qcvss8380.mbn"
+          ],
+          "lenovo-thinkpad-t14s-gen7-firmware": [
+            "qcom/glymur/LENOVO/22A8/adsp_dtbs.elf",
+            "qcom/glymur/LENOVO/22A8/adspr.jsn",
+            "qcom/glymur/LENOVO/22A8/adsps.jsn",
+            "qcom/glymur/LENOVO/22A8/adspua.jsn",
+            "qcom/glymur/LENOVO/22A8/cdsp_dtbs.elf",
+            "qcom/glymur/LENOVO/22A8/qcadsp8480.mbn",
+            "qcom/glymur/LENOVO/22A8/qccdsp8480.mbn"
+          ],
+          "medion-sprchrgd-14-s1-firmware": [
+            "qcom/x1e80100/Medion/sprchrgd-14-s1/adsp_dtbs.elf",
+            "qcom/x1e80100/Medion/sprchrgd-14-s1/cdsp_dtbs.elf",
+            "qcom/x1e80100/Medion/sprchrgd-14-s1/qcadsp8380.mbn",
+            "qcom/x1e80100/Medion/sprchrgd-14-s1/qccdsp8380.mbn",
+            "qcom/x1e80100/Medion/sprchrgd-14-s1/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/Medion/sprchrgd-14-s1/qcvss8380.mbn"
+          ],
+          "microsoft-surface-laptop-7-firmware": [
+            "qcom/x1e80100/microsoft/Romulus/adsp_dtbs.elf",
+            "qcom/x1e80100/microsoft/Romulus/adspr.jsn",
+            "qcom/x1e80100/microsoft/Romulus/adsps.jsn",
+            "qcom/x1e80100/microsoft/Romulus/adspua.jsn",
+            "qcom/x1e80100/microsoft/Romulus/battmgr.jsn",
+            "qcom/x1e80100/microsoft/Romulus/cdsp_dtbs.elf",
+            "qcom/x1e80100/microsoft/Romulus/cdspr.jsn",
+            "qcom/x1e80100/microsoft/Romulus/qcadsp8380.mbn",
+            "qcom/x1e80100/microsoft/Romulus/qccdsp8380.mbn",
+            "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn"
+          ],
+          "microsoft-surface-laptop-8-firmware": [
+            "qcom/glymur/microsoft/mahua/adsp_dtbs.elf",
+            "qcom/glymur/microsoft/mahua/adspr.jsn",
+            "qcom/glymur/microsoft/mahua/adsps.jsn",
+            "qcom/glymur/microsoft/mahua/adspua.jsn",
+            "qcom/glymur/microsoft/mahua/cdsp_dtbs.elf",
+            "qcom/glymur/microsoft/mahua/qcadsp8480.mbn",
+            "qcom/glymur/microsoft/mahua/qccdsp8480.mbn"
+          ],
+          "microsoft-surface-pro-11-firmware": [
+            "qcom/x1e80100/microsoft/Denali/adsp_dtb.mbn",
+            "qcom/x1e80100/microsoft/Denali/adspr.jsn",
+            "qcom/x1e80100/microsoft/Denali/adsps.jsn",
+            "qcom/x1e80100/microsoft/Denali/adspua.jsn",
+            "qcom/x1e80100/microsoft/Denali/battmgr.jsn",
+            "qcom/x1e80100/microsoft/Denali/cdsp_dtb.mbn",
+            "qcom/x1e80100/microsoft/Denali/cdspr.jsn",
+            "qcom/x1e80100/microsoft/Denali/qcadsp8380.mbn",
+            "qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn",
+            "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn"
+          ],
+          "microsoft-surface-pro-12in-firmware": [
+            "qcom/x1p42100/Microsoft/Surface12/adsp_dtbs.elf",
+            "qcom/x1p42100/Microsoft/Surface12/adspr.jsn",
+            "qcom/x1p42100/Microsoft/Surface12/adsps.jsn",
+            "qcom/x1p42100/Microsoft/Surface12/adspua.jsn",
+            "qcom/x1p42100/Microsoft/Surface12/battmgr.jsn",
+            "qcom/x1p42100/Microsoft/Surface12/cdsp_dtbs.elf",
+            "qcom/x1p42100/Microsoft/Surface12/cdspr.jsn",
+            "qcom/x1p42100/Microsoft/Surface12/qcadsp8380.mbn",
+            "qcom/x1p42100/Microsoft/Surface12/qccdsp8380.mbn",
+            "qcom/x1p42100/Microsoft/Surface12/qcdxkmsucpurwa.mbn"
+          ],
+          "samsung-galaxy-book4-edge-firmware": [
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/cdsp_dtbs.elf",
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn",
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn",
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcdxkmsuc8380.mbn"
           ],
           "surface-laptop-8-support": [
             "qcom/glymur/GLYMUR-Microsoft-Surface-Laptop-8-tplg.bin"
@@ -629,48 +1023,48 @@
     "problems": 6,
     "notYet": 64,
     "deviceTree": 51,
-    "ids": 44,
+    "ids": 45,
     "firmware": 42,
     "googlebooks": 2,
-    "acpi": 33,
+    "acpi": 34,
     "acpiWanted": 32,
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 0,
-      "pr": 23,
-      "carry": 11,
+      "edge": 25,
+      "pr": 0,
+      "carry": 10,
       "needs-deviceTree": 32,
-      "needs-ids": 8,
+      "needs-ids": 7,
       "needs-firmware": 8
     },
     "machine": {
       "nobody": 32,
       "untested": 2,
       "problems": 3,
-      "linux": 32,
-      "omarchy": 8,
+      "linux": 31,
+      "omarchy": 9,
       "team": 6
     },
     "ahead": {
       "deviceTree": {
-        "omarchy": 35,
+        "omarchy": 37,
         "fromUpstream": 19,
-        "added": 16,
+        "added": 18,
         "missing": 0,
         "pull": 1,
-        "available": 15,
+        "available": 13,
         "upstream": 19,
         "channels": {
           "stable": 16,
           "rc": 19,
-          "edge": 35
+          "edge": 37
         }
       },
       "ids": {
-        "omarchy": 35,
+        "omarchy": 36,
         "fromUpstream": 28,
-        "added": 7,
+        "added": 8,
         "missing": 0,
         "pull": 1,
         "available": 8,
@@ -678,30 +1072,30 @@
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 35
+          "edge": 36
         }
       },
       "firmware": {
-        "omarchy": 1,
+        "omarchy": 36,
         "fromUpstream": 1,
-        "added": 0,
+        "added": 35,
         "missing": 0,
-        "pull": 35,
+        "pull": 0,
         "available": 6,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 1
+          "edge": 36
         }
       },
       "all": {
-        "omarchy": 1,
+        "omarchy": 26,
         "fromUpstream": 1,
-        "added": 0,
+        "added": 25,
         "missing": 0,
-        "pull": 23,
-        "available": 11,
+        "pull": 0,
+        "available": 10,
         "upstream": 1
       }
     }
@@ -735,25 +1129,21 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "acer-aspire-14-ai-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
           "ids": "edge",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -840,25 +1230,21 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "acer-aspire-16-ai-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
           "ids": "edge",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -1030,25 +1416,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "acer-swift-14-ai-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -1141,25 +1523,21 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "acer-swift-14-go-pro-ai-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
           "ids": "edge",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "posted",
@@ -1248,25 +1626,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "acer-swift-go-14-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -1443,26 +1817,23 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "asus-proart-pz13-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
         "state": "carry",
         "pieces": {
           "deviceTree": "elsewhere",
           "ids": "elsewhere",
-          "firmware": "pr"
+          "firmware": "edge"
         },
         "missing": [
           "deviceTree",
-          "ids",
-          "firmware"
+          "ids"
         ]
       },
       "upstream": {
@@ -1904,25 +2275,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "asus-vivobook-s15-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -2087,26 +2454,23 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "asus-vivobook-s14-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
         "state": "needs-ids",
         "pieces": {
           "deviceTree": "elsewhere",
           "ids": "none",
-          "firmware": "pr"
+          "firmware": "edge"
         },
         "missing": [
           "deviceTree",
-          "ids",
-          "firmware"
+          "ids"
         ]
       },
       "upstream": {
@@ -2346,26 +2710,23 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "asus-vivobook-s16-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
         "state": "carry",
         "pieces": {
           "deviceTree": "elsewhere",
           "ids": "elsewhere",
-          "firmware": "pr"
+          "firmware": "edge"
         },
         "missing": [
           "deviceTree",
-          "ids",
-          "firmware"
+          "ids"
         ]
       },
       "upstream": {
@@ -2762,25 +3123,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "asus-zenbook-a14-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -3231,30 +3588,25 @@
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "asus-zenbook-a14-x2-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "edge",
         "pieces": {
-          "deviceTree": "elsewhere",
+          "deviceTree": "edge",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "deviceTree",
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "next",
@@ -3283,7 +3635,7 @@
           "model": "UX3407NA",
           "compatible": "asus,zenbook-a14-ux3407na",
           "computed": "newer",
-          "treeChannel": null,
+          "treeChannel": "edge",
           "idsChannel": "stable",
           "treePull": null,
           "idsPull": null,
@@ -3474,25 +3826,22 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "dell-inspiron-14-5441-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
         "state": "needs-ids",
         "pieces": {
           "deviceTree": "edge",
           "ids": "none",
-          "firmware": "pr"
+          "firmware": "edge"
         },
         "missing": [
-          "ids",
-          "firmware"
+          "ids"
         ]
       },
       "upstream": {
@@ -3595,25 +3944,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "dell-inspiron-14-plus-7441-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -3724,25 +4069,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "dell-latitude-5455-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -3838,25 +4179,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "dell-latitude-7455-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -3961,25 +4298,22 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "dell-xps-13-9345-firmware",
+          "linux-firmware-qcom"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -4362,7 +4696,7 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "partial",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -4487,25 +4821,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-elitebook-6-g1q-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "posted",
@@ -4601,25 +4931,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-elitebook-ultra-g1q-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -4805,26 +5131,23 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-omnibook-x14-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
         "state": "needs-ids",
         "pieces": {
           "deviceTree": "elsewhere",
           "ids": "none",
-          "firmware": "pr"
+          "firmware": "edge"
         },
         "missing": [
           "deviceTree",
-          "ids",
-          "firmware"
+          "ids"
         ]
       },
       "upstream": {
@@ -5069,26 +5392,23 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-omnibook-5-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
         "state": "carry",
         "pieces": {
           "deviceTree": "elsewhere",
           "ids": "elsewhere",
-          "firmware": "pr"
+          "firmware": "edge"
         },
         "missing": [
           "deviceTree",
-          "ids",
-          "firmware"
+          "ids"
         ]
       },
       "upstream": {
@@ -5271,25 +5591,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-omnibook-x14-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -5611,7 +5927,7 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "download",
+        "firmware": "partial",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -5806,26 +6122,23 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-omnibook-5-16-bf1-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
         "state": "carry",
         "pieces": {
           "deviceTree": "elsewhere",
           "ids": "elsewhere",
-          "firmware": "pr"
+          "firmware": "edge"
         },
         "missing": [
           "deviceTree",
-          "ids",
-          "firmware"
+          "ids"
         ]
       },
       "upstream": {
@@ -5898,44 +6211,38 @@
         "https://www.tomshardware.com/laptops/hp-omnibook-ultra-14-snapdragon-x2-elite-2026-review"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "newer",
       "reports": [],
-      "machine": "linux",
+      "machine": "omarchy",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-omnibook-ultra-14-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-ids",
+        "state": "edge",
         "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "none",
-          "firmware": "pr"
+          "deviceTree": "edge",
+          "ids": "edge",
+          "firmware": "edge"
         },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "posted",
         "firstRelease": null,
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260830-x2-hp-omnibook-ship-v1-2-9feada71dc79@oss.qualcomm.com/",
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2631-arm64-dts-qcom-add-HP-OmniBook-Ultra-14-kg0xxx.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-ultra-14-kg0",
-        "ids": "missing",
-        "idsCollected": null,
+        "ids": "collected",
+        "idsCollected": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/hp-omnibook-ultra-14-kg0",
         "idsStubble": null,
         "firmware": "download",
         "firmwareMissing": [],
@@ -5945,22 +6252,30 @@
         "firmwareUpstream": "posted",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/hp-omnibook-ultra-14-kg0"
+        ]
       },
       "variants": [
         {
           "compatible": "hp,omnibook-ultra-kg0xxx",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
+          "computed": "newer",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "glymur-hp-omnibook-ultra-kg0xxx.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2631-arm64-dts-qcom-add-HP-OmniBook-Ultra-14-kg0xxx.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "newer",
           "reports": []
         }
       ],
@@ -6088,25 +6403,21 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-omnibook-x16-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
           "ids": "edge",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "posted",
@@ -6288,25 +6599,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "lenovo-ideacentre-mini-x-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -7736,25 +8043,21 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "lenovo-thinkpad-t14s-gen7-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
           "ids": "edge",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "next",
@@ -7969,25 +8272,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "medion-sprchrgd-14-s1-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -8097,25 +8396,22 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "microsoft-surface-laptop-7-firmware",
+          "microsoft-surface-pro-11-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -8226,25 +8522,22 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "microsoft-surface-laptop-7-firmware",
+          "microsoft-surface-pro-11-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -8349,26 +8642,23 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "microsoft-surface-pro-12in-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
         "state": "carry",
         "pieces": {
           "deviceTree": "elsewhere",
           "ids": "elsewhere",
-          "firmware": "pr"
+          "firmware": "edge"
         },
         "missing": [
           "deviceTree",
-          "ids",
-          "firmware"
+          "ids"
         ]
       },
       "upstream": {
@@ -8458,25 +8748,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "microsoft-surface-pro-11-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -8613,25 +8899,21 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "microsoft-surface-pro-12in-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "rc",
           "ids": "edge",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -8823,25 +9105,22 @@
         },
         "ids": null,
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "microsoft-surface-laptop-8-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
         "state": "carry",
         "pieces": {
           "deviceTree": "edge",
           "ids": "elsewhere",
-          "firmware": "pr"
+          "firmware": "edge"
         },
         "missing": [
-          "ids",
-          "firmware"
+          "ids"
         ]
       },
       "upstream": {
@@ -9429,25 +9708,22 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "samsung-galaxy-book4-edge-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
         "state": "needs-ids",
         "pieces": {
           "deviceTree": "edge",
           "ids": "none",
-          "firmware": "pr"
+          "firmware": "edge"
         },
         "missing": [
-          "ids",
-          "firmware"
+          "ids"
         ]
       },
       "upstream": {
@@ -9533,25 +9809,21 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-          "number": 2037,
-          "title": "Add OEM firmware packages for 33 Snapdragon X machines"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "samsung-galaxy-book4-edge-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
           "ids": "edge",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "posted",

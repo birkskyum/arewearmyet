@@ -814,6 +814,8 @@ models:
     model_numbers: ["14-kg0xxx"]
     variants:
       - { compatible: "hp,omnibook-ultra-kg0xxx" }
+    acpi: ["arewearmyet/hp-omnibook-ultra-14-kg0"]
+    ids_collected: "https://github.com/birkskyum/arewearmyet/tree/main/acpi/hp-omnibook-ultra-14-kg0"
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260830-x2-hp-omnibook-ship-v1-2-9feada71dc79@oss.qualcomm.com/"
     firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1333"
     sources:
