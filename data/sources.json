@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-03T23:31:14.166Z",
+  "collected": "2026-11-04T17:40:25.667Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -26,7 +26,7 @@
     "v261",
     "v262"
   ],
-  "linuxNext": "20261103",
+  "linuxNext": "20261104",
   "deviceTrees": [
     {
       "file": "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -3271,20 +3271,26 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-12",
+        "kernel": "7.3-13",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-asus-zenbook-a16-ux3607oa.dts",
           "glymur-crd.dts",
+          "glymur-hp-elitebook-x-g2q.dts",
+          "glymur-lenovo-yoga-slim7x.dts",
           "glymur-microsoft-surface-laptop8.dts",
           "hamoa-iot-evk.dts",
           "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
+          "mahua-crd.dts",
+          "mahua-hp-omnibook-x16.dts",
+          "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
           "sc8280xp-crd.dts",
           "sc8280xp-huawei-gaokun3.dts",
           "sc8280xp-lenovo-thinkpad-x13s.dts",
           "sc8280xp-microsoft-arcata.dts",
           "sc8280xp-microsoft-blackrock.dts",
           "x1e001de-devkit.dts",
+          "x1e78100-acer-sfa14-11.dts",
           "x1e78100-lenovo-thinkpad-t14s.dts",
           "x1e78100-lenovo-thinkpad-t14s-oled.dts",
           "x1e80100-asus-vivobook-s15.dts",
@@ -3302,6 +3308,8 @@
           "x1e80100-microsoft-romulus13.dts",
           "x1e80100-microsoft-romulus15.dts",
           "x1e80100-qcp.dts",
+          "x1e80100-samsung-galaxy-book4-edge-14.dts",
+          "x1e84100-samsung-galaxy-book4-edge-16.dts",
           "x1p42100-acer-aspire-14-ai.dts",
           "x1p42100-acer-aspire-16-ai.dts",
           "x1p42100-acer-swift-go14-01.dts",
@@ -3311,9 +3319,12 @@
           "x1p42100-crd.dts",
           "x1p42100-hp-elitebook-6-g1q.dts",
           "x1p42100-hp-omnibook-x14.dts",
+          "x1p42100-lenovo-ideapad-slim5x-lcd.dts",
+          "x1p42100-lenovo-ideapad-slim5x-oled.dts",
           "x1p42100-lenovo-thinkbook-16.dts",
           "x1p42100-microsoft-sp12in.dts",
           "x1p64100-acer-swift-sf14-11.dts",
+          "x1p64100-dell-inspiron-14-plus-5441.dts",
           "x1p64100-dell-latitude-5455.dts",
           "x1p64100-microsoft-denali.dts"
         ],
@@ -3371,8 +3382,13 @@
           "x1p64100-dell-latitude-5455.json"
         ],
         "carriedIds": [
+          "mahua-hp-omnibook-x16.json",
+          "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
+          "x1e78100-acer-sfa14-11.json",
+          "x1e80100-samsung-galaxy-book4-edge-14.json",
           "x1p42100-acer-aspire-14-ai.json",
-          "x1p42100-acer-aspire-16-ai.json"
+          "x1p42100-acer-aspire-16-ai.json",
+          "x1p42100-microsoft-surface-pro-12in.json"
         ],
         "firmware": {
           "asus-zenbook-a16-audio": [
@@ -3552,9 +3568,126 @@
           "qcom,x1e80100"
         ],
         "patch": "2530-arm64-dts-qcom-Add-the-Dell-Latitude-5455.patch"
+      },
+      {
+        "file": "glymur-hp-elitebook-x-g2q.dts",
+        "model": "HP EliteBook X G2q 14 AI",
+        "compatible": [
+          "hp,elitebook-x-g2q",
+          "qcom,glymur"
+        ],
+        "patch": "2541-arm64-dts-qcom-Add-HP-EliteBook-X-G2q-14-AI.patch"
+      },
+      {
+        "file": "glymur-lenovo-yoga-slim7x.dts",
+        "model": "Lenovo Yoga Slim 7x Gen 11",
+        "compatible": [
+          "lenovo,yoga-slim7x-gen11",
+          "qcom,glymur"
+        ],
+        "patch": "2551-arm64-dts-qcom-glymur-Add-Lenovo-Yoga-Slim-7x-Gen11.patch"
+      },
+      {
+        "file": "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
+        "model": "Lenovo ThinkPad T14s Gen 7 (LCD)",
+        "compatible": [
+          "lenovo,thinkpad-t14s-gen7-lcd",
+          "lenovo,thinkpad-t14s-gen7",
+          "qcom,mahua"
+        ],
+        "patch": "2561-arm64-dts-qcom-Add-Lenovo-ThinkPad-T14s-Gen-7.patch"
+      },
+      {
+        "file": "mahua-hp-omnibook-x16.dts",
+        "model": "HP OmniBook X 16-cp1",
+        "compatible": [
+          "hp,omnibook-x16-cp1",
+          "qcom,mahua"
+        ],
+        "patch": "2571-arm64-dts-qcom-Add-HP-OmniBook-X-16-cp1.patch"
+      },
+      {
+        "file": "x1e78100-acer-sfa14-11.dts",
+        "model": "Acer Swift Go Pro AI (SFA14-11)",
+        "compatible": [
+          "acer,swift-go-sfa14-11",
+          "qcom,x1e78100",
+          "qcom,x1e80100"
+        ],
+        "patch": "2581-arm64-dts-qcom-Add-support-for-Acer-Swift-Go-Pro-AI-.patch"
+      },
+      {
+        "file": "x1e80100-samsung-galaxy-book4-edge-14.dts",
+        "model": "Samsung Galaxy Book4 Edge (14 inch)",
+        "compatible": [
+          "samsung,galaxy-book4-edge-14",
+          "samsung,galaxy-book4-edge",
+          "qcom,x1e80100"
+        ],
+        "patch": "2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
+      },
+      {
+        "file": "x1e84100-samsung-galaxy-book4-edge-16.dts",
+        "model": "Samsung Galaxy Book4 Edge (16 inch)",
+        "compatible": [
+          "samsung,galaxy-book4-edge-16",
+          "samsung,galaxy-book4-edge",
+          "qcom,x1e80100"
+        ],
+        "patch": "2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
+      },
+      {
+        "file": "x1p42100-lenovo-ideapad-slim5x-lcd.dts",
+        "model": "Lenovo IdeaPad Slim 5x 14Q8X9 (LCD)",
+        "compatible": [
+          "lenovo,ideapad-slim5x-lcd",
+          "lenovo,ideapad-5",
+          "qcom,x1p42100"
+        ],
+        "patch": "2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch"
+      },
+      {
+        "file": "x1p42100-lenovo-ideapad-slim5x-oled.dts",
+        "model": "Lenovo IdeaPad Slim 5x 14Q8X9 (OLED)",
+        "compatible": [
+          "lenovo,ideapad-slim5x-oled",
+          "lenovo,ideapad-5",
+          "qcom,x1p42100"
+        ],
+        "patch": "2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch"
+      },
+      {
+        "file": "x1p64100-dell-inspiron-14-plus-5441.dts",
+        "model": "Dell Inspiron 14 Plus 5441",
+        "compatible": [
+          "dell,inspiron-14-plus-5441",
+          "qcom,x1p64100",
+          "qcom,x1e80100"
+        ],
+        "patch": "2610-arm64-dts-qcom-Add-Dell-Inspiron-14-Plus-5441.patch"
       }
     ],
     "carriedIds": [
+      {
+        "file": "mahua-hp-omnibook-x16.json",
+        "name": "HP OmniBook X 16-cp1",
+        "compatible": "hp,omnibook-x16-cp1"
+      },
+      {
+        "file": "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
+        "name": "LENOVO ThinkPad T14s Gen 7",
+        "compatible": "lenovo,thinkpad-t14s-gen7-lcd"
+      },
+      {
+        "file": "x1e78100-acer-sfa14-11.json",
+        "name": "Acer Swift 14 Go Pro AI",
+        "compatible": "acer,swift-go-sfa14-11"
+      },
+      {
+        "file": "x1e80100-samsung-galaxy-book4-edge-14.json",
+        "name": "SAMSUNG ELECTRONICS CO., LTD. Galaxy Book4 Edge 14",
+        "compatible": "samsung,galaxy-book4-edge-14"
+      },
       {
         "file": "x1p42100-acer-aspire-14-ai.json",
         "name": "Acer Aspire 14 AI (A14-11M)",
@@ -3564,132 +3697,19 @@
         "file": "x1p42100-acer-aspire-16-ai.json",
         "name": "Acer Aspire 16 AI (A16-11M)",
         "compatible": "acer,aspire-a16-11m"
+      },
+      {
+        "file": "x1p42100-microsoft-surface-pro-12in.json",
+        "name": "Microsoft Corporation Surface",
+        "compatible": "microsoft,surface-pro-12in"
       }
     ],
     "pulls": [
       {
-        "number": 2091,
-        "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-        "draft": true,
-        "deviceTrees": [
-          {
-            "file": "glymur-hp-elitebook-x-g2q.dts",
-            "model": "HP EliteBook X G2q 14 AI",
-            "compatible": [
-              "hp,elitebook-x-g2q",
-              "qcom,glymur"
-            ]
-          },
-          {
-            "file": "glymur-lenovo-yoga-slim7x.dts",
-            "model": "Lenovo Yoga Slim 7x Gen 11",
-            "compatible": [
-              "lenovo,yoga-slim7x-gen11",
-              "qcom,glymur"
-            ]
-          },
-          {
-            "file": "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
-            "model": "Lenovo ThinkPad T14s Gen 7 (LCD)",
-            "compatible": [
-              "lenovo,thinkpad-t14s-gen7-lcd",
-              "lenovo,thinkpad-t14s-gen7",
-              "qcom,mahua"
-            ]
-          },
-          {
-            "file": "mahua-hp-omnibook-x16.dts",
-            "model": "HP OmniBook X 16-cp1",
-            "compatible": [
-              "hp,omnibook-x16-cp1",
-              "qcom,mahua"
-            ]
-          },
-          {
-            "file": "x1e78100-acer-sfa14-11.dts",
-            "model": "Acer Swift Go Pro AI (SFA14-11)",
-            "compatible": [
-              "acer,swift-go-sfa14-11",
-              "qcom,x1e78100",
-              "qcom,x1e80100"
-            ]
-          },
-          {
-            "file": "x1e80100-samsung-galaxy-book4-edge-14.dts",
-            "model": "Samsung Galaxy Book4 Edge (14 inch)",
-            "compatible": [
-              "samsung,galaxy-book4-edge-14",
-              "samsung,galaxy-book4-edge",
-              "qcom,x1e80100"
-            ]
-          },
-          {
-            "file": "x1e84100-samsung-galaxy-book4-edge-16.dts",
-            "model": "Samsung Galaxy Book4 Edge (16 inch)",
-            "compatible": [
-              "samsung,galaxy-book4-edge-16",
-              "samsung,galaxy-book4-edge",
-              "qcom,x1e80100"
-            ]
-          },
-          {
-            "file": "x1p42100-lenovo-ideapad-slim5x-lcd.dts",
-            "model": "Lenovo IdeaPad Slim 5x 14Q8X9 (LCD)",
-            "compatible": [
-              "lenovo,ideapad-slim5x-lcd",
-              "lenovo,ideapad-5",
-              "qcom,x1p42100"
-            ]
-          },
-          {
-            "file": "x1p42100-lenovo-ideapad-slim5x-oled.dts",
-            "model": "Lenovo IdeaPad Slim 5x 14Q8X9 (OLED)",
-            "compatible": [
-              "lenovo,ideapad-slim5x-oled",
-              "lenovo,ideapad-5",
-              "qcom,x1p42100"
-            ]
-          },
-          {
-            "file": "x1p64100-dell-inspiron-14-plus-5441.dts",
-            "model": "Dell Inspiron 14 Plus 5441",
-            "compatible": [
-              "dell,inspiron-14-plus-5441",
-              "qcom,x1p64100",
-              "qcom,x1e80100"
-            ]
-          }
-        ],
-        "ids": [
-          {
-            "file": "mahua-hp-omnibook-x16.json",
-            "compatible": "hp,omnibook-x16-cp1"
-          },
-          {
-            "file": "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
-            "compatible": "lenovo,thinkpad-t14s-gen7-lcd"
-          },
-          {
-            "file": "x1e78100-acer-sfa14-11.json",
-            "compatible": "acer,swift-go-sfa14-11"
-          },
-          {
-            "file": "x1e80100-samsung-galaxy-book4-edge-14.json",
-            "compatible": "samsung,galaxy-book4-edge-14"
-          },
-          {
-            "file": "x1p42100-microsoft-surface-pro-12in.json",
-            "compatible": "microsoft,surface-pro-12in"
-          }
-        ],
-        "firmware": []
-      },
-      {
         "number": 2037,
         "title": "Add OEM firmware packages for 33 Snapdragon X machines",
         "url": "https://github.com/omacom/omarchy-pkgs/pull/2037",
-        "draft": true,
+        "draft": false,
         "deviceTrees": [],
         "ids": [],
         "firmware": [

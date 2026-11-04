@@ -1,6 +1,6 @@
 {
-  "collected": "2026-11-03T23:31:14.166Z",
-  "linuxNext": "20261103",
+  "collected": "2026-11-04T17:40:25.667Z",
+  "linuxNext": "20261104",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "rc",
@@ -388,20 +388,26 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-12",
+        "kernel": "7.3-13",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-asus-zenbook-a16-ux3607oa.dts",
           "glymur-crd.dts",
+          "glymur-hp-elitebook-x-g2q.dts",
+          "glymur-lenovo-yoga-slim7x.dts",
           "glymur-microsoft-surface-laptop8.dts",
           "hamoa-iot-evk.dts",
           "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
+          "mahua-crd.dts",
+          "mahua-hp-omnibook-x16.dts",
+          "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
           "sc8280xp-crd.dts",
           "sc8280xp-huawei-gaokun3.dts",
           "sc8280xp-lenovo-thinkpad-x13s.dts",
           "sc8280xp-microsoft-arcata.dts",
           "sc8280xp-microsoft-blackrock.dts",
           "x1e001de-devkit.dts",
+          "x1e78100-acer-sfa14-11.dts",
           "x1e78100-lenovo-thinkpad-t14s.dts",
           "x1e78100-lenovo-thinkpad-t14s-oled.dts",
           "x1e80100-asus-vivobook-s15.dts",
@@ -419,6 +425,8 @@
           "x1e80100-microsoft-romulus13.dts",
           "x1e80100-microsoft-romulus15.dts",
           "x1e80100-qcp.dts",
+          "x1e80100-samsung-galaxy-book4-edge-14.dts",
+          "x1e84100-samsung-galaxy-book4-edge-16.dts",
           "x1p42100-acer-aspire-14-ai.dts",
           "x1p42100-acer-aspire-16-ai.dts",
           "x1p42100-acer-swift-go14-01.dts",
@@ -428,9 +436,12 @@
           "x1p42100-crd.dts",
           "x1p42100-hp-elitebook-6-g1q.dts",
           "x1p42100-hp-omnibook-x14.dts",
+          "x1p42100-lenovo-ideapad-slim5x-lcd.dts",
+          "x1p42100-lenovo-ideapad-slim5x-oled.dts",
           "x1p42100-lenovo-thinkbook-16.dts",
           "x1p42100-microsoft-sp12in.dts",
           "x1p64100-acer-swift-sf14-11.dts",
+          "x1p64100-dell-inspiron-14-plus-5441.dts",
           "x1p64100-dell-latitude-5455.dts",
           "x1p64100-microsoft-denali.dts"
         ],
@@ -488,8 +499,13 @@
           "x1p64100-dell-latitude-5455.json"
         ],
         "carriedIds": [
+          "mahua-hp-omnibook-x16.json",
+          "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
+          "x1e78100-acer-sfa14-11.json",
+          "x1e80100-samsung-galaxy-book4-edge-14.json",
           "x1p42100-acer-aspire-14-ai.json",
-          "x1p42100-acer-aspire-16-ai.json"
+          "x1p42100-acer-aspire-16-ai.json",
+          "x1p42100-microsoft-surface-pro-12in.json"
         ],
         "firmware": {
           "asus-zenbook-a16-audio": [
@@ -638,31 +654,31 @@
     },
     "ahead": {
       "deviceTree": {
-        "omarchy": 26,
+        "omarchy": 35,
         "fromUpstream": 19,
-        "added": 7,
+        "added": 16,
         "missing": 0,
-        "pull": 10,
+        "pull": 1,
         "available": 15,
         "upstream": 19,
         "channels": {
           "stable": 16,
           "rc": 19,
-          "edge": 26
+          "edge": 35
         }
       },
       "ids": {
-        "omarchy": 30,
+        "omarchy": 35,
         "fromUpstream": 28,
-        "added": 2,
+        "added": 7,
         "missing": 0,
-        "pull": 6,
+        "pull": 1,
         "available": 8,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 30
+          "edge": 35
         }
       },
       "firmware": {
@@ -1117,22 +1133,14 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/acer-sfa14-11"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "newer",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-          "number": 2091,
-          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-        },
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-          "number": 2091,
-          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-        },
+        "deviceTree": "edge",
+        "deviceTreePull": null,
+        "ids": "edge",
+        "idsPull": null,
         "firmware": "pr",
         "firmwareChannel": null,
         "firmwarePackages": [],
@@ -1145,13 +1153,11 @@
       "outOfBox": {
         "state": "pr",
         "pieces": {
-          "deviceTree": "pr",
-          "ids": "pr",
+          "deviceTree": "edge",
+          "ids": "edge",
           "firmware": "pr"
         },
         "missing": [
-          "deviceTree",
-          "ids",
           "firmware"
         ]
       },
@@ -1159,7 +1165,7 @@
         "deviceTree": "posted",
         "firstRelease": null,
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261030064149.14736-3-kaipeng94@gmail.com/",
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2581-arm64-dts-qcom-Add-support-for-Acer-Swift-Go-Pro-AI-.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/acer-swift-go-pro-ai-sfa14-11",
         "ids": "mismatch",
         "idsCollected": null,
@@ -1191,23 +1197,21 @@
               "compatible": "acer,swift-sfa14-11"
             }
           ],
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-            "number": 2091,
-            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          "computed": "newer",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "x1e78100-acer-sfa14-11.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2581-arm64-dts-qcom-Add-support-for-Acer-Swift-Go-Pro-AI-.patch"
           },
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-            "number": 2091,
-            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-          },
-          "deviceTree": null,
           "firmwareNeeded": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "newer",
           "reports": []
         }
       ],
@@ -3462,16 +3466,12 @@
         "https://dl.dell.com/content/manual20917790-inspiron-14-5441-owner-s-manual.pdf"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "newer",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-          "number": 2091,
-          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-        },
+        "deviceTree": "edge",
+        "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
         "firmware": "pr",
@@ -3486,12 +3486,11 @@
       "outOfBox": {
         "state": "needs-ids",
         "pieces": {
-          "deviceTree": "pr",
+          "deviceTree": "edge",
           "ids": "none",
           "firmware": "pr"
         },
         "missing": [
-          "deviceTree",
           "ids",
           "firmware"
         ]
@@ -3500,7 +3499,7 @@
         "deviceTree": "posted",
         "firstRelease": null,
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260508050828.7442-1-adamszyma@wp.pl/",
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2610-arm64-dts-qcom-Add-Dell-Inspiron-14-Plus-5441.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/dell-inspiron-14-5441",
         "ids": "missing",
         "idsCollected": null,
@@ -3536,20 +3535,22 @@
         {
           "chip": "X1P-64-100",
           "compatible": "dell,inspiron-14-plus-5441",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "newer",
+          "treeChannel": "edge",
           "idsChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-            "number": 2091,
-            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-          },
+          "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x1p64100-dell-inspiron-14-plus-5441.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2610-arm64-dts-qcom-Add-Dell-Inspiron-14-Plus-5441.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "newer",
           "reports": []
         }
       ],
@@ -5606,12 +5607,8 @@
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-          "number": 2091,
-          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-        },
+        "deviceTree": "edge",
+        "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
         "firmware": "download",
@@ -5622,12 +5619,11 @@
       "outOfBox": {
         "state": "carry",
         "pieces": {
-          "deviceTree": "pr",
+          "deviceTree": "edge",
           "ids": "stable",
           "firmware": "elsewhere"
         },
         "missing": [
-          "deviceTree",
           "firmware"
         ]
       },
@@ -5655,13 +5651,9 @@
         {
           "compatible": "hp,elitebook-x-g2q",
           "computed": "newer",
-          "treeChannel": null,
+          "treeChannel": "edge",
           "idsChannel": "stable",
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-            "number": 2091,
-            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-          },
+          "treePull": null,
           "idsPull": null,
           "deviceTree": {
             "file": "glymur-hp-elitebook-x-g2q.dts",
@@ -6088,22 +6080,14 @@
         "https://www.notebookcheck.net/HP-OmniBook-X-16-with-Snapdragon-X2-Elite-24-GB-RAM-OLED-drops-below-900.1356231.0.html"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "newer",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-          "number": 2091,
-          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-        },
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-          "number": 2091,
-          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-        },
+        "deviceTree": "edge",
+        "deviceTreePull": null,
+        "ids": "edge",
+        "idsPull": null,
         "firmware": "pr",
         "firmwareChannel": null,
         "firmwarePackages": [],
@@ -6116,13 +6100,11 @@
       "outOfBox": {
         "state": "pr",
         "pieces": {
-          "deviceTree": "pr",
-          "ids": "pr",
+          "deviceTree": "edge",
+          "ids": "edge",
           "firmware": "pr"
         },
         "missing": [
-          "deviceTree",
-          "ids",
           "firmware"
         ]
       },
@@ -6130,7 +6112,7 @@
         "deviceTree": "posted",
         "firstRelease": null,
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261028191800.27829-3-jeff.roach0@gmail.com/",
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2571-arm64-dts-qcom-Add-HP-OmniBook-X-16-cp1.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-x-16-cp",
         "ids": "posted",
         "idsCollected": "https://bugs.launchpad.net/ubuntu-concept/+bug/2170451",
@@ -6150,20 +6132,18 @@
         {
           "model": "16-cp1",
           "compatible": "hp,omnibook-x16-cp1",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-            "number": 2091,
-            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          "computed": "newer",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "mahua-hp-omnibook-x16.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2571-arm64-dts-qcom-Add-HP-OmniBook-X-16-cp1.patch"
           },
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-            "number": 2091,
-            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-          },
-          "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [
@@ -6173,7 +6153,7 @@
               "url": "https://github.com/ubuntu/stubble/pull/107"
             }
           ],
-          "outcome": "none",
+          "outcome": "newer",
           "reports": []
         }
       ],
@@ -6662,16 +6642,12 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-xiaoxin-14-q8x9"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "newer",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-          "number": 2091,
-          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-        },
+        "deviceTree": "edge",
+        "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
         "firmware": "windows",
@@ -6682,12 +6658,11 @@
       "outOfBox": {
         "state": "needs-firmware",
         "pieces": {
-          "deviceTree": "pr",
+          "deviceTree": "edge",
           "ids": "stable",
           "firmware": "none"
         },
         "missing": [
-          "deviceTree",
           "firmware"
         ]
       },
@@ -6695,7 +6670,7 @@
         "deviceTree": "posted",
         "firstRelease": null,
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260906-x1-ideapad-slim5x-v1-3-7ccffbe6bc4a@oldschoolsolutions.biz/",
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/lenovo-ideapad-slim-5x-14q8x9",
         "ids": "listed",
         "idsCollected": null,
@@ -6726,16 +6701,18 @@
           "model": "OLED",
           "chip": "X1P-42-100",
           "compatible": "lenovo,ideapad-slim5x-oled",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "newer",
+          "treeChannel": "edge",
           "idsChannel": "stable",
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-            "number": 2091,
-            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-          },
+          "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x1p42100-lenovo-ideapad-slim5x-oled.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch"
+          },
           "firmwareNeeded": [],
           "ids": [
             {
@@ -6753,27 +6730,29 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-lenovo-ideapad-slim-5-oled.json"
             }
           ],
-          "outcome": "none",
+          "outcome": "newer",
           "reports": []
         },
         {
           "model": "LCD",
           "chip": "X1P-42-100",
           "compatible": "lenovo,ideapad-slim5x-lcd",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "newer",
+          "treeChannel": "edge",
           "idsChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-            "number": 2091,
-            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-          },
+          "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x1p42100-lenovo-ideapad-slim5x-lcd.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "newer",
           "reports": []
         }
       ],
@@ -7753,18 +7732,10 @@
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-          "number": 2091,
-          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-        },
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-          "number": 2091,
-          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-        },
+        "deviceTree": "edge",
+        "deviceTreePull": null,
+        "ids": "edge",
+        "idsPull": null,
         "firmware": "pr",
         "firmwareChannel": null,
         "firmwarePackages": [],
@@ -7777,13 +7748,11 @@
       "outOfBox": {
         "state": "pr",
         "pieces": {
-          "deviceTree": "pr",
-          "ids": "pr",
+          "deviceTree": "edge",
+          "ids": "edge",
           "firmware": "pr"
         },
         "missing": [
-          "deviceTree",
-          "ids",
           "firmware"
         ]
       },
@@ -7814,18 +7783,10 @@
           "model": "LCD",
           "compatible": "lenovo,thinkpad-t14s-gen7-lcd",
           "computed": "newer",
-          "treeChannel": null,
-          "idsChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-            "number": 2091,
-            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-          },
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-            "number": 2091,
-            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-          },
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "treePull": null,
+          "idsPull": null,
           "deviceTree": {
             "file": "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
             "firstRelease": null,
@@ -7883,12 +7844,8 @@
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-          "number": 2091,
-          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-        },
+        "deviceTree": "edge",
+        "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
         "firmware": "windows",
@@ -7899,12 +7856,11 @@
       "outOfBox": {
         "state": "needs-firmware",
         "pieces": {
-          "deviceTree": "pr",
+          "deviceTree": "edge",
           "ids": "stable",
           "firmware": "none"
         },
         "missing": [
-          "deviceTree",
           "firmware"
         ]
       },
@@ -7940,13 +7896,9 @@
           "model": "14Q8Y11",
           "compatible": "lenovo,yoga-slim7x-gen11",
           "computed": "newer",
-          "treeChannel": null,
+          "treeChannel": "edge",
           "idsChannel": "stable",
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-            "number": 2091,
-            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-          },
+          "treePull": null,
           "idsPull": null,
           "deviceTree": {
             "file": "glymur-lenovo-yoga-slim7x.dts",
@@ -8659,12 +8611,8 @@
       "omarchy": {
         "deviceTree": "rc",
         "deviceTreePull": null,
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-          "number": 2091,
-          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-        },
+        "ids": "edge",
+        "idsPull": null,
         "firmware": "pr",
         "firmwareChannel": null,
         "firmwarePackages": [],
@@ -8678,11 +8626,10 @@
         "state": "pr",
         "pieces": {
           "deviceTree": "rc",
-          "ids": "pr",
+          "ids": "edge",
           "firmware": "pr"
         },
         "missing": [
-          "ids",
           "firmware"
         ]
       },
@@ -8723,13 +8670,9 @@
           ],
           "computed": "manual",
           "treeChannel": "rc",
-          "idsChannel": null,
+          "idsChannel": "edge",
           "treePull": null,
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-            "number": 2091,
-            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-          },
+          "idsPull": null,
           "deviceTree": {
             "file": "x1p42100-microsoft-sp12in.dts",
             "firstRelease": "v7.3",
@@ -9478,16 +9421,12 @@
         "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "newer",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-          "number": 2091,
-          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-        },
+        "deviceTree": "edge",
+        "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
         "firmware": "pr",
@@ -9502,12 +9441,11 @@
       "outOfBox": {
         "state": "needs-ids",
         "pieces": {
-          "deviceTree": "pr",
+          "deviceTree": "edge",
           "ids": "none",
           "firmware": "pr"
         },
         "missing": [
-          "deviceTree",
           "ids",
           "firmware"
         ]
@@ -9516,7 +9454,7 @@
         "deviceTree": "posted",
         "firstRelease": null,
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/",
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/samsung-galaxy-book4-edge-16",
         "ids": "missing",
         "idsCollected": null,
@@ -9535,20 +9473,22 @@
       "variants": [
         {
           "compatible": "samsung,galaxy-book4-edge-16",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "newer",
+          "treeChannel": "edge",
           "idsChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-            "number": 2091,
-            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-          },
+          "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x1e84100-samsung-galaxy-book4-edge-16.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "newer",
           "reports": []
         }
       ],
@@ -9589,18 +9529,10 @@
       ],
       "machine": "team",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-          "number": 2091,
-          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-        },
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-          "number": 2091,
-          "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-        },
+        "deviceTree": "edge",
+        "deviceTreePull": null,
+        "ids": "edge",
+        "idsPull": null,
         "firmware": "pr",
         "firmwareChannel": null,
         "firmwarePackages": [],
@@ -9613,13 +9545,11 @@
       "outOfBox": {
         "state": "pr",
         "pieces": {
-          "deviceTree": "pr",
-          "ids": "pr",
+          "deviceTree": "edge",
+          "ids": "edge",
           "firmware": "pr"
         },
         "missing": [
-          "deviceTree",
-          "ids",
           "firmware"
         ]
       },
@@ -9627,7 +9557,7 @@
         "deviceTree": "posted",
         "firstRelease": null,
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/",
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/samsung-galaxy-book4-edge-14",
         "ids": "posted",
         "idsCollected": "https://github.com/birkskyum/arewearmyet/issues/1",
@@ -9650,20 +9580,18 @@
           "model": "NP944XMA",
           "chip": "X1E-80-100",
           "compatible": "samsung,galaxy-book4-edge-14",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-            "number": 2091,
-            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
+          "computed": "newer",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "x1e80100-samsung-galaxy-book4-edge-14.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
           },
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2091",
-            "number": 2091,
-            "title": "linux-omarchy-aarch64: add nine more laptops' device trees and the Surface Pro 12in's hardware IDs"
-          },
-          "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [
