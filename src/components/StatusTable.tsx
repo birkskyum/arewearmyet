@@ -2,7 +2,7 @@
 // The model table. TanStack Table does the sorting, filtering and per-option counts; each column
 // header carries its own sort button and filter menu, and the view lives in the page address so
 // a filtered table can be shared.
-import { For, Show, createEffect, createSignal, onCleanup, onMount } from 'solid-js';
+import { For, Show, createEffect, createSignal, onCleanup, onMount, untrack } from 'solid-js';
 import {
   columnFacetingFeature,
   columnFilteringFeature,
@@ -54,8 +54,11 @@ const features = tableFeatures({
 type Row = { original: TableRow; getValue: (id: string) => unknown };
 // A row passes when its value is one of the ticked choices
 const inSet = (row: Row, id: string, value: unknown) => !Array.isArray(value) || value.length === 0 || value.includes(row.getValue(id));
-// The search box matches any part of a row's text, or a full product number that starts with one of its series
-const bySearch = (row: Row, _id: string, value: unknown) => typeof value !== 'string' || !value || row.original.search.includes(value) || row.original.prefixes.some((prefix) => value.startsWith(prefix));
+// The search box matches a row that has every word of it, in any part of its text or as a full product number that starts with one of its series
+const bySearch = (row: Row, _id: string, value: unknown) =>
+  typeof value !== 'string' || !value || value.split(' ').every((word) => row.original.search.includes(word) || row.original.prefixes.some((prefix) => word.startsWith(prefix)));
+// The search as the filter holds it: lowercase, single spaces, none at the ends
+const normalized = (text: string) => text.trim().toLowerCase().split(/\s+/).join(' ');
 const byRank = (a: Row, b: Row, id: string) => (a.original.cells[id]?.rank ?? Infinity) - (b.original.cells[id]?.rank ?? Infinity);
 // A status cell as the table shows it
 const cellText = (cell: CellData | undefined) => (!cell ? null : 'text' in cell ? cell.text || null : cell.label);
@@ -129,6 +132,11 @@ export default function StatusTable(props: Props) {
   const toggle = (id: string, key: string) => setSelected(id, selected(id).includes(key) ? selected(id).filter((k) => k !== key) : [...selected(id), key]);
   const query = () => (filters().find((filter) => filter.id === 'q')?.value as string | undefined) ?? '';
   const setQuery = (value: string) => setFilters((current) => [...current.filter((filter) => filter.id !== 'q'), ...(value ? [{ id: 'q', value }] : [])]);
+  // The search box keeps the text as typed, so a space at the end stays while the next word is typed
+  const [typed, setTyped] = createSignal('');
+  createEffect(() => {
+    if (normalized(untrack(typed)) !== query()) setTyped(query());
+  });
   const counts = (id: string) => table.getColumn(id)?.getFacetedUniqueValues() ?? new Map<unknown, number>();
   const shown = () => table.getRowModel().rows.length;
   // The spreadsheet holds the rows the table shows, in its order, with the labels it shows
@@ -207,7 +215,7 @@ export default function StatusTable(props: Props) {
     if (fromAddress && views.some((v) => v.id === fromAddress)) setViewId(fromAddress);
     setFilters([
       ...ids.filter((id) => params.get(prefix + id)).map((id) => ({ id, value: params.get(prefix + id)!.split(',') })),
-      ...(params.get(prefix + 'q') ? [{ id: 'q', value: params.get(prefix + 'q')!.toLowerCase() }] : []),
+      ...(params.get(prefix + 'q') ? [{ id: 'q', value: normalized(params.get(prefix + 'q')!) }] : []),
     ]);
     const sort = params.get(prefix + 'sort');
     if (sort) setSorting([{ id: sort.replace(/^-/, ''), desc: sort.startsWith('-') }]);
@@ -249,8 +257,11 @@ export default function StatusTable(props: Props) {
         <input
           type="search"
           placeholder="Search by name or model number"
-          value={query()}
-          onInput={(event) => setQuery(event.currentTarget.value.trim().toLowerCase())}
+          value={typed()}
+          onInput={(event) => {
+            setTyped(event.currentTarget.value);
+            setQuery(normalized(event.currentTarget.value));
+          }}
           class="w-72 rounded-md bg-zinc-900 px-3 py-1.5 text-sm text-zinc-100 ring-1 ring-zinc-700 placeholder:text-zinc-500 focus:outline-none focus:ring-zinc-400"
         />
         <details class="relative text-sm text-zinc-500">
