@@ -12,7 +12,7 @@ For every model in [`data/models.yaml`](data/models.yaml):
 - **Firmware**: whether every firmware file its device tree loads (its `firmware-name` lines) is in linux-firmware's newest release, merged for the next one, sent to linux-firmware as a merge request, only partly there, or available as a known vendor download, so the laptop's own Windows isn't needed.
 - **ACPI dump**: whether the aarch64-laptops project has the model's ACPI tables, which a device tree is written from.
 
-[`data/firmware-sources.yaml`](data/firmware-sources.yaml) lists, for the firmware linux-firmware doesn't ship yet, which maker download holds each file, where inside it, and each file's SHA-256, with no firmware in it. The site shows it at `/firmware` and serves it as `/firmware-sources.json` for tools on any distro.
+[`data/firmware-sources.yaml`](data/firmware-sources.yaml) lists, for the firmware linux-firmware doesn't ship yet, which maker download holds each file, where inside it, and each file's SHA-256, with no firmware in it. The site shows it at `/firmware` and serves it as `/firmware-sources.json` for tools on any distro. [`scripts/snapdragon-firmware-recipes.py`](scripts/snapdragon-firmware-recipes.py) writes Omarchy's firmware packages from it, one recipe per machine in omacom/omarchy-pkgs: `scripts/snapdragon-firmware-recipes.py --pkgbuilds <omarchy-pkgs>/pkgbuilds`.
 
 ## Sections
 
