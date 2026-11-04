@@ -22,7 +22,6 @@ else:
     table = json.load(open(args.table))
 out = os.path.realpath(args.pkgbuilds)
 
-MAINTAINER = "Birk Skyum <birk.skyum@pm.me>"
 TABLE_URL = "https://arewearmyet.com/firmware-sources.json"
 SCRIPT_URL = "https://github.com/birkskyum/arewearmyet/blob/main/scripts/snapdragon-firmware-recipes.py"
 
@@ -217,7 +216,7 @@ def recipe(name, who, paths):
     page = next((packages[p].get("page") for p in chosen if packages[p].get("page")), None) or packages[chosen[0]]["url"].split("?")[0]
 
     what = contents([w["dest"] for w in wanted])
-    L = [f"# Maintainer: {MAINTAINER}", "#"]
+    L = []
     L += comment(
         f"{what[0].upper() + what[1:]} firmware for the {who}. The firmware only runs if it is signed for this "
         f"board by {human_list(makers)}, so linux-firmware cannot carry it until the OEM submits it. The OEM ships it "
