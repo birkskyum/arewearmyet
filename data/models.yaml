@@ -303,7 +303,7 @@ models:
       - "https://gist.githubusercontent.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3/raw/x1p42100-asus-vivobook-s16-lcd.dts"
       - "https://gist.githubusercontent.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3/raw/x1p42100-asus-vivobook-s16.dtsi"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/2"
-    notes: "A draft device tree, written from two owners' hardware reports, in an OLED and an LCD version. An owner booted the OLED version on Ubuntu's live USB in November 2026, with the screen, keyboard, touchpad, Bluetooth, USB, HDMI and disk working. Wi-Fi needs board data that linux-firmware doesn't have yet."
+    notes: "A device tree written from two owners' hardware reports, in an OLED and an LCD version. An owner booted the OLED version on Ubuntu's live USB in November 2026, with the screen, keyboard, touchpad, Bluetooth, USB, HDMI and disk working. Wi-Fi needs board data that linux-firmware doesn't have yet."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s3607q/techspec/
       - https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/

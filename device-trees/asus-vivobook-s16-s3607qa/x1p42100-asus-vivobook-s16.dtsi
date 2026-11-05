@@ -4,7 +4,7 @@
  * Copyright (c) 2024, Xilin Wu <wuxilin123@gmail.com>
  * Copyright (c) 2025 Aleksandrs Vinarskis <alex@vinarskis.com>
  *
- * ASUS Vivobook S 16 (S3607QA), Snapdragon X X1-26-100. DRAFT, untested.
+ * ASUS Vivobook S 16 (S3607QA), Snapdragon X X1-26-100.
  * It is the Vivobook S 15 tree with the S3607QA's own Wi-Fi, panel and
  * eUSB2 repeater addresses. Its DSDT is the Vivobook S 14 S3407QA's
  * firmware with another SKU string, and that laptop runs a tree derived

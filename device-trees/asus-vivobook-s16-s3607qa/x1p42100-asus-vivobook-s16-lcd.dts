@@ -4,7 +4,7 @@
  * Copyright (c) 2025 Aleksandrs Vinarskis <alex@vinarskis.com>
  *
  * ASUS Vivobook S 16 (S3607QA) with the BOE NE160QDM-NX4 LCD panel.
- * DRAFT, untested. The backlight is the Zenbook A14 LCD's, since the DSDT
+ * The backlight is the Zenbook A14 LCD's, since the DSDT
  * gives this panel PMIC PWM backlight, 12 bits at 2400 Hz, as on that laptop.
  */
 

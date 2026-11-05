@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-3-Clause
 /*
  * ASUS Vivobook S 16 (S3607QA) with the Samsung ATNA60KJ01 OLED panel.
- * DRAFT, untested.
  */
 
 /dts-v1/;
