@@ -1,19 +1,20 @@
 {
-  "collected": "2026-11-04T22:40:18.140Z",
+  "collected": "2026-11-05T05:26:01.659Z",
   "linuxNext": "20261104",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "rc",
-    "kernel": "7.3-3",
+    "kernel": "7.3-3.1",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "channels": [
       {
         "name": "stable",
-        "kernel": "7.2.8-13",
+        "kernel": "7.3-3.1",
         "systemd": "262.1-1",
         "deviceTrees": [
+          "glymur-asus-zenbook-a16-ux3607oa.dts",
           "glymur-crd.dts",
           "hamoa-iot-evk.dts",
           "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
@@ -31,6 +32,7 @@
           "x1e80100-dell-inspiron-14-plus-7441.dts",
           "x1e80100-dell-latitude-7455.dts",
           "x1e80100-dell-xps13-9345.dts",
+          "x1e80100-honor-magicbook-art-14.dts",
           "x1e80100-hp-elitebook-ultra-g1q.dts",
           "x1e80100-hp-omnibook-x14.dts",
           "x1e80100-lenovo-yoga-slim7x.dts",
@@ -45,6 +47,7 @@
           "x1p42100-crd.dts",
           "x1p42100-hp-omnibook-x14.dts",
           "x1p42100-lenovo-thinkbook-16.dts",
+          "x1p42100-microsoft-sp12in.dts",
           "x1p64100-microsoft-denali.dts"
         ],
         "hwids": [
@@ -198,7 +201,7 @@
       },
       {
         "name": "rc",
-        "kernel": "7.3-3",
+        "kernel": "7.3-3.1",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-asus-zenbook-a16-ux3607oa.dts",
@@ -1056,7 +1059,7 @@
         "available": 13,
         "upstream": 19,
         "channels": {
-          "stable": 16,
+          "stable": 19,
           "rc": 19,
           "edge": 37
         }
@@ -3702,7 +3705,7 @@
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": "rc",
+        "deviceTree": "stable",
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
@@ -3714,7 +3717,7 @@
       "outOfBox": {
         "state": "carry",
         "pieces": {
-          "deviceTree": "rc",
+          "deviceTree": "stable",
           "ids": "stable",
           "firmware": "elsewhere"
         },
@@ -3751,7 +3754,7 @@
           "model": "UX3607OA",
           "compatible": "asus,zenbook-a16-ux3607oa",
           "computed": "should",
-          "treeChannel": "rc",
+          "treeChannel": "stable",
           "idsChannel": "stable",
           "treePull": null,
           "idsPull": null,
@@ -4692,7 +4695,7 @@
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": "rc",
+        "deviceTree": "stable",
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
@@ -4704,7 +4707,7 @@
       "outOfBox": {
         "state": "needs-firmware",
         "pieces": {
-          "deviceTree": "rc",
+          "deviceTree": "stable",
           "ids": "stable",
           "firmware": "none"
         },
@@ -4746,7 +4749,7 @@
           "chip": "X1E-80-100",
           "compatible": "honor,magicbook-art-14-snapdragon",
           "computed": "should",
-          "treeChannel": "rc",
+          "treeChannel": "stable",
           "idsChannel": "stable",
           "treePull": null,
           "idsPull": null,
@@ -8895,7 +8898,7 @@
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": "rc",
+        "deviceTree": "stable",
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
@@ -8909,7 +8912,7 @@
       "outOfBox": {
         "state": "edge",
         "pieces": {
-          "deviceTree": "rc",
+          "deviceTree": "stable",
           "ids": "edge",
           "firmware": "edge"
         },
@@ -8951,7 +8954,7 @@
             }
           ],
           "computed": "manual",
-          "treeChannel": "rc",
+          "treeChannel": "stable",
           "idsChannel": "edge",
           "treePull": null,
           "idsPull": null,

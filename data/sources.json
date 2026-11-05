@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-04T22:40:18.140Z",
+  "collected": "2026-11-05T05:26:01.659Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -2898,9 +2898,10 @@
     "channels": [
       {
         "name": "stable",
-        "kernel": "7.2.8-13",
+        "kernel": "7.3-3.1",
         "systemd": "262.1-1",
         "deviceTrees": [
+          "glymur-asus-zenbook-a16-ux3607oa.dts",
           "glymur-crd.dts",
           "hamoa-iot-evk.dts",
           "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
@@ -2918,6 +2919,7 @@
           "x1e80100-dell-inspiron-14-plus-7441.dts",
           "x1e80100-dell-latitude-7455.dts",
           "x1e80100-dell-xps13-9345.dts",
+          "x1e80100-honor-magicbook-art-14.dts",
           "x1e80100-hp-elitebook-ultra-g1q.dts",
           "x1e80100-hp-omnibook-x14.dts",
           "x1e80100-lenovo-yoga-slim7x.dts",
@@ -2932,6 +2934,7 @@
           "x1p42100-crd.dts",
           "x1p42100-hp-omnibook-x14.dts",
           "x1p42100-lenovo-thinkbook-16.dts",
+          "x1p42100-microsoft-sp12in.dts",
           "x1p64100-microsoft-denali.dts"
         ],
         "hwids": [
@@ -3085,7 +3088,7 @@
       },
       {
         "name": "rc",
-        "kernel": "7.3-3",
+        "kernel": "7.3-3.1",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-asus-zenbook-a16-ux3607oa.dts",
