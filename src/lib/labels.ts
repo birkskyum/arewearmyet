@@ -92,7 +92,7 @@ const STATES = {
   },
   acpi: {
     collected: { label: 'Collected', tone: 'good', meaning: `Its ACPI tables are in the aarch64-laptops collection, an owner's hardware report or this board's copy of a dump not merged there yet.` },
-    helps: { label: 'Would help', tone: 'close', meaning: `It has a device tree, but a report still gives the hardware IDs for each of its model numbers, the maker's firmware list, its panels and the tables to check the tree against.` },
+    helps: { label: 'Still useful', tone: 'close', meaning: `It has a device tree, but a report still gives the hardware IDs for each of its model numbers, the maker's firmware list, its panels and the tables to check the tree against.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: 'The first thing to send for a model without a device tree.' },
   },
   nvidiaOmarchy: {
