@@ -77,6 +77,10 @@ type DeviceTree = { file: string; firstRelease: string | null; inNext: boolean; 
 const deviceTrees: DeviceTree[] = sources.deviceTrees;
 const omarchyAdded: DeviceTree[] = sources.omarchy.kernelAddedDeviceTrees.map((dt: DeviceTree) => ({ ...dt, firstRelease: null, inNext: false }));
 
+// Glymur's boot firmware starts the SoCCP and Linux only attaches to it, so no package ships the
+// soccp images a tree names
+const loadedByLinux = (name: string) => !/\/soccp[^/]*$/.test(name);
+
 function findDeviceTree(compatible: string | undefined) {
   if (!compatible) return undefined;
   const upstream = deviceTrees.find((dt) => dt.compatible[0] === compatible) ?? deviceTrees.find((dt) => dt.compatible.includes(compatible));
@@ -85,7 +89,7 @@ function findDeviceTree(compatible: string | undefined) {
   const dt = upstream ?? added!;
   // Omarchy's kernel may carry a tree under its own file name before Linux takes it
   const files = [...new Set([upstream?.file, added?.file].filter(Boolean) as string[])];
-  return { file: dt.file, files, compatible: dt.compatible, firstRelease: upstream?.firstRelease ?? null, inNext: upstream?.inNext ?? false, upstream: Boolean(upstream), firmware: dt.firmware ?? [], patch: upstream ? null : added?.patch ?? null };
+  return { file: dt.file, files, compatible: dt.compatible, firstRelease: upstream?.firstRelease ?? null, inNext: upstream?.inNext ?? false, upstream: Boolean(upstream), firmware: (dt.firmware ?? []).filter(loadedByLinux), patch: upstream ? null : added?.patch ?? null };
 }
 
 type Ids = { file: string; firstRelease: string | null; inMain: boolean; compatible: string; name: string };
@@ -211,7 +215,7 @@ function archivedFirmware(id: string, compatibles: string[]): string[] {
       for (const name of line[1].matchAll(/"([^"]+)"/g)) names.add(name[1]);
     }
   }
-  return [...names];
+  return [...names].filter(loadedByLinux);
 }
 const anchor = (path: string) => `/firmware/#${path.replaceAll('/', '-')}`;
 function sourcesDownload(id: string, needed: string[]): string | undefined {

@@ -1034,9 +1034,9 @@
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 25,
+      "edge": 27,
       "pr": 0,
-      "carry": 10,
+      "carry": 8,
       "needs-deviceTree": 32,
       "needs-ids": 7,
       "needs-firmware": 8
@@ -1079,26 +1079,26 @@
         }
       },
       "firmware": {
-        "omarchy": 36,
+        "omarchy": 38,
         "fromUpstream": 1,
-        "added": 35,
+        "added": 37,
         "missing": 0,
         "pull": 0,
-        "available": 6,
+        "available": 4,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 36
+          "edge": 38
         }
       },
       "all": {
-        "omarchy": 26,
+        "omarchy": 28,
         "fromUpstream": 1,
-        "added": 25,
+        "added": 27,
         "missing": 0,
         "pull": 0,
-        "available": 10,
+        "available": 8,
         "upstream": 1
       }
     }
@@ -3360,9 +3360,7 @@
           "qcadsp8480.mbn",
           "adsp_dtbs.elf",
           "qccdsp8480.mbn",
-          "cdsp_dtbs.elf",
-          "soccp.mbn",
-          "soccp_dtb.mbn"
+          "cdsp_dtbs.elf"
         ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
@@ -3709,21 +3707,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "partial",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "asus-zenbook-a16-firmware"
+        ],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "elsewhere"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -3769,9 +3767,7 @@
             "qcom/glymur/ASUSTeK/UX3607OA/qcadsp8480.mbn",
             "qcom/glymur/ASUSTeK/UX3607OA/adsp_dtbs.elf",
             "qcom/glymur/ASUSTeK/UX3607OA/qccdsp8480.mbn",
-            "qcom/glymur/ASUSTeK/UX3607OA/cdsp_dtbs.elf",
-            "qcom/glymur/ASUSTeK/UX3607OA/soccp.mbn",
-            "qcom/glymur/ASUSTeK/UX3607OA/soccp_dtb.mbn"
+            "qcom/glymur/ASUSTeK/UX3607OA/cdsp_dtbs.elf"
           ],
           "ids": [
             {
@@ -5930,21 +5926,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "partial",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-elitebook-x-g2q-firmware"
+        ],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
           "ids": "stable",
-          "firmware": "elsewhere"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "next",
@@ -5985,9 +5981,7 @@
             "qcom/glymur/hp/elitebook-x-g2q/qcadsp8480.mbn",
             "qcom/glymur/hp/elitebook-x-g2q/adsp_dtbs.elf",
             "qcom/glymur/hp/elitebook-x-g2q/qccdsp8480.mbn",
-            "qcom/glymur/hp/elitebook-x-g2q/cdsp_dtbs.elf",
-            "qcom/glymur/hp/elitebook-x-g2q/soccp.mbn",
-            "qcom/glymur/hp/elitebook-x-g2q/soccp_dtb.mbn"
+            "qcom/glymur/hp/elitebook-x-g2q/cdsp_dtbs.elf"
           ],
           "ids": [
             {
@@ -6547,18 +6541,14 @@
         "idsStubble": null,
         "firmware": "partial",
         "firmwareMissing": [
-          "vpu36_p4_s7.mbn",
-          "soccp.mbn",
-          "soccp_dtb.mbn"
+          "vpu36_p4_s7.mbn"
         ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwarePosted": null,
         "firmwareUpstream": "partial",
         "firmwareUpstreamMissing": [
-          "vpu36_p4_s7.mbn",
-          "soccp.mbn",
-          "soccp_dtb.mbn"
+          "vpu36_p4_s7.mbn"
         ],
         "firmwareFolders": [],
         "acpi": "missing",
