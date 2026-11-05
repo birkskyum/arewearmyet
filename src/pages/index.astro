@@ -7,7 +7,7 @@ import ChipIcon from '../assets/chip-icon.svg';
 import OmarchyIcon from '../assets/omarchy-icon.svg';
 import GitHubIcon from '../assets/github-icon.svg';
 import status from '../data/status.json';
-import { ANNOUNCED, FILTERS, GOOGLEBOOK_LEGEND, NVIDIA_LEGEND, OMARCHY_LEGEND, TONE, UPSTREAM_LEGEND } from '../lib/labels';
+import { ANNOUNCED, FILTERS, GOOGLEBOOK_LEGEND, NVIDIA_OMARCHY_LEGEND, NVIDIA_UPSTREAM_LEGEND, OMARCHY_LEGEND, TONE, UPSTREAM_LEGEND } from '../lib/labels';
 import { PILL } from '../lib/tones';
 import { googlebookRows, nvidiaRows, snapdragonRows, type TableRow } from '../lib/rows';
 
@@ -61,10 +61,17 @@ const snapdragonViews = [
   { id: 'omarchy', label: 'Omarchy', question: `What Omarchy's packages ship today, by the most stable channel that has it.`, columns: OMARCHY_LEGEND.map((group, i) => ({ id: omarchyIds[i], header: group.column, question: group.question, options: FILTERS[omarchyIds[i]] })) },
   { id: 'upstream', label: 'Upstream', question: 'What Linux, systemd and linux-firmware have, which every distro gets.', columns: UPSTREAM_LEGEND.map((group, i) => ({ id: upstreamIds[i], header: group.column, question: group.question, options: FILTERS[upstreamIds[i]] })) },
 ];
-const nvidiaColumns = [
-  { id: 'linux', header: 'Linux', question: NVIDIA_LEGEND[0].question, options: FILTERS.nvidiaLinux },
-  { id: 'omarchy', header: 'Boots', question: NVIDIA_LEGEND[1].question, options: FILTERS.nvidiaOmarchy },
-  { id: 'notes', header: 'Notes', question: 'What else to know' },
+const nvidiaNotes = { id: 'notes', header: 'Notes', question: 'What else to know' };
+const nvidiaViews = [
+  { id: 'omarchy', label: 'Omarchy', question: `What Omarchy's kernel ships today, by the most stable channel that has it.`, columns: [
+    { id: 'kernel', header: 'Kernel', question: NVIDIA_OMARCHY_LEGEND[0].question, options: FILTERS.nvidiaKernel },
+    { id: 'omarchy', header: 'Boots', question: NVIDIA_OMARCHY_LEGEND[1].question, options: FILTERS.nvidiaOmarchy },
+    nvidiaNotes,
+  ] },
+  { id: 'upstream', label: 'Upstream', question: 'What Linux itself has, which every distro gets.', columns: [
+    { id: 'linux', header: 'Linux', question: NVIDIA_UPSTREAM_LEGEND[0].question, options: FILTERS.nvidiaLinux },
+    nvidiaNotes,
+  ] },
 ];
 const legendExtra = [
   { label: 'Green', tone: 'good' as const, meaning: 'Done.' },
@@ -198,16 +205,21 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
 
     <Family id="nvidia" title="NVIDIA N1x and GB10" parts={nvidiaParts} total={nvidia.length}>
       <p class="max-w-3xl text-sm text-zinc-400">
-        NVIDIA's ARM laptops and desktops start through ACPI, so they need no device tree or hardware IDs. What counts here is whether someone has booted into Omarchy on them.
+        NVIDIA's ARM laptops and desktops start through ACPI, so they need no device tree or hardware IDs. Omarchy's kernel carries the patches they need, which Linux itself doesn't have yet, so what counts here is whether someone has booted into Omarchy on them.
       </p>
       <p class={HELP}>
         To help, install Omarchy's ARM image or another distro and report whether it boots, through <a class={LINK} href={`${REPO}/issues/new?template=model.yml`}>Add your model</a>.
       </p>
-      <div class="mt-4">
-        <Legend title="What the labels mean" groups={NVIDIA_LEGEND} />
-      </div>
-      <div class="mt-4">
-        <StatusTable client:load rows={nvidia} columns={nvidiaColumns} chips={[{ key: 'n1x', label: 'NVIDIA N1x' }, { key: 'gb10', label: 'NVIDIA GB10' }]} urlPrefix="nvidia-" exportName="arewearmyet-nvidia" exportTitle="NVIDIA N1x and GB10" />
+      <div class="group/views mt-4" data-views data-view="omarchy">
+        <div class="group-data-[view=upstream]/views:hidden">
+          <Legend title="What the labels mean" groups={NVIDIA_OMARCHY_LEGEND} />
+        </div>
+        <div class="hidden group-data-[view=upstream]/views:block">
+          <Legend title="What the labels mean" groups={NVIDIA_UPSTREAM_LEGEND} />
+        </div>
+        <div class="mt-4">
+          <StatusTable client:load rows={nvidia} views={nvidiaViews} chips={[{ key: 'n1x', label: 'NVIDIA N1x' }, { key: 'gb10', label: 'NVIDIA GB10' }]} urlPrefix="nvidia-" exportName="arewearmyet-nvidia" exportTitle="NVIDIA N1x and GB10" />
+        </div>
       </div>
     </Family>
 

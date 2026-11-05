@@ -1,7 +1,7 @@
 // Turns models into plain rows for the table island: every label, hover text and sort rank is
 // worked out here at build time, so the browser only receives what it shows
 import status from '../data/status.json';
-import { ANNOUNCED, GENERATION, acpiCell, bootloaderCell, deviceTreeCell, googlebookOmarchyCell, idsCell, linuxImageCell, machineCell, nvidiaLinuxCell, nvidiaOmarchyCell, omarchyCell, omarchyFirmwareCell, omarchyIdsCell, omarchyTreeCell, outOfBoxCell, upstreamFirmwareCell, type Cell, type Model, type NvidiaModel } from './labels';
+import { ANNOUNCED, GENERATION, acpiCell, bootloaderCell, deviceTreeCell, googlebookOmarchyCell, idsCell, linuxImageCell, machineCell, nvidiaKernelCell, nvidiaLinuxCell, nvidiaOmarchyCell, omarchyCell, omarchyFirmwareCell, omarchyIdsCell, omarchyTreeCell, outOfBoxCell, upstreamFirmwareCell, type Cell, type Model, type NvidiaModel } from './labels';
 
 export type CellData = Pick<Cell, 'key' | 'label' | 'tone' | 'title' | 'href' | 'rank'> | { key: string; text: string; rank: number };
 export type TableRow = {
@@ -107,6 +107,7 @@ export function nvidiaRows(): TableRow[] {
     prefixes: [],
     cells: {
       omarchy: plain(nvidiaOmarchyCell(model)),
+      kernel: plain(nvidiaKernelCell(model)),
       linux: plain(nvidiaLinuxCell(model)),
       notes: { key: model.notes ? 'notes' : 'none', text: model.notes ?? '', rank: model.notes ? 0 : 1 },
     },

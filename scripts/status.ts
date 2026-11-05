@@ -122,6 +122,8 @@ const shipped = Object.fromEntries(
 ) as Record<Channel, { trees: Set<string>; ids: Set<string>; firmware: Map<string, string> }>;
 const channelRank = (name: Channel | null) => (name ? CHANNELS.indexOf(name) : Infinity);
 const mostStable = (names: (Channel | null)[]) => [...names].filter(Boolean).sort((a, b) => channelRank(a) - channelRank(b))[0] ?? null;
+// Every Omarchy kernel carries the N1x and GB10 patches, so an NVIDIA model's kernel is the most stable channel's
+const nvidiaKernel = CHANNELS.find((name) => sources.omarchy.channels.find((c: ChannelSource) => c.name === name)?.kernel) ?? null;
 
 // Open omarchy-pkgs pull requests that would add a device tree, hardware IDs or firmware files
 type Pull = { number: number; title: string; url: string; draft: boolean; deviceTrees: { file: string; compatible: string[] }[]; ids: { file: string; compatible: string }[]; firmware: string[] };
@@ -500,7 +502,7 @@ const unmatched = {
 mkdirSync('src/data', { recursive: true });
 writeFileSync(
   'src/data/status.json',
-  JSON.stringify({ collected: sources.collected, linuxNext: sources.linuxNext, firmwareRelease: sources.firmwareRelease, omarchy: { channel: OMARCHY_CHANNEL, kernel: channel.kernel, systemd: channel.systemd, kernelBase, systemdRelease, channels: sources.omarchy.channels }, summary, models: rows, nvidia, unmatched }, null, 2) + '\n',
+  JSON.stringify({ collected: sources.collected, linuxNext: sources.linuxNext, firmwareRelease: sources.firmwareRelease, omarchy: { channel: OMARCHY_CHANNEL, kernel: channel.kernel, systemd: channel.systemd, kernelBase, systemdRelease, channels: sources.omarchy.channels }, summary, models: rows, nvidia: nvidia.map((model) => ({ ...model, kernel: nvidiaKernel })), unmatched }, null, 2) + '\n',
 );
 console.log(summary);
 console.log(`unmatched: ${unmatched.deviceTrees.length} device trees, ${unmatched.ids.length} ID entries, ${unmatched.firmware.length} firmware folders, ${unmatched.acpi.length} ACPI dumps`);

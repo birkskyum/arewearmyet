@@ -10582,7 +10582,8 @@
       "name": "Veriton GN100",
       "generation": "gb10",
       "omarchy": "expected",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     },
     {
       "form": "desktop",
@@ -10598,7 +10599,8 @@
       "name": "Ascent GX10",
       "generation": "gb10",
       "omarchy": "expected",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     },
     {
       "form": "desktop",
@@ -10614,7 +10616,8 @@
       "name": "Pro Max with GB10",
       "generation": "gb10",
       "omarchy": "expected",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     },
     {
       "form": "desktop",
@@ -10630,7 +10633,8 @@
       "name": "AI TOP ATOM",
       "generation": "gb10",
       "omarchy": "expected",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     },
     {
       "form": "desktop",
@@ -10646,7 +10650,8 @@
       "name": "ZGX Nano G1n",
       "generation": "gb10",
       "omarchy": "expected",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     },
     {
       "form": "desktop",
@@ -10662,7 +10667,8 @@
       "name": "ThinkStation PGX",
       "generation": "gb10",
       "omarchy": "expected",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     },
     {
       "form": "desktop",
@@ -10678,7 +10684,8 @@
       "name": "EdgeXpert",
       "generation": "gb10",
       "omarchy": "expected",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     },
     {
       "form": "desktop",
@@ -10694,7 +10701,8 @@
       "name": "DGX Spark",
       "generation": "gb10",
       "omarchy": "works",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     },
     {
       "form": "laptop",
@@ -10710,7 +10718,8 @@
       "name": "ProArt P14",
       "generation": "n1x",
       "omarchy": "works",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     },
     {
       "form": "laptop",
@@ -10726,7 +10735,8 @@
       "name": "ProArt P16",
       "generation": "n1x",
       "omarchy": "untested",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     },
     {
       "form": "laptop",
@@ -10742,7 +10752,8 @@
       "name": "XPS 16 Creator Edition",
       "generation": "n1x",
       "omarchy": "untested",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     },
     {
       "form": "laptop",
@@ -10758,7 +10769,8 @@
       "name": "OmniBook Ultra 16",
       "generation": "n1x",
       "omarchy": "untested",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     },
     {
       "form": "laptop",
@@ -10773,7 +10785,8 @@
       "name": "OmniBook X 14",
       "generation": "n1x",
       "omarchy": "untested",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     },
     {
       "form": "laptop",
@@ -10788,7 +10801,8 @@
       "name": "Yoga Pro 9n",
       "generation": "n1x",
       "omarchy": "untested",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     },
     {
       "form": "laptop",
@@ -10805,7 +10819,8 @@
       "name": "Surface Laptop Ultra",
       "generation": "n1x",
       "omarchy": "untested",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     },
     {
       "form": "devkit",
@@ -10821,7 +10836,8 @@
       "name": "Surface RTX Spark Dev Box",
       "generation": "n1x",
       "omarchy": "untested",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     },
     {
       "form": "2-in-1",
@@ -10836,7 +10852,8 @@
       "name": "Prestige N16 Flip AI+",
       "generation": "n1x",
       "omarchy": "untested",
-      "linux": "omarchy"
+      "linux": "omarchy",
+      "kernel": "stable"
     }
   ],
   "unmatched": {

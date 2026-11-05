@@ -101,6 +101,11 @@ const STATES = {
     problems: { label: 'Problems', tone: 'wanted', meaning: `Someone tried it and couldn't get to the Omarchy desktop.` },
     untested: { label: 'Not tested', tone: 'muted', meaning: 'Nobody has tried Omarchy on it yet.' },
   },
+  nvidiaKernel: {
+    stable: { label: 'Stable', tone: 'good', meaning: `Omarchy's stable kernel carries the patches it needs (linux-omarchy ${channelKernel('stable')}).` },
+    rc: { label: 'RC', tone: 'good', meaning: `Omarchy's RC kernel carries the patches it needs (linux-omarchy ${channelKernel('rc')}), the one the current install image has.` },
+    edge: { label: 'Edge', tone: 'good', meaning: `Omarchy's edge kernel carries the patches it needs (linux-omarchy ${channelKernel('edge')}), the one the nightly image has.` },
+  },
   nvidiaLinux: {
     omarchy: { label: 'Not in Linux yet', tone: 'close', meaning: `Needs patches Linux doesn't have yet. Omarchy's kernel carries them.` },
     mainline: { label: 'Mainline', tone: 'good', meaning: 'Plain Linux supports it.' },
@@ -154,9 +159,15 @@ export const GOOGLEBOOK_LEGEND: Group[] = [
   { column: 'Boots', question: 'Has an owner reached the desktop on it? Tested on Omarchy so far.', states: Object.values(STATES.googlebookOmarchy) as State[] },
 ];
 
-export const NVIDIA_LEGEND: Group[] = [
-  { column: 'Linux', question: `Whether plain Linux runs it, or it needs patches Linux doesn't have yet.`, states: Object.values(STATES.nvidiaLinux) as State[] },
+// The Omarchy view: Omarchy's kernel and whether it boots
+export const NVIDIA_OMARCHY_LEGEND: Group[] = [
+  { column: 'Kernel', question: `Omarchy's kernel with the patches it needs, by the most stable channel that has it.`, states: Object.values(STATES.nvidiaKernel) as State[] },
   { column: 'Boots', question: 'Has someone reached the desktop on it? Tested on Omarchy so far, and reports from any distro are welcome.', states: Object.values(STATES.nvidiaOmarchy) as State[] },
+];
+
+// The upstream view: what Linux itself has, which every distro gets
+export const NVIDIA_UPSTREAM_LEGEND: Group[] = [
+  { column: 'Linux', question: `Whether plain Linux runs it, or it needs patches Linux doesn't have yet.`, states: Object.values(STATES.nvidiaLinux) as State[] },
 ];
 
 // Ranks sort best first: a state's position in its group, or a release number within "done"
@@ -282,6 +293,10 @@ export function nvidiaOmarchyCell(model: NvidiaModel): Cell {
   return cell(STATES.nvidiaOmarchy, model.omarchy in STATES.nvidiaOmarchy ? model.omarchy : 'untested');
 }
 
+export function nvidiaKernelCell(model: NvidiaModel): Cell {
+  return cell(STATES.nvidiaKernel, model.kernel ?? 'edge');
+}
+
 export function nvidiaLinuxCell(model: NvidiaModel): Cell {
   return cell(STATES.nvidiaLinux, model.linux);
 }
@@ -313,4 +328,5 @@ export const FILTERS = {
   acpi: options(STATES.acpi),
   nvidiaOmarchy: options(STATES.nvidiaOmarchy),
   nvidiaLinux: options(STATES.nvidiaLinux),
+  nvidiaKernel: options(STATES.nvidiaKernel),
 };
