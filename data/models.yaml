@@ -818,6 +818,8 @@ models:
     ids_collected: "https://github.com/birkskyum/arewearmyet/tree/main/acpi/hp-omnibook-ultra-14-kg0"
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260830-x2-hp-omnibook-ship-v1-2-9feada71dc79@oss.qualcomm.com/"
     firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1333"
+    reports:
+      - { state: "problems", note: "Installs from the edge channel's nightly image and reaches the desktop, but the screen stays dark at the disk password prompt. Loading the USB-C display drivers before the disk is unlocked brings the prompt up; that fix isn't in Omarchy yet.", checked: "2026-11" }
     sources:
       - https://www.hp.com/au-en/shop/hp-omnibook-ultra-laptop-next-gen-ai-14-kg0017qu-d78gmpa.html
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4520421
