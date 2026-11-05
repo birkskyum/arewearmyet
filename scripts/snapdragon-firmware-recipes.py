@@ -3,15 +3,18 @@
 # the OEM's own Windows driver package at build time, unpacks it without running it, installs the
 # firmware files the machine's device tree asks for and checks each against its SHA-256.
 #
-# Usage: scripts/snapdragon-firmware-recipes.py --pkgbuilds DIR [--table FILE] [recipe ...]
+# Usage: scripts/snapdragon-firmware-recipes.py --pkgbuilds DIR [--table FILE] [--linux-firmware FILE] [recipe ...]
 # DIR is the pkgbuilds/ folder of an omacom/omarchy-pkgs checkout. The table defaults to
 # https://arewearmyet.com/firmware-sources.json, which serves data/firmware-sources.yaml.
+# --linux-firmware is the package database whose linux-firmware-qcom the recipes leave files to,
+# by default Omarchy's edge mirror of Arch Linux ARM's core; "none" leaves nothing out.
 # Naming recipes limits the run to them.
-import argparse, json, os, re, sys, textwrap, urllib.request
+import argparse, io, json, os, re, sys, tarfile, textwrap, urllib.request
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--table", default="https://arewearmyet.com/firmware-sources.json")
 parser.add_argument("--pkgbuilds", required=True)
+parser.add_argument("--linux-firmware", default="https://arm-mirror.omarchy.org/aarch64/core/core.files")
 parser.add_argument("recipes", nargs="*")
 args = parser.parse_args()
 if re.match(r"https?://", args.table):
@@ -21,6 +24,37 @@ if re.match(r"https?://", args.table):
 else:
     table = json.load(open(args.table))
 out = os.path.realpath(args.pkgbuilds)
+
+
+def fetch(url):
+    request = urllib.request.Request(url, headers={"User-Agent": "omarchy-pkgs snapdragon-firmware-recipes"})
+    with urllib.request.urlopen(request) as response:
+        return response.read()
+
+
+# The firmware linux-firmware-qcom ships, by name without a compression suffix, so the recipes leave
+# out what it has. Its file list comes from a pacman files database.
+def linux_firmware_names(source):
+    if source == "none":
+        return set()
+    data = fetch(source) if re.match(r"https?://", source) else open(source, "rb").read()
+    with tarfile.open(fileobj=io.BytesIO(data), mode="r:*") as db:
+        member = next((m for m in db.getmembers() if re.fullmatch(r"linux-firmware-qcom-[^/]+/files", m.name)), None)
+        if member is None:
+            raise SystemExit(f"{source} has no linux-firmware-qcom")
+        lines = db.extractfile(member).read().decode().splitlines()
+    names = set()
+    for line in lines:
+        m = re.fullmatch(r"usr/lib/firmware/(qcom/.+?)(\.zst|\.xz)?", line)
+        if m and not line.endswith("/"):
+            names.add(m.group(1))
+    return names
+
+
+in_linux_firmware = linux_firmware_names(args.linux_firmware)
+
+# A DSP's image and its device-tree image have to come from the same release
+DSP_SETS = {"audio DSP": re.compile(r"(qcadsp\d+\.mbn|adsp_dtbs?\.(elf|mbn))"), "compute DSP": re.compile(r"(qccdsp\d+\.mbn|cdsp_dtbs?\.(elf|mbn))")}
 
 TABLE_URL = "https://arewearmyet.com/firmware-sources.json"
 SCRIPT_URL = "https://github.com/birkskyum/arewearmyet/blob/main/scripts/snapdragon-firmware-recipes.py"
@@ -188,6 +222,20 @@ def recipe(name, who, paths):
                 raise SystemExit(f"{name}: {path}/{n} is in no OEM download")
             wanted.append({"dest": f"{path}/{n}", "sha256": entry["sha256"], "from": entry["from"]})
 
+    # Leave out what linux-firmware ships. A DSP's two images go together, and when linux-firmware has
+    # one but not the other, the kernel would load images from two releases, so that needs a decision.
+    for path in paths:
+        for dsp, pattern in DSP_SETS.items():
+            in_set = [w["dest"] for w in wanted if os.path.dirname(w["dest"]) == path and pattern.fullmatch(os.path.basename(w["dest"]))]
+            shipped = [d for d in in_set if d in in_linux_firmware]
+            if shipped and len(shipped) < len(in_set):
+                raise SystemExit(f"{name}: linux-firmware ships {', '.join(shipped)} but not the rest of the {dsp} set in {path}")
+    left_out = [w["dest"] for w in wanted if w["dest"] in in_linux_firmware]
+    wanted = [w for w in wanted if w["dest"] not in in_linux_firmware]
+    if not wanted:
+        print(f"{name}: linux-firmware ships every file, so the recipe can go")
+        return None
+
     # The fewest OEM downloads that hold every file: the one with the most of the rest first,
     # the smaller on a tie.
     remaining, chosen = list(range(len(wanted))), []
@@ -220,8 +268,10 @@ def recipe(name, who, paths):
     L += comment(
         f"{what[0].upper() + what[1:]} firmware for the {who}. The firmware only runs if it is signed for this "
         f"board by {human_list(makers)}, so linux-firmware cannot carry it until the OEM submits it. The OEM ships it "
-        "in its Windows driver download, which this recipe unpacks without running. The files are installed "
-        "unmodified, under the names the device tree requests, and checked against the SHA-256 each was matched to.")
+        "in its Windows driver download, which this recipe unpacks without running. Each file is checked against the "
+        "SHA-256 it was matched to and installed under the name the device tree requests, compressed with xz. The "
+        "kernel tries a plain name, then .zst, then .xz, so once linux-firmware ships the same file, its copy is the "
+        "one loaded, and the two packages never install the same path.")
     if provided:
         L += ["#"] + comment(
             "The board's own firmware starts the SoC control processor before Linux, so its images are not "
@@ -230,7 +280,7 @@ def recipe(name, who, paths):
     L += [
         f"pkgname={name}",
         f"pkgver={version}",
-        "pkgrel=1",
+        "pkgrel=@PKGREL@",
         f"pkgdesc={q(what[0].upper() + what[1:] + ' firmware for the ' + who)}",
         "arch=('aarch64')",
         f"url={q(page)}",
@@ -294,23 +344,36 @@ def recipe(name, who, paths):
     L += ["", "  # The bytes each file was matched to in the OEM's download.", "  (", '    cd "$fw"', "    sha256sum -c --quiet <<'SUMS'"]
     for w in sorted(wanted, key=lambda w: w["dest"]):
         L.append(f"{w['sha256']}  {w['dest']}")
-    L += ["SUMS", "  )"]
+    L += ["SUMS", "  )", "", '  find "$fw" -type f -exec xz -C crc32 {} +']
     if provided:
         L += ["", f'  install -Dm644 -t "$pkgdir/usr/share/qcom-firmware-extract/provided.d" {q(COMPATIBLE[name] + ".list")}']
     L += ["}", ""]
 
     d = os.path.join(out, name)
     os.makedirs(os.path.join(d, ".omarchy"), exist_ok=True)
-    open(os.path.join(d, "PKGBUILD"), "w").write("\n".join(L))
+    # A changed recipe of the same version gets the next pkgrel, so it is published again
+    text, pkgrel = "\n".join(L), 1
+    old_path = os.path.join(d, "PKGBUILD")
+    if os.path.exists(old_path):
+        old = open(old_path).read()
+        old_ver = re.search(r"^pkgver=(.*)$", old, re.M)
+        old_rel = re.search(r"^pkgrel=(\d+)$", old, re.M)
+        if old_ver and old_rel and old_ver.group(1) == version:
+            pkgrel = int(old_rel.group(1))
+            if re.sub(r"^pkgrel=\d+$", "pkgrel=@PKGREL@", old, flags=re.M) != text:
+                pkgrel += 1
+    open(old_path, "w").write(text.replace("pkgrel=@PKGREL@", f"pkgrel={pkgrel}"))
     open(os.path.join(d, ".omarchy", "package.json"), "w").write('{\n  "source": "local"\n}\n')
     if provided:
         open(os.path.join(d, COMPATIBLE[name] + ".list"), "w").write(
             "# The board's own firmware starts the SoC control processor before Linux.\n" + "\n".join(provided) + "\n")
-    return {"name": name, "files": len(wanted), "sources": [(p, packages[p]["size"]) for p in chosen], "provided": provided}
+    return {"name": name, "files": len(wanted), "left_out": left_out, "sources": [(p, packages[p]["size"]) for p in chosen], "provided": provided}
 
 
 for name, (who, paths) in RECIPES.items():
     if args.recipes and name not in args.recipes:
         continue
     r = recipe(name, who, paths)
-    print(f'{r["name"]:40} {r["files"]:3} files from ' + ", ".join(f"{p} ({s // 1000000} MB)" for p, s in r["sources"]) + (f'  provided: {len(r["provided"])}' if r["provided"] else ""))
+    if r is None:
+        continue
+    print(f'{r["name"]:40} {r["files"]:3} files from ' + ", ".join(f"{p} ({s // 1000000} MB)" for p, s in r["sources"]) + (f'  provided: {len(r["provided"])}' if r["provided"] else "") + (f'  left to linux-firmware: {len(r["left_out"])}' if r["left_out"] else ""))

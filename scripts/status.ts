@@ -500,4 +500,13 @@ writeFileSync(
   JSON.stringify({ collected: sources.collected, linuxNext: sources.linuxNext, firmwareRelease: sources.firmwareRelease, omarchy: { channel: OMARCHY_CHANNEL, kernel: channel.kernel, systemd: channel.systemd, kernelBase, systemdRelease, image: sources.omarchy.image ?? null, channels: sources.omarchy.channels }, summary, models: rows, nvidia: nvidia.map((model) => ({ ...model, kernel: nvidiaKernel })), unmatched }, null, 2) + '\n',
 );
 console.log(summary);
+// A file both linux-firmware-qcom and one of Omarchy's firmware packages ship on edge. The package's copy is
+// xz-compressed, so the kernel loads linux-firmware's, but the recipe should drop it: regenerate it with
+// scripts/snapdragon-firmware-recipes.py, which also stops when linux-firmware has only half a DSP's set.
+const edgeFirmware: Record<string, string[]> = sources.omarchy.channels.find((c: { name: string }) => c.name === 'edge')?.firmware ?? {};
+const inLinuxFirmware = new Set(edgeFirmware['linux-firmware-qcom'] ?? []);
+for (const [pkg, files] of Object.entries(edgeFirmware)) {
+  if (pkg === 'linux-firmware-qcom') continue;
+  for (const file of files.filter((f) => inLinuxFirmware.has(f))) console.log(`::warning::linux-firmware-qcom now ships ${file}, which ${pkg} also installs; regenerate its recipe`);
+}
 console.log(`unmatched: ${unmatched.deviceTrees.length} device trees, ${unmatched.ids.length} ID entries, ${unmatched.firmware.length} firmware folders, ${unmatched.acpi.length} ACPI dumps`);
