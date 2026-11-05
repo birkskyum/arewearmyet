@@ -714,7 +714,7 @@ models:
     variants:
       - { chip: "X1P-42-100", compatible: "hp,omnibook-5" }
     ids_collected: "https://bugs.launchpad.net/ubuntu-concept/+bug/2169090"
-    notes: "Owners run the OmniBook 5 14's out-of-tree device tree on it."
+    notes: "It shares the OmniBook 5 14's board, and Omarchy's kernel gives it that laptop's device tree."
     sources:
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4439453
       - https://www.notebookcheck.net/HP-OmniBook-5-NGAI-16-fb0000.1190138.0.html

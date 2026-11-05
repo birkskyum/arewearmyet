@@ -5499,7 +5499,7 @@
         "https://www.notebookcheck.net/HP-OmniBook-5-NGAI-16-fb0000.1190138.0.html",
         "https://www.thurrott.com/mobile/copilot-pc/328237/hp-omnibook-5-16-review-its-a-snapdragon-miracle"
       ],
-      "notes": "Owners run the OmniBook 5 14's out-of-tree device tree on it.",
+      "notes": "It shares the OmniBook 5 14's board, and Omarchy's kernel gives it that laptop's device tree.",
       "outcome": "newer",
       "reports": [],
       "machine": "omarchy",
