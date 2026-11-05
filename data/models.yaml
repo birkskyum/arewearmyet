@@ -40,7 +40,6 @@ models:
     vendor: "Acer"
     name: "Aspire 14 AI"
     generation: x1
-    devicetree_untested: true
     released: "2025-06"
     chips: ["X1-26-100"]
     model_numbers: ["A14-11M", "A14-11MT"]
@@ -52,7 +51,7 @@ models:
       - "https://gist.githubusercontent.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1/raw/x1p42100-acer-aspire-14-ai.dts"
       - "https://gist.githubusercontent.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1/raw/x1p42100-acer-aspire-ai.dtsi"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/1"
-    notes: "A draft device tree, written from owners' hardware reports. It shares almost everything with the Aspire 16's, which an owner booted on Ubuntu's live USB, but nobody has tried it on an Aspire 14 yet."
+    notes: "A device tree written from owners' hardware reports, sharing almost everything with the Aspire 16's. An owner started Omarchy's edge live image on it in November 2026, and it picked this tree and reached the installer. Nobody has installed it yet."
     sources:
       - https://news.acer.com/acer-expands-aspire-ai-series-with-six-new-copilot-pcs-powered-by-next-gen-processors
       - https://www.notebookcheck.net/Acer-Aspire-14-AI-A14-11M.1173609.0.html
@@ -72,7 +71,7 @@ models:
       - "https://gist.githubusercontent.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1/raw/x1p42100-acer-aspire-16-ai.dts"
       - "https://gist.githubusercontent.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1/raw/x1p42100-acer-aspire-ai.dtsi"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/3"
-    notes: "A draft device tree, written from owners' hardware reports. An owner booted it on Ubuntu's live USB in November 2026, with the screen, keyboard, disk, USB, battery and Bluetooth working. Wi-Fi needs a board file copied from Windows, since linux-firmware has none for its card."
+    notes: "A device tree written from owners' hardware reports. An owner booted it on Ubuntu's live USB in November 2026, with the screen, keyboard, disk, USB, battery and Bluetooth working. Wi-Fi needs a board file copied from Windows, since linux-firmware has none for its card."
     sources:
       - https://news.acer.com/acer-expands-aspire-ai-series-with-six-new-copilot-pcs-powered-by-next-gen-processors
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/acer-aspire-16-ai
