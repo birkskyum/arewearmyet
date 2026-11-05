@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-05T16:29:42.169Z",
+  "collected": "2026-11-05T18:24:37.223Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -3278,7 +3278,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-15",
+        "kernel": "7.3-16",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -3395,6 +3395,7 @@
         ],
         "carriedIds": [
           "glymur-hp-omnibook-ultra-kg0xxx.json",
+          "glymur-microsoft-surface-laptop8.json",
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
           "x1e78100-acer-sfa14-11.json",
@@ -3913,7 +3914,7 @@
         "file": "glymur-microsoft-surface-laptop8.dts",
         "model": "Microsoft Surface Laptop 8 (13.8in, Snapdragon X2 Elite)",
         "compatible": [
-          "microsoft,surface-laptop8",
+          "microsoft,surface-laptop-8-13p8",
           "qcom,mahua"
         ],
         "patch": "2384-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8.patch"
@@ -4127,6 +4128,11 @@
         "file": "glymur-hp-omnibook-ultra-kg0xxx.json",
         "name": "HP OmniBook Ultra 14-kg0xxx",
         "compatible": "hp,omnibook-ultra-kg0xxx"
+      },
+      {
+        "file": "glymur-microsoft-surface-laptop8.json",
+        "name": "Microsoft Surface Laptop 8 13.8-inch (2036)",
+        "compatible": "microsoft,surface-laptop-8-13p8"
       },
       {
         "file": "mahua-hp-omnibook-x16.json",

@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-05T16:29:42.169Z",
+  "collected": "2026-11-05T18:24:37.223Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -391,7 +391,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-15",
+        "kernel": "7.3-16",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -508,6 +508,7 @@
         ],
         "carriedIds": [
           "glymur-hp-omnibook-ultra-kg0xxx.json",
+          "glymur-microsoft-surface-laptop8.json",
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
           "x1e78100-acer-sfa14-11.json",
@@ -1040,9 +1041,9 @@
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 29,
+      "edge": 30,
       "pr": 0,
-      "carry": 7,
+      "carry": 6,
       "needs-deviceTree": 31,
       "needs-ids": 7,
       "needs-firmware": 8
@@ -1069,17 +1070,17 @@
         }
       },
       "ids": {
-        "omarchy": 39,
+        "omarchy": 40,
         "fromUpstream": 28,
-        "added": 11,
+        "added": 12,
         "missing": 0,
         "pull": 1,
-        "available": 5,
+        "available": 4,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 39
+          "edge": 40
         }
       },
       "firmware": {
@@ -1097,12 +1098,12 @@
         }
       },
       "all": {
-        "omarchy": 30,
+        "omarchy": 31,
         "fromUpstream": 1,
-        "added": 29,
+        "added": 30,
         "missing": 0,
         "pull": 0,
-        "available": 7,
+        "available": 6,
         "upstream": 1
       }
     }
@@ -9123,12 +9124,8 @@
       "machine": "team",
       "omarchy": {
         "deviceTree": "edge",
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/1905",
-          "number": 1905,
-          "title": "linux-omarchy-aarch64: use the Surface Laptop 8's agreed board name"
-        },
-        "ids": null,
+        "deviceTreePull": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
@@ -9138,15 +9135,13 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
-          "ids": "elsewhere",
+          "ids": "edge",
           "firmware": "edge"
         },
-        "missing": [
-          "ids"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "posted",
@@ -9172,9 +9167,24 @@
         {
           "model": "Omarchy's tree",
           "compatible": "microsoft,surface-laptop8",
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        },
+        {
+          "model": "Posted tree",
+          "compatible": "microsoft,surface-laptop-8-13p8",
           "computed": "newer",
           "treeChannel": "edge",
-          "idsChannel": null,
+          "idsChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -9186,25 +9196,6 @@
           },
           "firmwareNeeded": [],
           "ids": [],
-          "stubble": [],
-          "outcome": "newer",
-          "reports": []
-        },
-        {
-          "model": "Posted tree",
-          "compatible": "microsoft,surface-laptop-8-13p8",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/1905",
-            "number": 1905,
-            "title": "linux-omarchy-aarch64: use the Surface Laptop 8's agreed board name"
-          },
-          "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
-          "ids": [],
           "stubble": [
             {
               "file": "mahua-microsoft-surface-laptop-8-13p8.json",
@@ -9212,7 +9203,7 @@
               "url": "https://github.com/ubuntu/stubble/pull/97"
             }
           ],
-          "outcome": "none",
+          "outcome": "newer",
           "reports": []
         }
       ],
