@@ -1048,12 +1048,10 @@
       "needs-firmware": 8
     },
     "machine": {
-      "nobody": 31,
-      "untested": 1,
-      "problems": 4,
-      "linux": 31,
-      "omarchy": 10,
-      "team": 6
+      "team": 6,
+      "omarchy": 14,
+      "linux": 32,
+      "nobody": 31
     },
     "ahead": {
       "deviceTree": {
@@ -2278,7 +2276,7 @@
           "checked": "2026-10"
         }
       ],
-      "machine": "problems",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -3337,7 +3335,7 @@
       "notes": "A draft device tree, written from its ACPI tables on the Zenbook A16's, whose firmware describes the same power, USB and PCIe wiring. Nobody has booted it yet. Ethernet and HDMI are the likeliest gaps.",
       "outcome": "none",
       "reports": [],
-      "machine": "untested",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -6238,7 +6236,7 @@
           "checked": "2026-11"
         }
       ],
-      "machine": "problems",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -8417,7 +8415,7 @@
           "checked": "2026-10"
         }
       ],
-      "machine": "problems",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -8543,7 +8541,7 @@
           "checked": "2026-10"
         }
       ],
-      "machine": "problems",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
