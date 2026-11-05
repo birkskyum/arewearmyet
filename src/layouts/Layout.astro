@@ -17,8 +17,10 @@ const imageAlt = 'Are we ARM yet? Omarchy on ARM PCs, model by model.';
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- The ?v= makes browsers that cached the starter template's Astro icon fetch these again -->
+    <link rel="icon" href="/favicon.ico?v=2" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={url} />
