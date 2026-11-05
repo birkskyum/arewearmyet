@@ -324,7 +324,10 @@ async function collectOmarchy() {
     channels.push({ name: channel.name, ...channelContents(packages(repo), packages(core)) });
   }
   const recipe = omarchyKernelRecipe();
-  return { channels, kernelAddedDeviceTrees: recipe.added, carriedIds: recipe.ids, pulls: await collectOmarchyPulls() };
+  // The edge nightly image, which testers install: it picks up every tree and ID the edge kernel has
+  const latest = await getJson('https://nightly.omarchy.org/edge-aarch64/latest.json').catch(() => undefined);
+  const image = latest?.url ? { version: latest.version, url: latest.url, kernel: latest.kernel ?? null } : null;
+  return { channels, kernelAddedDeviceTrees: recipe.added, carriedIds: recipe.ids, image, pulls: await collectOmarchyPulls() };
 }
 
 // ACPI dumps from aarch64-laptops, by misc/ folder, from the ARM installer's hardware reports, by

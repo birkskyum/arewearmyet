@@ -1214,9 +1214,8 @@ models:
     chips: ["X2P-64-100", "X2E-78-100"]
     model_numbers: ["2036", "2138"]
     variants:
-      - { model: "Omarchy's tree", compatible: "microsoft,surface-laptop8" }
-      - { model: "Posted tree", compatible: "microsoft,surface-laptop-8-13p8" }
-    notes: "Two device trees describe this laptop, both on the Mahua chip. Omarchy's kernel carries Jim Martin's, and Qualcomm posted its own to Linux under another name."
+      - { compatible: "microsoft,surface-laptop-8-13p8" }
+    notes: "Two device trees describe this laptop, both on the Mahua chip and under the name in Qualcomm's posted binding. Omarchy's kernel carries Jim Martin's, and Qualcomm posted its own to Linux."
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261027-mahua-surface-laptop-v2-3-7dd903a12d22@oss.qualcomm.com/"
     sources:
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference

@@ -1,13 +1,18 @@
 {
-  "collected": "2026-11-05T18:24:37.223Z",
+  "collected": "2026-11-05T18:30:01.394Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
-    "channel": "rc",
-    "kernel": "7.3-3.1",
+    "channel": "edge",
+    "kernel": "7.3-16",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
+    "image": {
+      "version": "2026.11.05.479",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.05.479/omarchy-edge-2026.11.05.479-aarch64.iso",
+      "kernel": "7.3.0-14-omarchy"
+    },
     "channels": [
       {
         "name": "stable",
@@ -1029,9 +1034,9 @@
     "nvidiaWorks": 2,
     "nvidiaExpected": 7,
     "works": 2,
-    "should": 11,
+    "should": 29,
     "problems": 7,
-    "notYet": 63,
+    "notYet": 45,
     "deviceTree": 52,
     "ids": 45,
     "firmware": 42,
@@ -1129,7 +1134,7 @@
         "https://www.notebookcheck.net/Acer-Aspire-14-AI-A14-11M.1173609.0.html"
       ],
       "notes": "A device tree written from owners' hardware reports, sharing almost everything with the Aspire 16's. An owner started Omarchy's edge live image on it in November 2026, and it picked this tree and reached the installer. Nobody has installed it yet.",
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -1179,7 +1184,7 @@
         {
           "chip": "X1-26-100",
           "compatible": "acer,aspire-a14-11m",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
           "treePull": null,
@@ -1200,7 +1205,7 @@
               "url": "https://github.com/ubuntu/stubble/pull/101"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -1230,7 +1235,7 @@
         "https://www.pcmag.com/reviews/acer-aspire-16-ai"
       ],
       "notes": "A device tree written from owners' hardware reports. An owner booted it on Ubuntu's live USB in November 2026, with the screen, keyboard, disk, USB, battery and Bluetooth working. Wi-Fi needs a board file copied from Windows, since linux-firmware has none for its card.",
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -1280,7 +1285,7 @@
         {
           "chip": "X1-26-100",
           "compatible": "acer,aspire-a16-11m",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
           "treePull": null,
@@ -1301,7 +1306,7 @@
               "url": "https://github.com/ubuntu/stubble/pull/102"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -1416,7 +1421,7 @@
         "https://github.com/systemd/systemd/blob/main/src/boot/hwids/aa64/x1p64100-acer-swift-sf14-11.json"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -1465,7 +1470,7 @@
           "model": "SF14-11",
           "chip": "X1P-64-100",
           "compatible": "acer,swift-sf14-11",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
           "treePull": null,
@@ -1494,7 +1499,7 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p64100-acer-swift-sf14-11.json"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -1523,7 +1528,7 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/acer-sfa14-11"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -1583,7 +1588,7 @@
               "compatible": "acer,swift-sfa14-11"
             }
           ],
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
           "treePull": null,
@@ -1597,7 +1602,7 @@
           },
           "firmwareNeeded": [],
           "stubble": [],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -1626,7 +1631,7 @@
         "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p42100-acer-swift-go14-01.txt"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -1675,7 +1680,7 @@
           "model": "SFG14-01",
           "chip": "X1P-42-100",
           "compatible": "acer,swift-go14-01",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
           "treePull": null,
@@ -1704,7 +1709,7 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-acer-swift-go14-01.json"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -2710,7 +2715,7 @@
         "https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/"
       ],
       "notes": "A device tree written from two owners' hardware reports, in an OLED and an LCD version. An owner booted the OLED version on Ubuntu's live USB in November 2026, with the screen, keyboard, touchpad, Bluetooth, USB, HDMI and disk working. Wi-Fi needs board data that linux-firmware doesn't have yet.",
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -2761,7 +2766,7 @@
           "model": "OLED",
           "chip": "X1-26-100",
           "compatible": "asus,vivobook-s16-s3607qa-oled",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
           "treePull": null,
@@ -2782,14 +2787,14 @@
               "url": "https://github.com/ubuntu/stubble/pull/103"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         },
         {
           "model": "LCD",
           "chip": "X1-26-100",
           "compatible": "asus,vivobook-s16-s3607qa-lcd",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
           "treePull": null,
@@ -2810,7 +2815,7 @@
               "url": "https://github.com/ubuntu/stubble/pull/103"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -3599,7 +3604,7 @@
         "https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a14-ux3407na.dts"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -3649,7 +3654,7 @@
         {
           "model": "UX3407NA",
           "compatible": "asus,zenbook-a14-ux3407na",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
           "treePull": null,
@@ -3683,7 +3688,7 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-asus-zenbook-a14-ux3407na.json"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -3831,7 +3836,7 @@
         "https://dl.dell.com/content/manual20917790-inspiron-14-5441-owner-s-manual.pdf"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "manual",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -3897,7 +3902,7 @@
         {
           "chip": "X1P-64-100",
           "compatible": "dell,inspiron-14-plus-5441",
-          "computed": "newer",
+          "computed": "manual",
           "treeChannel": "edge",
           "idsChannel": null,
           "treePull": null,
@@ -3912,7 +3917,7 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "newer",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -4074,7 +4079,7 @@
         "https://www.notebookcheck.net/Dell-Latitude-5455-arrives-later-this-month-in-Snapdragon-X-Plus-X1P-64-100-and-X1P-42-100-options.883656.0.html"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -4124,7 +4129,7 @@
         {
           "chip": "X1P-64-100",
           "compatible": "dell,latitude-5455",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
           "treePull": null,
@@ -4153,7 +4158,7 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p64100-dell-latitude-5455.json"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -4826,7 +4831,7 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/hp-elitebook-6-g1q"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -4876,7 +4881,7 @@
         {
           "chip": "X1P-42-100",
           "compatible": "hp,elitebook-6-g1q",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
           "treePull": null,
@@ -4905,7 +4910,7 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-hp-elitebook-6-g1q.json"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -5397,7 +5402,7 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/hp-omnibook-5-14-he0xxx"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -5447,7 +5452,7 @@
         {
           "chip": "X1P-42-100",
           "compatible": "hp,omnibook-5",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
           "treePull": null,
@@ -5468,7 +5473,7 @@
               "url": "https://github.com/ubuntu/stubble/pull/105"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -5499,7 +5504,7 @@
         "https://www.thurrott.com/mobile/copilot-pc/328237/hp-omnibook-5-16-review-its-a-snapdragon-miracle"
       ],
       "notes": "It shares the OmniBook 5 14's board, and Omarchy's kernel gives it that laptop's device tree.",
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -5547,7 +5552,7 @@
         {
           "chip": "X1P-42-100",
           "compatible": "hp,omnibook-5",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
           "treePull": null,
@@ -5568,7 +5573,7 @@
               "url": "https://github.com/ubuntu/stubble/pull/105"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -5939,7 +5944,7 @@
         "https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/glymur-hp-elitebook-x-g2q.dts"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -5986,7 +5991,7 @@
       "variants": [
         {
           "compatible": "hp,elitebook-x-g2q",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
           "treePull": null,
@@ -6020,7 +6025,7 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-hp-elitebook-x-g2q.json"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -6284,7 +6289,7 @@
       "variants": [
         {
           "compatible": "hp,omnibook-ultra-kg0xxx",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
           "treePull": null,
@@ -6425,7 +6430,7 @@
         "https://www.notebookcheck.net/HP-OmniBook-X-16-with-Snapdragon-X2-Elite-24-GB-RAM-OLED-drops-below-900.1356231.0.html"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -6473,7 +6478,7 @@
         {
           "model": "16-cp1",
           "compatible": "hp,omnibook-x16-cp1",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
           "treePull": null,
@@ -6494,7 +6499,7 @@
               "url": "https://github.com/ubuntu/stubble/pull/107"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -6975,7 +6980,7 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-xiaoxin-14-q8x9"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -7034,7 +7039,7 @@
           "model": "OLED",
           "chip": "X1P-42-100",
           "compatible": "lenovo,ideapad-slim5x-oled",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
           "treePull": null,
@@ -7063,14 +7068,14 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-lenovo-ideapad-slim-5-oled.json"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         },
         {
           "model": "LCD",
           "chip": "X1P-42-100",
           "compatible": "lenovo,ideapad-slim5x-lcd",
-          "computed": "newer",
+          "computed": "manual",
           "treeChannel": "edge",
           "idsChannel": null,
           "treePull": null,
@@ -7085,7 +7090,7 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "newer",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -8061,7 +8066,7 @@
         "https://www.notebookcheck.net/Lenovo-releases-new-14-inch-ThinkPad-with-Snapdragon-X2-Elite-and-over-27-hours-battery-life.1345695.0.html"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -8111,7 +8116,7 @@
         {
           "model": "LCD",
           "compatible": "lenovo,thinkpad-t14s-gen7-lcd",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
           "treePull": null,
@@ -8137,7 +8142,7 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/mahua-lenovo-thinkpad-t14s-gen7-lcd.json"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -8169,7 +8174,7 @@
         "https://www.xda-developers.com/lenovo-yoga-slim-7x-gen-11-review/"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -8224,7 +8229,7 @@
         {
           "model": "14Q8Y11",
           "compatible": "lenovo,yoga-slim7x-gen11",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
           "treePull": null,
@@ -8258,7 +8263,7 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-lenovo-yoga-slim7x.json"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -8917,7 +8922,7 @@
         "https://learn.microsoft.com/en-us/surface/surface-system-sku-reference"
       ],
       "notes": null,
-      "outcome": "manual",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -8976,7 +8981,7 @@
               "compatible": "microsoft,sp12"
             }
           ],
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "edge",
           "treePull": null,
@@ -9002,7 +9007,7 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-microsoft-surface-pro-12in.json"
             }
           ],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -9118,8 +9123,8 @@
         "https://www.notebookcheck.net/Microsoft-Surface-Laptop-8-13-8-Reviews-and-Specs.1336515.0.html",
         "https://www.cdw.com/product/microsoft-surface-laptop-for-business-8th-edition-copilot-pc-13.8/9186835"
       ],
-      "notes": "Two device trees describe this laptop, both on the Mahua chip. Omarchy's kernel carries Jim Martin's, and Qualcomm posted its own to Linux under another name.",
-      "outcome": "newer",
+      "notes": "Two device trees describe this laptop, both on the Mahua chip and under the name in Qualcomm's posted binding. Omarchy's kernel carries Jim Martin's, and Qualcomm posted its own to Linux.",
+      "outcome": "should",
       "reports": [],
       "machine": "team",
       "omarchy": {
@@ -9165,24 +9170,8 @@
       },
       "variants": [
         {
-          "model": "Omarchy's tree",
-          "compatible": "microsoft,surface-laptop8",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "treePull": null,
-          "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
-          "ids": [],
-          "stubble": [],
-          "outcome": "none",
-          "reports": []
-        },
-        {
-          "model": "Posted tree",
           "compatible": "microsoft,surface-laptop-8-13p8",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
           "treePull": null,
@@ -9203,7 +9192,7 @@
               "url": "https://github.com/ubuntu/stubble/pull/97"
             }
           ],
-          "outcome": "newer",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -9716,7 +9705,7 @@
         "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
       ],
       "notes": null,
-      "outcome": "newer",
+      "outcome": "manual",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -9765,7 +9754,7 @@
       "variants": [
         {
           "compatible": "samsung,galaxy-book4-edge-16",
-          "computed": "newer",
+          "computed": "manual",
           "treeChannel": "edge",
           "idsChannel": null,
           "treePull": null,
@@ -9780,7 +9769,7 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "newer",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -9868,7 +9857,7 @@
           "model": "NP944XMA",
           "chip": "X1E-80-100",
           "compatible": "samsung,galaxy-book4-edge-14",
-          "computed": "newer",
+          "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
           "treePull": null,

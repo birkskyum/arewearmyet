@@ -31,7 +31,7 @@ const VARIANT: Record<string, { tone: TableRow['variants'][number]['tone']; stat
   should: { tone: 'close', state: 'ready to test' },
   problems: { tone: 'wanted', state: 'problems' },
   manual: { tone: 'close', state: 'not recognised' },
-  newer: { tone: 'close', state: 'newer kernel' },
+  notCarried: { tone: 'close', state: 'not carried' },
   none: { tone: 'muted', state: 'no device tree' },
 };
 

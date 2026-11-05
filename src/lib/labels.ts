@@ -16,10 +16,10 @@ const channelKernel = (name: string) => status.omarchy.channels.find((c) => c.na
 const STATES = {
   omarchy: {
     works: { label: 'Boots', tone: 'good', meaning: 'An owner booted into the Omarchy desktop on the current release. Not every feature has to work yet.' },
-    should: { label: 'Ready to test', tone: 'close', meaning: `Omarchy's kernel has its device tree and the install image picks it by itself, but no owner has confirmed it boots yet.` },
+    should: { label: 'Ready to test', tone: 'close', meaning: `Omarchy's edge kernel has its device tree and the edge nightly image picks it by itself, but no owner has confirmed it boots yet.` },
     problems: { label: 'Problems', tone: 'wanted', meaning: `An owner couldn't get to the Omarchy desktop on the current release without a workaround.` },
     manual: { label: 'Not recognised', tone: 'close', meaning: `Omarchy's kernel has its device tree, but the install image doesn't recognise this model, because systemd has no hardware IDs for it. Its hardware IDs would fix that.` },
-    newer: { label: 'Newer kernel', tone: 'close', meaning: `Its device tree is in Omarchy's edge kernel or a newer Linux, but not in the RC kernel (${status.omarchy.kernel}) yet. It's ready to test once the RC gets it.` },
+    notCarried: { label: 'Not carried', tone: 'close', meaning: `Its device tree exists, in a newer Linux or a posted patch, but Omarchy's kernel doesn't carry it yet.` },
     none: { label: 'No device tree', tone: 'wanted', meaning: `Nobody has written a device tree for it yet, so Linux can't start on it.` },
   },
   deviceTree: {
@@ -47,9 +47,9 @@ const STATES = {
     wanted: { label: 'Wanted', tone: 'wanted', meaning: `Doesn't exist yet. An ACPI dump is what one gets written from.` },
   },
   outOfBox: {
-    stable: { label: 'On stable', tone: 'good', meaning: `A fresh install from Omarchy's stable channel has its device tree, hardware IDs and firmware.` },
-    rc: { label: 'On RC', tone: 'good', meaning: `A fresh install from Omarchy's RC channel has its device tree, hardware IDs and firmware.` },
-    edge: { label: 'On edge', tone: 'good', meaning: `A fresh install from Omarchy's edge channel, the nightly image, has its device tree, hardware IDs and firmware.` },
+    stable: { label: 'Stable channel', tone: 'good', meaning: `A fresh install from Omarchy's stable channel has its device tree, hardware IDs and firmware.` },
+    rc: { label: 'RC channel', tone: 'good', meaning: `A fresh install from Omarchy's RC channel has its device tree, hardware IDs and firmware.` },
+    edge: { label: 'Edge channel', tone: 'good', meaning: `A fresh install from Omarchy's edge channel, the nightly image, has its device tree, hardware IDs and firmware.` },
     pr: { label: 'After PRs', tone: 'close', meaning: 'Every piece Omarchy still lacks is in an open pull request on omarchy-pkgs.' },
     carry: { label: 'Needs carrying', tone: 'close', meaning: `Every piece exists, but Omarchy doesn't carry all of them yet.` },
     'needs-deviceTree': { label: 'Needs a tree', tone: 'wanted', meaning: 'Nobody has written its device tree yet.' },

@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-05T18:24:37.223Z",
+  "collected": "2026-11-05T18:30:01.394Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4185,6 +4185,11 @@
         "compatible": "microsoft,surface-pro-12in"
       }
     ],
+    "image": {
+      "version": "2026.11.05.479",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.05.479/omarchy-edge-2026.11.05.479-aarch64.iso",
+      "kernel": "7.3.0-14-omarchy"
+    },
     "pulls": [
       {
         "number": 1905,

@@ -5,8 +5,8 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { parse } from 'yaml';
 
-// The channel whose image people install today
-const OMARCHY_CHANNEL = 'rc' as const;
+// The channel testers install, from the edge nightly image
+const OMARCHY_CHANNEL = 'edge' as const;
 
 type Variant = { model?: string; chip?: string; display?: string; compatible?: string; ids?: string[] };
 type Model = {
@@ -150,7 +150,7 @@ function variantStatus(variant: Variant) {
   // the hardware IDs there pick it
   const treeHere = channelRank(treeChannel) <= channelRank(OMARCHY_CHANNEL);
   const idsHere = channelRank(idsChannel) <= channelRank(OMARCHY_CHANNEL);
-  const computed = treeHere ? (idsHere ? 'should' : 'manual') : dt ? 'newer' : 'none';
+  const computed = treeHere ? (idsHere ? 'should' : 'manual') : dt ? 'notCarried' : 'none';
   return {
     ...variant,
     computed,
@@ -166,7 +166,7 @@ function variantStatus(variant: Variant) {
 }
 
 // What an owner saw outranks what the pieces predict; a model shows its best variant
-const OUTCOMES = ['works', 'should', 'problems', 'manual', 'newer', 'none'] as const;
+const OUTCOMES = ['works', 'should', 'problems', 'manual', 'notCarried', 'none'] as const;
 type Outcome = (typeof OUTCOMES)[number];
 const best = (values: Outcome[]) => [...values].sort((a, b) => OUTCOMES.indexOf(a) - OUTCOMES.indexOf(b))[0];
 
@@ -420,7 +420,7 @@ const summary = {
   works: count(current, (r) => r.outcome === 'works'),
   should: count(current, (r) => r.outcome === 'should'),
   problems: count(current, (r) => r.outcome === 'problems'),
-  notYet: count(current, (r) => ['manual', 'newer', 'none'].includes(r.outcome)),
+  notYet: count(current, (r) => ['manual', 'notCarried', 'none'].includes(r.outcome)),
   // What we have to run each model, wherever it is: a device tree in Linux or out of tree, hardware IDs
   // listed or sent in, and firmware we can get without the machine's own Windows
   deviceTree: count(current, (r) => r.upstream.deviceTree !== 'missing'),
@@ -497,7 +497,7 @@ const unmatched = {
 mkdirSync('src/data', { recursive: true });
 writeFileSync(
   'src/data/status.json',
-  JSON.stringify({ collected: sources.collected, linuxNext: sources.linuxNext, firmwareRelease: sources.firmwareRelease, omarchy: { channel: OMARCHY_CHANNEL, kernel: channel.kernel, systemd: channel.systemd, kernelBase, systemdRelease, channels: sources.omarchy.channels }, summary, models: rows, nvidia: nvidia.map((model) => ({ ...model, kernel: nvidiaKernel })), unmatched }, null, 2) + '\n',
+  JSON.stringify({ collected: sources.collected, linuxNext: sources.linuxNext, firmwareRelease: sources.firmwareRelease, omarchy: { channel: OMARCHY_CHANNEL, kernel: channel.kernel, systemd: channel.systemd, kernelBase, systemdRelease, image: sources.omarchy.image ?? null, channels: sources.omarchy.channels }, summary, models: rows, nvidia: nvidia.map((model) => ({ ...model, kernel: nvidiaKernel })), unmatched }, null, 2) + '\n',
 );
 console.log(summary);
 console.log(`unmatched: ${unmatched.deviceTrees.length} device trees, ${unmatched.ids.length} ID entries, ${unmatched.firmware.length} firmware folders, ${unmatched.acpi.length} ACPI dumps`);

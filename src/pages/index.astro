@@ -12,7 +12,8 @@ import { PILL } from '../lib/tones';
 import { googlebookRows, nvidiaRows, snapdragonRows, type TableRow } from '../lib/rows';
 
 const { summary } = status;
-const channel = status.omarchy.channel.toUpperCase();
+// The edge nightly image testers install, linked as the collector last found it
+const image = status.omarchy.image;
 const byName = <T extends { vendor: string; name: string }>(a: T, b: T) => a.vendor.localeCompare(b.vendor) || a.name.localeCompare(b.name);
 const rows = snapdragonRows().sort(byName);
 // The 8cx Gen 3 machines are the generation before Snapdragon X, so they get their own table and stay out of the totals
@@ -121,7 +122,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
         <a href="#apple" class={NAV}>Apple Silicon</a>
       </nav>
       <p class="mt-5 max-w-3xl text-sm text-zinc-400">
-        Every ARM laptop needs a device tree, hardware IDs and firmware. Omarchy ships them in its own packages, often before Linux, systemd and linux-firmware have them. The Omarchy view shows what its channels ship today, and the Upstream view what every distro gets. Boots means an owner reached the desktop on Omarchy {channel}, with <span class="whitespace-nowrap">linux-omarchy {status.omarchy.kernel}</span> and systemd {status.omarchy.systemd}. Booting is the first goal; features like suspend and USB4 come next.
+        Every ARM laptop needs a device tree, hardware IDs and firmware. Omarchy ships them in its own packages, often before Linux, systemd and linux-firmware have them. The Omarchy view shows what its channels ship today, and the Upstream view what every distro gets. Ready to test means the {image ? <a class={LINK} href={image.url}>edge nightly image</a> : 'edge nightly image'} picks the model's device tree by itself, with <span class="whitespace-nowrap">linux-omarchy {status.omarchy.kernel}</span> and systemd {status.omarchy.systemd}, and Boots means an owner reached the desktop. Booting is the first goal; features like suspend and USB4 come next.
       </p>
       <div class="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 rounded-xl bg-[#9ece6a]/10 px-5 py-4 ring-1 ring-[#9ece6a]/40">
         <p class="text-zinc-300"><strong class="font-semibold text-[#9ece6a]">Own an ARM laptop that isn't green yet?</strong> Help get it there, whatever distro you run. It only takes a few minutes.</p>
@@ -134,7 +135,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
         <a class={LINK} href={`/?ootb=${OOTB_DONE}#snapdragon`}>{ootbDone} {ootbDone === 1 ? 'works' : 'work'} out of the box</a> on Omarchy today, <a class={LINK} href="/?ootb=pr#snapdragon">{ootb.pr} more once open pull requests land</a> and <a class={LINK} href="/?ootb=carry#snapdragon">{ootb.carry} once Omarchy carries pieces that exist elsewhere</a>. The others still need <a class={LINK} href="/?ootb=needs-deviceTree#snapdragon">a device tree ({ootb['needs-deviceTree']})</a>, <a class={LINK} href="/?ootb=needs-ids#snapdragon">hardware IDs ({ootb['needs-ids']})</a> or <a class={LINK} href="/?ootb=needs-firmware#snapdragon">firmware from outside Windows ({ootb['needs-firmware']})</a>.
       </p>
       <p class="mt-2 max-w-3xl text-sm text-zinc-400">
-        <a class={LINK} href="/?omarchy=should#snapdragon">{summary.should} models are ready to test</a> on Omarchy {channel}, and owners have confirmed {summary.works} boot to the desktop and reported problems on {summary.problems}. Nobody we know has <a class={LINK} href="/?machine=nobody#snapdragon">{summary.machine.nobody} of the models</a> yet. To help a model along, send a hardware report from Windows, the device tree you boot with on Linux, or a boot test, as <a class={LINK} href="/help">Help a model get there</a> explains.
+        <a class={LINK} href="/?omarchy=should#snapdragon">{summary.should} models are ready to test</a> on the {image ? <a class={LINK} href={image.url}>edge nightly image</a> : 'edge nightly image'}, and owners have confirmed {summary.works} boot to the desktop and reported problems on {summary.problems}. Nobody we know has <a class={LINK} href="/?machine=nobody#snapdragon">{summary.machine.nobody} of the models</a> yet. To help a model along, send a hardware report from Windows, the device tree you boot with on Linux, or a boot test, as <a class={LINK} href="/help">Help a model get there</a> explains.
       </p>
       <h3 class="mt-6 text-sm font-semibold text-zinc-200">How far ahead Omarchy is</h3>
       <p class="mt-1 max-w-3xl text-sm text-zinc-400">Models with each piece in Omarchy, on any channel, against the releases of Linux, systemd and linux-firmware. On Omarchy's bar the striped part comes from upstream, the green part is what Omarchy adds, the amber part is in an open pull request on <a class={LINK} href="https://github.com/omacom/omarchy-pkgs/pulls">omarchy-pkgs</a>, and the grey part exists elsewhere but Omarchy doesn't carry it yet.</p>
