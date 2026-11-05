@@ -92,7 +92,7 @@ const STATES = {
   },
   acpi: {
     collected: { label: 'Collected', tone: 'good', meaning: `Its ACPI tables are in the aarch64-laptops collection, an owner's hardware report or this board's copy of a dump not merged there yet.` },
-    notNeeded: { label: 'Not needed', tone: 'muted', meaning: 'It already has a device tree.' },
+    helps: { label: 'Would help', tone: 'close', meaning: `It has a device tree, but a report still gives the hardware IDs for each of its model numbers, the maker's firmware list, its panels and the tables to check the tree against.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: 'The first thing to send for a model without a device tree.' },
   },
   nvidiaOmarchy: {
@@ -131,7 +131,7 @@ export const ANNOUNCED = STATES.announced as State;
 
 type Group = { column: string; question: string; states: State[] };
 
-const ACPI_GROUP: Group = { column: 'ACPI dump', question: `The laptop's own hardware tables, which a device tree is written from.`, states: Object.values(STATES.acpi) as State[] };
+const ACPI_GROUP: Group = { column: 'Hardware report', question: `The laptop's own hardware tables, hardware IDs, panel and firmware list, from Omarchy's report tool or a dump in aarch64-laptops. A device tree is written from it and checked against it.`, states: Object.values(STATES.acpi) as State[] };
 const BOOTS_GROUP: Group = { column: 'Boots', question: `Has an owner reached the desktop on it? Tested on Omarchy so far, and reports from any distro are welcome. Booting is the first goal for every model; features like suspend and USB4 come next.`, states: Object.values(STATES.omarchy) as State[] };
 
 // The Omarchy view: what Omarchy's packages ship today
@@ -277,7 +277,7 @@ export function machineCell(model: Model): Cell {
 
 export function acpiCell(model: Model): Cell {
   if (model.upstream.acpi === 'collected') return cell(STATES.acpi, 'collected', { href: model.upstream.acpiUrls[0] });
-  return cell(STATES.acpi, model.upstream.deviceTree === 'missing' ? 'wanted' : 'notNeeded');
+  return cell(STATES.acpi, model.upstream.deviceTree === 'missing' ? 'wanted' : 'helps');
 }
 
 export function googlebookOmarchyCell(model: Model): Cell {
