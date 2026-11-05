@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# The link preview font, see scripts/og/render.sh
+scripts/og/*.ttf
