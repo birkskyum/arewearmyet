@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-05T18:30:01.394Z",
+  "collected": "2026-11-05T20:04:41.170Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -2232,6 +2232,7 @@
         {
           "chip": "X1-26-100",
           "compatible": "asus,vivobook-x16",
+          "ids": [],
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
@@ -2239,7 +2240,6 @@
           "idsPull": null,
           "deviceTree": null,
           "firmwareNeeded": [],
-          "ids": [],
           "stubble": [],
           "outcome": "none",
           "reports": []

@@ -14,6 +14,17 @@ For every model in [`data/models.yaml`](data/models.yaml):
 
 [`data/firmware-sources.yaml`](data/firmware-sources.yaml) lists, for the firmware linux-firmware doesn't ship yet, which maker download holds each file, where inside it, and each file's SHA-256, with no firmware in it. The site shows it at `/firmware` and serves it as `/firmware-sources.json` for tools on any distro. [`scripts/snapdragon-firmware-recipes.py`](scripts/snapdragon-firmware-recipes.py) writes Omarchy's firmware packages from it, one recipe per machine in omacom/omarchy-pkgs: `scripts/snapdragon-firmware-recipes.py --pkgbuilds <omarchy-pkgs>/pkgbuilds`.
 
+## What it keeps
+
+The board links its sources, and keeps its own copy of whatever no durable archive holds yet, so a closed pull request or a deleted repository loses nothing:
+
+- [`device-trees/`](device-trees): every device tree it links that isn't in Linux, a posted series as its mbox plus the files it adds, or an owner's out-of-tree files.
+- [`hwids/`](hwids): every hardware ID file that systemd's list doesn't have, from Omarchy's kernel package or Ubuntu's stubble.
+- [`reports/`](reports): each hardware report from the Omarchy Arm Installer's [report repository](https://github.com/turbineBMW/omarchy-hardware-reports), with the ACPI tables' SoC serial number zeroed. Its device list, driver files and registry export stay there.
+- [`acpi/`](acpi): ACPI dumps sent here before any other archive had them.
+
+Each copied folder has a `SOURCE.md` naming where its files came from. Linux, systemd, linux-firmware and aarch64-laptops are linked, not copied, and firmware files are never copied, only listed in `data/firmware-sources.yaml`.
+
 ## Sections
 
 Each section is a group of machines that one guide can help along:
@@ -25,8 +36,9 @@ Each section is a group of machines that one guide can help along:
 ## How the data flows
 
 1. `pnpm collect` reads the sources and writes `data/sources.json`: device trees in Linux releases (GitHub mirror of torvalds/linux) and linux-next (sparse clone from kernel.org), hardware IDs in systemd releases and Ubuntu's stubble, firmware folders in linux-firmware (GitLab API), ACPI dumps in aarch64-laptops/build, and the kernel and systemd versions in Omarchy's package channels. A GitHub token from `GITHUB_TOKEN` or `gh auth token` is used when present.
-2. `pnpm status` joins `data/models.yaml` with `data/sources.json` and writes `src/data/status.json`. It also lists everything the sources know that no model claims yet, under `unmatched`.
-3. `pnpm build` renders the site from `src/data/status.json`.
+2. `pnpm trees` and `pnpm archive` copy what the board links into `device-trees/`, `hwids/` and `reports/`, as listed above.
+3. `pnpm status` joins `data/models.yaml` with `data/sources.json` and writes `src/data/status.json`. It also lists everything the sources know that no model claims yet, under `unmatched`.
+4. `pnpm build` renders the site from `src/data/status.json`.
 
 ## Adding a model
 

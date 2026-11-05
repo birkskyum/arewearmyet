@@ -213,7 +213,7 @@ models:
     chips: ["X1-26-100"]
     model_numbers: ["X1607QA", "F1607QA", "A1607QA"]
     variants:
-      - { chip: "X1-26-100", compatible: "asus,vivobook-x16" }
+      - { chip: "X1-26-100", compatible: "asus,vivobook-x16", ids: ["x1p42100-asus-vivobook-16.json"] }
     firmware: ["qcom/x1e80100/ASUSTeK/vivobook-16"]
     devicetree_out_of_tree: "https://github.com/jglathe/linux_ms_dev_kit/blob/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100-asus-vivobook-16.dts"
     devicetree_files:

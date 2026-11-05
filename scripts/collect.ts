@@ -151,13 +151,13 @@ async function collectHardwareIds() {
   const stubble = [];
   for (const file of (await listDir('ubuntu/stubble', 'main', 'hwids/json')) ?? []) {
     const entry = JSON.parse(await raw('ubuntu/stubble', 'main', `hwids/json/${file}`));
-    stubble.push({ file, state: 'merged', url: `https://github.com/ubuntu/stubble/blob/main/hwids/json/${file}`, name: entry.name, compatible: entry.compatible });
+    stubble.push({ file, state: 'merged', url: `https://github.com/ubuntu/stubble/blob/main/hwids/json/${file}`, name: entry.name, compatible: entry.compatible, hwids: entry.hwids });
   }
   for (const pull of (await github('repos/ubuntu/stubble/pulls?state=open&per_page=100')) ?? []) {
     for (const change of (await github(`repos/ubuntu/stubble/pulls/${pull.number}/files?per_page=100`)) ?? []) {
       if (!/^hwids\/json\/[^/]+\.json$/.test(change.filename) || change.status === 'removed') continue;
       const entry = JSON.parse(await raw(pull.head.repo?.full_name ?? 'ubuntu/stubble', pull.head.sha, change.filename));
-      stubble.push({ file: change.filename.split('/').pop(), state: 'open', url: pull.html_url, name: entry.name, compatible: entry.compatible });
+      stubble.push({ file: change.filename.split('/').pop(), state: 'open', url: pull.html_url, name: entry.name, compatible: entry.compatible, hwids: entry.hwids });
     }
   }
   return { systemd, stubble };
@@ -271,7 +271,7 @@ function omarchyKernelRecipe() {
   }
   const ids = readdirSync(recipe).filter((name) => name.endsWith('.json')).sort().map((file) => {
     const entry = JSON.parse(readFileSync(join(recipe, file), 'utf8'));
-    return { file, name: entry.name, compatible: entry.compatible };
+    return { file, name: entry.name, compatible: entry.compatible, hwids: entry.hwids };
   });
   return { added, ids };
 }
