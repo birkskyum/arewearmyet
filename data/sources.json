@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-05T05:26:01.659Z",
+  "collected": "2026-11-05T16:29:42.169Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -26,7 +26,7 @@
     "v261",
     "v262"
   ],
-  "linuxNext": "20261104",
+  "linuxNext": "20261105",
   "deviceTrees": [
     {
       "file": "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -3278,7 +3278,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-14",
+        "kernel": "7.3-15",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -3323,10 +3323,13 @@
           "x1p42100-acer-aspire-16-ai.dts",
           "x1p42100-acer-swift-go14-01.dts",
           "x1p42100-asus-vivobook-s15.dts",
+          "x1p42100-asus-vivobook-s16.dts",
+          "x1p42100-asus-vivobook-s16-lcd.dts",
           "x1p42100-asus-zenbook-a14.dts",
           "x1p42100-asus-zenbook-a14-lcd.dts",
           "x1p42100-crd.dts",
           "x1p42100-hp-elitebook-6-g1q.dts",
+          "x1p42100-hp-omnibook-5.dts",
           "x1p42100-hp-omnibook-x14.dts",
           "x1p42100-lenovo-ideapad-slim5x-lcd.dts",
           "x1p42100-lenovo-ideapad-slim5x-oled.dts",
@@ -3398,6 +3401,9 @@
           "x1e80100-samsung-galaxy-book4-edge-14.json",
           "x1p42100-acer-aspire-14-ai.json",
           "x1p42100-acer-aspire-16-ai.json",
+          "x1p42100-asus-vivobook-s16-lcd.json",
+          "x1p42100-asus-vivobook-s16.json",
+          "x1p42100-hp-omnibook-5.json",
           "x1p42100-microsoft-surface-pro-12in.json"
         ],
         "firmware": {
@@ -4084,6 +4090,36 @@
           "qcom,glymur"
         ],
         "patch": "2641-arm64-dts-qcom-glymur-Add-Asus-Zenbook-A14-UX3407NA.patch"
+      },
+      {
+        "file": "x1p42100-hp-omnibook-5.dts",
+        "model": "HP OmniBook 5",
+        "compatible": [
+          "hp,omnibook-5",
+          "lenovo,thinkpad-t14s",
+          "qcom,x1p42100"
+        ],
+        "patch": "2651-arm64-dts-qcom-Add-the-HP-OmniBook-5-14.patch"
+      },
+      {
+        "file": "x1p42100-asus-vivobook-s16-lcd.dts",
+        "model": "ASUS Vivobook S 16 (S3607QA, LCD)",
+        "compatible": [
+          "asus,vivobook-s16-s3607qa-lcd",
+          "asus,vivobook-s16-s3607qa",
+          "qcom,x1p42100"
+        ],
+        "patch": "2662-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S3607QA.patch"
+      },
+      {
+        "file": "x1p42100-asus-vivobook-s16.dts",
+        "model": "ASUS Vivobook S 16 (S3607QA)",
+        "compatible": [
+          "asus,vivobook-s16-s3607qa-oled",
+          "asus,vivobook-s16-s3607qa",
+          "qcom,x1p42100"
+        ],
+        "patch": "2662-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S3607QA.patch"
       }
     ],
     "carriedIds": [
@@ -4121,6 +4157,21 @@
         "file": "x1p42100-acer-aspire-16-ai.json",
         "name": "Acer Aspire 16 AI (A16-11M)",
         "compatible": "acer,aspire-a16-11m"
+      },
+      {
+        "file": "x1p42100-asus-vivobook-s16-lcd.json",
+        "name": "ASUS Vivobook S 16 S3607QA (LCD)",
+        "compatible": "asus,vivobook-s16-s3607qa-lcd"
+      },
+      {
+        "file": "x1p42100-asus-vivobook-s16.json",
+        "name": "ASUS Vivobook S 16 S3607QA (OLED)",
+        "compatible": "asus,vivobook-s16-s3607qa-oled"
+      },
+      {
+        "file": "x1p42100-hp-omnibook-5.json",
+        "name": "HP OmniBook 5 14-he0 and 16-bf0",
+        "compatible": "hp,omnibook-5"
       },
       {
         "file": "x1p42100-microsoft-surface-pro-12in.json",

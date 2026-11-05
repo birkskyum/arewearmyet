@@ -1,6 +1,6 @@
 {
-  "collected": "2026-11-05T05:26:01.659Z",
-  "linuxNext": "20261104",
+  "collected": "2026-11-05T16:29:42.169Z",
+  "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "rc",
@@ -391,7 +391,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-14",
+        "kernel": "7.3-15",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -436,10 +436,13 @@
           "x1p42100-acer-aspire-16-ai.dts",
           "x1p42100-acer-swift-go14-01.dts",
           "x1p42100-asus-vivobook-s15.dts",
+          "x1p42100-asus-vivobook-s16.dts",
+          "x1p42100-asus-vivobook-s16-lcd.dts",
           "x1p42100-asus-zenbook-a14.dts",
           "x1p42100-asus-zenbook-a14-lcd.dts",
           "x1p42100-crd.dts",
           "x1p42100-hp-elitebook-6-g1q.dts",
+          "x1p42100-hp-omnibook-5.dts",
           "x1p42100-hp-omnibook-x14.dts",
           "x1p42100-lenovo-ideapad-slim5x-lcd.dts",
           "x1p42100-lenovo-ideapad-slim5x-oled.dts",
@@ -511,6 +514,9 @@
           "x1e80100-samsung-galaxy-book4-edge-14.json",
           "x1p42100-acer-aspire-14-ai.json",
           "x1p42100-acer-aspire-16-ai.json",
+          "x1p42100-asus-vivobook-s16-lcd.json",
+          "x1p42100-asus-vivobook-s16.json",
+          "x1p42100-hp-omnibook-5.json",
           "x1p42100-microsoft-surface-pro-12in.json"
         ],
         "firmware": {
@@ -1025,57 +1031,57 @@
     "should": 11,
     "problems": 7,
     "notYet": 63,
-    "deviceTree": 51,
+    "deviceTree": 52,
     "ids": 45,
     "firmware": 42,
     "googlebooks": 2,
     "acpi": 34,
-    "acpiWanted": 32,
+    "acpiWanted": 31,
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 27,
+      "edge": 29,
       "pr": 0,
-      "carry": 8,
-      "needs-deviceTree": 32,
+      "carry": 7,
+      "needs-deviceTree": 31,
       "needs-ids": 7,
       "needs-firmware": 8
     },
     "machine": {
-      "nobody": 32,
+      "nobody": 31,
       "untested": 1,
       "problems": 4,
       "linux": 31,
-      "omarchy": 9,
+      "omarchy": 10,
       "team": 6
     },
     "ahead": {
       "deviceTree": {
-        "omarchy": 37,
+        "omarchy": 40,
         "fromUpstream": 19,
-        "added": 18,
+        "added": 21,
         "missing": 0,
         "pull": 1,
-        "available": 13,
+        "available": 11,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 37
+          "edge": 40
         }
       },
       "ids": {
-        "omarchy": 36,
+        "omarchy": 39,
         "fromUpstream": 28,
-        "added": 8,
+        "added": 11,
         "missing": 0,
         "pull": 1,
-        "available": 8,
+        "available": 5,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 36
+          "edge": 39
         }
       },
       "firmware": {
@@ -1093,12 +1099,12 @@
         }
       },
       "all": {
-        "omarchy": 28,
+        "omarchy": 30,
         "fromUpstream": 1,
-        "added": 27,
+        "added": 29,
         "missing": 0,
         "pull": 0,
-        "available": 8,
+        "available": 7,
         "upstream": 1
       }
     }
@@ -2705,13 +2711,13 @@
         "https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/"
       ],
       "notes": "A device tree written from two owners' hardware reports, in an OLED and an LCD version. An owner booted the OLED version on Ubuntu's live USB in November 2026, with the screen, keyboard, touchpad, Bluetooth, USB, HDMI and disk working. Wi-Fi needs board data that linux-firmware doesn't have yet.",
-      "outcome": "none",
+      "outcome": "newer",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
@@ -2721,16 +2727,13 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "edge",
         "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "elsewhere",
+          "deviceTree": "edge",
+          "ids": "edge",
           "firmware": "edge"
         },
-        "missing": [
-          "deviceTree",
-          "ids"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -2759,12 +2762,18 @@
           "model": "OLED",
           "chip": "X1-26-100",
           "compatible": "asus,vivobook-s16-s3607qa-oled",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
+          "computed": "newer",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x1p42100-asus-vivobook-s16.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2662-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S3607QA.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [
@@ -2774,19 +2783,25 @@
               "url": "https://github.com/ubuntu/stubble/pull/103"
             }
           ],
-          "outcome": "none",
+          "outcome": "newer",
           "reports": []
         },
         {
           "model": "LCD",
           "chip": "X1-26-100",
           "compatible": "asus,vivobook-s16-s3607qa-lcd",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
+          "computed": "newer",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x1p42100-asus-vivobook-s16-lcd.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2662-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S3607QA.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [
@@ -2796,7 +2811,7 @@
               "url": "https://github.com/ubuntu/stubble/pull/103"
             }
           ],
-          "outcome": "none",
+          "outcome": "newer",
           "reports": []
         }
       ],
@@ -5383,13 +5398,13 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/hp-omnibook-5-14-he0xxx"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "newer",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
@@ -5399,16 +5414,13 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "edge",
         "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "elsewhere",
+          "deviceTree": "edge",
+          "ids": "edge",
           "firmware": "edge"
         },
-        "missing": [
-          "deviceTree",
-          "ids"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -5436,12 +5448,18 @@
         {
           "chip": "X1P-42-100",
           "compatible": "hp,omnibook-5",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
+          "computed": "newer",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x1p42100-hp-omnibook-5.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2651-arm64-dts-qcom-Add-the-HP-OmniBook-5-14.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [
@@ -5451,7 +5469,7 @@
               "url": "https://github.com/ubuntu/stubble/pull/105"
             }
           ],
-          "outcome": "none",
+          "outcome": "newer",
           "reports": []
         }
       ],
@@ -5482,13 +5500,13 @@
         "https://www.thurrott.com/mobile/copilot-pc/328237/hp-omnibook-5-16-review-its-a-snapdragon-miracle"
       ],
       "notes": "Owners run the OmniBook 5 14's out-of-tree device tree on it.",
-      "outcome": "none",
+      "outcome": "newer",
       "reports": [],
-      "machine": "nobody",
+      "machine": "omarchy",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "download",
         "firmwareChannel": null,
@@ -5496,23 +5514,21 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-deviceTree",
+        "state": "carry",
         "pieces": {
-          "deviceTree": "none",
-          "ids": "elsewhere",
+          "deviceTree": "edge",
+          "ids": "edge",
           "firmware": "elsewhere"
         },
         "missing": [
-          "deviceTree",
-          "ids",
           "firmware"
         ]
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2651-arm64-dts-qcom-Add-the-HP-OmniBook-5-14.patch",
         "devicetreeArchive": null,
         "ids": "posted",
         "idsCollected": "https://bugs.launchpad.net/ubuntu-concept/+bug/2169090",
@@ -5532,12 +5548,18 @@
         {
           "chip": "X1P-42-100",
           "compatible": "hp,omnibook-5",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
+          "computed": "newer",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x1p42100-hp-omnibook-5.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2651-arm64-dts-qcom-Add-the-HP-OmniBook-5-14.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [
@@ -5547,7 +5569,7 @@
               "url": "https://github.com/ubuntu/stubble/pull/105"
             }
           ],
-          "outcome": "none",
+          "outcome": "newer",
           "reports": []
         }
       ],
