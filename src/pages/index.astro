@@ -7,7 +7,7 @@ import ChipIcon from '../assets/chip-icon.svg';
 import OmarchyIcon from '../assets/omarchy-icon.svg';
 import GitHubIcon from '../assets/github-icon.svg';
 import status from '../data/status.json';
-import { ANNOUNCED, FILTERS, GOOGLEBOOK_LEGEND, NVIDIA_OMARCHY_LEGEND, NVIDIA_UPSTREAM_LEGEND, OMARCHY_LEGEND, TONE, UPSTREAM_LEGEND } from '../lib/labels';
+import { ANNOUNCED, FILTERS, GOOGLEBOOK_OMARCHY_LEGEND, GOOGLEBOOK_UPSTREAM_LEGEND, NVIDIA_OMARCHY_LEGEND, NVIDIA_UPSTREAM_LEGEND, OMARCHY_LEGEND, TONE, UPSTREAM_LEGEND } from '../lib/labels';
 import { PILL } from '../lib/tones';
 import { googlebookRows, nvidiaRows, snapdragonRows, type TableRow } from '../lib/rows';
 
@@ -80,12 +80,17 @@ const legendExtra = [
   { label: 'Grey', tone: 'muted' as const, meaning: 'Works another way today, or not needed.' },
   ANNOUNCED,
 ];
-const googlebookColumns = GOOGLEBOOK_LEGEND.map((group, i) => ({
-  id: ['bootloader', 'device-tree', 'image', 'omarchy'][i],
-  header: group.column,
-  question: group.question,
-  options: [FILTERS.bootloader, FILTERS.googlebookDeviceTree, FILTERS.linuxImage, FILTERS.googlebookOmarchy][i],
-}));
+const googlebookViews = [
+  { id: 'omarchy', label: 'Omarchy', question: `What Omarchy's packages ship for it today, and what owners reached.`, columns: GOOGLEBOOK_OMARCHY_LEGEND.map((group, i) => ({
+    id: ['bootloader', 'tree', 'image', 'omarchy'][i],
+    header: group.column,
+    question: group.question,
+    options: [FILTERS.bootloader, FILTERS.tree, FILTERS.linuxImage, FILTERS.googlebookOmarchy][i],
+  })) },
+  { id: 'upstream', label: 'Upstream', question: 'What Linux itself has, which every distro gets.', columns: [
+    { id: 'device-tree', header: 'Linux', question: GOOGLEBOOK_UPSTREAM_LEGEND[0].question, options: FILTERS.googlebookDeviceTree },
+  ] },
+];
 const HELP = 'mt-2 max-w-3xl text-sm text-zinc-400';
 
 const collected = new Date(status.collected).toISOString().slice(0, 10);
@@ -195,11 +200,16 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
       <p class={HELP}>
         To help, read the device tree Googlebook OS starts with, following the <a class={LINK} href="https://github.com/omacom/omarchy/discussions/16627">owner guide</a>. It changes nothing on the laptop.
       </p>
-      <div class="mt-4">
-        <Legend title="What the labels mean" groups={GOOGLEBOOK_LEGEND} />
-      </div>
-      <div class="mt-4">
-        <StatusTable client:load rows={googlebooks} columns={googlebookColumns} chips={[{ key: 'x1', label: 'Snapdragon X' }, { key: 'x2', label: 'Snapdragon X2' }]} urlPrefix="googlebook-" exportName="arewearmyet-googlebooks" exportTitle="Googlebooks with Snapdragon" />
+      <div class="group/views mt-4" data-views data-view="omarchy">
+        <div class="group-data-[view=upstream]/views:hidden">
+          <Legend title="What the labels mean" groups={GOOGLEBOOK_OMARCHY_LEGEND} />
+        </div>
+        <div class="hidden group-data-[view=upstream]/views:block">
+          <Legend title="What the labels mean" groups={GOOGLEBOOK_UPSTREAM_LEGEND} />
+        </div>
+        <div class="mt-4">
+          <StatusTable client:load rows={googlebooks} views={googlebookViews} chips={[{ key: 'x1', label: 'Snapdragon X' }, { key: 'x2', label: 'Snapdragon X2' }]} urlPrefix="googlebook-" exportName="arewearmyet-googlebooks" exportTitle="Googlebooks with Snapdragon" />
+        </div>
       </div>
     </Family>
 

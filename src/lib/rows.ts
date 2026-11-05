@@ -60,6 +60,7 @@ export function googlebookRows(): TableRow[] {
       ...modelRow(model, {
         omarchy: plain(googlebookOmarchyCell(model)),
         'device-tree': plain(deviceTreeCell(model)),
+        tree: plain(omarchyTreeCell(model)),
         bootloader: plain(bootloaderCell(model)),
         image: plain(linuxImageCell(model)),
       }),

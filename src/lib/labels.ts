@@ -152,11 +152,17 @@ export const UPSTREAM_LEGEND: Group[] = [
   { column: 'linux-firmware', question: 'Its firmware files in linux-firmware.', states: Object.values(STATES.upstreamFirmware) as State[] },
 ];
 
-export const GOOGLEBOOK_LEGEND: Group[] = [
+// The Omarchy view: what Omarchy's packages ship for it, and what owners reached
+export const GOOGLEBOOK_OMARCHY_LEGEND: Group[] = [
   { column: 'Bootloader', question: 'Whether its Android-style bootloader lets owners start another system.', states: Object.values(STATES.bootloader) as State[] },
-  { column: 'Device tree', question: 'The description of the hardware that Linux needs, the same work as for the other Snapdragon laptops.', states: Object.values(STATES.deviceTree) as State[] },
+  { column: 'Device tree', question: `The description of the hardware that Linux needs, in Omarchy's kernel, the same work as for the other Snapdragon laptops.`, states: Object.values(STATES.omarchyTree) as State[] },
   { column: 'Linux image', question: 'Whether a Linux image starts on it, the step before Omarchy can.', states: Object.values(STATES.linuxImage) as State[] },
   { column: 'Boots', question: 'Has an owner reached the desktop on it? Tested on Omarchy so far.', states: Object.values(STATES.googlebookOmarchy) as State[] },
+];
+
+// The upstream view: its device tree in Linux itself
+export const GOOGLEBOOK_UPSTREAM_LEGEND: Group[] = [
+  { column: 'Linux', question: 'Its device tree in Linux itself.', states: Object.values(STATES.deviceTree) as State[] },
 ];
 
 // The Omarchy view: Omarchy's kernel and whether it boots
