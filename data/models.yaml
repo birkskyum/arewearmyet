@@ -454,6 +454,7 @@ models:
       - { chip: "X1P-64-100", compatible: "dell,inspiron-14-plus-5441" }
     acpi: ["dell-inspiron-14-5441-x1p-42-100", "dell-inspron-14-5441-x1p-64-100"]
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260508050828.7442-1-adamszyma@wp.pl/"
+    ids_collected: "https://github.com/aarch64-laptops/build/pull/170#issuecomment-6676285882"
     sources:
       - https://www.notebookcheck.net/Dell-Inspiron-14-5441-now-available-for-899-with-new-Snapdragon-X-Plus-X1P-42-100-SoC.883655.0.html
       - https://dl.dell.com/content/manual20917790-inspiron-14-5441-owner-s-manual.pdf

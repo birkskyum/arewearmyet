@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-06T03:49:31.881Z",
+  "collected": "2026-11-06T03:56:44.527Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -1059,7 +1059,7 @@
     "problems": 7,
     "notYet": 41,
     "deviceTree": 52,
-    "ids": 45,
+    "ids": 46,
     "firmware": 43,
     "googlebooks": 2,
     "acpi": 34,
@@ -1068,10 +1068,10 @@
       "stable": 1,
       "rc": 0,
       "edge": 33,
-      "pr": 0,
+      "pr": 1,
       "carry": 4,
       "needs-deviceTree": 31,
-      "needs-ids": 7,
+      "needs-ids": 6,
       "needs-firmware": 7
     },
     "machine": {
@@ -1100,7 +1100,7 @@
         "fromUpstream": 28,
         "added": 14,
         "missing": 0,
-        "pull": 1,
+        "pull": 2,
         "available": 2,
         "upstream": 28,
         "channels": {
@@ -1128,7 +1128,7 @@
         "fromUpstream": 1,
         "added": 33,
         "missing": 0,
-        "pull": 0,
+        "pull": 1,
         "available": 4,
         "upstream": 1
       }
@@ -3862,7 +3862,11 @@
         "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
-        "idsPull": null,
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2218",
+          "number": 2218,
+          "title": "linux-omarchy-aarch64: give the Dell Inspiron 14 5441 hardware IDs"
+        },
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -3871,10 +3875,10 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-ids",
+        "state": "pr",
         "pieces": {
           "deviceTree": "edge",
-          "ids": "none",
+          "ids": "pr",
           "firmware": "edge"
         },
         "missing": [
@@ -3887,8 +3891,8 @@
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260508050828.7442-1-adamszyma@wp.pl/",
         "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2610-arm64-dts-qcom-Add-Dell-Inspiron-14-Plus-5441.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/dell-inspiron-14-5441",
-        "ids": "missing",
-        "idsCollected": null,
+        "ids": "collected",
+        "idsCollected": "https://github.com/aarch64-laptops/build/pull/170#issuecomment-6676285882",
         "idsStubble": null,
         "firmware": "download",
         "firmwareMissing": [],
@@ -3926,7 +3930,11 @@
           "treeChannel": "edge",
           "idsChannel": null,
           "treePull": null,
-          "idsPull": null,
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2218",
+            "number": 2218,
+            "title": "linux-omarchy-aarch64: give the Dell Inspiron 14 5441 hardware IDs"
+          },
           "deviceTree": {
             "file": "x1p64100-dell-inspiron-14-plus-5441.dts",
             "firstRelease": null,
