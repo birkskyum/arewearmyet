@@ -452,7 +452,7 @@ models:
     variants:
       - { chip: "X1P-42-100" }
       - { chip: "X1P-64-100", compatible: "dell,inspiron-14-plus-5441" }
-    acpi: ["dell-inspiron-14-5441-x1p-42-100"]
+    acpi: ["dell-inspiron-14-5441-x1p-42-100", "dell-inspron-14-5441-x1p-64-100"]
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260508050828.7442-1-adamszyma@wp.pl/"
     sources:
       - https://www.notebookcheck.net/Dell-Inspiron-14-5441-now-available-for-899-with-new-Snapdragon-X-Plus-X1P-42-100-SoC.883655.0.html
@@ -583,7 +583,7 @@ models:
     model_numbers: ["MRO-521"]
     variants:
       - { chip: "X1E-80-100", compatible: "honor,magicbook-art-14-snapdragon" }
-    acpi: ["honor-mro-521"]
+    acpi: ["honor-mro-521", "honor-magicbook-art-14"]
     notes: "Honor's driver download has no compute DSP firmware, so those two files still come from the laptop's own Windows."
     sources:
       - https://www.honor.com/cn/shop/product/10086978403812.html

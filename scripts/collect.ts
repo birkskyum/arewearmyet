@@ -350,7 +350,7 @@ async function collectAcpiDumps() {
     github('repos/turbineBMW/omarchy-hardware-reports/git/trees/HEAD?recursive=1'),
   ]);
   const paths = (tree: { tree: { path: string }[] }) => tree.tree.map((entry) => entry.path);
-  const misc = new Set(paths(laptops).filter((path) => /^misc\/[^/]+\/.*dsdt\.(dat|bin|aml)$/i.test(path)).map((path) => path.split('/')[1]));
+  const misc = new Set(paths(laptops).filter((path) => /^misc\/[^/]+\/.*dsdt\.(dat|bin|aml|dsl)$/i.test(path)).map((path) => path.split('/')[1]));
   const reported = new Set(paths(reports).map((path) => path.match(/^reports\/([^/]+\/[^/]+)\/[^/]+\/acpi\/dsdt\.(dat|bin|aml)$/i)?.[1]).filter(Boolean) as string[]);
   return [
     ...[...misc].sort().map((folder) => ({ folder, url: `https://github.com/aarch64-laptops/build/tree/HEAD/misc/${folder}` })),

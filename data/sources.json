@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-06T00:22:10.299Z",
+  "collected": "2026-11-06T01:40:16.998Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -3659,6 +3659,10 @@
       "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-7441-x1e-80-100"
     },
     {
+      "folder": "dell-inspron-14-5441-x1p-64-100",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspron-14-5441-x1p-64-100"
+    },
+    {
       "folder": "dell-latitude-5455",
       "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-latitude-5455"
     },
@@ -3673,6 +3677,10 @@
     {
       "folder": "ecs-liva-qc710",
       "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/ecs-liva-qc710"
+    },
+    {
+      "folder": "honor-magicbook-art-14",
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/honor-magicbook-art-14"
     },
     {
       "folder": "honor-mro-521",
@@ -5351,6 +5359,29 @@
       "kernel": "7.3.0-14-omarchy"
     },
     "pulls": [
+      {
+        "number": 2211,
+        "title": "linux-omarchy-aarch64: add the HP OmniBook 5 16 (2026)",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2211",
+        "draft": false,
+        "deviceTrees": [
+          {
+            "file": "mahua-hp-omnibook-5-bf1xxx.dts",
+            "model": "HP OmniBook 5 Laptop 16-bf1xxx",
+            "compatible": [
+              "hp,omnibook-5-16-bf1xxx",
+              "qcom,mahua"
+            ]
+          }
+        ],
+        "ids": [
+          {
+            "file": "mahua-hp-omnibook-5-bf1xxx.json",
+            "compatible": "hp,omnibook-5-16-bf1xxx"
+          }
+        ],
+        "firmware": []
+      },
       {
         "number": 1905,
         "title": "linux-omarchy-aarch64: use the Surface Laptop 8's agreed board name",

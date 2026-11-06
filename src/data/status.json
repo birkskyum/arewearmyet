@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-06T00:22:10.299Z",
+  "collected": "2026-11-06T01:40:16.998Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -1051,8 +1051,8 @@
       "stable": 1,
       "rc": 0,
       "edge": 31,
-      "pr": 0,
-      "carry": 5,
+      "pr": 1,
+      "carry": 4,
       "needs-deviceTree": 31,
       "needs-ids": 7,
       "needs-firmware": 8
@@ -1069,8 +1069,8 @@
         "fromUpstream": 19,
         "added": 24,
         "missing": 0,
-        "pull": 1,
-        "available": 8,
+        "pull": 2,
+        "available": 7,
         "upstream": 19,
         "channels": {
           "stable": 19,
@@ -1083,8 +1083,8 @@
         "fromUpstream": 28,
         "added": 13,
         "missing": 0,
-        "pull": 1,
-        "available": 3,
+        "pull": 2,
+        "available": 2,
         "upstream": 28,
         "channels": {
           "stable": 28,
@@ -1111,8 +1111,8 @@
         "fromUpstream": 1,
         "added": 31,
         "missing": 0,
-        "pull": 0,
-        "available": 5,
+        "pull": 1,
+        "available": 4,
         "upstream": 1
       }
     }
@@ -3889,7 +3889,8 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-5441-x1p-42-100"
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-5441-x1p-42-100",
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspron-14-5441-x1p-64-100"
         ]
       },
       "variants": [
@@ -4764,7 +4765,8 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/honor-mro-521"
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/honor-mro-521",
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/honor-magicbook-art-14"
         ]
       },
       "variants": [
@@ -6150,9 +6152,17 @@
       "machine": "linux",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2211",
+          "number": 2211,
+          "title": "linux-omarchy-aarch64: add the HP OmniBook 5 16 (2026)"
+        },
         "ids": null,
-        "idsPull": null,
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2211",
+          "number": 2211,
+          "title": "linux-omarchy-aarch64: add the HP OmniBook 5 16 (2026)"
+        },
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -6161,10 +6171,10 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "pr",
         "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "elsewhere",
+          "deviceTree": "pr",
+          "ids": "pr",
           "firmware": "edge"
         },
         "missing": [
@@ -6199,8 +6209,16 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2211",
+            "number": 2211,
+            "title": "linux-omarchy-aarch64: add the HP OmniBook 5 16 (2026)"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2211",
+            "number": 2211,
+            "title": "linux-omarchy-aarch64: add the HP OmniBook 5 16 (2026)"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
