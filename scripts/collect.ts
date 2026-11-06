@@ -243,14 +243,25 @@ function channelContents(repo: Package[], core: Package[]) {
 
 // The device trees a kernel patch adds: a new file shows up as a section from /dev/null to b/<path>
 function patchDeviceTrees(text: string) {
-  const trees = [];
+  const added = new Map<string, string>();
   for (const section of text.split(/^diff --git /m)) {
     const file = section.match(/^--- \/dev\/null\n\+\+\+ b\/arch\/arm64\/boot\/dts\/qcom\/(\S+)$/m)?.[1];
-    if (!file || !DT_PATTERN.test(file)) continue;
-    const source = section.split('\n').filter((line) => line.startsWith('+') && !line.startsWith('+++')).map((line) => line.slice(1)).join('\n');
-    trees.push({ file, ...parseDts(source) });
+    if (!file) continue;
+    added.set(file, section.split('\n').filter((line) => line.startsWith('+') && !line.startsWith('+++')).map((line) => line.slice(1)).join('\n'));
   }
-  return trees;
+  return [...added].filter(([file]) => DT_PATTERN.test(file)).map(([file, source]) => ({ file, ...patchRoot(source, added) }));
+}
+
+// A tree whose root node sits in a .dtsi the same patch adds, like the Vivobook 16's, takes its model and
+// compatible from the first included .dtsi that has a model, since a SoC .dtsi has compatibles but no model
+function patchRoot(source: string, added: Map<string, string>) {
+  const own = parseDts(source);
+  if (own.compatible.length) return own;
+  for (const [, include] of source.matchAll(/^#include "([^"]+\.dtsi)"/gm)) {
+    const root = added.has(include) ? parseDts(added.get(include)!) : undefined;
+    if (root?.model && root.compatible.length) return root;
+  }
+  return own;
 }
 
 // Device trees the linux-omarchy recipe adds on top of the Linux release it builds, and the hardware

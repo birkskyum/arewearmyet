@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-05T20:04:41.170Z",
+  "collected": "2026-11-06T00:22:10.299Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-16",
+    "kernel": "7.3-18",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-16",
+        "kernel": "7.3-18",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -416,6 +416,8 @@
           "sc8280xp-lenovo-thinkpad-x13s.dts",
           "sc8280xp-microsoft-arcata.dts",
           "sc8280xp-microsoft-blackrock.dts",
+          "x126100-asus-vivobook-16.dts",
+          "x126100-lenovo-ideapad-slim3.dts",
           "x1e001de-devkit.dts",
           "x1e78100-acer-sfa14-11.dts",
           "x1e78100-lenovo-thinkpad-t14s.dts",
@@ -449,6 +451,7 @@
           "x1p42100-hp-elitebook-6-g1q.dts",
           "x1p42100-hp-omnibook-5.dts",
           "x1p42100-hp-omnibook-x14.dts",
+          "x1p42100-lenovo-ideapad-5-2in1.dts",
           "x1p42100-lenovo-ideapad-slim5x-lcd.dts",
           "x1p42100-lenovo-ideapad-slim5x-oled.dts",
           "x1p42100-lenovo-thinkbook-16.dts",
@@ -516,6 +519,7 @@
           "glymur-microsoft-surface-laptop8.json",
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
+          "x126100-asus-vivobook-16.json",
           "x1e78100-acer-sfa14-11.json",
           "x1e80100-samsung-galaxy-book4-edge-14.json",
           "x1p42100-acer-aspire-14-ai.json",
@@ -1034,9 +1038,9 @@
     "nvidiaWorks": 2,
     "nvidiaExpected": 7,
     "works": 2,
-    "should": 29,
+    "should": 32,
     "problems": 7,
-    "notYet": 45,
+    "notYet": 42,
     "deviceTree": 52,
     "ids": 45,
     "firmware": 42,
@@ -1061,31 +1065,31 @@
     },
     "ahead": {
       "deviceTree": {
-        "omarchy": 40,
+        "omarchy": 43,
         "fromUpstream": 19,
-        "added": 21,
+        "added": 24,
         "missing": 0,
         "pull": 1,
-        "available": 11,
+        "available": 8,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 40
+          "edge": 43
         }
       },
       "ids": {
-        "omarchy": 40,
+        "omarchy": 41,
         "fromUpstream": 28,
-        "added": 12,
+        "added": 13,
         "missing": 0,
         "pull": 1,
-        "available": 4,
+        "available": 3,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 40
+          "edge": 41
         }
       },
       "firmware": {
@@ -2174,13 +2178,13 @@
         "https://github.com/linux-msm/audioreach-topology/commit/744161325eba0fca72436f8d98576d9d4f7e87de"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "should",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -2190,13 +2194,11 @@
       "outOfBox": {
         "state": "needs-firmware",
         "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "elsewhere",
+          "deviceTree": "edge",
+          "ids": "edge",
           "firmware": "none"
         },
         "missing": [
-          "deviceTree",
-          "ids",
           "firmware"
         ]
       },
@@ -2233,15 +2235,21 @@
           "chip": "X1-26-100",
           "compatible": "asus,vivobook-x16",
           "ids": [],
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x126100-asus-vivobook-16.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2691-arm64-dts-qcom-Add-the-ASUS-Vivobook-16-X1607QA.patch"
+          },
           "firmwareNeeded": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -6757,11 +6765,11 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-ideapad-5-2in1-83GH-14Q8X9"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
@@ -6773,12 +6781,11 @@
       "outOfBox": {
         "state": "needs-firmware",
         "pieces": {
-          "deviceTree": "elsewhere",
+          "deviceTree": "edge",
           "ids": "stable",
           "firmware": "none"
         },
         "missing": [
-          "deviceTree",
           "firmware"
         ]
       },
@@ -6815,12 +6822,18 @@
         {
           "chip": "X1P-42-100",
           "compatible": "lenovo,ideapad-5-2in1",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
           "idsChannel": "stable",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x1p42100-lenovo-ideapad-5-2in1.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2671-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-5x-2-in-1.patch"
+          },
           "firmwareNeeded": [],
           "ids": [
             {
@@ -6838,7 +6851,7 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-lenovo-ideapad-5-2in1.json"
             }
           ],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -6868,11 +6881,11 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-ideapad-slim3x-15q8x10-WCN7850"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
@@ -6884,12 +6897,11 @@
       "outOfBox": {
         "state": "needs-firmware",
         "pieces": {
-          "deviceTree": "elsewhere",
+          "deviceTree": "edge",
           "ids": "stable",
           "firmware": "none"
         },
         "missing": [
-          "deviceTree",
           "firmware"
         ]
       },
@@ -6926,12 +6938,18 @@
         {
           "chip": "X1-26-100",
           "compatible": "lenovo,ideapad-slim3",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
           "idsChannel": "stable",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x126100-lenovo-ideapad-slim3.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2681-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Slim-3x.patch"
+          },
           "firmwareNeeded": [],
           "ids": [
             {
@@ -6949,7 +6967,7 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x126100-lenovo-ideapad-slim3.json"
             }
           ],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],

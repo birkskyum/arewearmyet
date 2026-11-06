@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-05T20:04:41.170Z",
+  "collected": "2026-11-06T00:22:10.299Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4243,7 +4243,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-16",
+        "kernel": "7.3-18",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -4263,6 +4263,8 @@
           "sc8280xp-lenovo-thinkpad-x13s.dts",
           "sc8280xp-microsoft-arcata.dts",
           "sc8280xp-microsoft-blackrock.dts",
+          "x126100-asus-vivobook-16.dts",
+          "x126100-lenovo-ideapad-slim3.dts",
           "x1e001de-devkit.dts",
           "x1e78100-acer-sfa14-11.dts",
           "x1e78100-lenovo-thinkpad-t14s.dts",
@@ -4296,6 +4298,7 @@
           "x1p42100-hp-elitebook-6-g1q.dts",
           "x1p42100-hp-omnibook-5.dts",
           "x1p42100-hp-omnibook-x14.dts",
+          "x1p42100-lenovo-ideapad-5-2in1.dts",
           "x1p42100-lenovo-ideapad-slim5x-lcd.dts",
           "x1p42100-lenovo-ideapad-slim5x-oled.dts",
           "x1p42100-lenovo-thinkbook-16.dts",
@@ -4363,6 +4366,7 @@
           "glymur-microsoft-surface-laptop8.json",
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
+          "x126100-asus-vivobook-16.json",
           "x1e78100-acer-sfa14-11.json",
           "x1e80100-samsung-galaxy-book4-edge-14.json",
           "x1p42100-acer-aspire-14-ai.json",
@@ -5086,6 +5090,36 @@
           "qcom,x1p42100"
         ],
         "patch": "2662-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S3607QA.patch"
+      },
+      {
+        "file": "x1p42100-lenovo-ideapad-5-2in1.dts",
+        "model": "Lenovo IdeaPad 5 2in1 14Q8X9",
+        "compatible": [
+          "lenovo,ideapad-5-2in1",
+          "lenovo,thinkpad-t14s",
+          "qcom,x1p42100"
+        ],
+        "patch": "2671-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-5x-2-in-1.patch"
+      },
+      {
+        "file": "x126100-lenovo-ideapad-slim3.dts",
+        "model": "Lenovo IdeaPad Slim 3 15Q8X10",
+        "compatible": [
+          "lenovo,ideapad-slim3",
+          "lenovo,thinkpad-t14s",
+          "qcom,x126100",
+          "qcom,x1p42100"
+        ],
+        "patch": "2681-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Slim-3x.patch"
+      },
+      {
+        "file": "x126100-asus-vivobook-16.dts",
+        "model": "ASUS Vivobook 16 (F1607QA)",
+        "compatible": [
+          "asus,vivobook-x16",
+          "qcom,x126100"
+        ],
+        "patch": "2691-arm64-dts-qcom-Add-the-ASUS-Vivobook-16-X1607QA.patch"
       }
     ],
     "carriedIds": [
@@ -5163,6 +5197,24 @@
           "9891628b-598a-5ea6-bb16-1a260a065bc6",
           "05971a07-7799-5be2-b976-7904e308fdd2",
           "c59ec72f-56bb-514e-9854-3e7ace90c684"
+        ]
+      },
+      {
+        "file": "x126100-asus-vivobook-16.json",
+        "name": "ASUS Vivobook 16 X1607QA",
+        "compatible": "asus,vivobook-x16",
+        "hwids": [
+          "575f89c7-eaa4-5bf8-a571-1b9615ea78e4",
+          "9d6bac45-8ab0-5789-b5df-15c064e0b54f",
+          "dff2d806-454f-5a52-996f-ec31d55fe370",
+          "24e7639a-98e4-5818-8110-89f6c9644653",
+          "0907e64a-f34d-5e39-8b5f-c72367b31c36",
+          "9895604a-d3b3-52b5-ad37-a5c741de1b0b",
+          "21532707-d3e4-57d9-a215-4a02d90abe39",
+          "24652d54-00f4-59ae-96fb-f7adbfa4a939",
+          "9ddffa55-b50a-59a2-85f8-3fe038d9fd22",
+          "ef3ad04c-cb6b-5981-a15a-71c7ee95190e",
+          "f8d95087-670f-5015-987f-7cad2ecde912"
         ]
       },
       {
