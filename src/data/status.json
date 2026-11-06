@@ -1059,8 +1059,8 @@
     },
     "machine": {
       "team": 6,
-      "omarchy": 14,
-      "linux": 32,
+      "omarchy": 7,
+      "linux": 39,
       "nobody": 31
     },
     "ahead": {
@@ -1828,7 +1828,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "omarchy",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -2180,7 +2180,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "omarchy",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -5412,7 +5412,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "omarchy",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -5514,7 +5514,7 @@
       "notes": "It shares the OmniBook 5 14's board, and Omarchy's kernel gives it that laptop's device tree.",
       "outcome": "should",
       "reports": [],
-      "machine": "omarchy",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -6147,7 +6147,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "omarchy",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -6440,7 +6440,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "omarchy",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -8685,7 +8685,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "omarchy",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,

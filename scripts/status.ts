@@ -303,7 +303,8 @@ function outOfBox(pieces: Record<'deviceTree' | 'ids' | 'firmware', Piece>) {
 function whoHasOne(model: Model, reports: Report[], deviceTree: string, acpi: string[]) {
   if (model.team_has_one) return 'team';
   if (deviceTree === 'missing' && !acpi.length && !reports.length) return 'nobody';
-  const omarchyCommunity = reports.length > 0 || acpi.some((folder) => folder.startsWith('hardware-reports/')) || Boolean(model.ids_collected) || Boolean(model.discussion?.includes('omacom/omarchy'));
+  const sentToOmarchy = /^https:\/\/github\.com\/(omacom|turbineBMW\/omarchy-hardware-reports|birkskyum\/arewearmyet)\//.test(model.ids_collected ?? '');
+  const omarchyCommunity = reports.length > 0 || acpi.some((folder) => folder.startsWith('hardware-reports/')) || sentToOmarchy || Boolean(model.discussion?.includes('omacom/omarchy'));
   return omarchyCommunity ? 'omarchy' : 'linux';
 }
 
