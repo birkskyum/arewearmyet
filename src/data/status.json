@@ -6142,6 +6142,7 @@
         "16-bf1xxx"
       ],
       "chips": [
+        "X2E-84-100",
         "X2P-64-100"
       ],
       "status": null,
@@ -6195,7 +6196,7 @@
       },
       "variants": [
         {
-          "chip": "X2P-64-100",
+          "chip": "X2E-84-100",
           "compatible": "hp,omnibook-5-16-bf1xxx",
           "computed": "should",
           "treeChannel": "edge",
