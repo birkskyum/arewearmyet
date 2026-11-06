@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-06T03:56:44.527Z",
+  "collected": "2026-11-06T04:35:20.245Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-19",
+    "kernel": "7.3-20",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-19",
+        "kernel": "7.3-20",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -529,7 +529,8 @@
           "x1p42100-asus-vivobook-s16-lcd.json",
           "x1p42100-asus-vivobook-s16.json",
           "x1p42100-hp-omnibook-5.json",
-          "x1p42100-microsoft-surface-pro-12in.json"
+          "x1p42100-microsoft-surface-pro-12in.json",
+          "x1p64100-dell-inspiron-14-plus-5441.json"
         ],
         "firmware": {
           "acer-aspire-14-ai-firmware": [
@@ -1055,9 +1056,9 @@
     "nvidiaWorks": 2,
     "nvidiaExpected": 7,
     "works": 2,
-    "should": 33,
+    "should": 34,
     "problems": 7,
-    "notYet": 41,
+    "notYet": 40,
     "deviceTree": 52,
     "ids": 46,
     "firmware": 43,
@@ -1067,8 +1068,8 @@
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 33,
-      "pr": 1,
+      "edge": 34,
+      "pr": 0,
       "carry": 4,
       "needs-deviceTree": 31,
       "needs-ids": 6,
@@ -1096,17 +1097,17 @@
         }
       },
       "ids": {
-        "omarchy": 42,
+        "omarchy": 43,
         "fromUpstream": 28,
-        "added": 14,
+        "added": 15,
         "missing": 0,
-        "pull": 2,
+        "pull": 1,
         "available": 2,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 42
+          "edge": 43
         }
       },
       "firmware": {
@@ -1124,11 +1125,11 @@
         }
       },
       "all": {
-        "omarchy": 34,
+        "omarchy": 35,
         "fromUpstream": 1,
-        "added": 33,
+        "added": 34,
         "missing": 0,
-        "pull": 1,
+        "pull": 0,
         "available": 4,
         "upstream": 1
       }
@@ -3855,18 +3856,14 @@
         "https://dl.dell.com/content/manual20917790-inspiron-14-5441-owner-s-manual.pdf"
       ],
       "notes": null,
-      "outcome": "manual",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2218",
-          "number": 2218,
-          "title": "linux-omarchy-aarch64: give the Dell Inspiron 14 5441 hardware IDs"
-        },
+        "ids": "edge",
+        "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -3875,15 +3872,13 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
-          "ids": "pr",
+          "ids": "edge",
           "firmware": "edge"
         },
-        "missing": [
-          "ids"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "posted",
@@ -3891,9 +3886,9 @@
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260508050828.7442-1-adamszyma@wp.pl/",
         "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2610-arm64-dts-qcom-Add-Dell-Inspiron-14-Plus-5441.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/dell-inspiron-14-5441",
-        "ids": "collected",
+        "ids": "posted",
         "idsCollected": "https://github.com/aarch64-laptops/build/pull/170#issuecomment-6676285882",
-        "idsStubble": null,
+        "idsStubble": "https://github.com/ubuntu/stubble/pull/109",
         "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3926,15 +3921,11 @@
         {
           "chip": "X1P-64-100",
           "compatible": "dell,inspiron-14-plus-5441",
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
+          "idsChannel": "edge",
           "treePull": null,
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2218",
-            "number": 2218,
-            "title": "linux-omarchy-aarch64: give the Dell Inspiron 14 5441 hardware IDs"
-          },
+          "idsPull": null,
           "deviceTree": {
             "file": "x1p64100-dell-inspiron-14-plus-5441.dts",
             "firstRelease": null,
@@ -3944,8 +3935,14 @@
           },
           "firmwareNeeded": [],
           "ids": [],
-          "stubble": [],
-          "outcome": "manual",
+          "stubble": [
+            {
+              "file": "x1p64100-dell-inspiron-14-plus-5441.json",
+              "state": "open",
+              "url": "https://github.com/ubuntu/stubble/pull/109"
+            }
+          ],
+          "outcome": "should",
           "reports": []
         }
       ],

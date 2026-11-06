@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-06T03:56:44.527Z",
+  "collected": "2026-11-06T04:35:20.245Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -2939,6 +2939,20 @@
       ]
     },
     {
+      "file": "x1p64100-dell-inspiron-14-plus-5441.json",
+      "state": "open",
+      "url": "https://github.com/ubuntu/stubble/pull/109",
+      "name": "Dell Inc. Inspiron 14 5441",
+      "compatible": "dell,inspiron-14-plus-5441",
+      "hwids": [
+        "9cf40b57-a3da-5f9c-8811-efe1b5d32e93",
+        "5e6923e9-1305-5d37-b507-953cf63f106c",
+        "3ab0bff8-9444-58e8-9130-eb9469bb0078",
+        "7f89e5f5-d13c-5489-a568-af56ff6fdbed",
+        "60620447-0951-5151-8768-e9bca54efaff"
+      ]
+    },
+    {
       "file": "x1p42100-microsoft-surface-laptop-13.json",
       "state": "open",
       "url": "https://github.com/ubuntu/stubble/pull/108",
@@ -3407,8 +3421,11 @@
   "firmwareMain": [
     "qcom/glymur/ASUSTeK/UX3407NA/GLYMUR-ASUS-Zenbook-A14-UX3407NA-tplg.bin",
     "qcom/glymur/ASUSTeK/UX3607OA/GLYMUR-ASUS-Zenbook-A16-UX3607OA-tplg.bin",
+    "qcom/glymur/GLYMUR-ASUS-Zenbook-A14-UX3407NA-tplg.bin",
+    "qcom/glymur/GLYMUR-ASUS-Zenbook-A16-UX3607OA-tplg.bin",
     "qcom/glymur/GLYMUR-CRD-tplg.bin",
     "qcom/glymur/LENOVO/22A8/Lenovo-ThinkPad-T14s-Gen-7-tplg.bin",
+    "qcom/glymur/Lenovo-ThinkPad-T14s-Gen-7-tplg.bin",
     "qcom/glymur/adsp.mbn",
     "qcom/glymur/adsp_dtb.mbn",
     "qcom/glymur/adspr.jsn",
@@ -3428,6 +3445,7 @@
     "qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn",
     "qcom/sc8280xp/LENOVO/21BX/qcslpi8280.mbn",
     "qcom/sc8280xp/LENOVO/21BX/qcvss8280.mbn",
+    "qcom/sc8280xp/SC8280XP-LENOVO-X13S-tplg.bin",
     "qcom/sc8280xp/radxa/dragon-q8b/SC8280XP-Radxa-Dragon-Q8B-tplg.bin",
     "qcom/sc8280xp/radxa/dragon-q8b/qcadsp8280.mbn",
     "qcom/x1e80100/ASUSTeK/vivobook-16/X1E80100-ASUS-Vivobook-16-tplg.bin",
@@ -3461,8 +3479,18 @@
     "qcom/x1e80100/LENOVO/91B6/X1E80100-LENOVO-IdeaCentre-Mini-tplg.bin",
     "qcom/x1e80100/X1E001DE-DEVKIT-tplg.bin",
     "qcom/x1e80100/X1E80100-ACER-SWIFT-14-tplg.bin",
+    "qcom/x1e80100/X1E80100-ASUS-Vivobook-16-tplg.bin",
+    "qcom/x1e80100/X1E80100-ASUS-Vivobook-S15-tplg.bin",
+    "qcom/x1e80100/X1E80100-ASUS-Zenbook-A14-tplg.bin",
     "qcom/x1e80100/X1E80100-CRD-tplg.bin",
+    "qcom/x1e80100/X1E80100-Dell-Inspiron-14p-7441-tplg.bin",
+    "qcom/x1e80100/X1E80100-Dell-Latitude-7455-tplg.bin",
+    "qcom/x1e80100/X1E80100-Dell-XPS-13-9345-tplg.bin",
     "qcom/x1e80100/X1E80100-EVK-tplg.bin",
+    "qcom/x1e80100/X1E80100-HP-OMNIBOOK-X14-tplg.bin",
+    "qcom/x1e80100/X1E80100-LENOVO-IdeaCentre-Mini-tplg.bin",
+    "qcom/x1e80100/X1E80100-LENOVO-Thinkpad-T14s-tplg.bin",
+    "qcom/x1e80100/X1E80100-LENOVO-Yoga-Slim7x-tplg.bin",
     "qcom/x1e80100/X1E80100-MEDION-SPRCHRGD-14-S1-tplg.bin",
     "qcom/x1e80100/X1E80100-Microsoft-Surface-Pro-11-tplg.bin",
     "qcom/x1e80100/X1E80100-Romulus-tplg.bin",
@@ -4237,7 +4265,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-19",
+        "kernel": "7.3-20",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -4370,7 +4398,8 @@
           "x1p42100-asus-vivobook-s16-lcd.json",
           "x1p42100-asus-vivobook-s16.json",
           "x1p42100-hp-omnibook-5.json",
-          "x1p42100-microsoft-surface-pro-12in.json"
+          "x1p42100-microsoft-surface-pro-12in.json",
+          "x1p64100-dell-inspiron-14-plus-5441.json"
         ],
         "firmware": {
           "acer-aspire-14-ai-firmware": [
@@ -5372,6 +5401,18 @@
           "abbf3314-7dde-5966-980c-a1be8cf163b8",
           "587dab3d-0f40-5962-b043-6fc86e41cba2"
         ]
+      },
+      {
+        "file": "x1p64100-dell-inspiron-14-plus-5441.json",
+        "name": "Dell Inspiron 14 5441",
+        "compatible": "dell,inspiron-14-plus-5441",
+        "hwids": [
+          "9cf40b57-a3da-5f9c-8811-efe1b5d32e93",
+          "5e6923e9-1305-5d37-b507-953cf63f106c",
+          "3ab0bff8-9444-58e8-9130-eb9469bb0078",
+          "7f89e5f5-d13c-5489-a568-af56ff6fdbed",
+          "60620447-0951-5151-8768-e9bca54efaff"
+        ]
       }
     ],
     "image": {
@@ -5380,20 +5421,6 @@
       "kernel": "7.3.0-14-omarchy"
     },
     "pulls": [
-      {
-        "number": 2218,
-        "title": "linux-omarchy-aarch64: give the Dell Inspiron 14 5441 hardware IDs",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2218",
-        "draft": true,
-        "deviceTrees": [],
-        "ids": [
-          {
-            "file": "x1p64100-dell-inspiron-14-plus-5441.json",
-            "compatible": "dell,inspiron-14-plus-5441"
-          }
-        ],
-        "firmware": []
-      },
       {
         "number": 1634,
         "title": "linux-omarchy-aarch64: add the ASUS Zenbook 14 UX3480QA",
