@@ -195,11 +195,14 @@ for (const folder of sourceFolders) {
 // Trees outside Linux are only known through their copies in device-trees/, so the files they load
 // come from the firmware-name lines there: in the .dts naming one of the model's compatibles (a series
 // can add trees for several models) and the files it includes
+// A model that shares another's board and tree, like the OmniBook 5 16 the OmniBook 5 14's, has no copy of
+// its own and reads that model's
 function archivedFirmware(id: string, compatibles: string[]): string[] {
-  const entry = archived[id] as { files?: string[] } | undefined;
+  const from = archived[id] ? id : models.find((other: Model) => archived[other.id] && (other.variants ?? []).some((v: Variant) => v.compatible && compatibles.includes(v.compatible)))?.id;
+  const entry = from ? archived[from] as { files?: string[] } : undefined;
   const files = new Map<string, string>();
   for (const file of entry?.files ?? []) {
-    if (/\.dtsi?$/.test(file)) files.set(file, readFileSync(`device-trees/${id}/${file}`, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, ''));
+    if (/\.dtsi?$/.test(file)) files.set(file, readFileSync(`device-trees/${from}/${file}`, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, ''));
   }
   const boards = [...files.keys()].filter((file) => file.endsWith('.dts'));
   const own = boards.filter((file) => compatibles.some((compatible) => files.get(file)!.includes(`"${compatible}"`)));

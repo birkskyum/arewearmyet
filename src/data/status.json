@@ -1050,9 +1050,9 @@
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 30,
+      "edge": 31,
       "pr": 0,
-      "carry": 6,
+      "carry": 5,
       "needs-deviceTree": 31,
       "needs-ids": 7,
       "needs-firmware": 8
@@ -1093,26 +1093,26 @@
         }
       },
       "firmware": {
-        "omarchy": 38,
+        "omarchy": 39,
         "fromUpstream": 1,
-        "added": 37,
+        "added": 38,
         "missing": 0,
         "pull": 0,
-        "available": 4,
+        "available": 3,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 38
+          "edge": 39
         }
       },
       "all": {
-        "omarchy": 31,
+        "omarchy": 32,
         "fromUpstream": 1,
-        "added": 30,
+        "added": 31,
         "missing": 0,
         "pull": 0,
-        "available": 6,
+        "available": 5,
         "upstream": 1
       }
     }
@@ -5520,21 +5520,21 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-omnibook-5-firmware"
+        ],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
           "ids": "edge",
-          "firmware": "elsewhere"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
