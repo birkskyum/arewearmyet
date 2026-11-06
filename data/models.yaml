@@ -1445,7 +1445,6 @@ nvidia:
     released: "2025-10"
     omarchy: expected
     linux: omarchy
-    notes: "Same GB10 platform as the DGX Spark."
     sources:
       - https://www.acer.com/us-en/desktops-and-all-in-ones/veriton-workstations/veriton-gn100-ai-mini-workstation
       - https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers
@@ -1458,7 +1457,6 @@ nvidia:
     released: "2025-10"
     omarchy: expected
     linux: omarchy
-    notes: "Same GB10 platform as the DGX Spark."
     sources:
       - https://www.asus.com/networking-iot-servers/desktop-ai-supercomputer/ultra-small-ai-supercomputers/asus-ascent-gx10/
       - https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers
@@ -1471,7 +1469,6 @@ nvidia:
     released: "2025-10"
     omarchy: expected
     linux: omarchy
-    notes: "Same GB10 platform as the DGX Spark."
     sources:
       - https://www.dell.com/en-us/blog/how-dell-pro-max-with-gb10-transforms-ai-development/
       - https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers
@@ -1484,7 +1481,6 @@ nvidia:
     released: "2025-10"
     omarchy: expected
     linux: omarchy
-    notes: "Same GB10 platform as the DGX Spark."
     sources:
       - https://www.prnewswire.com/news-releases/gigabyte-announces-its-personal-ai-supercomputer-ai-top-atom-will-be-available-globally-on-october-15-302581862.html
       - https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers
@@ -1497,7 +1493,6 @@ nvidia:
     released: "2025-10"
     omarchy: expected
     linux: omarchy
-    notes: "Same GB10 platform as the DGX Spark."
     sources:
       - https://www.hp.com/us-en/newsroom/press-releases/2025/hp-accelerates-the-future-of-work.html
       - https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers
@@ -1510,7 +1505,6 @@ nvidia:
     released: "2025-10"
     omarchy: expected
     linux: omarchy
-    notes: "Same GB10 platform as the DGX Spark."
     sources:
       - https://news.lenovo.com/all-new-lenovo-thinkstation-pgx-big-ai-innovation-in-a-small-form-factor/
       - https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers
@@ -1523,7 +1517,6 @@ nvidia:
     released: "2025-10"
     omarchy: expected
     linux: omarchy
-    notes: "Same GB10 platform as the DGX Spark."
     sources:
       - https://ipc.msi.com/news/147188
       - https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers
@@ -1548,7 +1541,6 @@ nvidia:
     released: "2026-10"
     omarchy: works
     linux: omarchy
-    notes: "Boots through ACPI with Omarchy's kernel."
     sources:
       - https://www.computerbase.de/artikel/notebooks/nvidia-rtx-spark-n1x-test.99679/
       - https://blogs.windows.com/windowsexperience/2026/05/31/introducing-a-powerful-new-chapter-for-windows-pcs-accelerated-by-nvidia-rtx-spark/
@@ -1558,7 +1550,7 @@ nvidia:
     name: "ProArt P16"
     generation: n1x
     released: "2026-10"
-    omarchy: untested
+    omarchy: expected
     linux: omarchy
     sources:
       - https://www.notebookcheck.net/Asus-ProArt-P16-RTX-Spark-Laptop-Review-The-future-of-multimedia-laptops.1422366.0.html
@@ -1569,7 +1561,7 @@ nvidia:
     name: "XPS 16 Creator Edition"
     generation: n1x
     released: "2026"
-    omarchy: untested
+    omarchy: expected
     linux: omarchy
     status: "announced 2026-05-31 for \"this fall\""
     sources:
@@ -1581,7 +1573,7 @@ nvidia:
     name: "OmniBook Ultra 16"
     generation: n1x
     released: "2026-10"
-    omarchy: untested
+    omarchy: expected
     linux: omarchy
     sources:
       - https://www.hp.com/us-en/shop/pdp/hp-omnibook-ultra-laptop-next-gen-ai-16-bk000-16-bg9s9av-1
@@ -1592,7 +1584,7 @@ nvidia:
     name: "OmniBook X 14"
     generation: n1x
     released: "2026"
-    omarchy: untested
+    omarchy: expected
     linux: omarchy
     sources:
       - https://blogs.windows.com/windowsexperience/2026/05/31/introducing-a-powerful-new-chapter-for-windows-pcs-accelerated-by-nvidia-rtx-spark/
@@ -1602,7 +1594,7 @@ nvidia:
     name: "Yoga Pro 9n"
     generation: n1x
     released: "2026"
-    omarchy: untested
+    omarchy: expected
     linux: omarchy
     status: "announced 2026-05-31 for fall 2026"
     sources:
@@ -1613,7 +1605,7 @@ nvidia:
     name: "Surface Laptop Ultra"
     generation: n1x
     released: "2026-10"
-    omarchy: untested
+    omarchy: expected
     linux: omarchy
     sources:
       - https://www.microsoft.com/en-us/surface/devices/surface-laptop-ultra
@@ -1626,7 +1618,7 @@ nvidia:
     generation: n1x
     form: devkit
     released: "2026"
-    omarchy: untested
+    omarchy: expected
     linux: omarchy
     status: "announced at Build 2026 for later in 2026, US Microsoft"
     sources:
@@ -1639,7 +1631,7 @@ nvidia:
     generation: n1x
     form: 2-in-1
     released: "2026"
-    omarchy: untested
+    omarchy: expected
     linux: omarchy
     status: "announced 2026-05-31 for fall 2026"
     sources:

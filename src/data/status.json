@@ -1056,7 +1056,7 @@
     "models": 84,
     "nvidia": 17,
     "nvidiaWorks": 2,
-    "nvidiaExpected": 7,
+    "nvidiaExpected": 15,
     "works": 2,
     "should": 34,
     "problems": 8,
@@ -10687,7 +10687,7 @@
       "form": "desktop",
       "released": "2025-10",
       "status": null,
-      "notes": "Same GB10 platform as the DGX Spark.",
+      "notes": null,
       "sources": [
         "https://www.acer.com/us-en/desktops-and-all-in-ones/veriton-workstations/veriton-gn100-ai-mini-workstation",
         "https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers"
@@ -10704,7 +10704,7 @@
       "form": "desktop",
       "released": "2025-10",
       "status": null,
-      "notes": "Same GB10 platform as the DGX Spark.",
+      "notes": null,
       "sources": [
         "https://www.asus.com/networking-iot-servers/desktop-ai-supercomputer/ultra-small-ai-supercomputers/asus-ascent-gx10/",
         "https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers"
@@ -10721,7 +10721,7 @@
       "form": "desktop",
       "released": "2025-10",
       "status": null,
-      "notes": "Same GB10 platform as the DGX Spark.",
+      "notes": null,
       "sources": [
         "https://www.dell.com/en-us/blog/how-dell-pro-max-with-gb10-transforms-ai-development/",
         "https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers"
@@ -10738,7 +10738,7 @@
       "form": "desktop",
       "released": "2025-10",
       "status": null,
-      "notes": "Same GB10 platform as the DGX Spark.",
+      "notes": null,
       "sources": [
         "https://www.prnewswire.com/news-releases/gigabyte-announces-its-personal-ai-supercomputer-ai-top-atom-will-be-available-globally-on-october-15-302581862.html",
         "https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers"
@@ -10755,7 +10755,7 @@
       "form": "desktop",
       "released": "2025-10",
       "status": null,
-      "notes": "Same GB10 platform as the DGX Spark.",
+      "notes": null,
       "sources": [
         "https://www.hp.com/us-en/newsroom/press-releases/2025/hp-accelerates-the-future-of-work.html",
         "https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers"
@@ -10772,7 +10772,7 @@
       "form": "desktop",
       "released": "2025-10",
       "status": null,
-      "notes": "Same GB10 platform as the DGX Spark.",
+      "notes": null,
       "sources": [
         "https://news.lenovo.com/all-new-lenovo-thinkstation-pgx-big-ai-innovation-in-a-small-form-factor/",
         "https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers"
@@ -10789,7 +10789,7 @@
       "form": "desktop",
       "released": "2025-10",
       "status": null,
-      "notes": "Same GB10 platform as the DGX Spark.",
+      "notes": null,
       "sources": [
         "https://ipc.msi.com/news/147188",
         "https://nvidianews.nvidia.com/news/nvidia-dgx-spark-arrives-for-worlds-ai-developers"
@@ -10823,7 +10823,7 @@
       "form": "laptop",
       "released": "2026-10",
       "status": null,
-      "notes": "Boots through ACPI with Omarchy's kernel.",
+      "notes": null,
       "sources": [
         "https://www.computerbase.de/artikel/notebooks/nvidia-rtx-spark-n1x-test.99679/",
         "https://blogs.windows.com/windowsexperience/2026/05/31/introducing-a-powerful-new-chapter-for-windows-pcs-accelerated-by-nvidia-rtx-spark/"
@@ -10849,7 +10849,7 @@
       "vendor": "ASUS",
       "name": "ProArt P16",
       "generation": "n1x",
-      "omarchy": "untested",
+      "omarchy": "expected",
       "linux": "omarchy",
       "kernel": "stable"
     },
@@ -10866,7 +10866,7 @@
       "vendor": "Dell",
       "name": "XPS 16 Creator Edition",
       "generation": "n1x",
-      "omarchy": "untested",
+      "omarchy": "expected",
       "linux": "omarchy",
       "kernel": "stable"
     },
@@ -10883,7 +10883,7 @@
       "vendor": "HP",
       "name": "OmniBook Ultra 16",
       "generation": "n1x",
-      "omarchy": "untested",
+      "omarchy": "expected",
       "linux": "omarchy",
       "kernel": "stable"
     },
@@ -10899,7 +10899,7 @@
       "vendor": "HP",
       "name": "OmniBook X 14",
       "generation": "n1x",
-      "omarchy": "untested",
+      "omarchy": "expected",
       "linux": "omarchy",
       "kernel": "stable"
     },
@@ -10915,7 +10915,7 @@
       "vendor": "Lenovo",
       "name": "Yoga Pro 9n",
       "generation": "n1x",
-      "omarchy": "untested",
+      "omarchy": "expected",
       "linux": "omarchy",
       "kernel": "stable"
     },
@@ -10933,7 +10933,7 @@
       "vendor": "Microsoft",
       "name": "Surface Laptop Ultra",
       "generation": "n1x",
-      "omarchy": "untested",
+      "omarchy": "expected",
       "linux": "omarchy",
       "kernel": "stable"
     },
@@ -10950,7 +10950,7 @@
       "vendor": "Microsoft",
       "name": "Surface RTX Spark Dev Box",
       "generation": "n1x",
-      "omarchy": "untested",
+      "omarchy": "expected",
       "linux": "omarchy",
       "kernel": "stable"
     },
@@ -10966,7 +10966,7 @@
       "vendor": "MSI",
       "name": "Prestige N16 Flip AI+",
       "generation": "n1x",
-      "omarchy": "untested",
+      "omarchy": "expected",
       "linux": "omarchy",
       "kernel": "stable"
     }
