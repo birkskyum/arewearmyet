@@ -793,6 +793,7 @@ models:
     model_numbers: ["16-bf1xxx"]
     variants:
       - { chip: "X2P-64-100", compatible: "hp,omnibook-5-16-bf1xxx" }
+    notes: "Omarchy's kernel carries its owner's device tree with the GPU off, since it doesn't support the X2-85 yet. Bluetooth, sound and the embedded controller don't work on it yet."
     devicetree_out_of_tree: "https://github.com/theflyingrahul/linux-hp-omnibook-5-glymur"
     devicetree_files:
       - "https://raw.githubusercontent.com/theflyingrahul/linux-hp-omnibook-5-glymur/2d54a5a3a239fdf78f748e64bfe60a21eef2026a/dts/qcom/mahua-hp-omnibook-5-bf1xxx.dts"

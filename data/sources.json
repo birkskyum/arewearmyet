@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-06T01:40:16.998Z",
+  "collected": "2026-11-06T02:02:08.152Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4251,7 +4251,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-18",
+        "kernel": "7.3-19",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -4264,6 +4264,7 @@
           "hamoa-iot-evk.dts",
           "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
           "mahua-crd.dts",
+          "mahua-hp-omnibook-5-bf1xxx.dts",
           "mahua-hp-omnibook-x16.dts",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
           "sc8280xp-crd.dts",
@@ -4372,6 +4373,7 @@
         "carriedIds": [
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8.json",
+          "mahua-hp-omnibook-5-bf1xxx.json",
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
           "x126100-asus-vivobook-16.json",
@@ -5128,6 +5130,15 @@
           "qcom,x126100"
         ],
         "patch": "2691-arm64-dts-qcom-Add-the-ASUS-Vivobook-16-X1607QA.patch"
+      },
+      {
+        "file": "mahua-hp-omnibook-5-bf1xxx.dts",
+        "model": "HP OmniBook 5 Laptop 16-bf1xxx",
+        "compatible": [
+          "hp,omnibook-5-16-bf1xxx",
+          "qcom,mahua"
+        ],
+        "patch": "2711-arm64-dts-qcom-Add-the-HP-OmniBook-5-16-bf1xxx.patch"
       }
     ],
     "carriedIds": [
@@ -5164,6 +5175,15 @@
           "4bc647da-0871-56d4-8da8-53f61b7a3767",
           "41931424-2cbe-50cc-a426-7ba09e0c6e4e",
           "e5479a7c-5982-58e2-8953-036b5bddb159"
+        ]
+      },
+      {
+        "file": "mahua-hp-omnibook-5-bf1xxx.json",
+        "name": "HP OmniBook 5 16-bf1",
+        "compatible": "hp,omnibook-5-16-bf1xxx",
+        "hwids": [
+          "4ddf1f98-9166-536f-853d-452ee94ac07a",
+          "aa26cf43-45d4-5a10-901b-0358db424bf1"
         ]
       },
       {
@@ -5359,29 +5379,6 @@
       "kernel": "7.3.0-14-omarchy"
     },
     "pulls": [
-      {
-        "number": 2211,
-        "title": "linux-omarchy-aarch64: add the HP OmniBook 5 16 (2026)",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2211",
-        "draft": false,
-        "deviceTrees": [
-          {
-            "file": "mahua-hp-omnibook-5-bf1xxx.dts",
-            "model": "HP OmniBook 5 Laptop 16-bf1xxx",
-            "compatible": [
-              "hp,omnibook-5-16-bf1xxx",
-              "qcom,mahua"
-            ]
-          }
-        ],
-        "ids": [
-          {
-            "file": "mahua-hp-omnibook-5-bf1xxx.json",
-            "compatible": "hp,omnibook-5-16-bf1xxx"
-          }
-        ],
-        "firmware": []
-      },
       {
         "number": 1905,
         "title": "linux-omarchy-aarch64: use the Surface Laptop 8's agreed board name",

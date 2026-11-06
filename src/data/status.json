@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-06T01:40:16.998Z",
+  "collected": "2026-11-06T02:02:08.152Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-18",
+    "kernel": "7.3-19",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-18",
+        "kernel": "7.3-19",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -409,6 +409,7 @@
           "hamoa-iot-evk.dts",
           "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
           "mahua-crd.dts",
+          "mahua-hp-omnibook-5-bf1xxx.dts",
           "mahua-hp-omnibook-x16.dts",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
           "sc8280xp-crd.dts",
@@ -517,6 +518,7 @@
         "carriedIds": [
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8.json",
+          "mahua-hp-omnibook-5-bf1xxx.json",
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
           "x126100-asus-vivobook-16.json",
@@ -1038,9 +1040,9 @@
     "nvidiaWorks": 2,
     "nvidiaExpected": 7,
     "works": 2,
-    "should": 32,
+    "should": 33,
     "problems": 7,
-    "notYet": 42,
+    "notYet": 41,
     "deviceTree": 52,
     "ids": 45,
     "firmware": 42,
@@ -1050,8 +1052,8 @@
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 31,
-      "pr": 1,
+      "edge": 32,
+      "pr": 0,
       "carry": 4,
       "needs-deviceTree": 31,
       "needs-ids": 7,
@@ -1065,31 +1067,31 @@
     },
     "ahead": {
       "deviceTree": {
-        "omarchy": 43,
+        "omarchy": 44,
         "fromUpstream": 19,
-        "added": 24,
+        "added": 25,
         "missing": 0,
-        "pull": 2,
+        "pull": 1,
         "available": 7,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 43
+          "edge": 44
         }
       },
       "ids": {
-        "omarchy": 41,
+        "omarchy": 42,
         "fromUpstream": 28,
-        "added": 13,
+        "added": 14,
         "missing": 0,
-        "pull": 2,
+        "pull": 1,
         "available": 2,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 41
+          "edge": 42
         }
       },
       "firmware": {
@@ -1107,11 +1109,11 @@
         }
       },
       "all": {
-        "omarchy": 32,
+        "omarchy": 33,
         "fromUpstream": 1,
-        "added": 31,
+        "added": 32,
         "missing": 0,
-        "pull": 1,
+        "pull": 0,
         "available": 4,
         "upstream": 1
       }
@@ -6146,23 +6148,15 @@
       "sources": [
         "https://www.notebookcheck.net/HP-releases-new-16-inch-laptop-with-Snapdragon-X2-Plus-and-over-30-hours-battery-life.1414570.0.html"
       ],
-      "notes": null,
-      "outcome": "none",
+      "notes": "Omarchy's kernel carries its owner's device tree with the GPU off, since it doesn't support the X2-85 yet. Bluetooth, sound and the embedded controller don't work on it yet.",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2211",
-          "number": 2211,
-          "title": "linux-omarchy-aarch64: add the HP OmniBook 5 16 (2026)"
-        },
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2211",
-          "number": 2211,
-          "title": "linux-omarchy-aarch64: add the HP OmniBook 5 16 (2026)"
-        },
+        "deviceTree": "edge",
+        "deviceTreePull": null,
+        "ids": "edge",
+        "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -6171,16 +6165,13 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
-          "deviceTree": "pr",
-          "ids": "pr",
+          "deviceTree": "edge",
+          "ids": "edge",
           "firmware": "edge"
         },
-        "missing": [
-          "deviceTree",
-          "ids"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -6206,20 +6197,18 @@
         {
           "chip": "X2P-64-100",
           "compatible": "hp,omnibook-5-16-bf1xxx",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2211",
-            "number": 2211,
-            "title": "linux-omarchy-aarch64: add the HP OmniBook 5 16 (2026)"
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "mahua-hp-omnibook-5-bf1xxx.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2711-arm64-dts-qcom-Add-the-HP-OmniBook-5-16-bf1xxx.patch"
           },
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2211",
-            "number": 2211,
-            "title": "linux-omarchy-aarch64: add the HP OmniBook 5 16 (2026)"
-          },
-          "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [
@@ -6229,7 +6218,7 @@
               "url": "https://github.com/ubuntu/stubble/pull/106"
             }
           ],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
