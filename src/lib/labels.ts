@@ -90,7 +90,7 @@ const STATES = {
   },
   acpi: {
     collected: { label: 'Collected', tone: 'good', meaning: `Its ACPI tables are in the aarch64-laptops collection, an owner's hardware report or this board's copy of a dump not merged there yet.` },
-    helps: { label: 'Still useful', tone: 'close', meaning: `It has a device tree, but a report still gives the hardware IDs for each of its model numbers, the maker's firmware list, its panels and the tables to check the tree against.` },
+    helps: { label: 'Still useful', tone: 'muted', meaning: `It has a device tree, but a report still gives the hardware IDs for each of its model numbers, the maker's firmware list, its panels and the tables to check the tree against.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: 'The first thing to send for a model without a device tree.' },
   },
   nvidiaOmarchy: {
@@ -175,9 +175,9 @@ export const NVIDIA_UPSTREAM_LEGEND: Group[] = [
 ];
 
 // Ranks sort best first: a state's position in its group, or a release number within "done"
-const cell = (group: Record<string, State>, key: string, extra: { label?: string; title?: string; href?: string; rank?: number } = {}): Cell => {
+const cell = (group: Record<string, State>, key: string, extra: { label?: string; tone?: Tone; title?: string; href?: string; rank?: number } = {}): Cell => {
   const state = group[key];
-  return { ...state, key, label: extra.label ?? state.label, title: extra.title ?? state.meaning, href: extra.href, rank: extra.rank ?? 1000 + Object.keys(group).indexOf(key) };
+  return { ...state, key, label: extra.label ?? state.label, tone: extra.tone ?? state.tone, title: extra.title ?? state.meaning, href: extra.href, rank: extra.rank ?? 1000 + Object.keys(group).indexOf(key) };
 };
 const release = (tag: string) => tag.replace(/^v/, '');
 const releaseRank = (tag: string) => {
@@ -275,7 +275,10 @@ export function machineCell(model: Model): Cell {
 
 export function acpiCell(model: Model): Cell {
   if (model.upstream.acpi === 'collected') return cell(STATES.acpi, 'collected', { href: model.upstream.acpiUrls[0] });
-  return cell(STATES.acpi, model.upstream.deviceTree === 'missing' ? 'wanted' : 'helps');
+  if (model.upstream.deviceTree === 'missing') return cell(STATES.acpi, 'wanted');
+  // Grey once every piece exists, amber while the hardware IDs a report gives are still missing
+  if (model.outOfBox.pieces.ids !== 'none') return cell(STATES.acpi, 'helps');
+  return cell(STATES.acpi, 'helps', { tone: 'close', title: `It has a device tree but no hardware IDs yet, and a report gives them for each of its model numbers, along with the maker's firmware list, its panels and the tables to check the tree against.` });
 }
 
 export function googlebookOmarchyCell(model: Model): Cell {
