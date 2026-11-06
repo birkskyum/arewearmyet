@@ -1847,7 +1847,7 @@
       "reports": [
         {
           "state": "problems",
-          "note": "Installs from the edge channel's image and reaches the desktop, but the screen stays dark at the disk password prompt until the password is typed. Loading the USB-C display drivers before the disk is unlocked brings the prompt up; that fix isn't in Omarchy yet.",
+          "note": "Installs from the edge channel's image and reaches the desktop. Battery, Bluetooth and graphics work. The speakers and microphones don't work yet. The screen stayed dark at the disk password prompt until the password was typed. The fix for that, loading the USB-C display drivers before the disk is unlocked, is on edge and not yet checked on this laptop.",
           "checked": "2026-11"
         }
       ],
@@ -1915,7 +1915,7 @@
           "reports": [
             {
               "state": "problems",
-              "note": "Installs from the edge channel's image and reaches the desktop, but the screen stays dark at the disk password prompt until the password is typed. Loading the USB-C display drivers before the disk is unlocked brings the prompt up; that fix isn't in Omarchy yet.",
+              "note": "Installs from the edge channel's image and reaches the desktop. Battery, Bluetooth and graphics work. The speakers and microphones don't work yet. The screen stayed dark at the disk password prompt until the password was typed. The fix for that, loading the USB-C display drivers before the disk is unlocked, is on edge and not yet checked on this laptop.",
               "checked": "2026-11"
             }
           ]
@@ -6369,7 +6369,7 @@
       "reports": [
         {
           "state": "problems",
-          "note": "Installs from the edge channel's nightly image and reaches the desktop, but the screen stays dark at the disk password prompt. Loading the USB-C display drivers before the disk is unlocked brings the prompt up; that fix isn't in Omarchy yet.",
+          "note": "Installs from the edge channel's nightly image and reaches the desktop, but the screen stayed dark at the disk password prompt. The fix for that, loading the USB-C display drivers before the disk is unlocked, is on edge and not yet checked on this laptop.",
           "checked": "2026-11"
         }
       ],
@@ -6439,7 +6439,7 @@
           "reports": [
             {
               "state": "problems",
-              "note": "Installs from the edge channel's nightly image and reaches the desktop, but the screen stays dark at the disk password prompt. Loading the USB-C display drivers before the disk is unlocked brings the prompt up; that fix isn't in Omarchy yet.",
+              "note": "Installs from the edge channel's nightly image and reaches the desktop, but the screen stayed dark at the disk password prompt. The fix for that, loading the USB-C display drivers before the disk is unlocked, is on edge and not yet checked on this laptop.",
               "checked": "2026-11"
             }
           ]
