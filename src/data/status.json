@@ -1,17 +1,17 @@
 {
-  "collected": "2026-11-06T04:35:20.245Z",
+  "collected": "2026-11-06T18:16:40.441Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-20",
+    "kernel": "7.3-22",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.05.479",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.05.479/omarchy-edge-2026.11.05.479-aarch64.iso",
-      "kernel": "7.3.0-14-omarchy"
+      "version": "2026.11.06.480",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.06.480/omarchy-edge-2026.11.06.480-aarch64.iso",
+      "kernel": "7.3.0-20-omarchy"
     },
     "channels": [
       {
@@ -396,9 +396,10 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-20",
+        "kernel": "7.3-22",
         "systemd": "262.1-1",
         "deviceTrees": [
+          "glymur-anduril-bluechip.dts",
           "glymur-asus-zenbook-a14-ux3407na.dts",
           "glymur-asus-zenbook-a16-ux3607oa.dts",
           "glymur-crd.dts",
@@ -516,6 +517,7 @@
           "x1p64100-dell-latitude-5455.json"
         ],
         "carriedIds": [
+          "glymur-anduril-bluechip.json",
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8.json",
           "mahua-hp-omnibook-5-bf1xxx.json",
@@ -1051,16 +1053,16 @@
     ]
   },
   "summary": {
-    "models": 83,
+    "models": 84,
     "nvidia": 17,
     "nvidiaWorks": 2,
     "nvidiaExpected": 7,
     "works": 2,
     "should": 34,
-    "problems": 7,
+    "problems": 8,
     "notYet": 40,
-    "deviceTree": 52,
-    "ids": 46,
+    "deviceTree": 53,
+    "ids": 47,
     "firmware": 43,
     "googlebooks": 2,
     "acpi": 34,
@@ -1073,19 +1075,19 @@
       "carry": 4,
       "needs-deviceTree": 31,
       "needs-ids": 6,
-      "needs-firmware": 7
+      "needs-firmware": 8
     },
     "machine": {
-      "team": 6,
+      "team": 7,
       "omarchy": 7,
       "linux": 39,
       "nobody": 31
     },
     "ahead": {
       "deviceTree": {
-        "omarchy": 44,
+        "omarchy": 45,
         "fromUpstream": 19,
-        "added": 25,
+        "added": 26,
         "missing": 0,
         "pull": 1,
         "available": 7,
@@ -1093,13 +1095,13 @@
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 44
+          "edge": 45
         }
       },
       "ids": {
-        "omarchy": 43,
+        "omarchy": 44,
         "fromUpstream": 28,
-        "added": 15,
+        "added": 16,
         "missing": 0,
         "pull": 1,
         "available": 2,
@@ -1107,7 +1109,7 @@
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 43
+          "edge": 44
         }
       },
       "firmware": {
@@ -1818,6 +1820,105 @@
           "stubble": [],
           "outcome": "none",
           "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "anduril-bluechip",
+      "vendor": "Anduril",
+      "name": "BlueChip",
+      "generation": "x2",
+      "form": "laptop",
+      "released": null,
+      "modelNumbers": [],
+      "chips": [
+        "X2E-88-100"
+      ],
+      "status": null,
+      "sources": [
+        "https://www.anduril.com/bluechip"
+      ],
+      "notes": null,
+      "outcome": "problems",
+      "reports": [
+        {
+          "state": "problems",
+          "note": "Installs from the edge channel's image and reaches the desktop, but the screen stays dark at the disk password prompt until the password is typed. Loading the USB-C display drivers before the disk is unlocked brings the prompt up; that fix isn't in Omarchy yet.",
+          "checked": "2026-11"
+        }
+      ],
+      "machine": "team",
+      "omarchy": {
+        "deviceTree": "edge",
+        "deviceTreePull": null,
+        "ids": "edge",
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-firmware",
+        "pieces": {
+          "deviceTree": "edge",
+          "ids": "edge",
+          "firmware": "none"
+        },
+        "missing": [
+          "firmware"
+        ]
+      },
+      "upstream": {
+        "deviceTree": "out-of-tree",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2722-arm64-dts-qcom-glymur-Add-the-Anduril-BlueChip.patch",
+        "devicetreeArchive": null,
+        "ids": "collected",
+        "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/17",
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "compatible": "anduril,bluechip",
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "glymur-anduril-bluechip.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2722-arm64-dts-qcom-glymur-Add-the-Anduril-BlueChip.patch"
+          },
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "problems",
+          "reports": [
+            {
+              "state": "problems",
+              "note": "Installs from the edge channel's image and reaches the desktop, but the screen stays dark at the disk password prompt until the password is typed. Loading the USB-C display drivers before the disk is unlocked brings the prompt up; that fix isn't in Omarchy yet.",
+              "checked": "2026-11"
+            }
+          ]
         }
       ],
       "boot": "uefi",

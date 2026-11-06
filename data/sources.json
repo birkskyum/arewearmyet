@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-06T04:35:20.245Z",
+  "collected": "2026-11-06T18:16:40.441Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4265,9 +4265,10 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-20",
+        "kernel": "7.3-22",
         "systemd": "262.1-1",
         "deviceTrees": [
+          "glymur-anduril-bluechip.dts",
           "glymur-asus-zenbook-a14-ux3407na.dts",
           "glymur-asus-zenbook-a16-ux3607oa.dts",
           "glymur-crd.dts",
@@ -4385,6 +4386,7 @@
           "x1p64100-dell-latitude-5455.json"
         ],
         "carriedIds": [
+          "glymur-anduril-bluechip.json",
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8.json",
           "mahua-hp-omnibook-5-bf1xxx.json",
@@ -5169,9 +5171,35 @@
           "qcom,mahua"
         ],
         "patch": "2711-arm64-dts-qcom-Add-the-HP-OmniBook-5-16-bf1xxx.patch"
+      },
+      {
+        "file": "glymur-anduril-bluechip.dts",
+        "model": "Anduril BlueChip",
+        "compatible": [
+          "anduril,bluechip",
+          "qcom,glymur"
+        ],
+        "patch": "2722-arm64-dts-qcom-glymur-Add-the-Anduril-BlueChip.patch"
       }
     ],
     "carriedIds": [
+      {
+        "file": "glymur-anduril-bluechip.json",
+        "name": "Anduril BlueChip",
+        "compatible": "anduril,bluechip",
+        "hwids": [
+          "53d58ab3-e910-5d10-a2ec-80e051d566b8",
+          "a9a1b83e-c434-5e61-a6aa-cce5a026419d",
+          "6779ed07-7f14-52d8-9535-66619531e78f",
+          "96908d9d-ae94-5809-930d-92fe88c36038",
+          "d57f96c5-a504-585f-9d6b-845854d720fa",
+          "2ac7c5d5-8318-5be4-b088-477f9a004bc1",
+          "7ac534d4-a41c-53b9-87f6-c01a102082b4",
+          "b2f01473-c24f-5adb-a1fd-eaa60da1a921",
+          "473ae65d-b557-5883-afcb-bd99761da7fc",
+          "888804a5-f928-546f-b9ac-6c06a8cf1bf0"
+        ]
+      },
       {
         "file": "glymur-hp-omnibook-ultra-kg0xxx.json",
         "name": "HP OmniBook Ultra 14-kg0xxx",
@@ -5416,9 +5444,9 @@
       }
     ],
     "image": {
-      "version": "2026.11.05.479",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.05.479/omarchy-edge-2026.11.05.479-aarch64.iso",
-      "kernel": "7.3.0-14-omarchy"
+      "version": "2026.11.06.480",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.06.480/omarchy-edge-2026.11.06.480-aarch64.iso",
+      "kernel": "7.3.0-20-omarchy"
     },
     "pulls": [
       {

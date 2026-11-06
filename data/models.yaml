@@ -150,6 +150,22 @@ models:
       - https://www.notebookcheck.net/Acer-Swift-Spin-14-AI-SFSP14-Q51T-Reviews-and-Specs.1393057.0.html
 
 
+  # Anduril
+  - id: anduril-bluechip
+    vendor: "Anduril"
+    name: "BlueChip"
+    generation: x2
+    chips: ["X2E-88-100"]
+    variants:
+      - { compatible: "anduril,bluechip" }
+    acpi: ["hardware-reports/anduril/qualcomm-glymur"]
+    ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/17"
+    team_has_one: true
+    reports:
+      - { state: "problems", note: "Installs from the edge channel's image and reaches the desktop, but the screen stays dark at the disk password prompt until the password is typed. Loading the USB-C display drivers before the disk is unlocked brings the prompt up; that fix isn't in Omarchy yet.", checked: "2026-11" }
+    sources:
+      - https://www.anduril.com/bluechip
+
   # ASUS
   - id: asus-proart-pz13-ht5306
     vendor: "ASUS"
