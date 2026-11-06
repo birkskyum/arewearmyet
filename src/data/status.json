@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-06T02:02:08.152Z",
+  "collected": "2026-11-06T03:49:31.881Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -605,6 +605,13 @@
             "qcom/x1p42100/ASUSTeK/proart-pz13/qccdsp8380.mbn",
             "qcom/x1p42100/ASUSTeK/proart-pz13/qcdxkmsucpurwa.mbn"
           ],
+          "asus-vivobook-16-firmware": [
+            "qcom/x126100/ASUSTeK/vivobook-16/adsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-16/cdsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-16/qcadsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-16/qccdsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-16/qcdxkmsucpurwa.mbn"
+          ],
           "asus-vivobook-s14-firmware": [
             "qcom/x1p42100/ASUSTeK/vivobook-s14/adsp_dtbs.elf",
             "qcom/x1p42100/ASUSTeK/vivobook-s14/adspr.jsn",
@@ -850,6 +857,9 @@
             "qcom/glymur/hp/omnibook-x16/qcadsp8480.mbn",
             "qcom/glymur/hp/omnibook-x16/qccdsp8480.mbn"
           ],
+          "huawei-matebook-e-go-firmware": [
+            "qcom/sc8280xp/HUAWEI/gaokun3/qcadsp8280.mbn"
+          ],
           "lenovo-ideacentre-mini-x-firmware": [
             "qcom/x1e80100/LENOVO/91B6/adsp_dtbs.elf",
             "qcom/x1e80100/LENOVO/91B6/adspr.jsn",
@@ -924,6 +934,11 @@
             "qcom/x1p42100/Microsoft/Surface12/qcadsp8380.mbn",
             "qcom/x1p42100/Microsoft/Surface12/qccdsp8380.mbn",
             "qcom/x1p42100/Microsoft/Surface12/qcdxkmsucpurwa.mbn"
+          ],
+          "microsoft-surface-pro-9-5g-firmware": [
+            "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcadsp8280.mbn",
+            "qcom/sc8280xp/MICROSOFT/SurfacePro9/qccdsp8280.mbn",
+            "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcdxkmsuc8280.mbn"
           ],
           "samsung-galaxy-book4-edge-firmware": [
             "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
@@ -1052,9 +1067,9 @@
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 32,
+      "edge": 33,
       "pr": 0,
-      "carry": 5,
+      "carry": 4,
       "needs-deviceTree": 31,
       "needs-ids": 7,
       "needs-firmware": 7
@@ -1095,26 +1110,26 @@
         }
       },
       "firmware": {
-        "omarchy": 39,
+        "omarchy": 40,
         "fromUpstream": 1,
-        "added": 38,
+        "added": 39,
         "missing": 0,
         "pull": 0,
-        "available": 4,
+        "available": 3,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 39
+          "edge": 40
         }
       },
       "all": {
-        "omarchy": 33,
+        "omarchy": 34,
         "fromUpstream": 1,
-        "added": 32,
+        "added": 33,
         "missing": 0,
         "pull": 0,
-        "available": 5,
+        "available": 4,
         "upstream": 1
       }
     }
@@ -2188,21 +2203,21 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "asus-vivobook-16-firmware"
+        ],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
           "ids": "edge",
-          "firmware": "elsewhere"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -10110,7 +10125,7 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "partial",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -10363,21 +10378,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "microsoft-surface-pro-9-5g-firmware"
+        ],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "elsewhere"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",

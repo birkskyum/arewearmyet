@@ -14,7 +14,7 @@ const KERNEL_RELEASES = ['v6.8', 'v6.9', 'v6.10', 'v6.11', 'v6.12', 'v6.13', 'v6
 const SYSTEMD_RELEASES = ['v257', 'v258', 'v259', 'v260', 'v261', 'v262'];
 const DT_PATTERN = /^(x1|hamoa|purwa|glymur|mahua|sc8280xp).*\.dts$/;
 const DT_DIR = 'arch/arm64/boot/dts/qcom';
-const FIRMWARE_SOCS = ['x1e80100', 'x1p42100', 'glymur', 'sc8280xp'];
+const FIRMWARE_SOCS = ['x1e80100', 'x1p42100', 'x126100', 'glymur', 'sc8280xp'];
 // Omarchy's package channels: its own repository carries the kernel and the makers' firmware
 // packages, its Arch Linux ARM mirror carries systemd, whose hardware ID list decides which device
 // tree boots, and linux-firmware. Their files databases list what each package installs.

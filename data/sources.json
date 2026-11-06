@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-06T02:02:08.152Z",
+  "collected": "2026-11-06T03:49:31.881Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4460,6 +4460,13 @@
             "qcom/x1p42100/ASUSTeK/proart-pz13/qccdsp8380.mbn",
             "qcom/x1p42100/ASUSTeK/proart-pz13/qcdxkmsucpurwa.mbn"
           ],
+          "asus-vivobook-16-firmware": [
+            "qcom/x126100/ASUSTeK/vivobook-16/adsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-16/cdsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-16/qcadsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-16/qccdsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-16/qcdxkmsucpurwa.mbn"
+          ],
           "asus-vivobook-s14-firmware": [
             "qcom/x1p42100/ASUSTeK/vivobook-s14/adsp_dtbs.elf",
             "qcom/x1p42100/ASUSTeK/vivobook-s14/adspr.jsn",
@@ -4705,6 +4712,9 @@
             "qcom/glymur/hp/omnibook-x16/qcadsp8480.mbn",
             "qcom/glymur/hp/omnibook-x16/qccdsp8480.mbn"
           ],
+          "huawei-matebook-e-go-firmware": [
+            "qcom/sc8280xp/HUAWEI/gaokun3/qcadsp8280.mbn"
+          ],
           "lenovo-ideacentre-mini-x-firmware": [
             "qcom/x1e80100/LENOVO/91B6/adsp_dtbs.elf",
             "qcom/x1e80100/LENOVO/91B6/adspr.jsn",
@@ -4779,6 +4789,11 @@
             "qcom/x1p42100/Microsoft/Surface12/qcadsp8380.mbn",
             "qcom/x1p42100/Microsoft/Surface12/qccdsp8380.mbn",
             "qcom/x1p42100/Microsoft/Surface12/qcdxkmsucpurwa.mbn"
+          ],
+          "microsoft-surface-pro-9-5g-firmware": [
+            "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcadsp8280.mbn",
+            "qcom/sc8280xp/MICROSOFT/SurfacePro9/qccdsp8280.mbn",
+            "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcdxkmsuc8280.mbn"
           ],
           "samsung-galaxy-book4-edge-firmware": [
             "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
@@ -5379,24 +5394,6 @@
       "kernel": "7.3.0-14-omarchy"
     },
     "pulls": [
-      {
-        "number": 1905,
-        "title": "linux-omarchy-aarch64: use the Surface Laptop 8's agreed board name",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/1905",
-        "draft": true,
-        "deviceTrees": [
-          {
-            "file": "glymur-microsoft-surface-laptop8.dts",
-            "model": "Microsoft Surface Laptop 8 (13.8in, Snapdragon X2 Elite)",
-            "compatible": [
-              "microsoft,surface-laptop-8-13p8",
-              "qcom,mahua"
-            ]
-          }
-        ],
-        "ids": [],
-        "firmware": []
-      },
       {
         "number": 1634,
         "title": "linux-omarchy-aarch64: add the ASUS Zenbook 14 UX3480QA",
