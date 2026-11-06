@@ -47,12 +47,16 @@ const aheadRows = [
   { label: 'Firmware', ...ahead.firmware, ours: `Firmware Omarchy packages. ${channelNote(ahead.firmware.channels)}`, theirs: 'Every file in a linux-firmware release.', elsewhere: `Firmware in a maker's download or on its way to linux-firmware, which Omarchy could package.` },
   { label: 'All three', ...ahead.all, ours: 'Device tree, hardware IDs and firmware, all in Omarchy, where upstream lacks at least one.', theirs: 'All three in the releases.', elsewhere: 'Every piece exists, but Omarchy still has to carry at least one.' },
 ];
-// Upstream's colour, striped, for the part of Omarchy's bar that upstream has too
-const STRIPES = 'bg-[repeating-linear-gradient(-45deg,var(--color-sky-400)_0_3px,color-mix(in_oklab,var(--color-sky-400)_30%,transparent)_3px_6px)]';
-// Out of the box on any channel, and the filter that shows those
+// Omarchy's green in slashes that crawl to the right, for what Omarchy adds on top of the releases
+const STRIPES = 'bg-[linear-gradient(-45deg,var(--color-emerald-400)_25%,color-mix(in_oklab,var(--color-emerald-400)_40%,transparent)_25%_50%,var(--color-emerald-400)_50%_75%,color-mix(in_oklab,var(--color-emerald-400)_40%,transparent)_75%)] bg-size-[12px_12px] motion-safe:animate-stripes';
+// Out of the box on any channel, and the filter that shows those, with only the ways to more that count any
 const ootb = summary.outOfBox;
 const ootbDone = ootb.stable + ootb.rc + ootb.edge;
 const OOTB_DONE = 'stable,rc,edge';
+const ootbMore = [
+  { filter: 'pr', count: ootb.pr, text: 'once open pull requests land' },
+  { filter: 'carry', count: ootb.carry, text: 'once Omarchy carries pieces that exist elsewhere' },
+].filter((more) => more.count > 0);
 const width = (value: number) => `width: ${(100 * value) / Math.max(summary.models, 1)}%`;
 
 // Left to right in the order a model gets there, with booting last
@@ -132,13 +136,20 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
 
     <Family id="snapdragon" title="Snapdragon X and X2" total={current.length}>
       <p class="max-w-3xl text-sm text-zinc-400">
-        <a class={LINK} href={`/?ootb=${OOTB_DONE}#snapdragon`}>{ootbDone} {ootbDone === 1 ? 'works' : 'work'} out of the box</a> on Omarchy today, <a class={LINK} href="/?ootb=pr#snapdragon">{ootb.pr} more once open pull requests land</a> and <a class={LINK} href="/?ootb=carry#snapdragon">{ootb.carry} once Omarchy carries pieces that exist elsewhere</a>. The others still need <a class={LINK} href="/?ootb=needs-deviceTree#snapdragon">a device tree ({ootb['needs-deviceTree']})</a>, <a class={LINK} href="/?ootb=needs-ids#snapdragon">hardware IDs ({ootb['needs-ids']})</a> or <a class={LINK} href="/?ootb=needs-firmware#snapdragon">firmware from outside Windows ({ootb['needs-firmware']})</a>.
+        <a class={LINK} href={`/?ootb=${OOTB_DONE}#snapdragon`}>{ootbDone} {ootbDone === 1 ? 'works' : 'work'} out of the box</a> on Omarchy today{ootbMore.map((more, i) => <>{i === 0 && ootbMore.length > 1 ? ', ' : ' and '}<a class={LINK} href={`/?ootb=${more.filter}#snapdragon`}>{more.count} {i === 0 ? 'more ' : ''}{more.text}</a></>)}. The others still need <a class={LINK} href="/?ootb=needs-deviceTree#snapdragon">a device tree ({ootb['needs-deviceTree']})</a>, <a class={LINK} href="/?ootb=needs-ids#snapdragon">hardware IDs ({ootb['needs-ids']})</a> or <a class={LINK} href="/?ootb=needs-firmware#snapdragon">firmware from outside Windows ({ootb['needs-firmware']})</a>.
       </p>
       <p class="mt-2 max-w-3xl text-sm text-zinc-400">
-        <a class={LINK} href="/?omarchy=should#snapdragon">{summary.should} models are ready to test</a> on the {image ? <a class={LINK} href={image.url}>edge nightly image</a> : 'edge nightly image'}, and owners have confirmed {summary.works} boot to the desktop and reported problems on {summary.problems}. Nobody we know has <a class={LINK} href="/?machine=nobody#snapdragon">{summary.machine.nobody} of the models</a> yet. To help a model along, send a hardware report from Windows, the device tree you boot with on Linux, or a boot test, as <a class={LINK} href="/help">Help a model get there</a> explains.
+        <a class={LINK} href="/?omarchy=should#snapdragon">{summary.should} models are ready to test</a> on the {image ? <a class={LINK} href={image.url}>edge nightly image</a> : 'edge nightly image'}, owners have confirmed {summary.works} boot to the desktop and reported problems on {summary.problems}, and nobody we know has <a class={LINK} href="/?machine=nobody#snapdragon">{summary.machine.nobody} of the models</a> yet.
       </p>
-      <h3 class="mt-6 text-sm font-semibold text-zinc-200">How far ahead Omarchy is</h3>
-      <p class="mt-1 max-w-3xl text-sm text-zinc-400">Models with each piece in Omarchy, on any channel, against the releases of Linux, systemd and linux-firmware. On Omarchy's bar the striped part comes from upstream, the green part is what Omarchy adds, the amber part is in an open pull request on <a class={LINK} href="https://github.com/omacom/omarchy-pkgs/pulls">omarchy-pkgs</a>, and the grey part exists elsewhere but Omarchy doesn't carry it yet.</p>
+      <div class="mt-6 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
+        <h3 class="text-sm font-semibold text-zinc-200">How far ahead Omarchy is</h3>
+        <ul class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-400">
+          <li class="flex items-center gap-1.5"><span class="h-2 w-4 rounded-full bg-sky-400"></span>Upstream releases</li>
+          <li class="flex items-center gap-1.5"><span class={`h-2 w-4 rounded-full ${STRIPES}`}></span>Omarchy adds</li>
+          <li class="flex items-center gap-1.5"><span class="h-2 w-4 rounded-full bg-amber-400"></span><a class={LINK} href="https://github.com/omacom/omarchy-pkgs/pulls">Open pull requests</a></li>
+          <li class="flex items-center gap-1.5"><span class="h-2 w-4 rounded-full bg-zinc-600"></span>Exists elsewhere</li>
+        </ul>
+      </div>
       <dl class="mt-4 grid gap-x-8 gap-y-5 sm:grid-cols-2">
         {aheadRows.map((row) => (
           <div>
@@ -146,20 +157,14 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
               <dt class="font-medium text-zinc-200">{row.label}</dt>
               <dd class={`shrink-0 tabular-nums ${row.added > 0 ? 'text-[#9ece6a]' : 'text-zinc-500'}`}>{[row.added > 0 ? `${row.added} ahead` : 'even', row.missing > 0 ? `${row.missing} behind` : ''].filter(Boolean).join(', ')}</dd>
             </div>
-            <div class="mt-2 grid grid-cols-[5rem_1fr_7rem] items-center gap-x-3 gap-y-1.5 text-xs">
-              <span class="text-zinc-300">Omarchy</span>
-              <div class="flex h-2 overflow-hidden rounded-full bg-zinc-800">
-                <div class={`h-full ${STRIPES}`} style={width(row.fromUpstream)} data-tip-title={`From upstream: ${row.fromUpstream}`} data-tip="What Omarchy ships that the upstream releases have too."></div>
-                <div class="h-full bg-emerald-400" style={width(row.added)} data-tip-title={`Omarchy adds: ${row.added}`} data-tip={row.ours}></div>
+            <div class="mt-2 flex items-center gap-3 text-xs">
+              <div class="flex h-2 flex-1 overflow-hidden rounded-full bg-zinc-800">
+                <div class="h-full bg-sky-400" style={width(row.fromUpstream)} data-tip-title={`Upstream: ${row.fromUpstream} of ${summary.models}`} data-tip={`${row.theirs} Every distro gets these, Omarchy too.`}></div>
+                <div class={`h-full ${STRIPES}`} style={width(row.added)} data-tip-title={`Omarchy adds: ${row.added}`} data-tip={row.ours}></div>
                 <div class="h-full bg-amber-400" style={width(row.pull)} data-tip-title={`Open pull requests: ${row.pull} more`} data-tip="Not shipped yet, but an open pull request on omarchy-pkgs adds it."></div>
                 <div class="h-full bg-zinc-600" style={width(row.available)} data-tip-title={`Not carried yet: ${row.available} more`} data-tip={row.elsewhere}></div>
               </div>
-              <span class="whitespace-nowrap tabular-nums text-zinc-300">{row.omarchy}{row.pull > 0 && <span class="text-amber-300"> +{row.pull}</span>}{row.available > 0 && <span class="text-zinc-500"> +{row.available}</span>} <span class="text-zinc-500">/ {summary.models}</span></span>
-              <span class="text-zinc-400">Upstream</span>
-              <div class="flex h-2 overflow-hidden rounded-full bg-zinc-800">
-                <div class="h-full bg-sky-400" style={width(row.upstream)} data-tip-title={`Upstream: ${row.upstream} of ${summary.models}`} data-tip={row.theirs}></div>
-              </div>
-              <span class="tabular-nums text-zinc-400">{row.upstream} <span class="text-zinc-500">/ {summary.models}</span></span>
+              <span class="w-28 shrink-0 whitespace-nowrap tabular-nums text-zinc-300">{row.omarchy}{row.pull > 0 && <span class="text-amber-300"> +{row.pull}</span>}{row.available > 0 && <span class="text-zinc-500"> +{row.available}</span>} <span class="text-zinc-500">/ {summary.models}</span></span>
             </div>
           </div>
         ))}
