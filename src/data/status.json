@@ -1045,7 +1045,7 @@
     "notYet": 41,
     "deviceTree": 52,
     "ids": 45,
-    "firmware": 42,
+    "firmware": 43,
     "googlebooks": 2,
     "acpi": 34,
     "acpiWanted": 31,
@@ -1054,10 +1054,10 @@
       "rc": 0,
       "edge": 32,
       "pr": 0,
-      "carry": 4,
+      "carry": 5,
       "needs-deviceTree": 31,
       "needs-ids": 7,
-      "needs-firmware": 8
+      "needs-firmware": 7
     },
     "machine": {
       "team": 6,
@@ -1100,7 +1100,7 @@
         "added": 38,
         "missing": 0,
         "pull": 0,
-        "available": 3,
+        "available": 4,
         "upstream": 1,
         "channels": {
           "stable": 1,
@@ -1114,7 +1114,7 @@
         "added": 32,
         "missing": 0,
         "pull": 0,
-        "available": 4,
+        "available": 5,
         "upstream": 1
       }
     }
@@ -2188,17 +2188,17 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-firmware",
+        "state": "carry",
         "pieces": {
           "deviceTree": "edge",
           "ids": "edge",
-          "firmware": "none"
+          "firmware": "elsewhere"
         },
         "missing": [
           "firmware"
@@ -2213,16 +2213,10 @@
         "ids": "collected",
         "idsCollected": "https://github.com/ubuntu/stubble/pull/100",
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf",
-          "qcdxkmsucpurwa.mbn"
-        ],
-        "firmwareAudioOnly": true,
-        "firmwareDownload": null,
+        "firmware": "download",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": "/firmware/#qcom-x126100-ASUSTeK-vivobook-16",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -10369,17 +10363,17 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-firmware",
+        "state": "carry",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "none"
+          "firmware": "elsewhere"
         },
         "missing": [
           "firmware"
@@ -10394,14 +10388,10 @@
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8280.mbn",
-          "qcadsp8280.mbn",
-          "qccdsp8280.mbn"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-sc8280xp-MICROSOFT-SurfacePro9",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],

@@ -1894,6 +1894,60 @@ folders:
         sha256: "d937f9f15aed83fbb4f9066937cbb3f25174a8e6bb2d2475a960124cfd8fdb79"
         from:
           - { package: "hp-sp171529", member: "src/Driver/qcdx8380/qcdxkmsucpurwa.mbn" }
+  - path: "qcom/x126100/ASUSTeK/vivobook-16"
+    models: ["asus-vivobook-16-x1607qa"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "4efd01feefccc344874cc8d4d3600231310d228216fa16a8740ac5fcc5357ced"
+        from:
+          - { package: "asus-socpackage-50068", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "d2e81a2430ec9474aa46558a9568262b7fde3ae31bdc523028306454fb11d3b0"
+        from:
+          - { package: "asus-socpackage-50068", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "qcadsp8380.mbn"
+        size: 22075832
+        sha256: "5799e03a04e0f66dfec6a6230abd13dc742e6bb347d509e86d826382749c2b8b"
+        from:
+          - { package: "asus-socpackage-50068", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "e7f15a411d59f0aa91cadf3dec0366cd916af240c956731577c53a40d8343e64"
+        from:
+          - { package: "asus-socpackage-50068", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "5b8b1ea1de11b9acc74fdd4919aa4aeac924520e4b11cf27782c593640e11e44"
+        from:
+          - { package: "asus-socpackage-50068", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+  - path: "qcom/sc8280xp/MICROSOFT/SurfacePro9"
+    models: ["microsoft-surface-pro-9-5g"]
+    files:
+      - name: "qcadsp8280.mbn"
+        size: 14606924
+        sha256: "bfa1382134cfe9c053607ae0ed8d319ed83459b2e731f4fdd5b93458063af1d6"
+        from:
+          - { package: "microsoft-surfacepro9-5g", member: "SurfaceUpdate/surfaceproextadsp8280/qcadsp8280.mbn" }
+      - name: "qccdsp8280.mbn"
+        size: 3571712
+        sha256: "5da3feeb5ca7231c14a3dcfa1a137644f2955dca46909897334bb4012df06320"
+        from:
+          - { package: "microsoft-surfacepro9-5g", member: "SurfaceUpdate/surfaceproextcdsp8280/qccdsp8280.mbn" }
+      - name: "qcdxkmsuc8280.mbn"
+        size: 14424
+        sha256: "3847033eee563763317b918e047c83b42b9e76341be6f1912e65619019e8f3be"
+        from:
+          - { package: "microsoft-surfacepro9-5g", member: "SurfaceUpdate/qcdx8280/qcdxkmsuc8280.mbn" }
+  - path: "qcom/sc8280xp/HUAWEI/gaokun3"
+    models: ["huawei-matebook-e-go"]
+    files:
+      - name: "qcadsp8280.mbn"
+        size: 12950508
+        sha256: "3fd79f085816015d9431b45dd2be983065022866f23cc4c141d321c4b1cf6ec2"
+        from:
+          - { package: "huawei-msupdate-adsp-9.9.9999.1", member: "qcadsp8280.mbn" }
 
 packages:
   - id: "acer-a14-11m-adsp-2.0.9100.0001"
@@ -2266,3 +2320,29 @@ packages:
     size: 499831458
     sha256: "f8694548a45d46b1c07eb0dc3dbfea0d58c532f300c84dc4906815a63875c6b9"
     fetched: "2026-11-02"
+  - id: "asus-socpackage-50068"
+    maker: "ASUS"
+    title: "X1607QA V1.314.8800.0"
+    url: "https://dlcdnets.asus.com/pub/ASUS/nb/Image/Driver/DriverPackage/50068/SOCPackage_forWebSite_Qualcomm_Z_V1.314.8800.0_50068.exe"
+    page: "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-16-x1607q/helpdesk_download/?model2Name=X1607QA"
+    size: 386645424
+    sha256: "a7a6545923122b71cedb7fefed0131cb6e67a4e0cfd93d7c45df74fcea6fc063"
+    fetched: "2026-11-06"
+  - id: "microsoft-surfacepro9-5g"
+    maker: "Microsoft"
+    title: "Surface Pro 9 with 5G"
+    url: "https://download.microsoft.com/download/9ba185b4-fd54-44da-9c54-adb8b2bc6c09/SurfacePro9-5G_Win11_22631_26.062.19189.0.msi"
+    page: "https://www.microsoft.com/en-us/download/details.aspx?id=105941"
+    size: 404353024
+    sha256: "f371bbe1c262ad4526b16e898b30958eeeb7df38e7e87026cc2ff781829c23eb"
+    fetched: "2026-11-06"
+    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+  - id: "huawei-msupdate-adsp-9.9.9999.1"
+    maker: "Huawei"
+    title: "Qualcomm Audio DSP Subsystem extension 9.9.9999.1 for the MateBook E Go (Windows Update)"
+    url: "https://catalog.s.download.windowsupdate.com/c/msdownload/update/driver/drvs/2023/02/4a6acaaa-21bf-4b8c-bb8f-cab21fdc738c_87406e6f2a5d4c945c0ad691cd0ab50f149ea2fe.cab"
+    page: "https://www.catalog.update.microsoft.com/ScopedViewInline.aspx?updateid=2e7a8aa3-e328-43de-8667-fc5719d36233"
+    size: 7003354
+    sha256: "7670f5dd82474ebf28b7f0d0e064188894e2836208903e304d45c54d3d244308"
+    fetched: "2026-11-06"
+    note: "A Microsoft Update Catalog cab submitted by Huawei Device Co., Ltd.; it has a signature appended, which 7-Zip reports as data after the archive and cabextract as extra bytes."
