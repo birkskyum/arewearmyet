@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-07T20:36:00.123Z",
+  "collected": "2026-11-07T21:05:38.963Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-31",
+    "kernel": "7.3-32",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-31",
+        "kernel": "7.3-32",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -463,6 +463,7 @@
           "x1p42100-lenovo-ideapad-slim5x-oled.dts",
           "x1p42100-lenovo-thinkbook-16.dts",
           "x1p42100-microsoft-sp12in.dts",
+          "x1p42100-microsoft-surface-laptop-13.dts",
           "x1p64100-acer-swift-sf14-11.dts",
           "x1p64100-dell-inspiron-14-plus-5441.dts",
           "x1p64100-dell-latitude-5455.dts",
@@ -542,6 +543,7 @@
           "x1p42100-hp-omnibook-3-16.json",
           "x1p42100-hp-omnibook-3-oled.json",
           "x1p42100-hp-omnibook-5.json",
+          "x1p42100-microsoft-surface-laptop-13.json",
           "x1p42100-microsoft-surface-pro-12in.json",
           "x1p64100-dell-inspiron-14-plus-5441.json"
         ],
@@ -1022,6 +1024,18 @@
             "qcom/x1e80100/Medion/sprchrgd-14-s1/qcdxkmsuc8380.mbn",
             "qcom/x1e80100/Medion/sprchrgd-14-s1/qcvss8380.mbn"
           ],
+          "microsoft-surface-laptop-13-firmware": [
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/adsp_dtbs.elf",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/adspr.jsn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/adsps.jsn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/adspua.jsn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/battmgr.jsn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/cdsp_dtbs.elf",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/cdspr.jsn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/qcadsp8380.mbn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/qccdsp8380.mbn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/qcdxkmsucpurwa.mbn"
+          ],
           "microsoft-surface-laptop-7-firmware": [
             "qcom/x1e80100/microsoft/Romulus/adsp_dtbs.elf",
             "qcom/x1e80100/microsoft/Romulus/adspr.jsn",
@@ -1095,9 +1109,9 @@
     "nvidiaWorks": 2,
     "nvidiaExpected": 15,
     "works": 2,
-    "should": 39,
+    "should": 40,
     "problems": 8,
-    "notYet": 35,
+    "notYet": 34,
     "deviceTree": 55,
     "ids": 52,
     "firmware": 42,
@@ -1107,8 +1121,8 @@
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 39,
-      "pr": 1,
+      "edge": 40,
+      "pr": 0,
       "carry": 0,
       "needs-deviceTree": 29,
       "needs-ids": 3,
@@ -1122,16 +1136,16 @@
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 50,
+        "omarchy": 51,
         "fromUpstream": 19,
-        "added": 31,
-        "pull": 1,
+        "added": 32,
+        "pull": 0,
         "available": 4,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 50
+          "edge": 51
         },
         "models": {
           "fromUpstream": [
@@ -1183,14 +1197,13 @@
             "lenovo-ideapad-slim-5x-14q8x9",
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
             "lenovo-yoga-slim-7x-14q8y11",
+            "microsoft-surface-laptop-13in-1st-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "microsoft-surface-laptop-13in-1st-edition"
-          ],
+          "pull": [],
           "available": [
             "asus-vivobook-s14-s3407qa",
             "asus-ascent-qn10",
@@ -1200,16 +1213,16 @@
         }
       },
       "ids": {
-        "omarchy": 50,
+        "omarchy": 51,
         "fromUpstream": 28,
-        "added": 22,
-        "pull": 1,
+        "added": 23,
+        "pull": 0,
         "available": 1,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 50
+          "edge": 51
         },
         "models": {
           "fromUpstream": [
@@ -1260,31 +1273,30 @@
             "hp-omnibook-ultra-14-kg0",
             "hp-omnibook-x-16-cp",
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
+            "microsoft-surface-laptop-13in-1st-edition",
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "microsoft-surface-laptop-13in-1st-edition"
-          ],
+          "pull": [],
           "available": [
             "samsung-galaxy-book4-edge-15"
           ]
         }
       },
       "firmware": {
-        "omarchy": 41,
+        "omarchy": 42,
         "fromUpstream": 1,
-        "added": 40,
-        "pull": 1,
+        "added": 41,
+        "pull": 0,
         "available": 0,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 41
+          "edge": 42
         },
         "models": {
           "fromUpstream": [
@@ -1325,6 +1337,7 @@
             "medion-sprchrgd-14-s1",
             "microsoft-surface-laptop-7-13",
             "microsoft-surface-laptop-7-15",
+            "microsoft-surface-laptop-13in-1st-edition",
             "microsoft-surface-pro-11",
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
@@ -1332,17 +1345,15 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "microsoft-surface-laptop-13in-1st-edition"
-          ],
+          "pull": [],
           "available": []
         }
       },
       "all": {
-        "omarchy": 40,
+        "omarchy": 41,
         "fromUpstream": 1,
-        "added": 39,
-        "pull": 1,
+        "added": 40,
+        "pull": 0,
         "available": 0,
         "upstream": 1,
         "models": {
@@ -1383,6 +1394,7 @@
             "medion-sprchrgd-14-s1",
             "microsoft-surface-laptop-7-13",
             "microsoft-surface-laptop-7-15",
+            "microsoft-surface-laptop-13in-1st-edition",
             "microsoft-surface-pro-11",
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
@@ -1390,9 +1402,7 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "microsoft-surface-laptop-13in-1st-edition"
-          ],
+          "pull": [],
           "available": []
         }
       }
@@ -9121,43 +9131,29 @@
         "https://learn.microsoft.com/en-us/surface/surface-system-sku-reference"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2289",
-          "number": 2289,
-          "title": "Add the Microsoft Surface Laptop 13-inch: device tree, hardware IDs, firmware and sound"
-        },
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2289",
-          "number": 2289,
-          "title": "Add the Microsoft Surface Laptop 13-inch: device tree, hardware IDs, firmware and sound"
-        },
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2289",
-          "number": 2289,
-          "title": "Add the Microsoft Surface Laptop 13-inch: device tree, hardware IDs, firmware and sound"
-        }
+        "deviceTree": "edge",
+        "deviceTreePull": null,
+        "ids": "edge",
+        "idsPull": null,
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "microsoft-surface-laptop-13-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
-          "deviceTree": "pr",
-          "ids": "pr",
-          "firmware": "pr"
+          "deviceTree": "edge",
+          "ids": "edge",
+          "firmware": "edge"
         },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -9183,24 +9179,22 @@
         {
           "chip": "X1P-42-100",
           "compatible": "microsoft,surface-laptop-13",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2289",
-            "number": 2289,
-            "title": "Add the Microsoft Surface Laptop 13-inch: device tree, hardware IDs, firmware and sound"
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "x1p42100-microsoft-surface-laptop-13.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2772-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-13-inch.patch"
           },
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2289",
-            "number": 2289,
-            "title": "Add the Microsoft Surface Laptop 13-inch: device tree, hardware IDs, firmware and sound"
-          },
-          "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],

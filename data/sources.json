@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T20:36:00.123Z",
+  "collected": "2026-11-07T21:05:38.963Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4277,7 +4277,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-31",
+        "kernel": "7.3-32",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -4344,6 +4344,7 @@
           "x1p42100-lenovo-ideapad-slim5x-oled.dts",
           "x1p42100-lenovo-thinkbook-16.dts",
           "x1p42100-microsoft-sp12in.dts",
+          "x1p42100-microsoft-surface-laptop-13.dts",
           "x1p64100-acer-swift-sf14-11.dts",
           "x1p64100-dell-inspiron-14-plus-5441.dts",
           "x1p64100-dell-latitude-5455.dts",
@@ -4423,6 +4424,7 @@
           "x1p42100-hp-omnibook-3-16.json",
           "x1p42100-hp-omnibook-3-oled.json",
           "x1p42100-hp-omnibook-5.json",
+          "x1p42100-microsoft-surface-laptop-13.json",
           "x1p42100-microsoft-surface-pro-12in.json",
           "x1p64100-dell-inspiron-14-plus-5441.json"
         ],
@@ -4903,6 +4905,18 @@
             "qcom/x1e80100/Medion/sprchrgd-14-s1/qcdxkmsuc8380.mbn",
             "qcom/x1e80100/Medion/sprchrgd-14-s1/qcvss8380.mbn"
           ],
+          "microsoft-surface-laptop-13-firmware": [
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/adsp_dtbs.elf",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/adspr.jsn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/adsps.jsn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/adspua.jsn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/battmgr.jsn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/cdsp_dtbs.elf",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/cdspr.jsn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/qcadsp8380.mbn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/qccdsp8380.mbn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/qcdxkmsucpurwa.mbn"
+          ],
           "microsoft-surface-laptop-7-firmware": [
             "qcom/x1e80100/microsoft/Romulus/adsp_dtbs.elf",
             "qcom/x1e80100/microsoft/Romulus/adspr.jsn",
@@ -5277,6 +5291,15 @@
           "qcom,mahua"
         ],
         "patch": "2764-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8-15-inch.patch"
+      },
+      {
+        "file": "x1p42100-microsoft-surface-laptop-13.dts",
+        "model": "Surface Laptop 13in 1st Edition",
+        "compatible": [
+          "microsoft,surface-laptop-13",
+          "qcom,x1p42100"
+        ],
+        "patch": "2772-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-13-inch.patch"
       }
     ],
     "carriedIds": [
@@ -5604,6 +5627,15 @@
         ]
       },
       {
+        "file": "x1p42100-microsoft-surface-laptop-13.json",
+        "name": "Microsoft Surface Laptop 13-inch (2095)",
+        "compatible": "microsoft,surface-laptop-13",
+        "hwids": [
+          "66a91dc3-f343-5158-aca6-cda2b8948d86",
+          "3ab1854e-11a7-5e4d-b264-5a95ad00598f"
+        ]
+      },
+      {
         "file": "x1p42100-microsoft-surface-pro-12in.json",
         "name": "Microsoft Corporation Surface",
         "compatible": "microsoft,surface-pro-12in",
@@ -5642,40 +5674,6 @@
       "kernel": "7.3.0-26-omarchy"
     },
     "pulls": [
-      {
-        "number": 2289,
-        "title": "Add the Microsoft Surface Laptop 13-inch: device tree, hardware IDs, firmware and sound",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2289",
-        "draft": true,
-        "deviceTrees": [
-          {
-            "file": "x1p42100-microsoft-surface-laptop-13.dts",
-            "model": "Surface Laptop 13in 1st Edition",
-            "compatible": [
-              "microsoft,surface-laptop-13",
-              "qcom,x1p42100"
-            ]
-          }
-        ],
-        "ids": [
-          {
-            "file": "x1p42100-microsoft-surface-laptop-13.json",
-            "compatible": "microsoft,surface-laptop-13"
-          }
-        ],
-        "firmware": [
-          "qcom/x1p42100/Microsoft/SurfaceLaptop13/adsp_dtbs.elf",
-          "qcom/x1p42100/Microsoft/SurfaceLaptop13/adspr.jsn",
-          "qcom/x1p42100/Microsoft/SurfaceLaptop13/adsps.jsn",
-          "qcom/x1p42100/Microsoft/SurfaceLaptop13/adspua.jsn",
-          "qcom/x1p42100/Microsoft/SurfaceLaptop13/battmgr.jsn",
-          "qcom/x1p42100/Microsoft/SurfaceLaptop13/cdsp_dtbs.elf",
-          "qcom/x1p42100/Microsoft/SurfaceLaptop13/cdspr.jsn",
-          "qcom/x1p42100/Microsoft/SurfaceLaptop13/qcadsp8380.mbn",
-          "qcom/x1p42100/Microsoft/SurfaceLaptop13/qccdsp8380.mbn",
-          "qcom/x1p42100/Microsoft/SurfaceLaptop13/qcdxkmsucpurwa.mbn"
-        ]
-      },
       {
         "number": 1634,
         "title": "linux-omarchy-aarch64: add the ASUS Zenbook 14 UX3480QA",
