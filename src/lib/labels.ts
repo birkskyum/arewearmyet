@@ -275,10 +275,12 @@ export function machineCell(model: Model): Cell {
 
 export function acpiCell(model: Model): Cell {
   if (model.upstream.acpi === 'collected') return cell(STATES.acpi, 'collected', { href: model.upstream.acpiUrls[0] });
-  if (model.upstream.deviceTree === 'missing') return cell(STATES.acpi, 'wanted');
+  // Until one is collected, the cell links to how to make a report
+  const href = '/help#windows';
+  if (model.upstream.deviceTree === 'missing') return cell(STATES.acpi, 'wanted', { href });
   // Grey once every piece exists, amber while the hardware IDs a report gives are still missing
-  if (model.outOfBox.pieces.ids !== 'none') return cell(STATES.acpi, 'helps');
-  return cell(STATES.acpi, 'helps', { tone: 'close', title: `It has a device tree but no hardware IDs yet, and a report gives them for each of its model numbers, along with the maker's firmware list, its panels and the tables to check the tree against.` });
+  if (model.outOfBox.pieces.ids !== 'none') return cell(STATES.acpi, 'helps', { href });
+  return cell(STATES.acpi, 'helps', { tone: 'close', href, title: `It has a device tree but no hardware IDs yet, and a report gives them for each of its model numbers, along with the maker's firmware list, its panels and the tables to check the tree against.` });
 }
 
 export function googlebookOmarchyCell(model: Model): Cell {
