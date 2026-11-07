@@ -52,6 +52,8 @@ async function fetchRetrying(url: string, init: RequestInit = {}): Promise<Respo
 }
 
 async function getJson(url: string, headers: Record<string, string> = {}): Promise<any> {
+  // GitLab rate-limits unauthenticated API calls per address; a token lifts that
+  if (process.env.GITLAB_TOKEN && url.startsWith('https://gitlab.com/')) headers = { ...headers, 'PRIVATE-TOKEN': process.env.GITLAB_TOKEN };
   const response = await fetchRetrying(url, { headers });
   if (response.status === 404) return undefined;
   if (!response.ok) throw new Error(`${response.status} ${url}`);
@@ -227,7 +229,10 @@ function channelContents(repo: Package[], core: Package[]) {
   const systemd = core.find((pkg) => pkg.name === 'systemd');
   const names = (files: string[] | undefined, pattern: RegExp) => (files ?? []).map((path) => path.match(pattern)?.[1]).filter((name): name is string => Boolean(name)).sort();
   const firmware: Record<string, string[]> = {};
-  for (const pkg of [...repo, ...core.filter((pkg) => pkg.name.startsWith('linux-firmware'))]) {
+  // Omarchy's repository comes first in pacman.conf, so a package it builds, like its
+  // linux-firmware-qcom with backported firmware, replaces Arch Linux ARM's of the same name
+  const own = new Set(repo.map((pkg) => pkg.name));
+  for (const pkg of [...repo, ...core.filter((pkg) => pkg.name.startsWith('linux-firmware') && !own.has(pkg.name))]) {
     const files = names(pkg.files, new RegExp(`^usr/lib/firmware/(qcom/(?:${FIRMWARE_SOCS.join('|')})/.+?)(?:\\.zst|\\.xz)?$`));
     if (files.length) firmware[pkg.name] = files;
   }
