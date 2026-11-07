@@ -7,7 +7,7 @@ into `linux-surface/`, and the hardware reports into [`../reports/`](../reports)
 dumps published here first. Each folder's SOURCE.md says where its tables came from. The SoC serial number (SOSN)
 is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. Disassemble a table with `iasl -d`.
 
-45 of 88 models have at least one dump.
+46 of 88 models have at least one dump.
 
 | Model | Dumps |
 | --- | --- |
@@ -17,6 +17,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | Acer Swift 14 Go Pro AI | [acer-sfa14-11](aarch64-laptops/acer-sfa14-11), [acer-swift-sfa14-11](aarch64-laptops/acer-swift-sfa14-11) |
 | Anduril BlueChip | [hardware-reports/anduril/qualcomm-glymur](../reports/anduril/qualcomm-glymur) |
 | ASUS Vivobook S 15 | [asus-vivobook-s-15](aarch64-laptops/asus-vivobook-s-15), [asus-vivobook-s15-q5507](aarch64-laptops/asus-vivobook-s15-q5507), [asus-vivobook-s15-s5507](aarch64-laptops/asus-vivobook-s15-s5507) |
+| ASUS Vivobook S14 (S3407QA) | [arewearmyet/asus-vivobook-s14-s3407qa](asus-vivobook-s14-s3407qa) |
 | ASUS Vivobook S16 (S3607QA) | [hardware-reports/asustek-computer-inc/asus-vivobook-s-16-s3607qa-s3607qa](../reports/asustek-computer-inc/asus-vivobook-s-16-s3607qa-s3607qa) |
 | ASUS Zenbook 14 (2026) | [asus-zenbook-14-ux3480qa](aarch64-laptops/asus-zenbook-14-ux3480qa) |
 | ASUS Zenbook A14 | [asus-zenbook-a14-ux3407q](aarch64-laptops/asus-zenbook-a14-ux3407q) |
@@ -67,7 +68,6 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 - ASUS V400 AiO (VM471QA)
 - ASUS Vivobook 14
 - ASUS Vivobook 16
-- ASUS Vivobook S14 (S3407QA)
 - ASUS Vivobook S14 (S5408QA)
 - ASUS Vivobook S14 Flip
 - ASUS Vivobook S16 (S5608QA)

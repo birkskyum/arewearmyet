@@ -1116,7 +1116,7 @@
     "ids": 52,
     "firmware": 42,
     "googlebooks": 2,
-    "acpi": 41,
+    "acpi": 42,
     "acpiWanted": 29,
     "outOfBox": {
       "stable": 1,
@@ -2939,8 +2939,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/asus-vivobook-s14-s3407qa"
+        ]
       },
       "variants": [
         {
