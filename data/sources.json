@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T22:10:28.725Z",
+  "collected": "2026-11-07T23:10:23.582Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4586,7 +4586,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-32",
+        "kernel": "7.3-33",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -5014,6 +5014,30 @@
             "qcom/glymur/hp/elitebook-x-g2q/qcadsp8480.mbn",
             "qcom/glymur/hp/elitebook-x-g2q/qccdsp8480.mbn",
             "qcom/glymur/hp/elitebook-x-g2q/soccpr.jsn"
+          ],
+          "hp-omnibook-3-14-firmware": [
+            "qcom/x1p42100/hp/omnibook-3/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-3/adspr.jsn",
+            "qcom/x1p42100/hp/omnibook-3/adsps.jsn",
+            "qcom/x1p42100/hp/omnibook-3/adspua.jsn",
+            "qcom/x1p42100/hp/omnibook-3/battmgr.jsn",
+            "qcom/x1p42100/hp/omnibook-3/cdsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-3/cdspr.jsn",
+            "qcom/x1p42100/hp/omnibook-3/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-3/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-3/qcdxkmsucpurwa.mbn"
+          ],
+          "hp-omnibook-3-16-firmware": [
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/adspr.jsn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/adsps.jsn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/adspua.jsn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/battmgr.jsn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/cdsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/cdspr.jsn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/qcdxkmsucpurwa.mbn"
           ],
           "hp-omnibook-5-16-bf1-firmware": [
             "qcom/glymur/HP/omnibook-5-16-bf1xxx/adsp_dtbs.elf",

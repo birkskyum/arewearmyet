@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-07T22:10:28.725Z",
+  "collected": "2026-11-07T23:10:23.582Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-32",
+    "kernel": "7.3-33",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-32",
+        "kernel": "7.3-33",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -825,6 +825,30 @@
             "qcom/glymur/hp/elitebook-x-g2q/qccdsp8480.mbn",
             "qcom/glymur/hp/elitebook-x-g2q/soccpr.jsn"
           ],
+          "hp-omnibook-3-14-firmware": [
+            "qcom/x1p42100/hp/omnibook-3/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-3/adspr.jsn",
+            "qcom/x1p42100/hp/omnibook-3/adsps.jsn",
+            "qcom/x1p42100/hp/omnibook-3/adspua.jsn",
+            "qcom/x1p42100/hp/omnibook-3/battmgr.jsn",
+            "qcom/x1p42100/hp/omnibook-3/cdsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-3/cdspr.jsn",
+            "qcom/x1p42100/hp/omnibook-3/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-3/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-3/qcdxkmsucpurwa.mbn"
+          ],
+          "hp-omnibook-3-16-firmware": [
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/adspr.jsn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/adsps.jsn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/adspua.jsn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/battmgr.jsn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/cdsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/cdspr.jsn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/qcdxkmsucpurwa.mbn"
+          ],
           "hp-omnibook-5-16-bf1-firmware": [
             "qcom/glymur/HP/omnibook-5-16-bf1xxx/adsp_dtbs.elf",
             "qcom/glymur/HP/omnibook-5-16-bf1xxx/adspr.jsn",
@@ -1121,9 +1145,9 @@
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 40,
+      "edge": 42,
       "pr": 0,
-      "carry": 2,
+      "carry": 0,
       "needs-deviceTree": 26,
       "needs-ids": 6,
       "needs-firmware": 9
@@ -1290,16 +1314,16 @@
         }
       },
       "firmware": {
-        "omarchy": 45,
+        "omarchy": 47,
         "fromUpstream": 1,
-        "added": 44,
+        "added": 46,
         "pull": 0,
-        "available": 2,
+        "available": 0,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 45
+          "edge": 47
         },
         "models": {
           "fromUpstream": [
@@ -1327,6 +1351,8 @@
             "dell-xps-13-9345",
             "hp-elitebook-6-g1q",
             "hp-elitebook-ultra-g1q",
+            "hp-omnibook-3-14-hz0",
+            "hp-omnibook-3-16-bz0",
             "hp-omnibook-5-14-he0",
             "hp-omnibook-5-16-bf0",
             "hp-omnibook-x-14-fe",
@@ -1352,18 +1378,15 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": [
-            "hp-omnibook-3-14-hz0",
-            "hp-omnibook-3-16-bz0"
-          ]
+          "available": []
         }
       },
       "all": {
-        "omarchy": 41,
+        "omarchy": 43,
         "fromUpstream": 1,
-        "added": 40,
+        "added": 42,
         "pull": 0,
-        "available": 2,
+        "available": 0,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1390,6 +1413,8 @@
             "dell-xps-13-9345",
             "hp-elitebook-6-g1q",
             "hp-elitebook-ultra-g1q",
+            "hp-omnibook-3-14-hz0",
+            "hp-omnibook-3-16-bz0",
             "hp-omnibook-5-14-he0",
             "hp-omnibook-5-16-bf0",
             "hp-omnibook-x-14-fe",
@@ -1412,10 +1437,7 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": [
-            "hp-omnibook-3-14-hz0",
-            "hp-omnibook-3-16-bz0"
-          ]
+          "available": []
         }
       }
     }
@@ -5597,21 +5619,21 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-omnibook-3-14-firmware"
+        ],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
           "ids": "edge",
-          "firmware": "elsewhere"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -5688,21 +5710,21 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-omnibook-3-16-firmware"
+        ],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
           "ids": "edge",
-          "firmware": "elsewhere"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
