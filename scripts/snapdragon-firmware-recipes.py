@@ -95,6 +95,7 @@ RECIPES = {
     "lenovo-thinkpad-t14s-gen7-firmware": ("Lenovo ThinkPad T14s Gen 7", ["qcom/glymur/LENOVO/22A8"]),
     "medion-sprchrgd-14-s1-firmware": ("Medion SPRCHRGD 14 S1", ["qcom/x1e80100/Medion/sprchrgd-14-s1"]),
     "microsoft-surface-laptop-7-firmware": ("Microsoft Surface Laptop 7", ["qcom/x1e80100/microsoft/Romulus", "qcom/x1e80100/microsoft"]),
+    "microsoft-surface-laptop-13-firmware": ("Microsoft Surface Laptop 13-inch", ["qcom/x1p42100/Microsoft/SurfaceLaptop13"]),
     "microsoft-surface-laptop-8-firmware": ("Microsoft Surface Laptop 8", ["qcom/glymur/microsoft/mahua"]),
     "microsoft-surface-pro-9-5g-firmware": ("Microsoft Surface Pro 9 with 5G", ["qcom/sc8280xp/MICROSOFT/SurfacePro9"]),
     "microsoft-surface-pro-11-firmware": ("Microsoft Surface Pro 11th Edition", ["qcom/x1e80100/microsoft/Denali", "qcom/x1e80100/microsoft"]),
