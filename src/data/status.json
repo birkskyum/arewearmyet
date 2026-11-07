@@ -1076,8 +1076,8 @@
     "should": 35,
     "problems": 8,
     "notYet": 39,
-    "deviceTree": 53,
-    "ids": 48,
+    "deviceTree": 54,
+    "ids": 51,
     "firmware": 43,
     "googlebooks": 2,
     "acpi": 37,
@@ -1087,10 +1087,10 @@
       "rc": 0,
       "edge": 36,
       "pr": 0,
-      "carry": 2,
-      "needs-deviceTree": 31,
-      "needs-ids": 6,
-      "needs-firmware": 8
+      "carry": 4,
+      "needs-deviceTree": 30,
+      "needs-ids": 3,
+      "needs-firmware": 10
     },
     "machine": {
       "team": 7,
@@ -1104,7 +1104,7 @@
         "fromUpstream": 19,
         "added": 27,
         "pull": 1,
-        "available": 6,
+        "available": 7,
         "upstream": 19,
         "channels": {
           "stable": 19,
@@ -1169,6 +1169,7 @@
             "asus-vivobook-s14-s3407qa",
             "asus-ascent-qn10",
             "hp-omnibook-3-14-hz0",
+            "hp-omnibook-3-16-bz0",
             "humain-horizon",
             "microsoft-surface-laptop-13in-1st-edition",
             "samsung-galaxy-book4-edge-15"
@@ -1180,7 +1181,7 @@
         "fromUpstream": 28,
         "added": 17,
         "pull": 1,
-        "available": 2,
+        "available": 5,
         "upstream": 28,
         "channels": {
           "stable": 28,
@@ -1241,8 +1242,11 @@
             "asus-zenbook-14-ux3480qa"
           ],
           "available": [
+            "hp-omnibook-3-14-hz0",
             "hp-omnibook-3-16-bz0",
-            "microsoft-surface-laptop-13in-1st-edition"
+            "microsoft-surface-laptop-13in-1st-edition",
+            "samsung-galaxy-book4-edge-15",
+            "samsung-galaxy-book4-edge-16"
           ]
         }
       },
@@ -1316,7 +1320,7 @@
         "fromUpstream": 1,
         "added": 36,
         "pull": 0,
-        "available": 2,
+        "available": 4,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1363,7 +1367,9 @@
           "pull": [],
           "available": [
             "asus-zenbook-14-ux3480qa",
-            "microsoft-surface-laptop-13in-1st-edition"
+            "hp-omnibook-3-14-hz0",
+            "microsoft-surface-laptop-13in-1st-edition",
+            "samsung-galaxy-book4-edge-16"
           ]
         }
       }
@@ -5559,10 +5565,10 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-ids",
+        "state": "carry",
         "pieces": {
           "deviceTree": "elsewhere",
-          "ids": "none",
+          "ids": "elsewhere",
           "firmware": "edge"
         },
         "missing": [
@@ -5576,8 +5582,8 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-3-oled.dts",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-3-14-hz0",
-        "ids": "missing",
-        "idsCollected": null,
+        "ids": "collected",
+        "idsCollected": "https://github.com/jglathe/linux_ms_dev_kit/issues/78",
         "idsStubble": null,
         "firmware": "download",
         "firmwareMissing": [],
@@ -5645,9 +5651,9 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-deviceTree",
+        "state": "needs-firmware",
         "pieces": {
-          "deviceTree": "none",
+          "deviceTree": "elsewhere",
           "ids": "elsewhere",
           "firmware": "none"
         },
@@ -5658,16 +5664,22 @@
         ]
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/birkskyum/omarchy-pkgs/blob/42cdd22e42ecd90dc0bf259fb4b4499b9bb592af/pkgbuilds/linux-omarchy-aarch64/2744-arm64-dts-qcom-Add-the-HP-OmniBook-3-16.patch",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-3-16-bz0",
         "ids": "collected",
         "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/13",
         "idsStubble": null,
         "firmware": "windows",
-        "firmwareMissing": [],
+        "firmwareMissing": [
+          "qcdxkmsucpurwa.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwarePosted": null,
@@ -5681,6 +5693,8 @@
       },
       "variants": [
         {
+          "chip": "X1-26-100",
+          "compatible": "hp,omnibook-3-16-bz0",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
@@ -10039,10 +10053,10 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-ids",
+        "state": "needs-firmware",
         "pieces": {
           "deviceTree": "elsewhere",
-          "ids": "none",
+          "ids": "elsewhere",
           "firmware": "none"
         },
         "missing": [
@@ -10057,8 +10071,8 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/patch-2-anatase.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/samsung-galaxy-book4-edge-15",
-        "ids": "missing",
-        "idsCollected": null,
+        "ids": "collected",
+        "idsCollected": "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/x1p42100-samsung-galaxy-book4-edge-15.json",
         "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [
@@ -10080,6 +10094,8 @@
       },
       "variants": [
         {
+          "chip": "X1P-42-100",
+          "compatible": "samsung,galaxy-book4-edge-15",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
@@ -10139,10 +10155,10 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-ids",
+        "state": "carry",
         "pieces": {
           "deviceTree": "edge",
-          "ids": "none",
+          "ids": "elsewhere",
           "firmware": "edge"
         },
         "missing": [
@@ -10155,8 +10171,8 @@
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/",
         "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/samsung-galaxy-book4-edge-16",
-        "ids": "missing",
-        "idsCollected": null,
+        "ids": "collected",
+        "idsCollected": "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/x1e84100-samsung-galaxy-book4-edge-16.json",
         "idsStubble": null,
         "firmware": "download",
         "firmwareMissing": [],

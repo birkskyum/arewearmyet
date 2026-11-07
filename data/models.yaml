@@ -672,6 +672,7 @@ models:
     model_numbers: ["14-hz0xxx"]
     variants:
       - { chip: "X1-26-100", compatible: "hp,omnibook-3-oled" }
+    ids_collected: "https://github.com/jglathe/linux_ms_dev_kit/issues/78"
     devicetree_out_of_tree: "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-3-oled.dts"
     devicetree_files:
       - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-3-oled.dts"
@@ -687,8 +688,14 @@ models:
     released: "2026-01"
     chips: ["X1-26-100"]
     model_numbers: ["16-bz0xxx"]
+    variants:
+      - { chip: "X1-26-100", compatible: "hp,omnibook-3-16-bz0" }
     acpi: ["hardware-reports/hp/hp-omnibook-3-laptop-16-bz0xxx"]
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/13"
+    devicetree_out_of_tree: "https://github.com/birkskyum/omarchy-pkgs/blob/42cdd22e42ecd90dc0bf259fb4b4499b9bb592af/pkgbuilds/linux-omarchy-aarch64/2744-arm64-dts-qcom-Add-the-HP-OmniBook-3-16.patch"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/birkskyum/omarchy-pkgs/42cdd22e42ecd90dc0bf259fb4b4499b9bb592af/pkgbuilds/linux-omarchy-aarch64/2744-arm64-dts-qcom-Add-the-HP-OmniBook-3-16.patch#x1p42100-hp-omnibook-3-16.dts"
+      - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1-hp-omnibook-3.dtsi"
     sources:
       - https://www.hp.com/au-en/shop/hp-omnibook-3-laptop-next-gen-ai-16-bz0003qu-d46xfpa.html
       - https://www.notebookcheck.net/Efficient-16-GB-RAM-laptop-for-less-than-700-HP-OmniBook-3-16-review.1365529.0.html
@@ -1306,6 +1313,9 @@ models:
     released: "2024-10"
     chips: ["X1P-42-100", "X1-26-100"]
     model_numbers: ["NP750XQA", "NT750XQA", "NP750XQB", "NT750XQB"]
+    variants:
+      - { chip: "X1P-42-100", compatible: "samsung,galaxy-book4-edge-15" }
+    ids_collected: "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/x1p42100-samsung-galaxy-book4-edge-15.json"
     devicetree_out_of_tree: "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/patch-2-anatase.patch"
     devicetree_files:
       - "https://raw.githubusercontent.com/anatase-org/kernel-anatase/anatase-7.0/patch-2-anatase.patch#x1p42100-samsung-galaxy-book4-edge-15.dts"
@@ -1323,6 +1333,7 @@ models:
     model_numbers: ["NP960XMA", "NP960XMB", "NP964XMA", "NT960XMA", "NT960XMB"]
     variants:
       - { compatible: "samsung,galaxy-book4-edge-16" }
+    ids_collected: "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/x1e84100-samsung-galaxy-book4-edge-16.json"
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
     sources:
       - https://www.computerbase.de/2024-09/samsung-galaxy-book4-edge-x1e-84-10-test/
