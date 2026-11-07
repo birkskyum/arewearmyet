@@ -1,11 +1,1 @@
 @import "tailwindcss";
-
-@theme {
-  --animate-stripes: stripes 1s linear infinite;
-
-  @keyframes stripes {
-    to {
-      background-position: 12px 0;
-    }
-  }
-}
