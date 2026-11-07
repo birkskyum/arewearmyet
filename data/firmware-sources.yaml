@@ -2555,6 +2555,7 @@ packages:
     size: 457762623
     sha256: "b9c1940e3fe8e5c365c41b3ff0d0df7f28d167d2cc0c7e55e8dd691c56342a7a"
     fetched: "2026-11-08"
+    note: "Its audio DSP extension is for board CA09144D, which both published Edge 15 ACPI dumps report. Windows Update brings newer builds: an NP750XQA owner's laptop runs ADSP.HT.5.9-00826 against this pack's 00789.1, with the same signing, and a Samsung-signed GPU zap shader with rollback version 1, where this pack has Qualcomm's generic one with version 0."
   - id: "samsung-basw-a4231a01-1063"
     maker: "Samsung"
     title: "Windows Driver Pack"
