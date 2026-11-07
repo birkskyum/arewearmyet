@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T01:31:12.452Z",
+  "collected": "2026-11-07T03:12:58.346Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -3421,8 +3421,11 @@
   "firmwareMain": [
     "qcom/glymur/ASUSTeK/UX3407NA/GLYMUR-ASUS-Zenbook-A14-UX3407NA-tplg.bin",
     "qcom/glymur/ASUSTeK/UX3607OA/GLYMUR-ASUS-Zenbook-A16-UX3607OA-tplg.bin",
+    "qcom/glymur/GLYMUR-ASUS-Zenbook-A14-UX3407NA-tplg.bin",
+    "qcom/glymur/GLYMUR-ASUS-Zenbook-A16-UX3607OA-tplg.bin",
     "qcom/glymur/GLYMUR-CRD-tplg.bin",
     "qcom/glymur/LENOVO/22A8/Lenovo-ThinkPad-T14s-Gen-7-tplg.bin",
+    "qcom/glymur/Lenovo-ThinkPad-T14s-Gen-7-tplg.bin",
     "qcom/glymur/adsp.mbn",
     "qcom/glymur/adsp_dtb.mbn",
     "qcom/glymur/adspr.jsn",
@@ -3442,6 +3445,7 @@
     "qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn",
     "qcom/sc8280xp/LENOVO/21BX/qcslpi8280.mbn",
     "qcom/sc8280xp/LENOVO/21BX/qcvss8280.mbn",
+    "qcom/sc8280xp/SC8280XP-LENOVO-X13S-tplg.bin",
     "qcom/sc8280xp/radxa/dragon-q8b/SC8280XP-Radxa-Dragon-Q8B-tplg.bin",
     "qcom/sc8280xp/radxa/dragon-q8b/qcadsp8280.mbn",
     "qcom/x1e80100/ASUSTeK/vivobook-16/X1E80100-ASUS-Vivobook-16-tplg.bin",
@@ -3475,8 +3479,18 @@
     "qcom/x1e80100/LENOVO/91B6/X1E80100-LENOVO-IdeaCentre-Mini-tplg.bin",
     "qcom/x1e80100/X1E001DE-DEVKIT-tplg.bin",
     "qcom/x1e80100/X1E80100-ACER-SWIFT-14-tplg.bin",
+    "qcom/x1e80100/X1E80100-ASUS-Vivobook-16-tplg.bin",
+    "qcom/x1e80100/X1E80100-ASUS-Vivobook-S15-tplg.bin",
+    "qcom/x1e80100/X1E80100-ASUS-Zenbook-A14-tplg.bin",
     "qcom/x1e80100/X1E80100-CRD-tplg.bin",
+    "qcom/x1e80100/X1E80100-Dell-Inspiron-14p-7441-tplg.bin",
+    "qcom/x1e80100/X1E80100-Dell-Latitude-7455-tplg.bin",
+    "qcom/x1e80100/X1E80100-Dell-XPS-13-9345-tplg.bin",
     "qcom/x1e80100/X1E80100-EVK-tplg.bin",
+    "qcom/x1e80100/X1E80100-HP-OMNIBOOK-X14-tplg.bin",
+    "qcom/x1e80100/X1E80100-LENOVO-IdeaCentre-Mini-tplg.bin",
+    "qcom/x1e80100/X1E80100-LENOVO-Thinkpad-T14s-tplg.bin",
+    "qcom/x1e80100/X1E80100-LENOVO-Yoga-Slim7x-tplg.bin",
     "qcom/x1e80100/X1E80100-MEDION-SPRCHRGD-14-S1-tplg.bin",
     "qcom/x1e80100/X1E80100-Microsoft-Surface-Pro-11-tplg.bin",
     "qcom/x1e80100/X1E80100-Romulus-tplg.bin",
@@ -3530,6 +3544,7 @@
     "qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn",
     "qcom/sc8280xp/LENOVO/21BX/qcslpi8280.mbn",
     "qcom/sc8280xp/LENOVO/21BX/qcvss8280.mbn",
+    "qcom/sc8280xp/SC8280XP-LENOVO-X13S-tplg.bin",
     "qcom/sc8280xp/radxa/dragon-q8b/qcadsp8280.mbn",
     "qcom/x1e80100/ASUSTeK/vivobook-16/X1E80100-ASUS-Vivobook-16-tplg.bin",
     "qcom/x1e80100/ASUSTeK/vivobook-s15/X1E80100-ASUS-Vivobook-S15-tplg.bin",
@@ -3559,8 +3574,17 @@
     "qcom/x1e80100/LENOVO/83ED/qcdxkmsuc8380.mbn",
     "qcom/x1e80100/LENOVO/83ED/qcvss8380.mbn",
     "qcom/x1e80100/X1E001DE-DEVKIT-tplg.bin",
+    "qcom/x1e80100/X1E80100-ASUS-Vivobook-16-tplg.bin",
+    "qcom/x1e80100/X1E80100-ASUS-Vivobook-S15-tplg.bin",
+    "qcom/x1e80100/X1E80100-ASUS-Zenbook-A14-tplg.bin",
     "qcom/x1e80100/X1E80100-CRD-tplg.bin",
+    "qcom/x1e80100/X1E80100-Dell-Inspiron-14p-7441-tplg.bin",
+    "qcom/x1e80100/X1E80100-Dell-Latitude-7455-tplg.bin",
+    "qcom/x1e80100/X1E80100-Dell-XPS-13-9345-tplg.bin",
     "qcom/x1e80100/X1E80100-EVK-tplg.bin",
+    "qcom/x1e80100/X1E80100-HP-OMNIBOOK-X14-tplg.bin",
+    "qcom/x1e80100/X1E80100-LENOVO-Thinkpad-T14s-tplg.bin",
+    "qcom/x1e80100/X1E80100-LENOVO-Yoga-Slim7x-tplg.bin",
     "qcom/x1e80100/X1E80100-Romulus-tplg.bin",
     "qcom/x1e80100/X1E80100-TUXEDO-Elite-14-tplg.bin",
     "qcom/x1e80100/X1P42100-Microsoft-Surface-Pro-12in-tplg.bin",
@@ -4253,7 +4277,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-24",
+        "kernel": "7.3-26",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -4301,6 +4325,7 @@
           "x1p42100-acer-aspire-14-ai.dts",
           "x1p42100-acer-aspire-16-ai.dts",
           "x1p42100-acer-swift-go14-01.dts",
+          "x1p42100-asus-proart-pz13.dts",
           "x1p42100-asus-vivobook-s15.dts",
           "x1p42100-asus-vivobook-s16.dts",
           "x1p42100-asus-vivobook-s16-lcd.dts",
@@ -4385,6 +4410,7 @@
           "x1e80100-samsung-galaxy-book4-edge-14.json",
           "x1p42100-acer-aspire-14-ai.json",
           "x1p42100-acer-aspire-16-ai.json",
+          "x1p42100-asus-proart-pz13.json",
           "x1p42100-asus-vivobook-s16-lcd.json",
           "x1p42100-asus-vivobook-s16.json",
           "x1p42100-hp-omnibook-5.json",
@@ -4452,6 +4478,9 @@
             "qcom/x1e80100/ACER/SFG14-01/qcadsp8380.mbn",
             "qcom/x1e80100/ACER/SFG14-01/qccdsp8380.mbn",
             "qcom/x1e80100/ACER/SFG14-01/qcdxkmsuc8380.mbn"
+          ],
+          "asus-proart-pz13-audio": [
+            "qcom/x1e80100/X1P42100-ASUS-ProArt-PZ13-tplg.bin"
           ],
           "asus-proart-pz13-firmware": [
             "qcom/x1p42100/ASUSTeK/proart-pz13/adsp_dtbs.elf",
@@ -5178,6 +5207,15 @@
           "qcom,glymur"
         ],
         "patch": "2722-arm64-dts-qcom-glymur-Add-the-Anduril-BlueChip.patch"
+      },
+      {
+        "file": "x1p42100-asus-proart-pz13.dts",
+        "model": "ASUS ProArt PZ13 (HT5306QA)",
+        "compatible": [
+          "asus,proart-pz13-ht5306qa",
+          "qcom,x1p42100"
+        ],
+        "patch": "2732-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ13.patch"
       }
     ],
     "carriedIds": [
@@ -5360,6 +5398,17 @@
           "a4f0baa5-52dd-5d58-9046-3b5d678417f4",
           "82414d70-10f6-5a97-beab-dd51d1bcf49f",
           "427c626c-b3ad-577a-ac5b-241e599600ca"
+        ]
+      },
+      {
+        "file": "x1p42100-asus-proart-pz13.json",
+        "name": "ASUS ProArt PZ13 HT5306QA",
+        "compatible": "asus,proart-pz13-ht5306qa",
+        "hwids": [
+          "4f1d8eae-5b57-5097-b8b0-1f97e709ec3b",
+          "0bd45ebf-f168-5da9-86b6-c6ada77fdc3e",
+          "05878334-8124-5858-adf3-c1f3d680c1ac",
+          "d128a171-37b5-50ff-b682-b28ad90082c7"
         ]
       },
       {

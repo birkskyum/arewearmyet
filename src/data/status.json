@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-07T01:31:12.452Z",
+  "collected": "2026-11-07T03:12:58.346Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-24",
+    "kernel": "7.3-26",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-24",
+        "kernel": "7.3-26",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -444,6 +444,7 @@
           "x1p42100-acer-aspire-14-ai.dts",
           "x1p42100-acer-aspire-16-ai.dts",
           "x1p42100-acer-swift-go14-01.dts",
+          "x1p42100-asus-proart-pz13.dts",
           "x1p42100-asus-vivobook-s15.dts",
           "x1p42100-asus-vivobook-s16.dts",
           "x1p42100-asus-vivobook-s16-lcd.dts",
@@ -528,6 +529,7 @@
           "x1e80100-samsung-galaxy-book4-edge-14.json",
           "x1p42100-acer-aspire-14-ai.json",
           "x1p42100-acer-aspire-16-ai.json",
+          "x1p42100-asus-proart-pz13.json",
           "x1p42100-asus-vivobook-s16-lcd.json",
           "x1p42100-asus-vivobook-s16.json",
           "x1p42100-hp-omnibook-5.json",
@@ -595,6 +597,9 @@
             "qcom/x1e80100/ACER/SFG14-01/qcadsp8380.mbn",
             "qcom/x1e80100/ACER/SFG14-01/qccdsp8380.mbn",
             "qcom/x1e80100/ACER/SFG14-01/qcdxkmsuc8380.mbn"
+          ],
+          "asus-proart-pz13-audio": [
+            "qcom/x1e80100/X1P42100-ASUS-ProArt-PZ13-tplg.bin"
           ],
           "asus-proart-pz13-firmware": [
             "qcom/x1p42100/ASUSTeK/proart-pz13/adsp_dtbs.elf",
@@ -1068,9 +1073,9 @@
     "nvidiaWorks": 2,
     "nvidiaExpected": 15,
     "works": 2,
-    "should": 34,
+    "should": 35,
     "problems": 8,
-    "notYet": 40,
+    "notYet": 39,
     "deviceTree": 53,
     "ids": 47,
     "firmware": 43,
@@ -1080,9 +1085,9 @@
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 35,
+      "edge": 36,
       "pr": 0,
-      "carry": 3,
+      "carry": 2,
       "needs-deviceTree": 31,
       "needs-ids": 6,
       "needs-firmware": 8
@@ -1095,16 +1100,16 @@
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 45,
+        "omarchy": 46,
         "fromUpstream": 19,
-        "added": 26,
+        "added": 27,
         "pull": 1,
-        "available": 7,
+        "available": 6,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 45
+          "edge": 46
         },
         "models": {
           "fromUpstream": [
@@ -1135,6 +1140,7 @@
             "acer-swift-go-pro-ai-sfa14-11",
             "acer-swift-go-14-ai-sfg14-01",
             "anduril-bluechip",
+            "asus-proart-pz13-ht5306",
             "asus-vivobook-16-x1607qa",
             "asus-vivobook-s16-s3607qa",
             "asus-zenbook-a14-ux3407na",
@@ -1160,7 +1166,6 @@
             "asus-zenbook-14-ux3480qa"
           ],
           "available": [
-            "asus-proart-pz13-ht5306",
             "asus-vivobook-s14-s3407qa",
             "asus-ascent-qn10",
             "hp-omnibook-3-14-hz0",
@@ -1171,16 +1176,16 @@
         }
       },
       "ids": {
-        "omarchy": 44,
+        "omarchy": 45,
         "fromUpstream": 28,
-        "added": 16,
+        "added": 17,
         "pull": 1,
-        "available": 2,
+        "available": 1,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 44
+          "edge": 45
         },
         "models": {
           "fromUpstream": [
@@ -1218,6 +1223,7 @@
             "acer-aspire-16-ai-a16-11m",
             "acer-swift-go-pro-ai-sfa14-11",
             "anduril-bluechip",
+            "asus-proart-pz13-ht5306",
             "asus-vivobook-16-x1607qa",
             "asus-vivobook-s16-s3607qa",
             "dell-inspiron-14-5441",
@@ -1235,7 +1241,6 @@
             "asus-zenbook-14-ux3480qa"
           ],
           "available": [
-            "asus-proart-pz13-ht5306",
             "microsoft-surface-laptop-13in-1st-edition"
           ]
         }
@@ -1306,11 +1311,11 @@
         }
       },
       "all": {
-        "omarchy": 36,
+        "omarchy": 37,
         "fromUpstream": 1,
-        "added": 35,
+        "added": 36,
         "pull": 0,
-        "available": 3,
+        "available": 2,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1322,6 +1327,7 @@
             "acer-swift-14-ai-sf14-11",
             "acer-swift-go-pro-ai-sfa14-11",
             "acer-swift-go-14-ai-sfg14-01",
+            "asus-proart-pz13-ht5306",
             "asus-vivobook-16-x1607qa",
             "asus-vivobook-s15-s5507",
             "asus-vivobook-s16-s3607qa",
@@ -1355,7 +1361,6 @@
           ],
           "pull": [],
           "available": [
-            "asus-proart-pz13-ht5306",
             "asus-zenbook-14-ux3480qa",
             "microsoft-surface-laptop-13in-1st-edition"
           ]
@@ -2172,14 +2177,14 @@
         "https://www.asus.com/laptops/for-creators/proart/proart-pz13-ht5306/techspec/",
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-proart-pz13"
       ],
-      "notes": null,
-      "outcome": "none",
+      "notes": "Sound needs the asus-proart-pz13-audio package for now. No cameras yet.",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
@@ -2189,16 +2194,13 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "edge",
         "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "elsewhere",
+          "deviceTree": "edge",
+          "ids": "edge",
           "firmware": "edge"
         },
-        "missing": [
-          "deviceTree",
-          "ids"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -2224,12 +2226,18 @@
         {
           "chip": "X1P-42-100",
           "compatible": "asus,proart-pz13-ht5306qa",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x1p42100-asus-proart-pz13.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2732-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ13.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [
@@ -2239,7 +2247,7 @@
               "url": "https://github.com/ubuntu/stubble/pull/104"
             }
           ],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],

@@ -182,6 +182,7 @@ models:
       - "https://raw.githubusercontent.com/agrucza/asus-proart-pz13-linux/71c27d312a0e7650870bb9a3e1c2306a975c0e1a/dts/x1p42100-asus-proart-pz13.dts"
       - "https://raw.githubusercontent.com/agrucza/asus-proart-pz13-linux/71c27d312a0e7650870bb9a3e1c2306a975c0e1a/dts/x1-asus-proart-pz13.dtsi"
     ids_collected: "https://bugs.launchpad.net/ubuntu-concept/+bug/2115514"
+    notes: "Sound needs the asus-proart-pz13-audio package for now. No cameras yet."
     sources:
       - https://www.asus.com/laptops/for-creators/proart/proart-pz13-ht5306/techspec/
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-proart-pz13
