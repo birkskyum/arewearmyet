@@ -1814,11 +1814,11 @@ folders:
         sha256: "b2823a89d077bcd78150d06e97cc5ab61cfbbbb3c9577111ad589509acc8bca6"
         from:
           - { package: "samsung-basw-a4325a01-1063", member: "Graphics/qcdx8380_ss_se/qcdxkmsucpurwa.mbn" }
-      - name: "qcvss8380.mbn"
+      - name: "qcvss8380_pa.mbn"
         size: 2318952
-        sha256: "7cab108350d6cb7212e8aa59c7306b734bf3ba06b25db02e4cfa65b0fc92078e"
+        sha256: "64c6666df28ed53d40ea5a5f17950474aaf2120bebc5fc5c28c0b0ccb2c51349"
         from:
-          - { package: "samsung-basw-a4325a01-1063", member: "Graphics/qcdx8380_ss_se/qcvss8380.mbn" }
+          - { package: "samsung-basw-a4325a01-1063", member: "Graphics/qcdx8380_ss_se/qcvss8380_pa.mbn" }
   - path: "qcom/x1p42100/hp/elitebook-6-g1q"
     models: ["hp-elitebook-6-g1q", "hp-probook-4-g1q"]
     files:
