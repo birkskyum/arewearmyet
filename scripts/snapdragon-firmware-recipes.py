@@ -103,6 +103,7 @@ RECIPES = {
     "microsoft-surface-pro-11-firmware": ("Microsoft Surface Pro 11th Edition", ["qcom/x1e80100/microsoft/Denali", "qcom/x1e80100/microsoft"]),
     "microsoft-surface-pro-12in-firmware": ("Microsoft Surface Pro 12-inch", ["qcom/x1p42100/Microsoft/Surface12"]),
     "samsung-galaxy-book4-edge-firmware": ("Samsung Galaxy Book4 Edge", ["qcom/x1e80100/SAMSUNG/galaxy-book4-edge"]),
+    "samsung-galaxy-book4-edge-15-firmware": ("Samsung Galaxy Book4 Edge 15", ["qcom/x1p42100/SAMSUNG/galaxy-book4-edge"]),
 }
 # Both Surfaces load the same GPU zap shader from qcom/x1e80100/microsoft.
 CONFLICTS = {

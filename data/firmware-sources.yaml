@@ -1766,7 +1766,7 @@ folders:
         sha256: "de957e0a25c2a42f417f8e95ccf1cbdfeed5a4a6d77a84e215389b8b78fc8bf4"
         from:
           - { package: "microsoft-surfacelaptop-13in-1st-edition", member: "SurfaceUpdate/qcdx8380/qcdxkmsucpurwa.mbn" }
-  - path: "qcom/x1p42100/SAMSUNG/NP750XQB"
+  - path: "qcom/x1p42100/SAMSUNG/galaxy-book4-edge"
     models: ["samsung-galaxy-book4-edge-15"]
     files:
       - name: "adsp_dtbs.elf"
