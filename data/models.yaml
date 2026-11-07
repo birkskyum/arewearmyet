@@ -49,7 +49,7 @@ models:
       - "https://gist.githubusercontent.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1/raw/x1p42100-acer-aspire-14-ai.dts"
       - "https://gist.githubusercontent.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1/raw/x1p42100-acer-aspire-ai.dtsi"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/1"
-    notes: "A device tree written from owners' hardware reports, sharing almost everything with the Aspire 16's. An owner started Omarchy's edge live image on it in November 2026, and it picked this tree and reached the installer. Nobody has installed it yet."
+    notes: "Reached the installer on the edge image. Nobody has installed it yet."
     sources:
       - https://news.acer.com/acer-expands-aspire-ai-series-with-six-new-copilot-pcs-powered-by-next-gen-processors
       - https://www.notebookcheck.net/Acer-Aspire-14-AI-A14-11M.1173609.0.html
@@ -69,7 +69,7 @@ models:
       - "https://gist.githubusercontent.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1/raw/x1p42100-acer-aspire-16-ai.dts"
       - "https://gist.githubusercontent.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1/raw/x1p42100-acer-aspire-ai.dtsi"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/3"
-    notes: "A device tree written from owners' hardware reports. An owner booted it on Ubuntu's live USB in November 2026, with the screen, keyboard, disk, USB, battery and Bluetooth working. Wi-Fi needs a board file copied from Windows, since linux-firmware has none for its card."
+    notes: "Wi-Fi needs a board file from Windows."
     sources:
       - https://news.acer.com/acer-expands-aspire-ai-series-with-six-new-copilot-pcs-powered-by-next-gen-processors
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/acer-aspire-16-ai
@@ -216,7 +216,7 @@ models:
     released: "2025-01"
     chips: ["X1-26-100"]
     model_numbers: ["X1407QA", "A1407QA"]
-    notes: "Owners boot it with the X Plus Vivobook S 15's device tree or a patched Zenbook A14 one."
+    notes: "Owners boot it with the Vivobook S 15's or a patched Zenbook A14 device tree."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-14-x1407q/techspec/
       - https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html
@@ -256,7 +256,7 @@ models:
     acpi: ["asus-vivobook-s-15", "asus-vivobook-s15-q5507", "asus-vivobook-s15-s5507"]
     reports:
       - { state: "problems", note: "Two owners report the screen going dark after the boot menu on the RC image.", checked: "2026-10" }
-    notes: "The maker download on the firmware page has the X Elite model's files only. ASUS sells both chips as S5507QA, so which package carries the X Plus model's signed files isn't clear yet."
+    notes: "The maker download has the X Elite model's firmware only."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s-15-s5507/techspec/
       - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1p42100-asus-vivobook-s15.dts
@@ -316,7 +316,7 @@ models:
       - "https://gist.githubusercontent.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3/raw/x1p42100-asus-vivobook-s16-lcd.dts"
       - "https://gist.githubusercontent.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3/raw/x1p42100-asus-vivobook-s16.dtsi"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/2"
-    notes: "A device tree written from two owners' hardware reports, in an OLED and an LCD version. An owner booted the OLED version on Ubuntu's live USB in November 2026, with the screen, keyboard, touchpad, Bluetooth, USB, HDMI and disk working. Wi-Fi needs board data that linux-firmware doesn't have yet."
+    notes: "Wi-Fi needs board data linux-firmware doesn't have yet."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s3607q/techspec/
       - https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/
@@ -359,7 +359,6 @@ models:
     ids_collected: "https://github.com/birkskyum/arewearmyet/issues/2"
     reports:
       - { state: "problems", note: "The stock 4.5.0rc1 image shows a black screen and resets, since it has no device tree for this model. With the device tree and patches from omarchy-pkgs #1634 and an owner's board package, it installs and runs on linux-omarchy 7.3.", checked: "2026-10" }
-    notes: "The device tree builds on the Zenbook A14 UX3407QA's and isn't posted to the kernel lists yet. The hardware IDs are proposed in ubuntu/stubble#96 and the ACPI tables in aarch64-laptops/build#178."
     sources:
       - https://www.asus.com/laptops/for-home/zenbook/asus-zenbook-14-ux3480-qualcomm/techspec/
       - https://www.windowscentral.com/hardware/laptops/asus-zenbook-14-snapdragon-x-2026-review
@@ -396,7 +395,7 @@ models:
     devicetree_out_of_tree: "https://gist.github.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce"
     devicetree_files:
       - "https://gist.githubusercontent.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce/raw/glymur-asus-ascent-qn10.dts"
-    notes: "A draft device tree, written from its ACPI tables on the Zenbook A16's, whose firmware describes the same power, USB and PCIe wiring. Nobody has booted it yet. Ethernet and HDMI are the likeliest gaps."
+    notes: "Nobody has booted its draft device tree yet."
     sources:
       - https://www.asus.com/displays-desktops/mini-pcs/ascent-series/asus-ascent-qn10/techspec/
       - https://eshop.asus.com/us/90ms03e2-m000b0-asus-ascent-qn10.html
@@ -558,7 +557,7 @@ models:
     discussion: "https://github.com/omacom/omarchy/discussions/16627"
     reports:
       - { state: "works", note: "Boots into the Omarchy desktop from USB, on Linux 7.2 with a device tree written for it, started from the unlocked bootloader's boot-from-external-drive menu. The backlight stays very dim, Wi-Fi doesn't come up yet, and the internal drive is left off.", checked: "2026-10" }
-    notes: "Its Android device name is mica. The community tree is adapted from the HP Googlebook 14's, with the Dell wiring taken from the stock tree in Google's recovery image. It leaves the internal drive off, so it only runs from USB for now."
+    notes: "Runs from USB only for now."
     sources:
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4689114
       - https://9to5google.com/2026/09/21/googlebook-launch/
@@ -601,7 +600,7 @@ models:
     variants:
       - { chip: "X1E-80-100", compatible: "honor,magicbook-art-14-snapdragon" }
     acpi: ["honor-mro-521", "honor-magicbook-art-14"]
-    notes: "Honor's driver download has no compute DSP firmware, so those two files still come from the laptop's own Windows."
+    notes: "The compute DSP firmware still comes from Windows."
     sources:
       - https://www.honor.com/cn/shop/product/10086978403812.html
       - https://www.notebookcheck.net/Honor-MagicBook-Art-14-Snapdragon-released-in-Europe-with-free-tablet-and-earbuds.929574.0.html
@@ -655,7 +654,7 @@ models:
     bootloader: unlockable
     linux_image: boots
     discussion: "https://github.com/omacom/omarchy/discussions/16627"
-    notes: "A community tree runs mainline Linux from the second boot slot and leaves Googlebook OS on the first. Nearly everything works, with kernel patches for the keyboard, the audio DSP and suspend. The internal mics click now and then, and battery time estimates come out about 8 times too short."
+    notes: "Nearly everything works. The mics click now and then."
     sources:
       - https://www.hp.com/au-en/shop/hp-googlebook-14c-cf0000qu-e25rhpa.html
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4672974
@@ -728,7 +727,7 @@ models:
     variants:
       - { chip: "X1P-42-100", compatible: "hp,omnibook-5" }
     ids_collected: "https://bugs.launchpad.net/ubuntu-concept/+bug/2169090"
-    notes: "It shares the OmniBook 5 14's board, and Omarchy's kernel gives it that laptop's device tree."
+    notes: "Uses the OmniBook 5 14's device tree."
     sources:
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4439453
       - https://www.notebookcheck.net/HP-OmniBook-5-NGAI-16-fb0000.1190138.0.html
@@ -759,7 +758,7 @@ models:
     released: "2025-05"
     chips: ["X1-26-100", "X1P-42-100"]
     model_numbers: ["HSN-Q42C"]
-    notes: "Owners report Ubuntu booting on it with the X Plus OmniBook X 14's device tree."
+    notes: "Owners boot it with the OmniBook X 14's device tree."
     sources:
       - https://www.hp.com/au-en/shop/hp-probook-4-g1q-14-inch-notebook-next-gen-ai-pc-bx2e6pt.html
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-probook-4-g1q
@@ -810,7 +809,7 @@ models:
     model_numbers: ["16-bf1xxx"]
     variants:
       - { chip: "X2E-84-100", compatible: "hp,omnibook-5-16-bf1xxx" }
-    notes: "Omarchy's kernel carries its owner's device tree with the GPU off, since it doesn't support the X2-85 yet. Bluetooth, sound and the embedded controller don't work on it yet."
+    notes: "No GPU, Bluetooth or sound yet."
     devicetree_out_of_tree: "https://github.com/theflyingrahul/linux-hp-omnibook-5-glymur"
     devicetree_files:
       - "https://raw.githubusercontent.com/theflyingrahul/linux-hp-omnibook-5-glymur/2d54a5a3a239fdf78f748e64bfe60a21eef2026a/dts/qcom/mahua-hp-omnibook-5-bf1xxx.dts"
@@ -881,7 +880,6 @@ models:
     devicetree_files:
       - "https://raw.githubusercontent.com/playtron-os/humain-dtb/608eb397ba05ca892eec2c25ccdbae627308cbe7/glymur-crd.dts"
       - "https://raw.githubusercontent.com/playtron-os/humain-dtb/608eb397ba05ca892eec2c25ccdbae627308cbe7/glymur-crd.dtsi"
-    notes: "Its out-of-tree device tree is the Glymur reference board's with fixes for this machine, and keeps the reference board's compatible."
     sources:
       - https://www.qualcomm.com/news/releases/2026/08/qualcomm-and-humain-unveil-horizon-ultra-ai-pc-at-leap-2026--bri
       - https://www.humain.com/en/horizon.html
@@ -1233,7 +1231,6 @@ models:
     model_numbers: ["2036", "2138"]
     variants:
       - { compatible: "microsoft,surface-laptop-8-13p8" }
-    notes: "Two device trees describe this laptop, both on the Mahua chip and under the name in Qualcomm's posted binding. Omarchy's kernel carries Jim Martin's, and Qualcomm posted its own to Linux."
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261027-mahua-surface-laptop-v2-3-7dd903a12d22@oss.qualcomm.com/"
     sources:
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
@@ -1342,7 +1339,6 @@ models:
     ids_collected: "https://github.com/birkskyum/arewearmyet/issues/1"
     reports:
       - { state: "problems", note: "The stock 4.5.0rc1 image resets in a loop, since it has no device tree for this model. With an owner's board package it installs and is in daily use on linux-omarchy 7.3 with the v8 device tree series.", checked: "2026-10" }
-    notes: "The speaker amps are WSA883x, not the WSA884x the v8 device tree names."
     sources:
       - https://www.notebookcheck.net/Samsung-releases-Galaxy-Book4-Edge-laptops-in-Snapdragon-X-Elite-X1E-80-100-and-X1E-84-100-variants-from-1-349-99.839723.0.html
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4510120/export/pdf

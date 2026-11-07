@@ -9,7 +9,7 @@ import GitHubIcon from '../assets/github-icon.svg';
 import status from '../data/status.json';
 import { ANNOUNCED, FILTERS, GOOGLEBOOK_OMARCHY_LEGEND, GOOGLEBOOK_UPSTREAM_LEGEND, NVIDIA_OMARCHY_LEGEND, NVIDIA_UPSTREAM_LEGEND, OMARCHY_LEGEND, TONE, UPSTREAM_LEGEND } from '../lib/labels';
 import { PILL } from '../lib/tones';
-import { googlebookRows, nvidiaRows, snapdragonRows, type TableRow } from '../lib/rows';
+import { googlebookRows, nvidiaRows, snapdragonRows } from '../lib/rows';
 
 const { summary } = status;
 // The edge nightly image testers install, linked as the collector last found it
@@ -22,21 +22,6 @@ const older = rows.filter((row) => row.generation === '8cx');
 const googlebooks = googlebookRows().sort(byName);
 const nvidia = nvidiaRows().sort((a, b) => a.generation.localeCompare(b.generation) || byName(a, b));
 
-// The first goal for every machine is booting into Omarchy: each family's bar counts its rows by outcome,
-// leaving out outcomes none of them has
-type Outcome = TableRow['outcome'];
-type Part = { label: string; color: string; title: string };
-const OUTCOMES: Record<Outcome, Part> = {
-  works: { label: 'Boots', color: 'bg-emerald-400', title: 'An owner booted into the Omarchy desktop on the current release.' },
-  should: { label: 'Ready to test', color: 'bg-amber-400', title: 'Every piece is in place, but no owner has confirmed it boots yet.' },
-  problems: { label: 'Problems', color: 'bg-rose-400', title: `An owner couldn't get to the desktop without a workaround.` },
-  notyet: { label: 'Not yet', color: 'bg-zinc-600', title: 'Pieces are still missing.' },
-};
-const outcomeParts = (rows: TableRow[], changes: Partial<Record<Outcome, Partial<Part>>> = {}) =>
-  (Object.keys(OUTCOMES) as Outcome[])
-    .map((outcome) => ({ ...OUTCOMES[outcome], ...changes[outcome], value: rows.filter((row) => row.outcome === outcome).length }))
-    .filter((part, i) => i === 0 || part.value > 0);
-const nvidiaParts = outcomeParts(nvidia, { should: { title: 'Same platform as a model that boots.' }, notyet: { label: 'Not tested', title: 'Nobody has tried it yet.' } });
 // Where each piece stands: in any Omarchy channel, in the releases every distro gets,
 // in an open omarchy-pkgs pull request or elsewhere
 const { byPiece } = summary;
@@ -137,7 +122,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
 
     <Family id="snapdragon" title="Snapdragon X and X2" total={current.length}>
       <div class="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
-        <h3 class="text-sm font-semibold text-zinc-200">Device tree, hardware IDs and firmware</h3>
+        <h3 class="text-sm font-semibold text-zinc-200">Omarchy and upstream</h3>
         <ul class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-400">
           <li class="flex items-center gap-1.5"><span class="size-2.5 rounded-[2px] bg-sky-400"></span>Upstream releases</li>
           <li class="flex items-center gap-1.5"><span class="size-2.5 rounded-[2px] bg-emerald-400"></span>Omarchy adds</li>
@@ -192,7 +177,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
       </div>
     </Family>
 
-    <Family id="googlebooks" title="Googlebooks with Snapdragon" parts={outcomeParts(googlebooks)} total={googlebooks.length}>
+    <Family id="googlebooks" title="Googlebooks with Snapdragon" total={googlebooks.length}>
       <p class="max-w-3xl text-sm text-zinc-400">
         They use the same Snapdragon X Elite as the laptops above, but start like a Pixel, through Android's bootloader instead of UEFI. So they need no ACPI tables or hardware IDs, and Omarchy's ARM image doesn't start on them; they need a device tree and a Linux image built for that bootloader.
       </p>
@@ -212,7 +197,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
       </div>
     </Family>
 
-    <Family id="nvidia" title="NVIDIA N1x and GB10" parts={nvidiaParts} total={nvidia.length}>
+    <Family id="nvidia" title="NVIDIA N1x and GB10" total={nvidia.length}>
       <p class="max-w-3xl text-sm text-zinc-400">
         NVIDIA's ARM laptops and desktops start through ACPI, so they need no device tree or hardware IDs. Omarchy's kernel carries the patches they need, which Linux itself doesn't have yet, so what counts here is whether someone has booted into Omarchy on them.
       </p>
