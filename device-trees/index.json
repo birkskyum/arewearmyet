@@ -82,7 +82,7 @@
   },
   "asus-zenbook-14-ux3480qa": {
     "state": "out-of-tree",
-    "source": "https://github.com/omacom/omarchy-pkgs/pull/1634",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2273",
     "files": [
       "SOURCE.md",
       "x1p42100-asus-zenbook-14-ux3480qa.dts"

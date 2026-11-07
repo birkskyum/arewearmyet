@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T12:03:51.835Z",
+  "collected": "2026-11-07T15:25:22.290Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -5573,6 +5573,41 @@
       "kernel": "7.3.0-26-omarchy"
     },
     "pulls": [
+      {
+        "number": 2273,
+        "title": "Add the ASUS Zenbook 14 UX3480QA: device tree, firmware and sound",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2273",
+        "draft": true,
+        "deviceTrees": [
+          {
+            "file": "x1p42100-asus-zenbook-14-ux3480qa.dts",
+            "model": "ASUS Zenbook 14 (UX3480QA)",
+            "compatible": [
+              "asus,zenbook-14-ux3480qa",
+              "qcom,x1p42100"
+            ]
+          }
+        ],
+        "ids": [
+          {
+            "file": "x1p42100-asus-zenbook-14-ux3480qa.json",
+            "compatible": "asus,zenbook-14-ux3480qa"
+          }
+        ],
+        "firmware": [
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adspr.jsn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsps.jsn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adspua.jsn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/battmgr.jsn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdspr.jsn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcadsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qccdsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcdxkmsucpurwa.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcvss8380.mbn"
+        ]
+      },
       {
         "number": 1634,
         "title": "linux-omarchy-aarch64: add the ASUS Zenbook 14 UX3480QA",

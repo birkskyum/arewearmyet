@@ -150,9 +150,23 @@
  * UX3480QA BSP (IMAGE_VARIANT_STRING=PROD).
  */
 &iris {
-	firmware-name = "qcom/x1p42100/ASUSTeK/zenbook-a14/qcvss8380.mbn";
+	firmware-name = "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcvss8380.mbn";
 
 	status = "okay";
+};
+
+&gpu_zap_shader {
+	firmware-name = "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcdxkmsucpurwa.mbn";
+};
+
+&remoteproc_adsp {
+	firmware-name = "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcadsp8380.mbn",
+			"qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf";
+};
+
+&remoteproc_cdsp {
+	firmware-name = "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qccdsp8380.mbn",
+			"qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf";
 };
 
 /*
@@ -241,6 +255,17 @@
 
 &usb_1_ss1_qmpphy_out {
 	remote-endpoint = <&pmic_glink_ss1_ss_in>;
+};
+
+/*
+ * The Wi-Fi (WCN6855, subsystem 14cd:950a) takes linux-firmware's board
+ * data for 14cd:950a without a variant, which is this machine's own. The
+ * A14's variant would select the A14's calibration.
+ */
+&pcie4_port0 {
+	wifi@0 {
+		/delete-property/ qcom,calibration-variant;
+	};
 };
 
 /*

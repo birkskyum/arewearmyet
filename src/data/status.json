@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T12:03:51.835Z",
+  "collected": "2026-11-07T15:25:22.290Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -1091,8 +1091,8 @@
       "stable": 1,
       "rc": 0,
       "edge": 37,
-      "pr": 0,
-      "carry": 2,
+      "pr": 1,
+      "carry": 1,
       "needs-deviceTree": 30,
       "needs-ids": 3,
       "needs-firmware": 11
@@ -1259,8 +1259,8 @@
         "omarchy": 40,
         "fromUpstream": 1,
         "added": 39,
-        "pull": 0,
-        "available": 2,
+        "pull": 1,
+        "available": 1,
         "upstream": 1,
         "channels": {
           "stable": 1,
@@ -1312,9 +1312,10 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "asus-zenbook-14-ux3480qa"
+          ],
           "available": [
-            "asus-zenbook-14-ux3480qa",
             "microsoft-surface-laptop-8-15"
           ]
         }
@@ -1323,8 +1324,8 @@
         "omarchy": 38,
         "fromUpstream": 1,
         "added": 37,
-        "pull": 0,
-        "available": 2,
+        "pull": 1,
+        "available": 1,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1369,9 +1370,10 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "asus-zenbook-14-ux3480qa"
+          ],
           "available": [
-            "asus-zenbook-14-ux3480qa",
             "microsoft-surface-laptop-13in-1st-edition"
           ]
         }
@@ -3428,27 +3430,31 @@
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/1634",
-          "number": 1634,
-          "title": "linux-omarchy-aarch64: add the ASUS Zenbook 14 UX3480QA"
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2273",
+          "number": 2273,
+          "title": "Add the ASUS Zenbook 14 UX3480QA: device tree, firmware and sound"
         },
         "ids": null,
         "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/1634",
-          "number": 1634,
-          "title": "linux-omarchy-aarch64: add the ASUS Zenbook 14 UX3480QA"
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2273",
+          "number": 2273,
+          "title": "Add the ASUS Zenbook 14 UX3480QA: device tree, firmware and sound"
         },
-        "firmware": "download",
+        "firmware": "pr",
         "firmwareChannel": null,
         "firmwarePackages": [],
-        "firmwarePull": null
+        "firmwarePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2273",
+          "number": 2273,
+          "title": "Add the ASUS Zenbook 14 UX3480QA: device tree, firmware and sound"
+        }
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "pr",
         "pieces": {
           "deviceTree": "pr",
           "ids": "pr",
-          "firmware": "elsewhere"
+          "firmware": "pr"
         },
         "missing": [
           "deviceTree",
@@ -3460,7 +3466,7 @@
         "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/1634",
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2273",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-zenbook-14-ux3480qa",
         "ids": "posted",
         "idsCollected": "https://github.com/birkskyum/arewearmyet/issues/2",
@@ -3485,14 +3491,14 @@
           "treeChannel": null,
           "idsChannel": null,
           "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/1634",
-            "number": 1634,
-            "title": "linux-omarchy-aarch64: add the ASUS Zenbook 14 UX3480QA"
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2273",
+            "number": 2273,
+            "title": "Add the ASUS Zenbook 14 UX3480QA: device tree, firmware and sound"
           },
           "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/1634",
-            "number": 1634,
-            "title": "linux-omarchy-aarch64: add the ASUS Zenbook 14 UX3480QA"
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2273",
+            "number": 2273,
+            "title": "Add the ASUS Zenbook 14 UX3480QA: device tree, firmware and sound"
           },
           "deviceTree": null,
           "firmwareNeeded": [],
