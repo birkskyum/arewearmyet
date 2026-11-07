@@ -1093,12 +1093,11 @@
       "linux": 39,
       "nobody": 31
     },
-    "ahead": {
+    "byPiece": {
       "deviceTree": {
         "omarchy": 45,
         "fromUpstream": 19,
         "added": 26,
-        "missing": 0,
         "pull": 1,
         "available": 7,
         "upstream": 19,
@@ -1175,7 +1174,6 @@
         "omarchy": 44,
         "fromUpstream": 28,
         "added": 16,
-        "missing": 0,
         "pull": 1,
         "available": 2,
         "upstream": 28,
@@ -1246,7 +1244,6 @@
         "omarchy": 41,
         "fromUpstream": 1,
         "added": 40,
-        "missing": 0,
         "pull": 0,
         "available": 2,
         "upstream": 1,
@@ -1312,7 +1309,6 @@
         "omarchy": 36,
         "fromUpstream": 1,
         "added": 35,
-        "missing": 0,
         "pull": 0,
         "available": 3,
         "upstream": 1,

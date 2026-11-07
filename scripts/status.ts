@@ -438,9 +438,9 @@ const summary = {
   acpiWanted: count(current, (r) => r.upstream.deviceTree === 'missing' && r.upstream.acpi !== 'collected'),
   outOfBox: Object.fromEntries(['stable', 'rc', 'edge', 'pr', 'carry', 'needs-deviceTree', 'needs-ids', 'needs-firmware'].map((state) => [state, count(current, (r) => r.outOfBox.state === state)])),
   machine: Object.fromEntries(['team', 'omarchy', 'linux', 'nobody'].map((who) => [who, count(current, (r) => r.machine === who)])),
-  // How far Omarchy is ahead: each piece in an Omarchy channel, against the releases of Linux, systemd
-  // and linux-firmware that any distro can ship, and all three together
-  ahead: (() => {
+  // Where each piece stands: in an Omarchy channel, in the releases of Linux, systemd and linux-firmware
+  // that any distro can ship, in an open pull request or elsewhere, and all three together
+  byPiece: (() => {
     const omarchy = {
       deviceTree: (r: Row) => r.omarchy.deviceTree !== null,
       ids: (r: Row) => r.omarchy.ids !== null,
@@ -459,12 +459,11 @@ const summary = {
       firmware: (r: Row) => !omarchy.firmware(r) && !pull.firmware(r) && (r.upstream.firmwareDownload !== null || ['next-release', 'posted'].includes(r.upstream.firmwareUpstream)),
     };
     const pieces = ['deviceTree', 'ids', 'firmware'] as const;
-    // Omarchy's count split into what it has from upstream and what it adds, and what upstream has that it lacks
+    // Omarchy's count split into what it has from upstream and what it adds
     const split = (ours: (r: Row) => boolean, theirs: (r: Row) => boolean, open: (r: Row) => boolean, elsewhere: (r: Row) => boolean, channels?: Record<string, number>) => ({
       omarchy: count(current, ours),
       fromUpstream: count(current, (r) => ours(r) && theirs(r)),
       added: count(current, (r) => ours(r) && !theirs(r)),
-      missing: count(current, (r) => theirs(r) && !ours(r)),
       pull: count(current, open),
       available: count(current, elsewhere),
       upstream: count(current, theirs),
