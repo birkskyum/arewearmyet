@@ -58,7 +58,7 @@ async function inBatches<T, R>(items: T[], size: number, job: (item: T) => Promi
   return results;
 }
 
-type Model = { id: string; vendor: string; name: string; variants?: { compatible?: string; ids?: string[] }[] };
+type Model = { id: string; vendor: string; name: string; variants?: { compatible?: string; ids?: string[]; borrowed?: boolean }[] };
 type Ids = { file: string; name: string; compatible: string; hwids?: string[] };
 type AcpiDump = { folder: string; url: string; repo?: string; ref?: string; dir?: string; pull?: { number: number; state: string; by: string } };
 
@@ -72,7 +72,7 @@ const modelFor = new Map<string, Model>();
 const modelForFile = new Map<string, Model>();
 for (const model of models) {
   for (const variant of model.variants ?? []) {
-    if (variant.compatible && !modelFor.has(variant.compatible)) modelFor.set(variant.compatible, model);
+    if (variant.compatible && !variant.borrowed && !modelFor.has(variant.compatible)) modelFor.set(variant.compatible, model);
     for (const file of variant.ids ?? []) if (!modelForFile.has(file)) modelForFile.set(file, model);
   }
 }

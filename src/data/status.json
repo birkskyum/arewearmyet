@@ -1112,20 +1112,20 @@
     "should": 40,
     "problems": 8,
     "notYet": 34,
-    "deviceTree": 55,
+    "deviceTree": 58,
     "ids": 52,
-    "firmware": 44,
+    "firmware": 47,
     "googlebooks": 2,
     "acpi": 42,
-    "acpiWanted": 29,
+    "acpiWanted": 26,
     "outOfBox": {
       "stable": 1,
       "rc": 0,
       "edge": 40,
       "pr": 0,
       "carry": 2,
-      "needs-deviceTree": 29,
-      "needs-ids": 3,
+      "needs-deviceTree": 26,
+      "needs-ids": 6,
       "needs-firmware": 9
     },
     "machine": {
@@ -1136,16 +1136,16 @@
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 51,
+        "omarchy": 54,
         "fromUpstream": 19,
-        "added": 32,
+        "added": 35,
         "pull": 0,
         "available": 4,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 51
+          "edge": 54
         },
         "models": {
           "fromUpstream": [
@@ -1188,9 +1188,12 @@
             "hp-omnibook-3-16-bz0",
             "hp-omnibook-5-14-he0",
             "hp-omnibook-5-16-bf0",
+            "hp-probook-4-g1q",
             "hp-elitebook-x-g2q",
+            "hp-omnibook-5-14-he1",
             "hp-omnibook-5-16-bf1",
             "hp-omnibook-ultra-14-kg0",
+            "hp-omnibook-x-14-kr",
             "hp-omnibook-x-16-cp",
             "lenovo-ideapad-5x-2-in-1-14q8x9",
             "lenovo-ideapad-slim-3x-15q8x10",
@@ -1287,16 +1290,16 @@
         }
       },
       "firmware": {
-        "omarchy": 42,
+        "omarchy": 45,
         "fromUpstream": 1,
-        "added": 41,
+        "added": 44,
         "pull": 0,
         "available": 2,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 42
+          "edge": 45
         },
         "models": {
           "fromUpstream": [
@@ -1327,9 +1330,12 @@
             "hp-omnibook-5-14-he0",
             "hp-omnibook-5-16-bf0",
             "hp-omnibook-x-14-fe",
+            "hp-probook-4-g1q",
             "hp-elitebook-x-g2q",
+            "hp-omnibook-5-14-he1",
             "hp-omnibook-5-16-bf1",
             "hp-omnibook-ultra-14-kg0",
+            "hp-omnibook-x-14-kr",
             "hp-omnibook-x-16-cp",
             "lenovo-ideacentre-mini-x-01q8x10",
             "lenovo-yoga-slim-7x-14q8x9",
@@ -6219,46 +6225,46 @@
         "https://www.hp.com/au-en/shop/hp-probook-4-g1q-14-inch-notebook-next-gen-ai-pc-bx2e6pt.html",
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-probook-4-g1q"
       ],
-      "notes": "Owners boot it with the OmniBook X 14's device tree.",
-      "outcome": "none",
+      "notes": "HP builds it on the EliteBook 6 G1q's mainboard (board 8E06, driver pack sp174046), so it takes that tree and firmware. Owners boot it with the OmniBook X 14's tree; nobody has tried the EliteBook's yet.",
+      "outcome": "manual",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-elitebook-6-g1q-firmware"
+        ],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-deviceTree",
+        "state": "needs-ids",
         "pieces": {
-          "deviceTree": "none",
+          "deviceTree": "edge",
           "ids": "none",
-          "firmware": "none"
+          "firmware": "edge"
         },
         "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
+          "ids"
         ]
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2521-arm64-dts-qcom-Add-dts-for-HP-EliteBook-6-G1q.patch",
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x1p42100-hp-elitebook-6-g1q",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -6268,16 +6274,24 @@
       },
       "variants": [
         {
-          "computed": "none",
-          "treeChannel": null,
+          "compatible": "hp,elitebook-6-g1q",
+          "borrowed": true,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x1p42100-hp-elitebook-6-g1q.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2521-arm64-dts-qcom-Add-dts-for-HP-EliteBook-6-G1q.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -6505,46 +6519,46 @@
         "https://www.bruneau.fr/product/pc-portable-hp-omnibook-5-14-he1003nfx-14-oled-copilot-pc-snapdragon-ai-x2-16-go-ram-512-go-ssd-argent/8573172",
         "https://9to5google.com/2026/01/05/hp-unveils-its-new-snapdragon-x2-intel-powered-laptops-and-some-chromebooks-too/"
       ],
-      "notes": null,
-      "outcome": "none",
+      "notes": "HP builds it on the OmniBook 5 16's mainboard (board 8F47, driver pack sp173974), so it takes that tree and firmware. Nobody has tried it yet.",
+      "outcome": "manual",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-omnibook-5-16-bf1-firmware"
+        ],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-deviceTree",
+        "state": "needs-ids",
         "pieces": {
-          "deviceTree": "none",
+          "deviceTree": "edge",
           "ids": "none",
-          "firmware": "none"
+          "firmware": "edge"
         },
         "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
+          "ids"
         ]
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2711-arm64-dts-qcom-Add-the-HP-OmniBook-5-16-bf1xxx.patch",
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-glymur-HP-omnibook-5-16-bf1xxx",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -6554,16 +6568,24 @@
       },
       "variants": [
         {
-          "computed": "none",
-          "treeChannel": null,
+          "compatible": "hp,omnibook-5-16-bf1xxx",
+          "borrowed": true,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "mahua-hp-omnibook-5-bf1xxx.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2711-arm64-dts-qcom-Add-the-HP-OmniBook-5-16-bf1xxx.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -6798,46 +6820,46 @@
         "https://www.harveynorman.co.nz/computers/laptops/hp-omnibook-x-14-laptop-snapdragon-x2-plus-16gb-ram-512gb-ssd-copilot-pc-meteor-silver-14-kr1002qu.html",
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-omnibook-x"
       ],
-      "notes": null,
-      "outcome": "none",
+      "notes": "HP builds it on the OmniBook X 16's mainboard (board 8F46, driver pack sp172895), so it takes that tree and firmware. Nobody has tried it yet. HP also lists both on board 8F45, whose drivers are for Snapdragon X chips and which this tree doesn't cover.",
+      "outcome": "manual",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-omnibook-x16-firmware"
+        ],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-deviceTree",
+        "state": "needs-ids",
         "pieces": {
-          "deviceTree": "none",
+          "deviceTree": "edge",
           "ids": "none",
-          "firmware": "none"
+          "firmware": "edge"
         },
         "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
+          "ids"
         ]
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2571-arm64-dts-qcom-Add-HP-OmniBook-X-16-cp1.patch",
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-glymur-hp-omnibook-x16",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -6847,16 +6869,24 @@
       },
       "variants": [
         {
-          "computed": "none",
-          "treeChannel": null,
+          "compatible": "hp,omnibook-x16-cp1",
+          "borrowed": true,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "mahua-hp-omnibook-x16.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2571-arm64-dts-qcom-Add-HP-OmniBook-X-16-cp1.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],

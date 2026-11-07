@@ -8,7 +8,7 @@ import { parse } from 'yaml';
 // The channel testers install, from the edge nightly image
 const OMARCHY_CHANNEL = 'edge' as const;
 
-type Variant = { model?: string; chip?: string; display?: string; compatible?: string; ids?: string[] };
+type Variant = { model?: string; chip?: string; display?: string; compatible?: string; ids?: string[]; borrowed?: boolean };
 type Model = {
   id: string;
   vendor: string;
@@ -117,10 +117,11 @@ const shipped = Object.fromEntries(
     return [name, {
       trees: new Set(source?.deviceTrees ?? []),
       ids: new Set(compatibles.filter(Boolean) as string[]),
+      idFiles: new Set([...(source?.hwids ?? []), ...(source?.carriedIds ?? [])]),
       firmware: new Map(Object.entries(source?.firmware ?? {}).flatMap(([pkg, files]) => files.map((file) => [file, pkg] as const))),
     }];
   }),
-) as Record<Channel, { trees: Set<string>; ids: Set<string>; firmware: Map<string, string> }>;
+) as Record<Channel, { trees: Set<string>; ids: Set<string>; idFiles: Set<string>; firmware: Map<string, string> }>;
 const channelRank = (name: Channel | null) => (name ? CHANNELS.indexOf(name) : Infinity);
 const mostStable = (names: (Channel | null)[]) => [...names].filter(Boolean).sort((a, b) => channelRank(a) - channelRank(b))[0] ?? null;
 // Every Omarchy kernel carries the N1x and GB10 patches, so an NVIDIA model's kernel is the most stable channel's
@@ -138,15 +139,20 @@ function variantStatus(variant: Variant) {
   // systemd-stub compares a hardware ID entry only with a tree's first compatible
   const picked = compatibles[0];
   const named = (variant.ids ?? []).map((file) => systemdIds.find((ids) => ids.file === file)).filter((ids): ids is Ids => Boolean(ids));
-  const byCompatible = systemdIds.filter((ids) => compatibles.includes(ids.compatible));
+  // A borrowed tree is another model's, whose hardware IDs don't pick it on this one, so only the files the
+  // variant names count
+  const byCompatible = variant.borrowed ? [] : systemdIds.filter((ids) => compatibles.includes(ids.compatible));
   const ids = [...new Set([...named, ...byCompatible])];
   ids.forEach((entry) => used.ids.add(entry.file));
+  const ownIds = (file: string) => (variant.ids ?? []).includes(file);
   // The first channel whose kernel ships the tree, and whose hardware IDs pick it
   const treeChannel = dt ? CHANNELS.find((name) => dt.files.some((file) => shipped[name].trees.has(file))) ?? null : null;
-  const idsChannel = picked ? CHANNELS.find((name) => shipped[name].ids.has(picked)) ?? null : null;
+  const idsChannel = variant.borrowed
+    ? CHANNELS.find((name) => [...shipped[name].idFiles].some(ownIds)) ?? null
+    : picked ? CHANNELS.find((name) => shipped[name].ids.has(picked)) ?? null : null;
   const treeCompatible = variant.compatible ? [variant.compatible] : compatibles;
   const treePull = treeChannel ? undefined : pulls.find((pull) => pull.deviceTrees.some((tree) => tree.compatible.some((compatible) => treeCompatible.includes(compatible))));
-  const idsPull = idsChannel ? undefined : pulls.find((pull) => pull.ids.some((entry) => entry.compatible === picked));
+  const idsPull = idsChannel ? undefined : pulls.find((pull) => pull.ids.some((entry) => (variant.borrowed ? ownIds(entry.file) : entry.compatible === picked)));
 
   // Omarchy should boot a model when the kernel of the channel people install has its device tree and
   // the hardware IDs there pick it
@@ -163,7 +169,7 @@ function variantStatus(variant: Variant) {
     deviceTree: dt ? { file: dt.file, firstRelease: dt.firstRelease, inNext: dt.inNext, upstream: dt.upstream, patch: dt.patch } : null,
     firmwareNeeded: dt?.firmware ?? [],
     ids: ids.map((entry) => ({ file: entry.file, firstRelease: entry.firstRelease, inMain: entry.inMain, matches: entry.compatible === picked, compatible: entry.compatible })),
-    stubble: stubbleIds.filter((entry) => entry.compatible === picked).map(({ file, state, url }) => ({ file, state, url })),
+    stubble: stubbleIds.filter((entry) => (variant.borrowed ? ownIds(entry.file) : entry.compatible === picked)).map(({ file, state, url }) => ({ file, state, url })),
   };
 }
 
@@ -304,7 +310,10 @@ function outOfBox(pieces: Record<'deviceTree' | 'ids' | 'firmware', Piece>) {
 // nobody (no tree, no tables, no report)
 function whoHasOne(model: Model, reports: Report[], deviceTree: string, acpi: string[]) {
   if (model.team_has_one) return 'team';
-  if (deviceTree === 'missing' && !acpi.length && !reports.length) return 'nobody';
+  // A tree borrowed from another model on the same mainboard says nothing about who has this one
+  const variants: Variant[] = model.variants ?? [];
+  const ownTree = deviceTree !== 'missing' && !(variants.length && variants.every((variant) => variant.borrowed));
+  if (!ownTree && !acpi.length && !reports.length) return 'nobody';
   const sentToOmarchy = /^https:\/\/github\.com\/(omacom|turbineBMW\/omarchy-hardware-reports|birkskyum\/arewearmyet)\//.test(model.ids_collected ?? '');
   const omarchyCommunity = reports.length > 0 || acpi.some((folder) => folder.startsWith('hardware-reports/')) || sentToOmarchy || Boolean(model.discussion?.includes('omacom/omarchy'));
   return omarchyCommunity ? 'omarchy' : 'linux';

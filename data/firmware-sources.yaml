@@ -95,7 +95,7 @@ folders:
       - { name: "qcadsp8480.mbn", target: "../UX3407NA/qcadsp8480.mbn" }
       - { name: "qccdsp8480.mbn", target: "../UX3407NA/qccdsp8480.mbn" }
   - path: "qcom/glymur/HP/omnibook-5-16-bf1xxx"
-    models: ["hp-omnibook-5-16-bf1"]
+    models: ["hp-omnibook-5-16-bf1", "hp-omnibook-5-14-he1"]
     files:
       - name: "adsp_dtbs.elf"
         size: 225080
@@ -247,7 +247,7 @@ folders:
       - { name: "qcadsp8480.mbn", target: "../omnibook-x16/qcadsp8480.mbn" }
       - { name: "qccdsp8480.mbn", target: "../omnibook-x16/qccdsp8480.mbn" }
   - path: "qcom/glymur/hp/omnibook-x16"
-    models: ["hp-omnibook-x-16-cp"]
+    models: ["hp-omnibook-x-16-cp", "hp-omnibook-x-14-kr"]
     files:
       - name: "adsp_dtbs.elf"
         size: 225080
@@ -1767,7 +1767,7 @@ folders:
         from:
           - { package: "microsoft-surfacelaptop-13in-1st-edition", member: "SurfaceUpdate/qcdx8380/qcdxkmsucpurwa.mbn" }
   - path: "qcom/x1p42100/hp/elitebook-6-g1q"
-    models: ["hp-elitebook-6-g1q"]
+    models: ["hp-elitebook-6-g1q", "hp-probook-4-g1q"]
     files:
       - name: "adsp_dtbs.elf"
         size: 73528

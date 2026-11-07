@@ -6,7 +6,9 @@
 #   variants       one per device tree: compatible is the tree's first
 #                  compatible string, also for trees that are only posted or
 #                  out of tree; ids are systemd hardware ID files to check even
-#                  when they name a different compatible
+#                  when they name a different compatible; borrowed: true when the
+#                  tree is another model's on the same mainboard, whose hardware
+#                  IDs don't pick it here, so only its own ids count
 #   firmware       linux-firmware folders with this model's files
 #   acpi           aarch64-laptops/build misc/ folders with its ACPI dump, merged or in a
 #                  pull request, linux-surface/<folder> for linux-surface's acpidumps,
@@ -776,7 +778,9 @@ models:
     released: "2025-05"
     chips: ["X1-26-100", "X1P-42-100"]
     model_numbers: ["HSN-Q42C"]
-    notes: "Owners boot it with the OmniBook X 14's device tree."
+    variants:
+      - { compatible: "hp,elitebook-6-g1q", borrowed: true }
+    notes: "HP builds it on the EliteBook 6 G1q's mainboard (board 8E06, driver pack sp174046), so it takes that tree and firmware. Owners boot it with the OmniBook X 14's tree; nobody has tried the EliteBook's yet."
     sources:
       - https://www.hp.com/au-en/shop/hp-probook-4-g1q-14-inch-notebook-next-gen-ai-pc-bx2e6pt.html
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-probook-4-g1q
@@ -814,6 +818,9 @@ models:
     released: "2026"
     chips: ["X2P-42-100"]
     model_numbers: ["14-he1xxx"]
+    variants:
+      - { compatible: "hp,omnibook-5-16-bf1xxx", borrowed: true }
+    notes: "HP builds it on the OmniBook 5 16's mainboard (board 8F47, driver pack sp173974), so it takes that tree and firmware. Nobody has tried it yet."
     sources:
       - https://www.bruneau.fr/product/pc-portable-hp-omnibook-5-14-he1003nfx-14-oled-copilot-pc-snapdragon-ai-x2-16-go-ram-512-go-ssd-argent/8573172
       - https://9to5google.com/2026/01/05/hp-unveils-its-new-snapdragon-x2-intel-powered-laptops-and-some-chromebooks-too/
@@ -863,6 +870,9 @@ models:
     released: "2026"
     chips: ["X2P-42-100", "X2P-64-100", "X2E-80-100"]
     model_numbers: ["14-kr0xxx", "14-kr1xxx"]
+    variants:
+      - { compatible: "hp,omnibook-x16-cp1", borrowed: true }
+    notes: "HP builds it on the OmniBook X 16's mainboard (board 8F46, driver pack sp172895), so it takes that tree and firmware. Nobody has tried it yet. HP also lists both on board 8F45, whose drivers are for Snapdragon X chips and which this tree doesn't cover."
     sources:
       - https://www.hp.com/au-en/shop/laptops-tablets/personal-laptops/omnibook-x-laptops/hp-omnibook-x-laptop-next-gen-ai-14-kr1000qu-d8qf4pa.html
       - https://www.harveynorman.co.nz/computers/laptops/hp-omnibook-x-14-laptop-snapdragon-x2-plus-16gb-ram-512gb-ssd-copilot-pc-meteor-silver-14-kr1002qu.html
