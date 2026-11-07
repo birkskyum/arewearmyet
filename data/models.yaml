@@ -1257,6 +1257,13 @@ models:
     released: "2026-06"
     chips: ["X2E-78-100", "X2P-64-100"]
     model_numbers: ["2037", "2139"]
+    variants:
+      - { model: "2037", chip: "X2E-78-100", compatible: "microsoft,surface-laptop-8-15" }
+    devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2276"
+    devicetree_files:
+      - "data/device-trees/microsoft-surface-laptop-8-15/glymur-microsoft-surface-laptop8-15.dts"
+      - "data/device-trees/microsoft-surface-laptop-8-15/glymur-microsoft-surface-laptop8.dts"
+    ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/19"
     sources:
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
       - https://www.abt.com/Microsoft-Surface-Laptop-15-inch-Snapdragon-X2-Elite-12-core-32GB-RAM-512GB-SSD-Windows-11-8th-Edition-in-Platinum-EP260726/p/247633.html

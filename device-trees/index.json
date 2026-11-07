@@ -247,6 +247,15 @@
       "mahua-microsoft-surface-laptop-8-13p8.dts"
     ]
   },
+  "microsoft-surface-laptop-8-15": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2276",
+    "files": [
+      "SOURCE.md",
+      "glymur-microsoft-surface-laptop8-15.dts",
+      "glymur-microsoft-surface-laptop8.dts"
+    ]
+  },
   "samsung-galaxy-book4-edge-15": {
     "state": "out-of-tree",
     "source": "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/patch-2-anatase.patch",

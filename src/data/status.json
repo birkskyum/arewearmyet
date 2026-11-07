@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T15:54:41.179Z",
+  "collected": "2026-11-07T16:09:23.077Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -1096,34 +1096,34 @@
     "should": 38,
     "problems": 8,
     "notYet": 36,
-    "deviceTree": 54,
-    "ids": 51,
+    "deviceTree": 55,
+    "ids": 52,
     "firmware": 42,
     "googlebooks": 2,
     "acpi": 37,
-    "acpiWanted": 30,
+    "acpiWanted": 29,
     "outOfBox": {
       "stable": 1,
       "rc": 0,
       "edge": 38,
-      "pr": 0,
+      "pr": 1,
       "carry": 1,
-      "needs-deviceTree": 30,
+      "needs-deviceTree": 29,
       "needs-ids": 3,
       "needs-firmware": 11
     },
     "machine": {
       "team": 7,
-      "omarchy": 9,
+      "omarchy": 10,
       "linux": 38,
-      "nobody": 30
+      "nobody": 29
     },
     "byPiece": {
       "deviceTree": {
         "omarchy": 49,
         "fromUpstream": 19,
         "added": 30,
-        "pull": 0,
+        "pull": 1,
         "available": 5,
         "upstream": 19,
         "channels": {
@@ -1185,7 +1185,9 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "microsoft-surface-laptop-8-15"
+          ],
           "available": [
             "asus-vivobook-s14-s3407qa",
             "asus-ascent-qn10",
@@ -1199,7 +1201,7 @@
         "omarchy": 49,
         "fromUpstream": 28,
         "added": 21,
-        "pull": 0,
+        "pull": 1,
         "available": 2,
         "upstream": 28,
         "channels": {
@@ -1261,7 +1263,9 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "microsoft-surface-laptop-8-15"
+          ],
           "available": [
             "microsoft-surface-laptop-13in-1st-edition",
             "samsung-galaxy-book4-edge-15"
@@ -1269,16 +1273,16 @@
         }
       },
       "firmware": {
-        "omarchy": 41,
+        "omarchy": 42,
         "fromUpstream": 1,
-        "added": 40,
+        "added": 41,
         "pull": 0,
-        "available": 1,
+        "available": 0,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 41
+          "edge": 42
         },
         "models": {
           "fromUpstream": [
@@ -1323,20 +1327,19 @@
             "microsoft-surface-pro-11",
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
+            "microsoft-surface-laptop-8-15",
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": [
-            "microsoft-surface-laptop-8-15"
-          ]
+          "available": []
         }
       },
       "all": {
         "omarchy": 39,
         "fromUpstream": 1,
         "added": 38,
-        "pull": 0,
+        "pull": 1,
         "available": 1,
         "upstream": 1,
         "models": {
@@ -1383,7 +1386,9 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "microsoft-surface-laptop-8-15"
+          ],
           "available": [
             "microsoft-surface-laptop-13in-1st-edition"
           ]
@@ -9673,38 +9678,47 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "nobody",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2276",
+          "number": 2276,
+          "title": "Add the Microsoft Surface Laptop 8 15-inch: device tree, hardware IDs and sound"
+        },
         "ids": null,
-        "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2276",
+          "number": 2276,
+          "title": "Add the Microsoft Surface Laptop 8 15-inch: device tree, hardware IDs and sound"
+        },
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "microsoft-surface-laptop-8-firmware"
+        ],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-deviceTree",
+        "state": "pr",
         "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "elsewhere"
+          "deviceTree": "pr",
+          "ids": "pr",
+          "firmware": "edge"
         },
         "missing": [
           "deviceTree",
-          "ids",
-          "firmware"
+          "ids"
         ]
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
-        "ids": "missing",
-        "idsCollected": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2276",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/microsoft-surface-laptop-8-15",
+        "ids": "collected",
+        "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/19",
         "idsStubble": null,
         "firmware": "download",
         "firmwareMissing": [],
@@ -9719,11 +9733,22 @@
       },
       "variants": [
         {
+          "model": "2037",
+          "chip": "X2E-78-100",
+          "compatible": "microsoft,surface-laptop-8-15",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2276",
+            "number": 2276,
+            "title": "Add the Microsoft Surface Laptop 8 15-inch: device tree, hardware IDs and sound"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2276",
+            "number": 2276,
+            "title": "Add the Microsoft Surface Laptop 8 15-inch: device tree, hardware IDs and sound"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],

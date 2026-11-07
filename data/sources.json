@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T15:54:41.179Z",
+  "collected": "2026-11-07T16:09:23.077Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -5614,6 +5614,29 @@
       "kernel": "7.3.0-26-omarchy"
     },
     "pulls": [
+      {
+        "number": 2276,
+        "title": "Add the Microsoft Surface Laptop 8 15-inch: device tree, hardware IDs and sound",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2276",
+        "draft": true,
+        "deviceTrees": [
+          {
+            "file": "glymur-microsoft-surface-laptop8-15.dts",
+            "model": "Microsoft Surface Laptop 8 (15in, Snapdragon X2 Elite)",
+            "compatible": [
+              "microsoft,surface-laptop-8-15",
+              "qcom,mahua"
+            ]
+          }
+        ],
+        "ids": [
+          {
+            "file": "glymur-microsoft-surface-laptop8-15.json",
+            "compatible": "microsoft,surface-laptop-8-15"
+          }
+        ],
+        "firmware": []
+      },
       {
         "number": 1634,
         "title": "linux-omarchy-aarch64: add the ASUS Zenbook 14 UX3480QA",
