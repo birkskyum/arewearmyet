@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T16:09:23.077Z",
+  "collected": "2026-11-07T16:52:16.155Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4277,7 +4277,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-29",
+        "kernel": "7.3-30",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -4288,6 +4288,7 @@
           "glymur-hp-omnibook-ultra-kg0xxx.dts",
           "glymur-lenovo-yoga-slim7x.dts",
           "glymur-microsoft-surface-laptop8.dts",
+          "glymur-microsoft-surface-laptop8-15.dts",
           "hamoa-iot-evk.dts",
           "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
           "mahua-crd.dts",
@@ -4404,6 +4405,7 @@
         "carriedIds": [
           "glymur-anduril-bluechip.json",
           "glymur-hp-omnibook-ultra-kg0xxx.json",
+          "glymur-microsoft-surface-laptop8-15.json",
           "glymur-microsoft-surface-laptop8.json",
           "mahua-hp-omnibook-5-bf1xxx.json",
           "mahua-hp-omnibook-x16.json",
@@ -5266,6 +5268,15 @@
           "qcom,x1p42100"
         ],
         "patch": "2751-arm64-dts-qcom-Add-the-ASUS-Zenbook-14-UX3480QA.patch"
+      },
+      {
+        "file": "glymur-microsoft-surface-laptop8-15.dts",
+        "model": "Microsoft Surface Laptop 8 (15in, Snapdragon X2 Elite)",
+        "compatible": [
+          "microsoft,surface-laptop-8-15",
+          "qcom,mahua"
+        ],
+        "patch": "2764-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8-15-inch.patch"
       }
     ],
     "carriedIds": [
@@ -5305,6 +5316,23 @@
           "eb12a79c-569b-5b7c-9abe-61990b0bacea",
           "78e58aa3-9f2d-575e-b6b6-fdf4ab7a30f0",
           "3c83b4be-1505-57b0-9486-690c1473aa4e"
+        ]
+      },
+      {
+        "file": "glymur-microsoft-surface-laptop8-15.json",
+        "name": "Microsoft Surface Laptop 8 15-inch (2037)",
+        "compatible": "microsoft,surface-laptop-8-15",
+        "hwids": [
+          "24694a26-c7ed-5169-8c47-e702321018d9",
+          "523b52cb-e012-5fd1-9514-7c944eb81679",
+          "75db97f2-8905-5888-a8df-86984f29e0ee",
+          "affa28c2-45bc-5125-a5a2-f2dd670115a7",
+          "fb5049bb-a756-50d7-94fe-6fefed6016fb",
+          "6cc956f8-d873-5fba-9cf7-44ed7c83d416",
+          "924c9073-ff02-57f3-ac65-f96a58faace7",
+          "8348d0ec-17f2-5356-9546-239c59fd9063",
+          "90b52dd0-73fd-53e1-b8c8-014d6dfe15e2",
+          "c3f48d5e-195c-5740-9fca-676f7f26cd87"
         ]
       },
       {
@@ -5614,29 +5642,6 @@
       "kernel": "7.3.0-26-omarchy"
     },
     "pulls": [
-      {
-        "number": 2276,
-        "title": "Add the Microsoft Surface Laptop 8 15-inch: device tree, hardware IDs and sound",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2276",
-        "draft": true,
-        "deviceTrees": [
-          {
-            "file": "glymur-microsoft-surface-laptop8-15.dts",
-            "model": "Microsoft Surface Laptop 8 (15in, Snapdragon X2 Elite)",
-            "compatible": [
-              "microsoft,surface-laptop-8-15",
-              "qcom,mahua"
-            ]
-          }
-        ],
-        "ids": [
-          {
-            "file": "glymur-microsoft-surface-laptop8-15.json",
-            "compatible": "microsoft,surface-laptop-8-15"
-          }
-        ],
-        "firmware": []
-      },
       {
         "number": 1634,
         "title": "linux-omarchy-aarch64: add the ASUS Zenbook 14 UX3480QA",

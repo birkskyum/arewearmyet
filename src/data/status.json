@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-07T16:09:23.077Z",
+  "collected": "2026-11-07T16:52:16.155Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-29",
+    "kernel": "7.3-30",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-29",
+        "kernel": "7.3-30",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -407,6 +407,7 @@
           "glymur-hp-omnibook-ultra-kg0xxx.dts",
           "glymur-lenovo-yoga-slim7x.dts",
           "glymur-microsoft-surface-laptop8.dts",
+          "glymur-microsoft-surface-laptop8-15.dts",
           "hamoa-iot-evk.dts",
           "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
           "mahua-crd.dts",
@@ -523,6 +524,7 @@
         "carriedIds": [
           "glymur-anduril-bluechip.json",
           "glymur-hp-omnibook-ultra-kg0xxx.json",
+          "glymur-microsoft-surface-laptop8-15.json",
           "glymur-microsoft-surface-laptop8.json",
           "mahua-hp-omnibook-5-bf1xxx.json",
           "mahua-hp-omnibook-x16.json",
@@ -1093,9 +1095,9 @@
     "nvidiaWorks": 2,
     "nvidiaExpected": 15,
     "works": 2,
-    "should": 38,
+    "should": 39,
     "problems": 8,
-    "notYet": 36,
+    "notYet": 35,
     "deviceTree": 55,
     "ids": 52,
     "firmware": 42,
@@ -1105,8 +1107,8 @@
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 38,
-      "pr": 1,
+      "edge": 39,
+      "pr": 0,
       "carry": 1,
       "needs-deviceTree": 29,
       "needs-ids": 3,
@@ -1120,16 +1122,16 @@
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 49,
+        "omarchy": 50,
         "fromUpstream": 19,
-        "added": 30,
-        "pull": 1,
+        "added": 31,
+        "pull": 0,
         "available": 5,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 49
+          "edge": 50
         },
         "models": {
           "fromUpstream": [
@@ -1182,12 +1184,11 @@
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
             "lenovo-yoga-slim-7x-14q8y11",
             "microsoft-surface-laptop-8-13",
+            "microsoft-surface-laptop-8-15",
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "microsoft-surface-laptop-8-15"
-          ],
+          "pull": [],
           "available": [
             "asus-vivobook-s14-s3407qa",
             "asus-ascent-qn10",
@@ -1198,16 +1199,16 @@
         }
       },
       "ids": {
-        "omarchy": 49,
+        "omarchy": 50,
         "fromUpstream": 28,
-        "added": 21,
-        "pull": 1,
+        "added": 22,
+        "pull": 0,
         "available": 2,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 49
+          "edge": 50
         },
         "models": {
           "fromUpstream": [
@@ -1260,12 +1261,11 @@
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
+            "microsoft-surface-laptop-8-15",
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "microsoft-surface-laptop-8-15"
-          ],
+          "pull": [],
           "available": [
             "microsoft-surface-laptop-13in-1st-edition",
             "samsung-galaxy-book4-edge-15"
@@ -1336,10 +1336,10 @@
         }
       },
       "all": {
-        "omarchy": 39,
+        "omarchy": 40,
         "fromUpstream": 1,
-        "added": 38,
-        "pull": 1,
+        "added": 39,
+        "pull": 0,
         "available": 1,
         "upstream": 1,
         "models": {
@@ -1383,12 +1383,11 @@
             "microsoft-surface-pro-11",
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
+            "microsoft-surface-laptop-8-15",
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "microsoft-surface-laptop-8-15"
-          ],
+          "pull": [],
           "available": [
             "microsoft-surface-laptop-13in-1st-edition"
           ]
@@ -9676,22 +9675,14 @@
         "https://www.abt.com/Microsoft-Surface-Laptop-15-inch-Snapdragon-X2-Elite-12-core-32GB-RAM-512GB-SSD-Windows-11-8th-Edition-in-Platinum-EP260726/p/247633.html"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "should",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2276",
-          "number": 2276,
-          "title": "Add the Microsoft Surface Laptop 8 15-inch: device tree, hardware IDs and sound"
-        },
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2276",
-          "number": 2276,
-          "title": "Add the Microsoft Surface Laptop 8 15-inch: device tree, hardware IDs and sound"
-        },
+        "deviceTree": "edge",
+        "deviceTreePull": null,
+        "ids": "edge",
+        "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -9700,16 +9691,13 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
-          "deviceTree": "pr",
-          "ids": "pr",
+          "deviceTree": "edge",
+          "ids": "edge",
           "firmware": "edge"
         },
-        "missing": [
-          "deviceTree",
-          "ids"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -9736,24 +9724,22 @@
           "model": "2037",
           "chip": "X2E-78-100",
           "compatible": "microsoft,surface-laptop-8-15",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2276",
-            "number": 2276,
-            "title": "Add the Microsoft Surface Laptop 8 15-inch: device tree, hardware IDs and sound"
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "glymur-microsoft-surface-laptop8-15.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2764-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8-15-inch.patch"
           },
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2276",
-            "number": 2276,
-            "title": "Add the Microsoft Surface Laptop 8 15-inch: device tree, hardware IDs and sound"
-          },
-          "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
