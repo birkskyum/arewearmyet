@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T05:25:34.499Z",
+  "collected": "2026-11-07T10:00:03.320Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -9,9 +9,9 @@
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.06.480",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.06.480/omarchy-edge-2026.11.06.480-aarch64.iso",
-      "kernel": "7.3.0-20-omarchy"
+      "version": "2026.11.07.483",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.07.483/omarchy-edge-2026.11.07.483-aarch64.iso",
+      "kernel": "7.3.0-26-omarchy"
     },
     "channels": [
       {
@@ -1086,8 +1086,8 @@
       "stable": 1,
       "rc": 0,
       "edge": 36,
-      "pr": 0,
-      "carry": 4,
+      "pr": 2,
+      "carry": 2,
       "needs-deviceTree": 30,
       "needs-ids": 3,
       "needs-firmware": 10
@@ -1103,8 +1103,8 @@
         "omarchy": 46,
         "fromUpstream": 19,
         "added": 27,
-        "pull": 1,
-        "available": 7,
+        "pull": 3,
+        "available": 5,
         "upstream": 19,
         "channels": {
           "stable": 19,
@@ -1163,13 +1163,13 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [
-            "asus-zenbook-14-ux3480qa"
+            "asus-zenbook-14-ux3480qa",
+            "hp-omnibook-3-14-hz0",
+            "hp-omnibook-3-16-bz0"
           ],
           "available": [
             "asus-vivobook-s14-s3407qa",
             "asus-ascent-qn10",
-            "hp-omnibook-3-14-hz0",
-            "hp-omnibook-3-16-bz0",
             "humain-horizon",
             "microsoft-surface-laptop-13in-1st-edition",
             "samsung-galaxy-book4-edge-15"
@@ -1180,8 +1180,8 @@
         "omarchy": 45,
         "fromUpstream": 28,
         "added": 17,
-        "pull": 1,
-        "available": 5,
+        "pull": 4,
+        "available": 2,
         "upstream": 28,
         "channels": {
           "stable": 28,
@@ -1239,14 +1239,14 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [
-            "asus-zenbook-14-ux3480qa"
-          ],
-          "available": [
+            "asus-zenbook-14-ux3480qa",
             "hp-omnibook-3-14-hz0",
             "hp-omnibook-3-16-bz0",
-            "microsoft-surface-laptop-13in-1st-edition",
-            "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16"
+          ],
+          "available": [
+            "microsoft-surface-laptop-13in-1st-edition",
+            "samsung-galaxy-book4-edge-15"
           ]
         }
       },
@@ -1319,8 +1319,8 @@
         "omarchy": 37,
         "fromUpstream": 1,
         "added": 36,
-        "pull": 0,
-        "available": 4,
+        "pull": 2,
+        "available": 2,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1364,12 +1364,13 @@
             "microsoft-surface-laptop-8-13",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "hp-omnibook-3-14-hz0",
+            "samsung-galaxy-book4-edge-16"
+          ],
           "available": [
             "asus-zenbook-14-ux3480qa",
-            "hp-omnibook-3-14-hz0",
-            "microsoft-surface-laptop-13in-1st-edition",
-            "samsung-galaxy-book4-edge-16"
+            "microsoft-surface-laptop-13in-1st-edition"
           ]
         }
       }
@@ -5554,9 +5555,17 @@
       "machine": "linux",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2263",
+          "number": 2263,
+          "title": "linux-omarchy-aarch64: add the HP OmniBook 3 14 and 16"
+        },
         "ids": null,
-        "idsPull": null,
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2263",
+          "number": 2263,
+          "title": "linux-omarchy-aarch64: add the HP OmniBook 3 14 and 16"
+        },
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -5565,10 +5574,10 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "pr",
         "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "elsewhere",
+          "deviceTree": "pr",
+          "ids": "pr",
           "firmware": "edge"
         },
         "missing": [
@@ -5603,8 +5612,16 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2263",
+            "number": 2263,
+            "title": "linux-omarchy-aarch64: add the HP OmniBook 3 14 and 16"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2263",
+            "number": 2263,
+            "title": "linux-omarchy-aarch64: add the HP OmniBook 3 14 and 16"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
@@ -5642,9 +5659,17 @@
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2263",
+          "number": 2263,
+          "title": "linux-omarchy-aarch64: add the HP OmniBook 3 14 and 16"
+        },
         "ids": null,
-        "idsPull": null,
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2263",
+          "number": 2263,
+          "title": "linux-omarchy-aarch64: add the HP OmniBook 3 14 and 16"
+        },
         "firmware": "windows",
         "firmwareChannel": null,
         "firmwarePackages": [],
@@ -5653,8 +5678,8 @@
       "outOfBox": {
         "state": "needs-firmware",
         "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "elsewhere",
+          "deviceTree": "pr",
+          "ids": "pr",
           "firmware": "none"
         },
         "missing": [
@@ -5698,8 +5723,16 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2263",
+            "number": 2263,
+            "title": "linux-omarchy-aarch64: add the HP OmniBook 3 14 and 16"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2263",
+            "number": 2263,
+            "title": "linux-omarchy-aarch64: add the HP OmniBook 3 14 and 16"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
@@ -10146,7 +10179,11 @@
         "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
-        "idsPull": null,
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2263",
+          "number": 2263,
+          "title": "linux-omarchy-aarch64: add the HP OmniBook 3 14 and 16"
+        },
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -10155,10 +10192,10 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "pr",
         "pieces": {
           "deviceTree": "edge",
-          "ids": "elsewhere",
+          "ids": "pr",
           "firmware": "edge"
         },
         "missing": [
@@ -10192,7 +10229,11 @@
           "treeChannel": "edge",
           "idsChannel": null,
           "treePull": null,
-          "idsPull": null,
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2263",
+            "number": 2263,
+            "title": "linux-omarchy-aarch64: add the HP OmniBook 3 14 and 16"
+          },
           "deviceTree": {
             "file": "x1e84100-samsung-galaxy-book4-edge-16.dts",
             "firstRelease": null,

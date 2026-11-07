@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T05:25:34.499Z",
+  "collected": "2026-11-07T10:00:03.320Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -5491,11 +5491,53 @@
       }
     ],
     "image": {
-      "version": "2026.11.06.480",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.06.480/omarchy-edge-2026.11.06.480-aarch64.iso",
-      "kernel": "7.3.0-20-omarchy"
+      "version": "2026.11.07.483",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.07.483/omarchy-edge-2026.11.07.483-aarch64.iso",
+      "kernel": "7.3.0-26-omarchy"
     },
     "pulls": [
+      {
+        "number": 2263,
+        "title": "linux-omarchy-aarch64: add the HP OmniBook 3 14 and 16",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2263",
+        "draft": true,
+        "deviceTrees": [
+          {
+            "file": "x1p42100-hp-omnibook-3-oled.dts",
+            "model": "HP OmniBook 3 Laptop 14-hz0xxx",
+            "compatible": [
+              "hp,omnibook-3-oled",
+              "hp,omnibook-3",
+              "lenovo,thinkpad-t14s",
+              "qcom,x1p42100"
+            ]
+          },
+          {
+            "file": "x1p42100-hp-omnibook-3-16.dts",
+            "model": "HP OmniBook 3 Laptop 16-bz0xxx",
+            "compatible": [
+              "hp,omnibook-3-16-bz0",
+              "qcom,x126100",
+              "qcom,x1p42100"
+            ]
+          }
+        ],
+        "ids": [
+          {
+            "file": "x1e84100-samsung-galaxy-book4-edge-16.json",
+            "compatible": "samsung,galaxy-book4-edge-16"
+          },
+          {
+            "file": "x1p42100-hp-omnibook-3-16.json",
+            "compatible": "hp,omnibook-3-16-bz0"
+          },
+          {
+            "file": "x1p42100-hp-omnibook-3-oled.json",
+            "compatible": "hp,omnibook-3-oled"
+          }
+        ],
+        "firmware": []
+      },
       {
         "number": 1634,
         "title": "linux-omarchy-aarch64: add the ASUS Zenbook 14 UX3480QA",
