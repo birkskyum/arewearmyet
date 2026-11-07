@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-06T18:16:40.441Z",
+  "collected": "2026-11-07T01:31:12.452Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-22",
+    "kernel": "7.3-24",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-22",
+        "kernel": "7.3-24",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -695,9 +695,6 @@
             "qcom/glymur/ASUSTeK/UX3407NA/qcadsp8480.mbn",
             "qcom/glymur/ASUSTeK/UX3407NA/qccdsp8480.mbn"
           ],
-          "asus-zenbook-a16-audio": [
-            "qcom/glymur/GLYMUR-ASUS-Zenbook-A16-UX3607OA-tplg.bin"
-          ],
           "asus-zenbook-a16-firmware": [
             "qcom/glymur/ASUSTeK/UX3607OA/adsp_dtbs.elf",
             "qcom/glymur/ASUSTeK/UX3607OA/cdsp_dtbs.elf",
@@ -885,6 +882,111 @@
             "qcom/glymur/LENOVO/22A8/qcadsp8480.mbn",
             "qcom/glymur/LENOVO/22A8/qccdsp8480.mbn"
           ],
+          "linux-firmware-qcom": [
+            "qcom/glymur/ASUSTeK/UX3407NA/GLYMUR-ASUS-Zenbook-A14-UX3407NA-tplg.bin",
+            "qcom/glymur/ASUSTeK/UX3607OA/GLYMUR-ASUS-Zenbook-A16-UX3607OA-tplg.bin",
+            "qcom/glymur/GLYMUR-ASUS-Zenbook-A14-UX3407NA-tplg.bin",
+            "qcom/glymur/GLYMUR-ASUS-Zenbook-A16-UX3607OA-tplg.bin",
+            "qcom/glymur/GLYMUR-CRD-tplg.bin",
+            "qcom/glymur/LENOVO/22A8/Lenovo-ThinkPad-T14s-Gen-7-tplg.bin",
+            "qcom/glymur/Lenovo-ThinkPad-T14s-Gen-7-tplg.bin",
+            "qcom/glymur/adsp.mbn",
+            "qcom/glymur/adsp_dtb.mbn",
+            "qcom/glymur/adspr.jsn",
+            "qcom/glymur/adsps.jsn",
+            "qcom/glymur/adspua.jsn",
+            "qcom/glymur/cdsp.mbn",
+            "qcom/glymur/cdsp_dtb.mbn",
+            "qcom/glymur/cdspr.jsn",
+            "qcom/glymur/gen80100_zap.mbn",
+            "qcom/sc8280xp/LENOVO/21BX/adspr.jsn",
+            "qcom/sc8280xp/LENOVO/21BX/adspua.jsn",
+            "qcom/sc8280xp/LENOVO/21BX/audioreach-tplg.bin",
+            "qcom/sc8280xp/LENOVO/21BX/battmgr.jsn",
+            "qcom/sc8280xp/LENOVO/21BX/cdspr.jsn",
+            "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn",
+            "qcom/sc8280xp/LENOVO/21BX/qccdsp8280.mbn",
+            "qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn",
+            "qcom/sc8280xp/LENOVO/21BX/qcslpi8280.mbn",
+            "qcom/sc8280xp/LENOVO/21BX/qcvss8280.mbn",
+            "qcom/sc8280xp/SC8280XP-LENOVO-X13S-tplg.bin",
+            "qcom/sc8280xp/radxa/dragon-q8b/SC8280XP-Radxa-Dragon-Q8B-tplg.bin",
+            "qcom/sc8280xp/radxa/dragon-q8b/qcadsp8280.mbn",
+            "qcom/x1e80100/ASUSTeK/vivobook-16/X1E80100-ASUS-Vivobook-16-tplg.bin",
+            "qcom/x1e80100/ASUSTeK/vivobook-s15/X1E80100-ASUS-Vivobook-S15-tplg.bin",
+            "qcom/x1e80100/ASUSTeK/zenbook-a14/X1E80100-ASUS-Zenbook-A14-tplg.bin",
+            "qcom/x1e80100/LENOVO/21N1/X1E80100-LENOVO-Thinkpad-T14s-tplg.bin",
+            "qcom/x1e80100/LENOVO/21N1/adsp_dtbs.elf",
+            "qcom/x1e80100/LENOVO/21N1/adspr.jsn",
+            "qcom/x1e80100/LENOVO/21N1/adsps.jsn",
+            "qcom/x1e80100/LENOVO/21N1/adspua.jsn",
+            "qcom/x1e80100/LENOVO/21N1/battmgr.jsn",
+            "qcom/x1e80100/LENOVO/21N1/cdsp_dtbs.elf",
+            "qcom/x1e80100/LENOVO/21N1/cdspr.jsn",
+            "qcom/x1e80100/LENOVO/21N1/qcadsp8380.mbn",
+            "qcom/x1e80100/LENOVO/21N1/qccdsp8380.mbn",
+            "qcom/x1e80100/LENOVO/21N1/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/LENOVO/21N1/qcvss8380.mbn",
+            "qcom/x1e80100/LENOVO/83ED/X1E80100-LENOVO-Yoga-Slim7x-tplg.bin",
+            "qcom/x1e80100/LENOVO/83ED/adsp_dtbs.elf",
+            "qcom/x1e80100/LENOVO/83ED/adspr.jsn",
+            "qcom/x1e80100/LENOVO/83ED/adsps.jsn",
+            "qcom/x1e80100/LENOVO/83ED/adspua.jsn",
+            "qcom/x1e80100/LENOVO/83ED/battmgr.jsn",
+            "qcom/x1e80100/LENOVO/83ED/cdsp_dtbs.elf",
+            "qcom/x1e80100/LENOVO/83ED/cdspr.jsn",
+            "qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn",
+            "qcom/x1e80100/LENOVO/83ED/qcav1e8380.mbn",
+            "qcom/x1e80100/LENOVO/83ED/qccdsp8380.mbn",
+            "qcom/x1e80100/LENOVO/83ED/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/LENOVO/83ED/qcvss8380.mbn",
+            "qcom/x1e80100/LENOVO/91B6/X1E80100-LENOVO-IdeaCentre-Mini-tplg.bin",
+            "qcom/x1e80100/X1E001DE-DEVKIT-tplg.bin",
+            "qcom/x1e80100/X1E80100-ACER-SWIFT-14-tplg.bin",
+            "qcom/x1e80100/X1E80100-ASUS-Vivobook-16-tplg.bin",
+            "qcom/x1e80100/X1E80100-ASUS-Vivobook-S15-tplg.bin",
+            "qcom/x1e80100/X1E80100-ASUS-Zenbook-A14-tplg.bin",
+            "qcom/x1e80100/X1E80100-CRD-tplg.bin",
+            "qcom/x1e80100/X1E80100-Dell-Inspiron-14p-7441-tplg.bin",
+            "qcom/x1e80100/X1E80100-Dell-Latitude-7455-tplg.bin",
+            "qcom/x1e80100/X1E80100-Dell-XPS-13-9345-tplg.bin",
+            "qcom/x1e80100/X1E80100-EVK-tplg.bin",
+            "qcom/x1e80100/X1E80100-HP-OMNIBOOK-X14-tplg.bin",
+            "qcom/x1e80100/X1E80100-LENOVO-IdeaCentre-Mini-tplg.bin",
+            "qcom/x1e80100/X1E80100-LENOVO-Thinkpad-T14s-tplg.bin",
+            "qcom/x1e80100/X1E80100-LENOVO-Yoga-Slim7x-tplg.bin",
+            "qcom/x1e80100/X1E80100-MEDION-SPRCHRGD-14-S1-tplg.bin",
+            "qcom/x1e80100/X1E80100-Microsoft-Surface-Pro-11-tplg.bin",
+            "qcom/x1e80100/X1E80100-Romulus-tplg.bin",
+            "qcom/x1e80100/X1E80100-TUXEDO-Elite-14-tplg.bin",
+            "qcom/x1e80100/X1P42100-Microsoft-Surface-Pro-12in-tplg.bin",
+            "qcom/x1e80100/adsp.mbn",
+            "qcom/x1e80100/adsp_dtb.mbn",
+            "qcom/x1e80100/adspr.jsn",
+            "qcom/x1e80100/adsps.jsn",
+            "qcom/x1e80100/adspua.jsn",
+            "qcom/x1e80100/battmgr.jsn",
+            "qcom/x1e80100/cdsp.mbn",
+            "qcom/x1e80100/cdsp_dtb.mbn",
+            "qcom/x1e80100/cdspr.jsn",
+            "qcom/x1e80100/dell/inspiron-14-plus-7441/X1E80100-Dell-Inspiron-14p-7441-tplg.bin",
+            "qcom/x1e80100/dell/latitude-7455/X1E80100-Dell-Latitude-7455-tplg.bin",
+            "qcom/x1e80100/dell/xps13-9345/X1E80100-Dell-XPS-13-9345-tplg.bin",
+            "qcom/x1e80100/dell/xps13-9345/adsp_dtbs.elf",
+            "qcom/x1e80100/dell/xps13-9345/adspr.jsn",
+            "qcom/x1e80100/dell/xps13-9345/adsps.jsn",
+            "qcom/x1e80100/dell/xps13-9345/adspua.jsn",
+            "qcom/x1e80100/dell/xps13-9345/battmgr.jsn",
+            "qcom/x1e80100/dell/xps13-9345/cdsp_dtbs.elf",
+            "qcom/x1e80100/dell/xps13-9345/cdspr.jsn",
+            "qcom/x1e80100/dell/xps13-9345/qcadsp8380.mbn",
+            "qcom/x1e80100/dell/xps13-9345/qccdsp8380.mbn",
+            "qcom/x1e80100/dell/xps13-9345/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/gen70500_zap.mbn",
+            "qcom/x1e80100/hp/omnibook-x14/X1E80100-HP-OMNIBOOK-X14-tplg.bin",
+            "qcom/x1e80100/qupv3fw.elf",
+            "qcom/x1p42100/gen71500_zap.mbn"
+          ],
           "medion-sprchrgd-14-s1-firmware": [
             "qcom/x1e80100/Medion/sprchrgd-14-s1/adsp_dtbs.elf",
             "qcom/x1e80100/Medion/sprchrgd-14-s1/cdsp_dtbs.elf",
@@ -955,98 +1057,6 @@
           ],
           "surface-pro-11-support": [
             "qcom/x1e80100/X1E80100-Microsoft-Surface-Pro-11-tplg.bin"
-          ],
-          "linux-firmware-qcom": [
-            "qcom/glymur/GLYMUR-CRD-tplg.bin",
-            "qcom/glymur/adsp.mbn",
-            "qcom/glymur/adsp_dtb.mbn",
-            "qcom/glymur/adspr.jsn",
-            "qcom/glymur/adsps.jsn",
-            "qcom/glymur/adspua.jsn",
-            "qcom/glymur/cdsp.mbn",
-            "qcom/glymur/cdsp_dtb.mbn",
-            "qcom/glymur/cdspr.jsn",
-            "qcom/glymur/gen80100_zap.mbn",
-            "qcom/sc8280xp/LENOVO/21BX/adspr.jsn",
-            "qcom/sc8280xp/LENOVO/21BX/adspua.jsn",
-            "qcom/sc8280xp/LENOVO/21BX/audioreach-tplg.bin",
-            "qcom/sc8280xp/LENOVO/21BX/battmgr.jsn",
-            "qcom/sc8280xp/LENOVO/21BX/cdspr.jsn",
-            "qcom/sc8280xp/LENOVO/21BX/qcadsp8280.mbn",
-            "qcom/sc8280xp/LENOVO/21BX/qccdsp8280.mbn",
-            "qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn",
-            "qcom/sc8280xp/LENOVO/21BX/qcslpi8280.mbn",
-            "qcom/sc8280xp/LENOVO/21BX/qcvss8280.mbn",
-            "qcom/sc8280xp/SC8280XP-LENOVO-X13S-tplg.bin",
-            "qcom/sc8280xp/radxa/dragon-q8b/qcadsp8280.mbn",
-            "qcom/x1e80100/ASUSTeK/vivobook-16/X1E80100-ASUS-Vivobook-16-tplg.bin",
-            "qcom/x1e80100/ASUSTeK/vivobook-s15/X1E80100-ASUS-Vivobook-S15-tplg.bin",
-            "qcom/x1e80100/ASUSTeK/zenbook-a14/X1E80100-ASUS-Zenbook-A14-tplg.bin",
-            "qcom/x1e80100/LENOVO/21N1/X1E80100-LENOVO-Thinkpad-T14s-tplg.bin",
-            "qcom/x1e80100/LENOVO/21N1/adsp_dtbs.elf",
-            "qcom/x1e80100/LENOVO/21N1/adspr.jsn",
-            "qcom/x1e80100/LENOVO/21N1/adsps.jsn",
-            "qcom/x1e80100/LENOVO/21N1/adspua.jsn",
-            "qcom/x1e80100/LENOVO/21N1/battmgr.jsn",
-            "qcom/x1e80100/LENOVO/21N1/cdsp_dtbs.elf",
-            "qcom/x1e80100/LENOVO/21N1/cdspr.jsn",
-            "qcom/x1e80100/LENOVO/21N1/qcadsp8380.mbn",
-            "qcom/x1e80100/LENOVO/21N1/qccdsp8380.mbn",
-            "qcom/x1e80100/LENOVO/21N1/qcdxkmsuc8380.mbn",
-            "qcom/x1e80100/LENOVO/21N1/qcvss8380.mbn",
-            "qcom/x1e80100/LENOVO/83ED/X1E80100-LENOVO-Yoga-Slim7x-tplg.bin",
-            "qcom/x1e80100/LENOVO/83ED/adsp_dtbs.elf",
-            "qcom/x1e80100/LENOVO/83ED/adspr.jsn",
-            "qcom/x1e80100/LENOVO/83ED/adsps.jsn",
-            "qcom/x1e80100/LENOVO/83ED/adspua.jsn",
-            "qcom/x1e80100/LENOVO/83ED/battmgr.jsn",
-            "qcom/x1e80100/LENOVO/83ED/cdspr.jsn",
-            "qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn",
-            "qcom/x1e80100/LENOVO/83ED/qcav1e8380.mbn",
-            "qcom/x1e80100/LENOVO/83ED/qccdsp8380.mbn",
-            "qcom/x1e80100/LENOVO/83ED/qcdxkmsuc8380.mbn",
-            "qcom/x1e80100/LENOVO/83ED/qcvss8380.mbn",
-            "qcom/x1e80100/X1E001DE-DEVKIT-tplg.bin",
-            "qcom/x1e80100/X1E80100-ASUS-Vivobook-16-tplg.bin",
-            "qcom/x1e80100/X1E80100-ASUS-Vivobook-S15-tplg.bin",
-            "qcom/x1e80100/X1E80100-ASUS-Zenbook-A14-tplg.bin",
-            "qcom/x1e80100/X1E80100-CRD-tplg.bin",
-            "qcom/x1e80100/X1E80100-Dell-Inspiron-14p-7441-tplg.bin",
-            "qcom/x1e80100/X1E80100-Dell-Latitude-7455-tplg.bin",
-            "qcom/x1e80100/X1E80100-Dell-XPS-13-9345-tplg.bin",
-            "qcom/x1e80100/X1E80100-EVK-tplg.bin",
-            "qcom/x1e80100/X1E80100-HP-OMNIBOOK-X14-tplg.bin",
-            "qcom/x1e80100/X1E80100-LENOVO-Thinkpad-T14s-tplg.bin",
-            "qcom/x1e80100/X1E80100-LENOVO-Yoga-Slim7x-tplg.bin",
-            "qcom/x1e80100/X1E80100-Romulus-tplg.bin",
-            "qcom/x1e80100/X1E80100-TUXEDO-Elite-14-tplg.bin",
-            "qcom/x1e80100/X1P42100-Microsoft-Surface-Pro-12in-tplg.bin",
-            "qcom/x1e80100/adsp.mbn",
-            "qcom/x1e80100/adsp_dtb.mbn",
-            "qcom/x1e80100/adspr.jsn",
-            "qcom/x1e80100/adsps.jsn",
-            "qcom/x1e80100/adspua.jsn",
-            "qcom/x1e80100/battmgr.jsn",
-            "qcom/x1e80100/cdsp.mbn",
-            "qcom/x1e80100/cdsp_dtb.mbn",
-            "qcom/x1e80100/cdspr.jsn",
-            "qcom/x1e80100/dell/inspiron-14-plus-7441/X1E80100-Dell-Inspiron-14p-7441-tplg.bin",
-            "qcom/x1e80100/dell/latitude-7455/X1E80100-Dell-Latitude-7455-tplg.bin",
-            "qcom/x1e80100/dell/xps13-9345/X1E80100-Dell-XPS-13-9345-tplg.bin",
-            "qcom/x1e80100/dell/xps13-9345/adsp_dtbs.elf",
-            "qcom/x1e80100/dell/xps13-9345/adspr.jsn",
-            "qcom/x1e80100/dell/xps13-9345/adsps.jsn",
-            "qcom/x1e80100/dell/xps13-9345/adspua.jsn",
-            "qcom/x1e80100/dell/xps13-9345/battmgr.jsn",
-            "qcom/x1e80100/dell/xps13-9345/cdsp_dtbs.elf",
-            "qcom/x1e80100/dell/xps13-9345/cdspr.jsn",
-            "qcom/x1e80100/dell/xps13-9345/qcadsp8380.mbn",
-            "qcom/x1e80100/dell/xps13-9345/qccdsp8380.mbn",
-            "qcom/x1e80100/dell/xps13-9345/qcdxkmsuc8380.mbn",
-            "qcom/x1e80100/gen70500_zap.mbn",
-            "qcom/x1e80100/hp/omnibook-x14/X1E80100-HP-OMNIBOOK-X14-tplg.bin",
-            "qcom/x1e80100/qupv3fw.elf",
-            "qcom/x1p42100/gen71500_zap.mbn"
           ]
         }
       }
@@ -1065,14 +1075,14 @@
     "ids": 47,
     "firmware": 43,
     "googlebooks": 2,
-    "acpi": 34,
+    "acpi": 35,
     "acpiWanted": 31,
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 34,
+      "edge": 35,
       "pr": 0,
-      "carry": 4,
+      "carry": 3,
       "needs-deviceTree": 31,
       "needs-ids": 6,
       "needs-firmware": 8
@@ -1233,17 +1243,17 @@
         }
       },
       "firmware": {
-        "omarchy": 40,
+        "omarchy": 41,
         "fromUpstream": 1,
-        "added": 39,
+        "added": 40,
         "missing": 0,
         "pull": 0,
-        "available": 3,
+        "available": 2,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 40
+          "edge": 41
         },
         "models": {
           "fromUpstream": [
@@ -1279,6 +1289,7 @@
             "hp-omnibook-ultra-14-kg0",
             "hp-omnibook-x-16-cp",
             "lenovo-ideacentre-mini-x-01q8x10",
+            "lenovo-yoga-slim-7x-14q8x9",
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
             "medion-sprchrgd-14-s1",
             "microsoft-surface-laptop-7-13",
@@ -1293,18 +1304,17 @@
           "pull": [],
           "available": [
             "asus-zenbook-14-ux3480qa",
-            "lenovo-yoga-slim-7x-14q8x9",
             "microsoft-surface-laptop-8-15"
           ]
         }
       },
       "all": {
-        "omarchy": 35,
+        "omarchy": 36,
         "fromUpstream": 1,
-        "added": 34,
+        "added": 35,
         "missing": 0,
         "pull": 0,
-        "available": 4,
+        "available": 3,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1337,6 +1347,7 @@
             "hp-omnibook-ultra-14-kg0",
             "hp-omnibook-x-16-cp",
             "lenovo-ideacentre-mini-x-01q8x10",
+            "lenovo-yoga-slim-7x-14q8x9",
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
             "medion-sprchrgd-14-s1",
             "microsoft-surface-laptop-7-13",
@@ -1350,7 +1361,6 @@
           "available": [
             "asus-proart-pz13-ht5306",
             "asus-zenbook-14-ux3480qa",
-            "lenovo-yoga-slim-7x-14q8x9",
             "microsoft-surface-laptop-13in-1st-edition"
           ]
         }
@@ -2110,8 +2120,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/anduril/qualcomm-glymur"
+        ]
       },
       "variants": [
         {
@@ -7963,21 +7975,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "partial",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "linux-firmware-qcom"
+        ],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "elsewhere"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -11195,6 +11207,9 @@
     "deviceTrees": [],
     "ids": [],
     "firmware": [],
-    "acpi": []
+    "acpi": [
+      "hardware-reports/acer/swift-sf14-11t",
+      "hardware-reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
+    ]
   }
 }
