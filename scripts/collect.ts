@@ -3,7 +3,7 @@
 //
 // Sources: device trees in Linux releases and linux-next, hardware IDs in systemd
 // releases and Ubuntu's stubble, firmware folders in linux-firmware, and the ACPI
-// dumps collected by the aarch64-laptops project.
+// dumps collected by the aarch64-laptops project, linux-surface and the ARM installer's reports.
 
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
@@ -350,20 +350,75 @@ async function collectOmarchy() {
   return { channels, kernelAddedDeviceTrees: recipe.added, carriedIds: recipe.ids, image, pulls: await collectOmarchyPulls() };
 }
 
-// ACPI dumps from aarch64-laptops, by misc/ folder, from the ARM installer's hardware reports, by
-// reports/<vendor>/<model> folder as hardware-reports/<vendor>/<model>, since one model can get several reports,
-// and from this repository's acpi/<folder> as arewearmyet/<folder>, for dumps sent elsewhere but not merged yet
-async function collectAcpiDumps() {
-  const [laptops, reports] = await Promise.all([
-    github('repos/aarch64-laptops/build/git/trees/HEAD?recursive=1'),
-    github('repos/turbineBMW/omarchy-hardware-reports/git/trees/HEAD?recursive=1'),
+// ACPI dumps, each with where scripts/archive.ts fetches its tables (repo, ref, dir):
+// - aarch64-laptops' misc/<folder>, merged, or proposed in a pull request that wasn't merged, open or closed, for
+//   a folder master doesn't have
+// - linux-surface's dumps of the Arm Surfaces, as linux-surface/<folder>
+// - the ARM installer's hardware reports, merged or in an open pull request, by reports/<vendor>/<model> folder as
+//   hardware-reports/<vendor>/<model>, since one model can get several reports; a report the installer couldn't
+//   name (unknown/unknown) by its own folder
+// - this repository's acpi/<folder> as arewearmyet/<folder>, for dumps published here first
+const LAPTOPS = 'aarch64-laptops/build';
+const SURFACE = 'linux-surface/acpidumps';
+const REPORTS = 'turbineBMW/omarchy-hardware-reports';
+const SURFACE_ARM = /_qcom$|_5g$|^windows_dev_kit|^surface_pro_x/;
+
+type AcpiDump = { folder: string; url: string; repo?: string; ref?: string; dir?: string; pull?: { number: number; state: string; by: string } };
+
+async function pages(path: string): Promise<any[]> {
+  const all: any[] = [];
+  for (let page = 1; ; page++) {
+    const batch = (await github(`${path}${path.includes('?') ? '&' : '?'}per_page=100&page=${page}`)) ?? [];
+    all.push(...batch);
+    if (batch.length < 100) return all;
+  }
+}
+
+async function collectAcpiDumps(): Promise<AcpiDump[]> {
+  const head = (repo: string) => github(`repos/${repo}/commits/HEAD`).then((commit) => commit.sha as string);
+  const blobs = (repo: string, ref: string) => github(`repos/${repo}/git/trees/${ref}?recursive=1`).then((tree) => tree.tree.filter((entry: { type: string }) => entry.type === 'blob').map((entry: { path: string }) => entry.path) as string[]);
+  const [laptopsRef, reportsRef, surfaceRef] = await Promise.all([head(LAPTOPS), head(REPORTS), head(SURFACE)]);
+  const [laptops, reports, surface, laptopPulls, reportPulls] = await Promise.all([
+    blobs(LAPTOPS, laptopsRef), blobs(REPORTS, reportsRef), blobs(SURFACE, surfaceRef), pages(`repos/${LAPTOPS}/pulls?state=all`), pages(`repos/${REPORTS}/pulls?state=open`),
   ]);
-  const paths = (tree: { tree: { path: string }[] }) => tree.tree.map((entry) => entry.path);
-  const misc = new Set(paths(laptops).filter((path) => /^misc\/[^/]+\/.*dsdt\.(dat|bin|aml|dsl)$/i.test(path)).map((path) => path.split('/')[1]));
-  const reported = new Set(paths(reports).map((path) => path.match(/^reports\/([^/]+\/[^/]+)\/[^/]+\/acpi\/dsdt\.(dat|bin|aml)$/i)?.[1]).filter(Boolean) as string[]);
+
+  const miscDump = (path: string) => path.match(/^misc\/([^/]+)\/.*dsdt\.(dat|bin|aml|dsl)$/i)?.[1];
+  const misc = new Set(laptops.map(miscDump).filter(Boolean) as string[]);
+  const proposed = new Map<string, AcpiDump>();
+  // Newest first, so a folder proposed twice comes from the newer pull request
+  for (const pull of laptopPulls.filter((pull) => !pull.merged_at).sort((a, b) => b.number - a.number)) {
+    const files = await pages(`repos/${LAPTOPS}/pulls/${pull.number}/files`);
+    for (const folder of new Set(files.filter((file) => file.status !== 'removed').map((file) => miscDump(file.filename)).filter(Boolean) as string[])) {
+      if (misc.has(folder) || proposed.has(folder)) continue;
+      proposed.set(folder, { folder, url: pull.html_url, repo: LAPTOPS, ref: pull.head.sha, dir: `misc/${folder}`, pull: { number: pull.number, state: pull.state, by: pull.user.login } });
+    }
+  }
+
+  const surfaceFolders = new Set(surface.map((path) => path.split('/')).filter((parts) => parts.length > 1 && SURFACE_ARM.test(parts[0])).map((parts) => parts[0]));
+
+  const reportDump = (path: string) => path.match(/^reports\/([^/]+\/[^/]+)\/([^/]+)\/acpi\/dsdt\.(dat|bin|aml)$/i);
+  const reportKey = (model: string, id: string) => (model === 'unknown/unknown' ? `${model}/${id}` : model);
+  const reported = new Map<string, AcpiDump>();
+  for (const [, model, id] of reports.map(reportDump).filter(Boolean) as RegExpMatchArray[]) {
+    const key = reportKey(model, id);
+    reported.set(key, { folder: `hardware-reports/${key}`, url: `https://github.com/${REPORTS}/tree/main/reports/${key}` });
+  }
+  // Merged reports come first, so a model with both links the merged ones
+  const pending: AcpiDump[] = [];
+  for (const pull of reportPulls) {
+    for (const [, model, id] of (await blobs(REPORTS, pull.head.sha)).map(reportDump).filter(Boolean) as RegExpMatchArray[]) {
+      if (reports.some((path) => path.startsWith(`reports/${model}/${id}/`))) continue;
+      const key = reportKey(model, id);
+      pending.push({ folder: `hardware-reports/${key}`, url: pull.html_url, repo: REPORTS, ref: pull.head.sha, dir: `reports/${model}/${id}`, pull: { number: pull.number, state: pull.state, by: pull.user.login } });
+    }
+  }
+
   return [
-    ...[...misc].sort().map((folder) => ({ folder, url: `https://github.com/aarch64-laptops/build/tree/HEAD/misc/${folder}` })),
-    ...[...reported].sort().map((model) => ({ folder: `hardware-reports/${model}`, url: `https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/${model}` })),
+    ...[...misc].sort().map((folder) => ({ folder, url: `https://github.com/${LAPTOPS}/tree/HEAD/misc/${folder}`, repo: LAPTOPS, ref: laptopsRef, dir: `misc/${folder}` })),
+    ...[...proposed.values()].sort((a, b) => a.folder.localeCompare(b.folder)),
+    ...[...surfaceFolders].sort().map((folder) => ({ folder: `linux-surface/${folder}`, url: `https://github.com/${SURFACE}/tree/HEAD/${folder}`, repo: SURFACE, ref: surfaceRef, dir: folder })),
+    ...[...reported.values()].sort((a, b) => a.folder.localeCompare(b.folder)),
+    ...pending,
     ...(existsSync('acpi') ? readdirSync('acpi').filter((folder) => existsSync(join('acpi', folder, 'dsdt.dat'))).sort() : [])
       .map((folder) => ({ folder: `arewearmyet/${folder}`, url: `https://github.com/birkskyum/arewearmyet/tree/main/acpi/${folder}` })),
   ];

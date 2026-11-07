@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T21:05:38.963Z",
+  "collected": "2026-11-07T22:10:28.725Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -1116,7 +1116,7 @@
     "ids": 52,
     "firmware": 42,
     "googlebooks": 2,
-    "acpi": 37,
+    "acpi": 41,
     "acpiWanted": 29,
     "outOfBox": {
       "stable": 1,
@@ -1904,7 +1904,8 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-sfa14-11"
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-sfa14-11",
+          "https://github.com/aarch64-laptops/build/pull/163"
         ]
       },
       "variants": [
@@ -3493,8 +3494,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/pull/178"
+        ]
       },
       "variants": [
         {
@@ -3812,7 +3815,7 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/asus-ascent-qn10"
+          "https://github.com/aarch64-laptops/build/pull/175"
         ]
       },
       "variants": [
@@ -4070,8 +4073,10 @@
         "firmwareFolders": [
           "qcom/glymur/ASUSTeK/UX3407NA"
         ],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/pull/174"
+        ]
       },
       "variants": [
         {
@@ -8929,7 +8934,8 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-romulus13_and_15"
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-romulus13_and_15",
+          "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_laptop_7_qcom"
         ]
       },
       "variants": [
@@ -9055,7 +9061,8 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-romulus13_and_15"
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-romulus13_and_15",
+          "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_laptop_7_qcom"
         ]
       },
       "variants": [
@@ -9277,7 +9284,8 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-11"
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-11",
+          "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_11_qcom"
         ]
       },
       "variants": [
@@ -9578,13 +9586,15 @@
       ],
       "chips": [
         "X2P-64-100",
-        "X2E-78-100"
+        "X2E-78-100",
+        "X2E-80-100"
       ],
       "status": null,
       "sources": [
         "https://learn.microsoft.com/en-us/surface/surface-system-sku-reference",
         "https://www.notebookcheck.net/Microsoft-Surface-Laptop-8-13-8-Reviews-and-Specs.1336515.0.html",
-        "https://www.cdw.com/product/microsoft-surface-laptop-for-business-8th-edition-copilot-pc-13.8/9186835"
+        "https://www.cdw.com/product/microsoft-surface-laptop-for-business-8th-edition-copilot-pc-13.8/9186835",
+        "https://slickdeals.net/f/19822497-microsoft-surface-laptop-8-2026-13-8-3-2-120hz-ips-touch-snapdragon-x2-elite-x2e-80-100-16gb-lpddr5x-512gb-ssd-1199-99"
       ],
       "notes": null,
       "outcome": "should",
@@ -9628,8 +9638,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/pull/176"
+        ]
       },
       "variants": [
         {
@@ -9726,8 +9738,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/20"
+        ]
       },
       "variants": [
         {
@@ -10848,7 +10862,8 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-9-5G"
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-9-5G",
+          "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_9_5g"
         ]
       },
       "variants": [
@@ -10962,7 +10977,8 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-devkit-2023"
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-devkit-2023",
+          "https://github.com/linux-surface/acpidumps/tree/HEAD/windows_dev_kit_2023"
         ]
       },
       "variants": [

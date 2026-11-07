@@ -8,9 +8,11 @@
 #                  out of tree; ids are systemd hardware ID files to check even
 #                  when they name a different compatible
 #   firmware       linux-firmware folders with this model's files
-#   acpi           aarch64-laptops/build misc/ folders with its ACPI dump,
-#                  hardware-reports/<vendor>/<model> for the ARM installer's reports, or
-#                  arewearmyet/<folder> for a dump kept in acpi/ until it's merged elsewhere
+#   acpi           aarch64-laptops/build misc/ folders with its ACPI dump, merged or in a
+#                  pull request, linux-surface/<folder> for linux-surface's acpidumps,
+#                  hardware-reports/<vendor>/<model> for the ARM installer's reports (with
+#                  /<report> for one it couldn't name), or arewearmyet/<folder> for a dump
+#                  published in acpi/ first
 #   firmware_download  the vendor's driver page whose package has every firmware
 #                  file its device tree loads
 #   firmware_posted  the linux-firmware merge request adding its files, until it's merged
@@ -115,7 +117,7 @@ models:
     model_numbers: ["SFA14-11"]
     variants:
       - { model: "SFA14-11", chip: "X1E-78-100", compatible: "acer,swift-go-sfa14-11", ids: ["x1e78100-acer-sfa14-11.json"] }
-    acpi: ["acer-sfa14-11"]
+    acpi: ["acer-sfa14-11", "acer-swift-sfa14-11"]
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261030064149.14736-3-kaipeng94@gmail.com/"
     sources:
       - https://www.ithome.com/0/775/814.htm
@@ -357,6 +359,7 @@ models:
     variants:
       - { model: "UX3480QA", chip: "X1-26-100", compatible: "asus,zenbook-14-ux3480qa" }
     firmware: ["qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa"]
+    acpi: ["asus-zenbook-14-ux3480qa"]
     firmware_download: "https://www.asus.com/supportonly/ux3480qa/helpdesk_download/"
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2273"
     devicetree_files: ["https://raw.githubusercontent.com/omacom/omarchy-pkgs/2aa4b94c/pkgbuilds/linux-omarchy-aarch64/2751-arm64-dts-qcom-Add-the-ASUS-Zenbook-14-UX3480QA.patch#x1p42100-asus-zenbook-14-ux3480qa.dts"]
@@ -395,7 +398,7 @@ models:
     model_numbers: ["QN10", "90MS03E2-M000B0"]
     variants:
       - { chip: "X2E-88-100", compatible: "asus,ascent-qn10" }
-    acpi: ["arewearmyet/asus-ascent-qn10"]
+    acpi: ["asus-qn10-16e"]
     devicetree_out_of_tree: "https://gist.github.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce"
     devicetree_files:
       - "https://gist.githubusercontent.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce/raw/glymur-asus-ascent-qn10.dts"
@@ -438,6 +441,7 @@ models:
     variants:
       - { model: "UX3407NA", compatible: "asus,zenbook-a14-ux3407na" }
     firmware: ["qcom/glymur/ASUSTeK/UX3407NA"]
+    acpi: ["asus-zenbook-a14-ux3407na"]
     sources:
       - https://www.asus.com/laptops/for-home/zenbook/asus-zenbook-a14-ux3407/techspec/
       - https://www.notebookcheck.net/Asus-Zenbook-A14-Laptop-Review-Snapdragon-X2-Elite-against-the-MacBook-Air-M5.1261944.0.html
@@ -1144,7 +1148,7 @@ models:
     model_numbers: ["2036"]
     variants:
       - { compatible: "microsoft,romulus13" }
-    acpi: ["microsoft-surface-romulus13_and_15"]
+    acpi: ["microsoft-surface-romulus13_and_15", "linux-surface/surface_laptop_7_qcom"]
     reports:
       - { state: "problems", note: "The screen stays dark after install; the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.", checked: "2026-10" }
     sources:
@@ -1161,7 +1165,7 @@ models:
     model_numbers: ["2037"]
     variants:
       - { chip: "X1E-80-100", compatible: "microsoft,romulus15" }
-    acpi: ["microsoft-surface-romulus13_and_15"]
+    acpi: ["microsoft-surface-romulus13_and_15", "linux-surface/surface_laptop_7_qcom"]
     reports:
       - { state: "problems", note: "The screen stays dark after install; the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.", checked: "2026-10" }
     sources:
@@ -1198,7 +1202,7 @@ models:
     variants:
       - { model: "OLED", chip: "X1E-80-100", compatible: "microsoft,denali-oled" }
       - { model: "LCD", chip: "X1P-64-100", compatible: "microsoft,denali-lcd" }
-    acpi: ["microsoft-surface-pro-11"]
+    acpi: ["microsoft-surface-pro-11", "linux-surface/surface_pro_11_qcom"]
     reports:
       - { state: "works", variant: "OLED", note: "Boots on Omarchy's kernel; suspend, both cameras, pen and touch work.", checked: "2026-10" }
     sources:
@@ -1240,15 +1244,17 @@ models:
     generation: x2
     team_has_one: true
     released: "2026-06"
-    chips: ["X2P-64-100", "X2E-78-100"]
+    chips: ["X2P-64-100", "X2E-78-100", "X2E-80-100"]
     model_numbers: ["2036", "2138"]
     variants:
       - { compatible: "microsoft,surface-laptop-8-13p8" }
+    acpi: ["microsoft-surface-8-x2e-80-100"]
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261027-mahua-surface-laptop-v2-3-7dd903a12d22@oss.qualcomm.com/"
     sources:
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
       - https://www.notebookcheck.net/Microsoft-Surface-Laptop-8-13-8-Reviews-and-Specs.1336515.0.html
       - https://www.cdw.com/product/microsoft-surface-laptop-for-business-8th-edition-copilot-pc-13.8/9186835
+      - https://slickdeals.net/f/19822497-microsoft-surface-laptop-8-2026-13-8-3-2-120hz-ips-touch-snapdragon-x2-elite-x2e-80-100-16gb-lpddr5x-512gb-ssd-1199-99
 
   - id: microsoft-surface-laptop-8-15
     vendor: "Microsoft"
@@ -1259,6 +1265,7 @@ models:
     model_numbers: ["2037", "2139"]
     variants:
       - { model: "2037", chip: "X2E-78-100", compatible: "microsoft,surface-laptop-8-15" }
+    acpi: ["hardware-reports/unknown/unknown/94bdf4be"]
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2276"
     devicetree_files:
       - "data/device-trees/microsoft-surface-laptop-8-15/glymur-microsoft-surface-laptop8-15.dts"
@@ -1431,7 +1438,7 @@ models:
     model_numbers: ["1996", "1997"]
     variants:
       - { compatible: "microsoft,arcata" }
-    acpi: ["microsoft-surface-pro-9-5G"]
+    acpi: ["microsoft-surface-pro-9-5G", "linux-surface/surface_pro_9_5g"]
     sources:
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
 
@@ -1445,7 +1452,7 @@ models:
     model_numbers: ["2043"]
     variants:
       - { compatible: "microsoft,blackrock" }
-    acpi: ["microsoft-devkit-2023"]
+    acpi: ["microsoft-devkit-2023", "linux-surface/windows_dev_kit_2023"]
     sources:
       - https://en.wikipedia.org/wiki/Windows_Dev_Kit_2023
       - https://www.cnx-software.com/2022/10/25/600-windows-dev-kit-2023-is-powered-by-qualcomm-snapdragon-8cx-gen-3-processor/
@@ -1666,4 +1673,4 @@ nvidia:
 ignore:
   ids: ["glymur-crd.json", "x1e80100-crd.json", "msm8998-lenovo-miix-630-81f1.json", "sc7180-acer-aspire1.json", "sc7180-ecs-liva-qc710.json", "sc8180x-lenovo-flex-5g-81xe.json", "sc8180x-lenovo-flex-5g-82ak.json", "sdm850-lenovo-yoga-c630.json", "sc8280xp-radxa-dragon-q8b.json"]
   firmware: ["qcom/sc8280xp/radxa/dragon-q8b"]
-  acpi: ["acer-aspire-1", "acer-gateway-gwtn133-1", "acer-spin-7-sp714-61na", "apcsilmic-dot-1", "asus-tp370ql", "dell-inspiron-14-3420", "ecs-liva-qc710", "hp-envy-x2", "huawei-matebooke-2019", "lenovo-flex-5g", "lenovo-ideapad-5g-14q8x05", "lenovo-l10w", "lenovo-miix-630", "lenovo-yoga-c630", "microsoft-surface-prox", "samsung-galaxy-book-go", "samsung-galaxy-book-go-5g", "samsung-galaxy-book-s", "samsung-galaxybook2", "samsung-galaxybook2-go", "tcl-book-14-go", "xiaomi-book-s"]
+  acpi: ["acer-aspire-1", "acer-gateway-gwtn133-1", "acer-spin-7-sp714-61na", "apcsilmic-dot-1", "asus-tp370ql", "dell-inspiron-14-3420", "ecs-liva-qc710", "hp-envy-x2", "huawei-matebooke-2019", "lenovo-flex-5g", "lenovo-ideapad-5g", "lenovo-ideapad-5g-14q8x05", "lenovo-l10w", "lenovo-miix-630", "lenovo-yoga-c630", "microsoft-surface-prox", "samsung-galaxy-book-go", "samsung-galaxy-book-go-5g", "samsung-galaxy-book-s", "samsung-galaxybook2", "samsung-galaxybook2-go", "tcl-book-14-go", "xiaomi-book-s", "linux-surface/surface_pro_x_sq1", "linux-surface/surface_pro_x_sq2"]

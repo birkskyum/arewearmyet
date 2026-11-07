@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T21:05:38.963Z",
+  "collected": "2026-11-07T22:10:28.725Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -3618,247 +3618,544 @@
   "acpiDumps": [
     {
       "folder": "acer-aspire-1",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-aspire-1"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-aspire-1",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/acer-aspire-1"
     },
     {
       "folder": "acer-gateway-gwtn133-1",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-gateway-gwtn133-1"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-gateway-gwtn133-1",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/acer-gateway-gwtn133-1"
     },
     {
       "folder": "acer-sfa14-11",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-sfa14-11"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-sfa14-11",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/acer-sfa14-11"
     },
     {
       "folder": "acer-spin-7-sp714-61na",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-spin-7-sp714-61na"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-spin-7-sp714-61na",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/acer-spin-7-sp714-61na"
     },
     {
       "folder": "apcsilmic-dot-1",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/apcsilmic-dot-1"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/apcsilmic-dot-1",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/apcsilmic-dot-1"
     },
     {
       "folder": "asus-tp370ql",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-tp370ql"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-tp370ql",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/asus-tp370ql"
     },
     {
       "folder": "asus-vivobook-s-15",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-vivobook-s-15"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-vivobook-s-15",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/asus-vivobook-s-15"
     },
     {
       "folder": "asus-vivobook-s15-q5507",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-vivobook-s15-q5507"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-vivobook-s15-q5507",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/asus-vivobook-s15-q5507"
     },
     {
       "folder": "asus-vivobook-s15-s5507",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-vivobook-s15-s5507"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-vivobook-s15-s5507",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/asus-vivobook-s15-s5507"
     },
     {
       "folder": "asus-zenbook-a14-ux3407q",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-zenbook-a14-ux3407q"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-zenbook-a14-ux3407q",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/asus-zenbook-a14-ux3407q"
     },
     {
       "folder": "asus-zenbook-a16-ux3607oa",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-zenbook-a16-ux3607oa"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-zenbook-a16-ux3607oa",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/asus-zenbook-a16-ux3607oa"
     },
     {
       "folder": "dell-inspiron-14-3420",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-3420"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-3420",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/dell-inspiron-14-3420"
     },
     {
       "folder": "dell-inspiron-14-5441-x1p-42-100",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-5441-x1p-42-100"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-5441-x1p-42-100",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/dell-inspiron-14-5441-x1p-42-100"
     },
     {
       "folder": "dell-inspiron-14-7441-x1e-80-100",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-7441-x1e-80-100"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-7441-x1e-80-100",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/dell-inspiron-14-7441-x1e-80-100"
     },
     {
       "folder": "dell-inspron-14-5441-x1p-64-100",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspron-14-5441-x1p-64-100"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspron-14-5441-x1p-64-100",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/dell-inspron-14-5441-x1p-64-100"
     },
     {
       "folder": "dell-latitude-5455",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-latitude-5455"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-latitude-5455",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/dell-latitude-5455"
     },
     {
       "folder": "dell-latitude-7455",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-latitude-7455"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-latitude-7455",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/dell-latitude-7455"
     },
     {
       "folder": "dell-xps-9345",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-xps-9345"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-xps-9345",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/dell-xps-9345"
     },
     {
       "folder": "ecs-liva-qc710",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/ecs-liva-qc710"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/ecs-liva-qc710",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/ecs-liva-qc710"
     },
     {
       "folder": "honor-magicbook-art-14",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/honor-magicbook-art-14"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/honor-magicbook-art-14",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/honor-magicbook-art-14"
     },
     {
       "folder": "honor-mro-521",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/honor-mro-521"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/honor-mro-521",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/honor-mro-521"
     },
     {
       "folder": "hp-elitebook-6-g1q",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-elitebook-6-g1q"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-elitebook-6-g1q",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/hp-elitebook-6-g1q"
     },
     {
       "folder": "hp-elitebook-ultra-g1q",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-elitebook-ultra-g1q"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-elitebook-ultra-g1q",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/hp-elitebook-ultra-g1q"
     },
     {
       "folder": "hp-envy-x2",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-envy-x2"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-envy-x2",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/hp-envy-x2"
     },
     {
       "folder": "hp-omnibook-5-14-he0xxx",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-omnibook-5-14-he0xxx"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-omnibook-5-14-he0xxx",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/hp-omnibook-5-14-he0xxx"
     },
     {
       "folder": "hp-omnibook-x14-fe0xxx",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-omnibook-x14-fe0xxx"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-omnibook-x14-fe0xxx",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/hp-omnibook-x14-fe0xxx"
     },
     {
       "folder": "huawei-matebooke-2019",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/huawei-matebooke-2019"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/huawei-matebooke-2019",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/huawei-matebooke-2019"
     },
     {
       "folder": "huawei-matebooke-go",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/huawei-matebooke-go"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/huawei-matebooke-go",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/huawei-matebooke-go"
     },
     {
       "folder": "lenovo-flex-5g",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-flex-5g"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-flex-5g",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/lenovo-flex-5g"
     },
     {
       "folder": "lenovo-ideacentre-01q8x10",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideacentre-01q8x10"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideacentre-01q8x10",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/lenovo-ideacentre-01q8x10"
     },
     {
       "folder": "lenovo-ideapad-5-2in1-83GH-14Q8X9",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideapad-5-2in1-83GH-14Q8X9"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideapad-5-2in1-83GH-14Q8X9",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/lenovo-ideapad-5-2in1-83GH-14Q8X9"
     },
     {
       "folder": "lenovo-ideapad-5-slim-14Q8X9",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideapad-5-slim-14Q8X9"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideapad-5-slim-14Q8X9",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/lenovo-ideapad-5-slim-14Q8X9"
     },
     {
       "folder": "lenovo-ideapad-5g-14q8x05",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideapad-5g-14q8x05"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideapad-5g-14q8x05",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/lenovo-ideapad-5g-14q8x05"
     },
     {
       "folder": "lenovo-ideapad-slim3x-15q8x10-WCN7850",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideapad-slim3x-15q8x10-WCN7850"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideapad-slim3x-15q8x10-WCN7850",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/lenovo-ideapad-slim3x-15q8x10-WCN7850"
     },
     {
       "folder": "lenovo-l10w",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-l10w"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-l10w",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/lenovo-l10w"
     },
     {
       "folder": "lenovo-miix-630",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-miix-630"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-miix-630",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/lenovo-miix-630"
     },
     {
       "folder": "lenovo-thinkbook-16-g7-qoy",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-thinkbook-16-g7-qoy"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-thinkbook-16-g7-qoy",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/lenovo-thinkbook-16-g7-qoy"
     },
     {
       "folder": "lenovo-thinkpad-t14s",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-thinkpad-t14s"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-thinkpad-t14s",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/lenovo-thinkpad-t14s"
     },
     {
       "folder": "lenovo-thinkpad-t14s-120hz-64gb",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-thinkpad-t14s-120hz-64gb"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-thinkpad-t14s-120hz-64gb",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/lenovo-thinkpad-t14s-120hz-64gb"
     },
     {
       "folder": "lenovo-thinkpad-x13s",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-thinkpad-x13s"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-thinkpad-x13s",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/lenovo-thinkpad-x13s"
     },
     {
       "folder": "lenovo-xiaoxin-14-q8x9",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-xiaoxin-14-q8x9"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-xiaoxin-14-q8x9",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/lenovo-xiaoxin-14-q8x9"
     },
     {
       "folder": "lenovo-yoga-c630",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-yoga-c630"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-yoga-c630",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/lenovo-yoga-c630"
     },
     {
       "folder": "lenovo-yoga-slim-7x",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-yoga-slim-7x"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-yoga-slim-7x",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/lenovo-yoga-slim-7x"
     },
     {
       "folder": "lenovo-yoga-slim-7x-14Q8Y11",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-yoga-slim-7x-14Q8Y11"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-yoga-slim-7x-14Q8Y11",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/lenovo-yoga-slim-7x-14Q8Y11"
     },
     {
       "folder": "medion-14-s1-elite-sprchrgd",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/medion-14-s1-elite-sprchrgd"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/medion-14-s1-elite-sprchrgd",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/medion-14-s1-elite-sprchrgd"
     },
     {
       "folder": "medion-14-s1-sprchrgd",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/medion-14-s1-sprchrgd"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/medion-14-s1-sprchrgd",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/medion-14-s1-sprchrgd"
     },
     {
       "folder": "microsoft-devkit-2023",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-devkit-2023"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-devkit-2023",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/microsoft-devkit-2023"
     },
     {
       "folder": "microsoft-surface-pro-11",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-11"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-11",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/microsoft-surface-pro-11"
     },
     {
       "folder": "microsoft-surface-pro-12-in",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-12-in"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-12-in",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/microsoft-surface-pro-12-in"
     },
     {
       "folder": "microsoft-surface-pro-9-5G",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-9-5G"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-9-5G",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/microsoft-surface-pro-9-5G"
     },
     {
       "folder": "microsoft-surface-prox",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-prox"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-prox",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/microsoft-surface-prox"
     },
     {
       "folder": "microsoft-surface-romulus13_and_15",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-romulus13_and_15"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-romulus13_and_15",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/microsoft-surface-romulus13_and_15"
     },
     {
       "folder": "qualcomm-snapdragon-dev-kit",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/qualcomm-snapdragon-dev-kit"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/qualcomm-snapdragon-dev-kit",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/qualcomm-snapdragon-dev-kit"
     },
     {
       "folder": "samsung-galaxy-book-go",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxy-book-go"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxy-book-go",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/samsung-galaxy-book-go"
     },
     {
       "folder": "samsung-galaxy-book-go-5g",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxy-book-go-5g"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxy-book-go-5g",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/samsung-galaxy-book-go-5g"
     },
     {
       "folder": "samsung-galaxy-book-s",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxy-book-s"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxy-book-s",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/samsung-galaxy-book-s"
     },
     {
       "folder": "samsung-galaxybook2",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxybook2"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxybook2",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/samsung-galaxybook2"
     },
     {
       "folder": "samsung-galaxybook2-go",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxybook2-go"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxybook2-go",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/samsung-galaxybook2-go"
     },
     {
       "folder": "samsung-galaxybook4-edge",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxybook4-edge"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxybook4-edge",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/samsung-galaxybook4-edge"
     },
     {
       "folder": "tcl-book-14-go",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/tcl-book-14-go"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/tcl-book-14-go",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/tcl-book-14-go"
     },
     {
       "folder": "xiaomi-book-s",
-      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/xiaomi-book-s"
+      "url": "https://github.com/aarch64-laptops/build/tree/HEAD/misc/xiaomi-book-s",
+      "repo": "aarch64-laptops/build",
+      "ref": "2e58842f5fa2f87771c2df017ae4d8c65225ef10",
+      "dir": "misc/xiaomi-book-s"
+    },
+    {
+      "folder": "acer-swift-sfa14-11",
+      "url": "https://github.com/aarch64-laptops/build/pull/163",
+      "repo": "aarch64-laptops/build",
+      "ref": "b0dfbce32586c2e3b1c0de320439daf614449950",
+      "dir": "misc/acer-swift-sfa14-11",
+      "pull": {
+        "number": 163,
+        "state": "closed",
+        "by": "deskflag-cfc"
+      }
+    },
+    {
+      "folder": "asus-qn10-16e",
+      "url": "https://github.com/aarch64-laptops/build/pull/175",
+      "repo": "aarch64-laptops/build",
+      "ref": "e17341e4c9fce07b6acda13b1b4bd8da80ac8cba",
+      "dir": "misc/asus-qn10-16e",
+      "pull": {
+        "number": 175,
+        "state": "open",
+        "by": "Sonicadvance1"
+      }
+    },
+    {
+      "folder": "asus-zenbook-14-ux3480qa",
+      "url": "https://github.com/aarch64-laptops/build/pull/178",
+      "repo": "aarch64-laptops/build",
+      "ref": "c93f6b670047df2859f3d1b1a9d3ff92f75b5972",
+      "dir": "misc/asus-zenbook-14-ux3480qa",
+      "pull": {
+        "number": 178,
+        "state": "open",
+        "by": "emirb"
+      }
+    },
+    {
+      "folder": "asus-zenbook-a14-ux3407na",
+      "url": "https://github.com/aarch64-laptops/build/pull/174",
+      "repo": "aarch64-laptops/build",
+      "ref": "310889bbaeb97d68b9226faa37848b3ddba46787",
+      "dir": "misc/asus-zenbook-a14-ux3407na",
+      "pull": {
+        "number": 174,
+        "state": "open",
+        "by": "JamiKettunen"
+      }
+    },
+    {
+      "folder": "lenovo-ideapad-5g",
+      "url": "https://github.com/aarch64-laptops/build/pull/87",
+      "repo": "aarch64-laptops/build",
+      "ref": "b3ca29bf6b595b4043af7298ab0f27e70b0dda76",
+      "dir": "misc/lenovo-ideapad-5g",
+      "pull": {
+        "number": 87,
+        "state": "closed",
+        "by": "sjentsch"
+      }
+    },
+    {
+      "folder": "microsoft-surface-8-x2e-80-100",
+      "url": "https://github.com/aarch64-laptops/build/pull/176",
+      "repo": "aarch64-laptops/build",
+      "ref": "d7ae771f520e6179f9aae01969b291eae450871b",
+      "dir": "misc/microsoft-surface-8-x2e-80-100",
+      "pull": {
+        "number": 176,
+        "state": "open",
+        "by": "ggarmidi"
+      }
+    },
+    {
+      "folder": "linux-surface/surface_laptop_7_qcom",
+      "url": "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_laptop_7_qcom",
+      "repo": "linux-surface/acpidumps",
+      "ref": "1d0a2ce742b450fe3f65287adbe174ddccabe228",
+      "dir": "surface_laptop_7_qcom"
+    },
+    {
+      "folder": "linux-surface/surface_pro_11_qcom",
+      "url": "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_11_qcom",
+      "repo": "linux-surface/acpidumps",
+      "ref": "1d0a2ce742b450fe3f65287adbe174ddccabe228",
+      "dir": "surface_pro_11_qcom"
+    },
+    {
+      "folder": "linux-surface/surface_pro_9_5g",
+      "url": "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_9_5g",
+      "repo": "linux-surface/acpidumps",
+      "ref": "1d0a2ce742b450fe3f65287adbe174ddccabe228",
+      "dir": "surface_pro_9_5g"
+    },
+    {
+      "folder": "linux-surface/surface_pro_x_sq1",
+      "url": "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_x_sq1",
+      "repo": "linux-surface/acpidumps",
+      "ref": "1d0a2ce742b450fe3f65287adbe174ddccabe228",
+      "dir": "surface_pro_x_sq1"
+    },
+    {
+      "folder": "linux-surface/surface_pro_x_sq2",
+      "url": "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_x_sq2",
+      "repo": "linux-surface/acpidumps",
+      "ref": "1d0a2ce742b450fe3f65287adbe174ddccabe228",
+      "dir": "surface_pro_x_sq2"
+    },
+    {
+      "folder": "linux-surface/windows_dev_kit_2023",
+      "url": "https://github.com/linux-surface/acpidumps/tree/HEAD/windows_dev_kit_2023",
+      "repo": "linux-surface/acpidumps",
+      "ref": "1d0a2ce742b450fe3f65287adbe174ddccabe228",
+      "dir": "windows_dev_kit_2023"
     },
     {
       "folder": "hardware-reports/acer/aspire-a14-11m",
@@ -3885,8 +4182,16 @@
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
     },
     {
-      "folder": "arewearmyet/asus-ascent-qn10",
-      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/asus-ascent-qn10"
+      "folder": "hardware-reports/unknown/unknown/94bdf4be",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/20",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "5e080091a40823cff5ca670866120b5b863434fb",
+      "dir": "reports/unknown/unknown/94bdf4be",
+      "pull": {
+        "number": 20,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
     },
     {
       "folder": "arewearmyet/hp-omnibook-ultra-14-kg0",
@@ -5673,30 +5978,6 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.07.483/omarchy-edge-2026.11.07.483-aarch64.iso",
       "kernel": "7.3.0-26-omarchy"
     },
-    "pulls": [
-      {
-        "number": 1634,
-        "title": "linux-omarchy-aarch64: add the ASUS Zenbook 14 UX3480QA",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/1634",
-        "draft": true,
-        "deviceTrees": [
-          {
-            "file": "x1p42100-asus-zenbook-14-ux3480qa.dts",
-            "model": "ASUS Zenbook 14 (UX3480QA)",
-            "compatible": [
-              "asus,zenbook-14-ux3480qa",
-              "qcom,x1p42100"
-            ]
-          }
-        ],
-        "ids": [
-          {
-            "file": "x1p42100-asus-zenbook-14-ux3480qa.hwids.json",
-            "compatible": "asus,zenbook-14-ux3480qa"
-          }
-        ],
-        "firmware": []
-      }
-    ]
+    "pulls": []
   }
 }
