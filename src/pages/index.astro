@@ -143,7 +143,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
         <h3 class="text-sm font-semibold text-zinc-200">How far ahead Omarchy is</h3>
         <ul class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-400">
           <li class="flex items-center gap-1.5"><span class="h-2 w-4 rounded-full bg-sky-400"></span>Upstream releases</li>
-          <li class="flex items-center gap-1.5"><span class="h-2 w-4 rounded-full bg-[#9ece6a]"></span>Omarchy adds</li>
+          <li class="flex items-center gap-1.5"><span class="h-2 w-4 rounded-full bg-emerald-400"></span>Omarchy adds</li>
           <li class="flex items-center gap-1.5"><span class="h-2 w-4 rounded-full bg-amber-400"></span><a class={LINK} href="https://github.com/omacom/omarchy-pkgs/pulls">Open pull requests</a></li>
           <li class="flex items-center gap-1.5"><span class="h-2 w-4 rounded-full bg-zinc-600"></span>Exists elsewhere</li>
         </ul>
@@ -158,7 +158,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
             <div class="mt-2 flex items-center gap-3 text-xs">
               <div class="flex h-2 flex-1 overflow-hidden rounded-full bg-zinc-800">
                 <div class="h-full bg-sky-400" style={width(row.fromUpstream)} data-tip-title={`Upstream: ${row.fromUpstream} of ${summary.models}`} data-tip={`${row.theirs} Every distro gets these, Omarchy too.`}></div>
-                <div class="h-full bg-[#9ece6a]" style={width(row.added)} data-tip-title={`Omarchy adds: ${row.added}`} data-tip={row.ours}></div>
+                <div class="h-full bg-emerald-400" style={width(row.added)} data-tip-title={`Omarchy adds: ${row.added}`} data-tip={row.ours}></div>
                 <div class="h-full bg-amber-400" style={width(row.pull)} data-tip-title={`Open pull requests: ${row.pull} more`} data-tip="Not shipped yet, but an open pull request on omarchy-pkgs adds it."></div>
                 <div class="h-full bg-zinc-600" style={width(row.available)} data-tip-title={`Not carried yet: ${row.available} more`} data-tip={row.elsewhere}></div>
               </div>
