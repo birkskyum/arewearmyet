@@ -1138,7 +1138,7 @@
     "notYet": 34,
     "deviceTree": 58,
     "ids": 52,
-    "firmware": 47,
+    "firmware": 48,
     "googlebooks": 2,
     "acpi": 42,
     "acpiWanted": 26,
@@ -1147,10 +1147,10 @@
       "rc": 0,
       "edge": 42,
       "pr": 0,
-      "carry": 0,
+      "carry": 1,
       "needs-deviceTree": 26,
       "needs-ids": 6,
-      "needs-firmware": 9
+      "needs-firmware": 8
     },
     "machine": {
       "team": 7,
@@ -1318,7 +1318,7 @@
         "fromUpstream": 1,
         "added": 46,
         "pull": 0,
-        "available": 0,
+        "available": 1,
         "upstream": 1,
         "channels": {
           "stable": 1,
@@ -1378,7 +1378,9 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": []
+          "available": [
+            "samsung-galaxy-book4-edge-15"
+          ]
         }
       },
       "all": {
@@ -1386,7 +1388,7 @@
         "fromUpstream": 1,
         "added": 42,
         "pull": 0,
-        "available": 0,
+        "available": 1,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1437,7 +1439,9 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": []
+          "available": [
+            "samsung-galaxy-book4-edge-15"
+          ]
         }
       }
     }
@@ -10147,17 +10151,17 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-firmware",
+        "state": "carry",
         "pieces": {
           "deviceTree": "elsewhere",
           "ids": "elsewhere",
-          "firmware": "none"
+          "firmware": "elsewhere"
         },
         "missing": [
           "deviceTree",
@@ -10174,17 +10178,10 @@
         "ids": "collected",
         "idsCollected": "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/x1p42100-samsung-galaxy-book4-edge-15.json",
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsucpurwa.mbn",
-          "qcvss8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x1p42100-SAMSUNG-NP750XQB",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
