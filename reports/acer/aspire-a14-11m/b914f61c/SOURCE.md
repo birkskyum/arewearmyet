@@ -1,6 +1,6 @@
 # Hardware report acer/aspire-a14-11m/b914f61c
 
-From https://github.com/turbineBMW/omarchy-hardware-reports/tree/ded40129b0ec1093f3abd8980f49f431add15d8f/reports/acer/aspire-a14-11m/b914f61c, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
+From https://github.com/turbineBMW/omarchy-hardware-reports/tree/821b76eda2e7fcb808e515f18aa97ff609a83b0d/reports/acer/aspire-a14-11m/b914f61c, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
 addresses. Here the SoC serial number (SOSN) is also zeroed in the ACPI tables and each table's checksum corrected.
 The device list, driver files and registry export stay in that repository.
 
