@@ -233,10 +233,10 @@
   },
   "microsoft-surface-laptop-13in-1st-edition": {
     "state": "out-of-tree",
-    "source": "https://github.com/kairunjp/Surface-Laptop-for-Business-13in-1st-Ed-with-Snapdragon-Linux",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2289",
     "files": [
       "SOURCE.md",
-      "surface-laptop-13-typec.dts"
+      "x1p42100-microsoft-surface-laptop-13.dts"
     ]
   },
   "microsoft-surface-laptop-8-13": {

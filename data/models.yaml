@@ -1177,10 +1177,10 @@ models:
     chips: ["X1P-42-100"]
     model_numbers: ["2095"]
     variants:
-      - { chip: "X1P-42-100", compatible: "microsoft,surface-laptop-13-2095" }
-    devicetree_out_of_tree: "https://github.com/kairunjp/Surface-Laptop-for-Business-13in-1st-Ed-with-Snapdragon-Linux"
+      - { chip: "X1P-42-100", compatible: "microsoft,surface-laptop-13" }
+    devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2289"
     devicetree_files:
-      - "https://raw.githubusercontent.com/kairunjp/Surface-Laptop-for-Business-13in-1st-Ed-with-Snapdragon-Linux/3d52bdac42b40b5f9294c75bc1c5af1d371fa422/device-tree/base/surface-laptop-13-typec.dts"
+      - "data/device-trees/microsoft-surface-laptop-13in-1st-edition/x1p42100-microsoft-surface-laptop-13.dts"
     ids_collected: "https://bugs.launchpad.net/ubuntu-concept/+bug/2115909"
     sources:
       - https://blogs.windows.com/devices/2025/05/06/introducing-all-new-surface-copilot-pcs-the-surface-pro-12-inch-and-surface-laptop-13-inch/

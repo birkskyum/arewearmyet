@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T19:07:45.107Z",
+  "collected": "2026-11-07T20:36:00.123Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -5642,6 +5642,40 @@
       "kernel": "7.3.0-26-omarchy"
     },
     "pulls": [
+      {
+        "number": 2289,
+        "title": "Add the Microsoft Surface Laptop 13-inch: device tree, hardware IDs, firmware and sound",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2289",
+        "draft": true,
+        "deviceTrees": [
+          {
+            "file": "x1p42100-microsoft-surface-laptop-13.dts",
+            "model": "Surface Laptop 13in 1st Edition",
+            "compatible": [
+              "microsoft,surface-laptop-13",
+              "qcom,x1p42100"
+            ]
+          }
+        ],
+        "ids": [
+          {
+            "file": "x1p42100-microsoft-surface-laptop-13.json",
+            "compatible": "microsoft,surface-laptop-13"
+          }
+        ],
+        "firmware": [
+          "qcom/x1p42100/Microsoft/SurfaceLaptop13/adsp_dtbs.elf",
+          "qcom/x1p42100/Microsoft/SurfaceLaptop13/adspr.jsn",
+          "qcom/x1p42100/Microsoft/SurfaceLaptop13/adsps.jsn",
+          "qcom/x1p42100/Microsoft/SurfaceLaptop13/adspua.jsn",
+          "qcom/x1p42100/Microsoft/SurfaceLaptop13/battmgr.jsn",
+          "qcom/x1p42100/Microsoft/SurfaceLaptop13/cdsp_dtbs.elf",
+          "qcom/x1p42100/Microsoft/SurfaceLaptop13/cdspr.jsn",
+          "qcom/x1p42100/Microsoft/SurfaceLaptop13/qcadsp8380.mbn",
+          "qcom/x1p42100/Microsoft/SurfaceLaptop13/qccdsp8380.mbn",
+          "qcom/x1p42100/Microsoft/SurfaceLaptop13/qcdxkmsucpurwa.mbn"
+        ]
+      },
       {
         "number": 1634,
         "title": "linux-omarchy-aarch64: add the ASUS Zenbook 14 UX3480QA",

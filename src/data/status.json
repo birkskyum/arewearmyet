@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T19:07:45.107Z",
+  "collected": "2026-11-07T20:36:00.123Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -1108,8 +1108,8 @@
       "stable": 1,
       "rc": 0,
       "edge": 39,
-      "pr": 0,
-      "carry": 1,
+      "pr": 1,
+      "carry": 0,
       "needs-deviceTree": 29,
       "needs-ids": 3,
       "needs-firmware": 11
@@ -1125,8 +1125,8 @@
         "omarchy": 50,
         "fromUpstream": 19,
         "added": 31,
-        "pull": 0,
-        "available": 5,
+        "pull": 1,
+        "available": 4,
         "upstream": 19,
         "channels": {
           "stable": 19,
@@ -1188,12 +1188,13 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "microsoft-surface-laptop-13in-1st-edition"
+          ],
           "available": [
             "asus-vivobook-s14-s3407qa",
             "asus-ascent-qn10",
             "humain-horizon",
-            "microsoft-surface-laptop-13in-1st-edition",
             "samsung-galaxy-book4-edge-15"
           ]
         }
@@ -1202,8 +1203,8 @@
         "omarchy": 50,
         "fromUpstream": 28,
         "added": 22,
-        "pull": 0,
-        "available": 2,
+        "pull": 1,
+        "available": 1,
         "upstream": 28,
         "channels": {
           "stable": 28,
@@ -1265,24 +1266,25 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "microsoft-surface-laptop-13in-1st-edition"
+          ],
           "available": [
-            "microsoft-surface-laptop-13in-1st-edition",
             "samsung-galaxy-book4-edge-15"
           ]
         }
       },
       "firmware": {
-        "omarchy": 42,
+        "omarchy": 41,
         "fromUpstream": 1,
-        "added": 41,
-        "pull": 0,
+        "added": 40,
+        "pull": 1,
         "available": 0,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 42
+          "edge": 41
         },
         "models": {
           "fromUpstream": [
@@ -1323,7 +1325,6 @@
             "medion-sprchrgd-14-s1",
             "microsoft-surface-laptop-7-13",
             "microsoft-surface-laptop-7-15",
-            "microsoft-surface-laptop-13in-1st-edition",
             "microsoft-surface-pro-11",
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
@@ -1331,7 +1332,9 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "microsoft-surface-laptop-13in-1st-edition"
+          ],
           "available": []
         }
       },
@@ -1339,8 +1342,8 @@
         "omarchy": 40,
         "fromUpstream": 1,
         "added": 39,
-        "pull": 0,
-        "available": 1,
+        "pull": 1,
+        "available": 0,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1387,10 +1390,10 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
-          "available": [
+          "pull": [
             "microsoft-surface-laptop-13in-1st-edition"
-          ]
+          ],
+          "available": []
         }
       }
     }
@@ -9123,41 +9126,52 @@
       "machine": "linux",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2289",
+          "number": 2289,
+          "title": "Add the Microsoft Surface Laptop 13-inch: device tree, hardware IDs, firmware and sound"
+        },
         "ids": null,
-        "idsPull": null,
-        "firmware": "shipped",
-        "firmwareChannel": "edge",
-        "firmwarePackages": [
-          "microsoft-surface-pro-12in-firmware"
-        ],
-        "firmwarePull": null
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2289",
+          "number": 2289,
+          "title": "Add the Microsoft Surface Laptop 13-inch: device tree, hardware IDs, firmware and sound"
+        },
+        "firmware": "pr",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2289",
+          "number": 2289,
+          "title": "Add the Microsoft Surface Laptop 13-inch: device tree, hardware IDs, firmware and sound"
+        }
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "pr",
         "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "elsewhere",
-          "firmware": "edge"
+          "deviceTree": "pr",
+          "ids": "pr",
+          "firmware": "pr"
         },
         "missing": [
           "deviceTree",
-          "ids"
+          "ids",
+          "firmware"
         ]
       },
       "upstream": {
         "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": "https://github.com/kairunjp/Surface-Laptop-for-Business-13in-1st-Ed-with-Snapdragon-Linux",
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2289",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/microsoft-surface-laptop-13in-1st-edition",
-        "ids": "posted",
+        "ids": "collected",
         "idsCollected": "https://bugs.launchpad.net/ubuntu-concept/+bug/2115909",
-        "idsStubble": "https://github.com/ubuntu/stubble/pull/108",
+        "idsStubble": null,
         "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": "/firmware/#qcom-x1p42100-Microsoft-Surface12",
+        "firmwareDownload": "/firmware/#qcom-x1p42100-Microsoft-SurfaceLaptop13",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -9168,22 +9182,24 @@
       "variants": [
         {
           "chip": "X1P-42-100",
-          "compatible": "microsoft,surface-laptop-13-2095",
+          "compatible": "microsoft,surface-laptop-13",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2289",
+            "number": 2289,
+            "title": "Add the Microsoft Surface Laptop 13-inch: device tree, hardware IDs, firmware and sound"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2289",
+            "number": 2289,
+            "title": "Add the Microsoft Surface Laptop 13-inch: device tree, hardware IDs, firmware and sound"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
-          "stubble": [
-            {
-              "file": "x1p42100-microsoft-surface-laptop-13.json",
-              "state": "open",
-              "url": "https://github.com/ubuntu/stubble/pull/108"
-            }
-          ],
+          "stubble": [],
           "outcome": "none",
           "reports": []
         }
