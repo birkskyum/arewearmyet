@@ -1054,12 +1054,6 @@
 			enable-gpios = <&pmc8380_3_gpios 4 GPIO_ACTIVE_HIGH>;
 			power-supply = <&vreg_edp_3p3>;
 
-			/*
-			 * Panel reports 11-bit PWM (PWMGEN_BIT_COUNT=0x0b), so
-			 * 2047 levels. Silences "no max-brightness property found".
-			 */
-			max-brightness = <2047>;
-
 			pinctrl-0 = <&edp_bl_en>;
 			pinctrl-names = "default";
 
@@ -1114,7 +1108,7 @@
 	wake-gpios = <&tlmm 148 GPIO_ACTIVE_LOW>;
 
 	wifi@0 {
-		compatible = "pci17cb,1107";
+		compatible = "pci17cb,1103";
 		reg = <0x10000 0x0 0x0 0x0 0x0>;
 
 		vddaon-supply = <&vreg_pmu_aon_0p8>;

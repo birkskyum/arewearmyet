@@ -673,10 +673,10 @@ models:
     variants:
       - { chip: "X1-26-100", compatible: "hp,omnibook-3-oled" }
     ids_collected: "https://github.com/jglathe/linux_ms_dev_kit/issues/78"
-    devicetree_out_of_tree: "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-3-oled.dts"
+    devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2263"
     devicetree_files:
-      - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-3-oled.dts"
-      - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1-hp-omnibook-3.dtsi"
+      - "data/device-trees/hp-omnibook-3-14-hz0/x1p42100-hp-omnibook-3-oled.dts"
+      - "data/device-trees/hp-omnibook-3-14-hz0/x1-hp-omnibook-3.dtsi"
     sources:
       - https://www.hp.com/au-en/shop/hp-omnibook-3-laptop-next-gen-ai-14-hz0062qu-dz4m3pa.html
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4520692
@@ -692,10 +692,10 @@ models:
       - { chip: "X1-26-100", compatible: "hp,omnibook-3-16-bz0" }
     acpi: ["hardware-reports/hp/hp-omnibook-3-laptop-16-bz0xxx"]
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/13"
-    devicetree_out_of_tree: "https://github.com/birkskyum/omarchy-pkgs/blob/3fb2613baf2afe069a5a6cf9c30b007df72c9208/pkgbuilds/linux-omarchy-aarch64/2744-arm64-dts-qcom-Add-the-HP-OmniBook-3-16.patch"
+    devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2263"
     devicetree_files:
-      - "https://raw.githubusercontent.com/birkskyum/omarchy-pkgs/3fb2613baf2afe069a5a6cf9c30b007df72c9208/pkgbuilds/linux-omarchy-aarch64/2744-arm64-dts-qcom-Add-the-HP-OmniBook-3-16.patch#x1p42100-hp-omnibook-3-16.dts"
-      - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1-hp-omnibook-3.dtsi"
+      - "data/device-trees/hp-omnibook-3-16-bz0/x1p42100-hp-omnibook-3-16.dts"
+      - "data/device-trees/hp-omnibook-3-14-hz0/x1-hp-omnibook-3.dtsi"
     sources:
       - https://www.hp.com/au-en/shop/hp-omnibook-3-laptop-next-gen-ai-16-bz0003qu-d46xfpa.html
       - https://www.notebookcheck.net/Efficient-16-GB-RAM-laptop-for-less-than-700-HP-OmniBook-3-16-review.1365529.0.html

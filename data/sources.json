@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T10:00:03.320Z",
+  "collected": "2026-11-07T12:03:51.835Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4277,7 +4277,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-26",
+        "kernel": "7.3-28",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -4333,6 +4333,8 @@
           "x1p42100-asus-zenbook-a14-lcd.dts",
           "x1p42100-crd.dts",
           "x1p42100-hp-elitebook-6-g1q.dts",
+          "x1p42100-hp-omnibook-3-16.dts",
+          "x1p42100-hp-omnibook-3-oled.dts",
           "x1p42100-hp-omnibook-5.dts",
           "x1p42100-hp-omnibook-x14.dts",
           "x1p42100-lenovo-ideapad-5-2in1.dts",
@@ -4408,11 +4410,14 @@
           "x126100-asus-vivobook-16.json",
           "x1e78100-acer-sfa14-11.json",
           "x1e80100-samsung-galaxy-book4-edge-14.json",
+          "x1e84100-samsung-galaxy-book4-edge-16.json",
           "x1p42100-acer-aspire-14-ai.json",
           "x1p42100-acer-aspire-16-ai.json",
           "x1p42100-asus-proart-pz13.json",
           "x1p42100-asus-vivobook-s16-lcd.json",
           "x1p42100-asus-vivobook-s16.json",
+          "x1p42100-hp-omnibook-3-16.json",
+          "x1p42100-hp-omnibook-3-oled.json",
           "x1p42100-hp-omnibook-5.json",
           "x1p42100-microsoft-surface-pro-12in.json",
           "x1p64100-dell-inspiron-14-plus-5441.json"
@@ -5216,6 +5221,27 @@
           "qcom,x1p42100"
         ],
         "patch": "2732-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ13.patch"
+      },
+      {
+        "file": "x1p42100-hp-omnibook-3-oled.dts",
+        "model": "HP OmniBook 3 Laptop 14-hz0xxx",
+        "compatible": [
+          "hp,omnibook-3-oled",
+          "hp,omnibook-3",
+          "lenovo,thinkpad-t14s",
+          "qcom,x1p42100"
+        ],
+        "patch": "2742-arm64-dts-qcom-Add-the-HP-OmniBook-3-14.patch"
+      },
+      {
+        "file": "x1p42100-hp-omnibook-3-16.dts",
+        "model": "HP OmniBook 3 Laptop 16-bz0xxx",
+        "compatible": [
+          "hp,omnibook-3-16-bz0",
+          "qcom,x126100",
+          "qcom,x1p42100"
+        ],
+        "patch": "2744-arm64-dts-qcom-Add-the-HP-OmniBook-3-16.patch"
       }
     ],
     "carriedIds": [
@@ -5373,6 +5399,18 @@
         ]
       },
       {
+        "file": "x1e84100-samsung-galaxy-book4-edge-16.json",
+        "name": "Samsung Galaxy Book4 Edge (16 inch, X1E84100)",
+        "compatible": "samsung,galaxy-book4-edge-16",
+        "hwids": [
+          "a91193f2-0097-5d1e-a301-48b88c0e9654",
+          "45153613-8171-51b1-930b-8aea3ab5c055",
+          "f008b072-3492-5a41-8638-2a60d0022ce4",
+          "a22b52d7-d73a-5169-a213-ad7a9a1b18d1",
+          "4773c798-bbac-515b-bbe7-090dda2bc010"
+        ]
+      },
+      {
         "file": "x1p42100-acer-aspire-14-ai.json",
         "name": "Acer Aspire 14 AI (A14-11M)",
         "compatible": "acer,aspire-a14-11m",
@@ -5436,6 +5474,45 @@
         ]
       },
       {
+        "file": "x1p42100-hp-omnibook-3-16.json",
+        "name": "HP OmniBook 3 Laptop 16-bz0xxx",
+        "compatible": "hp,omnibook-3-16-bz0",
+        "hwids": [
+          "49b4ab3f-62f5-56b4-ba81-978c5073ef3c",
+          "b64faaeb-bc4b-55e6-ae39-69b4e0ddc7cb",
+          "bc2007a5-78ce-5e00-8f56-af55b083bd69",
+          "f9b943c5-95bb-56c8-ae80-9b28e5dd5170",
+          "4a8965ba-59c7-5e8a-89dc-4e9176579608",
+          "54c75dff-89ed-5e18-974b-209e4dcf15ae",
+          "b69f7f62-0ab1-5dc1-9290-a732246a6add",
+          "99d095d0-4514-5c03-bfed-a6e17f882f66",
+          "1397be13-224a-59e9-8c5e-f8c0256fb441",
+          "3b0c7517-cfae-5654-ae71-124aff9c2b26"
+        ]
+      },
+      {
+        "file": "x1p42100-hp-omnibook-3-oled.json",
+        "name": "HP OmniBook 3 Laptop 14-hz0xxx",
+        "compatible": "hp,omnibook-3-oled",
+        "hwids": [
+          "719ecd4e-a12e-58bb-a953-120af69f421d",
+          "16325ab9-bd7a-59af-a745-5c9c0384bb63",
+          "686b3feb-0e15-51c5-bf0b-4bc7a64b5c12",
+          "dd050d31-ab5a-5151-8ac5-e8f25c12d754",
+          "5033baf5-b8ed-55f2-9adf-013e1c7bcaac",
+          "a863f05d-bdf8-5b5d-ac2b-5c6311b5b50a",
+          "3dc651a6-959e-53dd-baa6-f9ab149add34",
+          "e309dfb0-9a40-5a2c-ac21-10cbb8388872",
+          "cb921a83-b5ae-5227-9c6c-e1b102c76b2d",
+          "3ae7910b-0781-536b-85ba-b9c5a248e8f1",
+          "211882f8-7481-5ffc-b611-91a8f527a0c3",
+          "f2e69190-0ed7-5999-b1ae-533711e71dd4",
+          "6f003dcc-2981-5209-a582-f672e2d37b21",
+          "48ac319d-d34b-5ada-9903-349eb8bc7515",
+          "981f59ae-5bc4-527f-a520-5c0b7dbd6f22"
+        ]
+      },
+      {
         "file": "x1p42100-hp-omnibook-5.json",
         "name": "HP OmniBook 5 14-he0 and 16-bf0",
         "compatible": "hp,omnibook-5",
@@ -5496,48 +5573,6 @@
       "kernel": "7.3.0-26-omarchy"
     },
     "pulls": [
-      {
-        "number": 2263,
-        "title": "linux-omarchy-aarch64: add the HP OmniBook 3 14 and 16",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2263",
-        "draft": true,
-        "deviceTrees": [
-          {
-            "file": "x1p42100-hp-omnibook-3-oled.dts",
-            "model": "HP OmniBook 3 Laptop 14-hz0xxx",
-            "compatible": [
-              "hp,omnibook-3-oled",
-              "hp,omnibook-3",
-              "lenovo,thinkpad-t14s",
-              "qcom,x1p42100"
-            ]
-          },
-          {
-            "file": "x1p42100-hp-omnibook-3-16.dts",
-            "model": "HP OmniBook 3 Laptop 16-bz0xxx",
-            "compatible": [
-              "hp,omnibook-3-16-bz0",
-              "qcom,x126100",
-              "qcom,x1p42100"
-            ]
-          }
-        ],
-        "ids": [
-          {
-            "file": "x1e84100-samsung-galaxy-book4-edge-16.json",
-            "compatible": "samsung,galaxy-book4-edge-16"
-          },
-          {
-            "file": "x1p42100-hp-omnibook-3-16.json",
-            "compatible": "hp,omnibook-3-16-bz0"
-          },
-          {
-            "file": "x1p42100-hp-omnibook-3-oled.json",
-            "compatible": "hp,omnibook-3-oled"
-          }
-        ],
-        "firmware": []
-      },
       {
         "number": 1634,
         "title": "linux-omarchy-aarch64: add the ASUS Zenbook 14 UX3480QA",

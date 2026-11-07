@@ -1,0 +1,34 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
+/dts-v1/;
+
+#include "purwa.dtsi"
+#include "hamoa-pmics.dtsi"
+#include "x1-hp-omnibook-3.dtsi"
+
+/delete-node/ &pmc8380_6;
+/delete-node/ &pmc8380_6_thermal;
+
+/ {
+	model = "HP OmniBook 3 Laptop 14-hz0xxx";
+	compatible = "hp,omnibook-3-oled", "qcom,x126100", "qcom,x1p42100";
+	chassis-type = "laptop";
+};
+
+&gpu_zap_shader {
+	firmware-name = "qcom/x1p42100/hp/omnibook-3/qcdxkmsucpurwa.mbn";
+};
+
+&remoteproc_adsp {
+	firmware-name = "qcom/x1p42100/hp/omnibook-3/qcadsp8380.mbn",
+			"qcom/x1p42100/hp/omnibook-3/adsp_dtbs.elf";
+
+	status = "okay";
+};
+
+&remoteproc_cdsp {
+	firmware-name = "qcom/x1p42100/hp/omnibook-3/qccdsp8380.mbn",
+			"qcom/x1p42100/hp/omnibook-3/cdsp_dtbs.elf";
+
+	status = "okay";
+};
