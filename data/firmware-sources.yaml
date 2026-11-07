@@ -1829,6 +1829,112 @@ folders:
         sha256: "de957e0a25c2a42f417f8e95ccf1cbdfeed5a4a6d77a84e215389b8b78fc8bf4"
         from:
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcdx8380/qcdxkmsucpurwa.mbn" }
+  - path: "qcom/x1p42100/hp/omnibook-3"
+    models: ["hp-omnibook-3-14-hz0"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "9a4f2c9322023190c5bdaf93a61a9aa07dddc5706216f7233624012c22477cd7"
+        from:
+          - { package: "hp-sp174443", member: "drivers/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "hp-sp174443", member: "drivers/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "hp-sp174443", member: "drivers/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "hp-sp174443", member: "drivers/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "hp-sp174443", member: "drivers/qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "c1e3cdeee17e61ee5f9426fef78e5e35eaf9fdd49d3d39b9bd82dcad04c71647"
+        from:
+          - { package: "hp-sp174443", member: "drivers/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "hp-sp174443", member: "drivers/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22129032
+        sha256: "2b22728d19482e1641b17e7b7b843cf84106c0676e7bc0fe3fb52aa8ce88259d"
+        from:
+          - { package: "hp-sp174443", member: "drivers/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "4d2aa10aa60245177ca253d4a8f7ee15c0a0390e877efec29fa25c7d4b725568"
+        from:
+          - { package: "hp-sp174443", member: "drivers/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "d625f54f5dc00aa347fe82f0bafcab854190603397aeae184a2cff58c0cebdcb"
+        from:
+          - { package: "hp-sp174443", member: "drivers/qcdx8380/qcdxkmsucpurwa.mbn" }
+  - path: "qcom/x1p42100/hp/omnibook-3-16-bz0"
+    models: ["hp-omnibook-3-16-bz0"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "253c250971a7b8e1b263106b6415d578959b9c6233bd1a3aa10ddc033d6c5415"
+        from:
+          - { package: "hp-sp174413", member: "src/Driver/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "hp-sp174413", member: "src/Driver/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "hp-sp174413", member: "src/Driver/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "hp-sp174413", member: "src/Driver/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "hp-sp174413", member: "src/Driver/qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "c1e3cdeee17e61ee5f9426fef78e5e35eaf9fdd49d3d39b9bd82dcad04c71647"
+        from:
+          - { package: "hp-sp174413", member: "src/Driver/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "hp-sp174413", member: "src/Driver/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22309256
+        sha256: "bb88ad197f538044f160cfe2a293eb5a9db82900b91e7db9f77376fa5ca3848e"
+        from:
+          - { package: "hp-sp174413", member: "src/Driver/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "4d2aa10aa60245177ca253d4a8f7ee15c0a0390e877efec29fa25c7d4b725568"
+        from:
+          - { package: "hp-sp174413", member: "src/Driver/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "05b09b7951148134068024e948c93f7a4688102600f1d8f9548ab470b73f6234"
+        from:
+          - { package: "hp-sp174413", member: "src/Driver/qcdx8380/qcdxkmsucpurwa.mbn" }
   - path: "qcom/x1p42100/hp/omnibook-5"
     models: ["hp-omnibook-5-14-he0", "hp-omnibook-5-16-bf0"]
     files:
@@ -2295,6 +2401,20 @@ packages:
     size: 454396368
     sha256: "98fe80a7588e1c3cc4a460726c9907e28a1fd6e5f18669d9187554804002c7dd"
     fetched: "2026-11-02"
+  - id: "hp-sp174413"
+    maker: "HP"
+    title: "Qualcomm Driver Pack sp174413"
+    url: "https://ftp.hp.com/pub/softpaq/sp174001-174500/sp174413.exe"
+    size: 395092216
+    sha256: "86fcb80854fea8ac886c4bccd43b778c53a7b57ee2a79d68b1606a0954f372e9"
+    fetched: "2026-11-07"
+  - id: "hp-sp174443"
+    maker: "HP"
+    title: "Qualcomm Driver Pack sp174443"
+    url: "https://ftp.hp.com/pub/softpaq/sp174001-174500/sp174443.exe"
+    size: 467705440
+    sha256: "2a97effeec3d6e24d01f46a51adf50522b1176ae998bc70f7c7759d49050f790"
+    fetched: "2026-11-07"
   - id: "hp-sp174694"
     maker: "HP"
     title: "Qualcomm BSP Software Pack sp174694"

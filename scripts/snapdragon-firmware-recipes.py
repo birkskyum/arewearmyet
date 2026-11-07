@@ -85,6 +85,8 @@ RECIPES = {
     "hp-elitebook-6-g1q-firmware": ("HP EliteBook 6 G1q", ["qcom/x1p42100/hp/elitebook-6-g1q"]),
     "hp-elitebook-ultra-g1q-firmware": ("HP EliteBook Ultra G1q", ["qcom/x1e80100/hp/elitebook-ultra-g1q"]),
     "hp-elitebook-x-g2q-firmware": ("HP EliteBook X G2q", ["qcom/glymur/hp/elitebook-x-g2q"]),
+    "hp-omnibook-3-14-firmware": ("HP OmniBook 3 14", ["qcom/x1p42100/hp/omnibook-3"]),
+    "hp-omnibook-3-16-firmware": ("HP OmniBook 3 16", ["qcom/x1p42100/hp/omnibook-3-16-bz0"]),
     "hp-omnibook-5-firmware": ("HP OmniBook 5 14 and 16", ["qcom/x1p42100/hp/omnibook-5"]),
     "hp-omnibook-5-16-bf1-firmware": ("HP OmniBook 5 16 (2026)", ["qcom/glymur/HP/omnibook-5-16-bf1xxx"]),
     "hp-omnibook-ultra-14-firmware": ("HP OmniBook Ultra 14", ["qcom/glymur/hp/omnibook-ultra-14-kg0xxx"]),
