@@ -75,7 +75,7 @@ RECIPES = {
     "asus-vivobook-s16-firmware": ("ASUS Vivobook S 16", ["qcom/x1p42100/ASUSTeK/vivobook-s16"]),
     "asus-zenbook-14-ux3480qa-firmware": ("ASUS Zenbook 14 UX3480QA", ["qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa"]),
     "asus-zenbook-a14-firmware": ("ASUS Zenbook A14", ["qcom/x1e80100/ASUSTeK/zenbook-a14", "qcom/x1p42100/ASUSTeK/zenbook-a14"]),
-    "asus-zenbook-a14-x2-firmware": ("ASUS Zenbook A14 (X2)", ["qcom/glymur/ASUSTeK/UX3407NA"]),
+    "asus-zenbook-a14-ux3407na-firmware": ("ASUS Zenbook A14 UX3407NA", ["qcom/glymur/ASUSTeK/UX3407NA"]),
     "dell-inspiron-14-5441-firmware": ("Dell Inspiron 14 5441", ["qcom/x1e80100/dell/inspiron-14-plus-5441"]),
     "dell-inspiron-14-plus-7441-firmware": ("Dell Inspiron 14 Plus 7441", ["qcom/x1e80100/dell/inspiron-14-plus-7441"]),
     "dell-latitude-5455-firmware": ("Dell Latitude 5455", ["qcom/x1e80100/dell/latitude-5455"]),
@@ -106,6 +106,9 @@ CONFLICTS = {
     "microsoft-surface-laptop-7-firmware": ["microsoft-surface-pro-11-firmware"],
     "microsoft-surface-pro-11-firmware": ["microsoft-surface-laptop-7-firmware"],
 }
+# Recipes that took over another package's name. Each provides and replaces the old name, so pacman
+# moves installed machines to it on the next update, and conflicts with it, so both never install.
+RENAMED = {"asus-zenbook-a14-ux3407na-firmware": ["asus-zenbook-a14-x2-firmware"]}
 # Device-tree compatibles for the provided.d list of firmware the board's boot firmware loads.
 COMPATIBLE = {"hp-elitebook-x-g2q-firmware": "hp,elitebook-x-g2q"}
 
@@ -289,10 +292,14 @@ def recipe(name, who, paths):
         "arch=('aarch64')",
         f"url={q(page)}",
         "license=('LicenseRef-proprietary')",
-        "provides=(" + " ".join(q("qcom-firmware-" + p.removeprefix("qcom/").replace("/", "-").lower()) for p in paths) + ")",
+        "provides=(" + " ".join([q("qcom-firmware-" + p.removeprefix("qcom/").replace("/", "-").lower()) for p in paths]
+                                + [q(old) for old in RENAMED.get(name, [])]) + ")",
     ]
-    if name in CONFLICTS:
-        L.append("conflicts=(" + " ".join(q(c) for c in CONFLICTS[name]) + ")")
+    conflicts = CONFLICTS.get(name, []) + RENAMED.get(name, [])
+    if conflicts:
+        L.append("conflicts=(" + " ".join(q(c) for c in conflicts) + ")")
+    if name in RENAMED:
+        L.append("replaces=(" + " ".join(q(old) for old in RENAMED[name]) + ")")
     L += [
         "makedepends=(" + " ".join(q(d) for d in makedepends) + ")",
         "options=('!strip' '!debug')",
