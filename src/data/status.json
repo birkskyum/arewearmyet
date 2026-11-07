@@ -10142,7 +10142,7 @@
         "https://news.samsung.com/global/galaxy-book4-edge-samsungs-next-gen-ai-pc-now-available-with-15-inch-display",
         "https://www.notebookcheck.net/Samsung-Galaxy-Book4-Edge-15.988764.0.html"
       ],
-      "notes": null,
+      "notes": "Samsung's driver pack has an older GPU zap shader than Windows Update installs, signed by Qualcomm rather than Samsung; nobody has tried it on the laptop yet.",
       "outcome": "none",
       "reports": [],
       "machine": "linux",

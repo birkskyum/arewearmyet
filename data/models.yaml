@@ -1341,6 +1341,7 @@ models:
     variants:
       - { chip: "X1P-42-100", compatible: "samsung,galaxy-book4-edge-15" }
     ids_collected: "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/x1p42100-samsung-galaxy-book4-edge-15.json"
+    notes: "Samsung's driver pack has an older GPU zap shader than Windows Update installs, signed by Qualcomm rather than Samsung; nobody has tried it on the laptop yet."
     devicetree_out_of_tree: "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/patch-2-anatase.patch"
     devicetree_files:
       - "https://raw.githubusercontent.com/anatase-org/kernel-anatase/anatase-7.0/patch-2-anatase.patch#x1p42100-samsung-galaxy-book4-edge-15.dts"
