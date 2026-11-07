@@ -47,8 +47,8 @@ const aheadRows = [
   { label: 'Firmware', ...ahead.firmware, ours: `Firmware Omarchy packages. ${channelNote(ahead.firmware.channels)}`, theirs: 'Every file in a linux-firmware release.', elsewhere: `Firmware in a maker's download or on its way to linux-firmware, which Omarchy could package.` },
   { label: 'All three', ...ahead.all, ours: 'Device tree, hardware IDs and firmware, all in Omarchy, where upstream lacks at least one.', theirs: 'All three in the releases.', elsewhere: 'Every piece exists, but Omarchy still has to carry at least one.' },
 ];
-// Omarchy's green in slashes that crawl to the right, for what Omarchy adds on top of the releases
-const STRIPES = 'bg-[linear-gradient(-45deg,var(--color-emerald-400)_25%,color-mix(in_oklab,var(--color-emerald-400)_40%,transparent)_25%_50%,var(--color-emerald-400)_50%_75%,color-mix(in_oklab,var(--color-emerald-400)_40%,transparent)_75%)] bg-size-[12px_12px] motion-safe:animate-stripes';
+// The Omarchy logo's green in slashes that crawl to the right, for what Omarchy adds on top of the releases
+const STRIPES = 'bg-[linear-gradient(-45deg,#9ece6a_25%,color-mix(in_oklab,#9ece6a_82%,black)_25%_50%,#9ece6a_50%_75%,color-mix(in_oklab,#9ece6a_82%,black)_75%)] bg-size-[12px_12px] motion-safe:animate-stripes';
 // Out of the box on any channel, and the filter that shows those, with only the ways to more that count any
 const ootb = summary.outOfBox;
 const ootbDone = ootb.stable + ootb.rc + ootb.edge;
