@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-07T15:25:22.290Z",
+  "collected": "2026-11-07T15:54:41.179Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-28",
+    "kernel": "7.3-29",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-28",
+        "kernel": "7.3-29",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -448,6 +448,7 @@
           "x1p42100-asus-vivobook-s15.dts",
           "x1p42100-asus-vivobook-s16.dts",
           "x1p42100-asus-vivobook-s16-lcd.dts",
+          "x1p42100-asus-zenbook-14-ux3480qa.dts",
           "x1p42100-asus-zenbook-a14.dts",
           "x1p42100-asus-zenbook-a14-lcd.dts",
           "x1p42100-crd.dts",
@@ -535,6 +536,7 @@
           "x1p42100-asus-proart-pz13.json",
           "x1p42100-asus-vivobook-s16-lcd.json",
           "x1p42100-asus-vivobook-s16.json",
+          "x1p42100-asus-zenbook-14-ux3480qa.json",
           "x1p42100-hp-omnibook-3-16.json",
           "x1p42100-hp-omnibook-3-oled.json",
           "x1p42100-hp-omnibook-5.json",
@@ -673,6 +675,19 @@
             "qcom/x1p42100/ASUSTeK/vivobook-s16/qccdsp8380.mbn",
             "qcom/x1p42100/ASUSTeK/vivobook-s16/qcdxkmsucpurwa.mbn",
             "qcom/x1p42100/ASUSTeK/vivobook-s16/qcvss8380.mbn"
+          ],
+          "asus-zenbook-14-ux3480qa-firmware": [
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adspr.jsn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsps.jsn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adspua.jsn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/battmgr.jsn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdspr.jsn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcvss8380.mbn"
           ],
           "asus-zenbook-a14-firmware": [
             "qcom/x1e80100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
@@ -1090,8 +1105,8 @@
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 37,
-      "pr": 1,
+      "edge": 38,
+      "pr": 0,
       "carry": 1,
       "needs-deviceTree": 30,
       "needs-ids": 3,
@@ -1105,16 +1120,16 @@
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 48,
+        "omarchy": 49,
         "fromUpstream": 19,
-        "added": 29,
-        "pull": 1,
+        "added": 30,
+        "pull": 0,
         "available": 5,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 48
+          "edge": 49
         },
         "models": {
           "fromUpstream": [
@@ -1148,6 +1163,7 @@
             "asus-proart-pz13-ht5306",
             "asus-vivobook-16-x1607qa",
             "asus-vivobook-s16-s3607qa",
+            "asus-zenbook-14-ux3480qa",
             "asus-zenbook-a14-ux3407na",
             "dell-inspiron-14-5441",
             "dell-latitude-5455",
@@ -1169,9 +1185,7 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "asus-zenbook-14-ux3480qa"
-          ],
+          "pull": [],
           "available": [
             "asus-vivobook-s14-s3407qa",
             "asus-ascent-qn10",
@@ -1182,16 +1196,16 @@
         }
       },
       "ids": {
-        "omarchy": 48,
+        "omarchy": 49,
         "fromUpstream": 28,
-        "added": 20,
-        "pull": 1,
+        "added": 21,
+        "pull": 0,
         "available": 2,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 48
+          "edge": 49
         },
         "models": {
           "fromUpstream": [
@@ -1232,6 +1246,7 @@
             "asus-proart-pz13-ht5306",
             "asus-vivobook-16-x1607qa",
             "asus-vivobook-s16-s3607qa",
+            "asus-zenbook-14-ux3480qa",
             "dell-inspiron-14-5441",
             "hp-omnibook-3-14-hz0",
             "hp-omnibook-3-16-bz0",
@@ -1246,9 +1261,7 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "asus-zenbook-14-ux3480qa"
-          ],
+          "pull": [],
           "available": [
             "microsoft-surface-laptop-13in-1st-edition",
             "samsung-galaxy-book4-edge-15"
@@ -1256,16 +1269,16 @@
         }
       },
       "firmware": {
-        "omarchy": 40,
+        "omarchy": 41,
         "fromUpstream": 1,
-        "added": 39,
-        "pull": 1,
+        "added": 40,
+        "pull": 0,
         "available": 1,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 40
+          "edge": 41
         },
         "models": {
           "fromUpstream": [
@@ -1282,6 +1295,7 @@
             "asus-vivobook-s15-s5507",
             "asus-vivobook-s14-s3407qa",
             "asus-vivobook-s16-s3607qa",
+            "asus-zenbook-14-ux3480qa",
             "asus-zenbook-a14-ux3407",
             "asus-zenbook-a14-ux3407na",
             "asus-zenbook-a16-ux3607oa",
@@ -1312,19 +1326,17 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "asus-zenbook-14-ux3480qa"
-          ],
+          "pull": [],
           "available": [
             "microsoft-surface-laptop-8-15"
           ]
         }
       },
       "all": {
-        "omarchy": 38,
+        "omarchy": 39,
         "fromUpstream": 1,
-        "added": 37,
-        "pull": 1,
+        "added": 38,
+        "pull": 0,
         "available": 1,
         "upstream": 1,
         "models": {
@@ -1341,6 +1353,7 @@
             "asus-vivobook-16-x1607qa",
             "asus-vivobook-s15-s5507",
             "asus-vivobook-s16-s3607qa",
+            "asus-zenbook-14-ux3480qa",
             "asus-zenbook-a14-ux3407",
             "asus-zenbook-a14-ux3407na",
             "asus-zenbook-a16-ux3607oa",
@@ -1370,9 +1383,7 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "asus-zenbook-14-ux3480qa"
-          ],
+          "pull": [],
           "available": [
             "microsoft-surface-laptop-13in-1st-edition"
           ]
@@ -3428,39 +3439,25 @@
       ],
       "machine": "team",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2273",
-          "number": 2273,
-          "title": "Add the ASUS Zenbook 14 UX3480QA: device tree, firmware and sound"
-        },
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2273",
-          "number": 2273,
-          "title": "Add the ASUS Zenbook 14 UX3480QA: device tree, firmware and sound"
-        },
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2273",
-          "number": 2273,
-          "title": "Add the ASUS Zenbook 14 UX3480QA: device tree, firmware and sound"
-        }
+        "deviceTree": "edge",
+        "deviceTreePull": null,
+        "ids": "edge",
+        "idsPull": null,
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "asus-zenbook-14-ux3480qa-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
-          "deviceTree": "pr",
-          "ids": "pr",
-          "firmware": "pr"
+          "deviceTree": "edge",
+          "ids": "edge",
+          "firmware": "edge"
         },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -3487,20 +3484,18 @@
           "model": "UX3480QA",
           "chip": "X1-26-100",
           "compatible": "asus,zenbook-14-ux3480qa",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2273",
-            "number": 2273,
-            "title": "Add the ASUS Zenbook 14 UX3480QA: device tree, firmware and sound"
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "x1p42100-asus-zenbook-14-ux3480qa.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2751-arm64-dts-qcom-Add-the-ASUS-Zenbook-14-UX3480QA.patch"
           },
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2273",
-            "number": 2273,
-            "title": "Add the ASUS Zenbook 14 UX3480QA: device tree, firmware and sound"
-          },
-          "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [

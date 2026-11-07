@@ -359,7 +359,7 @@ models:
     firmware: ["qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa"]
     firmware_download: "https://www.asus.com/supportonly/ux3480qa/helpdesk_download/"
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2273"
-    devicetree_files: ["https://raw.githubusercontent.com/birkskyum/omarchy-pkgs/e16efb5f12fee0ac5e4110b75b96f61eaf64806e/pkgbuilds/linux-omarchy-aarch64/2751-arm64-dts-qcom-Add-the-ASUS-Zenbook-14-UX3480QA.patch#x1p42100-asus-zenbook-14-ux3480qa.dts"]
+    devicetree_files: ["https://raw.githubusercontent.com/omacom/omarchy-pkgs/2aa4b94c/pkgbuilds/linux-omarchy-aarch64/2751-arm64-dts-qcom-Add-the-ASUS-Zenbook-14-UX3480QA.patch#x1p42100-asus-zenbook-14-ux3480qa.dts"]
     ids_collected: "https://github.com/birkskyum/arewearmyet/issues/2"
     reports:
       - { state: "problems", note: "The stock 4.5.0rc1 image shows a black screen and resets, since it has no device tree for this model. With the device tree and patches from omarchy-pkgs #1634 and an owner's board package, it installs and runs on linux-omarchy 7.3.", checked: "2026-10" }

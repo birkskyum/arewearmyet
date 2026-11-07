@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T15:25:22.290Z",
+  "collected": "2026-11-07T15:54:41.179Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4277,7 +4277,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-28",
+        "kernel": "7.3-29",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -4329,6 +4329,7 @@
           "x1p42100-asus-vivobook-s15.dts",
           "x1p42100-asus-vivobook-s16.dts",
           "x1p42100-asus-vivobook-s16-lcd.dts",
+          "x1p42100-asus-zenbook-14-ux3480qa.dts",
           "x1p42100-asus-zenbook-a14.dts",
           "x1p42100-asus-zenbook-a14-lcd.dts",
           "x1p42100-crd.dts",
@@ -4416,6 +4417,7 @@
           "x1p42100-asus-proart-pz13.json",
           "x1p42100-asus-vivobook-s16-lcd.json",
           "x1p42100-asus-vivobook-s16.json",
+          "x1p42100-asus-zenbook-14-ux3480qa.json",
           "x1p42100-hp-omnibook-3-16.json",
           "x1p42100-hp-omnibook-3-oled.json",
           "x1p42100-hp-omnibook-5.json",
@@ -4554,6 +4556,19 @@
             "qcom/x1p42100/ASUSTeK/vivobook-s16/qccdsp8380.mbn",
             "qcom/x1p42100/ASUSTeK/vivobook-s16/qcdxkmsucpurwa.mbn",
             "qcom/x1p42100/ASUSTeK/vivobook-s16/qcvss8380.mbn"
+          ],
+          "asus-zenbook-14-ux3480qa-firmware": [
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adspr.jsn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsps.jsn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adspua.jsn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/battmgr.jsn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdspr.jsn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcvss8380.mbn"
           ],
           "asus-zenbook-a14-firmware": [
             "qcom/x1e80100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
@@ -5242,6 +5257,15 @@
           "qcom,x1p42100"
         ],
         "patch": "2744-arm64-dts-qcom-Add-the-HP-OmniBook-3-16.patch"
+      },
+      {
+        "file": "x1p42100-asus-zenbook-14-ux3480qa.dts",
+        "model": "ASUS Zenbook 14 (UX3480QA)",
+        "compatible": [
+          "asus,zenbook-14-ux3480qa",
+          "qcom,x1p42100"
+        ],
+        "patch": "2751-arm64-dts-qcom-Add-the-ASUS-Zenbook-14-UX3480QA.patch"
       }
     ],
     "carriedIds": [
@@ -5474,6 +5498,23 @@
         ]
       },
       {
+        "file": "x1p42100-asus-zenbook-14-ux3480qa.json",
+        "name": "ASUS Zenbook 14 UX3480QA",
+        "compatible": "asus,zenbook-14-ux3480qa",
+        "hwids": [
+          "3398b61f-aad3-5484-aef0-d65d8bbecb68",
+          "863f3e16-a6b7-530d-98ba-387f1508157f",
+          "3157e6ad-2506-5ed8-8e2b-0d8352664e2f",
+          "c8350d1e-4a23-54bd-b773-8e7333a30305",
+          "59b7e39f-cce2-5736-95db-e3becc8e1cd8",
+          "40fdb1be-2687-520f-9056-bf19282c4277",
+          "41a0c293-6602-50ec-881d-ad12ff1db8f8",
+          "2eed3ed5-f1a6-5f09-a129-5f569481f81e",
+          "cc7b1cce-6b99-5385-b37b-646c0a08c509",
+          "1df04289-d893-5db6-a2f7-706662991cae"
+        ]
+      },
+      {
         "file": "x1p42100-hp-omnibook-3-16.json",
         "name": "HP OmniBook 3 Laptop 16-bz0xxx",
         "compatible": "hp,omnibook-3-16-bz0",
@@ -5573,41 +5614,6 @@
       "kernel": "7.3.0-26-omarchy"
     },
     "pulls": [
-      {
-        "number": 2273,
-        "title": "Add the ASUS Zenbook 14 UX3480QA: device tree, firmware and sound",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2273",
-        "draft": true,
-        "deviceTrees": [
-          {
-            "file": "x1p42100-asus-zenbook-14-ux3480qa.dts",
-            "model": "ASUS Zenbook 14 (UX3480QA)",
-            "compatible": [
-              "asus,zenbook-14-ux3480qa",
-              "qcom,x1p42100"
-            ]
-          }
-        ],
-        "ids": [
-          {
-            "file": "x1p42100-asus-zenbook-14-ux3480qa.json",
-            "compatible": "asus,zenbook-14-ux3480qa"
-          }
-        ],
-        "firmware": [
-          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf",
-          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adspr.jsn",
-          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsps.jsn",
-          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adspua.jsn",
-          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/battmgr.jsn",
-          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf",
-          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdspr.jsn",
-          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcadsp8380.mbn",
-          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qccdsp8380.mbn",
-          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcdxkmsucpurwa.mbn",
-          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcvss8380.mbn"
-        ]
-      },
       {
         "number": 1634,
         "title": "linux-omarchy-aarch64: add the ASUS Zenbook 14 UX3480QA",
