@@ -155,13 +155,6 @@
 	};
 };
 
-/* Windows: PCI 17cb:1103 subsystem 103c:8d9a, a WCN6855 */
-&pcie4_port0 {
-	wifi@0 {
-		compatible = "pci17cb,1103";
-	};
-};
-
 &pmc8380_3_gpios {
 	edp_bl_reg_en: edp-bl-reg-en-state {
 		pins = "gpio10";
