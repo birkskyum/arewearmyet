@@ -1096,6 +1096,69 @@
           "stable": 19,
           "rc": 19,
           "edge": 45
+        },
+        "models": {
+          "fromUpstream": [
+            "asus-vivobook-s15-s5507",
+            "asus-zenbook-a14-ux3407",
+            "asus-zenbook-a16-ux3607oa",
+            "dell-inspiron-14-plus-7441",
+            "dell-latitude-7455",
+            "dell-xps-13-9345",
+            "honor-magicbook-art-14-snapdragon",
+            "hp-elitebook-ultra-g1q",
+            "hp-omnibook-x-14-fe",
+            "lenovo-ideacentre-mini-x-01q8x10",
+            "lenovo-thinkbook-16-gen-7-qoy",
+            "lenovo-thinkpad-t14s-gen-6-snapdragon",
+            "lenovo-yoga-slim-7x-14q8x9",
+            "medion-sprchrgd-14-s1",
+            "microsoft-surface-laptop-7-13",
+            "microsoft-surface-laptop-7-15",
+            "microsoft-surface-pro-11",
+            "microsoft-surface-pro-12in-1st-edition",
+            "qualcomm-snapdragon-dev-kit-for-windows"
+          ],
+          "added": [
+            "acer-aspire-14-ai-a14-11m",
+            "acer-aspire-16-ai-a16-11m",
+            "acer-swift-14-ai-sf14-11",
+            "acer-swift-go-pro-ai-sfa14-11",
+            "acer-swift-go-14-ai-sfg14-01",
+            "anduril-bluechip",
+            "asus-vivobook-16-x1607qa",
+            "asus-vivobook-s16-s3607qa",
+            "asus-zenbook-a14-ux3407na",
+            "dell-inspiron-14-5441",
+            "dell-latitude-5455",
+            "hp-elitebook-6-g1q",
+            "hp-omnibook-5-14-he0",
+            "hp-omnibook-5-16-bf0",
+            "hp-elitebook-x-g2q",
+            "hp-omnibook-5-16-bf1",
+            "hp-omnibook-ultra-14-kg0",
+            "hp-omnibook-x-16-cp",
+            "lenovo-ideapad-5x-2-in-1-14q8x9",
+            "lenovo-ideapad-slim-3x-15q8x10",
+            "lenovo-ideapad-slim-5x-14q8x9",
+            "lenovo-thinkpad-t14s-gen-7-snapdragon",
+            "lenovo-yoga-slim-7x-14q8y11",
+            "microsoft-surface-laptop-8-13",
+            "samsung-galaxy-book4-edge-16",
+            "samsung-galaxy-book4-edge-14"
+          ],
+          "pull": [
+            "asus-zenbook-14-ux3480qa"
+          ],
+          "available": [
+            "asus-proart-pz13-ht5306",
+            "asus-vivobook-s14-s3407qa",
+            "asus-ascent-qn10",
+            "hp-omnibook-3-14-hz0",
+            "humain-horizon",
+            "microsoft-surface-laptop-13in-1st-edition",
+            "samsung-galaxy-book4-edge-15"
+          ]
         }
       },
       "ids": {
@@ -1110,6 +1173,63 @@
           "stable": 28,
           "rc": 28,
           "edge": 44
+        },
+        "models": {
+          "fromUpstream": [
+            "acer-swift-14-ai-sf14-11",
+            "acer-swift-go-14-ai-sfg14-01",
+            "asus-vivobook-s15-s5507",
+            "asus-zenbook-a14-ux3407",
+            "asus-zenbook-a14-ux3407na",
+            "asus-zenbook-a16-ux3607oa",
+            "dell-inspiron-14-plus-7441",
+            "dell-latitude-5455",
+            "dell-latitude-7455",
+            "dell-xps-13-9345",
+            "honor-magicbook-art-14-snapdragon",
+            "hp-elitebook-6-g1q",
+            "hp-elitebook-ultra-g1q",
+            "hp-omnibook-x-14-fe",
+            "hp-elitebook-x-g2q",
+            "lenovo-ideacentre-mini-x-01q8x10",
+            "lenovo-ideapad-5x-2-in-1-14q8x9",
+            "lenovo-ideapad-slim-3x-15q8x10",
+            "lenovo-ideapad-slim-5x-14q8x9",
+            "lenovo-thinkbook-16-gen-7-qoy",
+            "lenovo-thinkpad-t14s-gen-6-snapdragon",
+            "lenovo-yoga-slim-7x-14q8x9",
+            "lenovo-yoga-slim-7x-14q8y11",
+            "medion-sprchrgd-14-s1",
+            "microsoft-surface-laptop-7-13",
+            "microsoft-surface-laptop-7-15",
+            "microsoft-surface-pro-11",
+            "qualcomm-snapdragon-dev-kit-for-windows"
+          ],
+          "added": [
+            "acer-aspire-14-ai-a14-11m",
+            "acer-aspire-16-ai-a16-11m",
+            "acer-swift-go-pro-ai-sfa14-11",
+            "anduril-bluechip",
+            "asus-vivobook-16-x1607qa",
+            "asus-vivobook-s16-s3607qa",
+            "dell-inspiron-14-5441",
+            "hp-omnibook-5-14-he0",
+            "hp-omnibook-5-16-bf0",
+            "hp-omnibook-5-16-bf1",
+            "hp-omnibook-ultra-14-kg0",
+            "hp-omnibook-x-16-cp",
+            "lenovo-thinkpad-t14s-gen-7-snapdragon",
+            "microsoft-surface-pro-12in-1st-edition",
+            "microsoft-surface-laptop-8-13",
+            "samsung-galaxy-book4-edge-14"
+          ],
+          "pull": [
+            "asus-zenbook-14-ux3480qa"
+          ],
+          "available": [
+            "asus-proart-pz13-ht5306",
+            "microsoft-surface-laptop-13in-1st-edition"
+          ]
         }
       },
       "firmware": {
@@ -1124,6 +1244,58 @@
           "stable": 1,
           "rc": 1,
           "edge": 40
+        },
+        "models": {
+          "fromUpstream": [
+            "lenovo-thinkpad-t14s-gen-6-snapdragon"
+          ],
+          "added": [
+            "acer-aspire-14-ai-a14-11m",
+            "acer-aspire-16-ai-a16-11m",
+            "acer-swift-14-ai-sf14-11",
+            "acer-swift-go-pro-ai-sfa14-11",
+            "acer-swift-go-14-ai-sfg14-01",
+            "asus-proart-pz13-ht5306",
+            "asus-vivobook-16-x1607qa",
+            "asus-vivobook-s15-s5507",
+            "asus-vivobook-s14-s3407qa",
+            "asus-vivobook-s16-s3607qa",
+            "asus-zenbook-a14-ux3407",
+            "asus-zenbook-a14-ux3407na",
+            "asus-zenbook-a16-ux3607oa",
+            "dell-inspiron-14-5441",
+            "dell-inspiron-14-plus-7441",
+            "dell-latitude-5455",
+            "dell-latitude-7455",
+            "dell-xps-13-9345",
+            "hp-elitebook-6-g1q",
+            "hp-elitebook-ultra-g1q",
+            "hp-omnibook-3-14-hz0",
+            "hp-omnibook-5-14-he0",
+            "hp-omnibook-5-16-bf0",
+            "hp-omnibook-x-14-fe",
+            "hp-elitebook-x-g2q",
+            "hp-omnibook-5-16-bf1",
+            "hp-omnibook-ultra-14-kg0",
+            "hp-omnibook-x-16-cp",
+            "lenovo-ideacentre-mini-x-01q8x10",
+            "lenovo-thinkpad-t14s-gen-7-snapdragon",
+            "medion-sprchrgd-14-s1",
+            "microsoft-surface-laptop-7-13",
+            "microsoft-surface-laptop-7-15",
+            "microsoft-surface-laptop-13in-1st-edition",
+            "microsoft-surface-pro-11",
+            "microsoft-surface-pro-12in-1st-edition",
+            "microsoft-surface-laptop-8-13",
+            "samsung-galaxy-book4-edge-16",
+            "samsung-galaxy-book4-edge-14"
+          ],
+          "pull": [],
+          "available": [
+            "asus-zenbook-14-ux3480qa",
+            "lenovo-yoga-slim-7x-14q8x9",
+            "microsoft-surface-laptop-8-15"
+          ]
         }
       },
       "all": {
@@ -1133,7 +1305,55 @@
         "missing": 0,
         "pull": 0,
         "available": 4,
-        "upstream": 1
+        "upstream": 1,
+        "models": {
+          "fromUpstream": [
+            "lenovo-thinkpad-t14s-gen-6-snapdragon"
+          ],
+          "added": [
+            "acer-aspire-14-ai-a14-11m",
+            "acer-aspire-16-ai-a16-11m",
+            "acer-swift-14-ai-sf14-11",
+            "acer-swift-go-pro-ai-sfa14-11",
+            "acer-swift-go-14-ai-sfg14-01",
+            "asus-vivobook-16-x1607qa",
+            "asus-vivobook-s15-s5507",
+            "asus-vivobook-s16-s3607qa",
+            "asus-zenbook-a14-ux3407",
+            "asus-zenbook-a14-ux3407na",
+            "asus-zenbook-a16-ux3607oa",
+            "dell-inspiron-14-5441",
+            "dell-inspiron-14-plus-7441",
+            "dell-latitude-5455",
+            "dell-latitude-7455",
+            "dell-xps-13-9345",
+            "hp-elitebook-6-g1q",
+            "hp-elitebook-ultra-g1q",
+            "hp-omnibook-5-14-he0",
+            "hp-omnibook-5-16-bf0",
+            "hp-omnibook-x-14-fe",
+            "hp-elitebook-x-g2q",
+            "hp-omnibook-5-16-bf1",
+            "hp-omnibook-ultra-14-kg0",
+            "hp-omnibook-x-16-cp",
+            "lenovo-ideacentre-mini-x-01q8x10",
+            "lenovo-thinkpad-t14s-gen-7-snapdragon",
+            "medion-sprchrgd-14-s1",
+            "microsoft-surface-laptop-7-13",
+            "microsoft-surface-laptop-7-15",
+            "microsoft-surface-pro-11",
+            "microsoft-surface-pro-12in-1st-edition",
+            "microsoft-surface-laptop-8-13",
+            "samsung-galaxy-book4-edge-14"
+          ],
+          "pull": [],
+          "available": [
+            "asus-proart-pz13-ht5306",
+            "asus-zenbook-14-ux3480qa",
+            "lenovo-yoga-slim-7x-14q8x9",
+            "microsoft-surface-laptop-13in-1st-edition"
+          ]
+        }
       }
     }
   },

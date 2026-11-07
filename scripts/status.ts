@@ -469,7 +469,15 @@ const summary = {
       available: count(current, elsewhere),
       upstream: count(current, theirs),
       ...(channels ? { channels } : {}),
+      // Which models make up each part, so the page can draw one cell per model
+      models: {
+        fromUpstream: ids((r) => ours(r) && theirs(r)),
+        added: ids((r) => ours(r) && !theirs(r)),
+        pull: ids(open),
+        available: ids(elsewhere),
+      },
     });
+    const ids = (test: (r: Row) => boolean) => current.filter(test).map((r) => r.id);
     const byChannel = (piece: (typeof pieces)[number]) =>
       Object.fromEntries(CHANNELS.map((name) => [name, count(current, (r) => channelRank(piece === 'firmware' ? r.omarchy.firmwareChannel : r.omarchy[piece]) <= channelRank(name))]));
     // Not shipped yet, but an open omarchy-pkgs pull request adds it

@@ -42,11 +42,24 @@ const nvidiaParts = outcomeParts(nvidia, { should: { title: 'Same platform as a 
 const { ahead } = summary;
 const channelNote = (channels: Record<string, number>) => `Stable ${channels.stable}, RC ${channels.rc}, edge ${channels.edge}.`;
 const aheadRows = [
-  { label: 'Device tree', ...ahead.deviceTree, ours: `Trees Omarchy's kernel adds. ${channelNote(ahead.deviceTree.channels)}`, theirs: 'In a Linux release.', elsewhere: 'Trees in linux-next, a posted patch or out of tree, which Omarchy could carry.' },
-  { label: 'Hardware IDs', ...ahead.ids, ours: `IDs Omarchy's kernel adds, or systemd's that only Omarchy's systemd has. ${channelNote(ahead.ids.channels)}`, theirs: 'In a systemd release.', elsewhere: `IDs in systemd's development branch, Ubuntu's stubble or sent in here, which Omarchy could carry.` },
-  { label: 'Firmware', ...ahead.firmware, ours: `Firmware Omarchy packages. ${channelNote(ahead.firmware.channels)}`, theirs: 'Every file in a linux-firmware release.', elsewhere: `Firmware in a maker's download or on its way to linux-firmware, which Omarchy could package.` },
-  { label: 'All three', ...ahead.all, ours: 'Device tree, hardware IDs and firmware, all in Omarchy, where upstream lacks at least one.', theirs: 'All three in the releases.', elsewhere: 'Every piece exists, but Omarchy still has to carry at least one.' },
+  { label: 'Device tree', ...ahead.deviceTree, ours: `Trees Omarchy's kernel adds. ${channelNote(ahead.deviceTree.channels)}`, theirs: 'In a Linux release.', none: 'Nobody has written its tree yet.' },
+  { label: 'Hardware IDs', ...ahead.ids, ours: `IDs Omarchy's kernel adds, or systemd's that only Omarchy's systemd has. ${channelNote(ahead.ids.channels)}`, theirs: 'In a systemd release.', none: 'Nobody has sent its hardware IDs yet.' },
+  { label: 'Firmware', ...ahead.firmware, ours: `Firmware Omarchy packages. ${channelNote(ahead.firmware.channels)}`, theirs: 'Every file in a linux-firmware release.', none: 'Its firmware has only turned up in Windows so far.' },
+  { label: 'All three', ...ahead.all, ours: 'Device tree, hardware IDs and firmware, all in Omarchy, where upstream lacks at least one.', theirs: 'All three in the releases.', none: `At least one piece doesn't exist yet.` },
 ];
+// One cell per model, in the bar's order and by name within each part, each linking to its model in the table
+const modelById = new Map(current.map((model) => [model.id, model]));
+const cells = (row: (typeof aheadRows)[number]) => {
+  const parts = [
+    { ids: row.models.fromUpstream, color: 'bg-sky-400', tip: `${row.theirs} Omarchy ships it too.` },
+    { ids: row.models.added, color: 'bg-emerald-400', tip: 'Only Omarchy ships it so far.' },
+    { ids: row.models.pull, color: 'bg-amber-400', tip: 'An open pull request on omarchy-pkgs adds it.' },
+    { ids: row.models.available, color: 'bg-zinc-600', tip: `It exists elsewhere, but Omarchy doesn't carry it yet.` },
+  ];
+  const placed = new Set(parts.flatMap((part) => part.ids));
+  parts.push({ ids: current.filter((model) => !placed.has(model.id)).map((model) => model.id), color: 'bg-zinc-800', tip: row.none });
+  return parts.flatMap((part) => part.ids.map((id) => modelById.get(id)!).sort(byName).map((model) => ({ name: `${model.vendor} ${model.name}`, color: part.color, tip: part.tip })));
+};
 // Out of the box on any channel, and the filter that shows those, with only the ways to more that count any
 const ootb = summary.outOfBox;
 const ootbDone = ootb.stable + ootb.rc + ootb.edge;
@@ -55,7 +68,6 @@ const ootbMore = [
   { filter: 'pr', count: ootb.pr, text: 'once open pull requests land' },
   { filter: 'carry', count: ootb.carry, text: 'once Omarchy carries pieces that exist elsewhere' },
 ].filter((more) => more.count > 0);
-const width = (value: number) => `width: ${(100 * value) / Math.max(summary.models, 1)}%`;
 
 // Left to right in the order a model gets there, with booting last
 const omarchyIds = ['ootb', 'acpi', 'tree', 'hwids', 'fw', 'omarchy', 'machine'] as const;
@@ -142,10 +154,10 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
       <div class="mt-6 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
         <h3 class="text-sm font-semibold text-zinc-200">How far ahead Omarchy is</h3>
         <ul class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-400">
-          <li class="flex items-center gap-1.5"><span class="h-2 w-4 rounded-full bg-sky-400"></span>Upstream releases</li>
-          <li class="flex items-center gap-1.5"><span class="h-2 w-4 rounded-full bg-emerald-400"></span>Omarchy adds</li>
-          <li class="flex items-center gap-1.5"><span class="h-2 w-4 rounded-full bg-amber-400"></span><a class={LINK} href="https://github.com/omacom/omarchy-pkgs/pulls">Open pull requests</a></li>
-          <li class="flex items-center gap-1.5"><span class="h-2 w-4 rounded-full bg-zinc-600"></span>Exists elsewhere</li>
+          <li class="flex items-center gap-1.5"><span class="size-2.5 rounded-[2px] bg-sky-400"></span>Upstream releases</li>
+          <li class="flex items-center gap-1.5"><span class="size-2.5 rounded-[2px] bg-emerald-400"></span>Omarchy adds</li>
+          <li class="flex items-center gap-1.5"><span class="size-2.5 rounded-[2px] bg-amber-400"></span><a class={LINK} href="https://github.com/omacom/omarchy-pkgs/pulls">Open pull requests</a></li>
+          <li class="flex items-center gap-1.5"><span class="size-2.5 rounded-[2px] bg-zinc-600"></span>Exists elsewhere</li>
         </ul>
       </div>
       <dl class="mt-4 grid gap-x-8 gap-y-5 sm:grid-cols-2">
@@ -156,13 +168,14 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
               <dd class={`shrink-0 tabular-nums ${row.added > 0 ? 'text-[#9ece6a]' : 'text-zinc-500'}`}>{[row.added > 0 ? `${row.added} ahead` : 'even', row.missing > 0 ? `${row.missing} behind` : ''].filter(Boolean).join(', ')}</dd>
             </div>
             <div class="mt-2 flex items-center gap-3 text-xs">
-              <div class="flex h-2 flex-1 overflow-hidden rounded-full bg-zinc-800">
-                <div class="h-full bg-sky-400" style={width(row.fromUpstream)} data-tip-title={`Upstream: ${row.fromUpstream} of ${summary.models}`} data-tip={`${row.theirs} Every distro gets these, Omarchy too.`}></div>
-                <div class="h-full bg-emerald-400" style={width(row.added)} data-tip-title={`Omarchy adds: ${row.added}`} data-tip={row.ours}></div>
-                <div class="h-full bg-amber-400" style={width(row.pull)} data-tip-title={`Open pull requests: ${row.pull} more`} data-tip="Not shipped yet, but an open pull request on omarchy-pkgs adds it."></div>
-                <div class="h-full bg-zinc-600" style={width(row.available)} data-tip-title={`Not carried yet: ${row.available} more`} data-tip={row.elsewhere}></div>
+              <div class="@container min-w-0 flex-1">
+                <div class="grid h-3 grid-flow-col grid-cols-[repeat(var(--half),minmax(0,1fr))] grid-rows-2 gap-0.5 @lg:grid-flow-row @lg:grid-cols-[repeat(var(--all),minmax(0,1fr))] @lg:grid-rows-1" style={`--all: ${summary.models}; --half: ${Math.ceil(summary.models / 2)}`}>
+                  {cells(row).map((cell) => (
+                    <a href={`/?q=${encodeURIComponent(cell.name)}#snapdragon`} class={`rounded-[2px] ${cell.color} transition hover:scale-y-150 hover:brightness-150`} data-tip-title={cell.name} data-tip={cell.tip} aria-label={`${cell.name}: ${cell.tip}`}></a>
+                  ))}
+                </div>
               </div>
-              <span class="w-28 shrink-0 whitespace-nowrap tabular-nums text-zinc-300">{row.omarchy}{row.pull > 0 && <span class="text-amber-300"> +{row.pull}</span>}{row.available > 0 && <span class="text-zinc-500"> +{row.available}</span>} <span class="text-zinc-500">/ {summary.models}</span></span>
+              <span class="w-28 shrink-0 whitespace-nowrap tabular-nums text-zinc-300" data-tip-title={`Omarchy: ${row.omarchy} of ${summary.models}`} data-tip={row.ours}>{row.omarchy}{row.pull > 0 && <span class="text-amber-300"> +{row.pull}</span>}{row.available > 0 && <span class="text-zinc-500"> +{row.available}</span>} <span class="text-zinc-500">/ {summary.models}</span></span>
             </div>
           </div>
         ))}
