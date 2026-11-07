@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T23:10:23.582Z",
+  "collected": "2026-11-07T23:49:15.711Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -1146,8 +1146,8 @@
       "stable": 1,
       "rc": 0,
       "edge": 42,
-      "pr": 0,
-      "carry": 1,
+      "pr": 1,
+      "carry": 0,
       "needs-deviceTree": 26,
       "needs-ids": 6,
       "needs-firmware": 8
@@ -1163,8 +1163,8 @@
         "omarchy": 54,
         "fromUpstream": 19,
         "added": 35,
-        "pull": 0,
-        "available": 4,
+        "pull": 1,
+        "available": 3,
         "upstream": 19,
         "channels": {
           "stable": 19,
@@ -1230,12 +1230,13 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "samsung-galaxy-book4-edge-15"
+          ],
           "available": [
             "asus-vivobook-s14-s3407qa",
             "asus-ascent-qn10",
-            "humain-horizon",
-            "samsung-galaxy-book4-edge-15"
+            "humain-horizon"
           ]
         }
       },
@@ -1243,8 +1244,8 @@
         "omarchy": 51,
         "fromUpstream": 28,
         "added": 23,
-        "pull": 0,
-        "available": 1,
+        "pull": 1,
+        "available": 0,
         "upstream": 28,
         "channels": {
           "stable": 28,
@@ -1307,18 +1308,18 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
-          "available": [
+          "pull": [
             "samsung-galaxy-book4-edge-15"
-          ]
+          ],
+          "available": []
         }
       },
       "firmware": {
         "omarchy": 47,
         "fromUpstream": 1,
         "added": 46,
-        "pull": 0,
-        "available": 1,
+        "pull": 1,
+        "available": 0,
         "upstream": 1,
         "channels": {
           "stable": 1,
@@ -1377,18 +1378,18 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
-          "available": [
+          "pull": [
             "samsung-galaxy-book4-edge-15"
-          ]
+          ],
+          "available": []
         }
       },
       "all": {
         "omarchy": 43,
         "fromUpstream": 1,
         "added": 42,
-        "pull": 0,
-        "available": 1,
+        "pull": 1,
+        "available": 0,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1438,10 +1439,10 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
-          "available": [
+          "pull": [
             "samsung-galaxy-book4-edge-15"
-          ]
+          ],
+          "available": []
         }
       }
     }
@@ -10142,26 +10143,38 @@
         "https://news.samsung.com/global/galaxy-book4-edge-samsungs-next-gen-ai-pc-now-available-with-15-inch-display",
         "https://www.notebookcheck.net/Samsung-Galaxy-Book4-Edge-15.988764.0.html"
       ],
-      "notes": "Samsung's driver pack has an older GPU zap shader than Windows Update installs, signed by Qualcomm rather than Samsung; nobody has tried it on the laptop yet.",
+      "notes": "USB-C charging stays at 5 V and a trickle without the owner's userspace tool (book4-pd-charge).",
       "outcome": "none",
       "reports": [],
       "machine": "linux",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2303",
+          "number": 2303,
+          "title": "Add the Samsung Galaxy Book4 Edge 15: device tree, hardware IDs and firmware"
+        },
         "ids": null,
-        "idsPull": null,
-        "firmware": "download",
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2303",
+          "number": 2303,
+          "title": "Add the Samsung Galaxy Book4 Edge 15: device tree, hardware IDs and firmware"
+        },
+        "firmware": "pr",
         "firmwareChannel": null,
         "firmwarePackages": [],
-        "firmwarePull": null
+        "firmwarePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2303",
+          "number": 2303,
+          "title": "Add the Samsung Galaxy Book4 Edge 15: device tree, hardware IDs and firmware"
+        }
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "pr",
         "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "elsewhere",
-          "firmware": "elsewhere"
+          "deviceTree": "pr",
+          "ids": "pr",
+          "firmware": "pr"
         },
         "missing": [
           "deviceTree",
@@ -10173,7 +10186,7 @@
         "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/patch-2-anatase.patch",
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2303",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/samsung-galaxy-book4-edge-15",
         "ids": "collected",
         "idsCollected": "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/x1p42100-samsung-galaxy-book4-edge-15.json",
@@ -10181,7 +10194,7 @@
         "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": "/firmware/#qcom-x1p42100-SAMSUNG-NP750XQB",
+        "firmwareDownload": "/firmware/#qcom-x1p42100-SAMSUNG-galaxy-book4-edge",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -10196,8 +10209,16 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2303",
+            "number": 2303,
+            "title": "Add the Samsung Galaxy Book4 Edge 15: device tree, hardware IDs and firmware"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2303",
+            "number": 2303,
+            "title": "Add the Samsung Galaxy Book4 Edge 15: device tree, hardware IDs and firmware"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],

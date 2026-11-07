@@ -258,11 +258,10 @@
   },
   "samsung-galaxy-book4-edge-15": {
     "state": "out-of-tree",
-    "source": "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/patch-2-anatase.patch",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2303",
     "files": [
       "SOURCE.md",
-      "x1p42100-samsung-galaxy-book4-edge-15.dts",
-      "x1-samsung-galaxy-book4-edge.dtsi"
+      "x1p42100-samsung-galaxy-book4-edge-15.dts"
     ]
   },
   "samsung-galaxy-book4-edge-16": {

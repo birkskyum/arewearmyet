@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T23:10:23.582Z",
+  "collected": "2026-11-07T23:49:15.711Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -6006,6 +6006,41 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.07.483/omarchy-edge-2026.11.07.483-aarch64.iso",
       "kernel": "7.3.0-26-omarchy"
     },
-    "pulls": []
+    "pulls": [
+      {
+        "number": 2303,
+        "title": "Add the Samsung Galaxy Book4 Edge 15: device tree, hardware IDs and firmware",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2303",
+        "draft": true,
+        "deviceTrees": [
+          {
+            "file": "x1p42100-samsung-galaxy-book4-edge-15.dts",
+            "model": "Samsung Galaxy Book4 Edge 15",
+            "compatible": [
+              "samsung,galaxy-book4-edge-15",
+              "qcom,x1p42100"
+            ]
+          }
+        ],
+        "ids": [
+          {
+            "file": "x1p42100-samsung-galaxy-book4-edge-15.json",
+            "compatible": "samsung,galaxy-book4-edge-15"
+          }
+        ],
+        "firmware": [
+          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
+          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adspr.jsn",
+          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adsps.jsn",
+          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adspua.jsn",
+          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/cdsp_dtbs.elf",
+          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/cdspr.jsn",
+          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn",
+          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn",
+          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcdxkmsucpurwa.mbn",
+          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcvss8380.mbn"
+        ]
+      }
+    ]
   }
 }
