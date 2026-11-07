@@ -1077,11 +1077,11 @@
     "problems": 8,
     "notYet": 39,
     "deviceTree": 53,
-    "ids": 47,
+    "ids": 48,
     "firmware": 43,
     "googlebooks": 2,
-    "acpi": 35,
-    "acpiWanted": 31,
+    "acpi": 37,
+    "acpiWanted": 30,
     "outOfBox": {
       "stable": 1,
       "rc": 0,
@@ -1094,9 +1094,9 @@
     },
     "machine": {
       "team": 7,
-      "omarchy": 7,
-      "linux": 39,
-      "nobody": 31
+      "omarchy": 9,
+      "linux": 38,
+      "nobody": 30
     },
     "byPiece": {
       "deviceTree": {
@@ -1180,7 +1180,7 @@
         "fromUpstream": 28,
         "added": 17,
         "pull": 1,
-        "available": 1,
+        "available": 2,
         "upstream": 28,
         "channels": {
           "stable": 28,
@@ -1241,6 +1241,7 @@
             "asus-zenbook-14-ux3480qa"
           ],
           "available": [
+            "hp-omnibook-3-16-bz0",
             "microsoft-surface-laptop-13in-1st-edition"
           ]
         }
@@ -1678,7 +1679,7 @@
       "notes": null,
       "outcome": "should",
       "reports": [],
-      "machine": "linux",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -1707,7 +1708,7 @@
         "devicetreeOutOfTree": "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p64100-acer-swift-sf14-11.txt",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/acer-swift-14-ai-sf14-11",
         "ids": "listed",
-        "idsCollected": null,
+        "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/15",
         "idsStubble": null,
         "firmware": "download",
         "firmwareMissing": [],
@@ -1717,13 +1718,51 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/acer/swift-sf14-11t"
+        ]
       },
       "variants": [
         {
           "model": "SF14-11",
           "chip": "X1P-64-100",
+          "compatible": "acer,swift-sf14-11",
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "stable",
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "x1p64100-acer-swift-sf14-11.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2513-arm64-dts-qcom-x1-acer-swift-14-Add-support-for-Acer-Swift-14.patch"
+          },
+          "firmwareNeeded": [],
+          "ids": [
+            {
+              "file": "x1p64100-acer-swift-sf14-11.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "acer,swift-sf14-11"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "x1p64100-acer-swift-sf14-11.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p64100-acer-swift-sf14-11.json"
+            }
+          ],
+          "outcome": "should",
+          "reports": []
+        },
+        {
+          "model": "SF14-11T",
+          "chip": "X1E-78-100",
           "compatible": "acer,swift-sf14-11",
           "computed": "should",
           "treeChannel": "edge",
@@ -5594,7 +5633,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "nobody",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -5609,7 +5648,7 @@
         "state": "needs-deviceTree",
         "pieces": {
           "deviceTree": "none",
-          "ids": "none",
+          "ids": "elsewhere",
           "firmware": "none"
         },
         "missing": [
@@ -5624,8 +5663,8 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": null,
         "devicetreeArchive": null,
-        "ids": "missing",
-        "idsCollected": null,
+        "ids": "collected",
+        "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/13",
         "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
@@ -5635,8 +5674,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
+        ]
       },
       "variants": [
         {
@@ -11211,9 +11252,6 @@
     "deviceTrees": [],
     "ids": [],
     "firmware": [],
-    "acpi": [
-      "hardware-reports/acer/swift-sf14-11t",
-      "hardware-reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
-    ]
+    "acpi": []
   }
 }

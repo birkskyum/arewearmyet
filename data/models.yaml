@@ -94,6 +94,9 @@ models:
     model_numbers: ["SF14-11", "SF14-11T"]
     variants:
       - { model: "SF14-11", chip: "X1P-64-100", compatible: "acer,swift-sf14-11" }
+      - { model: "SF14-11T", chip: "X1E-78-100", compatible: "acer,swift-sf14-11" }
+    acpi: ["hardware-reports/acer/swift-sf14-11t"]
+    ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/15"
     devicetree_out_of_tree: "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p64100-acer-swift-sf14-11.txt"
     devicetree_files:
       - "https://raw.githubusercontent.com/delphix/linux-kernel-generic/develop/arch/arm64/boot/dts/qcom/x1p64100-acer-swift-sf14-11.dts"
@@ -684,6 +687,8 @@ models:
     released: "2026-01"
     chips: ["X1-26-100"]
     model_numbers: ["16-bz0xxx"]
+    acpi: ["hardware-reports/hp/hp-omnibook-3-laptop-16-bz0xxx"]
+    ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/13"
     sources:
       - https://www.hp.com/au-en/shop/hp-omnibook-3-laptop-next-gen-ai-16-bz0003qu-d46xfpa.html
       - https://www.notebookcheck.net/Efficient-16-GB-RAM-laptop-for-less-than-700-HP-OmniBook-3-16-review.1365529.0.html
