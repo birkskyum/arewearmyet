@@ -78,7 +78,7 @@ const omarchyAdded: DeviceTree[] = sources.omarchy.kernelAddedDeviceTrees.map((d
 
 // Glymur's boot firmware starts the SoCCP and Linux only attaches to it, so no package ships the
 // soccp images a tree names. The Surface Laptop 8's USB4 router image exists only inside Qualcomm's
-// Windows USB4 driver, which surface-laptop-8-support copies it out of, so no firmware package
+// Windows USB4 driver, which microsoft-surface-laptop-8-support copies it out of, so no firmware package
 // carries it either
 const loadedByLinux = (name: string) => !/\/soccp[^/]*$/.test(name) && !/\/usb4-router[^/]*$/.test(name);
 

@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-07T16:52:16.155Z",
+  "collected": "2026-11-07T19:07:45.107Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-30",
+    "kernel": "7.3-31",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-30",
+        "kernel": "7.3-31",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -713,7 +713,7 @@
             "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
             "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn"
           ],
-          "asus-zenbook-a14-x2-firmware": [
+          "asus-zenbook-a14-ux3407na-firmware": [
             "qcom/glymur/ASUSTeK/UX3407NA/adsp_dtbs.elf",
             "qcom/glymur/ASUSTeK/UX3407NA/adspr.jsn",
             "qcom/glymur/ASUSTeK/UX3407NA/adsps.jsn",
@@ -1043,6 +1043,9 @@
             "qcom/glymur/microsoft/mahua/qcadsp8480.mbn",
             "qcom/glymur/microsoft/mahua/qccdsp8480.mbn"
           ],
+          "microsoft-surface-laptop-8-support": [
+            "qcom/glymur/GLYMUR-Microsoft-Surface-Laptop-8-tplg.bin"
+          ],
           "microsoft-surface-pro-11-firmware": [
             "qcom/x1e80100/microsoft/Denali/adsp_dtb.mbn",
             "qcom/x1e80100/microsoft/Denali/adspr.jsn",
@@ -1054,6 +1057,9 @@
             "qcom/x1e80100/microsoft/Denali/qcadsp8380.mbn",
             "qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn",
             "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn"
+          ],
+          "microsoft-surface-pro-11-support": [
+            "qcom/x1e80100/X1E80100-Microsoft-Surface-Pro-11-tplg.bin"
           ],
           "microsoft-surface-pro-12in-firmware": [
             "qcom/x1p42100/Microsoft/Surface12/adsp_dtbs.elf",
@@ -1078,12 +1084,6 @@
             "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn",
             "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn",
             "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcdxkmsuc8380.mbn"
-          ],
-          "surface-laptop-8-support": [
-            "qcom/glymur/GLYMUR-Microsoft-Surface-Laptop-8-tplg.bin"
-          ],
-          "surface-pro-11-support": [
-            "qcom/x1e80100/X1E80100-Microsoft-Surface-Pro-11-tplg.bin"
           ]
         }
       }
@@ -4025,7 +4025,7 @@
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
-          "asus-zenbook-a14-x2-firmware"
+          "asus-zenbook-a14-ux3407na-firmware"
         ],
         "firmwarePull": null
       },

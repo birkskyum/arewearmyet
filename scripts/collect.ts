@@ -209,7 +209,7 @@ async function repository(dbUrl: string): Promise<string | undefined> {
   return dir;
 }
 
-type Package = { name: string; version: string; files: string[] };
+type Package = { name: string; version: string; replaces: string[]; files: string[] };
 
 function packages(dir: string | undefined): Package[] {
   if (!dir) return [];
@@ -217,7 +217,8 @@ function packages(dir: string | undefined): Package[] {
     const field = (text: string, key: string) => text.match(new RegExp(`^%${key}%\n([^\n]+)`, 'm'))?.[1] ?? '';
     const desc = readFileSync(join(dir, folder, 'desc'), 'utf8');
     const files = existsSync(join(dir, folder, 'files')) ? readFileSync(join(dir, folder, 'files'), 'utf8').split('\n').filter((line) => line && !line.startsWith('%') && !line.endsWith('/')) : [];
-    return { name: field(desc, 'NAME'), version: field(desc, 'VERSION'), files };
+    const list = (key: string) => desc.match(new RegExp(`^%${key}%\n((?:[^\n]+\n?)+)`, 'm'))?.[1].split('\n').filter(Boolean) ?? [];
+    return { name: field(desc, 'NAME'), version: field(desc, 'VERSION'), replaces: list('REPLACES'), files };
   });
 }
 
@@ -232,7 +233,10 @@ function channelContents(repo: Package[], core: Package[]) {
   // Omarchy's repository comes first in pacman.conf, so a package it builds, like its
   // linux-firmware-qcom with backported firmware, replaces Arch Linux ARM's of the same name
   const own = new Set(repo.map((pkg) => pkg.name));
-  for (const pkg of [...repo, ...core.filter((pkg) => pkg.name.startsWith('linux-firmware') && !own.has(pkg.name))]) {
+  // A renamed package stays published under its old name until it is unpublished, and pacman -Syu
+  // swaps it for the package that replaces it, so only the new name counts
+  const replaced = new Set(repo.flatMap((pkg) => pkg.replaces));
+  for (const pkg of [...repo.filter((pkg) => !replaced.has(pkg.name)), ...core.filter((pkg) => pkg.name.startsWith('linux-firmware') && !own.has(pkg.name))]) {
     const files = names(pkg.files, new RegExp(`^usr/lib/firmware/(qcom/(?:${FIRMWARE_SOCS.join('|')})/.+?)(?:\\.zst|\\.xz)?$`));
     if (files.length) firmware[pkg.name] = files;
   }
