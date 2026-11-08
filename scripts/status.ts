@@ -293,13 +293,13 @@ function omarchyFirmware(files: string[], download?: string) {
 const acpiDumps: { folder: string; url: string }[] = sources.acpiDumps;
 
 // Whether a fresh install boots it: problems an owner reported, otherwise the most stable channel whose install
-// image picks its device tree, confirmed once an owner reached the desktop. Without one, what it still needs
+// image picks its device tree, whether or not an owner has tried it yet. Without one, what it still needs
 // to boot, the first piece nobody has, then pieces Omarchy doesn't carry, then open pull requests.
 // Firmware isn't needed to boot, so the firmware column covers it.
 type Piece = Channel | 'pr' | 'elsewhere' | 'none';
 function bootable(outcome: Outcome, channel: Channel | null, pieces: Record<'deviceTree' | 'ids', Piece>) {
   if (outcome === 'problems') return 'problems';
-  if (channel) return outcome === 'works' ? channel : `${channel}-untested`;
+  if (channel) return channel;
   if (outcome === 'works') return 'works';
   const values = [pieces.deviceTree, pieces.ids];
   if (pieces.deviceTree === 'none') return 'needs-deviceTree';

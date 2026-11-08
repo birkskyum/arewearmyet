@@ -39,7 +39,7 @@ const CASES = [
       Every Snapdragon laptop needs a device tree that describes its hardware to Linux, its hardware IDs so a boot image picks that tree by itself, and its firmware. Writing a device tree takes a developer, but it's written from what's on your laptop, and it's finished by someone testing it on the real hardware.
     </p>
     <p class="mt-3">
-      If your laptop is marked <span class={`${PILL} ${TONE.wanted}`}>Wanted</span> on the board, has an amber channel like <span class={`${PILL} ${TONE.close}`}>Edge</span> under Bootable, or isn't on it at all, pick the case that fits. Each takes a few minutes, and all of them end in the same form.
+      If your laptop is marked <span class={`${PILL} ${TONE.wanted}`}>Wanted</span> on the board, shows a channel like <span class={`${PILL} ${TONE.good}`}>Edge</span> under Bootable that nobody has confirmed yet, or isn't on it at all, pick the case that fits. Each takes a few minutes, and all of them end in the same form.
     </p>
 
     <nav class="mt-6 grid gap-3 sm:grid-cols-3">
@@ -94,7 +94,7 @@ sed -i '/serial-number/d' tree.dts</code></pre>
     <section id="test" class={`mt-6 ${CARD}`}>
       <h2 class="text-xl font-semibold text-zinc-100">It's ready to test</h2>
       <p class="mt-2">
-        A model with an amber channel like <span class={`${PILL} ${TONE.close}`}>Edge</span> under Bootable has its device tree and hardware IDs in that Omarchy channel, so its install image picks the tree by itself. Nobody has confirmed it on the real hardware yet.
+        A model with a channel like <span class={`${PILL} ${TONE.good}`}>Edge</span> under Bootable has its device tree and hardware IDs in that Omarchy channel, so its install image picks the tree by itself. Nobody has confirmed it on the real hardware yet.
       </p>
       <ol class={STEPS}>
         <li>Make an Omarchy USB stick. With Windows still on the laptop, the <a class={LINK} href={INSTALLER}>Omarchy Arm Installer</a> makes one and copies the laptop's firmware onto it from Windows' own drivers.</li>

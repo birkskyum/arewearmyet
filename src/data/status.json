@@ -1508,7 +1508,7 @@
       ],
       "notes": "Reached the installer on the edge image. Nobody has installed it yet.",
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -1607,7 +1607,7 @@
       ],
       "notes": "Wi-Fi needs a board file from Windows.",
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -1785,7 +1785,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -1929,7 +1929,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -2031,7 +2031,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -2311,7 +2311,7 @@
       ],
       "notes": "Sound needs the asus-proart-pz13-audio package for now. No cameras yet.",
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -2656,7 +2656,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -2936,7 +2936,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -3187,7 +3187,7 @@
       ],
       "notes": "Wi-Fi needs board data linux-firmware doesn't have yet.",
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -3588,7 +3588,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "stable-untested",
+      "bootable": "stable",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -4041,7 +4041,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -4155,7 +4155,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "stable-untested",
+      "bootable": "stable",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -4271,7 +4271,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -4516,7 +4516,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -4624,7 +4624,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "stable-untested",
+      "bootable": "stable",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -4741,7 +4741,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "stable-untested",
+      "bootable": "stable",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -5121,7 +5121,7 @@
       ],
       "notes": "The compute DSP firmware still comes from Windows.",
       "outcome": "should",
-      "bootable": "stable-untested",
+      "bootable": "stable",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -5238,7 +5238,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -5346,7 +5346,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "stable-untested",
+      "bootable": "stable",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -5538,7 +5538,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -5627,7 +5627,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -5802,7 +5802,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -5902,7 +5902,7 @@
       ],
       "notes": "Uses the OmniBook 5 14's device tree.",
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -6004,7 +6004,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "stable-untested",
+      "bootable": "stable",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -6162,7 +6162,7 @@
       ],
       "notes": "HP builds it on the EliteBook 6 G1q's mainboard (board 8E06, driver pack sp174046), so it takes that tree and firmware. Owners boot it with the OmniBook X 14's tree; nobody has tried the EliteBook's yet.",
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -6339,7 +6339,7 @@
       ],
       "notes": "Its tree is for the 18-core Glymur chips. The X2E-84-100 and X2E-80-100 units have Mahua chips and the X2P-42-100 ones the 6-core Kalambo chip, which need trees on mahua.dtsi and kalambo.dtsi.",
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -6525,7 +6525,7 @@
       ],
       "notes": "No GPU, Bluetooth or sound yet.",
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -6979,7 +6979,7 @@
       ],
       "notes": "Its tree is for the Mahua chips. The X2P-42-100 units have the 6-core Kalambo chip and need a tree on kalambo.dtsi. The 2025 16-cp0 is a Snapdragon X model on board 8F45, listed on its own.",
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -7297,7 +7297,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -7409,7 +7409,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -7522,7 +7522,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -7900,7 +7900,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "stable-untested",
+      "bootable": "stable",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -8100,7 +8100,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "stable-untested",
+      "bootable": "stable",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -8735,7 +8735,7 @@
       ],
       "notes": "Its tree is for the Mahua X2E-80-100. The X2P-42-100 units have the 6-core Kalambo chip and need a tree on kalambo.dtsi.",
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -8841,7 +8841,7 @@
       ],
       "notes": "Its tree is for the 18-core X2E-88-100. The X2E-80-100 units have the Mahua chip and the X2P-42-100 ones the 6-core Kalambo chip, which need trees on mahua.dtsi and kalambo.dtsi.",
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -8958,7 +8958,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "stable-untested",
+      "bootable": "stable",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -9324,7 +9324,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -9576,7 +9576,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -9774,7 +9774,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "team",
       "omarchy": {
@@ -9872,7 +9872,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -10133,7 +10133,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "stable-untested",
+      "bootable": "stable",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -10248,7 +10248,7 @@
       ],
       "notes": "USB-C charging stays at 5 V and a trickle without the owner's userspace tool (book4-pd-charge).",
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -10343,7 +10343,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "edge-untested",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -10702,7 +10702,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "stable-untested",
+      "bootable": "stable",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -10811,7 +10811,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "stable-untested",
+      "bootable": "stable",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -10947,7 +10947,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "stable-untested",
+      "bootable": "stable",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -11056,7 +11056,7 @@
       ],
       "notes": null,
       "outcome": "should",
-      "bootable": "stable-untested",
+      "bootable": "stable",
       "reports": [],
       "machine": "linux",
       "omarchy": {
