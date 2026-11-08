@@ -224,7 +224,7 @@ models:
     released: "2025-01"
     chips: ["X1-26-100"]
     model_numbers: ["X1407QA", "A1407QA"]
-    notes: "Owners boot it with the Vivobook S 15's or a patched Zenbook A14 device tree."
+    notes: "Owners boot it with the Vivobook S 15's or a patched Zenbook A14 device tree. Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so the X1607QA's tree is the closest start, with its own IPS panel and PWM backlight added."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-14-x1407q/techspec/
       - https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html
@@ -283,6 +283,7 @@ models:
     devicetree_out_of_tree: "https://github.com/jonaslindeburg-svg/vivobook-s3407qa-linux"
     devicetree_files:
       - "https://raw.githubusercontent.com/jonaslindeburg-svg/vivobook-s3407qa-linux/a9b964ee371675a8c1e5e23ea7c8da00f2178dfd/dts/x1p42100-asus-vivobook-s14.dts"
+    ids_collected: "https://github.com/jonaslindeburg-svg/vivobook-s3407qa-linux/blob/4630a369b8f06c68b2fc239dcb16943d454ac088/notes/dmesg.txt#L265"
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s14-s3407q/techspec/
       - https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/
@@ -405,6 +406,7 @@ models:
     devicetree_out_of_tree: "https://gist.github.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce"
     devicetree_files:
       - "https://gist.githubusercontent.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce/raw/glymur-asus-ascent-qn10.dts"
+    ids_collected: "https://gist.github.com/Sonicadvance1/3e8e7ba00d388d9da88a5f394b350adc"
     notes: "Nobody has booted its draft device tree yet."
     sources:
       - https://www.asus.com/displays-desktops/mini-pcs/ascent-series/asus-ascent-qn10/techspec/
@@ -712,8 +714,9 @@ models:
     name: "OmniBook 3 16 (16-ct0)"
     generation: x1
     released: "2026-09"
-    chips: ["X1-26-100"]
-    model_numbers: ["16-ct0xxx"]
+    chips: ["C1-10-100"]
+    model_numbers: ["16-ct0xxx", "8FD0", "8FD1"]
+    notes: "Its Snapdragon C C1-10-100 is a 7c Gen 3 class chip (SC7280), not a Snapdragon X. HP's driver pack sp174797 carries only 8270 firmware."
     sources:
       - https://www.hp.com/au-en/shop/hp-omnibook-3-laptop-ai-16-ct0030qu-e5hs8pa.html
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4688594
@@ -779,7 +782,8 @@ models:
     chips: ["X1-26-100", "X1P-42-100"]
     model_numbers: ["HSN-Q42C"]
     variants:
-      - { compatible: "hp,elitebook-6-g1q", borrowed: true }
+      - { compatible: "hp,elitebook-6-g1q", borrowed: true, ids: ["x1p42100-hp-probook-4-g1q.json"] }
+    ids_collected: "https://bugs.launchpad.net/ubuntu-concept/+bug/2167258"
     notes: "HP builds it on the EliteBook 6 G1q's mainboard (board 8E06, driver pack sp174046), so it takes that tree and firmware. Owners boot it with the OmniBook X 14's tree; nobody has tried the EliteBook's yet."
     sources:
       - https://www.hp.com/au-en/shop/hp-probook-4-g1q-14-inch-notebook-next-gen-ai-pc-bx2e6pt.html
@@ -805,6 +809,7 @@ models:
     model_numbers: ["HSN-I66C-4", "8E91"]
     variants:
       - { compatible: "hp,elitebook-x-g2q" }
+    notes: "Its tree is for the 18-core Glymur chips. The X2E-84-100 and X2E-80-100 units have Mahua chips and the X2P-42-100 ones the 6-core Kalambo chip, which need trees on mahua.dtsi and kalambo.dtsi."
     firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1333"
     sources:
       - https://www.notebookcheck.net/HP-unveils-EliteBook-X-G2q-and-EliteBook-X-G2x-enterprise-laptops-with-new-Qualcomm-and-AMD-CPUs.1196602.0.html
@@ -818,9 +823,7 @@ models:
     released: "2026"
     chips: ["X2P-42-100"]
     model_numbers: ["14-he1xxx"]
-    variants:
-      - { compatible: "hp,omnibook-5-16-bf1xxx", borrowed: true }
-    notes: "HP builds it on the OmniBook 5 16's mainboard (board 8F47, driver pack sp173974), so it takes that tree and firmware. Nobody has tried it yet."
+    notes: "HP builds it on the OmniBook 5 16's mainboard (board 8F47, driver pack sp173974), but its X2P-42-100 is the 6-core Kalambo chip, which the 16's Mahua tree doesn't describe. It needs a tree on kalambo.dtsi, which Omarchy doesn't carry yet."
     sources:
       - https://www.bruneau.fr/product/pc-portable-hp-omnibook-5-14-he1003nfx-14-oled-copilot-pc-snapdragon-ai-x2-16-go-ram-512-go-ssd-argent/8573172
       - https://9to5google.com/2026/01/05/hp-unveils-its-new-snapdragon-x2-intel-powered-laptops-and-some-chromebooks-too/
@@ -852,6 +855,7 @@ models:
     model_numbers: ["14-kg0xxx"]
     variants:
       - { compatible: "hp,omnibook-ultra-kg0xxx" }
+    notes: "Its tree is for the 18-core X2E-90-100. The X2E-84-100 and X2P-64-100 units have Mahua chips, which need a tree on mahua.dtsi."
     acpi: ["arewearmyet/hp-omnibook-ultra-14-kg0"]
     ids_collected: "https://github.com/birkskyum/arewearmyet/tree/main/acpi/hp-omnibook-ultra-14-kg0"
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260830-x2-hp-omnibook-ship-v1-2-9feada71dc79@oss.qualcomm.com/"
@@ -863,16 +867,39 @@ models:
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4520421
       - https://www.tomshardware.com/laptops/hp-omnibook-ultra-14-snapdragon-x2-elite-2026-review
 
+  - id: hp-omnibook-x-14-kr0
+    vendor: "HP"
+    name: "OmniBook X 14 (14-kr0)"
+    generation: x1
+    released: "2025"
+    chips: ["X1P-42-100"]
+    model_numbers: ["14-kr0xxx", "8F45"]
+    notes: "HP builds it on board 8F45 with the OmniBook X 16 16-cp0 (driver pack sp172628), a different mainboard from the 14-fe's. Nobody has published a tree, hardware IDs or ACPI dump for it."
+    sources:
+      - https://www.bestbuy.com/product/hp-omnibook-x-14-2k-oled-touchscreen-laptop-snapdragon-x-plus-2025-16gb-memory-512gb-ssd-copilot-pc-meteor-silver/JJGWKY44RC
+      - https://ftp.hp.com/pub/softpaq/sp172501-173000/sp172628.cva
+
+  - id: hp-omnibook-x-16-cp0
+    vendor: "HP"
+    name: "OmniBook X 16 (16-cp0)"
+    generation: x1
+    released: "2025"
+    model_numbers: ["16-cp0xxx", "8F45"]
+    notes: "HP builds it on board 8F45 with the OmniBook X 14 14-kr0 (driver pack sp172628). Sold with a Snapdragon X Plus, exact chip not confirmed. Nobody has published a tree, hardware IDs or ACPI dump for it."
+    sources:
+      - https://www.bestbuy.com/product/hp-omnibook-x-16-2k-oled-touchscreen-laptop-snapdragon-x-plus-2025-16gb-memory-512gb-ssd-copilot-pc-deep-espresso/JJGWKY446Z
+      - https://ftp.hp.com/pub/softpaq/sp172501-173000/sp172628.cva
+
   - id: hp-omnibook-x-14-kr
     vendor: "HP"
     name: "OmniBook X 14 (2026)"
     generation: x2
     released: "2026"
     chips: ["X2P-42-100", "X2P-64-100", "X2E-80-100"]
-    model_numbers: ["14-kr0xxx", "14-kr1xxx"]
+    model_numbers: ["14-kr1xxx", "8F46"]
     variants:
       - { compatible: "hp,omnibook-x16-cp1", borrowed: true }
-    notes: "HP builds it on the OmniBook X 16's mainboard (board 8F46, driver pack sp172895), so it takes that tree and firmware. Nobody has tried it yet. HP also lists both on board 8F45, whose drivers are for Snapdragon X chips and which this tree doesn't cover."
+    notes: "HP builds it on the OmniBook X 16's mainboard (board 8F46, driver pack sp172895), so the X2P-64-100 and X2E-80-100 units take that tree and firmware. Nobody has tried it yet. The X2P-42-100 units have the 6-core Kalambo chip and need a tree on kalambo.dtsi. The 2025 14-kr0 is a Snapdragon X model on board 8F45, listed on its own."
     sources:
       - https://www.hp.com/au-en/shop/laptops-tablets/personal-laptops/omnibook-x-laptops/hp-omnibook-x-laptop-next-gen-ai-14-kr1000qu-d8qf4pa.html
       - https://www.harveynorman.co.nz/computers/laptops/hp-omnibook-x-14-laptop-snapdragon-x2-plus-16gb-ram-512gb-ssd-copilot-pc-meteor-silver-14-kr1002qu.html
@@ -884,9 +911,10 @@ models:
     generation: x2
     released: "2026-07"
     chips: ["X2E-84-100", "X2P-42-100"]
-    model_numbers: ["16-cp0xxx", "16-cp1xxx"]
+    model_numbers: ["16-cp1xxx", "8F46"]
     variants:
       - { model: "16-cp1", compatible: "hp,omnibook-x16-cp1" }
+    notes: "Its tree is for the Mahua chips. The X2P-42-100 units have the 6-core Kalambo chip and need a tree on kalambo.dtsi. The 2025 16-cp0 is a Snapdragon X model on board 8F45, listed on its own."
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261028191800.27829-3-jeff.roach0@gmail.com/"
     firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1333"
     ids_collected: "https://bugs.launchpad.net/ubuntu-concept/+bug/2170451"
@@ -992,8 +1020,21 @@ models:
     released: "2026-10"
     chips: ["X1-26-100"]
     model_numbers: ["14Q8X12", "84A9"]
+    notes: "Its BIOS (VGCN13WW) is the IdeaPad Slim 3x 15Q8X10's LCFC platform, so that tree is the closest start, with a second USB-C port, the touchscreen at 0x24 and its own panel and EC."
     sources:
       - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Vibe_14Q8X12
+
+  - id: lenovo-ideapad-vibe-15q8x12
+    vendor: "Lenovo"
+    name: "IdeaPad Vibe 15"
+    generation: x1
+    released: "2026-10"
+    chips: ["X1-26-100"]
+    model_numbers: ["15Q8X12", "84AA"]
+    notes: "Shares the IdeaPad Vibe 14's BIOS (VGCN13WW) and DSDT."
+    sources:
+      - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Vibe_15Q8X12
+      - https://download.lenovo.com/consumer/mobiles/vgcn13ww.exe
 
   - id: lenovo-thinkbook-16-gen-7-qoy
     vendor: "Lenovo"
@@ -1109,6 +1150,7 @@ models:
     model_numbers: ["22A7", "22A8"]
     variants:
       - { model: "LCD", compatible: "lenovo,thinkpad-t14s-gen7-lcd" }
+    notes: "Its tree is for the Mahua X2E-80-100. The X2P-42-100 units have the 6-core Kalambo chip and need a tree on kalambo.dtsi."
     firmware: ["qcom/glymur/LENOVO/22A8"]
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260929221821.505551-3-srinivas.kandagatla@oss.qualcomm.com/"
     sources:
@@ -1125,6 +1167,7 @@ models:
     model_numbers: ["14Q8Y11", "83QR"]
     variants:
       - { model: "14Q8Y11", compatible: "lenovo,yoga-slim7x-gen11" }
+    notes: "Its tree is for the 18-core X2E-88-100. The X2E-80-100 units have the Mahua chip and the X2P-42-100 ones the 6-core Kalambo chip, which need trees on mahua.dtsi and kalambo.dtsi."
     acpi: ["lenovo-yoga-slim-7x-14Q8Y11"]
     sources:
       - https://psref.lenovo.com/Product/Yoga/Yoga_Slim_7_14Q8Y11

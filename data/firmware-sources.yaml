@@ -22,6 +22,23 @@
 # the linux-firmware merge requests (!1331 to !1338 and !1341).
 
 folders:
+  - path: "qcom/glymur/ASUSTeK/QN10"
+    models: ["asus-ascent-qn10"]
+    files:
+      - name: "cdsp_dtbs.elf"
+        size: 69432
+        sha256: "9bee104a48d4aac647287d6c1454df170c1cff7158a2352711fd1e2163ea6d1d"
+        note: "ASUS publishes no drivers for the QN10, so this is Qualcomm's generic X2 compute DSP, signed for any maker and installed by the qcnspmcdm8480 extension that matches every X2 NPU. The QN10's DSDT gives its compute DSP CRD08480. Its audio DSP (board 89401043) is in no ASUS package."
+        from:
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/NPU/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/NPU/qcnspmcdm8480/cdsp_dtbs.elf" }
+      - name: "qccdsp8480.mbn"
+        size: 3252504
+        sha256: "acf13d29288d283793f418a36650e8a261eed927d30de109a59cb2210f458794"
+        note: "ASUS publishes no drivers for the QN10, so this is Qualcomm's generic X2 compute DSP, signed for any maker and installed by the qcnspmcdm8480 extension that matches every X2 NPU. The QN10's DSDT gives its compute DSP CRD08480. Its audio DSP (board 89401043) is in no ASUS package."
+        from:
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/NPU/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/NPU/qcnspmcdm8480/qccdsp8480.mbn" }
   - path: "qcom/glymur/ASUSTeK/UX3407NA"
     models: ["asus-zenbook-a14-ux3407na"]
     files:
@@ -645,11 +662,29 @@ folders:
         sha256: "50f69be96f44e735daee31432e0d6d5455d943b440de0f16386bdeb3c6391320"
         from:
           - { package: "honor-audio-1.0.4047.7214", member: "Software/HONOR MagicBook Art 14 Snapdragon_Audio_1.0.4047.7214.zip!/Audio_1.0.4047.7214.exe!/Audio_1.0.4047.7214.exe!/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "93941f040da14b8305d39579686d886706d22954a538b03da676c1aaa191797f"
+        note: "Honor publishes no compute DSP, so this is Qualcomm's generic one, signed for any maker and installed by an extension that matches every X1 compute DSP. The same bytes run on the ThinkPad T14s Gen 6, Latitude 5455, OmniBook X 14 and Surface Laptop 7, and are in linux-firmware's LENOVO/21N1. Not compared with an MRO-521's own copy."
+        from:
+          - { package: "lenovo-n42qq22w", member: "code$GetExtractPath$/N42QQ22W/N42QG16W/Core_drivers/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "dell-drc2v", member: "16299/Drivers/arm64/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "hp-sp171528", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdsp_dtbs.elf" }
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdsp_dtbs.elf" }
       - name: "qcadsp8380.mbn"
         size: 21977528
         sha256: "544fc0a4ade82c207c450c42f1baa70864ce46aaa2425979a0bff6974af74994"
         from:
           - { package: "honor-audio-1.0.4047.7214", member: "Software/HONOR MagicBook Art 14 Snapdragon_Audio_1.0.4047.7214.zip!/Audio_1.0.4047.7214.exe!/Audio_1.0.4047.7214.exe!/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "4a67a03367f2eff2f8a0e867ca25d2bf2fcd5aee3e41e2c9f436c804e257c789"
+        note: "Honor publishes no compute DSP, so this is Qualcomm's generic one (CDSP.HT.2.9.c1-00078), signed for any maker and installed by an extension that matches every X1 compute DSP. The same bytes run on the ThinkPad T14s Gen 6, Latitude 5455, OmniBook X 14 and Surface Laptop 7, and are in linux-firmware's LENOVO/21N1. Not compared with an MRO-521's own copy."
+        from:
+          - { package: "lenovo-n42qq22w", member: "code$GetExtractPath$/N42QQ22W/N42QG16W/Core_drivers/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "dell-drc2v", member: "16299/Drivers/arm64/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "hp-sp171528", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/qccdsp8380.mbn" }
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
       - name: "qcdxkmsuc8380.mbn"
         size: 12088
         sha256: "255d848d194d825b21413fbb02e87cb45c2557d1e7de2d5ce15c77eb5c659bdc"
@@ -798,6 +833,59 @@ folders:
         sha256: "a3a75134e11f2d4eed88288c38f533cc66a3a5f8e13d2317238d79acb9417cd3"
         from:
           - { package: "samsung-basw-a4231a01-1063", member: "Graphics/qcdx8380_ss/qcdxkmsuc8380.mbn" }
+  - path: "qcom/x1e80100/Thundercomm/DEVKIT"
+    models: ["qualcomm-snapdragon-dev-kit-for-windows"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "0e7411b56d45cbdcafce51019bc5c4c2fbec52663c5fbcd97280d141a7cf5cf5"
+        from:
+          - { package: "qualcomm-devkit-wu-200.0.4.0-adsp", member: "adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "qualcomm-devkit-wu-200.0.4.0-adsp", member: "adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "qualcomm-devkit-wu-200.0.4.0-adsp", member: "adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "qualcomm-devkit-wu-200.0.4.0-adsp", member: "adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "qualcomm-devkit-wu-200.0.4.0-adsp", member: "battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "12e589de9aeea2ae2b2b7f4295b755d7e0a673755236242936a7853a92ddbfed"
+        from:
+          - { package: "qualcomm-devkit-wu-200.0.4.0-cdsp", member: "cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "qualcomm-devkit-wu-200.0.4.0-cdsp", member: "cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22038920
+        sha256: "1453ca606d5cf25201bea30abe540e5026da974309f8ba3c3e87baf7cbd77bb9"
+        from:
+          - { package: "qualcomm-devkit-wu-200.0.4.0-adsp", member: "qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3072424
+        sha256: "b2f78dfe2983cb8333a07d33bea5bd3d2290dce3c7da5057ca067a23809e5535"
+        from:
+          - { package: "qualcomm-devkit-wu-200.0.4.0-cdsp", member: "qccdsp8380.mbn" }
+      - name: "qcdxkmsuc8380.mbn"
+        size: 12088
+        sha256: "ab17276c807c7cd4b187f4c0ec8de99ad3327dfa293622ea38f3e34df8ae3795"
+        from:
+          - { package: "qualcomm-devkit-wu-200.0.4.0-graphics", member: "qcdxkmsuc8380.mbn" }
   - path: "qcom/x1e80100/dell/inspiron-14-plus-5441"
     models: ["dell-inspiron-14-5441"]
     links:
@@ -2107,7 +2195,7 @@ folders:
         from:
           - { package: "hp-sp171529", member: "src/Driver/qcdx8380/qcdxkmsucpurwa.mbn" }
   - path: "qcom/x126100/ASUSTeK/vivobook-16"
-    models: ["asus-vivobook-16-x1607qa"]
+    models: ["asus-vivobook-16-x1607qa", "asus-vivobook-14-x1407qa"]
     files:
       - name: "adsp_dtbs.elf"
         size: 73528
@@ -2626,3 +2714,30 @@ packages:
     sha256: "a1240497f44145c1445110522820c7ad8d4d4995403b399ee6323743f30e67b9"
     fetched: "2026-11-08"
     note: "Huawei's Windows Update bundle for the MateBook E Go, whose product is its hardware ID e1b94e53-0f20-5d01-abfc-cfb348544a31 (in systemd's huawei,gaokun3 entry). Windows Update serves it only to the machine itself, so this is the copy matebook-e-go/uup-drivers-sc8280xp fetched with UUPMediaCreator and publishes, one .cab per driver. Its compute DSP and GPU zap shader are signed by Qualcomm for any OEM (0x14d), as are the ones linux-firmware ships for the ThinkPad X13s."
+  - id: "qualcomm-devkit-wu-200.0.4.0-adsp"
+    maker: "Qualcomm"
+    title: "Qualcomm Audio DSP Subsystem extension 2.0.4037.7300 for the Snapdragon Dev Kit (Windows Update 200.0.4.0)"
+    url: "https://raw.githubusercontent.com/WOA-Project/Qualcomm-Reference-Drivers/ff8328f7939081387766c6a9a10b5d44fc7db309/8380_RUN/200.0.4.0/qcsubsys_ext_adsp8380.cab"
+    page: "https://github.com/WOA-Project/Qualcomm-Reference-Drivers/tree/ff8328f7939081387766c6a9a10b5d44fc7db309/8380_RUN/200.0.4.0"
+    size: 14984836
+    sha256: "fb7bea878c0eeeb6c858f8af39fd10be296292e5eeea3b4bb13606c89fa9bb42"
+    fetched: "2026-11-08"
+    note: "Windows Update serves the Dev Kit's drivers only to the Dev Kit itself, so this is the copy WOA-Project fetched with UUPDownload for Qualcomm's SMBIOS (SCP_HAMOA, Snapdragon-Devkit) and keeps on GitHub. Its INF names ACPI\\VEN_QCOM&DEV_0C1B&SUBSYS_RUN08380, the subsystem the Dev Kit's DSDT gives its audio DSP. The cab has a signature appended, which 7-Zip reports as a warning and cabextract as extra bytes."
+  - id: "qualcomm-devkit-wu-200.0.4.0-cdsp"
+    maker: "Qualcomm"
+    title: "Qualcomm Compute DSP Subsystem extension 2.0.4037.7300 for the Snapdragon Dev Kit (Windows Update 200.0.4.0)"
+    url: "https://raw.githubusercontent.com/WOA-Project/Qualcomm-Reference-Drivers/ff8328f7939081387766c6a9a10b5d44fc7db309/8380_RUN/200.0.4.0/qcsubsys_ext_cdsp8380.cab"
+    page: "https://github.com/WOA-Project/Qualcomm-Reference-Drivers/tree/ff8328f7939081387766c6a9a10b5d44fc7db309/8380_RUN/200.0.4.0"
+    size: 11715117
+    sha256: "88adb69f077e009cd16f4769d83ec036d8e26630e55fe1e572b78d846ea3df2e"
+    fetched: "2026-11-08"
+    note: "Windows Update's copy for the Dev Kit, kept on GitHub by WOA-Project. Its INF names ACPI\\VEN_QCOM&DEV_0CB0&SUBSYS_CRD08380, the subsystem the Dev Kit's DSDT gives its compute DSP. The cab has a signature appended."
+  - id: "qualcomm-devkit-wu-200.0.4.0-graphics"
+    maker: "Qualcomm"
+    title: "Qualcomm Adreno graphics driver 31.0.56.0 for the Snapdragon Dev Kit (Windows Update 200.0.4.0)"
+    url: "https://raw.githubusercontent.com/WOA-Project/Qualcomm-Reference-Drivers/ff8328f7939081387766c6a9a10b5d44fc7db309/8380_RUN/200.0.4.0/qcdx8380.cab"
+    page: "https://github.com/WOA-Project/Qualcomm-Reference-Drivers/tree/ff8328f7939081387766c6a9a10b5d44fc7db309/8380_RUN/200.0.4.0"
+    size: 76293438
+    sha256: "acce08c4adf857e5be786f94cc81fd962be7e2501f3b9193e1d3732609eaf958"
+    fetched: "2026-11-08"
+    note: "Windows Update's copy for the Dev Kit, kept on GitHub by WOA-Project. Its INF has a model line of its own for the X1E001DE GPU. The cab has a signature appended."

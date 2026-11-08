@@ -1142,48 +1142,48 @@
     ]
   },
   "summary": {
-    "models": 84,
+    "models": 87,
     "nvidia": 17,
     "nvidiaWorks": 2,
     "nvidiaExpected": 15,
     "works": 2,
     "should": 41,
     "problems": 8,
-    "notYet": 33,
-    "deviceTree": 58,
-    "ids": 52,
-    "firmware": 48,
+    "notYet": 36,
+    "deviceTree": 57,
+    "ids": 55,
+    "firmware": 51,
     "googlebooks": 2,
     "acpi": 42,
-    "acpiWanted": 26,
+    "acpiWanted": 30,
     "outOfBox": {
       "stable": 1,
       "rc": 0,
       "edge": 43,
       "pr": 0,
-      "carry": 0,
-      "needs-deviceTree": 26,
-      "needs-ids": 6,
-      "needs-firmware": 8
+      "carry": 4,
+      "needs-deviceTree": 30,
+      "needs-ids": 2,
+      "needs-firmware": 7
     },
     "machine": {
       "team": 7,
       "omarchy": 10,
       "linux": 38,
-      "nobody": 29
+      "nobody": 32
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 55,
+        "omarchy": 54,
         "fromUpstream": 19,
-        "added": 36,
+        "added": 35,
         "pull": 0,
         "available": 3,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 55
+          "edge": 54
         },
         "models": {
           "fromUpstream": [
@@ -1228,7 +1228,6 @@
             "hp-omnibook-5-16-bf0",
             "hp-probook-4-g1q",
             "hp-elitebook-x-g2q",
-            "hp-omnibook-5-14-he1",
             "hp-omnibook-5-16-bf1",
             "hp-omnibook-ultra-14-kg0",
             "hp-omnibook-x-14-kr",
@@ -1258,7 +1257,7 @@
         "fromUpstream": 28,
         "added": 24,
         "pull": 0,
-        "available": 0,
+        "available": 3,
         "upstream": 28,
         "channels": {
           "stable": 28,
@@ -1323,20 +1322,24 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": []
+          "available": [
+            "asus-vivobook-s14-s3407qa",
+            "asus-ascent-qn10",
+            "hp-probook-4-g1q"
+          ]
         }
       },
       "firmware": {
-        "omarchy": 48,
+        "omarchy": 47,
         "fromUpstream": 1,
-        "added": 47,
+        "added": 46,
         "pull": 0,
-        "available": 0,
+        "available": 4,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 48
+          "edge": 47
         },
         "models": {
           "fromUpstream": [
@@ -1371,7 +1374,6 @@
             "hp-omnibook-x-14-fe",
             "hp-probook-4-g1q",
             "hp-elitebook-x-g2q",
-            "hp-omnibook-5-14-he1",
             "hp-omnibook-5-16-bf1",
             "hp-omnibook-ultra-14-kg0",
             "hp-omnibook-x-14-kr",
@@ -1392,7 +1394,12 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": []
+          "available": [
+            "asus-vivobook-14-x1407qa",
+            "honor-magicbook-art-14-snapdragon",
+            "hp-omnibook-5-14-he1",
+            "qualcomm-snapdragon-dev-kit-for-windows"
+          ]
         }
       },
       "all": {
@@ -1400,7 +1407,7 @@
         "fromUpstream": 1,
         "added": 43,
         "pull": 0,
-        "available": 0,
+        "available": 4,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1452,7 +1459,12 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": []
+          "available": [
+            "asus-vivobook-s14-s3407qa",
+            "honor-magicbook-art-14-snapdragon",
+            "hp-probook-4-g1q",
+            "qualcomm-snapdragon-dev-kit-for-windows"
+          ]
         }
       }
     }
@@ -2572,7 +2584,7 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-14-x1407q/techspec/",
         "https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html"
       ],
-      "notes": "Owners boot it with the Vivobook S 15's or a patched Zenbook A14 device tree.",
+      "notes": "Owners boot it with the Vivobook S 15's or a patched Zenbook A14 device tree. Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so the X1607QA's tree is the closest start, with its own IPS panel and PWM backlight added.",
       "outcome": "none",
       "reports": [],
       "machine": "nobody",
@@ -2581,7 +2593,7 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -2591,7 +2603,7 @@
         "pieces": {
           "deviceTree": "none",
           "ids": "none",
-          "firmware": "none"
+          "firmware": "elsewhere"
         },
         "missing": [
           "deviceTree",
@@ -2608,10 +2620,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x126100-ASUSTeK-vivobook-16",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -2960,10 +2972,10 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-ids",
+        "state": "carry",
         "pieces": {
           "deviceTree": "elsewhere",
-          "ids": "none",
+          "ids": "elsewhere",
           "firmware": "edge"
         },
         "missing": [
@@ -2977,8 +2989,8 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": "https://github.com/jonaslindeburg-svg/vivobook-s3407qa-linux",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-vivobook-s14-s3407qa",
-        "ids": "missing",
-        "idsCollected": null,
+        "ids": "collected",
+        "idsCollected": "https://github.com/jonaslindeburg-svg/vivobook-s3407qa-linux/blob/4630a369b8f06c68b2fc239dcb16943d454ac088/notes/dmesg.txt#L265",
         "idsStubble": null,
         "firmware": "download",
         "firmwareMissing": [],
@@ -3830,10 +3842,10 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-ids",
+        "state": "needs-firmware",
         "pieces": {
           "deviceTree": "elsewhere",
-          "ids": "none",
+          "ids": "elsewhere",
           "firmware": "none"
         },
         "missing": [
@@ -3848,8 +3860,8 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": "https://gist.github.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-ascent-qn10",
-        "ids": "missing",
-        "idsCollected": null,
+        "ids": "collected",
+        "idsCollected": "https://gist.github.com/Sonicadvance1/3e8e7ba00d388d9da88a5f394b350adc",
         "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [
@@ -5204,11 +5216,11 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-firmware",
+        "state": "carry",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "none"
+          "firmware": "elsewhere"
         },
         "missing": [
           "firmware"
@@ -5223,17 +5235,10 @@
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8380.mbn",
-          "qcvss8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x1e80100-HONOR-MRO-XXX",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -5799,17 +5804,19 @@
       "form": "laptop",
       "released": "2026-09",
       "modelNumbers": [
-        "16-ct0xxx"
+        "16-ct0xxx",
+        "8FD0",
+        "8FD1"
       ],
       "chips": [
-        "X1-26-100"
+        "C1-10-100"
       ],
       "status": null,
       "sources": [
         "https://www.hp.com/au-en/shop/hp-omnibook-3-laptop-ai-16-ct0030qu-e5hs8pa.html",
         "https://www.energystar.gov/productfinder/product/certified-computers/details/4688594"
       ],
-      "notes": null,
+      "notes": "Its Snapdragon C C1-10-100 is a 7c Gen 3 class chip (SC7280), not a Snapdragon X. HP's driver pack sp174797 carries only 8270 firmware.",
       "outcome": "none",
       "reports": [],
       "machine": "nobody",
@@ -6279,10 +6286,10 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-ids",
+        "state": "carry",
         "pieces": {
           "deviceTree": "edge",
-          "ids": "none",
+          "ids": "elsewhere",
           "firmware": "edge"
         },
         "missing": [
@@ -6295,8 +6302,8 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2521-arm64-dts-qcom-Add-dts-for-HP-EliteBook-6-G1q.patch",
         "devicetreeArchive": null,
-        "ids": "missing",
-        "idsCollected": null,
+        "ids": "collected",
+        "idsCollected": "https://bugs.launchpad.net/ubuntu-concept/+bug/2167258",
         "idsStubble": null,
         "firmware": "download",
         "firmwareMissing": [],
@@ -6313,6 +6320,7 @@
         {
           "compatible": "hp,elitebook-6-g1q",
           "borrowed": true,
+          "ids": [],
           "computed": "manual",
           "treeChannel": "edge",
           "idsChannel": null,
@@ -6326,7 +6334,6 @@
             "patch": "2521-arm64-dts-qcom-Add-dts-for-HP-EliteBook-6-G1q.patch"
           },
           "firmwareNeeded": [],
-          "ids": [],
           "stubble": [],
           "outcome": "manual",
           "reports": []
@@ -6447,7 +6454,7 @@
         "https://www.91mobiles.com/reviews/hp-elitebook-x-g2q-14-ai-review/",
         "https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/glymur-hp-elitebook-x-g2q.dts"
       ],
-      "notes": null,
+      "notes": "Its tree is for the 18-core Glymur chips. The X2E-84-100 and X2E-80-100 units have Mahua chips and the X2P-42-100 ones the 6-core Kalambo chip, which need trees on mahua.dtsi and kalambo.dtsi.",
       "outcome": "should",
       "reports": [],
       "machine": "linux",
@@ -6556,38 +6563,38 @@
         "https://www.bruneau.fr/product/pc-portable-hp-omnibook-5-14-he1003nfx-14-oled-copilot-pc-snapdragon-ai-x2-16-go-ram-512-go-ssd-argent/8573172",
         "https://9to5google.com/2026/01/05/hp-unveils-its-new-snapdragon-x2-intel-powered-laptops-and-some-chromebooks-too/"
       ],
-      "notes": "HP builds it on the OmniBook 5 16's mainboard (board 8F47, driver pack sp173974), so it takes that tree and firmware. Nobody has tried it yet.",
-      "outcome": "manual",
+      "notes": "HP builds it on the OmniBook 5 16's mainboard (board 8F47, driver pack sp173974), but its X2P-42-100 is the 6-core Kalambo chip, which the 16's Mahua tree doesn't describe. It needs a tree on kalambo.dtsi, which Omarchy doesn't carry yet.",
+      "outcome": "none",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
-        "deviceTree": "edge",
+        "deviceTree": null,
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "shipped",
-        "firmwareChannel": "edge",
-        "firmwarePackages": [
-          "hp-omnibook-5-16-bf1-firmware"
-        ],
+        "firmware": "download",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-ids",
+        "state": "needs-deviceTree",
         "pieces": {
-          "deviceTree": "edge",
+          "deviceTree": "none",
           "ids": "none",
-          "firmware": "edge"
+          "firmware": "elsewhere"
         },
         "missing": [
-          "ids"
+          "deviceTree",
+          "ids",
+          "firmware"
         ]
       },
       "upstream": {
-        "deviceTree": "out-of-tree",
+        "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2711-arm64-dts-qcom-Add-the-HP-OmniBook-5-16-bf1xxx.patch",
+        "devicetreeOutOfTree": null,
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
@@ -6605,24 +6612,16 @@
       },
       "variants": [
         {
-          "compatible": "hp,omnibook-5-16-bf1xxx",
-          "borrowed": true,
-          "computed": "manual",
-          "treeChannel": "edge",
+          "computed": "none",
+          "treeChannel": null,
           "idsChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": {
-            "file": "mahua-hp-omnibook-5-bf1xxx.dts",
-            "firstRelease": null,
-            "inNext": false,
-            "upstream": false,
-            "patch": "2711-arm64-dts-qcom-Add-the-HP-OmniBook-5-16-bf1xxx.patch"
-          },
+          "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "none",
           "reports": []
         }
       ],
@@ -6749,7 +6748,7 @@
         "https://www.energystar.gov/productfinder/product/certified-computers/details/4520421",
         "https://www.tomshardware.com/laptops/hp-omnibook-ultra-14-snapdragon-x2-elite-2026-review"
       ],
-      "notes": null,
+      "notes": "Its tree is for the 18-core X2E-90-100. The X2E-84-100 and X2P-64-100 units have Mahua chips, which need a tree on mahua.dtsi.",
       "outcome": "problems",
       "reports": [
         {
@@ -6836,6 +6835,176 @@
       "discussion": null
     },
     {
+      "id": "hp-omnibook-x-14-kr0",
+      "vendor": "HP",
+      "name": "OmniBook X 14 (14-kr0)",
+      "generation": "x1",
+      "form": "laptop",
+      "released": "2025",
+      "modelNumbers": [
+        "14-kr0xxx",
+        "8F45"
+      ],
+      "chips": [
+        "X1P-42-100"
+      ],
+      "status": null,
+      "sources": [
+        "https://www.bestbuy.com/product/hp-omnibook-x-14-2k-oled-touchscreen-laptop-snapdragon-x-plus-2025-16gb-memory-512gb-ssd-copilot-pc-meteor-silver/JJGWKY44RC",
+        "https://ftp.hp.com/pub/softpaq/sp172501-173000/sp172628.cva"
+      ],
+      "notes": "HP builds it on board 8F45 with the OmniBook X 16 16-cp0 (driver pack sp172628), a different mainboard from the 14-fe's. Nobody has published a tree, hardware IDs or ACPI dump for it.",
+      "outcome": "none",
+      "reports": [],
+      "machine": "nobody",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "hp-omnibook-x-16-cp0",
+      "vendor": "HP",
+      "name": "OmniBook X 16 (16-cp0)",
+      "generation": "x1",
+      "form": "laptop",
+      "released": "2025",
+      "modelNumbers": [
+        "16-cp0xxx",
+        "8F45"
+      ],
+      "chips": [],
+      "status": null,
+      "sources": [
+        "https://www.bestbuy.com/product/hp-omnibook-x-16-2k-oled-touchscreen-laptop-snapdragon-x-plus-2025-16gb-memory-512gb-ssd-copilot-pc-deep-espresso/JJGWKY446Z",
+        "https://ftp.hp.com/pub/softpaq/sp172501-173000/sp172628.cva"
+      ],
+      "notes": "HP builds it on board 8F45 with the OmniBook X 14 14-kr0 (driver pack sp172628). Sold with a Snapdragon X Plus, exact chip not confirmed. Nobody has published a tree, hardware IDs or ACPI dump for it.",
+      "outcome": "none",
+      "reports": [],
+      "machine": "nobody",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
       "id": "hp-omnibook-x-14-kr",
       "vendor": "HP",
       "name": "OmniBook X 14 (2026)",
@@ -6843,8 +7012,8 @@
       "form": "laptop",
       "released": "2026",
       "modelNumbers": [
-        "14-kr0xxx",
-        "14-kr1xxx"
+        "14-kr1xxx",
+        "8F46"
       ],
       "chips": [
         "X2P-42-100",
@@ -6857,7 +7026,7 @@
         "https://www.harveynorman.co.nz/computers/laptops/hp-omnibook-x-14-laptop-snapdragon-x2-plus-16gb-ram-512gb-ssd-copilot-pc-meteor-silver-14-kr1002qu.html",
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-omnibook-x"
       ],
-      "notes": "HP builds it on the OmniBook X 16's mainboard (board 8F46, driver pack sp172895), so it takes that tree and firmware. Nobody has tried it yet. HP also lists both on board 8F45, whose drivers are for Snapdragon X chips and which this tree doesn't cover.",
+      "notes": "HP builds it on the OmniBook X 16's mainboard (board 8F46, driver pack sp172895), so the X2P-64-100 and X2E-80-100 units take that tree and firmware. Nobody has tried it yet. The X2P-42-100 units have the 6-core Kalambo chip and need a tree on kalambo.dtsi. The 2025 14-kr0 is a Snapdragon X model on board 8F45, listed on its own.",
       "outcome": "manual",
       "reports": [],
       "machine": "nobody",
@@ -6940,8 +7109,8 @@
       "form": "laptop",
       "released": "2026-07",
       "modelNumbers": [
-        "16-cp0xxx",
-        "16-cp1xxx"
+        "16-cp1xxx",
+        "8F46"
       ],
       "chips": [
         "X2E-84-100",
@@ -6953,7 +7122,7 @@
         "https://support.hp.com/au-en/document/ish_14096181-14096226-16",
         "https://www.notebookcheck.net/HP-OmniBook-X-16-with-Snapdragon-X2-Elite-24-GB-RAM-OLED-drops-below-900.1356231.0.html"
       ],
-      "notes": null,
+      "notes": "Its tree is for the Mahua chips. The X2P-42-100 units have the 6-core Kalambo chip and need a tree on kalambo.dtsi. The 2025 16-cp0 is a Snapdragon X model on board 8F45, listed on its own.",
       "outcome": "should",
       "reports": [],
       "machine": "linux",
@@ -7651,7 +7820,93 @@
       "sources": [
         "https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Vibe_14Q8X12"
       ],
-      "notes": null,
+      "notes": "Its BIOS (VGCN13WW) is the IdeaPad Slim 3x 15Q8X10's LCFC platform, so that tree is the closest start, with a second USB-C port, the touchscreen at 0x24 and its own panel and EC.",
+      "outcome": "none",
+      "reports": [],
+      "machine": "nobody",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "lenovo-ideapad-vibe-15q8x12",
+      "vendor": "Lenovo",
+      "name": "IdeaPad Vibe 15",
+      "generation": "x1",
+      "form": "laptop",
+      "released": "2026-10",
+      "modelNumbers": [
+        "15Q8X12",
+        "84AA"
+      ],
+      "chips": [
+        "X1-26-100"
+      ],
+      "status": null,
+      "sources": [
+        "https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Vibe_15Q8X12",
+        "https://download.lenovo.com/consumer/mobiles/vgcn13ww.exe"
+      ],
+      "notes": "Shares the IdeaPad Vibe 14's BIOS (VGCN13WW) and DSDT.",
       "outcome": "none",
       "reports": [],
       "machine": "nobody",
@@ -8599,7 +8854,7 @@
         "https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
         "https://www.notebookcheck.net/Lenovo-releases-new-14-inch-ThinkPad-with-Snapdragon-X2-Elite-and-over-27-hours-battery-life.1345695.0.html"
       ],
-      "notes": null,
+      "notes": "Its tree is for the Mahua X2E-80-100. The X2P-42-100 units have the 6-core Kalambo chip and need a tree on kalambo.dtsi.",
       "outcome": "should",
       "reports": [],
       "machine": "linux",
@@ -8707,7 +8962,7 @@
         "https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/glymur-lenovo-yoga-slim7x.dts",
         "https://www.xda-developers.com/lenovo-yoga-slim-7x-gen-11-review/"
       ],
-      "notes": null,
+      "notes": "Its tree is for the 18-core X2E-88-100. The X2E-80-100 units have the Mahua chip and the X2P-42-100 ones the 6-core Kalambo chip, which need trees on mahua.dtsi and kalambo.dtsi.",
       "outcome": "should",
       "reports": [],
       "machine": "linux",
@@ -10039,17 +10294,17 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-firmware",
+        "state": "carry",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "none"
+          "firmware": "elsewhere"
         },
         "missing": [
           "firmware"
@@ -10064,16 +10319,10 @@
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x1e80100-Thundercomm-DEVKIT",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
