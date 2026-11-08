@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-07T23:49:15.711Z",
+  "collected": "2026-11-08T00:01:45.453Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -6038,7 +6038,7 @@
           "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn",
           "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn",
           "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcdxkmsucpurwa.mbn",
-          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcvss8380.mbn"
+          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcvss8380_pa.mbn"
         ]
       }
     ]

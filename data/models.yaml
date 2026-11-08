@@ -1343,7 +1343,7 @@ models:
     ids_collected: "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/x1p42100-samsung-galaxy-book4-edge-15.json"
     notes: "USB-C charging stays at 5 V and a trickle without the owner's userspace tool (book4-pd-charge)."
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2303"
-    devicetree_files: ["https://raw.githubusercontent.com/omacom/omarchy-pkgs/0bc2ac0c/pkgbuilds/linux-omarchy-aarch64/2792-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book4-Edge-15.patch#x1p42100-samsung-galaxy-book4-edge-15.dts"]
+    devicetree_files: ["https://raw.githubusercontent.com/omacom/omarchy-pkgs/f5e47d76/pkgbuilds/linux-omarchy-aarch64/2792-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book4-Edge-15.patch#x1p42100-samsung-galaxy-book4-edge-15.dts"]
     sources:
       - https://news.samsung.com/global/galaxy-book4-edge-samsungs-next-gen-ai-pc-now-available-with-15-inch-display
       - https://www.notebookcheck.net/Samsung-Galaxy-Book4-Edge-15.988764.0.html
