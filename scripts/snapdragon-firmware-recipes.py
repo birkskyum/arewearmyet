@@ -354,7 +354,7 @@ def recipe(name, who, paths):
     ]
     for p in chosen:
         L.append(f"  _unpack {q(local[p])} {q(p)} {kinds[p]}")
-    nested = sorted({(w["src"][0], "!/".join(w["src"][1].split("!/")[:i])) for w in wanted for i in range(1, len(w["src"][1].split("!/")))}, key=lambda t: (t[0], t[1].count("!/")))
+    nested = sorted({(w["src"][0], "!/".join(w["src"][1].split("!/")[:i])) for w in wanted for i in range(1, len(w["src"][1].split("!/")))}, key=lambda t: (t[0], t[1].count("!/"), t[1]))
     for p, inner in nested:
         disk = inner.replace("!/", "__x/")
         L.append(f"  _unpack {q(p + '/' + disk)} {q(p + '/' + disk + '__x')} 7z")
