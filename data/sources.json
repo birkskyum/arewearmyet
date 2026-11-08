@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-08T00:01:45.453Z",
+  "collected": "2026-11-08T00:41:51.378Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4586,7 +4586,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-33",
+        "kernel": "7.3-34",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -4654,6 +4654,7 @@
           "x1p42100-lenovo-thinkbook-16.dts",
           "x1p42100-microsoft-sp12in.dts",
           "x1p42100-microsoft-surface-laptop-13.dts",
+          "x1p42100-samsung-galaxy-book4-edge-15.dts",
           "x1p64100-acer-swift-sf14-11.dts",
           "x1p64100-dell-inspiron-14-plus-5441.dts",
           "x1p64100-dell-latitude-5455.dts",
@@ -4735,6 +4736,7 @@
           "x1p42100-hp-omnibook-5.json",
           "x1p42100-microsoft-surface-laptop-13.json",
           "x1p42100-microsoft-surface-pro-12in.json",
+          "x1p42100-samsung-galaxy-book4-edge-15.json",
           "x1p64100-dell-inspiron-14-plus-5441.json"
         ],
         "firmware": {
@@ -5306,6 +5308,18 @@
             "qcom/sc8280xp/MICROSOFT/SurfacePro9/qccdsp8280.mbn",
             "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcdxkmsuc8280.mbn"
           ],
+          "samsung-galaxy-book4-edge-15-firmware": [
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adspr.jsn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adsps.jsn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adspua.jsn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/cdsp_dtbs.elf",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/cdspr.jsn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcvss8380_pa.mbn"
+          ],
           "samsung-galaxy-book4-edge-firmware": [
             "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
             "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/cdsp_dtbs.elf",
@@ -5633,6 +5647,15 @@
           "qcom,x1p42100"
         ],
         "patch": "2772-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-13-inch.patch"
+      },
+      {
+        "file": "x1p42100-samsung-galaxy-book4-edge-15.dts",
+        "model": "Samsung Galaxy Book4 Edge 15",
+        "compatible": [
+          "samsung,galaxy-book4-edge-15",
+          "qcom,x1p42100"
+        ],
+        "patch": "2792-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book4-Edge-15.patch"
       }
     ],
     "carriedIds": [
@@ -5989,6 +6012,15 @@
         ]
       },
       {
+        "file": "x1p42100-samsung-galaxy-book4-edge-15.json",
+        "name": "SAMSUNG ELECTRONICS CO., LTD. Galaxy Book4 Edge 15",
+        "compatible": "samsung,galaxy-book4-edge-15",
+        "hwids": [
+          "3d280ab8-5a2b-5a09-b4a7-2d5daa3090fb",
+          "05147d98-025d-505f-bf80-e8dfff975faf"
+        ]
+      },
+      {
         "file": "x1p64100-dell-inspiron-14-plus-5441.json",
         "name": "Dell Inspiron 14 5441",
         "compatible": "dell,inspiron-14-plus-5441",
@@ -6006,41 +6038,6 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.07.483/omarchy-edge-2026.11.07.483-aarch64.iso",
       "kernel": "7.3.0-26-omarchy"
     },
-    "pulls": [
-      {
-        "number": 2303,
-        "title": "Add the Samsung Galaxy Book4 Edge 15: device tree, hardware IDs and firmware",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2303",
-        "draft": true,
-        "deviceTrees": [
-          {
-            "file": "x1p42100-samsung-galaxy-book4-edge-15.dts",
-            "model": "Samsung Galaxy Book4 Edge 15",
-            "compatible": [
-              "samsung,galaxy-book4-edge-15",
-              "qcom,x1p42100"
-            ]
-          }
-        ],
-        "ids": [
-          {
-            "file": "x1p42100-samsung-galaxy-book4-edge-15.json",
-            "compatible": "samsung,galaxy-book4-edge-15"
-          }
-        ],
-        "firmware": [
-          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
-          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adspr.jsn",
-          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adsps.jsn",
-          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adspua.jsn",
-          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/cdsp_dtbs.elf",
-          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/cdspr.jsn",
-          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn",
-          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn",
-          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcdxkmsucpurwa.mbn",
-          "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcvss8380_pa.mbn"
-        ]
-      }
-    ]
+    "pulls": []
   }
 }

@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-08T00:01:45.453Z",
+  "collected": "2026-11-08T00:41:51.378Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-33",
+    "kernel": "7.3-34",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-33",
+        "kernel": "7.3-34",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -464,6 +464,7 @@
           "x1p42100-lenovo-thinkbook-16.dts",
           "x1p42100-microsoft-sp12in.dts",
           "x1p42100-microsoft-surface-laptop-13.dts",
+          "x1p42100-samsung-galaxy-book4-edge-15.dts",
           "x1p64100-acer-swift-sf14-11.dts",
           "x1p64100-dell-inspiron-14-plus-5441.dts",
           "x1p64100-dell-latitude-5455.dts",
@@ -545,6 +546,7 @@
           "x1p42100-hp-omnibook-5.json",
           "x1p42100-microsoft-surface-laptop-13.json",
           "x1p42100-microsoft-surface-pro-12in.json",
+          "x1p42100-samsung-galaxy-book4-edge-15.json",
           "x1p64100-dell-inspiron-14-plus-5441.json"
         ],
         "firmware": {
@@ -1116,6 +1118,18 @@
             "qcom/sc8280xp/MICROSOFT/SurfacePro9/qccdsp8280.mbn",
             "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcdxkmsuc8280.mbn"
           ],
+          "samsung-galaxy-book4-edge-15-firmware": [
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adspr.jsn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adsps.jsn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adspua.jsn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/cdsp_dtbs.elf",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/cdspr.jsn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcvss8380_pa.mbn"
+          ],
           "samsung-galaxy-book4-edge-firmware": [
             "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
             "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/cdsp_dtbs.elf",
@@ -1133,9 +1147,9 @@
     "nvidiaWorks": 2,
     "nvidiaExpected": 15,
     "works": 2,
-    "should": 40,
+    "should": 41,
     "problems": 8,
-    "notYet": 34,
+    "notYet": 33,
     "deviceTree": 58,
     "ids": 52,
     "firmware": 48,
@@ -1145,8 +1159,8 @@
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 42,
-      "pr": 1,
+      "edge": 43,
+      "pr": 0,
       "carry": 0,
       "needs-deviceTree": 26,
       "needs-ids": 6,
@@ -1160,16 +1174,16 @@
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 54,
+        "omarchy": 55,
         "fromUpstream": 19,
-        "added": 35,
-        "pull": 1,
+        "added": 36,
+        "pull": 0,
         "available": 3,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 54
+          "edge": 55
         },
         "models": {
           "fromUpstream": [
@@ -1227,12 +1241,11 @@
             "microsoft-surface-laptop-13in-1st-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
+            "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "samsung-galaxy-book4-edge-15"
-          ],
+          "pull": [],
           "available": [
             "asus-vivobook-s14-s3407qa",
             "asus-ascent-qn10",
@@ -1241,16 +1254,16 @@
         }
       },
       "ids": {
-        "omarchy": 51,
+        "omarchy": 52,
         "fromUpstream": 28,
-        "added": 23,
-        "pull": 1,
+        "added": 24,
+        "pull": 0,
         "available": 0,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 51
+          "edge": 52
         },
         "models": {
           "fromUpstream": [
@@ -1305,26 +1318,25 @@
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
+            "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "samsung-galaxy-book4-edge-15"
-          ],
+          "pull": [],
           "available": []
         }
       },
       "firmware": {
-        "omarchy": 47,
+        "omarchy": 48,
         "fromUpstream": 1,
-        "added": 46,
-        "pull": 1,
+        "added": 47,
+        "pull": 0,
         "available": 0,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 47
+          "edge": 48
         },
         "models": {
           "fromUpstream": [
@@ -1375,20 +1387,19 @@
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
+            "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "samsung-galaxy-book4-edge-15"
-          ],
+          "pull": [],
           "available": []
         }
       },
       "all": {
-        "omarchy": 43,
+        "omarchy": 44,
         "fromUpstream": 1,
-        "added": 42,
-        "pull": 1,
+        "added": 43,
+        "pull": 0,
         "available": 0,
         "upstream": 1,
         "models": {
@@ -1436,12 +1447,11 @@
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
+            "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "samsung-galaxy-book4-edge-15"
-          ],
+          "pull": [],
           "available": []
         }
       }
@@ -10144,43 +10154,29 @@
         "https://www.notebookcheck.net/Samsung-Galaxy-Book4-Edge-15.988764.0.html"
       ],
       "notes": "USB-C charging stays at 5 V and a trickle without the owner's userspace tool (book4-pd-charge).",
-      "outcome": "none",
+      "outcome": "should",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2303",
-          "number": 2303,
-          "title": "Add the Samsung Galaxy Book4 Edge 15: device tree, hardware IDs and firmware"
-        },
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2303",
-          "number": 2303,
-          "title": "Add the Samsung Galaxy Book4 Edge 15: device tree, hardware IDs and firmware"
-        },
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2303",
-          "number": 2303,
-          "title": "Add the Samsung Galaxy Book4 Edge 15: device tree, hardware IDs and firmware"
-        }
+        "deviceTree": "edge",
+        "deviceTreePull": null,
+        "ids": "edge",
+        "idsPull": null,
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "samsung-galaxy-book4-edge-15-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
-          "deviceTree": "pr",
-          "ids": "pr",
-          "firmware": "pr"
+          "deviceTree": "edge",
+          "ids": "edge",
+          "firmware": "edge"
         },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -10206,24 +10202,22 @@
         {
           "chip": "X1P-42-100",
           "compatible": "samsung,galaxy-book4-edge-15",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2303",
-            "number": 2303,
-            "title": "Add the Samsung Galaxy Book4 Edge 15: device tree, hardware IDs and firmware"
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "x1p42100-samsung-galaxy-book4-edge-15.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2792-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book4-Edge-15.patch"
           },
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2303",
-            "number": 2303,
-            "title": "Add the Samsung Galaxy Book4 Edge 15: device tree, hardware IDs and firmware"
-          },
-          "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
