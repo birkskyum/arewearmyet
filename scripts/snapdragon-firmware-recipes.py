@@ -103,6 +103,7 @@ RECIPES = {
     "microsoft-windows-dev-kit-2023-firmware": ("Microsoft Windows Dev Kit 2023", ["qcom/sc8280xp/microsoft/blackrock"]),
     "microsoft-surface-pro-11-firmware": ("Microsoft Surface Pro 11th Edition", ["qcom/x1e80100/microsoft/Denali", "qcom/x1e80100/microsoft"]),
     "microsoft-surface-pro-12in-firmware": ("Microsoft Surface Pro 12-inch", ["qcom/x1p42100/Microsoft/Surface12"]),
+    "qualcomm-snapdragon-dev-kit-firmware": ("Qualcomm Snapdragon Dev Kit for Windows", ["qcom/x1e80100/Thundercomm/DEVKIT"]),
     "samsung-galaxy-book4-edge-firmware": ("Samsung Galaxy Book4 Edge", ["qcom/x1e80100/SAMSUNG/galaxy-book4-edge"]),
     "samsung-galaxy-book4-edge-15-firmware": ("Samsung Galaxy Book4 Edge 15", ["qcom/x1p42100/SAMSUNG/galaxy-book4-edge"]),
 }
@@ -268,12 +269,16 @@ def recipe(name, who, paths):
         if "!xz@" in w["src"][1]:
             raise SystemExit(f"{name}: {w['dest']} is an XZ stream; the generator does not unpack those")
 
-    makers = sorted({packages[p]["maker"] for p in chosen})
+    # The audio DSP is the image signed for the board; the others can be Qualcomm's generic ones from
+    # another maker's download, so the signer and the recipe's page come from the audio DSP's package.
+    signed = [w["src"][0] for w in wanted if re.match(r"(qcadsp\d+\.mbn|adsp_dtbs\.elf)$", os.path.basename(w["dest"]))]
+    signers = [p for p in chosen if p in signed] or chosen
+    makers = sorted({packages[p]["maker"] for p in signers})
     kinds = {p: unpack_kind(packages[p]) for p in chosen}
     makedepends = ["7zip"] + (["innoextract"] if "inno" in kinds.values() else []) + (["msitools"] if "msi" in kinds.values() else [])
     local = {p: f"{p}{ext(packages[p])}" for p in chosen}
     version = max(packages[p]["fetched"] for p in chosen).replace("-", "")
-    page = next((packages[p].get("page") for p in chosen if packages[p].get("page")), None) or packages[chosen[0]]["url"].split("?")[0]
+    page = next((packages[p].get("page") for p in signers if packages[p].get("page")), None) or packages[signers[0]]["url"].split("?")[0]
 
     what = contents([w["dest"] for w in wanted])
     L = []
