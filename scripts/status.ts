@@ -159,11 +159,14 @@ function variantStatus(variant: Variant) {
   const treeHere = channelRank(treeChannel) <= channelRank(OMARCHY_CHANNEL);
   const idsHere = channelRank(idsChannel) <= channelRank(OMARCHY_CHANNEL);
   const computed = treeHere ? (idsHere ? 'should' : 'manual') : dt ? 'notCarried' : 'none';
+  // The most stable channel whose install image boots it: its device tree and the hardware IDs that pick it
+  const bootChannel = treeChannel && idsChannel ? CHANNELS[Math.max(channelRank(treeChannel), channelRank(idsChannel))] : null;
   return {
     ...variant,
     computed,
     treeChannel,
     idsChannel,
+    bootChannel,
     treePull: pullRef(treePull),
     idsPull: pullRef(idsPull),
     deviceTree: dt ? { file: dt.file, firstRelease: dt.firstRelease, inNext: dt.inNext, upstream: dt.upstream, patch: dt.patch } : null,
@@ -289,19 +292,22 @@ function omarchyFirmware(files: string[], download?: string) {
 
 const acpiDumps: { folder: string; url: string }[] = sources.acpiDumps;
 
-// Whether a fresh install works out of the box: all three pieces on a channel (named by the least stable
-// one it takes), once open pull requests land, once Omarchy carries pieces that exist elsewhere, or the
-// first piece nobody has yet
+// Whether a fresh install boots it: problems an owner reported, otherwise the most stable channel whose install
+// image picks its device tree, confirmed once an owner reached the desktop. Without one, what it still needs
+// to boot, the first piece nobody has, then pieces Omarchy doesn't carry, then open pull requests.
+// Firmware isn't needed to boot, so the firmware column covers it.
 type Piece = Channel | 'pr' | 'elsewhere' | 'none';
-function outOfBox(pieces: Record<'deviceTree' | 'ids' | 'firmware', Piece>) {
-  const values = Object.values(pieces);
-  const missing = (Object.keys(pieces) as (keyof typeof pieces)[]).filter((piece) => !CHANNELS.includes(pieces[piece] as Channel));
-  const state = values.every((value) => CHANNELS.includes(value as Channel))
-    ? CHANNELS[Math.max(...values.map((value) => CHANNELS.indexOf(value as Channel)))]
-    : values.includes('none') ? `needs-${missing.find((piece) => pieces[piece] === 'none')}`
-    : values.includes('elsewhere') ? 'carry'
-    : 'pr';
-  return { state, pieces, missing };
+function bootable(outcome: Outcome, channel: Channel | null, pieces: Record<'deviceTree' | 'ids', Piece>) {
+  if (outcome === 'problems') return 'problems';
+  if (channel) return outcome === 'works' ? channel : `${channel}-untested`;
+  if (outcome === 'works') return 'works';
+  const values = [pieces.deviceTree, pieces.ids];
+  if (pieces.deviceTree === 'none') return 'needs-deviceTree';
+  if (pieces.ids === 'none') return 'needs-ids';
+  if (values.includes('elsewhere')) return 'carry';
+  if (values.includes('pr')) return 'pr';
+  // Every piece ships, but for different variants
+  return 'needs-ids';
 }
 
 // Who we know has the machine: the team, someone in Omarchy's community (a report on Omarchy, a hardware
@@ -393,10 +399,11 @@ const rows = models.map((model) => {
     sources: model.sources ?? [],
     notes: model.notes ?? null,
     outcome: best(variants.map((v) => v.outcome)),
+    bootable: bootable(best(variants.map((v) => v.outcome)), mostStable(variants.map((v) => v.bootChannel)), pieces),
     reports,
     machine: whoHasOne(model, reports, deviceTree, model.acpi ?? []),
     omarchy,
-    outOfBox: outOfBox(pieces),
+    pieces,
     upstream: {
       deviceTree,
       firstRelease,
@@ -449,7 +456,6 @@ const summary = {
   // has no device tree anywhere, posted or out of tree included
   acpi: count(current, (r) => r.upstream.acpi === 'collected'),
   acpiWanted: count(current, (r) => r.upstream.deviceTree === 'missing' && r.upstream.acpi !== 'collected'),
-  outOfBox: Object.fromEntries(['stable', 'rc', 'edge', 'pr', 'carry', 'needs-deviceTree', 'needs-ids', 'needs-firmware'].map((state) => [state, count(current, (r) => r.outOfBox.state === state)])),
   machine: Object.fromEntries(['team', 'omarchy', 'linux', 'nobody'].map((who) => [who, count(current, (r) => r.machine === who)])),
   // Where each piece stands: in an Omarchy channel, in the releases of Linux, systemd and linux-firmware
   // that any distro can ship, in an open pull request or elsewhere, and all three together

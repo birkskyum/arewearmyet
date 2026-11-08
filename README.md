@@ -6,7 +6,7 @@ Linux on ARM PCs, model by model: which ARM laptops and desktops boot today, and
 
 For every model in [`data/models.yaml`](data/models.yaml):
 
-- **Boots**: what owners report (on Omarchy so far, works or problems), and otherwise whether every piece is in place for it to work: the kernel of Omarchy's release candidate carries the model's device tree, and the image picks it by itself through systemd's hardware IDs.
+- **Bootable**: the most stable Omarchy channel whose install image picks the model's device tree by itself, through its kernel's trees and hardware IDs. It turns green once an owner reports reaching the desktop (on Omarchy so far), and red when an owner reports problems. Without a channel, it names what the model still needs to boot.
 - **Device tree**: the first Linux release with it, or linux-next, or a posted series.
 - **Hardware IDs**: whether systemd's `src/boot/hwids/aa64` has an entry for the model's device tree.
 - **Firmware**: whether every firmware file its device tree loads (its `firmware-name` lines) is in linux-firmware's newest release, merged for the next one, sent to linux-firmware as a merge request, only partly there, or available as a known vendor download, so the laptop's own Windows isn't needed.

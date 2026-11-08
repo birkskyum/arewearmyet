@@ -1,7 +1,7 @@
 // Turns models into plain rows for the table island: every label, hover text and sort rank is
 // worked out here at build time, so the browser only receives what it shows
 import status from '../data/status.json';
-import { ANNOUNCED, GENERATION, acpiCell, bootloaderCell, deviceTreeCell, googlebookOmarchyCell, idsCell, linuxImageCell, machineCell, nvidiaKernelCell, nvidiaLinuxCell, nvidiaOmarchyCell, omarchyCell, omarchyFirmwareCell, omarchyIdsCell, omarchyTreeCell, outOfBoxCell, upstreamFirmwareCell, type Cell, type Model, type NvidiaModel } from './labels';
+import { ANNOUNCED, GENERATION, acpiCell, bootableCell, bootloaderCell, deviceTreeCell, googlebookOmarchyCell, idsCell, linuxImageCell, machineCell, nvidiaKernelCell, nvidiaLinuxCell, nvidiaOmarchyCell, omarchyFirmwareCell, omarchyIdsCell, omarchyTreeCell, upstreamFirmwareCell, type Cell, type Model, type NvidiaModel } from './labels';
 
 export type CellData = Pick<Cell, 'key' | 'label' | 'tone' | 'title' | 'href' | 'rank'> | { key: string; text: string; rank: number };
 export type TableRow = {
@@ -27,13 +27,17 @@ const plain = ({ key, label, tone, title, href, rank }: Cell) => ({ key, label, 
 const announcedTitle = (statusText: string | null) => (statusText ? `${ANNOUNCED.meaning} The vendor said: ${statusText}.` : null);
 
 const VARIANT: Record<string, { tone: TableRow['variants'][number]['tone']; state: string }> = {
-  works: { tone: 'good', state: 'boots' },
-  should: { tone: 'close', state: 'ready to test' },
+  works: { tone: 'good', state: 'yes' },
+  should: { tone: 'close', state: 'yes' },
   problems: { tone: 'wanted', state: 'problems' },
-  manual: { tone: 'close', state: 'not recognised' },
+  manual: { tone: 'wanted', state: 'needs IDs' },
   notCarried: { tone: 'close', state: 'not carried' },
-  none: { tone: 'muted', state: 'no device tree' },
+  none: { tone: 'wanted', state: 'needs a tree' },
 };
+
+// A variant that boots names its channel, like the model's cell does
+const variantState = (v: Model['variants'][number]) =>
+  v.bootChannel && (v.outcome === 'works' || v.outcome === 'should') ? { ...VARIANT[v.outcome], state: v.bootChannel === 'rc' ? 'RC' : v.bootChannel[0].toUpperCase() + v.bootChannel.slice(1) } : VARIANT[v.outcome];
 
 const modelRow = (model: Model, cells: Record<string, CellData>): TableRow => ({
   id: model.id,
@@ -45,7 +49,7 @@ const modelRow = (model: Model, cells: Record<string, CellData>): TableRow => ({
   subtitle: [GENERATION[model.generation], year(model.released), model.chips.join(', '), model.modelNumbers.slice(0, 3).join(', ')].filter(Boolean).join(' · '),
   generation: model.generation,
   outcome: (['works', 'should', 'problems'].includes(model.outcome) ? model.outcome : 'notyet') as TableRow['outcome'],
-  variants: model.variants.length > 1 ? model.variants.map((v) => ({ text: [v.model, v.chip].filter(Boolean).join(' · '), ...VARIANT[v.outcome] })) : [],
+  variants: model.variants.length > 1 ? model.variants.map((v) => ({ text: [v.model, v.chip].filter(Boolean).join(' · '), ...variantState(v) })) : [],
   notes: model.notes,
   search: [model.vendor, model.name, ...model.modelNumbers, ...model.chips, ...model.variants.map((v) => `${v.model ?? ''} ${v.chip ?? ''}`)].join(' ').toLowerCase(),
   prefixes: model.modelNumbers.map((number) => number.toLowerCase().replace(/x{2,}$/, '')).filter((prefix) => prefix.length >= 4),
@@ -74,12 +78,11 @@ export function snapdragonRows(): TableRow[] {
     .map((model: Model) =>
       modelRow(model, {
         // The Omarchy view
-        ootb: plain(outOfBoxCell(model)),
+        bootable: plain(bootableCell(model)),
         acpi: plain(acpiCell(model)),
         tree: plain(omarchyTreeCell(model)),
         hwids: plain(omarchyIdsCell(model)),
         fw: plain(omarchyFirmwareCell(model)),
-        omarchy: plain(omarchyCell(model)),
         machine: plain(machineCell(model)),
         // The upstream view
         'device-tree': plain(deviceTreeCell(model)),

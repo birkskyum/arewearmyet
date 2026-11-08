@@ -47,8 +47,8 @@ const cells = (row: (typeof pieceRows)[number]) => {
   parts.push({ ids: current.filter((model) => !placed.has(model.id)).map((model) => model.id), color: 'bg-zinc-800', tip: row.none });
   return parts.flatMap((part) => part.ids.map((id) => modelById.get(id)!).sort(byName).map((model) => ({ name: `${model.vendor} ${model.name}`, color: part.color, tip: part.tip })));
 };
-// Left to right in the order a model gets there, with booting last
-const omarchyIds = ['ootb', 'acpi', 'tree', 'hwids', 'fw', 'omarchy', 'machine'] as const;
+// Whether it boots first, then the pieces in the order a model gets them
+const omarchyIds = ['bootable', 'acpi', 'tree', 'hwids', 'fw', 'machine'] as const;
 const upstreamIds = ['device-tree', 'ids', 'firmware'] as const;
 const snapdragonViews = [
   { id: 'omarchy', label: 'Omarchy', question: `What Omarchy's packages ship today, by the most stable channel that has it.`, columns: OMARCHY_LEGEND.map((group, i) => ({ id: omarchyIds[i], header: group.column, question: group.question, options: FILTERS[omarchyIds[i]] })) },
@@ -58,7 +58,7 @@ const nvidiaNotes = { id: 'notes', header: 'Notes', question: 'What else to know
 const nvidiaViews = [
   { id: 'omarchy', label: 'Omarchy', question: `What Omarchy's kernel ships today, by the most stable channel that has it.`, columns: [
     { id: 'kernel', header: 'Kernel', question: NVIDIA_OMARCHY_LEGEND[0].question, options: FILTERS.nvidiaKernel },
-    { id: 'omarchy', header: 'Boots', question: NVIDIA_OMARCHY_LEGEND[1].question, options: FILTERS.nvidiaOmarchy },
+    { id: 'omarchy', header: NVIDIA_OMARCHY_LEGEND[1].column, question: NVIDIA_OMARCHY_LEGEND[1].question, options: FILTERS.nvidiaOmarchy },
     nvidiaNotes,
   ] },
   { id: 'upstream', label: 'Upstream', question: 'What Linux itself has, which every distro gets.', columns: [
@@ -115,7 +115,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
         <a href="#apple" class={NAV}>Apple Silicon</a>
       </nav>
       <p class="mt-5 max-w-3xl text-sm text-zinc-400">
-        Every ARM laptop needs a device tree, hardware IDs and firmware. Omarchy ships them in its own packages, often before Linux, systemd and linux-firmware have them. The Omarchy view shows what its channels ship today, and the Upstream view what every distro gets. Ready to test means the {image ? <a class={LINK} href={image.url}>edge nightly image</a> : 'edge nightly image'} picks the model's device tree by itself, with <span class="whitespace-nowrap">linux-omarchy {status.omarchy.kernel}</span> and systemd {status.omarchy.systemd}, and Boots means an owner reached the desktop. Booting is the first goal; features like suspend and USB4 come next.
+        Every ARM laptop needs a device tree, hardware IDs and firmware. Omarchy ships them in its own packages, often before Linux, systemd and linux-firmware have them. The Omarchy view shows what its channels ship today, and the Upstream view what every distro gets. Bootable names the most stable channel whose install image picks the model's device tree by itself, green once an owner reached the desktop and amber until then. Edge is the {image ? <a class={LINK} href={image.url}>nightly image</a> : 'nightly image'}, with <span class="whitespace-nowrap">linux-omarchy {status.omarchy.kernel}</span> and systemd {status.omarchy.systemd}. Booting is the first goal; features like suspend and USB4 come next.
       </p>
       <div class="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 rounded-xl bg-[#9ece6a]/10 px-5 py-4 ring-1 ring-[#9ece6a]/40">
         <p class="text-zinc-300"><strong class="font-semibold text-[#9ece6a]">Own an ARM laptop that isn't green yet?</strong> Help get it there, whatever distro you run. It only takes a few minutes.</p>

@@ -1180,16 +1180,6 @@
     "googlebooks": 2,
     "acpi": 42,
     "acpiWanted": 28,
-    "outOfBox": {
-      "stable": 1,
-      "rc": 0,
-      "edge": 47,
-      "pr": 0,
-      "carry": 1,
-      "needs-deviceTree": 28,
-      "needs-ids": 2,
-      "needs-firmware": 7
-    },
     "machine": {
       "team": 7,
       "omarchy": 12,
@@ -1518,6 +1508,7 @@
       ],
       "notes": "Reached the installer on the edge image. Nobody has installed it yet.",
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -1532,14 +1523,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -1570,6 +1557,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -1619,6 +1607,7 @@
       ],
       "notes": "Wi-Fi needs a board file from Windows.",
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -1633,14 +1622,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -1671,6 +1656,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -1717,6 +1703,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -1729,18 +1716,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -1767,6 +1746,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -1805,6 +1785,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -1819,14 +1800,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -1858,6 +1835,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -1894,6 +1872,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -1950,6 +1929,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -1964,14 +1944,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -2013,6 +1989,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -2054,6 +2031,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -2068,14 +2046,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -2105,6 +2079,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -2160,6 +2135,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -2172,18 +2148,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -2210,6 +2178,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -2242,6 +2211,7 @@
       ],
       "notes": null,
       "outcome": "problems",
+      "bootable": "problems",
       "reports": [
         {
           "state": "problems",
@@ -2260,16 +2230,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-firmware",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "none"
-        },
-        "missing": [
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -2299,6 +2263,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -2346,6 +2311,7 @@
       ],
       "notes": "Sound needs the asus-proart-pz13-audio package for now. No cameras yet.",
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -2360,14 +2326,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -2396,6 +2358,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -2443,6 +2406,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -2455,18 +2419,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -2495,6 +2451,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -2529,6 +2486,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -2541,18 +2499,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -2581,6 +2531,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -2617,6 +2568,7 @@
       ],
       "notes": "Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so its tree builds on the X1607QA's, with its IPS panel and PWM backlight. An owner's live USB reached the desktop on the Zenbook A14 tree, and that owner can test boot images.",
       "outcome": "none",
+      "bootable": "carry",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -2629,25 +2581,17 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "carry",
-        "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "elsewhere",
-          "firmware": "elsewhere"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "elsewhere",
+        "ids": "elsewhere",
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
         "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2340",
-        "devicetreeArchive": null,
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-vivobook-14-x1407qa",
         "ids": "collected",
         "idsCollected": "https://github.com/birkskyum/arewearmyet/issues/7",
         "idsStubble": null,
@@ -2673,6 +2617,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -2711,6 +2656,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -2725,14 +2671,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -2764,6 +2706,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -2809,6 +2752,7 @@
       ],
       "notes": "The maker download has the X Elite model's firmware only.",
       "outcome": "problems",
+      "bootable": "problems",
       "reports": [
         {
           "state": "problems",
@@ -2829,14 +2773,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -2872,6 +2812,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -2921,6 +2862,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -2994,6 +2936,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -3008,14 +2951,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -3046,6 +2985,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -3086,6 +3026,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -3098,18 +3039,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -3138,6 +3071,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -3172,6 +3106,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -3184,18 +3119,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -3224,6 +3151,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -3259,6 +3187,7 @@
       ],
       "notes": "Wi-Fi needs board data linux-firmware doesn't have yet.",
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -3273,14 +3202,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -3312,6 +3237,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -3340,6 +3266,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -3386,6 +3313,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -3398,18 +3326,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -3438,6 +3358,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -3472,6 +3393,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -3484,18 +3406,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -3524,6 +3438,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -3559,6 +3474,7 @@
       ],
       "notes": null,
       "outcome": "problems",
+      "bootable": "problems",
       "reports": [
         {
           "state": "problems",
@@ -3579,14 +3495,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -3618,6 +3530,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -3675,6 +3588,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "stable-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -3689,14 +3603,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -3730,6 +3640,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -3772,6 +3683,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -3814,6 +3726,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -3877,6 +3790,7 @@
       ],
       "notes": "Nobody has booted its draft device tree yet.",
       "outcome": "none",
+      "bootable": "carry",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -3889,18 +3803,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-firmware",
-        "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "elsewhere",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "elsewhere",
+        "ids": "elsewhere",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -3936,6 +3842,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -3971,6 +3878,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -3983,18 +3891,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -4023,6 +3923,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -4058,6 +3959,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -4070,18 +3972,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -4110,6 +4004,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -4146,6 +4041,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -4160,14 +4056,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "next",
@@ -4200,6 +4092,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -4262,6 +4155,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "stable-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -4276,14 +4170,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -4316,6 +4206,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -4380,6 +4271,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -4394,14 +4286,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -4432,6 +4320,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -4447,6 +4336,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -4497,6 +4387,7 @@
       ],
       "notes": null,
       "outcome": "problems",
+      "bootable": "problems",
       "reports": [
         {
           "state": "problems",
@@ -4517,14 +4408,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -4557,6 +4444,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -4628,6 +4516,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -4642,14 +4531,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -4680,6 +4565,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -4738,6 +4624,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "stable-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -4752,14 +4639,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -4792,6 +4675,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -4857,6 +4741,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "stable-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -4872,14 +4757,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -4914,6 +4795,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -4977,6 +4859,7 @@
       ],
       "notes": "Runs from USB only for now.",
       "outcome": "works",
+      "bootable": "works",
       "reports": [
         {
           "state": "works",
@@ -4995,18 +4878,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-ids",
-        "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "elsewhere",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -5038,6 +4913,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -5081,6 +4957,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -5093,18 +4970,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -5133,6 +5002,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -5171,6 +5041,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -5183,18 +5054,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -5221,6 +5084,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -5257,6 +5121,7 @@
       ],
       "notes": "The compute DSP firmware still comes from Windows.",
       "outcome": "should",
+      "bootable": "stable-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -5271,14 +5136,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -5310,6 +5171,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -5376,6 +5238,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -5390,14 +5253,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -5428,6 +5287,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -5486,6 +5346,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "stable-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -5500,14 +5361,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -5538,6 +5395,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -5599,6 +5457,7 @@
       ],
       "notes": "Nearly everything works. The mics click now and then.",
       "outcome": "none",
+      "bootable": "needs-ids",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -5611,18 +5470,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-ids",
-        "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "elsewhere",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -5651,6 +5502,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -5686,6 +5538,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -5700,14 +5553,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -5736,6 +5585,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -5777,6 +5627,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -5791,14 +5642,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -5829,6 +5676,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -5872,6 +5720,7 @@
       ],
       "notes": "HP's driver pack sp174797 is the 7c Gen 3's (SC7280 power driver, 8270 firmware).",
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -5884,18 +5733,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -5922,6 +5763,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -5960,6 +5802,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -5974,14 +5817,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -6012,6 +5851,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -6062,6 +5902,7 @@
       ],
       "notes": "Uses the OmniBook 5 14's device tree.",
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -6076,14 +5917,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -6112,6 +5949,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -6166,6 +6004,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "stable-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -6180,14 +6019,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -6221,6 +6056,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -6263,6 +6099,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -6325,6 +6162,7 @@
       ],
       "notes": "HP builds it on the EliteBook 6 G1q's mainboard (board 8E06, driver pack sp174046), so it takes that tree and firmware. Owners boot it with the OmniBook X 14's tree; nobody has tried the EliteBook's yet.",
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -6339,14 +6177,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -6376,6 +6210,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -6417,6 +6252,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -6429,18 +6265,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -6469,6 +6297,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -6510,6 +6339,7 @@
       ],
       "notes": "Its tree is for the 18-core Glymur chips. The X2E-84-100 and X2E-80-100 units have Mahua chips and the X2P-42-100 ones the 6-core Kalambo chip, which need trees on mahua.dtsi and kalambo.dtsi.",
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -6524,14 +6354,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "next",
@@ -6559,6 +6385,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -6619,6 +6446,7 @@
       ],
       "notes": "HP builds it on the OmniBook 5 16's mainboard (board 8F47, driver pack sp173974), but its X2P-42-100 is the 6-core Kalambo chip, which the 16's Mahua tree doesn't describe. It needs a tree on kalambo.dtsi, which Omarchy doesn't carry yet.",
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -6631,18 +6459,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "elsewhere"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -6669,6 +6489,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -6704,6 +6525,7 @@
       ],
       "notes": "No GPU, Bluetooth or sound yet.",
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -6718,14 +6540,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -6754,6 +6572,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -6804,6 +6623,7 @@
       ],
       "notes": "Its tree is for the 18-core X2E-90-100. The X2E-84-100 and X2P-64-100 units have Mahua chips, which need a tree on mahua.dtsi.",
       "outcome": "problems",
+      "bootable": "problems",
       "reports": [
         {
           "state": "problems",
@@ -6824,14 +6644,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -6861,6 +6677,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -6909,6 +6726,7 @@
       ],
       "notes": "HP builds it on board 8F45 with the OmniBook X 16 16-cp0 (driver pack sp172628), a different mainboard from the 14-fe's. Nobody has published a tree, hardware IDs or ACPI dump for it.",
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -6921,18 +6739,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -6959,6 +6769,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -6993,6 +6804,7 @@
       ],
       "notes": "HP builds it on board 8F45 with the OmniBook X 14 14-kr0 (driver pack sp172628). Sold with a Snapdragon X Plus, exact chip not confirmed. Nobody has published a tree, hardware IDs or ACPI dump for it.",
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -7005,18 +6817,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -7043,6 +6847,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -7082,6 +6887,7 @@
       ],
       "notes": "HP builds it on the OmniBook X 16's mainboard (board 8F46, driver pack sp172895), so the X2P-64-100 and X2E-80-100 units take that tree and firmware. Nobody has tried it yet. The X2P-42-100 units have the 6-core Kalambo chip and need a tree on kalambo.dtsi. The 2025 14-kr0 is a Snapdragon X model on board 8F45, listed on its own.",
       "outcome": "manual",
+      "bootable": "needs-ids",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -7096,16 +6902,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-ids",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "none",
-          "firmware": "edge"
-        },
-        "missing": [
-          "ids"
-        ]
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "none",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -7134,6 +6934,7 @@
           "computed": "manual",
           "treeChannel": "edge",
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -7178,6 +6979,7 @@
       ],
       "notes": "Its tree is for the Mahua chips. The X2P-42-100 units have the 6-core Kalambo chip and need a tree on kalambo.dtsi. The 2025 16-cp0 is a Snapdragon X model on board 8F45, listed on its own.",
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -7192,14 +6994,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -7228,6 +7026,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -7278,6 +7077,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -7290,18 +7090,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-ids",
-        "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "elsewhere",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -7332,6 +7124,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -7370,6 +7163,7 @@
       ],
       "notes": "Jens Glathe's posted series splits the tree and adds the X1-26-100 (Purwa) model, which he runs on Ubuntu 26.10 and can test. systemd has the Purwa model's hardware IDs. The Purwa model needs its own GPU and DSP firmware, under qcom/x1p42100/LENOVO/91B6.",
       "outcome": "manual",
+      "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -7384,21 +7178,17 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v7.1",
         "devicetreePosted": "https://lore.kernel.org/all/20260905-x1-ideacentre-mini-prettify-v1-0-9a87882973bb@oldschoolsolutions.biz/",
         "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/lenovo-ideacentre-mini-x-01q8x10",
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
@@ -7425,6 +7215,7 @@
           "computed": "manual",
           "treeChannel": "stable",
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -7454,6 +7245,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": "stable",
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -7505,6 +7297,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -7517,16 +7310,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-firmware",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "stable",
-          "firmware": "none"
-        },
-        "missing": [
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "stable",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -7564,6 +7351,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -7621,6 +7409,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -7633,16 +7422,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-firmware",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "stable",
-          "firmware": "none"
-        },
-        "missing": [
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "stable",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -7680,6 +7463,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -7738,6 +7522,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -7750,16 +7535,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-firmware",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "stable",
-          "firmware": "none"
-        },
-        "missing": [
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "stable",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -7799,6 +7578,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -7835,6 +7615,7 @@
           "computed": "manual",
           "treeChannel": "edge",
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -7876,6 +7657,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -7888,18 +7670,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -7926,6 +7700,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -7961,6 +7736,7 @@
       ],
       "notes": "Its BIOS (VGCN13WW) is the IdeaPad Slim 3x 15Q8X10's LCFC platform, so that tree is the closest start, with a second USB-C port, the touchscreen at 0x24 and its own panel and EC.",
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -7973,18 +7749,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -8013,6 +7781,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -8049,6 +7818,7 @@
       ],
       "notes": "Shares the IdeaPad Vibe 14's BIOS (VGCN13WW) and DSDT.",
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -8061,18 +7831,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -8101,6 +7863,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -8137,6 +7900,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "stable-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -8149,16 +7913,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-firmware",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "none"
-        },
-        "missing": [
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "released",
@@ -8195,6 +7953,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -8258,6 +8017,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -8270,18 +8030,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -8310,6 +8062,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -8347,6 +8100,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "stable-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -8361,14 +8115,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "stable",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "stable"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "stable"
       },
       "upstream": {
         "deviceTree": "released",
@@ -8403,6 +8153,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -8458,6 +8209,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -8523,6 +8275,7 @@
       ],
       "notes": null,
       "outcome": "works",
+      "bootable": "stable",
       "reports": [
         {
           "state": "works",
@@ -8543,14 +8296,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -8588,6 +8337,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -8657,6 +8407,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -8669,18 +8420,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -8709,6 +8452,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -8745,6 +8489,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -8757,18 +8502,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -8797,6 +8534,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -8833,6 +8571,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -8845,18 +8584,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -8885,6 +8616,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -8919,6 +8651,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -8931,18 +8664,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -8971,6 +8696,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -9009,6 +8735,7 @@
       ],
       "notes": "Its tree is for the Mahua X2E-80-100. The X2P-42-100 units have the 6-core Kalambo chip and need a tree on kalambo.dtsi.",
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -9023,14 +8750,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "next",
@@ -9061,6 +8784,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -9117,6 +8841,7 @@
       ],
       "notes": "Its tree is for the 18-core X2E-88-100. The X2E-80-100 units have the Mahua chip and the X2P-42-100 ones the 6-core Kalambo chip, which need trees on mahua.dtsi and kalambo.dtsi.",
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -9129,16 +8854,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-firmware",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "stable",
-          "firmware": "none"
-        },
-        "missing": [
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "stable",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "next",
@@ -9174,6 +8893,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "stable",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -9238,6 +8958,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "stable-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -9252,14 +8973,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -9292,6 +9009,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -9356,6 +9074,7 @@
       ],
       "notes": null,
       "outcome": "problems",
+      "bootable": "problems",
       "reports": [
         {
           "state": "problems",
@@ -9377,14 +9096,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -9415,6 +9130,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -9483,6 +9199,7 @@
       ],
       "notes": null,
       "outcome": "problems",
+      "bootable": "problems",
       "reports": [
         {
           "state": "problems",
@@ -9504,14 +9221,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -9543,6 +9256,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -9610,6 +9324,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -9624,14 +9339,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -9660,6 +9371,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -9706,6 +9418,7 @@
       ],
       "notes": null,
       "outcome": "works",
+      "bootable": "stable",
       "reports": [
         {
           "state": "works",
@@ -9727,14 +9440,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -9767,6 +9476,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -9816,6 +9526,7 @@
           "computed": "manual",
           "treeChannel": "stable",
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -9865,6 +9576,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -9879,14 +9591,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -9926,6 +9634,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -9979,6 +9688,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -9991,18 +9701,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -10031,6 +9733,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -10071,6 +9774,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "team",
       "omarchy": {
@@ -10085,14 +9789,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -10122,6 +9822,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -10171,6 +9872,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -10185,14 +9887,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -10224,6 +9922,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -10266,6 +9965,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -10278,18 +9978,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -10318,6 +10010,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -10358,6 +10051,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -10370,18 +10064,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -10410,6 +10096,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -10446,6 +10133,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "stable-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -10460,14 +10148,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -10498,6 +10182,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -10563,6 +10248,7 @@
       ],
       "notes": "USB-C charging stays at 5 V and a trickle without the owner's userspace tool (book4-pd-charge).",
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -10577,14 +10263,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -10613,6 +10295,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -10660,6 +10343,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "edge-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -10674,14 +10358,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -10709,6 +10389,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -10753,6 +10434,7 @@
       ],
       "notes": null,
       "outcome": "problems",
+      "bootable": "problems",
       "reports": [
         {
           "state": "problems",
@@ -10773,14 +10455,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "edge",
-          "ids": "edge",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -10812,6 +10490,7 @@
           "computed": "should",
           "treeChannel": "edge",
           "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -10865,6 +10544,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -10877,18 +10557,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -10915,6 +10587,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -10951,6 +10624,7 @@
       ],
       "notes": null,
       "outcome": "none",
+      "bootable": "needs-deviceTree",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
@@ -10963,18 +10637,10 @@
         "firmwarePackages": [],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "needs-deviceTree",
-        "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
-          "firmware": "none"
-        },
-        "missing": [
-          "deviceTree",
-          "ids",
-          "firmware"
-        ]
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -11001,6 +10667,7 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
+          "bootChannel": null,
           "treePull": null,
           "idsPull": null,
           "deviceTree": null,
@@ -11035,6 +10702,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "stable-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -11049,14 +10717,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -11086,6 +10750,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -11146,6 +10811,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "stable-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -11160,14 +10826,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "stable",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "stable"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "stable"
       },
       "upstream": {
         "deviceTree": "released",
@@ -11199,6 +10861,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -11284,6 +10947,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "stable-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -11298,14 +10962,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -11336,6 +10996,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -11395,6 +11056,7 @@
       ],
       "notes": null,
       "outcome": "should",
+      "bootable": "stable-untested",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -11409,14 +11071,10 @@
         ],
         "firmwarePull": null
       },
-      "outOfBox": {
-        "state": "edge",
-        "pieces": {
-          "deviceTree": "stable",
-          "ids": "stable",
-          "firmware": "edge"
-        },
-        "missing": []
+      "pieces": {
+        "deviceTree": "stable",
+        "ids": "stable",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -11447,6 +11105,7 @@
           "computed": "should",
           "treeChannel": "stable",
           "idsChannel": "stable",
+          "bootChannel": "stable",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
