@@ -64,7 +64,7 @@
   },
   "asus-vivobook-s14-s3407qa": {
     "state": "out-of-tree",
-    "source": "https://github.com/jonaslindeburg-svg/vivobook-s3407qa-linux",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2315",
     "files": [
       "SOURCE.md",
       "x1p42100-asus-vivobook-s14.dts"

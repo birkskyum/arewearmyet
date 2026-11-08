@@ -1168,8 +1168,8 @@
     },
     "machine": {
       "team": 7,
-      "omarchy": 10,
-      "linux": 38,
+      "omarchy": 11,
+      "linux": 37,
       "nobody": 31
     },
     "byPiece": {
@@ -2967,7 +2967,7 @@
       "notes": null,
       "outcome": "none",
       "reports": [],
-      "machine": "linux",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -2996,10 +2996,10 @@
         "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": "https://github.com/jonaslindeburg-svg/vivobook-s3407qa-linux",
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2315",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-vivobook-s14-s3407qa",
         "ids": "collected",
-        "idsCollected": "https://github.com/jonaslindeburg-svg/vivobook-s3407qa-linux/blob/4630a369b8f06c68b2fc239dcb16943d454ac088/notes/dmesg.txt#L265",
+        "idsCollected": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/asus-vivobook-s14-s3407qa",
         "idsStubble": null,
         "firmware": "download",
         "firmwareMissing": [],
