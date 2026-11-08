@@ -88,9 +88,11 @@ const STATES = {
     helps: { label: 'Still useful', tone: 'muted', meaning: `It has a device tree, but a report still gives the hardware IDs for each of its model numbers, the maker's firmware list, its panels and the tables to check the tree against.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: 'The first thing to send for a model without a device tree.' },
   },
+  // The most stable channel that boots it, whether someone booted this model or another of its platform
   nvidiaOmarchy: {
-    works: { label: 'Yes', tone: 'good', meaning: 'Someone booted into Omarchy on it. Not every feature has to work yet.' },
-    expected: { label: 'Yes', tone: 'good', meaning: 'Same platform as a model that boots, but nobody has tried this one yet.' },
+    stable: { label: 'Stable', tone: 'good', meaning: `Omarchy's stable channel boots it. Not every feature has to work yet.` },
+    rc: { label: 'RC', tone: 'good', meaning: `Omarchy's RC channel, the current install image, boots it. Not every feature has to work yet.` },
+    edge: { label: 'Edge', tone: 'good', meaning: `Omarchy's edge channel, the nightly image, boots it. Not every feature has to work yet.` },
     problems: { label: 'Problems', tone: 'wanted', meaning: `Someone tried it and couldn't get to the Omarchy desktop.` },
     untested: { label: 'Not tested', tone: 'muted', meaning: 'Nobody has tried Omarchy on it yet.' },
   },
@@ -165,7 +167,7 @@ export const GOOGLEBOOK_UPSTREAM_LEGEND: Group[] = [
 // The Omarchy view: Omarchy's kernel and whether it boots
 export const NVIDIA_OMARCHY_LEGEND: Group[] = [
   { column: 'Kernel', question: `Omarchy's kernel with the patches it needs, by the most stable channel that has it.`, states: Object.values(STATES.nvidiaKernel) as State[] },
-  { column: 'Bootable', question: `Whether it boots Omarchy, because someone reached the desktop on it or on another model of the same platform. Reports from any distro are welcome.`, states: Object.values(STATES.nvidiaOmarchy) as State[] },
+  { column: 'Bootable', question: `Which Omarchy channel boots it, because someone reached the desktop on it or on another model of the same platform. Reports from any distro are welcome.`, states: [{ ...STATES.nvidiaOmarchy.stable, meaning: `The most stable Omarchy channel, Stable, RC or Edge, that boots it. Pointing at it says whether someone booted this model or another of the same platform. Not every feature has to work yet.` }, STATES.nvidiaOmarchy.problems, STATES.nvidiaOmarchy.untested] },
 ];
 
 // The upstream view: what Linux itself has, which every distro gets
@@ -287,7 +289,12 @@ export function linuxImageCell(model: Model): Cell {
 }
 
 export function nvidiaOmarchyCell(model: NvidiaModel): Cell {
-  return cell(STATES.nvidiaOmarchy, model.omarchy in STATES.nvidiaOmarchy ? model.omarchy : 'untested');
+  if (model.omarchy === 'works' || model.omarchy === 'expected') {
+    const channel = (model.kernel ?? 'edge') as Channel;
+    const who = model.omarchy === 'works' ? 'Someone booted into Omarchy on it.' : 'Same platform as a model that boots, but nobody has tried this one yet.';
+    return cell(STATES.nvidiaOmarchy, channel, { title: `${STATES.nvidiaOmarchy[channel].meaning} ${who}` });
+  }
+  return cell(STATES.nvidiaOmarchy, model.omarchy === 'problems' ? 'problems' : 'untested');
 }
 
 export function nvidiaKernelCell(model: NvidiaModel): Cell {
