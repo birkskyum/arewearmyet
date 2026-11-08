@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-08T03:12:40.325Z",
+  "collected": "2026-11-08T03:23:58.664Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4666,7 +4666,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-34",
+        "kernel": "7.3-35",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -6118,6 +6118,63 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.07.483/omarchy-edge-2026.11.07.483-aarch64.iso",
       "kernel": "7.3.0-26-omarchy"
     },
-    "pulls": []
+    "pulls": [
+      {
+        "number": 2314,
+        "title": "Add the rest of the MateBook E Go's and Windows Dev Kit 2023's firmware",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2314",
+        "draft": true,
+        "deviceTrees": [],
+        "ids": [],
+        "firmware": [
+          "qcom/sc8280xp/HUAWEI/gaokun3/qcadsp8280.mbn",
+          "qcom/sc8280xp/HUAWEI/gaokun3/qccdsp8280.mbn",
+          "qcom/sc8280xp/HUAWEI/gaokun3/qcdxkmsuc8280.mbn",
+          "qcom/sc8280xp/microsoft/blackrock/qcadsp8280.mbn",
+          "qcom/sc8280xp/microsoft/blackrock/qccdsp8280.mbn",
+          "qcom/sc8280xp/microsoft/blackrock/qcdxkmsuc8280.mbn"
+        ]
+      },
+      {
+        "number": 2313,
+        "title": "Add the Honor MagicBook Art 14's compute DSP and the Snapdragon Dev Kit's firmware",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2313",
+        "draft": true,
+        "deviceTrees": [],
+        "ids": [],
+        "firmware": [
+          "qcom/x1e80100/HONOR/MRO-XXX/adsp_dtbs.elf",
+          "qcom/x1e80100/HONOR/MRO-XXX/cdsp_dtbs.elf",
+          "qcom/x1e80100/HONOR/MRO-XXX/qcadsp8380.mbn",
+          "qcom/x1e80100/HONOR/MRO-XXX/qccdsp8380.mbn",
+          "qcom/x1e80100/HONOR/MRO-XXX/qcdxkmsuc8380.mbn",
+          "qcom/x1e80100/HONOR/MRO-XXX/qcvss8380.mbn",
+          "qcom/x1e80100/Thundercomm/DEVKIT/adsp_dtbs.elf",
+          "qcom/x1e80100/Thundercomm/DEVKIT/adspr.jsn",
+          "qcom/x1e80100/Thundercomm/DEVKIT/adsps.jsn",
+          "qcom/x1e80100/Thundercomm/DEVKIT/adspua.jsn",
+          "qcom/x1e80100/Thundercomm/DEVKIT/battmgr.jsn",
+          "qcom/x1e80100/Thundercomm/DEVKIT/cdsp_dtbs.elf",
+          "qcom/x1e80100/Thundercomm/DEVKIT/cdspr.jsn",
+          "qcom/x1e80100/Thundercomm/DEVKIT/qcadsp8380.mbn",
+          "qcom/x1e80100/Thundercomm/DEVKIT/qccdsp8380.mbn",
+          "qcom/x1e80100/Thundercomm/DEVKIT/qcdxkmsuc8380.mbn"
+        ]
+      },
+      {
+        "number": 2312,
+        "title": "linux-omarchy-aarch64: give the HP ProBook 4 G1q hardware IDs",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2312",
+        "draft": true,
+        "deviceTrees": [],
+        "ids": [
+          {
+            "file": "x1p42100-hp-probook-4-g1q.json",
+            "compatible": "hp,elitebook-6-g1q"
+          }
+        ],
+        "firmware": []
+      }
+    ]
   }
 }
