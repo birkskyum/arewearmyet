@@ -362,6 +362,7 @@ const where = (folder: string) => {
   if (copiedAcpi.has(folder)) return copiedAcpi.get(folder)!;
   if (folder.startsWith('hardware-reports/')) return `../reports/${folder.slice('hardware-reports/'.length)}`;
   if (folder.startsWith('arewearmyet/')) return folder.slice('arewearmyet/'.length);
+  if (folder.startsWith('firmware/')) return folder;
   return undefined;
 };
 const known = new Set(acpiDumps.map((dump) => dump.folder));
@@ -374,7 +375,9 @@ writeFileSync('acpi/README.md', [
   'Every ACPI dump the board knows of, by model, with a link to this repository\'s copy. scripts/archive.ts copies the',
   'tables of the dumps in [aarch64-laptops](https://github.com/aarch64-laptops/build), merged or proposed in a pull',
   'request, into `aarch64-laptops/`, those of the Arm Surfaces in [linux-surface](https://github.com/linux-surface/acpidumps)',
-  'into `linux-surface/`, and the hardware reports into [`../reports/`](../reports), every day. The other folders here are',
+  'into `linux-surface/`, and the hardware reports into [`../reports/`](../reports), every day. `firmware/` holds tables',
+  'taken out of the BIOS or UEFI images in makers\' own downloads, for models nobody has dumped, so they have no per-unit',
+  'values and can differ from a running machine where the firmware fills fields in at boot. The other folders here are',
   'dumps published here first. Each folder\'s SOURCE.md says where its tables came from. The SoC serial number (SOSN)',
   'is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. Disassemble a table with `iasl -d`.', '',
   `${rows.filter((row) => row.dumps.length).length} of ${rows.length} models have at least one dump.`, '',

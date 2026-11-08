@@ -13,7 +13,7 @@ type Model = {
   id: string;
   vendor: string;
   name: string;
-  generation: 'x1' | 'x2' | '8cx';
+  generation: 'x1' | 'x2' | '8cx' | 'c';
   form?: string;
   released?: string | number;
   model_numbers?: string[];
@@ -313,9 +313,11 @@ function whoHasOne(model: Model, reports: Report[], deviceTree: string, acpi: st
   // A tree borrowed from another model on the same mainboard says nothing about who has this one
   const variants: Variant[] = model.variants ?? [];
   const ownTree = deviceTree !== 'missing' && !(variants.length && variants.every((variant) => variant.borrowed));
-  if (!ownTree && !acpi.length && !reports.length) return 'nobody';
+  // Tables taken out of a maker's firmware image say nothing about who has one either
+  const dumps = acpi.filter((folder) => !folder.startsWith('firmware/'));
+  if (!ownTree && !dumps.length && !reports.length) return 'nobody';
   const sentToOmarchy = /^https:\/\/github\.com\/(omacom|turbineBMW\/omarchy-hardware-reports|birkskyum\/arewearmyet)\//.test(model.ids_collected ?? '');
-  const omarchyCommunity = reports.length > 0 || acpi.some((folder) => folder.startsWith('hardware-reports/')) || sentToOmarchy || Boolean(model.discussion?.includes('omacom/omarchy'));
+  const omarchyCommunity = reports.length > 0 || dumps.some((folder) => folder.startsWith('hardware-reports/')) || sentToOmarchy || Boolean(model.discussion?.includes('omacom/omarchy'));
   return omarchyCommunity ? 'omarchy' : 'linux';
 }
 
@@ -413,7 +415,7 @@ const rows = models.map((model) => {
       firmwareUpstream: firmwareUpstream.state,
       firmwareUpstreamMissing: firmwareUpstream.missing,
       firmwareFolders: firmware.map((folder) => folder.path),
-      acpi: acpi.length ? 'collected' : 'missing',
+      acpi: acpi.some((dump) => !dump.folder.startsWith('firmware/')) ? 'collected' : acpi.length ? 'firmware' : 'missing',
       acpiUrls: acpi.map((dump) => dump.url),
     },
     variants,
@@ -426,7 +428,7 @@ const rows = models.map((model) => {
 
 const count = <T>(items: T[], test: (item: T) => boolean) => items.filter(test).length;
 type Row = (typeof rows)[number];
-const current = rows.filter((row) => row.generation !== '8cx' && row.boot !== 'android');
+const current = rows.filter((row) => row.generation !== '8cx' && row.generation !== 'c' && row.boot !== 'android');
 const summary = {
   models: current.length,
   nvidia: nvidia.length,

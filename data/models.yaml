@@ -1,7 +1,7 @@
 # Every ARM PC model the board tracks. One entry per hardware model; variants
 # that Linux describes with separate device trees are listed inside it.
 #
-#   generation     x1 (Snapdragon X), x2 (Snapdragon X2) or 8cx (8cx Gen 3)
+#   generation     x1 (Snapdragon X), x2 (Snapdragon X2), 8cx (8cx Gen 3) or c (Snapdragon C)
 #   chips          the processors it's sold with
 #   variants       one per device tree: compatible is the tree's first
 #                  compatible string, also for trees that are only posted or
@@ -202,6 +202,7 @@ models:
     released: "2026-01"
     chips: ["X1-26-100"]
     model_numbers: ["VM441QA"]
+    acpi: ["firmware/asus-v400-aio-vm441qa"]
     sources:
       - https://www.asus.com/displays-desktops/all-in-one-pcs/asus-aio/asus-v400-aio-vm441qa/techspec/
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-aio-vm441qa
@@ -214,6 +215,7 @@ models:
     released: "2026"
     chips: ["X1-26-100"]
     model_numbers: ["VM471QA"]
+    acpi: ["firmware/asus-v400-aio-vm471qa"]
     sources:
       - https://www.asus.com/displays-desktops/all-in-one-pcs/asus-aio/asus-v400-aio-vm471qa/techspec/
 
@@ -224,6 +226,7 @@ models:
     released: "2025-01"
     chips: ["X1-26-100"]
     model_numbers: ["X1407QA", "A1407QA"]
+    acpi: ["firmware/asus-vivobook-14-x1407qa"]
     notes: "Owners boot it with the Vivobook S 15's or a patched Zenbook A14 device tree. Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so the X1607QA's tree is the closest start, with its own IPS panel and PWM backlight added."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-14-x1407q/techspec/
@@ -295,6 +298,7 @@ models:
     released: "2026"
     chips: ["X1-26-101"]
     model_numbers: ["S5408QA"]
+    acpi: ["firmware/asus-vivobook-s14-s5408qa"]
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s14-s5408-qualcomm/techspec/
 
@@ -306,6 +310,7 @@ models:
     released: "2026"
     chips: ["X1-26-100"]
     model_numbers: ["TP5408QA"]
+    acpi: ["firmware/asus-vivobook-s14-flip-tp5408qa"]
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s14-flip-tp5408-qualcomm/techspec/
 
@@ -338,6 +343,7 @@ models:
     released: "2026"
     chips: ["X1-26-101"]
     model_numbers: ["S5608QA"]
+    acpi: ["firmware/asus-vivobook-s16-s5608qa"]
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s5608-qualcomm/techspec/
 
@@ -349,6 +355,7 @@ models:
     released: "2026"
     chips: ["X1-26-100"]
     model_numbers: ["TP5608QA"]
+    acpi: ["firmware/asus-vivobook-s16-flip-tp5608qa"]
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-flip-tp5608-qualcomm/techspec/
 
@@ -421,6 +428,7 @@ models:
     released: "2026-01"
     chips: ["X2E-88-100"]
     model_numbers: ["HT7407NA"]
+    acpi: ["firmware/asus-proart-pz14-ht7407"]
     sources:
       - https://www.asus.com/laptops/for-creators/proart/proart-pz14-ht7407/techspec/
       - https://www.notebookcheck.net/Powerful-creator-tablet-with-Snapdragon-X2-Elite-Asus-ProArt-PZ14-Review.1359622.0.html
@@ -432,6 +440,7 @@ models:
     released: "2026-01"
     chips: ["X2E-88-100"]
     model_numbers: ["S3607NA"]
+    acpi: ["firmware/asus-vivobook-s16-s3607na"]
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s3607q/techspec/
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-vivobook-s16
@@ -584,6 +593,7 @@ models:
     released: "2025-12"
     chips: ["X1P-42-100"]
     model_numbers: ["P1D5APBL", "W6XDZA5BAM-K"]
+    acpi: ["firmware/dynabook-xd5"]
     sources:
       - https://pc.watch.impress.co.jp/docs/news/2072007.html
       - https://www.notebookcheck.net/Dynabook-XD5-first-Dynabook-laptop-powered-by-a-Snapdragon-X-Plus-processor.1189810.0.html
@@ -712,11 +722,11 @@ models:
   - id: hp-omnibook-3-16-ct0
     vendor: "HP"
     name: "OmniBook 3 16 (16-ct0)"
-    generation: x1
+    generation: c
     released: "2026-09"
     chips: ["C1-10-100"]
     model_numbers: ["16-ct0xxx", "8FD0", "8FD1"]
-    notes: "Its Snapdragon C C1-10-100 is a 7c Gen 3 class chip (SC7280), not a Snapdragon X. HP's driver pack sp174797 carries only 8270 firmware."
+    notes: "HP's driver pack sp174797 is the 7c Gen 3's (SC7280 power driver, 8270 firmware)."
     sources:
       - https://www.hp.com/au-en/shop/hp-omnibook-3-laptop-ai-16-ct0030qu-e5hs8pa.html
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4688594
@@ -796,6 +806,7 @@ models:
     released: "2026-05"
     chips: ["X2E-84-100", "X2P-64-100"]
     model_numbers: ["HSN-I68C"]
+    acpi: ["firmware/hp-elitebook-6-g2q"]
     sources:
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4586583
       - https://shop.avoira.com/hp-elitebook-6-g2q-14-next-gen-ai-copilot-pc-snapdragon-x2p-64-100-laptop-35-6-cm-14-wuxga-16-gb-lpddr5x-sdram-512-gb-ssd-wi-fi-7-802-11be-windows-11-pro-silver-dq0b5et-abu.html
@@ -1013,6 +1024,18 @@ models:
       - https://www.ithome.com/0/799/284.htm
       - https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-xiaoxin-14-q8x9
 
+  - id: lenovo-v15-g7-q7x
+    vendor: "Lenovo"
+    name: "V15 G7 Q7X"
+    generation: c
+    released: "2026"
+    chips: ["C1-10-100"]
+    model_numbers: ["83YW"]
+    discussion: "https://github.com/aarch64-laptops/build/issues/177"
+    sources:
+      - https://www.notebookcheck.net/Lenovo-confirms-new-15-inch-budget-laptop-with-Snapdragon-C-processor.1411775.0.html
+      - https://www.coolmod.com/lenovo-v15-g7-q7x-83yw0000sp-qualcomm-snapdragon-c1-10-100-8gb-256gb-15-3-w11h/
+
   - id: lenovo-ideapad-vibe-14q8x12
     vendor: "Lenovo"
     name: "IdeaPad Vibe"
@@ -1020,6 +1043,7 @@ models:
     released: "2026-10"
     chips: ["X1-26-100"]
     model_numbers: ["14Q8X12", "84A9"]
+    acpi: ["firmware/lenovo-ideapad-vibe-14q8x12"]
     notes: "Its BIOS (VGCN13WW) is the IdeaPad Slim 3x 15Q8X10's LCFC platform, so that tree is the closest start, with a second USB-C port, the touchscreen at 0x24 and its own panel and EC."
     sources:
       - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Vibe_14Q8X12
@@ -1031,6 +1055,7 @@ models:
     released: "2026-10"
     chips: ["X1-26-100"]
     model_numbers: ["15Q8X12", "84AA"]
+    acpi: ["firmware/lenovo-ideapad-vibe-14q8x12"]
     notes: "Shares the IdeaPad Vibe 14's BIOS (VGCN13WW) and DSDT."
     sources:
       - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Vibe_15Q8X12
@@ -1058,6 +1083,7 @@ models:
     released: "2025-05"
     chips: ["X1-26-100"]
     model_numbers: ["13C8", "13C9", "13CA"]
+    acpi: ["firmware/lenovo-thinkcentre-neo-50q-qc"]
     sources:
       - https://psref.lenovo.com/Product/ThinkCentre/ThinkCentre_neo_50q_QC
       - https://www.xda-developers.com/review-lenovo-thinkcenter-neo-50q-snapdragon/
@@ -1105,6 +1131,7 @@ models:
     released: "2026-04"
     chips: ["X2P-42-100"]
     model_numbers: ["14Q8Y11", "83UK"]
+    acpi: ["firmware/lenovo-ideapad-5x-2-in-1-14q8y11"]
     sources:
       - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_5_2_in_1_14Q8Y11
       - https://www.notebookcheck.net/Lenovo-releases-new-14-inch-laptop-globally-with-Snapdragon-X2-and-over-33-hours-battery-life.1360398.0.html
@@ -1116,6 +1143,7 @@ models:
     released: "2026-03"
     chips: ["X2P-42-100"]
     model_numbers: ["13Q8Y11", "83RK"]
+    acpi: ["firmware/lenovo-ideapad-slim-5x-13q8y11"]
     sources:
       - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Slim_5_13Q8Y11
       - https://www.notebookcheck.net/Lenovo-IdeaPad-Slim-5-13Q8Y11.1311036.0.html
@@ -1127,6 +1155,7 @@ models:
     released: "2026-03"
     chips: ["X2P-42-100"]
     model_numbers: ["15Q8Y11", "83RL"]
+    acpi: ["firmware/lenovo-ideapad-slim-5x-15q8y11"]
     sources:
       - https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Slim_5_15Q8Y11
       - https://www.pcmag.com/reviews/lenovo-ideapad-slim-5x-gen-11
@@ -1138,6 +1167,7 @@ models:
     released: "2026-10"
     chips: ["X2P-42-100"]
     model_numbers: ["22BB"]
+    acpi: ["firmware/lenovo-thinkbook-14-gen-9-q8y"]
     sources:
       - https://psref.lenovo.com/Product/ThinkBook/ThinkBook_14_G9_Q8Y
 
@@ -1287,6 +1317,7 @@ models:
     released: "2026-10"
     chips: ["X2P-42-100"]
     model_numbers: ["2145"]
+    acpi: ["firmware/microsoft-surface-laptop-13in-2nd-edition"]
     sources:
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
       - https://www.notebookcheck.com/Microsoft-plant-neuen-Surface-Laptop-mit-Qualcomm-Snapdragon-X2.1406655.0.html
@@ -1337,6 +1368,7 @@ models:
     released: "2026-10"
     chips: ["X2P-42-100"]
     model_numbers: ["2148", "2149"]
+    acpi: ["firmware/microsoft-surface-pro-12in-2nd-edition"]
     sources:
       - https://www.notebookcheck.net/Microsoft-Surface-Pro-12-2nd-edition-2-in-1-tablet-PC-arrives-with-fanless-design-and-optional-5G-cellular-module.1405432.0.html
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
@@ -1349,6 +1381,7 @@ models:
     released: "2026-06"
     chips: ["X2P-64-100", "X2E-78-100"]
     model_numbers: ["2076", "2140", "2085", "2141"]
+    acpi: ["firmware/microsoft-surface-pro-12th-edition"]
     sources:
       - https://www.notebookcheck.net/Microsoft-Surface-Pro-13-OLED-Reviews-and-Specs.1403321.0.html
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference

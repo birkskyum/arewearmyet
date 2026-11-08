@@ -358,6 +358,7 @@ async function collectOmarchy() {
 //   hardware-reports/<vendor>/<model>, since one model can get several reports; a report the installer couldn't
 //   name (unknown/unknown) by its own folder
 // - this repository's acpi/<folder> as arewearmyet/<folder>, for dumps published here first
+// - this repository's acpi/firmware/<folder> as firmware/<folder>, for tables taken out of a maker's BIOS or UEFI image
 const LAPTOPS = 'aarch64-laptops/build';
 const SURFACE = 'linux-surface/acpidumps';
 const REPORTS = 'turbineBMW/omarchy-hardware-reports';
@@ -421,6 +422,8 @@ async function collectAcpiDumps(): Promise<AcpiDump[]> {
     ...pending,
     ...(existsSync('acpi') ? readdirSync('acpi').filter((folder) => existsSync(join('acpi', folder, 'dsdt.dat'))).sort() : [])
       .map((folder) => ({ folder: `arewearmyet/${folder}`, url: `https://github.com/birkskyum/arewearmyet/tree/main/acpi/${folder}` })),
+    ...(existsSync('acpi/firmware') ? readdirSync('acpi/firmware').filter((folder) => readdirSync(join('acpi/firmware', folder)).some((file) => /^dsdt.*\.dat$/i.test(file))).sort() : [])
+      .map((folder) => ({ folder: `firmware/${folder}`, url: `https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/${folder}` })),
   ];
 }
 

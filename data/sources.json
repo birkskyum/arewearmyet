@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-08T00:41:51.378Z",
+  "collected": "2026-11-08T03:12:40.325Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4200,6 +4200,86 @@
     {
       "folder": "arewearmyet/hp-omnibook-ultra-14-kg0",
       "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/hp-omnibook-ultra-14-kg0"
+    },
+    {
+      "folder": "firmware/asus-proart-pz14-ht7407",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-proart-pz14-ht7407"
+    },
+    {
+      "folder": "firmware/asus-v400-aio-vm441qa",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-v400-aio-vm441qa"
+    },
+    {
+      "folder": "firmware/asus-v400-aio-vm471qa",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-v400-aio-vm471qa"
+    },
+    {
+      "folder": "firmware/asus-vivobook-14-x1407qa",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-vivobook-14-x1407qa"
+    },
+    {
+      "folder": "firmware/asus-vivobook-s14-flip-tp5408qa",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-vivobook-s14-flip-tp5408qa"
+    },
+    {
+      "folder": "firmware/asus-vivobook-s14-s5408qa",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-vivobook-s14-s5408qa"
+    },
+    {
+      "folder": "firmware/asus-vivobook-s16-flip-tp5608qa",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-vivobook-s16-flip-tp5608qa"
+    },
+    {
+      "folder": "firmware/asus-vivobook-s16-s3607na",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-vivobook-s16-s3607na"
+    },
+    {
+      "folder": "firmware/asus-vivobook-s16-s5608qa",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-vivobook-s16-s5608qa"
+    },
+    {
+      "folder": "firmware/dynabook-xd5",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/dynabook-xd5"
+    },
+    {
+      "folder": "firmware/hp-elitebook-6-g2q",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/hp-elitebook-6-g2q"
+    },
+    {
+      "folder": "firmware/lenovo-ideapad-5x-2-in-1-14q8y11",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/lenovo-ideapad-5x-2-in-1-14q8y11"
+    },
+    {
+      "folder": "firmware/lenovo-ideapad-slim-5x-13q8y11",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/lenovo-ideapad-slim-5x-13q8y11"
+    },
+    {
+      "folder": "firmware/lenovo-ideapad-slim-5x-15q8y11",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/lenovo-ideapad-slim-5x-15q8y11"
+    },
+    {
+      "folder": "firmware/lenovo-ideapad-vibe-14q8x12",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/lenovo-ideapad-vibe-14q8x12"
+    },
+    {
+      "folder": "firmware/lenovo-thinkbook-14-gen-9-q8y",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/lenovo-thinkbook-14-gen-9-q8y"
+    },
+    {
+      "folder": "firmware/lenovo-thinkcentre-neo-50q-qc",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/lenovo-thinkcentre-neo-50q-qc"
+    },
+    {
+      "folder": "firmware/microsoft-surface-laptop-13in-2nd-edition",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/microsoft-surface-laptop-13in-2nd-edition"
+    },
+    {
+      "folder": "firmware/microsoft-surface-pro-12in-2nd-edition",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/microsoft-surface-pro-12in-2nd-edition"
+    },
+    {
+      "folder": "firmware/microsoft-surface-pro-12th-edition",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/microsoft-surface-pro-12th-edition"
     }
   ],
   "omarchy": {

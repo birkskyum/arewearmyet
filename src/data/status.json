@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-08T00:41:51.378Z",
+  "collected": "2026-11-08T03:12:40.325Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -1142,27 +1142,27 @@
     ]
   },
   "summary": {
-    "models": 87,
+    "models": 86,
     "nvidia": 17,
     "nvidiaWorks": 2,
     "nvidiaExpected": 15,
     "works": 2,
     "should": 41,
     "problems": 8,
-    "notYet": 36,
+    "notYet": 35,
     "deviceTree": 57,
     "ids": 55,
     "firmware": 51,
     "googlebooks": 2,
     "acpi": 42,
-    "acpiWanted": 30,
+    "acpiWanted": 29,
     "outOfBox": {
       "stable": 1,
       "rc": 0,
       "edge": 43,
       "pr": 0,
       "carry": 4,
-      "needs-deviceTree": 30,
+      "needs-deviceTree": 29,
       "needs-ids": 2,
       "needs-firmware": 7
     },
@@ -1170,7 +1170,7 @@
       "team": 7,
       "omarchy": 10,
       "linux": 38,
-      "nobody": 32
+      "nobody": 31
     },
     "byPiece": {
       "deviceTree": {
@@ -2458,8 +2458,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-v400-aio-vm441qa"
+        ]
       },
       "variants": [
         {
@@ -2542,8 +2544,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-v400-aio-vm471qa"
+        ]
       },
       "variants": [
         {
@@ -2628,8 +2632,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-vivobook-14-x1407qa"
+        ]
       },
       "variants": [
         {
@@ -3088,8 +3094,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-vivobook-s14-s5408qa"
+        ]
       },
       "variants": [
         {
@@ -3172,8 +3180,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-vivobook-s14-flip-tp5408qa"
+        ]
       },
       "variants": [
         {
@@ -3384,8 +3394,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-vivobook-s16-s5608qa"
+        ]
       },
       "variants": [
         {
@@ -3468,8 +3480,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-vivobook-s16-flip-tp5608qa"
+        ]
       },
       "variants": [
         {
@@ -3965,8 +3979,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-proart-pz14-ht7407"
+        ]
       },
       "variants": [
         {
@@ -4050,8 +4066,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-vivobook-s16-s3607na"
+        ]
       },
       "variants": [
         {
@@ -5071,8 +5089,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/dynabook-xd5"
+        ]
       },
       "variants": [
         {
@@ -5800,7 +5820,7 @@
       "id": "hp-omnibook-3-16-ct0",
       "vendor": "HP",
       "name": "OmniBook 3 16 (16-ct0)",
-      "generation": "x1",
+      "generation": "c",
       "form": "laptop",
       "released": "2026-09",
       "modelNumbers": [
@@ -5816,7 +5836,7 @@
         "https://www.hp.com/au-en/shop/hp-omnibook-3-laptop-ai-16-ct0030qu-e5hs8pa.html",
         "https://www.energystar.gov/productfinder/product/certified-computers/details/4688594"
       ],
-      "notes": "Its Snapdragon C C1-10-100 is a 7c Gen 3 class chip (SC7280), not a Snapdragon X. HP's driver pack sp174797 carries only 8270 firmware.",
+      "notes": "HP's driver pack sp174797 is the 7c Gen 3's (SC7280 power driver, 8270 firmware).",
       "outcome": "none",
       "reports": [],
       "machine": "nobody",
@@ -6407,8 +6427,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/hp-elitebook-6-g2q"
+        ]
       },
       "variants": [
         {
@@ -7803,6 +7825,91 @@
       "discussion": null
     },
     {
+      "id": "lenovo-v15-g7-q7x",
+      "vendor": "Lenovo",
+      "name": "V15 G7 Q7X",
+      "generation": "c",
+      "form": "laptop",
+      "released": "2026",
+      "modelNumbers": [
+        "83YW"
+      ],
+      "chips": [
+        "C1-10-100"
+      ],
+      "status": null,
+      "sources": [
+        "https://www.notebookcheck.net/Lenovo-confirms-new-15-inch-budget-laptop-with-Snapdragon-C-processor.1411775.0.html",
+        "https://www.coolmod.com/lenovo-v15-g7-q7x-83yw0000sp-qualcomm-snapdragon-c1-10-100-8gb-256gb-15-3-w11h/"
+      ],
+      "notes": null,
+      "outcome": "none",
+      "reports": [],
+      "machine": "nobody",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "outOfBox": {
+        "state": "needs-deviceTree",
+        "pieces": {
+          "deviceTree": "none",
+          "ids": "none",
+          "firmware": "none"
+        },
+        "missing": [
+          "deviceTree",
+          "ids",
+          "firmware"
+        ]
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": "https://github.com/aarch64-laptops/build/issues/177"
+    },
+    {
       "id": "lenovo-ideapad-vibe-14q8x12",
       "vendor": "Lenovo",
       "name": "IdeaPad Vibe",
@@ -7864,8 +7971,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/lenovo-ideapad-vibe-14q8x12"
+        ]
       },
       "variants": [
         {
@@ -7950,8 +8059,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/lenovo-ideapad-vibe-14q8x12"
+        ]
       },
       "variants": [
         {
@@ -8157,8 +8268,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/lenovo-thinkcentre-neo-50q-qc"
+        ]
       },
       "variants": [
         {
@@ -8554,8 +8667,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/lenovo-ideapad-5x-2-in-1-14q8y11"
+        ]
       },
       "variants": [
         {
@@ -8640,8 +8755,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/lenovo-ideapad-slim-5x-13q8y11"
+        ]
       },
       "variants": [
         {
@@ -8726,8 +8843,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/lenovo-ideapad-slim-5x-15q8y11"
+        ]
       },
       "variants": [
         {
@@ -8810,8 +8929,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/lenovo-thinkbook-14-gen-9-q8y"
+        ]
       },
       "variants": [
         {
@@ -9868,8 +9989,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/microsoft-surface-laptop-13in-2nd-edition"
+        ]
       },
       "variants": [
         {
@@ -10153,8 +10276,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/microsoft-surface-pro-12in-2nd-edition"
+        ]
       },
       "variants": [
         {
@@ -10243,8 +10368,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/microsoft-surface-pro-12th-edition"
+        ]
       },
       "variants": [
         {
