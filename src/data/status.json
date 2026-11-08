@@ -1,17 +1,17 @@
 {
-  "collected": "2026-11-08T05:24:44.415Z",
+  "collected": "2026-11-08T19:08:00.455Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-37",
+    "kernel": "7.3-40",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.07.483",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.07.483/omarchy-edge-2026.11.07.483-aarch64.iso",
-      "kernel": "7.3.0-26-omarchy"
+      "version": "2026.11.08.484",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.08.484/omarchy-edge-2026.11.08.484-aarch64.iso",
+      "kernel": "7.3.0-37-omarchy"
     },
     "channels": [
       {
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-37",
+        "kernel": "7.3-40",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -419,6 +419,7 @@
           "sc8280xp-lenovo-thinkpad-x13s.dts",
           "sc8280xp-microsoft-arcata.dts",
           "sc8280xp-microsoft-blackrock.dts",
+          "x126100-asus-vivobook-14.dts",
           "x126100-asus-vivobook-16.dts",
           "x126100-lenovo-ideapad-slim3.dts",
           "x1e001de-devkit.dts",
@@ -532,6 +533,7 @@
           "mahua-hp-omnibook-5-bf1xxx.json",
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
+          "x126100-asus-vivobook-14.json",
           "x126100-asus-vivobook-16.json",
           "x1e78100-acer-sfa14-11.json",
           "x1e80100-samsung-galaxy-book4-edge-14.json",
@@ -1171,9 +1173,9 @@
     "nvidiaWorks": 2,
     "nvidiaExpected": 15,
     "works": 2,
-    "should": 43,
+    "should": 44,
     "problems": 8,
-    "notYet": 33,
+    "notYet": 32,
     "deviceTree": 58,
     "ids": 56,
     "firmware": 51,
@@ -1188,16 +1190,16 @@
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 55,
+        "omarchy": 56,
         "fromUpstream": 19,
-        "added": 36,
+        "added": 37,
         "pull": 0,
-        "available": 3,
+        "available": 2,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 55
+          "edge": 56
         },
         "models": {
           "fromUpstream": [
@@ -1229,6 +1231,7 @@
             "acer-swift-go-14-ai-sfg14-01",
             "anduril-bluechip",
             "asus-proart-pz13-ht5306",
+            "asus-vivobook-14-x1407qa",
             "asus-vivobook-16-x1607qa",
             "asus-vivobook-s14-s3407qa",
             "asus-vivobook-s16-s3607qa",
@@ -1261,23 +1264,22 @@
           ],
           "pull": [],
           "available": [
-            "asus-vivobook-14-x1407qa",
             "asus-ascent-qn10",
             "humain-horizon"
           ]
         }
       },
       "ids": {
-        "omarchy": 54,
+        "omarchy": 55,
         "fromUpstream": 28,
-        "added": 26,
+        "added": 27,
         "pull": 0,
-        "available": 2,
+        "available": 1,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 54
+          "edge": 55
         },
         "models": {
           "fromUpstream": [
@@ -1316,6 +1318,7 @@
             "acer-swift-go-pro-ai-sfa14-11",
             "anduril-bluechip",
             "asus-proart-pz13-ht5306",
+            "asus-vivobook-14-x1407qa",
             "asus-vivobook-16-x1607qa",
             "asus-vivobook-s14-s3407qa",
             "asus-vivobook-s16-s3607qa",
@@ -1340,22 +1343,21 @@
           ],
           "pull": [],
           "available": [
-            "asus-vivobook-14-x1407qa",
             "asus-ascent-qn10"
           ]
         }
       },
       "firmware": {
-        "omarchy": 49,
+        "omarchy": 50,
         "fromUpstream": 1,
-        "added": 48,
+        "added": 49,
         "pull": 0,
-        "available": 2,
+        "available": 1,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 49
+          "edge": 50
         },
         "models": {
           "fromUpstream": [
@@ -1368,6 +1370,7 @@
             "acer-swift-go-pro-ai-sfa14-11",
             "acer-swift-go-14-ai-sfg14-01",
             "asus-proart-pz13-ht5306",
+            "asus-vivobook-14-x1407qa",
             "asus-vivobook-16-x1607qa",
             "asus-vivobook-s15-s5507",
             "asus-vivobook-s14-s3407qa",
@@ -1413,17 +1416,16 @@
           ],
           "pull": [],
           "available": [
-            "asus-vivobook-14-x1407qa",
             "hp-omnibook-5-14-he1"
           ]
         }
       },
       "all": {
-        "omarchy": 48,
+        "omarchy": 49,
         "fromUpstream": 1,
-        "added": 47,
+        "added": 48,
         "pull": 0,
-        "available": 1,
+        "available": 0,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1436,6 +1438,7 @@
             "acer-swift-go-pro-ai-sfa14-11",
             "acer-swift-go-14-ai-sfg14-01",
             "asus-proart-pz13-ht5306",
+            "asus-vivobook-14-x1407qa",
             "asus-vivobook-16-x1607qa",
             "asus-vivobook-s15-s5507",
             "asus-vivobook-s14-s3407qa",
@@ -1479,9 +1482,7 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": [
-            "asus-vivobook-14-x1407qa"
-          ]
+          "available": []
         }
       }
     }
@@ -2566,25 +2567,27 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-14-x1407q/techspec/",
         "https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html"
       ],
-      "notes": "Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so its tree builds on the X1607QA's, with its IPS panel and PWM backlight. An owner's live USB reached the desktop on the Zenbook A14 tree, and that owner can test boot images.",
-      "outcome": "none",
-      "bootable": "carry",
+      "notes": "Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so its tree builds on the X1607QA's, with its IPS panel and PWM backlight. An owner's live USB reached the desktop on the Zenbook A14 tree, and that owner can test its own tree, in linux-omarchy 7.3-40 on edge.",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "asus-vivobook-16-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
-        "ids": "elsewhere",
-        "firmware": "elsewhere"
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -2614,17 +2617,23 @@
         {
           "chip": "X1-26-100",
           "compatible": "asus,vivobook-14-x1407qa",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x126100-asus-vivobook-14.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2801-arm64-dts-qcom-Add-the-ASUS-Vivobook-14-X1407QA.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -9465,7 +9474,8 @@
         "acpi": "collected",
         "acpiUrls": [
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-11",
-          "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_11_qcom"
+          "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_11_qcom",
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/22"
         ]
       },
       "variants": [

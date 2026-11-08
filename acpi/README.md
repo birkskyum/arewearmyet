@@ -67,7 +67,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | Medion SPRCHRGD 14 S1 | [medion-14-s1-elite-sprchrgd](aarch64-laptops/medion-14-s1-elite-sprchrgd), [medion-14-s1-sprchrgd](aarch64-laptops/medion-14-s1-sprchrgd) |
 | Microsoft Surface Laptop 7 (13.8") | [microsoft-surface-romulus13_and_15](aarch64-laptops/microsoft-surface-romulus13_and_15), [linux-surface/surface_laptop_7_qcom](linux-surface/surface_laptop_7_qcom) |
 | Microsoft Surface Laptop 7 (15") | [microsoft-surface-romulus13_and_15](aarch64-laptops/microsoft-surface-romulus13_and_15), [linux-surface/surface_laptop_7_qcom](linux-surface/surface_laptop_7_qcom) |
-| Microsoft Surface Pro 11th Edition | [microsoft-surface-pro-11](aarch64-laptops/microsoft-surface-pro-11), [linux-surface/surface_pro_11_qcom](linux-surface/surface_pro_11_qcom) |
+| Microsoft Surface Pro 11th Edition | [microsoft-surface-pro-11](aarch64-laptops/microsoft-surface-pro-11), [linux-surface/surface_pro_11_qcom](linux-surface/surface_pro_11_qcom), [hardware-reports/microsoft-corporation/microsoft-surface-pro-11th-edition](../reports/microsoft-corporation/microsoft-surface-pro-11th-edition) |
 | Microsoft Surface Pro 12-inch | [microsoft-surface-pro-12-in](aarch64-laptops/microsoft-surface-pro-12-in) |
 | Microsoft Surface Laptop 13-inch (2nd Edition) | [firmware/microsoft-surface-laptop-13in-2nd-edition](firmware/microsoft-surface-laptop-13in-2nd-edition) |
 | Microsoft Surface Laptop 8 (13.8") | [microsoft-surface-8-x2e-80-100](aarch64-laptops/microsoft-surface-8-x2e-80-100) |

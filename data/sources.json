@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-08T05:24:44.415Z",
+  "collected": "2026-11-08T19:08:00.455Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4182,6 +4182,18 @@
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
     },
     {
+      "folder": "hardware-reports/microsoft-corporation/microsoft-surface-pro-11th-edition",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/22",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "2a0f7b02872caf6e23505702cba3df047a8e2dd6",
+      "dir": "reports/microsoft-corporation/microsoft-surface-pro-11th-edition/43df080a",
+      "pull": {
+        "number": 22,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
       "folder": "hardware-reports/unknown/unknown/94bdf4be",
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/20",
       "repo": "turbineBMW/omarchy-hardware-reports",
@@ -4666,7 +4678,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-37",
+        "kernel": "7.3-40",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -4689,6 +4701,7 @@
           "sc8280xp-lenovo-thinkpad-x13s.dts",
           "sc8280xp-microsoft-arcata.dts",
           "sc8280xp-microsoft-blackrock.dts",
+          "x126100-asus-vivobook-14.dts",
           "x126100-asus-vivobook-16.dts",
           "x126100-lenovo-ideapad-slim3.dts",
           "x1e001de-devkit.dts",
@@ -4802,6 +4815,7 @@
           "mahua-hp-omnibook-5-bf1xxx.json",
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
+          "x126100-asus-vivobook-14.json",
           "x126100-asus-vivobook-16.json",
           "x1e78100-acer-sfa14-11.json",
           "x1e80100-samsung-galaxy-book4-edge-14.json",
@@ -5769,6 +5783,16 @@
           "qcom,x1p42100"
         ],
         "patch": "2796-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-S3407QA.patch"
+      },
+      {
+        "file": "x126100-asus-vivobook-14.dts",
+        "model": "ASUS Vivobook 14 (X1407QA)",
+        "compatible": [
+          "asus,vivobook-14-x1407qa",
+          "qcom,x126100",
+          "qcom,x1p42100"
+        ],
+        "patch": "2801-arm64-dts-qcom-Add-the-ASUS-Vivobook-14-X1407QA.patch"
       }
     ],
     "carriedIds": [
@@ -5892,6 +5916,21 @@
         ]
       },
       {
+        "file": "x126100-asus-vivobook-14.json",
+        "name": "ASUS Vivobook 14 X1407QA",
+        "compatible": "asus,vivobook-14-x1407qa",
+        "hwids": [
+          "48e760e9-f554-50f0-bbd7-32c97e576340",
+          "775adde9-0d52-521a-bffd-73d3c6249268",
+          "af52a449-f48c-58f4-a37d-ebe4d5492302",
+          "11dc624f-e6bd-53b0-afa2-97ebfce193c1",
+          "03001eb0-1ca9-5471-979a-3216030eb89c",
+          "87fde16f-5709-5135-8986-8079469adff8",
+          "c62de106-3b06-5f8d-b33c-843d24b00818",
+          "aac36ff8-1558-5d00-b637-36a524a4c4d7"
+        ]
+      },
+      {
         "file": "x126100-asus-vivobook-16.json",
         "name": "ASUS Vivobook 16 X1607QA",
         "compatible": "asus,vivobook-x16",
@@ -5903,7 +5942,6 @@
           "0907e64a-f34d-5e39-8b5f-c72367b31c36",
           "9895604a-d3b3-52b5-ad37-a5c741de1b0b",
           "21532707-d3e4-57d9-a215-4a02d90abe39",
-          "24652d54-00f4-59ae-96fb-f7adbfa4a939",
           "9ddffa55-b50a-59a2-85f8-3fe038d9fd22",
           "ef3ad04c-cb6b-5981-a15a-71c7ee95190e",
           "f8d95087-670f-5015-987f-7cad2ecde912"
@@ -6040,7 +6078,17 @@
           "41a0c293-6602-50ec-881d-ad12ff1db8f8",
           "2eed3ed5-f1a6-5f09-a129-5f569481f81e",
           "cc7b1cce-6b99-5385-b37b-646c0a08c509",
-          "1df04289-d893-5db6-a2f7-706662991cae"
+          "1df04289-d893-5db6-a2f7-706662991cae",
+          "7eccd89f-3f63-5ec7-aab9-667f7349ee7c",
+          "0e60ba15-105e-54b5-a185-73d30ab427ac",
+          "d9030e88-cd92-54df-9a1c-9be238b1d565",
+          "726f40d0-eca5-5bd2-908b-e784f38f6c5c",
+          "56bad6d5-ae9f-5fe2-9fb4-b52eb7fad27e",
+          "845ac86e-088e-588c-98fd-2255505a6dc8",
+          "276de2e1-947c-5595-8150-66b42c335449",
+          "18ede463-bba0-5a98-82ae-6bfe7f5e809b",
+          "ffc0967b-7c09-561a-b343-b81e42066cf0",
+          "08fa908f-7594-5f05-9d3f-f71fe3a7f355"
         ]
       },
       {
@@ -6165,9 +6213,9 @@
       }
     ],
     "image": {
-      "version": "2026.11.07.483",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.07.483/omarchy-edge-2026.11.07.483-aarch64.iso",
-      "kernel": "7.3.0-26-omarchy"
+      "version": "2026.11.08.484",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.08.484/omarchy-edge-2026.11.08.484-aarch64.iso",
+      "kernel": "7.3.0-37-omarchy"
     },
     "pulls": []
   }

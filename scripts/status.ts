@@ -207,13 +207,19 @@ for (const folder of sourceFolders) {
 // come from the firmware-name lines there: in the .dts naming one of the model's compatibles (a series
 // can add trees for several models) and the files it includes
 // A model that shares another's board and tree, like the OmniBook 5 16 the OmniBook 5 14's, has no copy of
-// its own and reads that model's
+// its own and reads that model's. A board .dtsi the copy doesn't hold, like the Vivobook 16's that the
+// Vivobook 14's tree includes, comes from the other copy that has it.
+const strip = (text: string) => text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '');
+const archivedFile = (file: string) => {
+  const owner = Object.entries(archived).find(([, entry]) => ((entry as { files?: string[] }).files ?? []).includes(file))?.[0];
+  return owner ? strip(readFileSync(`device-trees/${owner}/${file}`, 'utf8')) : undefined;
+};
 function archivedFirmware(id: string, compatibles: string[]): string[] {
   const from = archived[id] ? id : models.find((other: Model) => archived[other.id] && (other.variants ?? []).some((v: Variant) => v.compatible && compatibles.includes(v.compatible)))?.id;
   const entry = from ? archived[from] as { files?: string[] } : undefined;
   const files = new Map<string, string>();
   for (const file of entry?.files ?? []) {
-    if (/\.dtsi?$/.test(file)) files.set(file, readFileSync(`device-trees/${from}/${file}`, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, ''));
+    if (/\.dtsi?$/.test(file)) files.set(file, strip(readFileSync(`device-trees/${from}/${file}`, 'utf8')));
   }
   const boards = [...files.keys()].filter((file) => file.endsWith('.dts'));
   const own = boards.filter((file) => compatibles.some((compatible) => files.get(file)!.includes(`"${compatible}"`)));
@@ -222,9 +228,10 @@ function archivedFirmware(id: string, compatibles: string[]): string[] {
   const names = new Set<string>();
   while (todo.length) {
     const file = todo.pop()!;
-    if (seen.has(file) || !files.has(file)) continue;
+    if (seen.has(file)) continue;
     seen.add(file);
-    const text = files.get(file)!;
+    const text = files.get(file) ?? archivedFile(file);
+    if (!text) continue;
     for (const include of text.matchAll(/#include\s+"([^"]+)"/g)) todo.push(include[1]);
     for (const line of text.matchAll(/firmware-name\s*=\s*([^;]*);/g)) {
       for (const name of line[1].matchAll(/"([^"]+)"/g)) names.add(name[1]);

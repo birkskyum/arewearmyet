@@ -232,9 +232,9 @@ models:
     acpi: ["firmware/asus-vivobook-14-x1407qa"]
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2340"
     devicetree_files:
-      - "https://raw.githubusercontent.com/birkskyum/omarchy-pkgs/68593263/pkgbuilds/linux-omarchy-aarch64/2801-arm64-dts-qcom-Add-the-ASUS-Vivobook-14-X1407QA.patch#x126100-asus-vivobook-14.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/6c50f70430edbe3a9854df5834a2946afb34570e/pkgbuilds/linux-omarchy-aarch64/2801-arm64-dts-qcom-Add-the-ASUS-Vivobook-14-X1407QA.patch#x126100-asus-vivobook-14.dts"
     ids_collected: "https://github.com/birkskyum/arewearmyet/issues/7"
-    notes: "Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so its tree builds on the X1607QA's, with its IPS panel and PWM backlight. An owner's live USB reached the desktop on the Zenbook A14 tree, and that owner can test boot images."
+    notes: "Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so its tree builds on the X1607QA's, with its IPS panel and PWM backlight. An owner's live USB reached the desktop on the Zenbook A14 tree, and that owner can test its own tree, in linux-omarchy 7.3-40 on edge."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-14-x1407q/techspec/
       - https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html
@@ -1295,7 +1295,7 @@ models:
     variants:
       - { model: "OLED", chip: "X1E-80-100", compatible: "microsoft,denali-oled" }
       - { model: "LCD", chip: "X1P-64-100", compatible: "microsoft,denali-lcd" }
-    acpi: ["microsoft-surface-pro-11", "linux-surface/surface_pro_11_qcom"]
+    acpi: ["microsoft-surface-pro-11", "linux-surface/surface_pro_11_qcom", "hardware-reports/microsoft-corporation/microsoft-surface-pro-11th-edition"]
     reports:
       - { state: "works", variant: "OLED", note: "Boots on Omarchy's kernel; suspend, both cameras, pen and touch work.", checked: "2026-10" }
     sources:
