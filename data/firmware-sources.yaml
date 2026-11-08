@@ -2134,6 +2134,24 @@ folders:
         sha256: "5b8b1ea1de11b9acc74fdd4919aa4aeac924520e4b11cf27782c593640e11e44"
         from:
           - { package: "asus-socpackage-50068", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+  - path: "qcom/sc8280xp/microsoft/blackrock"
+    models: ["microsoft-windows-dev-kit-2023"]
+    files:
+      - name: "qcadsp8280.mbn"
+        size: 14606924
+        sha256: "bfa1382134cfe9c053607ae0ed8d319ed83459b2e731f4fdd5b93458063af1d6"
+        from:
+          - { package: "microsoft-surfacepro9-5g", member: "SurfaceUpdate/surfaceproextadsp8280/qcadsp8280.mbn" }
+      - name: "qccdsp8280.mbn"
+        size: 3571712
+        sha256: "5da3feeb5ca7231c14a3dcfa1a137644f2955dca46909897334bb4012df06320"
+        from:
+          - { package: "microsoft-surfacepro9-5g", member: "SurfaceUpdate/surfaceproextcdsp8280/qccdsp8280.mbn" }
+      - name: "qcdxkmsuc8280.mbn"
+        size: 14424
+        sha256: "3847033eee563763317b918e047c83b42b9e76341be6f1912e65619019e8f3be"
+        from:
+          - { package: "microsoft-surfacepro9-5g", member: "SurfaceUpdate/qcdx8280/qcdxkmsuc8280.mbn" }
   - path: "qcom/sc8280xp/MICROSOFT/SurfacePro9"
     models: ["microsoft-surface-pro-9-5g"]
     files:
@@ -2160,6 +2178,16 @@ folders:
         sha256: "3fd79f085816015d9431b45dd2be983065022866f23cc4c141d321c4b1cf6ec2"
         from:
           - { package: "huawei-msupdate-adsp-9.9.9999.1", member: "qcadsp8280.mbn" }
+      - name: "qccdsp8280.mbn"
+        size: 3571712
+        sha256: "5934adcf21028401756f373fb2fc4b74bc56973f3f700c8a68952ef95897cac8"
+        from:
+          - { package: "huawei-system-hardware-update-200.0.10.0", member: "qcsubsys_ext_cdsp8280.cab!/qccdsp8280.mbn" }
+      - name: "qcdxkmsuc8280.mbn"
+        size: 14392
+        sha256: "87ffe7e65f4ebeb39bf8372962cc6283e649cc2fcddc10b962a32c661ed3cff5"
+        from:
+          - { package: "huawei-system-hardware-update-200.0.10.0", member: "qcdx8280.cab!/qcdxkmsuc8280.mbn" }
 
 packages:
   - id: "acer-a14-11m-adsp-2.0.9100.0001"
@@ -2579,7 +2607,7 @@ packages:
     size: 404353024
     sha256: "f371bbe1c262ad4526b16e898b30958eeeb7df38e7e87026cc2ff781829c23eb"
     fetched: "2026-11-06"
-    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+    note: "The file link changes with every version; the page always lists the current one, which may hold newer files. The Windows Dev Kit 2023 reports the same subsystem IDs (MSHW0276 audio DSP, MSHW0278 compute DSP, MSWW8280 GPU), so Windows gives it these drivers too. A Dev Kit's own copy (Armbian's DEVKIT23) has this compute DSP byte for byte and an older build of this audio DSP with the same Microsoft signing (OEM 0x69, model 0x47)."
   - id: "huawei-msupdate-adsp-9.9.9999.1"
     maker: "Huawei"
     title: "Qualcomm Audio DSP Subsystem extension 9.9.9999.1 for the MateBook E Go (Windows Update)"
@@ -2589,3 +2617,12 @@ packages:
     sha256: "7670f5dd82474ebf28b7f0d0e064188894e2836208903e304d45c54d3d244308"
     fetched: "2026-11-06"
     note: "A Microsoft Update Catalog cab submitted by Huawei Device Co., Ltd.; it has a signature appended, which 7-Zip reports as data after the archive and cabextract as extra bytes."
+  - id: "huawei-system-hardware-update-200.0.10.0"
+    maker: "Huawei"
+    title: "HUAWEI - System Hardware Update - 4/26/2024 (200.0.10.0), from Windows Update"
+    url: "https://github.com/matebook-e-go/uup-drivers-sc8280xp/releases/download/200.0.10.0/200.0.10.0.zip"
+    page: "https://github.com/matebook-e-go/uup-drivers-sc8280xp/releases/tag/200.0.10.0"
+    size: 185120388
+    sha256: "a1240497f44145c1445110522820c7ad8d4d4995403b399ee6323743f30e67b9"
+    fetched: "2026-11-08"
+    note: "Huawei's Windows Update bundle for the MateBook E Go, whose product is its hardware ID e1b94e53-0f20-5d01-abfc-cfb348544a31 (in systemd's huawei,gaokun3 entry). Windows Update serves it only to the machine itself, so this is the copy matebook-e-go/uup-drivers-sc8280xp fetched with UUPMediaCreator and publishes, one .cab per driver. Its compute DSP and GPU zap shader are signed by Qualcomm for any OEM (0x14d), as are the ones linux-firmware ships for the ThinkPad X13s."

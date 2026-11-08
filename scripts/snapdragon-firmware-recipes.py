@@ -100,6 +100,7 @@ RECIPES = {
     "microsoft-surface-laptop-13-firmware": ("Microsoft Surface Laptop 13-inch", ["qcom/x1p42100/Microsoft/SurfaceLaptop13"]),
     "microsoft-surface-laptop-8-firmware": ("Microsoft Surface Laptop 8", ["qcom/glymur/microsoft/mahua"]),
     "microsoft-surface-pro-9-5g-firmware": ("Microsoft Surface Pro 9 with 5G", ["qcom/sc8280xp/MICROSOFT/SurfacePro9"]),
+    "microsoft-windows-dev-kit-2023-firmware": ("Microsoft Windows Dev Kit 2023", ["qcom/sc8280xp/microsoft/blackrock"]),
     "microsoft-surface-pro-11-firmware": ("Microsoft Surface Pro 11th Edition", ["qcom/x1e80100/microsoft/Denali", "qcom/x1e80100/microsoft"]),
     "microsoft-surface-pro-12in-firmware": ("Microsoft Surface Pro 12-inch", ["qcom/x1p42100/Microsoft/Surface12"]),
     "samsung-galaxy-book4-edge-firmware": ("Samsung Galaxy Book4 Edge", ["qcom/x1e80100/SAMSUNG/galaxy-book4-edge"]),

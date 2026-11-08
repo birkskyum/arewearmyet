@@ -10646,11 +10646,11 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-firmware",
+        "state": "carry",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "none"
+          "firmware": "elsewhere"
         },
         "missing": [
           "firmware"
@@ -10665,14 +10665,10 @@
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8280.mbn",
-          "qcadsp8280.mbn",
-          "qccdsp8280.mbn"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-sc8280xp-HUAWEI-gaokun3",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -11004,17 +11000,17 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-firmware",
+        "state": "carry",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "none"
+          "firmware": "elsewhere"
         },
         "missing": [
           "firmware"
@@ -11029,14 +11025,10 @@
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8280.mbn",
-          "qcadsp8280.mbn",
-          "qccdsp8280.mbn"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-sc8280xp-microsoft-blackrock",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
