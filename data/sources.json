@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-08T03:23:58.664Z",
+  "collected": "2026-11-08T03:43:36.920Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -5059,7 +5059,9 @@
           ],
           "honor-magicbook-art-14-firmware": [
             "qcom/x1e80100/HONOR/MRO-XXX/adsp_dtbs.elf",
+            "qcom/x1e80100/HONOR/MRO-XXX/cdsp_dtbs.elf",
             "qcom/x1e80100/HONOR/MRO-XXX/qcadsp8380.mbn",
+            "qcom/x1e80100/HONOR/MRO-XXX/qccdsp8380.mbn",
             "qcom/x1e80100/HONOR/MRO-XXX/qcdxkmsuc8380.mbn",
             "qcom/x1e80100/HONOR/MRO-XXX/qcvss8380.mbn"
           ],
@@ -5183,7 +5185,9 @@
             "qcom/glymur/hp/omnibook-x16/qccdsp8480.mbn"
           ],
           "huawei-matebook-e-go-firmware": [
-            "qcom/sc8280xp/HUAWEI/gaokun3/qcadsp8280.mbn"
+            "qcom/sc8280xp/HUAWEI/gaokun3/qcadsp8280.mbn",
+            "qcom/sc8280xp/HUAWEI/gaokun3/qccdsp8280.mbn",
+            "qcom/sc8280xp/HUAWEI/gaokun3/qcdxkmsuc8280.mbn"
           ],
           "lenovo-ideacentre-mini-x-firmware": [
             "qcom/x1e80100/LENOVO/91B6/adsp_dtbs.elf",
@@ -5387,6 +5391,23 @@
             "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcadsp8280.mbn",
             "qcom/sc8280xp/MICROSOFT/SurfacePro9/qccdsp8280.mbn",
             "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcdxkmsuc8280.mbn"
+          ],
+          "microsoft-windows-dev-kit-2023-firmware": [
+            "qcom/sc8280xp/microsoft/blackrock/qcadsp8280.mbn",
+            "qcom/sc8280xp/microsoft/blackrock/qccdsp8280.mbn",
+            "qcom/sc8280xp/microsoft/blackrock/qcdxkmsuc8280.mbn"
+          ],
+          "qualcomm-snapdragon-dev-kit-firmware": [
+            "qcom/x1e80100/Thundercomm/DEVKIT/adsp_dtbs.elf",
+            "qcom/x1e80100/Thundercomm/DEVKIT/adspr.jsn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/adsps.jsn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/adspua.jsn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/battmgr.jsn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/cdsp_dtbs.elf",
+            "qcom/x1e80100/Thundercomm/DEVKIT/cdspr.jsn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/qcadsp8380.mbn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/qccdsp8380.mbn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/qcdxkmsuc8380.mbn"
           ],
           "samsung-galaxy-book4-edge-15-firmware": [
             "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
@@ -6063,6 +6084,15 @@
         ]
       },
       {
+        "file": "x1p42100-hp-probook-4-g1q.json",
+        "name": "HP ProBook 4 G1q",
+        "compatible": "hp,elitebook-6-g1q",
+        "hwids": [
+          "b348003c-d304-5a78-9d6b-605c29e83297",
+          "2a07d2bb-a31a-523a-9cce-a5098587c795"
+        ]
+      },
+      {
         "file": "x1p42100-microsoft-surface-laptop-13.json",
         "name": "Microsoft Surface Laptop 13-inch (2095)",
         "compatible": "microsoft,surface-laptop-13",
@@ -6120,57 +6150,24 @@
     },
     "pulls": [
       {
-        "number": 2314,
-        "title": "Add the rest of the MateBook E Go's and Windows Dev Kit 2023's firmware",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2314",
+        "number": 2315,
+        "title": "linux-omarchy-aarch64: add the ASUS Vivobook S14 (S3407QA)",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2315",
         "draft": true,
-        "deviceTrees": [],
-        "ids": [],
-        "firmware": [
-          "qcom/sc8280xp/HUAWEI/gaokun3/qcadsp8280.mbn",
-          "qcom/sc8280xp/HUAWEI/gaokun3/qccdsp8280.mbn",
-          "qcom/sc8280xp/HUAWEI/gaokun3/qcdxkmsuc8280.mbn",
-          "qcom/sc8280xp/microsoft/blackrock/qcadsp8280.mbn",
-          "qcom/sc8280xp/microsoft/blackrock/qccdsp8280.mbn",
-          "qcom/sc8280xp/microsoft/blackrock/qcdxkmsuc8280.mbn"
-        ]
-      },
-      {
-        "number": 2313,
-        "title": "Add the Honor MagicBook Art 14's compute DSP and the Snapdragon Dev Kit's firmware",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2313",
-        "draft": true,
-        "deviceTrees": [],
-        "ids": [],
-        "firmware": [
-          "qcom/x1e80100/HONOR/MRO-XXX/adsp_dtbs.elf",
-          "qcom/x1e80100/HONOR/MRO-XXX/cdsp_dtbs.elf",
-          "qcom/x1e80100/HONOR/MRO-XXX/qcadsp8380.mbn",
-          "qcom/x1e80100/HONOR/MRO-XXX/qccdsp8380.mbn",
-          "qcom/x1e80100/HONOR/MRO-XXX/qcdxkmsuc8380.mbn",
-          "qcom/x1e80100/HONOR/MRO-XXX/qcvss8380.mbn",
-          "qcom/x1e80100/Thundercomm/DEVKIT/adsp_dtbs.elf",
-          "qcom/x1e80100/Thundercomm/DEVKIT/adspr.jsn",
-          "qcom/x1e80100/Thundercomm/DEVKIT/adsps.jsn",
-          "qcom/x1e80100/Thundercomm/DEVKIT/adspua.jsn",
-          "qcom/x1e80100/Thundercomm/DEVKIT/battmgr.jsn",
-          "qcom/x1e80100/Thundercomm/DEVKIT/cdsp_dtbs.elf",
-          "qcom/x1e80100/Thundercomm/DEVKIT/cdspr.jsn",
-          "qcom/x1e80100/Thundercomm/DEVKIT/qcadsp8380.mbn",
-          "qcom/x1e80100/Thundercomm/DEVKIT/qccdsp8380.mbn",
-          "qcom/x1e80100/Thundercomm/DEVKIT/qcdxkmsuc8380.mbn"
-        ]
-      },
-      {
-        "number": 2312,
-        "title": "linux-omarchy-aarch64: give the HP ProBook 4 G1q hardware IDs",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2312",
-        "draft": true,
-        "deviceTrees": [],
+        "deviceTrees": [
+          {
+            "file": "x1p42100-asus-vivobook-s14.dts",
+            "model": "ASUS Vivobook S14 (S3407QA)",
+            "compatible": [
+              "asus,vivobook-s14-s3407qa",
+              "qcom,x1p42100"
+            ]
+          }
+        ],
         "ids": [
           {
-            "file": "x1p42100-hp-probook-4-g1q.json",
-            "compatible": "hp,elitebook-6-g1q"
+            "file": "x1p42100-asus-vivobook-s14.json",
+            "compatible": "asus,vivobook-s14-s3407qa"
           }
         ],
         "firmware": []

@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-08T03:23:58.664Z",
+  "collected": "2026-11-08T03:43:36.920Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -789,7 +789,9 @@
           ],
           "honor-magicbook-art-14-firmware": [
             "qcom/x1e80100/HONOR/MRO-XXX/adsp_dtbs.elf",
+            "qcom/x1e80100/HONOR/MRO-XXX/cdsp_dtbs.elf",
             "qcom/x1e80100/HONOR/MRO-XXX/qcadsp8380.mbn",
+            "qcom/x1e80100/HONOR/MRO-XXX/qccdsp8380.mbn",
             "qcom/x1e80100/HONOR/MRO-XXX/qcdxkmsuc8380.mbn",
             "qcom/x1e80100/HONOR/MRO-XXX/qcvss8380.mbn"
           ],
@@ -913,7 +915,9 @@
             "qcom/glymur/hp/omnibook-x16/qccdsp8480.mbn"
           ],
           "huawei-matebook-e-go-firmware": [
-            "qcom/sc8280xp/HUAWEI/gaokun3/qcadsp8280.mbn"
+            "qcom/sc8280xp/HUAWEI/gaokun3/qcadsp8280.mbn",
+            "qcom/sc8280xp/HUAWEI/gaokun3/qccdsp8280.mbn",
+            "qcom/sc8280xp/HUAWEI/gaokun3/qcdxkmsuc8280.mbn"
           ],
           "lenovo-ideacentre-mini-x-firmware": [
             "qcom/x1e80100/LENOVO/91B6/adsp_dtbs.elf",
@@ -1118,6 +1122,23 @@
             "qcom/sc8280xp/MICROSOFT/SurfacePro9/qccdsp8280.mbn",
             "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcdxkmsuc8280.mbn"
           ],
+          "microsoft-windows-dev-kit-2023-firmware": [
+            "qcom/sc8280xp/microsoft/blackrock/qcadsp8280.mbn",
+            "qcom/sc8280xp/microsoft/blackrock/qccdsp8280.mbn",
+            "qcom/sc8280xp/microsoft/blackrock/qcdxkmsuc8280.mbn"
+          ],
+          "qualcomm-snapdragon-dev-kit-firmware": [
+            "qcom/x1e80100/Thundercomm/DEVKIT/adsp_dtbs.elf",
+            "qcom/x1e80100/Thundercomm/DEVKIT/adspr.jsn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/adsps.jsn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/adspua.jsn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/battmgr.jsn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/cdsp_dtbs.elf",
+            "qcom/x1e80100/Thundercomm/DEVKIT/cdspr.jsn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/qcadsp8380.mbn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/qccdsp8380.mbn",
+            "qcom/x1e80100/Thundercomm/DEVKIT/qcdxkmsuc8380.mbn"
+          ],
           "samsung-galaxy-book4-edge-15-firmware": [
             "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
             "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adspr.jsn",
@@ -1159,8 +1180,8 @@
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 43,
-      "pr": 3,
+      "edge": 45,
+      "pr": 1,
       "carry": 1,
       "needs-deviceTree": 29,
       "needs-ids": 2,
@@ -1177,8 +1198,8 @@
         "omarchy": 54,
         "fromUpstream": 19,
         "added": 35,
-        "pull": 0,
-        "available": 3,
+        "pull": 1,
+        "available": 2,
         "upstream": 19,
         "channels": {
           "stable": 19,
@@ -1244,9 +1265,10 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "asus-vivobook-s14-s3407qa"
+          ],
           "available": [
-            "asus-vivobook-s14-s3407qa",
             "asus-ascent-qn10",
             "humain-horizon"
           ]
@@ -1322,25 +1344,25 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [
-            "hp-probook-4-g1q"
+            "asus-vivobook-s14-s3407qa"
           ],
           "available": [
-            "asus-vivobook-s14-s3407qa",
-            "asus-ascent-qn10"
+            "asus-ascent-qn10",
+            "hp-probook-4-g1q"
           ]
         }
       },
       "firmware": {
-        "omarchy": 47,
+        "omarchy": 49,
         "fromUpstream": 1,
-        "added": 46,
-        "pull": 2,
+        "added": 48,
+        "pull": 0,
         "available": 2,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 47
+          "edge": 49
         },
         "models": {
           "fromUpstream": [
@@ -1366,6 +1388,7 @@
             "dell-latitude-5455",
             "dell-latitude-7455",
             "dell-xps-13-9345",
+            "honor-magicbook-art-14-snapdragon",
             "hp-elitebook-6-g1q",
             "hp-elitebook-ultra-g1q",
             "hp-omnibook-3-14-hz0",
@@ -1390,14 +1413,12 @@
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
+            "qualcomm-snapdragon-dev-kit-for-windows",
             "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "honor-magicbook-art-14-snapdragon",
-            "qualcomm-snapdragon-dev-kit-for-windows"
-          ],
+          "pull": [],
           "available": [
             "asus-vivobook-14-x1407qa",
             "hp-omnibook-5-14-he1"
@@ -1405,10 +1426,10 @@
         }
       },
       "all": {
-        "omarchy": 44,
+        "omarchy": 46,
         "fromUpstream": 1,
-        "added": 43,
-        "pull": 3,
+        "added": 45,
+        "pull": 1,
         "available": 1,
         "upstream": 1,
         "models": {
@@ -1434,6 +1455,7 @@
             "dell-latitude-5455",
             "dell-latitude-7455",
             "dell-xps-13-9345",
+            "honor-magicbook-art-14-snapdragon",
             "hp-elitebook-6-g1q",
             "hp-elitebook-ultra-g1q",
             "hp-omnibook-3-14-hz0",
@@ -1456,17 +1478,16 @@
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
+            "qualcomm-snapdragon-dev-kit-for-windows",
             "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [
-            "honor-magicbook-art-14-snapdragon",
-            "hp-probook-4-g1q",
-            "qualcomm-snapdragon-dev-kit-for-windows"
+            "asus-vivobook-s14-s3407qa"
           ],
           "available": [
-            "asus-vivobook-s14-s3407qa"
+            "hp-probook-4-g1q"
           ]
         }
       }
@@ -2970,9 +2991,17 @@
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2315",
+          "number": 2315,
+          "title": "linux-omarchy-aarch64: add the ASUS Vivobook S14 (S3407QA)"
+        },
         "ids": null,
-        "idsPull": null,
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2315",
+          "number": 2315,
+          "title": "linux-omarchy-aarch64: add the ASUS Vivobook S14 (S3407QA)"
+        },
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -2981,10 +3010,10 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "pr",
         "pieces": {
-          "deviceTree": "elsewhere",
-          "ids": "elsewhere",
+          "deviceTree": "pr",
+          "ids": "pr",
           "firmware": "edge"
         },
         "missing": [
@@ -3021,8 +3050,16 @@
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2315",
+            "number": 2315,
+            "title": "linux-omarchy-aarch64: add the ASUS Vivobook S14 (S3407QA)"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2315",
+            "number": 2315,
+            "title": "linux-omarchy-aarch64: add the ASUS Vivobook S14 (S3407QA)"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
@@ -5233,25 +5270,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2313",
-          "number": 2313,
-          "title": "Add the Honor MagicBook Art 14's compute DSP and the Snapdragon Dev Kit's firmware"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "honor-magicbook-art-14-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -6304,11 +6337,7 @@
         "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2312",
-          "number": 2312,
-          "title": "linux-omarchy-aarch64: give the HP ProBook 4 G1q hardware IDs"
-        },
+        "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -6317,10 +6346,10 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "carry",
         "pieces": {
           "deviceTree": "edge",
-          "ids": "pr",
+          "ids": "elsewhere",
           "firmware": "edge"
         },
         "missing": [
@@ -6356,11 +6385,7 @@
           "treeChannel": "edge",
           "idsChannel": null,
           "treePull": null,
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2312",
-            "number": 2312,
-            "title": "linux-omarchy-aarch64: give the HP ProBook 4 G1q hardware IDs"
-          },
+          "idsPull": null,
           "deviceTree": {
             "file": "x1p42100-hp-elitebook-6-g1q.dts",
             "firstRelease": null,
@@ -10436,25 +10461,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2313",
-          "number": 2313,
-          "title": "Add the Honor MagicBook Art 14's compute DSP and the Snapdragon Dev Kit's firmware"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "qualcomm-snapdragon-dev-kit-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -11029,25 +11050,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2314",
-          "number": 2314,
-          "title": "Add the rest of the MateBook E Go's and Windows Dev Kit 2023's firmware"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "huawei-matebook-e-go-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
@@ -11393,25 +11410,21 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2314",
-          "number": 2314,
-          "title": "Add the rest of the MateBook E Go's and Windows Dev Kit 2023's firmware"
-        }
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "microsoft-windows-dev-kit-2023-firmware"
+        ],
+        "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
           "deviceTree": "stable",
           "ids": "stable",
-          "firmware": "pr"
+          "firmware": "edge"
         },
-        "missing": [
-          "firmware"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "released",
