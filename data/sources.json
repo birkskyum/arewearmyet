@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-08T03:43:36.920Z",
+  "collected": "2026-11-08T05:24:44.415Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4666,7 +4666,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-35",
+        "kernel": "7.3-37",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -4716,6 +4716,7 @@
           "x1p42100-acer-aspire-16-ai.dts",
           "x1p42100-acer-swift-go14-01.dts",
           "x1p42100-asus-proart-pz13.dts",
+          "x1p42100-asus-vivobook-s14.dts",
           "x1p42100-asus-vivobook-s15.dts",
           "x1p42100-asus-vivobook-s16.dts",
           "x1p42100-asus-vivobook-s16-lcd.dts",
@@ -4808,12 +4809,14 @@
           "x1p42100-acer-aspire-14-ai.json",
           "x1p42100-acer-aspire-16-ai.json",
           "x1p42100-asus-proart-pz13.json",
+          "x1p42100-asus-vivobook-s14.json",
           "x1p42100-asus-vivobook-s16-lcd.json",
           "x1p42100-asus-vivobook-s16.json",
           "x1p42100-asus-zenbook-14-ux3480qa.json",
           "x1p42100-hp-omnibook-3-16.json",
           "x1p42100-hp-omnibook-3-oled.json",
           "x1p42100-hp-omnibook-5.json",
+          "x1p42100-hp-probook-4-g1q.json",
           "x1p42100-microsoft-surface-laptop-13.json",
           "x1p42100-microsoft-surface-pro-12in.json",
           "x1p42100-samsung-galaxy-book4-edge-15.json",
@@ -5757,6 +5760,15 @@
           "qcom,x1p42100"
         ],
         "patch": "2792-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book4-Edge-15.patch"
+      },
+      {
+        "file": "x1p42100-asus-vivobook-s14.dts",
+        "model": "ASUS Vivobook S14 (S3407QA)",
+        "compatible": [
+          "asus,vivobook-s14-s3407qa",
+          "qcom,x1p42100"
+        ],
+        "patch": "2796-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-S3407QA.patch"
       }
     ],
     "carriedIds": [
@@ -5982,6 +5994,15 @@
         ]
       },
       {
+        "file": "x1p42100-asus-vivobook-s14.json",
+        "name": "ASUS Vivobook S14 S3407QA",
+        "compatible": "asus,vivobook-s14-s3407qa",
+        "hwids": [
+          "1deb1b04-b39b-510c-9eea-610da0691489",
+          "c9e04d56-5a9e-596e-bc93-0c2a3a434508"
+        ]
+      },
+      {
         "file": "x1p42100-asus-vivobook-s16-lcd.json",
         "name": "ASUS Vivobook S 16 S3607QA (LCD)",
         "compatible": "asus,vivobook-s16-s3607qa-lcd",
@@ -6148,30 +6169,6 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.07.483/omarchy-edge-2026.11.07.483-aarch64.iso",
       "kernel": "7.3.0-26-omarchy"
     },
-    "pulls": [
-      {
-        "number": 2315,
-        "title": "linux-omarchy-aarch64: add the ASUS Vivobook S14 (S3407QA)",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2315",
-        "draft": true,
-        "deviceTrees": [
-          {
-            "file": "x1p42100-asus-vivobook-s14.dts",
-            "model": "ASUS Vivobook S14 (S3407QA)",
-            "compatible": [
-              "asus,vivobook-s14-s3407qa",
-              "qcom,x1p42100"
-            ]
-          }
-        ],
-        "ids": [
-          {
-            "file": "x1p42100-asus-vivobook-s14.json",
-            "compatible": "asus,vivobook-s14-s3407qa"
-          }
-        ],
-        "firmware": []
-      }
-    ]
+    "pulls": []
   }
 }

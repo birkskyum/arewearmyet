@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-08T03:43:36.920Z",
+  "collected": "2026-11-08T05:24:44.415Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-35",
+    "kernel": "7.3-37",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-35",
+        "kernel": "7.3-37",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -446,6 +446,7 @@
           "x1p42100-acer-aspire-16-ai.dts",
           "x1p42100-acer-swift-go14-01.dts",
           "x1p42100-asus-proart-pz13.dts",
+          "x1p42100-asus-vivobook-s14.dts",
           "x1p42100-asus-vivobook-s15.dts",
           "x1p42100-asus-vivobook-s16.dts",
           "x1p42100-asus-vivobook-s16-lcd.dts",
@@ -538,12 +539,14 @@
           "x1p42100-acer-aspire-14-ai.json",
           "x1p42100-acer-aspire-16-ai.json",
           "x1p42100-asus-proart-pz13.json",
+          "x1p42100-asus-vivobook-s14.json",
           "x1p42100-asus-vivobook-s16-lcd.json",
           "x1p42100-asus-vivobook-s16.json",
           "x1p42100-asus-zenbook-14-ux3480qa.json",
           "x1p42100-hp-omnibook-3-16.json",
           "x1p42100-hp-omnibook-3-oled.json",
           "x1p42100-hp-omnibook-5.json",
+          "x1p42100-hp-probook-4-g1q.json",
           "x1p42100-microsoft-surface-laptop-13.json",
           "x1p42100-microsoft-surface-pro-12in.json",
           "x1p42100-samsung-galaxy-book4-edge-15.json",
@@ -1168,9 +1171,9 @@
     "nvidiaWorks": 2,
     "nvidiaExpected": 15,
     "works": 2,
-    "should": 41,
+    "should": 43,
     "problems": 8,
-    "notYet": 35,
+    "notYet": 33,
     "deviceTree": 57,
     "ids": 55,
     "firmware": 51,
@@ -1180,9 +1183,9 @@
     "outOfBox": {
       "stable": 1,
       "rc": 0,
-      "edge": 45,
-      "pr": 1,
-      "carry": 1,
+      "edge": 47,
+      "pr": 0,
+      "carry": 0,
       "needs-deviceTree": 29,
       "needs-ids": 2,
       "needs-firmware": 7
@@ -1195,16 +1198,16 @@
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 54,
+        "omarchy": 55,
         "fromUpstream": 19,
-        "added": 35,
-        "pull": 1,
+        "added": 36,
+        "pull": 0,
         "available": 2,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 54
+          "edge": 55
         },
         "models": {
           "fromUpstream": [
@@ -1237,6 +1240,7 @@
             "anduril-bluechip",
             "asus-proart-pz13-ht5306",
             "asus-vivobook-16-x1607qa",
+            "asus-vivobook-s14-s3407qa",
             "asus-vivobook-s16-s3607qa",
             "asus-zenbook-14-ux3480qa",
             "asus-zenbook-a14-ux3407na",
@@ -1265,9 +1269,7 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "asus-vivobook-s14-s3407qa"
-          ],
+          "pull": [],
           "available": [
             "asus-ascent-qn10",
             "humain-horizon"
@@ -1275,16 +1277,16 @@
         }
       },
       "ids": {
-        "omarchy": 52,
+        "omarchy": 54,
         "fromUpstream": 28,
-        "added": 24,
-        "pull": 1,
-        "available": 2,
+        "added": 26,
+        "pull": 0,
+        "available": 1,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 52
+          "edge": 54
         },
         "models": {
           "fromUpstream": [
@@ -1324,6 +1326,7 @@
             "anduril-bluechip",
             "asus-proart-pz13-ht5306",
             "asus-vivobook-16-x1607qa",
+            "asus-vivobook-s14-s3407qa",
             "asus-vivobook-s16-s3607qa",
             "asus-zenbook-14-ux3480qa",
             "dell-inspiron-14-5441",
@@ -1331,6 +1334,7 @@
             "hp-omnibook-3-16-bz0",
             "hp-omnibook-5-14-he0",
             "hp-omnibook-5-16-bf0",
+            "hp-probook-4-g1q",
             "hp-omnibook-5-16-bf1",
             "hp-omnibook-ultra-14-kg0",
             "hp-omnibook-x-16-cp",
@@ -1343,12 +1347,9 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "asus-vivobook-s14-s3407qa"
-          ],
+          "pull": [],
           "available": [
-            "asus-ascent-qn10",
-            "hp-probook-4-g1q"
+            "asus-ascent-qn10"
           ]
         }
       },
@@ -1426,11 +1427,11 @@
         }
       },
       "all": {
-        "omarchy": 46,
+        "omarchy": 48,
         "fromUpstream": 1,
-        "added": 45,
-        "pull": 1,
-        "available": 1,
+        "added": 47,
+        "pull": 0,
+        "available": 0,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1445,6 +1446,7 @@
             "asus-proart-pz13-ht5306",
             "asus-vivobook-16-x1607qa",
             "asus-vivobook-s15-s5507",
+            "asus-vivobook-s14-s3407qa",
             "asus-vivobook-s16-s3607qa",
             "asus-zenbook-14-ux3480qa",
             "asus-zenbook-a14-ux3407",
@@ -1463,6 +1465,7 @@
             "hp-omnibook-5-14-he0",
             "hp-omnibook-5-16-bf0",
             "hp-omnibook-x-14-fe",
+            "hp-probook-4-g1q",
             "hp-elitebook-x-g2q",
             "hp-omnibook-5-16-bf1",
             "hp-omnibook-ultra-14-kg0",
@@ -1483,12 +1486,8 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "asus-vivobook-s14-s3407qa"
-          ],
-          "available": [
-            "hp-probook-4-g1q"
-          ]
+          "pull": [],
+          "available": []
         }
       }
     }
@@ -2986,22 +2985,14 @@
         "https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "should",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2315",
-          "number": 2315,
-          "title": "linux-omarchy-aarch64: add the ASUS Vivobook S14 (S3407QA)"
-        },
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2315",
-          "number": 2315,
-          "title": "linux-omarchy-aarch64: add the ASUS Vivobook S14 (S3407QA)"
-        },
+        "deviceTree": "edge",
+        "deviceTreePull": null,
+        "ids": "edge",
+        "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -3010,16 +3001,13 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "pr",
+        "state": "edge",
         "pieces": {
-          "deviceTree": "pr",
-          "ids": "pr",
+          "deviceTree": "edge",
+          "ids": "edge",
           "firmware": "edge"
         },
-        "missing": [
-          "deviceTree",
-          "ids"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -3047,24 +3035,22 @@
         {
           "chip": "X1-26-100",
           "compatible": "asus,vivobook-s14-s3407qa",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2315",
-            "number": 2315,
-            "title": "linux-omarchy-aarch64: add the ASUS Vivobook S14 (S3407QA)"
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "x1p42100-asus-vivobook-s14.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2796-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-S3407QA.patch"
           },
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2315",
-            "number": 2315,
-            "title": "linux-omarchy-aarch64: add the ASUS Vivobook S14 (S3407QA)"
-          },
-          "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -6330,13 +6316,13 @@
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-probook-4-g1q"
       ],
       "notes": "HP builds it on the EliteBook 6 G1q's mainboard (board 8E06, driver pack sp174046), so it takes that tree and firmware. Owners boot it with the OmniBook X 14's tree; nobody has tried the EliteBook's yet.",
-      "outcome": "manual",
+      "outcome": "should",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
@@ -6346,15 +6332,13 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "carry",
+        "state": "edge",
         "pieces": {
           "deviceTree": "edge",
-          "ids": "elsewhere",
+          "ids": "edge",
           "firmware": "edge"
         },
-        "missing": [
-          "ids"
-        ]
+        "missing": []
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -6381,9 +6365,9 @@
           "compatible": "hp,elitebook-6-g1q",
           "borrowed": true,
           "ids": [],
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
+          "idsChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -6395,7 +6379,7 @@
           },
           "firmwareNeeded": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],
