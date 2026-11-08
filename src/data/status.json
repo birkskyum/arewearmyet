@@ -1174,27 +1174,27 @@
     "should": 43,
     "problems": 8,
     "notYet": 33,
-    "deviceTree": 57,
-    "ids": 55,
+    "deviceTree": 58,
+    "ids": 56,
     "firmware": 51,
     "googlebooks": 2,
     "acpi": 42,
-    "acpiWanted": 29,
+    "acpiWanted": 28,
     "outOfBox": {
       "stable": 1,
       "rc": 0,
       "edge": 47,
       "pr": 0,
-      "carry": 0,
-      "needs-deviceTree": 29,
+      "carry": 1,
+      "needs-deviceTree": 28,
       "needs-ids": 2,
       "needs-firmware": 7
     },
     "machine": {
       "team": 7,
-      "omarchy": 11,
+      "omarchy": 12,
       "linux": 37,
-      "nobody": 31
+      "nobody": 30
     },
     "byPiece": {
       "deviceTree": {
@@ -1202,7 +1202,7 @@
         "fromUpstream": 19,
         "added": 36,
         "pull": 0,
-        "available": 2,
+        "available": 3,
         "upstream": 19,
         "channels": {
           "stable": 19,
@@ -1271,6 +1271,7 @@
           ],
           "pull": [],
           "available": [
+            "asus-vivobook-14-x1407qa",
             "asus-ascent-qn10",
             "humain-horizon"
           ]
@@ -1281,7 +1282,7 @@
         "fromUpstream": 28,
         "added": 26,
         "pull": 0,
-        "available": 1,
+        "available": 2,
         "upstream": 28,
         "channels": {
           "stable": 28,
@@ -1349,6 +1350,7 @@
           ],
           "pull": [],
           "available": [
+            "asus-vivobook-14-x1407qa",
             "asus-ascent-qn10"
           ]
         }
@@ -1431,7 +1433,7 @@
         "fromUpstream": 1,
         "added": 47,
         "pull": 0,
-        "available": 0,
+        "available": 1,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1487,7 +1489,9 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": []
+          "available": [
+            "asus-vivobook-14-x1407qa"
+          ]
         }
       }
     }
@@ -2611,10 +2615,10 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-14-x1407q/techspec/",
         "https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html"
       ],
-      "notes": "Owners boot it with the Vivobook S 15's or a patched Zenbook A14 device tree. Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so the X1607QA's tree is the closest start, with its own IPS panel and PWM backlight added.",
+      "notes": "Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so its tree builds on the X1607QA's, with its IPS panel and PWM backlight. An owner's live USB reached the desktop on the Zenbook A14 tree, and that owner can test boot images.",
       "outcome": "none",
       "reports": [],
-      "machine": "nobody",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -2626,10 +2630,10 @@
         "firmwarePull": null
       },
       "outOfBox": {
-        "state": "needs-deviceTree",
+        "state": "carry",
         "pieces": {
-          "deviceTree": "none",
-          "ids": "none",
+          "deviceTree": "elsewhere",
+          "ids": "elsewhere",
           "firmware": "elsewhere"
         },
         "missing": [
@@ -2639,13 +2643,13 @@
         ]
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2340",
         "devicetreeArchive": null,
-        "ids": "missing",
-        "idsCollected": null,
+        "ids": "collected",
+        "idsCollected": "https://github.com/birkskyum/arewearmyet/issues/7",
         "idsStubble": null,
         "firmware": "download",
         "firmwareMissing": [],
@@ -2654,7 +2658,9 @@
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
-        "firmwareFolders": [],
+        "firmwareFolders": [
+          "qcom/x1e80100/ASUSTeK/vivobook-16"
+        ],
         "acpi": "firmware",
         "acpiUrls": [
           "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-vivobook-14-x1407qa"
@@ -2662,6 +2668,8 @@
       },
       "variants": [
         {
+          "chip": "X1-26-100",
+          "compatible": "asus,vivobook-14-x1407qa",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
@@ -7360,7 +7368,7 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/hamoa-lenovo-ideacentre-mini-01q8x10.dts",
         "https://www.windowscentral.com/hardware/lenovo/lenovo-ideacentre-mini-x-review"
       ],
-      "notes": null,
+      "notes": "Jens Glathe's posted series splits the tree and adds the X1-26-100 (Purwa) model, which he runs on Ubuntu 26.10 and can test. systemd has the Purwa model's hardware IDs. The Purwa model needs its own GPU and DSP firmware, under qcom/x1p42100/LENOVO/91B6.",
       "outcome": "manual",
       "reports": [],
       "machine": "linux",
@@ -7388,7 +7396,7 @@
       "upstream": {
         "deviceTree": "released",
         "firstRelease": "v7.1",
-        "devicetreePosted": null,
+        "devicetreePosted": "https://lore.kernel.org/all/20260905-x1-ideacentre-mini-prettify-v1-0-9a87882973bb@oldschoolsolutions.biz/",
         "devicetreeOutOfTree": null,
         "devicetreeArchive": null,
         "ids": "listed",
@@ -7411,8 +7419,8 @@
       },
       "variants": [
         {
-          "model": "X Elite",
-          "chip": "X1E-78-100",
+          "model": "X Plus",
+          "chip": "X1P-64-100",
           "compatible": "lenovo,ideacentre-mini-01q8x10",
           "computed": "manual",
           "treeChannel": "stable",
@@ -7440,8 +7448,8 @@
           "reports": []
         },
         {
-          "model": "X Plus",
-          "chip": "X1P-42-100",
+          "model": "Snapdragon X",
+          "chip": "X1-26-100",
           "compatible": "lenovo,purwa-ideacentre-mini-01q8x10",
           "computed": "none",
           "treeChannel": null,

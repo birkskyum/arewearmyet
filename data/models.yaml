@@ -226,8 +226,15 @@ models:
     released: "2025-01"
     chips: ["X1-26-100"]
     model_numbers: ["X1407QA", "A1407QA"]
+    variants:
+      - { chip: "X1-26-100", compatible: "asus,vivobook-14-x1407qa" }
+    firmware: ["qcom/x1e80100/ASUSTeK/vivobook-16"]
     acpi: ["firmware/asus-vivobook-14-x1407qa"]
-    notes: "Owners boot it with the Vivobook S 15's or a patched Zenbook A14 device tree. Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so the X1607QA's tree is the closest start, with its own IPS panel and PWM backlight added."
+    devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2340"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/birkskyum/omarchy-pkgs/68593263/pkgbuilds/linux-omarchy-aarch64/2801-arm64-dts-qcom-Add-the-ASUS-Vivobook-14-X1407QA.patch#x126100-asus-vivobook-14.dts"
+    ids_collected: "https://github.com/birkskyum/arewearmyet/issues/7"
+    notes: "Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so its tree builds on the X1607QA's, with its IPS panel and PWM backlight. An owner's live USB reached the desktop on the Zenbook A14 tree, and that owner can test boot images."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-14-x1407q/techspec/
       - https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html
@@ -963,10 +970,12 @@ models:
     chips: ["X1P-64-100", "X1-26-100"]
     model_numbers: ["01Q8X10", "91B6"]
     variants:
-      - { model: "X Elite", chip: "X1E-78-100", compatible: "lenovo,ideacentre-mini-01q8x10" }
-      - { model: "X Plus", chip: "X1P-42-100", compatible: "lenovo,purwa-ideacentre-mini-01q8x10" }
+      - { model: "X Plus", chip: "X1P-64-100", compatible: "lenovo,ideacentre-mini-01q8x10" }
+      - { model: "Snapdragon X", chip: "X1-26-100", compatible: "lenovo,purwa-ideacentre-mini-01q8x10" }
     firmware: ["qcom/x1e80100/LENOVO/91B6"]
     acpi: ["lenovo-ideacentre-01q8x10"]
+    devicetree_posted: "https://lore.kernel.org/all/20260905-x1-ideacentre-mini-prettify-v1-0-9a87882973bb@oldschoolsolutions.biz/"
+    notes: "Jens Glathe's posted series splits the tree and adds the X1-26-100 (Purwa) model, which he runs on Ubuntu 26.10 and can test. systemd has the Purwa model's hardware IDs. The Purwa model needs its own GPU and DSP firmware, under qcom/x1p42100/LENOVO/91B6."
     sources:
       - https://psref.lenovo.com/Product/IdeaCentre/IdeaCentre_Mini_01Q8X10
       - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/hamoa-lenovo-ideacentre-mini-01q8x10.dts

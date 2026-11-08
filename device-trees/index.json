@@ -52,6 +52,14 @@
       "x1-asus-proart-pz13.dtsi"
     ]
   },
+  "asus-vivobook-14-x1407qa": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2340",
+    "files": [
+      "SOURCE.md",
+      "x126100-asus-vivobook-14.dts"
+    ]
+  },
   "asus-vivobook-16-x1607qa": {
     "state": "out-of-tree",
     "source": "https://github.com/jglathe/linux_ms_dev_kit/blob/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100-asus-vivobook-16.dts",
@@ -195,6 +203,13 @@
       "SOURCE.md",
       "glymur-crd.dts",
       "glymur-crd.dtsi"
+    ]
+  },
+  "lenovo-ideacentre-mini-x-01q8x10": {
+    "state": "posted",
+    "source": "https://lore.kernel.org/all/20260905-x1-ideacentre-mini-prettify-v1-0-9a87882973bb@oldschoolsolutions.biz/",
+    "files": [
+      "series.mbox"
     ]
   },
   "lenovo-ideapad-5x-2-in-1-14q8x9": {

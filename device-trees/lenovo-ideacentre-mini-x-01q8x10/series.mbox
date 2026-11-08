@@ -1,0 +1,94 @@
+From patchwork Thu Jul 18 20:07:14 2013
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Patchwork-Submitter: David Brown <davidb@codeaurora.org>
+X-Patchwork-Id: 2829852
+Return-Path: <linux-arm-msm-owner@kernel.org>
+X-Original-To: patchwork-linux-arm-msm@patchwork.kernel.org
+Delivered-To: patchwork-parsemail@patchwork1.web.kernel.org
+Received: from mail.kernel.org (mail.kernel.org [198.145.19.201])
+	by patchwork1.web.kernel.org (Postfix) with ESMTP id F0D209F4D4
+	for <patchwork-linux-arm-msm@patchwork.kernel.org>;
+	Thu, 18 Jul 2013 20:08:13 +0000 (UTC)
+Received: from mail.kernel.org (localhost [127.0.0.1])
+	by mail.kernel.org (Postfix) with ESMTP id 8DF28202C7
+	for <patchwork-linux-arm-msm@patchwork.kernel.org>;
+	Thu, 18 Jul 2013 20:08:12 +0000 (UTC)
+Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
+	by mail.kernel.org (Postfix) with ESMTP id 2B37A202A7
+	for <patchwork-linux-arm-msm@patchwork.kernel.org>;
+	Thu, 18 Jul 2013 20:08:11 +0000 (UTC)
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S934252Ab3GRUHo (ORCPT
+	<rfc822;patchwork-linux-arm-msm@patchwork.kernel.org>);
+	Thu, 18 Jul 2013 16:07:44 -0400
+Received: from smtp.codeaurora.org ([198.145.11.231]:49715 "EHLO
+	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759102Ab3GRUHk (ORCPT
+	<rfc822;linux-arm-msm@vger.kernel.org>);
+	Thu, 18 Jul 2013 16:07:40 -0400
+Received: from smtp.codeaurora.org (localhost [127.0.0.1])
+	by smtp.codeaurora.org (Postfix) with ESMTP id 7BE9213F116;
+	Thu, 18 Jul 2013 20:07:40 +0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 486)
+	id 6DCFB13F11B; Thu, 18 Jul 2013 20:07:40 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on mail.kernel.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-7.2 required=5.0 tests=BAYES_00, RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD, UNPARSEABLE_RELAY autolearn=ham version=3.3.1
+Received: from codeaurora.org (i-global252.qualcomm.com [199.106.103.252])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: davidb@smtp.codeaurora.org)
+	by smtp.codeaurora.org (Postfix) with ESMTPSA id B239013F116;
+	Thu, 18 Jul 2013 20:07:39 +0000 (UTC)
+From: David Brown <davidb@codeaurora.org>
+To: Grant Likely <grant.likely@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Cc: Rohit Vaswani <rvaswani@codeaurora.org>,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+	"Bird, Tim" <Tim.Bird@sonymobile.com>,
+	David Brown <davidb@codeaurora.org>
+Subject: [PATCH 2/3] drivers: gpio: msm: Fix the error condition for reading
+	ngpio
+Date: Thu, 18 Jul 2013 13:07:14 -0700
+Message-Id: <1374178035-19943-3-git-send-email-davidb@codeaurora.org>
+X-Mailer: git-send-email 1.8.3.2
+In-Reply-To: <1374178035-19943-1-git-send-email-davidb@codeaurora.org>
+References: <1374178035-19943-1-git-send-email-davidb@codeaurora.org>
+X-Virus-Scanned: ClamAV using ClamSMTP
+Sender: linux-arm-msm-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <linux-arm-msm.vger.kernel.org>
+X-Mailing-List: linux-arm-msm@vger.kernel.org
+X-Virus-Scanned: ClamAV using ClamSMTP
+
+From: Rohit Vaswani <rvaswani@codeaurora.org>
+
+of_property_read_u32 return 0 on success. The check was using a ! to
+return error. Fix the if condition.
+
+Signed-off-by: Rohit Vaswani <rvaswani@codeaurora.org>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Pankaj Jangra  <jangra.pankaj9@gmail.com>
+Cc: "Bird, Tim" <Tim.Bird@sonymobile.com>
+Signed-off-by: David Brown <davidb@codeaurora.org>
+---
+ drivers/gpio/gpio-msm-v2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpio/gpio-msm-v2.c b/drivers/gpio/gpio-msm-v2.c
+index f4491a4..c2fa770 100644
+--- a/drivers/gpio/gpio-msm-v2.c
++++ b/drivers/gpio/gpio-msm-v2.c
+@@ -378,7 +378,7 @@ static int msm_gpio_probe(struct platform_device *pdev)
+ 	int ret, ngpio;
+ 	struct resource *res;
+ 
+-	if (!of_property_read_u32(pdev->dev.of_node, "ngpio", &ngpio)) {
++	if (of_property_read_u32(pdev->dev.of_node, "ngpio", &ngpio)) {
+ 		dev_err(&pdev->dev, "%s: ngpio property missing\n", __func__);
+ 		return -EINVAL;
+ 	}
