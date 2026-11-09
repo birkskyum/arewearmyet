@@ -60,7 +60,7 @@ const CASES = [
         <li>Download <code class={INLINE}>OmarchyArmInstaller.exe</code> from the <a class={LINK} href={INSTALLER}>installer's latest release</a>. It's a pre-release, so expect rough edges.</li>
         <li>Right-click it and choose Run as administrator, which it needs to read the firmware tables.</li>
         <li>Choose Share a hardware report. If Linux doesn't know the laptop yet, the installer offers it by itself.</li>
-        <li>Choose Collect the report. The zip lands in Downloads, next to a list of what was taken out of it.</li>
+        <li>Choose Collect the report. The zip lands in Downloads, next to a list of what was taken out of it. Unless you clear the box above the button, the installer then sends the firmware files in the laptop's drivers to this site's private store. They are used to ask the maker to put them in linux-firmware, and are never published.</li>
         <li>Choose Open the form. The model and its hardware IDs are filled in already. Drag the zip in, add a link to the vendor's driver page if you know it, and submit. Reports are public in <a class={LINK} href={REPORTS}>omarchy-hardware-reports</a>.</li>
       </ol>
       <p class="mt-4">If you can test boot images on the laptop later, say so in the report. An owner who can test is what gets a device tree finished.</p>
