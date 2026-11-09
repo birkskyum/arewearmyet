@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-09T05:26:38.702Z",
+  "collected": "2026-11-09T21:17:16.286Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -26,7 +26,7 @@
     "v261",
     "v262"
   ],
-  "linuxNext": "20261105",
+  "linuxNext": "20261109",
   "deviceTrees": [
     {
       "file": "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -3116,7 +3116,10 @@
         "b32b82ee-79c0-5bf0-8081-e964846b90ba",
         "991bf0a2-7727-5a6f-aeb5-8a43df7fb9a0",
         "21f00890-b6f1-5e16-981a-72929032baeb",
-        "83aa43c5-87f7-54af-81a8-b6a8fcfeec2d"
+        "83aa43c5-87f7-54af-81a8-b6a8fcfeec2d",
+        "8fc369d5-d5a6-54b7-84a2-2c26ca106430",
+        "0569ad99-d9c0-586c-bd74-3871407fe316",
+        "8f53b329-2c93-50a5-9fef-2602b9f58565"
       ]
     },
     {
@@ -4182,6 +4185,42 @@
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
     },
     {
+      "folder": "hardware-reports/samsung-electronics-co-ltd/galaxy-book4-edge/a220b319",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/34",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "2fdcae6fc67926220ee5947edb53fe7912939bbe",
+      "dir": "reports/samsung-electronics-co-ltd/galaxy-book4-edge/a220b319",
+      "pull": {
+        "number": 34,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
+      "folder": "hardware-reports/dell-inc/inspiron-14-5441",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/32",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "2e11d41568b942c8c619d143d89747e132404ad4",
+      "dir": "reports/dell-inc/inspiron-14-5441/c4e26892",
+      "pull": {
+        "number": 32,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
+      "folder": "hardware-reports/hp/hp-omnibook-5-laptop-14-he0xxx",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/30",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "a38ea3d9bc063818aded48ad43f02860365beead",
+      "dir": "reports/hp/hp-omnibook-5-laptop-14-he0xxx/97863638",
+      "pull": {
+        "number": 30,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
       "folder": "hardware-reports/microsoft-corporation/microsoft-surface-laptop-7th-edition",
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/28",
       "repo": "turbineBMW/omarchy-hardware-reports",
@@ -4714,7 +4753,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-41",
+        "kernel": "7.3-42",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -6013,7 +6052,10 @@
           "b32b82ee-79c0-5bf0-8081-e964846b90ba",
           "991bf0a2-7727-5a6f-aeb5-8a43df7fb9a0",
           "21f00890-b6f1-5e16-981a-72929032baeb",
-          "83aa43c5-87f7-54af-81a8-b6a8fcfeec2d"
+          "83aa43c5-87f7-54af-81a8-b6a8fcfeec2d",
+          "8fc369d5-d5a6-54b7-84a2-2c26ca106430",
+          "0569ad99-d9c0-586c-bd74-3871407fe316",
+          "8f53b329-2c93-50a5-9fef-2602b9f58565"
         ]
       },
       {

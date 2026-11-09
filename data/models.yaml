@@ -234,7 +234,7 @@ models:
     devicetree_files:
       - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/6c50f70430edbe3a9854df5834a2946afb34570e/pkgbuilds/linux-omarchy-aarch64/2801-arm64-dts-qcom-Add-the-ASUS-Vivobook-14-X1407QA.patch#x126100-asus-vivobook-14.dts"
     ids_collected: "https://github.com/birkskyum/arewearmyet/issues/7"
-    notes: "Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so its tree builds on the X1607QA's, with its IPS panel and PWM backlight. An owner's live USB reached the desktop on the Zenbook A14 tree, and that owner can test its own tree, in linux-omarchy 7.3-40 on edge."
+    notes: "Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so its tree builds on the X1607QA's, with its IPS panel and PWM backlight. An owner's live USB reached the desktop on the Zenbook A14 tree, and that owner can test its own tree, in linux-omarchy 7.3-40 on edge. A second owner runs Omarchy on a tree made from the Zenbook A14 LCD's: display, keyboard, touchpad, battery, video decode and both cameras work, Wi-Fi with a borrowed board data file, suspend as s2idle only, and only the left speaker plays. That tree and the owner's notes are kept in data/device-trees/asus-vivobook-14-x1407qa."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-14-x1407q/techspec/
       - https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html
@@ -496,7 +496,8 @@ models:
     variants:
       - { chip: "X1P-42-100" }
       - { chip: "X1P-64-100", compatible: "dell,inspiron-14-plus-5441" }
-    acpi: ["dell-inspiron-14-5441-x1p-42-100", "dell-inspron-14-5441-x1p-64-100"]
+    acpi: ["dell-inspiron-14-5441-x1p-42-100", "dell-inspron-14-5441-x1p-64-100", "hardware-reports/dell-inc/inspiron-14-5441"]
+    notes: "An owner sent a hardware report of the X1P-42-100 model (SKU 0C84). None of its hardware IDs are among the X1P-64-100's that Omarchy carries, and it has no device tree yet."
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260508050828.7442-1-adamszyma@wp.pl/"
     ids_collected: "https://github.com/aarch64-laptops/build/pull/170#issuecomment-6676285882"
     sources:
@@ -747,7 +748,7 @@ models:
     model_numbers: ["14-he0xxx", "14-he0"]
     variants:
       - { chip: "X1P-42-100", compatible: "hp,omnibook-5" }
-    acpi: ["hp-omnibook-5-14-he0xxx"]
+    acpi: ["hp-omnibook-5-14-he0xxx", "hardware-reports/hp/hp-omnibook-5-laptop-14-he0xxx"]
     devicetree_out_of_tree: "https://github.com/jglathe/linux_ms_dev_kit/blob/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-5.dts"
     devicetree_files:
       - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/35e73a004cbe4eaa238b10e43ddd611ebb660868/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-5.dts"
@@ -1092,7 +1093,8 @@ models:
     released: "2025-05"
     chips: ["X1-26-100"]
     model_numbers: ["13C8", "13C9", "13CA"]
-    acpi: ["firmware/lenovo-thinkcentre-neo-50q-qc"]
+    acpi: ["firmware/lenovo-thinkcentre-neo-50q-qc", "hardware-reports/lenovo/13c8cto1ww"]
+    ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/25"
     sources:
       - https://psref.lenovo.com/Product/ThinkCentre/ThinkCentre_neo_50q_QC
       - https://www.xda-developers.com/review-lenovo-thinkcenter-neo-50q-snapdragon/
@@ -1241,7 +1243,7 @@ models:
     model_numbers: ["2036"]
     variants:
       - { compatible: "microsoft,romulus13" }
-    acpi: ["microsoft-surface-romulus13_and_15", "linux-surface/surface_laptop_7_qcom"]
+    acpi: ["microsoft-surface-romulus13_and_15", "linux-surface/surface_laptop_7_qcom", "hardware-reports/microsoft-corporation/microsoft-surface-laptop-7th-edition"]
     reports:
       - { state: "problems", note: "The screen stays dark after install; the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.", checked: "2026-10" }
     sources:
@@ -1442,6 +1444,7 @@ models:
     model_numbers: ["NP960XMA", "NP960XMB", "NP964XMA", "NT960XMA", "NT960XMB"]
     variants:
       - { compatible: "samsung,galaxy-book4-edge-16" }
+    acpi: ["hardware-reports/samsung-electronics-co-ltd/galaxy-book4-edge/a220b319"]
     ids_collected: "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/x1e84100-samsung-galaxy-book4-edge-16.json"
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
     sources:

@@ -9,7 +9,7 @@ values and can differ from a running machine where the firmware fills fields in 
 dumps published here first. Each folder's SOURCE.md says where its tables came from. The SoC serial number (SOSN)
 is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. Disassemble a table with `iasl -d`.
 
-67 of 92 models have at least one dump.
+68 of 92 models have at least one dump.
 
 | Model | Dumps |
 | --- | --- |
@@ -35,7 +35,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | ASUS Vivobook S16 (S3607NA) | [firmware/asus-vivobook-s16-s3607na](firmware/asus-vivobook-s16-s3607na) |
 | ASUS Zenbook A14 (X2) | [asus-zenbook-a14-ux3407na](aarch64-laptops/asus-zenbook-a14-ux3407na) |
 | ASUS Zenbook A16 | [asus-zenbook-a16-ux3607oa](aarch64-laptops/asus-zenbook-a16-ux3607oa) |
-| Dell Inspiron 14 5441 | [dell-inspiron-14-5441-x1p-42-100](aarch64-laptops/dell-inspiron-14-5441-x1p-42-100), [dell-inspron-14-5441-x1p-64-100](aarch64-laptops/dell-inspron-14-5441-x1p-64-100) |
+| Dell Inspiron 14 5441 | [dell-inspiron-14-5441-x1p-42-100](aarch64-laptops/dell-inspiron-14-5441-x1p-42-100), [dell-inspron-14-5441-x1p-64-100](aarch64-laptops/dell-inspron-14-5441-x1p-64-100), [hardware-reports/dell-inc/inspiron-14-5441](../reports/dell-inc/inspiron-14-5441) |
 | Dell Inspiron 14 Plus 7441 | [dell-inspiron-14-7441-x1e-80-100](aarch64-laptops/dell-inspiron-14-7441-x1e-80-100) |
 | Dell Latitude 5455 | [dell-latitude-5455](aarch64-laptops/dell-latitude-5455) |
 | Dell Latitude 7455 | [dell-latitude-7455](aarch64-laptops/dell-latitude-7455) |
@@ -45,7 +45,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | HP EliteBook 6 G1q | [hp-elitebook-6-g1q](aarch64-laptops/hp-elitebook-6-g1q) |
 | HP EliteBook Ultra G1q | [hp-elitebook-ultra-g1q](aarch64-laptops/hp-elitebook-ultra-g1q) |
 | HP OmniBook 3 16 (16-bz0) | [hardware-reports/hp/hp-omnibook-3-laptop-16-bz0xxx](../reports/hp/hp-omnibook-3-laptop-16-bz0xxx) |
-| HP OmniBook 5 14 | [hp-omnibook-5-14-he0xxx](aarch64-laptops/hp-omnibook-5-14-he0xxx) |
+| HP OmniBook 5 14 | [hp-omnibook-5-14-he0xxx](aarch64-laptops/hp-omnibook-5-14-he0xxx), [hardware-reports/hp/hp-omnibook-5-laptop-14-he0xxx](../reports/hp/hp-omnibook-5-laptop-14-he0xxx) |
 | HP OmniBook X 14 | [hp-omnibook-x14-fe0xxx](aarch64-laptops/hp-omnibook-x14-fe0xxx) |
 | HP EliteBook 6 G2q | [firmware/hp-elitebook-6-g2q](firmware/hp-elitebook-6-g2q) |
 | HP OmniBook Ultra 14 | [arewearmyet/hp-omnibook-ultra-14-kg0](hp-omnibook-ultra-14-kg0) |
@@ -56,7 +56,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | Lenovo IdeaPad Vibe | [firmware/lenovo-ideapad-vibe-14q8x12](firmware/lenovo-ideapad-vibe-14q8x12) |
 | Lenovo IdeaPad Vibe 15 | [firmware/lenovo-ideapad-vibe-14q8x12](firmware/lenovo-ideapad-vibe-14q8x12) |
 | Lenovo ThinkBook 16 G7 QOY | [lenovo-thinkbook-16-g7-qoy](aarch64-laptops/lenovo-thinkbook-16-g7-qoy) |
-| Lenovo ThinkCentre neo 50q QC | [firmware/lenovo-thinkcentre-neo-50q-qc](firmware/lenovo-thinkcentre-neo-50q-qc) |
+| Lenovo ThinkCentre neo 50q QC | [firmware/lenovo-thinkcentre-neo-50q-qc](firmware/lenovo-thinkcentre-neo-50q-qc), [hardware-reports/lenovo/13c8cto1ww](../reports/lenovo/13c8cto1ww) |
 | Lenovo ThinkPad T14s Gen 6 | [lenovo-thinkpad-t14s](aarch64-laptops/lenovo-thinkpad-t14s), [lenovo-thinkpad-t14s-120hz-64gb](aarch64-laptops/lenovo-thinkpad-t14s-120hz-64gb) |
 | Lenovo Yoga Slim 7x | [lenovo-yoga-slim-7x](aarch64-laptops/lenovo-yoga-slim-7x) |
 | Lenovo IdeaPad 5x 2-in-1 Gen 11 | [firmware/lenovo-ideapad-5x-2-in-1-14q8y11](firmware/lenovo-ideapad-5x-2-in-1-14q8y11) |
@@ -65,7 +65,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | Lenovo ThinkBook 14 Gen 9 | [firmware/lenovo-thinkbook-14-gen-9-q8y](firmware/lenovo-thinkbook-14-gen-9-q8y) |
 | Lenovo Yoga Slim 7x Gen 11 | [lenovo-yoga-slim-7x-14Q8Y11](aarch64-laptops/lenovo-yoga-slim-7x-14Q8Y11) |
 | Medion SPRCHRGD 14 S1 | [medion-14-s1-elite-sprchrgd](aarch64-laptops/medion-14-s1-elite-sprchrgd), [medion-14-s1-sprchrgd](aarch64-laptops/medion-14-s1-sprchrgd) |
-| Microsoft Surface Laptop 7 (13.8") | [microsoft-surface-romulus13_and_15](aarch64-laptops/microsoft-surface-romulus13_and_15), [linux-surface/surface_laptop_7_qcom](linux-surface/surface_laptop_7_qcom) |
+| Microsoft Surface Laptop 7 (13.8") | [microsoft-surface-romulus13_and_15](aarch64-laptops/microsoft-surface-romulus13_and_15), [linux-surface/surface_laptop_7_qcom](linux-surface/surface_laptop_7_qcom), [hardware-reports/microsoft-corporation/microsoft-surface-laptop-7th-edition](../reports/microsoft-corporation/microsoft-surface-laptop-7th-edition) |
 | Microsoft Surface Laptop 7 (15") | [microsoft-surface-romulus13_and_15](aarch64-laptops/microsoft-surface-romulus13_and_15), [linux-surface/surface_laptop_7_qcom](linux-surface/surface_laptop_7_qcom) |
 | Microsoft Surface Pro 11th Edition | [microsoft-surface-pro-11](aarch64-laptops/microsoft-surface-pro-11), [linux-surface/surface_pro_11_qcom](linux-surface/surface_pro_11_qcom), [hardware-reports/microsoft-corporation/microsoft-surface-pro-11th-edition](../reports/microsoft-corporation/microsoft-surface-pro-11th-edition) |
 | Microsoft Surface Pro 12-inch | [microsoft-surface-pro-12-in](aarch64-laptops/microsoft-surface-pro-12-in) |
@@ -75,6 +75,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | Microsoft Surface Pro 12-inch (2nd Edition) | [firmware/microsoft-surface-pro-12in-2nd-edition](firmware/microsoft-surface-pro-12in-2nd-edition) |
 | Microsoft Surface Pro 12th Edition | [firmware/microsoft-surface-pro-12th-edition](firmware/microsoft-surface-pro-12th-edition) |
 | Qualcomm Snapdragon Dev Kit for Windows | [qualcomm-snapdragon-dev-kit](aarch64-laptops/qualcomm-snapdragon-dev-kit) |
+| Samsung Galaxy Book4 Edge 16 | [hardware-reports/samsung-electronics-co-ltd/galaxy-book4-edge/a220b319](../reports/samsung-electronics-co-ltd/galaxy-book4-edge/a220b319) |
 | Samsung Galaxy Book4 Edge 14 | [samsung-galaxybook4-edge](aarch64-laptops/samsung-galaxybook4-edge) |
 | Huawei MateBook E Go | [huawei-matebooke-go](aarch64-laptops/huawei-matebooke-go) |
 | Lenovo ThinkPad X13s | [lenovo-thinkpad-x13s](aarch64-laptops/lenovo-thinkpad-x13s) |
@@ -105,11 +106,5 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 - Lenovo ThinkPad T14s Gen 7
 - Microsoft Surface Laptop 13-inch
 - Samsung Galaxy Book4 Edge 15
-- Samsung Galaxy Book4 Edge 16
 - Samsung Galaxy Book5 Edge 5G
 - Samsung Galaxy Book6 Edge 16
-
-## Not matched to a model yet
-
-- [hardware-reports/microsoft-corporation/microsoft-surface-laptop-7th-edition](../reports/microsoft-corporation/microsoft-surface-laptop-7th-edition)
-- [hardware-reports/lenovo/13c8cto1ww](../reports/lenovo/13c8cto1ww)

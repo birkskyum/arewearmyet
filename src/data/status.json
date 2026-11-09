@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-09T05:26:38.702Z",
-  "linuxNext": "20261105",
+  "collected": "2026-11-09T21:17:16.286Z",
+  "linuxNext": "20261109",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-41",
+    "kernel": "7.3-42",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-41",
+        "kernel": "7.3-42",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -1177,16 +1177,16 @@
     "problems": 7,
     "notYet": 32,
     "deviceTree": 58,
-    "ids": 56,
+    "ids": 57,
     "firmware": 51,
     "googlebooks": 2,
-    "acpi": 42,
-    "acpiWanted": 28,
+    "acpi": 44,
+    "acpiWanted": 27,
     "machine": {
       "team": 7,
-      "omarchy": 12,
-      "linux": 37,
-      "nobody": 30
+      "omarchy": 16,
+      "linux": 34,
+      "nobody": 29
     },
     "byPiece": {
       "deviceTree": {
@@ -1274,7 +1274,7 @@
         "fromUpstream": 28,
         "added": 27,
         "pull": 0,
-        "available": 1,
+        "available": 2,
         "upstream": 28,
         "channels": {
           "stable": 28,
@@ -1343,7 +1343,8 @@
           ],
           "pull": [],
           "available": [
-            "asus-ascent-qn10"
+            "asus-ascent-qn10",
+            "lenovo-thinkcentre-neo-50q-qc"
           ]
         }
       },
@@ -2567,7 +2568,7 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-14-x1407q/techspec/",
         "https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html"
       ],
-      "notes": "Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so its tree builds on the X1607QA's, with its IPS panel and PWM backlight. An owner's live USB reached the desktop on the Zenbook A14 tree, and that owner can test its own tree, in linux-omarchy 7.3-40 on edge.",
+      "notes": "Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so its tree builds on the X1607QA's, with its IPS panel and PWM backlight. An owner's live USB reached the desktop on the Zenbook A14 tree, and that owner can test its own tree, in linux-omarchy 7.3-40 on edge. A second owner runs Omarchy on a tree made from the Zenbook A14 LCD's: display, keyboard, touchpad, battery, video decode and both cameras work, Wi-Fi with a borrowed board data file, suspend as s2idle only, and only the left speaker plays. That tree and the owner's notes are kept in data/device-trees/asus-vivobook-14-x1407qa.",
       "outcome": "should",
       "bootable": "edge",
       "reports": [],
@@ -4278,11 +4279,11 @@
         "https://www.notebookcheck.net/Dell-Inspiron-14-5441-now-available-for-899-with-new-Snapdragon-X-Plus-X1P-42-100-SoC.883655.0.html",
         "https://dl.dell.com/content/manual20917790-inspiron-14-5441-owner-s-manual.pdf"
       ],
-      "notes": null,
+      "notes": "An owner sent a hardware report of the X1P-42-100 model (SKU 0C84). None of its hardware IDs are among the X1P-64-100's that Omarchy carries, and it has no device tree yet.",
       "outcome": "should",
       "bootable": "edge",
       "reports": [],
-      "machine": "linux",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -4320,7 +4321,8 @@
         "acpi": "collected",
         "acpiUrls": [
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-5441-x1p-42-100",
-          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspron-14-5441-x1p-64-100"
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspron-14-5441-x1p-64-100",
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/32"
         ]
       },
       "variants": [
@@ -5813,7 +5815,7 @@
       "outcome": "should",
       "bootable": "edge",
       "reports": [],
-      "machine": "linux",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -5850,7 +5852,8 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-omnibook-5-14-he0xxx"
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-omnibook-5-14-he0xxx",
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/30"
         ]
       },
       "variants": [
@@ -8028,7 +8031,7 @@
       "outcome": "none",
       "bootable": "needs-deviceTree",
       "reports": [],
-      "machine": "nobody",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -8041,7 +8044,7 @@
       },
       "pieces": {
         "deviceTree": "none",
-        "ids": "none",
+        "ids": "elsewhere",
         "firmware": "none"
       },
       "upstream": {
@@ -8050,8 +8053,8 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": null,
         "devicetreeArchive": null,
-        "ids": "missing",
-        "idsCollected": null,
+        "ids": "collected",
+        "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/25",
         "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
@@ -8061,9 +8064,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "firmware",
+        "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/lenovo-thinkcentre-neo-50q-qc"
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/lenovo-thinkcentre-neo-50q-qc",
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/26"
         ]
       },
       "variants": [
@@ -9130,7 +9134,8 @@
         "acpi": "collected",
         "acpiUrls": [
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-romulus13_and_15",
-          "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_laptop_7_qcom"
+          "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_laptop_7_qcom",
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/28"
         ]
       },
       "variants": [
@@ -10355,7 +10360,7 @@
       "outcome": "should",
       "bootable": "edge",
       "reports": [],
-      "machine": "linux",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -10390,8 +10395,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/34"
+        ]
       },
       "variants": [
         {
@@ -11480,10 +11487,6 @@
     "deviceTrees": [],
     "ids": [],
     "firmware": [],
-    "acpi": [
-      "hardware-reports/microsoft-corporation/microsoft-surface-laptop-7th-edition",
-      "hardware-reports/lenovo/13c8cto1ww",
-      "hardware-reports/microsoft-corporation/microsoft-surface-laptop-7th-edition"
-    ]
+    "acpi": []
   }
 }
