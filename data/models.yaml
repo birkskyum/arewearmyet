@@ -494,10 +494,10 @@ models:
     chips: ["X1P-64-100", "X1P-42-100", "X1-26-100"]
     model_numbers: ["5441", "P190G", "P190G001"]
     variants:
-      - { chip: "X1P-42-100" }
+      - { chip: "X1P-42-100", compatible: "dell,purwa-inspiron-14-plus-5441" }
       - { chip: "X1P-64-100", compatible: "dell,inspiron-14-plus-5441" }
     acpi: ["dell-inspiron-14-5441-x1p-42-100", "dell-inspron-14-5441-x1p-64-100", "hardware-reports/dell-inc/inspiron-14-5441"]
-    notes: "An owner sent a hardware report of the X1P-42-100 model (SKU 0C84). None of its hardware IDs are among the X1P-64-100's that Omarchy carries, and it has no device tree yet."
+    notes: "The X1P-42-100 model (board 0DGG6Y) has a board and hardware IDs of its own. Its device tree and IDs are written from an owner's hardware report, and nobody has booted them yet."
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260508050828.7442-1-adamszyma@wp.pl/"
     ids_collected: "https://github.com/aarch64-laptops/build/pull/170#issuecomment-6676285882"
     sources:
@@ -1093,8 +1093,12 @@ models:
     released: "2025-05"
     chips: ["X1-26-100"]
     model_numbers: ["13C8", "13C9", "13CA"]
+    variants:
+      - { chip: "X1-26-100", compatible: "lenovo,thinkcentre-neo-50q-qc" }
     acpi: ["firmware/lenovo-thinkcentre-neo-50q-qc", "hardware-reports/lenovo/13c8cto1ww"]
+    firmware_download: "https://pcsupport.lenovo.com/us/en/products/desktops-and-all-in-ones/thinkcentre-neo-series-desktops/thinkcentre-neo-50q-qc/13c8/downloads/driver-list"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/25"
+    notes: "Its device tree and hardware IDs are written from an owner's hardware report, on the IdeaCentre Mini x's board file, and nobody has booted them yet."
     sources:
       - https://psref.lenovo.com/Product/ThinkCentre/ThinkCentre_neo_50q_QC
       - https://www.xda-developers.com/review-lenovo-thinkcenter-neo-50q-snapdragon/

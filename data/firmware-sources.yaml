@@ -1735,6 +1735,59 @@ folders:
         sha256: "fa5e78c9743c5ca3439baadfe7f1e118591f8a1ad976e9f87b75937945d42e8b"
         from:
           - { package: "asus-socpackage-50883", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+  - path: "qcom/x1p42100/LENOVO/13C8"
+    models: ["lenovo-thinkcentre-neo-50q-qc"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 65336
+        sha256: "21948b2dca8f534b22c27a69310815337c45dce07c8c27746d0fe968363b551a"
+        from:
+          - { package: "lenovo-u9corggus14lcfc", member: "code$GetExtractPath$/Drivers/Neo8800_adsp/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 534
+        sha256: "4b9566fcfdc1656c38d8158d79db6964e9c4b57a6e42b46241e8d63aabc42d8d"
+        from:
+          - { package: "lenovo-u9corggus14lcfc", member: "code$GetExtractPath$/Drivers/Neo8800_adsp/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "lenovo-u9corggus14lcfc", member: "code$GetExtractPath$/Drivers/Neo8800_adsp/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "lenovo-u9corggus14lcfc", member: "code$GetExtractPath$/Drivers/Neo8800_adsp/adspua.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "8880a7a2252e7951b1bc7c14869c8c37062583ba26b21fee6194c593e3447a7e"
+        from:
+          - { package: "lenovo-u9corggus14lcfc", member: "code$GetExtractPath$/Drivers/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "lenovo-u9corggus14lcfc", member: "code$GetExtractPath$/Drivers/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 19880136
+        sha256: "23a6abb07bdbf910b478dff323b4489125da1205cbd8ba6e459afc12466fefe7"
+        from:
+          - { package: "lenovo-u9corggus14lcfc", member: "code$GetExtractPath$/Drivers/Neo8800_adsp/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "8a4465f747dbf43441fdba7d5c0312057d2cd1bb1e42cb4833d9ebdb7253388e"
+        from:
+          - { package: "lenovo-u9corggus14lcfc", member: "code$GetExtractPath$/Drivers/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "08cedef477485c11dd0b2eccd9f01f2528e319e3b2d9b00fb0fa469904abad70"
+        from:
+          - { package: "lenovo-u9corggus14lcfc", member: "code$GetExtractPath$/Drivers/qcdx8380/qcdxkmsucpurwa.mbn" }
+      - name: "qcvss8380_pa.mbn"
+        size: 2318952
+        sha256: "21e2dc5b977009c716daa7ece02dc7136acc40b9349954809a8a4a2e034bd1b0"
+        from:
+          - { package: "lenovo-u9corggus14lcfc", member: "code$GetExtractPath$/Drivers/qcdx8380/qcvss8380_pa.mbn" }
   - path: "qcom/x1p42100/Microsoft/Surface12"
     models: ["microsoft-surface-pro-12in-1st-edition"]
     files:
@@ -1907,6 +1960,64 @@ folders:
         sha256: "64c6666df28ed53d40ea5a5f17950474aaf2120bebc5fc5c28c0b0ccb2c51349"
         from:
           - { package: "samsung-basw-a4325a01-1063", member: "Graphics/qcdx8380_ss_se/qcvss8380_pa.mbn" }
+  - path: "qcom/x1p42100/dell/inspiron-14-plus-5441"
+    models: ["dell-inspiron-14-5441"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 72408
+        sha256: "a619c578fd609e29ed6c2bee324e7a2a99d447cd526718e59e09bdeed4047cff"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 670
+        sha256: "549bb9c8e32dc6253d0d0ddde2ce5c26f75f8333d3e55861f297e169a9f3e5c0"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 515
+        sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 703
+        sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 516
+        sha256: "be8c6fba330908e4683fb6282761cb08485a302d6a66e09721e102e342f27236"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "8eaa1bae6e3b4df0f2d42aa7fcaab324269e6ba7e83de32ce453e239d8acfe2d"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22500696
+        sha256: "b8be5ec108ce2552df82730ea94f507eb84845f925a427b78cda85916ea2eb28"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "352fb65e5578995919b782716de3ff033a1e8c97ebe65d795506d2347ab8b9c7"
+        from:
+          - { package: "dell-10wkv", member: "16299/Drivers/arm64/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "96c216f421ca6e9f241da254a968d8062d5304b3bd091e625109fb91a97bd2c6"
+        from:
+          - { package: "dell-2chk7", member: "16299/Drivers/MUP/qcdx8380/qcdxkmsucpurwa.mbn" }
+      - name: "qcvss8380_pa.mbn"
+        size: 2327144
+        sha256: "48a7de17a895996699c20d1d1213b426c302e29e65cd879f31fe05330e1d6bec"
+        from:
+          - { package: "dell-2chk7", member: "16299/Drivers/MUP/qcdx8380/qcvss8380_pa.mbn" }
   - path: "qcom/x1p42100/hp/elitebook-6-g1q"
     models: ["hp-elitebook-6-g1q", "hp-probook-4-g1q"]
     files:
@@ -2605,6 +2716,13 @@ packages:
     size: 208574360
     sha256: "ef833926fd9d739c53d6c79e8d819e27047f09267985b682a0ccd21d143dd3f4"
     fetched: "2026-11-02"
+  - id: "lenovo-u9corggus14lcfc"
+    maker: "Lenovo"
+    title: "Qualcomm Integrated System Software and Firmware Package (ThinkCentre neo 50q QC)"
+    url: "https://download.lenovo.com/pccbbs/desktop/u9corggus14lcfc.exe"
+    size: 160429360
+    sha256: "aceac7ac986381be2dc68b234575ad2d6757669e3dcee28254d7cbe980fd4e0a"
+    fetched: "2026-11-09"
   - id: "lenovo-u9corhdus14lcfc"
     maker: "Lenovo"
     title: "Qualcomm platform Driver package BSP8300/8900"

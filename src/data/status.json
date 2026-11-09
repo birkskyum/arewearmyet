@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-09T21:17:16.286Z",
+  "collected": "2026-11-09T22:24:47.384Z",
   "linuxNext": "20261109",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -1178,7 +1178,7 @@
     "notYet": 32,
     "deviceTree": 58,
     "ids": 57,
-    "firmware": 51,
+    "firmware": 52,
     "googlebooks": 2,
     "acpi": 44,
     "acpiWanted": 27,
@@ -1193,7 +1193,7 @@
         "omarchy": 56,
         "fromUpstream": 19,
         "added": 37,
-        "pull": 0,
+        "pull": 1,
         "available": 2,
         "upstream": 19,
         "channels": {
@@ -1262,7 +1262,9 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "lenovo-thinkcentre-neo-50q-qc"
+          ],
           "available": [
             "asus-ascent-qn10",
             "humain-horizon"
@@ -1273,8 +1275,8 @@
         "omarchy": 55,
         "fromUpstream": 28,
         "added": 27,
-        "pull": 0,
-        "available": 2,
+        "pull": 1,
+        "available": 1,
         "upstream": 28,
         "channels": {
           "stable": 28,
@@ -1341,10 +1343,11 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
-          "available": [
-            "asus-ascent-qn10",
+          "pull": [
             "lenovo-thinkcentre-neo-50q-qc"
+          ],
+          "available": [
+            "asus-ascent-qn10"
           ]
         }
       },
@@ -1353,7 +1356,7 @@
         "fromUpstream": 1,
         "added": 49,
         "pull": 0,
-        "available": 1,
+        "available": 2,
         "upstream": 1,
         "channels": {
           "stable": 1,
@@ -1417,7 +1420,8 @@
           ],
           "pull": [],
           "available": [
-            "hp-omnibook-5-14-he1"
+            "hp-omnibook-5-14-he1",
+            "lenovo-thinkcentre-neo-50q-qc"
           ]
         }
       },
@@ -1426,7 +1430,7 @@
         "fromUpstream": 1,
         "added": 48,
         "pull": 0,
-        "available": 0,
+        "available": 1,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1483,7 +1487,9 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": []
+          "available": [
+            "lenovo-thinkcentre-neo-50q-qc"
+          ]
         }
       }
     }
@@ -4279,16 +4285,24 @@
         "https://www.notebookcheck.net/Dell-Inspiron-14-5441-now-available-for-899-with-new-Snapdragon-X-Plus-X1P-42-100-SoC.883655.0.html",
         "https://dl.dell.com/content/manual20917790-inspiron-14-5441-owner-s-manual.pdf"
       ],
-      "notes": "An owner sent a hardware report of the X1P-42-100 model (SKU 0C84). None of its hardware IDs are among the X1P-64-100's that Omarchy carries, and it has no device tree yet.",
+      "notes": "The X1P-42-100 model (board 0DGG6Y) has a board and hardware IDs of its own. Its device tree and IDs are written from an owner's hardware report, and nobody has booted them yet.",
       "outcome": "should",
       "bootable": "edge",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
+          "number": 2404,
+          "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
+        },
         "ids": "edge",
-        "idsPull": null,
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
+          "number": 2404,
+          "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
+        },
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -4328,12 +4342,21 @@
       "variants": [
         {
           "chip": "X1P-42-100",
+          "compatible": "dell,purwa-inspiron-14-plus-5441",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
           "bootChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
+            "number": 2404,
+            "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
+            "number": 2404,
+            "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
@@ -8027,25 +8050,33 @@
         "https://psref.lenovo.com/Product/ThinkCentre/ThinkCentre_neo_50q_QC",
         "https://www.xda-developers.com/review-lenovo-thinkcenter-neo-50q-snapdragon/"
       ],
-      "notes": null,
+      "notes": "Its device tree and hardware IDs are written from an owner's hardware report, on the IdeaCentre Mini x's board file, and nobody has booted them yet.",
       "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "bootable": "pr",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
+          "number": 2404,
+          "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
+        },
         "ids": null,
-        "idsPull": null,
-        "firmware": "windows",
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
+          "number": 2404,
+          "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
+        },
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
-        "ids": "elsewhere",
-        "firmware": "none"
+        "deviceTree": "pr",
+        "ids": "pr",
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -8056,10 +8087,10 @@
         "ids": "collected",
         "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/25",
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "https://pcsupport.lenovo.com/us/en/products/desktops-and-all-in-ones/thinkcentre-neo-series-desktops/thinkcentre-neo-50q-qc/13c8/downloads/driver-list",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -8072,12 +8103,22 @@
       },
       "variants": [
         {
+          "chip": "X1-26-100",
+          "compatible": "lenovo,thinkcentre-neo-50q-qc",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
           "bootChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
+            "number": 2404,
+            "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
+            "number": 2404,
+            "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
@@ -9446,7 +9487,11 @@
         "deviceTree": "stable",
         "deviceTreePull": null,
         "ids": "stable",
-        "idsPull": null,
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
+          "number": 2404,
+          "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
+        },
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -9543,7 +9588,11 @@
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
-          "idsPull": null,
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
+            "number": 2404,
+            "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
+          },
           "deviceTree": {
             "file": "x1p64100-microsoft-denali.dts",
             "firstRelease": "v7.0",
