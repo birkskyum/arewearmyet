@@ -25,6 +25,16 @@ The board links its sources, and keeps its own copy of whatever no durable archi
 
 Each copied folder has a `SOURCE.md` naming where its files came from. Linux, systemd and linux-firmware are linked, not copied, and firmware files are never copied, only listed in `data/firmware-sources.yaml`.
 
+## Firmware drop
+
+[`worker/index.ts`](worker/index.ts) serves the pages and `/api/firmware/*`, where the Omarchy Arm Installer sends the firmware it finds in a laptop's Windows drivers when the owner ticks the box. It writes to the private R2 bucket `arewearmyet-firmware`, which has no public URL; nothing in the Worker lists or returns a stored file. Files are kept as `files/<sha256>`, so a file many laptops share is stored once.
+
+1. `POST /api/firmware/missing` with `{"sha256": [...]}`, at most 40 hashes, answers `{"missing": [...]}`.
+2. `PUT /api/firmware/files/<sha256>` with the file as the body, at most 95 MB. R2 refuses a body whose hash differs.
+3. `POST /api/firmware/reports` with `{"installer", "machine": {"manufacturer", "product", "family", "sku", "baseboard", "bios"}, "files": [{"folder", "name", "size", "sha256"}]}` stores `reports/<code>.json` and answers `{"code": "FW-..."}` for the owner's hardware report. Other machine fields, like a serial number, are dropped.
+
+Each IP gets 300 requests a minute, and an answer of 429 means wait a minute. Setting `FIRMWARE_UPLOADS` to anything but `on` in `wrangler.jsonc` closes the drop. Locally, `pnpm build && pnpm wrangler dev` runs it against a local bucket.
+
 ## Sections
 
 Each section is a group of machines that one guide can help along:

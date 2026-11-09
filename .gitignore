@@ -25,3 +25,7 @@ pnpm-debug.log*
 
 # The link preview font, see scripts/og/render.sh
 scripts/og/*.ttf
+
+# wrangler types worker/worker-configuration.d.ts
+worker/worker-configuration.d.ts
+.wrangler/
