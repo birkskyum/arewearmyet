@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-09T22:24:47.384Z",
+  "collected": "2026-11-09T23:05:03.531Z",
   "linuxNext": "20261109",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-42",
+    "kernel": "7.3-43",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-42",
+        "kernel": "7.3-43",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -422,6 +422,7 @@
           "x126100-asus-vivobook-14.dts",
           "x126100-asus-vivobook-16.dts",
           "x126100-lenovo-ideapad-slim3.dts",
+          "x126100-lenovo-thinkcentre-neo-50q-qc.dts",
           "x1e001de-devkit.dts",
           "x1e78100-acer-sfa14-11.dts",
           "x1e78100-lenovo-thinkpad-t14s.dts",
@@ -455,6 +456,7 @@
           "x1p42100-asus-zenbook-a14.dts",
           "x1p42100-asus-zenbook-a14-lcd.dts",
           "x1p42100-crd.dts",
+          "x1p42100-dell-inspiron-14-plus-5441.dts",
           "x1p42100-hp-elitebook-6-g1q.dts",
           "x1p42100-hp-omnibook-3-16.dts",
           "x1p42100-hp-omnibook-3-oled.dts",
@@ -535,6 +537,7 @@
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
           "x126100-asus-vivobook-14.json",
           "x126100-asus-vivobook-16.json",
+          "x126100-lenovo-thinkcentre-neo-50q-qc.json",
           "x1e78100-acer-sfa14-11.json",
           "x1e80100-samsung-galaxy-book4-edge-14.json",
           "x1e84100-samsung-galaxy-book4-edge-16.json",
@@ -545,6 +548,7 @@
           "x1p42100-asus-vivobook-s16-lcd.json",
           "x1p42100-asus-vivobook-s16.json",
           "x1p42100-asus-zenbook-14-ux3480qa.json",
+          "x1p42100-dell-inspiron-14-plus-5441.json",
           "x1p42100-hp-omnibook-3-16.json",
           "x1p42100-hp-omnibook-3-oled.json",
           "x1p42100-hp-omnibook-5.json",
@@ -552,7 +556,8 @@
           "x1p42100-microsoft-surface-laptop-13.json",
           "x1p42100-microsoft-surface-pro-12in.json",
           "x1p42100-samsung-galaxy-book4-edge-15.json",
-          "x1p64100-dell-inspiron-14-plus-5441.json"
+          "x1p64100-dell-inspiron-14-plus-5441.json",
+          "x1p64100-microsoft-denali.json"
         ],
         "firmware": {
           "acer-aspire-14-ai-firmware": [
@@ -748,7 +753,18 @@
             "qcom/x1e80100/dell/inspiron-14-plus-5441/qcadsp8380.mbn",
             "qcom/x1e80100/dell/inspiron-14-plus-5441/qccdsp8380.mbn",
             "qcom/x1e80100/dell/inspiron-14-plus-5441/qcdxkmsuc8380.mbn",
-            "qcom/x1e80100/dell/inspiron-14-plus-5441/qcvss8380.mbn"
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/qcvss8380.mbn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/adsp_dtbs.elf",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/adspr.jsn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/adsps.jsn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/adspua.jsn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/battmgr.jsn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/cdsp_dtbs.elf",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/cdspr.jsn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/qcadsp8380.mbn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/qccdsp8380.mbn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/qcvss8380_pa.mbn"
           ],
           "dell-inspiron-14-plus-7441-firmware": [
             "qcom/x1e80100/dell/inspiron-14-plus-7441/adsp_dtbs.elf",
@@ -936,6 +952,18 @@
             "qcom/x1e80100/LENOVO/91B6/qccdsp8380.mbn",
             "qcom/x1e80100/LENOVO/91B6/qcdxkmsuc8380.mbn",
             "qcom/x1e80100/LENOVO/91B6/qcvss8380.mbn"
+          ],
+          "lenovo-thinkcentre-neo-50q-qc-firmware": [
+            "qcom/x1p42100/LENOVO/13C8/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/13C8/adspr.jsn",
+            "qcom/x1p42100/LENOVO/13C8/adsps.jsn",
+            "qcom/x1p42100/LENOVO/13C8/adspua.jsn",
+            "qcom/x1p42100/LENOVO/13C8/cdsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/13C8/cdspr.jsn",
+            "qcom/x1p42100/LENOVO/13C8/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/13C8/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/13C8/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/13C8/qcvss8380_pa.mbn"
           ],
           "lenovo-thinkpad-t14s-gen7-firmware": [
             "qcom/glymur/LENOVO/22A8/adsp_dtbs.elf",
@@ -1173,10 +1201,10 @@
     "nvidiaWorks": 2,
     "nvidiaExpected": 15,
     "works": 2,
-    "should": 45,
+    "should": 46,
     "problems": 7,
-    "notYet": 32,
-    "deviceTree": 58,
+    "notYet": 31,
+    "deviceTree": 59,
     "ids": 57,
     "firmware": 52,
     "googlebooks": 2,
@@ -1190,16 +1218,16 @@
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 56,
+        "omarchy": 57,
         "fromUpstream": 19,
-        "added": 37,
-        "pull": 1,
+        "added": 38,
+        "pull": 0,
         "available": 2,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 56
+          "edge": 57
         },
         "models": {
           "fromUpstream": [
@@ -1253,6 +1281,7 @@
             "lenovo-ideapad-5x-2-in-1-14q8x9",
             "lenovo-ideapad-slim-3x-15q8x10",
             "lenovo-ideapad-slim-5x-14q8x9",
+            "lenovo-thinkcentre-neo-50q-qc",
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
             "lenovo-yoga-slim-7x-14q8y11",
             "microsoft-surface-laptop-13in-1st-edition",
@@ -1262,9 +1291,7 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "lenovo-thinkcentre-neo-50q-qc"
-          ],
+          "pull": [],
           "available": [
             "asus-ascent-qn10",
             "humain-horizon"
@@ -1272,16 +1299,16 @@
         }
       },
       "ids": {
-        "omarchy": 55,
+        "omarchy": 56,
         "fromUpstream": 28,
-        "added": 27,
-        "pull": 1,
+        "added": 28,
+        "pull": 0,
         "available": 1,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 55
+          "edge": 56
         },
         "models": {
           "fromUpstream": [
@@ -1334,6 +1361,7 @@
             "hp-omnibook-5-16-bf1",
             "hp-omnibook-ultra-14-kg0",
             "hp-omnibook-x-16-cp",
+            "lenovo-thinkcentre-neo-50q-qc",
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
             "microsoft-surface-laptop-13in-1st-edition",
             "microsoft-surface-pro-12in-1st-edition",
@@ -1343,25 +1371,23 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "lenovo-thinkcentre-neo-50q-qc"
-          ],
+          "pull": [],
           "available": [
             "asus-ascent-qn10"
           ]
         }
       },
       "firmware": {
-        "omarchy": 50,
+        "omarchy": 51,
         "fromUpstream": 1,
-        "added": 49,
+        "added": 50,
         "pull": 0,
-        "available": 2,
+        "available": 1,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 50
+          "edge": 51
         },
         "models": {
           "fromUpstream": [
@@ -1403,6 +1429,7 @@
             "hp-omnibook-x-14-kr",
             "hp-omnibook-x-16-cp",
             "lenovo-ideacentre-mini-x-01q8x10",
+            "lenovo-thinkcentre-neo-50q-qc",
             "lenovo-yoga-slim-7x-14q8x9",
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
             "medion-sprchrgd-14-s1",
@@ -1420,17 +1447,16 @@
           ],
           "pull": [],
           "available": [
-            "hp-omnibook-5-14-he1",
-            "lenovo-thinkcentre-neo-50q-qc"
+            "hp-omnibook-5-14-he1"
           ]
         }
       },
       "all": {
-        "omarchy": 49,
+        "omarchy": 50,
         "fromUpstream": 1,
-        "added": 48,
+        "added": 49,
         "pull": 0,
-        "available": 1,
+        "available": 0,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1471,6 +1497,7 @@
             "hp-omnibook-ultra-14-kg0",
             "hp-omnibook-x-16-cp",
             "lenovo-ideacentre-mini-x-01q8x10",
+            "lenovo-thinkcentre-neo-50q-qc",
             "lenovo-yoga-slim-7x-14q8x9",
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
             "medion-sprchrgd-14-s1",
@@ -1487,9 +1514,7 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": [
-            "lenovo-thinkcentre-neo-50q-qc"
-          ]
+          "available": []
         }
       }
     }
@@ -4292,17 +4317,9 @@
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
-          "number": 2404,
-          "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
-        },
+        "deviceTreePull": null,
         "ids": "edge",
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
-          "number": 2404,
-          "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
-        },
+        "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -4319,7 +4336,7 @@
         "deviceTree": "posted",
         "firstRelease": null,
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260508050828.7442-1-adamszyma@wp.pl/",
-        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2610-arm64-dts-qcom-Add-Dell-Inspiron-14-Plus-5441.patch",
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2811-arm64-dts-qcom-Add-the-Dell-Inspiron-14-Plus-5441-X1.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/dell-inspiron-14-5441",
         "ids": "posted",
         "idsCollected": "https://github.com/aarch64-laptops/build/pull/170#issuecomment-6676285882",
@@ -4343,25 +4360,23 @@
         {
           "chip": "X1P-42-100",
           "compatible": "dell,purwa-inspiron-14-plus-5441",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
-            "number": 2404,
-            "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "x1p42100-dell-inspiron-14-plus-5441.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2811-arm64-dts-qcom-Add-the-Dell-Inspiron-14-Plus-5441-X1.patch"
           },
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
-            "number": 2404,
-            "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
-          },
-          "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         },
         {
@@ -8051,39 +8066,33 @@
         "https://www.xda-developers.com/review-lenovo-thinkcenter-neo-50q-snapdragon/"
       ],
       "notes": "Its device tree and hardware IDs are written from an owner's hardware report, on the IdeaCentre Mini x's board file, and nobody has booted them yet.",
-      "outcome": "none",
-      "bootable": "pr",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
-          "number": 2404,
-          "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
-        },
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
-          "number": 2404,
-          "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
-        },
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "deviceTree": "edge",
+        "deviceTreePull": null,
+        "ids": "edge",
+        "idsPull": null,
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "lenovo-thinkcentre-neo-50q-qc-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "pr",
-        "ids": "pr",
-        "firmware": "elsewhere"
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2404",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/lenovo-thinkcentre-neo-50q-qc",
         "ids": "collected",
         "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/25",
         "idsStubble": null,
@@ -8105,25 +8114,23 @@
         {
           "chip": "X1-26-100",
           "compatible": "lenovo,thinkcentre-neo-50q-qc",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
-            "number": 2404,
-            "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "x126100-lenovo-thinkcentre-neo-50q-qc.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2823-arm64-dts-qcom-Add-the-Lenovo-ThinkCentre-neo-50q-QC.patch"
           },
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
-            "number": 2404,
-            "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
-          },
-          "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -9487,11 +9494,7 @@
         "deviceTree": "stable",
         "deviceTreePull": null,
         "ids": "stable",
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
-          "number": 2404,
-          "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
-        },
+        "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -9583,16 +9586,12 @@
           "model": "LCD",
           "chip": "X1P-64-100",
           "compatible": "microsoft,denali-lcd",
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "stable",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
-            "number": 2404,
-            "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC"
-          },
+          "idsPull": null,
           "deviceTree": {
             "file": "x1p64100-microsoft-denali.dts",
             "firstRelease": "v7.0",
@@ -9609,7 +9608,7 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],

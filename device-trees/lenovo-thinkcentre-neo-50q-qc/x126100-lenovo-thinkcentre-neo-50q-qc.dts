@@ -1,0 +1,238 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Lenovo ThinkCentre neo 50q QC (13C8), Snapdragon X X1-26-100 (Purwa)
+ */
+
+/dts-v1/;
+
+#include "purwa.dtsi"
+#include "x1-lenovo-ideacentre-mini-01q8x10.dtsi"
+
+/delete-node/ &pmc8380_6;
+/delete-node/ &pmc8380_6_thermal;
+/delete-node/ &pmc8380_6_die_temp;
+
+/ {
+	model = "Lenovo ThinkCentre neo 50q QC";
+	compatible = "lenovo,thinkcentre-neo-50q-qc", "qcom,x126100", "qcom,x1p42100";
+
+	/delete-node/ regulator-wifi-1v8;
+	/delete-node/ wcn7850-pmu;
+
+	/* Optional rear port */
+	dp-connector-1 {
+		compatible = "dp-connector";
+		type = "full-size";
+
+		pinctrl-0 = <&usb0_dp_hot_plug_detect>;
+		pinctrl-names = "default";
+
+		port {
+			dp_port1_in: endpoint {
+				remote-endpoint = <&usb_1_ss0_qmpphy_out_dp>;
+			};
+		};
+	};
+
+	pmic-glink {
+		status = "disabled";
+	};
+
+	vreg_wcn_1p9: regulator-wcn-1p9 {
+		compatible = "regulator-fixed";
+
+		regulator-name = "VREG_WCN_1P9";
+		regulator-min-microvolt = <1900000>;
+		regulator-max-microvolt = <1900000>;
+
+		vin-supply = <&vreg_wifi_3v3>;
+	};
+
+	wcn6855-pmu {
+		compatible = "qcom,wcn6855-pmu";
+
+		vddaon-supply = <&vreg_wcn_0p95>;
+		vddio-supply = <&vreg_wcn_1p9>;
+		vddpcie1p3-supply = <&vreg_wcn_1p9>;
+		vddpcie1p9-supply = <&vreg_wcn_1p9>;
+		vddpmu-supply = <&vreg_wcn_0p95>;
+		vddpmucx-supply = <&vreg_wcn_0p95>;
+		vddpmumx-supply = <&vreg_wcn_0p95>;
+		vddrfa0p95-supply = <&vreg_wcn_0p95>;
+		vddrfa1p3-supply = <&vreg_wcn_1p9>;
+		vddrfa1p9-supply = <&vreg_wcn_1p9>;
+
+		wlan-enable-gpios = <&tlmm 117 GPIO_ACTIVE_HIGH>;
+		bt-enable-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
+
+		pinctrl-0 = <&wcn_wlan_bt_en>;
+		pinctrl-names = "default";
+
+		regulators {
+			vreg_pmu_rfa_cmn_0p8: ldo0 {
+				regulator-name = "vreg_pmu_rfa_cmn_0p8";
+			};
+
+			vreg_pmu_aon_0p8: ldo1 {
+				regulator-name = "vreg_pmu_aon_0p8";
+			};
+
+			vreg_pmu_wlcx_0p8: ldo2 {
+				regulator-name = "vreg_pmu_wlcx_0p8";
+			};
+
+			vreg_pmu_wlmx_0p8: ldo3 {
+				regulator-name = "vreg_pmu_wlmx_0p8";
+			};
+
+			vreg_pmu_btcmx_0p8: ldo4 {
+				regulator-name = "vreg_pmu_btcmx_0p8";
+			};
+
+			vreg_pmu_pcie_1p8: ldo5 {
+				regulator-name = "vreg_pmu_pcie_1p8";
+			};
+
+			vreg_pmu_pcie_0p9: ldo6 {
+				regulator-name = "vreg_pmu_pcie_0p9";
+			};
+
+			vreg_pmu_rfa_0p8: ldo7 {
+				regulator-name = "vreg_pmu_rfa_0p8";
+			};
+
+			vreg_pmu_rfa_1p2: ldo8 {
+				regulator-name = "vreg_pmu_rfa_1p2";
+			};
+
+			vreg_pmu_rfa_1p7: ldo9 {
+				regulator-name = "vreg_pmu_rfa_1p7";
+			};
+		};
+	};
+};
+
+&gpu_zap_shader {
+	firmware-name = "qcom/x1p42100/LENOVO/13C8/qcdxkmsucpurwa.mbn";
+};
+
+&i2c3 {
+	status = "disabled";
+};
+
+&iris {
+	firmware-name = "qcom/x1p42100/LENOVO/13C8/qcvss8380_pa.mbn";
+
+	status = "okay";
+};
+
+&mdss_dp0_out {
+	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000>;
+};
+
+&mdss_dp1_out {
+	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000>;
+};
+
+&pcie4_port0 {
+	/delete-node/ wifi@0;
+
+	wifi@0 {
+		compatible = "pci17cb,1103";
+		reg = <0x10000 0x0 0x0 0x0 0x0>;
+
+		vddaon-supply = <&vreg_pmu_aon_0p8>;
+		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
+		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn_0p8>;
+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
+		vddwlmx-supply = <&vreg_pmu_wlmx_0p8>;
+	};
+};
+
+&remoteproc_adsp {
+	firmware-name = "qcom/x1p42100/LENOVO/13C8/qcadsp8380.mbn",
+			"qcom/x1p42100/LENOVO/13C8/adsp_dtbs.elf";
+
+	status = "okay";
+};
+
+&remoteproc_cdsp {
+	firmware-name = "qcom/x1p42100/LENOVO/13C8/qccdsp8380.mbn",
+			"qcom/x1p42100/LENOVO/13C8/cdsp_dtbs.elf";
+
+	status = "okay";
+};
+
+&tlmm {
+	usb0_dp_hot_plug_detect: usb0-dp-hot-plug-detect-state {
+		pins = "gpio122";
+		function = "usb0_dp";
+		bias-disable;
+	};
+};
+
+&uart14 {
+	/delete-node/ bluetooth;
+
+	bluetooth {
+		compatible = "qcom,wcn6855-bt";
+		max-speed = <3200000>;
+
+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn_0p8>;
+		vddaon-supply = <&vreg_pmu_aon_0p8>;
+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
+		vddwlmx-supply = <&vreg_pmu_wlmx_0p8>;
+		vddbtcmx-supply = <&vreg_pmu_btcmx_0p8>;
+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
+		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
+	};
+};
+
+&usb0_retimer_in {
+	/delete-property/ remote-endpoint;
+};
+
+&usb_1_ss0 {
+	maximum-speed = "high-speed";
+	phys = <&usb_1_ss0_hsphy>;
+	phy-names = "usb2-phy";
+	qcom,select-utmi-as-pipe-clk;
+};
+
+&usb_1_ss0_qmpphy {
+	/delete-property/ mode-switch;
+	/delete-property/ orientation-switch;
+
+	ports {
+		port@0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			/delete-node/ endpoint;
+
+			usb_1_ss0_qmpphy_out_dp: endpoint@0 {
+				reg = <0>;
+
+				data-lanes = <3 2 1 0>;
+				remote-endpoint = <&dp_port1_in>;
+			};
+		};
+	};
+};
+
+&vreg_v0p9 {
+	status = "disabled";
+};
+
+&vreg_vdd1v8 {
+	status = "disabled";
+};
+
+&vreg_vdd33_rtmr {
+	status = "disabled";
+};

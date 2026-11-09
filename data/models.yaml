@@ -1096,6 +1096,10 @@ models:
     variants:
       - { chip: "X1-26-100", compatible: "lenovo,thinkcentre-neo-50q-qc" }
     acpi: ["firmware/lenovo-thinkcentre-neo-50q-qc", "hardware-reports/lenovo/13c8cto1ww"]
+    devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2404"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/65a4b0f646f7afe480fdebc7c0cf8cf2b56bf27f/pkgbuilds/linux-omarchy-aarch64/2823-arm64-dts-qcom-Add-the-Lenovo-ThinkCentre-neo-50q-QC.patch#x126100-lenovo-thinkcentre-neo-50q-qc.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/65a4b0f646f7afe480fdebc7c0cf8cf2b56bf27f/pkgbuilds/linux-omarchy-aarch64/2821-arm64-dts-qcom-Split-IdeaCentre-Mini-into-a-common-D.patch#x1-lenovo-ideacentre-mini-01q8x10.dtsi"
     firmware_download: "https://pcsupport.lenovo.com/us/en/products/desktops-and-all-in-ones/thinkcentre-neo-series-desktops/thinkcentre-neo-50q-qc/13c8/downloads/driver-list"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/25"
     notes: "Its device tree and hardware IDs are written from an owner's hardware report, on the IdeaCentre Mini x's board file, and nobody has booted them yet."

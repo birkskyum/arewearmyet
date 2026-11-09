@@ -238,6 +238,15 @@
       "x1p42100-lenovo-ideapad-slim5x.dtsi"
     ]
   },
+  "lenovo-thinkcentre-neo-50q-qc": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2404",
+    "files": [
+      "SOURCE.md",
+      "x126100-lenovo-thinkcentre-neo-50q-qc.dts",
+      "x1-lenovo-ideacentre-mini-01q8x10.dtsi"
+    ]
+  },
   "lenovo-thinkpad-t14s-gen-7-snapdragon": {
     "state": "posted",
     "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260929221821.505551-3-srinivas.kandagatla@oss.qualcomm.com/",

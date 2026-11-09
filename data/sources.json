@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-09T22:24:47.384Z",
+  "collected": "2026-11-09T23:05:03.531Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4753,7 +4753,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-42",
+        "kernel": "7.3-43",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -4779,6 +4779,7 @@
           "x126100-asus-vivobook-14.dts",
           "x126100-asus-vivobook-16.dts",
           "x126100-lenovo-ideapad-slim3.dts",
+          "x126100-lenovo-thinkcentre-neo-50q-qc.dts",
           "x1e001de-devkit.dts",
           "x1e78100-acer-sfa14-11.dts",
           "x1e78100-lenovo-thinkpad-t14s.dts",
@@ -4812,6 +4813,7 @@
           "x1p42100-asus-zenbook-a14.dts",
           "x1p42100-asus-zenbook-a14-lcd.dts",
           "x1p42100-crd.dts",
+          "x1p42100-dell-inspiron-14-plus-5441.dts",
           "x1p42100-hp-elitebook-6-g1q.dts",
           "x1p42100-hp-omnibook-3-16.dts",
           "x1p42100-hp-omnibook-3-oled.dts",
@@ -4892,6 +4894,7 @@
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
           "x126100-asus-vivobook-14.json",
           "x126100-asus-vivobook-16.json",
+          "x126100-lenovo-thinkcentre-neo-50q-qc.json",
           "x1e78100-acer-sfa14-11.json",
           "x1e80100-samsung-galaxy-book4-edge-14.json",
           "x1e84100-samsung-galaxy-book4-edge-16.json",
@@ -4902,6 +4905,7 @@
           "x1p42100-asus-vivobook-s16-lcd.json",
           "x1p42100-asus-vivobook-s16.json",
           "x1p42100-asus-zenbook-14-ux3480qa.json",
+          "x1p42100-dell-inspiron-14-plus-5441.json",
           "x1p42100-hp-omnibook-3-16.json",
           "x1p42100-hp-omnibook-3-oled.json",
           "x1p42100-hp-omnibook-5.json",
@@ -4909,7 +4913,8 @@
           "x1p42100-microsoft-surface-laptop-13.json",
           "x1p42100-microsoft-surface-pro-12in.json",
           "x1p42100-samsung-galaxy-book4-edge-15.json",
-          "x1p64100-dell-inspiron-14-plus-5441.json"
+          "x1p64100-dell-inspiron-14-plus-5441.json",
+          "x1p64100-microsoft-denali.json"
         ],
         "firmware": {
           "acer-aspire-14-ai-firmware": [
@@ -5105,7 +5110,18 @@
             "qcom/x1e80100/dell/inspiron-14-plus-5441/qcadsp8380.mbn",
             "qcom/x1e80100/dell/inspiron-14-plus-5441/qccdsp8380.mbn",
             "qcom/x1e80100/dell/inspiron-14-plus-5441/qcdxkmsuc8380.mbn",
-            "qcom/x1e80100/dell/inspiron-14-plus-5441/qcvss8380.mbn"
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/qcvss8380.mbn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/adsp_dtbs.elf",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/adspr.jsn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/adsps.jsn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/adspua.jsn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/battmgr.jsn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/cdsp_dtbs.elf",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/cdspr.jsn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/qcadsp8380.mbn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/qccdsp8380.mbn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/qcvss8380_pa.mbn"
           ],
           "dell-inspiron-14-plus-7441-firmware": [
             "qcom/x1e80100/dell/inspiron-14-plus-7441/adsp_dtbs.elf",
@@ -5293,6 +5309,18 @@
             "qcom/x1e80100/LENOVO/91B6/qccdsp8380.mbn",
             "qcom/x1e80100/LENOVO/91B6/qcdxkmsuc8380.mbn",
             "qcom/x1e80100/LENOVO/91B6/qcvss8380.mbn"
+          ],
+          "lenovo-thinkcentre-neo-50q-qc-firmware": [
+            "qcom/x1p42100/LENOVO/13C8/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/13C8/adspr.jsn",
+            "qcom/x1p42100/LENOVO/13C8/adsps.jsn",
+            "qcom/x1p42100/LENOVO/13C8/adspua.jsn",
+            "qcom/x1p42100/LENOVO/13C8/cdsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/13C8/cdspr.jsn",
+            "qcom/x1p42100/LENOVO/13C8/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/13C8/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/13C8/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/13C8/qcvss8380_pa.mbn"
           ],
           "lenovo-thinkpad-t14s-gen7-firmware": [
             "qcom/glymur/LENOVO/22A8/adsp_dtbs.elf",
@@ -5868,6 +5896,25 @@
           "qcom,x1p42100"
         ],
         "patch": "2801-arm64-dts-qcom-Add-the-ASUS-Vivobook-14-X1407QA.patch"
+      },
+      {
+        "file": "x1p42100-dell-inspiron-14-plus-5441.dts",
+        "model": "Dell Inspiron 14 Plus 5441 (X1P-42-100)",
+        "compatible": [
+          "dell,purwa-inspiron-14-plus-5441",
+          "qcom,x1p42100"
+        ],
+        "patch": "2811-arm64-dts-qcom-Add-the-Dell-Inspiron-14-Plus-5441-X1.patch"
+      },
+      {
+        "file": "x126100-lenovo-thinkcentre-neo-50q-qc.dts",
+        "model": "Lenovo ThinkCentre neo 50q QC",
+        "compatible": [
+          "lenovo,thinkcentre-neo-50q-qc",
+          "qcom,x126100",
+          "qcom,x1p42100"
+        ],
+        "patch": "2823-arm64-dts-qcom-Add-the-Lenovo-ThinkCentre-neo-50q-QC.patch"
       }
     ],
     "carriedIds": [
@@ -6023,6 +6070,22 @@
         ]
       },
       {
+        "file": "x126100-lenovo-thinkcentre-neo-50q-qc.json",
+        "name": "Lenovo ThinkCentre neo 50q QC",
+        "compatible": "lenovo,thinkcentre-neo-50q-qc",
+        "hwids": [
+          "7200c6a7-a129-5ad3-b60e-7bfb80367259",
+          "55f7cadf-29a7-5f44-b0da-5d60db2d3d62",
+          "a7d3802c-0b79-52ca-b0df-fce36f9d2488",
+          "b5330b6c-dd44-548a-ae34-4fb03d69d5f7",
+          "260c6642-8b04-55ec-acaf-dc4a1725d25d",
+          "9c47f1f2-1a86-5a79-b9ce-b24b9029fb76",
+          "48022068-676f-5db9-8495-1a786f70b5a5",
+          "659761ea-dc76-506e-bdc5-38eb5d394b39",
+          "1c1a4153-c3a4-55a6-bc6b-c939d6b3a716"
+        ]
+      },
+      {
         "file": "x1e78100-acer-sfa14-11.json",
         "name": "Acer Swift 14 Go Pro AI",
         "compatible": "acer,swift-go-sfa14-11",
@@ -6170,6 +6233,18 @@
         ]
       },
       {
+        "file": "x1p42100-dell-inspiron-14-plus-5441.json",
+        "name": "Dell Inspiron 14 5441 (X1P-42-100)",
+        "compatible": "dell,purwa-inspiron-14-plus-5441",
+        "hwids": [
+          "3d8cd946-63d3-5ec7-8ebf-211a41be8d3e",
+          "292909ae-0328-5ee8-b965-f8d64266ea1f",
+          "f110a06d-0540-5b88-9dab-25f4f1f2073d",
+          "11c02816-fd4f-554c-945d-06331bb5089a",
+          "402dea86-8a39-50fc-84b4-2e373e1bb25a"
+        ]
+      },
+      {
         "file": "x1p42100-hp-omnibook-3-16.json",
         "name": "HP OmniBook 3 Laptop 16-bz0xxx",
         "compatible": "hp,omnibook-3-16-bz0",
@@ -6288,6 +6363,16 @@
           "7f89e5f5-d13c-5489-a568-af56ff6fdbed",
           "60620447-0951-5151-8768-e9bca54efaff"
         ]
+      },
+      {
+        "file": "x1p64100-microsoft-denali.json",
+        "name": "Microsoft Surface Pro 11th Edition (LCD)",
+        "compatible": "microsoft,denali-lcd",
+        "hwids": [
+          "3ae5702b-a1d9-50d5-83d8-4aa34e371123",
+          "dac465e6-ddc3-5777-a3f7-a0ce47d41e1d",
+          "26f0f85f-48fb-5d0b-b671-9e70dc8e83d5"
+        ]
       }
     ],
     "image": {
@@ -6295,80 +6380,6 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.08.484/omarchy-edge-2026.11.08.484-aarch64.iso",
       "kernel": "7.3.0-37-omarchy"
     },
-    "pulls": [
-      {
-        "number": 2404,
-        "title": "Add the Dell Inspiron 14 5441 (X1P-42-100) and the Lenovo ThinkCentre neo 50q QC",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2404",
-        "draft": true,
-        "deviceTrees": [
-          {
-            "file": "x1p42100-dell-inspiron-14-plus-5441.dts",
-            "model": "Dell Inspiron 14 Plus 5441 (X1P-42-100)",
-            "compatible": [
-              "dell,purwa-inspiron-14-plus-5441",
-              "qcom,x1p42100"
-            ]
-          },
-          {
-            "file": "x126100-lenovo-thinkcentre-neo-50q-qc.dts",
-            "model": "Lenovo ThinkCentre neo 50q QC",
-            "compatible": [
-              "lenovo,thinkcentre-neo-50q-qc",
-              "qcom,x126100",
-              "qcom,x1p42100"
-            ]
-          }
-        ],
-        "ids": [
-          {
-            "file": "x126100-lenovo-thinkcentre-neo-50q-qc.json",
-            "compatible": "lenovo,thinkcentre-neo-50q-qc"
-          },
-          {
-            "file": "x1p42100-dell-inspiron-14-plus-5441.json",
-            "compatible": "dell,purwa-inspiron-14-plus-5441"
-          },
-          {
-            "file": "x1p64100-microsoft-denali.json",
-            "compatible": "microsoft,denali-lcd"
-          }
-        ],
-        "firmware": [
-          "qcom/x1e80100/dell/inspiron-14-plus-5441/adsp_dtbs.elf",
-          "qcom/x1e80100/dell/inspiron-14-plus-5441/adspr.jsn",
-          "qcom/x1e80100/dell/inspiron-14-plus-5441/adsps.jsn",
-          "qcom/x1e80100/dell/inspiron-14-plus-5441/adspua.jsn",
-          "qcom/x1e80100/dell/inspiron-14-plus-5441/battmgr.jsn",
-          "qcom/x1e80100/dell/inspiron-14-plus-5441/cdsp_dtbs.elf",
-          "qcom/x1e80100/dell/inspiron-14-plus-5441/cdspr.jsn",
-          "qcom/x1e80100/dell/inspiron-14-plus-5441/qcadsp8380.mbn",
-          "qcom/x1e80100/dell/inspiron-14-plus-5441/qccdsp8380.mbn",
-          "qcom/x1e80100/dell/inspiron-14-plus-5441/qcdxkmsuc8380.mbn",
-          "qcom/x1e80100/dell/inspiron-14-plus-5441/qcvss8380.mbn",
-          "qcom/x1p42100/LENOVO/13C8/adsp_dtbs.elf",
-          "qcom/x1p42100/LENOVO/13C8/adspr.jsn",
-          "qcom/x1p42100/LENOVO/13C8/adsps.jsn",
-          "qcom/x1p42100/LENOVO/13C8/adspua.jsn",
-          "qcom/x1p42100/LENOVO/13C8/cdsp_dtbs.elf",
-          "qcom/x1p42100/LENOVO/13C8/cdspr.jsn",
-          "qcom/x1p42100/LENOVO/13C8/qcadsp8380.mbn",
-          "qcom/x1p42100/LENOVO/13C8/qccdsp8380.mbn",
-          "qcom/x1p42100/LENOVO/13C8/qcdxkmsucpurwa.mbn",
-          "qcom/x1p42100/LENOVO/13C8/qcvss8380_pa.mbn",
-          "qcom/x1p42100/dell/inspiron-14-plus-5441/adsp_dtbs.elf",
-          "qcom/x1p42100/dell/inspiron-14-plus-5441/adspr.jsn",
-          "qcom/x1p42100/dell/inspiron-14-plus-5441/adsps.jsn",
-          "qcom/x1p42100/dell/inspiron-14-plus-5441/adspua.jsn",
-          "qcom/x1p42100/dell/inspiron-14-plus-5441/battmgr.jsn",
-          "qcom/x1p42100/dell/inspiron-14-plus-5441/cdsp_dtbs.elf",
-          "qcom/x1p42100/dell/inspiron-14-plus-5441/cdspr.jsn",
-          "qcom/x1p42100/dell/inspiron-14-plus-5441/qcadsp8380.mbn",
-          "qcom/x1p42100/dell/inspiron-14-plus-5441/qccdsp8380.mbn",
-          "qcom/x1p42100/dell/inspiron-14-plus-5441/qcdxkmsucpurwa.mbn",
-          "qcom/x1p42100/dell/inspiron-14-plus-5441/qcvss8380_pa.mbn"
-        ]
-      }
-    ]
+    "pulls": []
   }
 }
