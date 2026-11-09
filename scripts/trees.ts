@@ -16,7 +16,7 @@ const models: Model[] = parse(readFileSync('data/models.yaml', 'utf8')).models;
 const DT_DIR = 'arch/arm64/boot/dts/qcom/';
 
 // GitHub's raw file host answers 429 after a burst of requests, so files on GitHub go through its API instead,
-// with the workflow's token when there is one, and a 429 waits and tries again
+// with the workflow's token when there is one, and a 429 or a server error waits and tries again
 async function get(url: string) {
   const github = url.match(/^https:\/\/raw\.githubusercontent\.com\/([^/]+)\/([^/]+)\/([^/]+)\/(.+)$/);
   const token = process.env.GITHUB_TOKEN;
@@ -26,7 +26,7 @@ async function get(url: string) {
   for (let attempt = 1; ; attempt++) {
     const response = await fetch(request.url, { headers: { 'User-Agent': 'arewearmyet (+https://arewearmyet.com)', ...request.headers } });
     if (response.ok) return response.text();
-    if (response.status !== 429 || attempt === 4) throw new Error(`${url}: HTTP ${response.status}`);
+    if ((response.status !== 429 && response.status < 500) || attempt === 4) throw new Error(`${url}: HTTP ${response.status}`);
     await new Promise((resolve) => setTimeout(resolve, attempt * 15000));
   }
 }

@@ -171,6 +171,56 @@ function zeroSosn(table: Buffer) {
   return { data, changed };
 }
 
+// A report made by hand can leave the processor's serial number, the same chip serial as SOSN, in the SMBIOS
+// table, and blank other strings with zeros, so the table no longer walks from its start. Each processor
+// structure (type 4) is found by its own header instead, and its serial number and asset tag overwritten.
+function blankProcessorSerial(table: Buffer) {
+  const data = Buffer.from(table);
+  let changed = false;
+  for (let at = 0; at + 0x23 < data.length; at++) {
+    const length = data[at + 1];
+    if (data[at] !== 4 || length < 0x23 || length > 0x40 || at + length >= data.length) continue;
+    const strings: [number, number][] = [];
+    for (let from = at + length; from < data.length && data[from] !== 0; ) {
+      const end = data.indexOf(0, from);
+      if (end < 0) break;
+      strings.push([from, end]);
+      from = end + 1;
+    }
+    const text = (index: number) => (index > 0 && index <= strings.length ? data.toString('latin1', ...strings[index - 1]) : '');
+    if (!strings.every(([from, end]) => data.subarray(from, end).every((byte) => byte >= 0x20 && byte < 0x7f))) continue;
+    if (!/CPU|Processor|Snapdragon|Qualcomm|NVIDIA/i.test(text(data[at + 0x10]))) continue;
+    for (const field of [0x20, 0x21]) {
+      const value = text(data[at + field]);
+      if (!value || value === 'redacted' || /^0+$/.test(value)) continue;
+      data.fill(0x30, ...strings[data[at + field] - 1]);
+      changed = true;
+    }
+  }
+  return { data, changed };
+}
+
+// The same for a panel's serial number in its EDID: the number in bytes 12 to 15 and a serial number descriptor
+// (tag 0xff), with the block's checksum put right.
+function blankEdidSerial(edid: Buffer) {
+  const data = Buffer.from(edid);
+  let changed = false;
+  if (data.length < 128 || data.readUInt32BE(0) !== 0x00ffffff) return { data, changed };
+  if (data.subarray(12, 16).some((byte) => byte !== 0)) {
+    data.fill(0, 12, 16);
+    changed = true;
+  }
+  for (let at = 54; at < 126; at += 18) {
+    if (data.readUInt16BE(at) === 0 && data[at + 2] === 0 && data[at + 3] === 0xff && !/^0*$/.test(data.toString('latin1', at + 5, at + 18).trim())) {
+      data.fill(0x20, at + 5, at + 18);
+      data[at + 5] = 0x0a;
+      changed = true;
+    }
+  }
+  if (changed) data[127] = (256 - (data.subarray(0, 127).reduce((sum, byte) => sum + byte, 0) % 256)) % 256;
+  return { data, changed };
+}
+
 const KEEP = /^(acpi\/[^/]+\.dat|smbios\/[^/]+|edid\/[^/]+|firmware\.json|hwids\.json|report\.json|summary\.md)$/;
 const walk = (dir: string, base = ''): string[] => readdirSync(join(dir, base), { withFileTypes: true }).flatMap((entry) =>
   entry.isDirectory() ? walk(dir, join(base, entry.name)) : [join(base, entry.name)]);
@@ -181,11 +231,16 @@ rmSync('reports', { recursive: true, force: true });
 function copyReport(report: string, files: { file: string; data: Buffer }[], from: string) {
   const to = join('reports', report);
   let zeroed = 0;
+  let blanked = false;
   for (const { file, data } of files) {
     mkdirSync(dirname(join(to, file)), { recursive: true });
     if (file.startsWith('acpi/')) {
       const scrubbed = zeroSosn(data);
       if (scrubbed.changed) zeroed++;
+      writeFileSync(join(to, file), scrubbed.data);
+    } else if (file.startsWith('smbios/') || file.startsWith('edid/')) {
+      const scrubbed = file.startsWith('smbios/') ? blankProcessorSerial(data) : blankEdidSerial(data);
+      if (scrubbed.changed) blanked = true;
       writeFileSync(join(to, file), scrubbed.data);
     } else {
       writeFileSync(join(to, file), data);
@@ -195,6 +250,7 @@ function copyReport(report: string, files: { file: string; data: Buffer }[], fro
     `# Hardware report ${report}`, '',
     `From ${from}, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC`,
     `addresses. Here the SoC serial number (SOSN) is also zeroed in the ACPI tables and each table's checksum corrected${zeroed ? ` (${zeroed} table${zeroed === 1 ? '' : 's'} still had it)` : ''}.`,
+    ...(blanked ? ['It still had the processor\'s or the panel\'s serial number, which is blanked here.'] : []),
     'The device list, driver files and registry export stay in that repository.', '',
     '- `acpi/`: the ACPI tables. Disassemble with `iasl -d`.',
     '- `smbios/dmi.bin`: the SMBIOS table. Read it with `dmidecode --from-dump`.',
@@ -203,7 +259,7 @@ function copyReport(report: string, files: { file: string; data: Buffer }[], fro
     '- `hwids.json`, `report.json`, `summary.md`: the report\'s hardware IDs and its own record.', '',
     'Copied by scripts/archive.ts.', '',
   ].join('\n'));
-  console.log(`reports/${report}: ${files.length} files${zeroed ? `, SOSN zeroed in ${zeroed}` : ''}`);
+  console.log(`reports/${report}: ${files.length} files${zeroed ? `, SOSN zeroed in ${zeroed}` : ''}${blanked ? ', serial blanked' : ''}`);
 }
 
 const reportDirs = walk(join(checkout, 'reports')).filter((file) => file.endsWith('/report.json')).map((file) => dirname(file)).sort();

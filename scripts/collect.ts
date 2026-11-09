@@ -355,14 +355,17 @@ async function collectOmarchy() {
 //   a folder master doesn't have
 // - linux-surface's dumps of the Arm Surfaces, as linux-surface/<folder>
 // - the ARM installer's hardware reports, merged or in an open pull request, by reports/<vendor>/<model> folder as
-//   hardware-reports/<vendor>/<model>, since one model can get several reports; a report the installer couldn't
-//   name (unknown/unknown) by its own folder
+//   hardware-reports/<vendor>/<model>, since one model can get several reports; a report in a folder several
+//   models share (PER_REPORT) by its own folder
 // - this repository's acpi/<folder> as arewearmyet/<folder>, for dumps published here first
 // - this repository's acpi/firmware/<folder> as firmware/<folder>, for tables taken out of a maker's BIOS or UEFI image
 const LAPTOPS = 'aarch64-laptops/build';
 const SURFACE = 'linux-surface/acpidumps';
 const REPORTS = 'turbineBMW/omarchy-hardware-reports';
 const SURFACE_ARM = /_qcom$|_5g$|^windows_dev_kit|^surface_pro_x/;
+// Report folders that hold more than one model, so each report in them goes by its own folder: the ones the installer
+// couldn't name, and the Galaxy Book4 Edge, whose 14, 15 and 16 inch models all give the same product name
+const PER_REPORT = new Set(['unknown/unknown', 'samsung-electronics-co-ltd/galaxy-book4-edge']);
 
 type AcpiDump = { folder: string; url: string; repo?: string; ref?: string; dir?: string; pull?: { number: number; state: string; by: string } };
 
@@ -398,7 +401,7 @@ async function collectAcpiDumps(): Promise<AcpiDump[]> {
   const surfaceFolders = new Set(surface.map((path) => path.split('/')).filter((parts) => parts.length > 1 && SURFACE_ARM.test(parts[0])).map((parts) => parts[0]));
 
   const reportDump = (path: string) => path.match(/^reports\/([^/]+\/[^/]+)\/([^/]+)\/acpi\/dsdt\.(dat|bin|aml)$/i);
-  const reportKey = (model: string, id: string) => (model === 'unknown/unknown' ? `${model}/${id}` : model);
+  const reportKey = (model: string, id: string) => (PER_REPORT.has(model) ? `${model}/${id}` : model);
   const reported = new Map<string, AcpiDump>();
   for (const [, model, id] of reports.map(reportDump).filter(Boolean) as RegExpMatchArray[]) {
     const key = reportKey(model, id);
