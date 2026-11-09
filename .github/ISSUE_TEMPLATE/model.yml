@@ -7,7 +7,7 @@ body:
       value: |
         Thanks for helping. Every model needs a device tree and its hardware IDs, which let a boot image pick that device tree by itself. Send what you have; one field is already useful.
 
-        Don't paste serial numbers, and don't attach firmware files: they belong to the vendor, so a link to the vendor's download is what helps.
+        Don't paste serial numbers.
 
   - type: input
     id: model
