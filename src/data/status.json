@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-08T19:08:00.455Z",
+  "collected": "2026-11-09T05:26:38.702Z",
   "linuxNext": "20261105",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-40",
+    "kernel": "7.3-41",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-40",
+        "kernel": "7.3-41",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -11449,6 +11449,10 @@
     "deviceTrees": [],
     "ids": [],
     "firmware": [],
-    "acpi": []
+    "acpi": [
+      "hardware-reports/microsoft-corporation/microsoft-surface-laptop-7th-edition",
+      "hardware-reports/lenovo/13c8cto1ww",
+      "hardware-reports/microsoft-corporation/microsoft-surface-laptop-7th-edition"
+    ]
   }
 }

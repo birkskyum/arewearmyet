@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-08T19:08:00.455Z",
+  "collected": "2026-11-09T05:26:38.702Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4182,6 +4182,42 @@
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
     },
     {
+      "folder": "hardware-reports/microsoft-corporation/microsoft-surface-laptop-7th-edition",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/28",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "81118b3db1cf182d33bb57e2f315887e5fae55f6",
+      "dir": "reports/microsoft-corporation/microsoft-surface-laptop-7th-edition/21ab1011",
+      "pull": {
+        "number": 28,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
+      "folder": "hardware-reports/lenovo/13c8cto1ww",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/26",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "c344150ca08dfe9db8f628ecd0890b611cbf837c",
+      "dir": "reports/lenovo/13c8cto1ww/c6b22c7a",
+      "pull": {
+        "number": 26,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
+      "folder": "hardware-reports/microsoft-corporation/microsoft-surface-laptop-7th-edition",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/24",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "12abcbe7327d2ce69e6c2849b8718c3c5b1a8afd",
+      "dir": "reports/microsoft-corporation/microsoft-surface-laptop-7th-edition/ad8b46fc",
+      "pull": {
+        "number": 24,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
       "folder": "hardware-reports/microsoft-corporation/microsoft-surface-pro-11th-edition",
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/22",
       "repo": "turbineBMW/omarchy-hardware-reports",
@@ -4678,7 +4714,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-40",
+        "kernel": "7.3-41",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",

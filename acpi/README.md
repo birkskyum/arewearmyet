@@ -108,3 +108,8 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 - Samsung Galaxy Book4 Edge 16
 - Samsung Galaxy Book5 Edge 5G
 - Samsung Galaxy Book6 Edge 16
+
+## Not matched to a model yet
+
+- [hardware-reports/microsoft-corporation/microsoft-surface-laptop-7th-edition](../reports/microsoft-corporation/microsoft-surface-laptop-7th-edition)
+- [hardware-reports/lenovo/13c8cto1ww](../reports/lenovo/13c8cto1ww)
