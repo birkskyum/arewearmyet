@@ -1173,8 +1173,8 @@
     "nvidiaWorks": 2,
     "nvidiaExpected": 15,
     "works": 2,
-    "should": 44,
-    "problems": 8,
+    "should": 45,
+    "problems": 7,
     "notYet": 32,
     "deviceTree": 58,
     "ids": 56,
@@ -10442,9 +10442,9 @@
         "https://www.energystar.gov/productfinder/product/certified-computers/details/4510120/export/pdf",
         "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
       ],
-      "notes": "The hardware IDs Omarchy carries come from an NP944XMA. The European NP940XMA has another baseboard name and BIOS line, so none of them match and the image doesn't pick the tree on it yet. Its owner sent its IDs in, and runs it daily on another kernel, with deep sleep in s2idle at about 0.9 W.",
-      "outcome": "problems",
-      "bootable": "problems",
+      "notes": "The European NP940XMA has another baseboard name and BIOS line than the NP944XMA, so it has its own hardware IDs, on edge since linux-omarchy 7.3-42. Its owner runs it daily on another kernel, with deep sleep in s2idle at about 0.9 W. Nobody has booted Omarchy's image on it yet.",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [
         {
           "state": "problems",
@@ -10534,11 +10534,10 @@
           "model": "NP940XMA",
           "chip": "X1E-80-100",
           "compatible": "samsung,galaxy-book4-edge-14",
-          "borrowed": true,
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -10550,8 +10549,14 @@
           },
           "firmwareNeeded": [],
           "ids": [],
-          "stubble": [],
-          "outcome": "manual",
+          "stubble": [
+            {
+              "file": "x1e80100-samsung-galaxy-book4-edge-14.json",
+              "state": "open",
+              "url": "https://github.com/ubuntu/stubble/pull/98"
+            }
+          ],
+          "outcome": "should",
           "reports": []
         }
       ],
