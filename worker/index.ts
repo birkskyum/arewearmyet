@@ -8,9 +8,16 @@
  * from the one in its URL. The installer asks which files are missing, sends
  * those, then sends the list of every file with its driver package, and gets a
  * code back for the owner's hardware report.
+ *
+ * A request body can't pass 100 MB on this plan, so a bigger file comes in
+ * parts: an R2 multipart upload under incoming/, which is then copied to its
+ * place under files/ with the same SHA-256 check, so R2 does the hashing
+ * rather than the Worker.
  */
 
 const MAX_FILE = 95 * 1024 * 1024;
+const MAX_LARGE = 1024 * 1024 * 1024;
+const MAX_PARTS = 100;
 const MAX_HASHES = 40;
 const MAX_REPORT_FILES = 5000;
 const MAX_REPORT = 2 * 1024 * 1024;
@@ -34,6 +41,7 @@ export default {
     const route = url.pathname.slice('/api/firmware/'.length);
     if (route === 'missing' && request.method === 'POST') return missing(request, env);
     if (route.startsWith('files/') && request.method === 'PUT') return putFile(route.slice('files/'.length), request, env);
+    if (route.startsWith('uploads/')) return upload(route.slice('uploads/'.length).split('/'), request, env);
     if (route === 'reports' && request.method === 'POST') return putReport(request, env);
     return json({ error: 'Not found.' }, 404);
   },
@@ -68,6 +76,80 @@ async function putFile(hash: string, request: Request, env: Env): Promise<Respon
   return json({ stored: true }, 201);
 }
 
+/**
+ * A file over MAX_FILE, in parts:
+ * POST uploads/<sha256> with {"size"} starts it and answers {"uploadId"};
+ * PUT uploads/<sha256>/<uploadId>/<part> sends part 1, 2, ..., each the same
+ * size but the last, at least 5 MiB and at most MAX_FILE, and answers {"etag"};
+ * POST uploads/<sha256>/<uploadId>/complete with {"parts": [{"partNumber", "etag"}]}
+ * joins them, checks the SHA-256 and stores the file.
+ */
+async function upload(path: string[], request: Request, env: Env): Promise<Response> {
+  const [hash, uploadId, part] = path;
+  if (!SHA256.test(hash ?? '')) return json({ error: 'The path must name the lowercase SHA-256 of the file.' }, 400);
+  const key = `files/${hash}`;
+  const incoming = `incoming/${hash}`;
+
+  if (path.length === 1 && request.method === 'POST') {
+    const body = await readJson(request, 1024);
+    const size = body && typeof body === 'object' && 'size' in body ? body.size : null;
+    if (typeof size !== 'number' || !Number.isInteger(size) || size <= MAX_FILE || size > MAX_LARGE)
+      return json({ error: `Send {"size"} for a file over ${MAX_FILE} and up to ${MAX_LARGE} bytes.` }, 400);
+    if (await env.FIRMWARE.head(key)) return json({ stored: false });
+    const started = await env.FIRMWARE.createMultipartUpload(incoming);
+    return json({ uploadId: started.uploadId }, 201);
+  }
+  if (!uploadId) return json({ error: 'Not found.' }, 404);
+  const multipart = env.FIRMWARE.resumeMultipartUpload(incoming, uploadId);
+
+  if (path.length === 3 && part !== 'complete' && request.method === 'PUT') {
+    const number = Number(part);
+    if (!Number.isInteger(number) || number < 1 || number > MAX_PARTS) return json({ error: `Parts are numbered 1 to ${MAX_PARTS}.` }, 400);
+    const length = Number(request.headers.get('content-length'));
+    if (!Number.isInteger(length) || length <= 0) return json({ error: 'Content-Length is required.' }, 411);
+    if (length > MAX_FILE) return json({ error: `Parts over ${MAX_FILE} bytes aren't taken.` }, 413);
+    if (!request.body) return json({ error: 'The part is missing.' }, 400);
+    try {
+      const uploaded = await multipart.uploadPart(number, request.body);
+      return json({ etag: uploaded.etag });
+    } catch {
+      return json({ error: 'No such upload.' }, 404);
+    }
+  }
+
+  if (path.length === 3 && part === 'complete' && request.method === 'POST') {
+    const body = await readJson(request, 64 * 1024);
+    const parts = body && typeof body === 'object' && 'parts' in body ? body.parts : null;
+    if (!Array.isArray(parts) || parts.length === 0 || parts.length > MAX_PARTS
+        || !parts.every((p) => p && Number.isInteger(p.partNumber) && typeof p.etag === 'string'))
+      return json({ error: 'Send {"parts": [{"partNumber", "etag"}]}.' }, 400);
+    let joined: R2Object;
+    try {
+      joined = await multipart.complete(parts as R2UploadedPart[]);
+    } catch {
+      return json({ error: "The parts couldn't be joined." }, 400);
+    }
+    try {
+      if (await env.FIRMWARE.head(key)) return json({ stored: false });
+      if (joined.size > MAX_LARGE) return json({ error: `Files over ${MAX_LARGE} bytes aren't taken.` }, 413);
+      const object = await env.FIRMWARE.get(incoming);
+      if (!object) return json({ error: 'The joined file is missing.' }, 500);
+      // R2 hashes what it is given and refuses a mismatch, as for one PUT
+      const { readable, writable } = new FixedLengthStream(object.size);
+      const copied = object.body.pipeTo(writable);
+      try {
+        await Promise.all([env.FIRMWARE.put(key, readable, { sha256: hash }), copied]);
+      } catch {
+        return json({ error: "The file doesn't match its SHA-256." }, 400);
+      }
+      return json({ stored: true }, 201);
+    } finally {
+      await env.FIRMWARE.delete(incoming);
+    }
+  }
+  return json({ error: 'Not found.' }, 404);
+}
+
 /** Stores the list of files a laptop sent and returns its code. */
 async function putReport(request: Request, env: Env): Promise<Response> {
   const body = await readJson(request, MAX_REPORT);
@@ -93,7 +175,7 @@ async function putReport(request: Request, env: Env): Promise<Response> {
       return json({ error: `Bad file path: ${String(folder)}/${String(name)}` }, 400);
     if (typeof size !== 'number' || !Number.isInteger(size) || size < 0) return json({ error: `Bad size for ${folder}/${name}` }, 400);
     if (typeof sha256 !== 'string' || !SHA256.test(sha256)) return json({ error: `Bad SHA-256 for ${folder}/${name}` }, 400);
-    cleanFiles.push({ folder, name, size, sha256, uploaded: size <= MAX_FILE });
+    cleanFiles.push({ folder, name, size, sha256, uploaded: size <= MAX_LARGE });
   }
 
   // The same machine sending the same files again gets its first code back,
