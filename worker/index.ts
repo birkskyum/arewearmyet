@@ -96,12 +96,26 @@ async function putReport(request: Request, env: Env): Promise<Response> {
     cleanFiles.push({ folder, name, size, sha256, uploaded: size <= MAX_FILE });
   }
 
+  // The same machine sending the same files again gets its first code back,
+  // so a second run makes no second report; any other driver changes it
+  const digestKey = `digests/${await listDigest(cleanMachine, cleanFiles)}`;
+  const known = await env.FIRMWARE.get(digestKey);
+  if (known) return json({ code: await known.text(), known: true });
+
   const code = newCode();
   const report = { code, received: new Date().toISOString(), installer, machine: cleanMachine, files: cleanFiles };
   await env.FIRMWARE.put(`reports/${code}.json`, JSON.stringify(report, null, 1), {
     httpMetadata: { contentType: 'application/json' },
   });
-  return json({ code }, 201);
+  await env.FIRMWARE.put(digestKey, code);
+  return json({ code, known: false }, 201);
+}
+
+async function listDigest(machine: Record<string, string>, files: { folder: string; name: string; sha256: string }[]): Promise<string> {
+  const lines = files.map((f) => `${f.folder}/${f.name} ${f.sha256}`).sort();
+  const text = JSON.stringify([MACHINE_KEYS.map((k) => machine[k] ?? ''), lines]);
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 function segment(part: string): boolean {

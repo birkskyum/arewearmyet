@@ -31,7 +31,7 @@ Each copied folder has a `SOURCE.md` naming where its files came from. Linux, sy
 
 1. `POST /api/firmware/missing` with `{"sha256": [...]}`, at most 40 hashes, answers `{"missing": [...]}`.
 2. `PUT /api/firmware/files/<sha256>` with the file as the body, at most 95 MB. R2 refuses a body whose hash differs.
-3. `POST /api/firmware/reports` with `{"installer", "machine": {"manufacturer", "product", "family", "sku", "baseboard", "bios"}, "files": [{"folder", "name", "size", "sha256"}]}` stores `reports/<code>.json` and answers `{"code": "FW-..."}` for the owner's hardware report. Other machine fields, like a serial number, are dropped.
+3. `POST /api/firmware/reports` with `{"installer", "machine": {"manufacturer", "product", "family", "sku", "baseboard", "bios"}, "files": [{"folder", "name", "size", "sha256"}]}` stores `reports/<code>.json` and answers `{"code": "FW-...", "known": false}` for the owner's hardware report. Other machine fields, like a serial number, are dropped. The same machine with the same files gets its first code back with `"known": true`, and no second report.
 
 Each IP gets 300 requests a minute, and an answer of 429 means wait a minute. Setting `FIRMWARE_UPLOADS` to anything but `on` in `wrangler.jsonc` closes the drop. Locally, `pnpm build && pnpm wrangler dev` runs it against a local bucket.
 
