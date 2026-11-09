@@ -15,8 +15,9 @@ const MAX_HASHES = 40;
 const MAX_REPORT_FILES = 5000;
 const MAX_REPORT = 2 * 1024 * 1024;
 const SHA256 = /^[0-9a-f]{64}$/;
-const FOLDER = /^[A-Za-z0-9][A-Za-z0-9._-]{0,159}$/;
-const NAME = /^[A-Za-z0-9._+-][A-Za-z0-9._+ ()-]{0,159}(\/[A-Za-z0-9._+-][A-Za-z0-9._+ ()-]{0,159}){0,7}$/;
+// Paths are only kept as data (files are stored by hash), so any Windows
+// file name goes, short of control characters and backslashes
+const UNSAFE = /[\u0000-\u001f\u007f\\/]/;
 const MACHINE_KEYS = ['manufacturer', 'product', 'family', 'sku', 'baseboard', 'bios'] as const;
 const CODE_ALPHABET = 'ABCDEFGHJKMNPQRSTVWXYZ23456789';
 
@@ -88,7 +89,7 @@ async function putReport(request: Request, env: Env): Promise<Response> {
   const cleanFiles = [];
   for (const f of files) {
     const { folder, name, size, sha256 } = (f ?? {}) as Record<string, unknown>;
-    if (typeof folder !== 'string' || !FOLDER.test(folder) || typeof name !== 'string' || !NAME.test(name) || name.split('/').includes('..'))
+    if (typeof folder !== 'string' || !segment(folder) || typeof name !== 'string' || name.split('/').length > 8 || !name.split('/').every(segment))
       return json({ error: `Bad file path: ${String(folder)}/${String(name)}` }, 400);
     if (typeof size !== 'number' || !Number.isInteger(size) || size < 0) return json({ error: `Bad size for ${folder}/${name}` }, 400);
     if (typeof sha256 !== 'string' || !SHA256.test(sha256)) return json({ error: `Bad SHA-256 for ${folder}/${name}` }, 400);
@@ -101,6 +102,10 @@ async function putReport(request: Request, env: Env): Promise<Response> {
     httpMetadata: { contentType: 'application/json' },
   });
   return json({ code }, 201);
+}
+
+function segment(part: string): boolean {
+  return part.length > 0 && part.length <= 160 && part !== '.' && part !== '..' && !UNSAFE.test(part);
 }
 
 async function readJson(request: Request, limit: number): Promise<unknown> {
