@@ -81,9 +81,14 @@ for (const model of models) {
 const same = (a: Ids, b: Ids) => a.compatible === b.compatible && [...(a.hwids ?? [])].sort().join() === [...(b.hwids ?? [])].sort().join();
 const inSystemd = (entry: Ids) => sources.systemd.some((listed: Ids) => same(listed, entry));
 
-const PKGS_RECIPE = 'https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64';
+const PKGS = 'https://github.com/omacom/omarchy-pkgs/blob/master';
+const KERNEL_RECIPE = 'pkgbuilds/linux-omarchy-aarch64';
 const candidates: (Ids & { source: string })[] = [
-  ...(sources.omarchy.carriedIds ?? []).map((entry: Ids) => ({ ...entry, source: `Omarchy's kernel package, ${PKGS_RECIPE}/${entry.file}` })),
+  // The ID files sit in the kernel's recipe, or in the device tree package's once they move there
+  ...(sources.omarchy.carriedIds ?? []).map(({ recipe, ...entry }: Ids & { recipe?: string }) => ({
+    ...entry,
+    source: `Omarchy's ${recipe && recipe !== KERNEL_RECIPE ? 'device tree' : 'kernel'} package, ${PKGS}/${recipe ?? KERNEL_RECIPE}/${entry.file}`,
+  })),
   ...sources.stubble.map((entry: Ids & { state: string; url: string }) => ({ ...entry, source: `Ubuntu's stubble, ${entry.state === 'open' ? 'pull request' : 'merged'}: ${entry.url}` })),
 ];
 

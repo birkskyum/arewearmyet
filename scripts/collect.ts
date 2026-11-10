@@ -25,6 +25,9 @@ const OMARCHY_CHANNELS = [
 ];
 const OMARCHY_PKGS = 'omacom/omarchy-pkgs';
 const OMARCHY_KERNEL_RECIPE = 'pkgbuilds/linux-omarchy-aarch64';
+// The device trees and hardware ID files move out of the kernel package into this one
+const OMARCHY_TREES_RECIPE = 'pkgbuilds/linux-omarchy-dtbs';
+const OMARCHY_TREES_PACKAGE = 'linux-omarchy-dtbs';
 
 function githubToken(): string | undefined {
   if (process.env.GITHUB_TOKEN) return process.env.GITHUB_TOKEN;
@@ -38,16 +41,23 @@ function githubToken(): string | undefined {
 const token = githubToken();
 
 // GitHub's API and raw hosts answer the odd request with a 5xx, so a server
-// error or a dropped connection is tried again before the run gives up.
+// error or a dropped connection is tried again before the run gives up. GitHub
+// and GitLab also answer a burst of requests with 429; that waits as long as
+// Retry-After says, or a minute, and is tried more often.
 async function fetchRetrying(url: string, init: RequestInit = {}): Promise<Response> {
   for (let attempt = 1; ; attempt++) {
+    let wait = 2000 * attempt;
     try {
       const response = await fetch(url, init);
-      if (response.status < 500 || attempt === 3) return response;
+      if (response.status === 429 && attempt < 6) {
+        wait = Math.max(Number(response.headers.get('retry-after')) || 60, 1) * 1000;
+      } else if (response.status < 500 || attempt >= 3) {
+        return response;
+      }
     } catch (error) {
-      if (attempt === 3) throw error;
+      if (attempt >= 3) throw error;
     }
-    await new Promise((resolve) => setTimeout(resolve, 2000 * attempt));
+    await new Promise((resolve) => setTimeout(resolve, wait));
   }
 }
 
@@ -227,6 +237,7 @@ function packages(dir: string | undefined): Package[] {
 // package it comes in, under the name the kernel asks for
 function channelContents(repo: Package[], core: Package[]) {
   const kernel = repo.find((pkg) => pkg.name === 'linux-omarchy');
+  const trees = [...(kernel?.files ?? []), ...(repo.find((pkg) => pkg.name === OMARCHY_TREES_PACKAGE)?.files ?? [])];
   const systemd = core.find((pkg) => pkg.name === 'systemd');
   const names = (files: string[] | undefined, pattern: RegExp) => (files ?? []).map((path) => path.match(pattern)?.[1]).filter((name): name is string => Boolean(name)).sort();
   const firmware: Record<string, string[]> = {};
@@ -243,9 +254,9 @@ function channelContents(repo: Package[], core: Package[]) {
   return {
     kernel: kernel?.version ?? null,
     systemd: systemd?.version ?? null,
-    deviceTrees: names(kernel?.files, /^boot\/dtbs\/linux-omarchy\/qcom\/([^/]+)\.dtb$/).map((name) => `${name}.dts`).filter((file) => DT_PATTERN.test(file)),
+    deviceTrees: names(trees, /^boot\/dtbs\/linux-omarchy\/qcom\/([^/]+)\.dtb$/).map((name) => `${name}.dts`).filter((file) => DT_PATTERN.test(file)),
     hwids: names(systemd?.files, /^usr\/lib\/systemd\/boot\/hwids\/aa64\/([^/]+\.json)$/),
-    carriedIds: names(kernel?.files, /^usr\/lib\/systemd\/boot\/hwids\/aa64\/linux-omarchy\/([^/]+\.json)$/),
+    carriedIds: names(trees, /^usr\/lib\/systemd\/boot\/hwids\/aa64\/linux-omarchy\/([^/]+\.json)$/),
     firmware,
   };
 }
@@ -282,17 +293,19 @@ function omarchyKernelRecipe() {
     execFileSync('git', ['-C', dir, 'reset', '-q', '--hard', 'FETCH_HEAD'], { stdio: 'inherit' });
   } else {
     execFileSync('git', ['clone', '-q', '--depth', '1', '--filter=blob:none', '--sparse', 'https://github.com/omacom/omarchy-pkgs.git', dir], { stdio: 'inherit' });
-    execFileSync('git', ['-C', dir, 'sparse-checkout', 'set', OMARCHY_KERNEL_RECIPE], { stdio: 'inherit' });
   }
+  execFileSync('git', ['-C', dir, 'sparse-checkout', 'set', OMARCHY_KERNEL_RECIPE, OMARCHY_TREES_RECIPE], { stdio: 'inherit' });
   const recipe = join(dir, OMARCHY_KERNEL_RECIPE);
   const added = [];
   for (const patch of readdirSync(recipe).filter((name) => name.endsWith('.patch')).sort()) {
     added.push(...patchDeviceTrees(readFileSync(join(recipe, patch), 'utf8')).map((dt) => ({ ...dt, patch })));
   }
-  const ids = readdirSync(recipe).filter((name) => name.endsWith('.json')).sort().map((file) => {
-    const entry = JSON.parse(readFileSync(join(recipe, file), 'utf8'));
-    return { file, name: entry.name, compatible: entry.compatible, hwids: entry.hwids };
-  });
+  const ids = [OMARCHY_KERNEL_RECIPE, OMARCHY_TREES_RECIPE].filter((folder) => existsSync(join(dir, folder))).flatMap((folder) =>
+    readdirSync(join(dir, folder)).filter((name) => name.endsWith('.json')).map((file) => {
+      const entry = JSON.parse(readFileSync(join(dir, folder, file), 'utf8'));
+      return { file, recipe: folder, name: entry.name, compatible: entry.compatible, hwids: entry.hwids };
+    }),
+  ).sort((a, b) => a.file.localeCompare(b.file));
   return { added, ids };
 }
 
@@ -322,7 +335,7 @@ async function collectOmarchyPulls() {
       if (status === 'removed') continue;
       if (filename.startsWith(`${OMARCHY_KERNEL_RECIPE}/`) && /(dts|arm64-qcom).*\.patch$/i.test(filename)) {
         deviceTrees.push(...patchDeviceTrees(await raw(repo, pull.head.sha, filename)));
-      } else if (filename.startsWith(`${OMARCHY_KERNEL_RECIPE}/`) && filename.endsWith('.json')) {
+      } else if ([OMARCHY_KERNEL_RECIPE, OMARCHY_TREES_RECIPE].some((folder) => filename.startsWith(`${folder}/`)) && /^[^/]+\/[^/]+\/[^/]+\.json$/.test(filename)) {
         const entry = JSON.parse(await raw(repo, pull.head.sha, filename));
         ids.push({ file: filename.split('/').pop(), compatible: entry.compatible });
       } else if (/^pkgbuilds\/[^/]+-firmware\/PKGBUILD$/.test(filename)) {
