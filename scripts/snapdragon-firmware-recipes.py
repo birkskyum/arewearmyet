@@ -69,6 +69,7 @@ RECIPES = {
     "acer-swift-14-ai-firmware": ("Acer Swift 14 AI", ["qcom/x1e80100/ACER/SF14-11"]),
     "acer-swift-go-14-firmware": ("Acer Swift Go 14", ["qcom/x1e80100/ACER/SFG14-01"]),
     "asus-proart-pz13-firmware": ("ASUS ProArt PZ13", ["qcom/x1p42100/ASUSTeK/proart-pz13"]),
+    "asus-proart-pz14-firmware": ("ASUS ProArt PZ14", ["qcom/glymur/ASUSTeK/HT7407NA"]),
     "asus-vivobook-s14-firmware": ("ASUS Vivobook S 14", ["qcom/x1p42100/ASUSTeK/vivobook-s14"]),
     "asus-vivobook-s15-firmware": ("ASUS Vivobook S 15", ["qcom/x1e80100/ASUSTeK/vivobook-s15", "qcom/x1p42100/ASUSTeK/vivobook-s15"]),
     "asus-vivobook-16-firmware": ("ASUS Vivobook 16", ["qcom/x126100/ASUSTeK/vivobook-16"]),

@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-10T13:55:19.047Z",
+  "collected": "2026-11-10T14:19:22.037Z",
   "linuxNext": "20261109",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -1206,7 +1206,7 @@
     "notYet": 31,
     "deviceTree": 59,
     "ids": 58,
-    "firmware": 52,
+    "firmware": 53,
     "googlebooks": 2,
     "acpi": 45,
     "acpiWanted": 26,
@@ -1221,7 +1221,7 @@
         "omarchy": 57,
         "fromUpstream": 19,
         "added": 38,
-        "pull": 0,
+        "pull": 1,
         "available": 2,
         "upstream": 19,
         "channels": {
@@ -1291,7 +1291,9 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "asus-proart-pz14-ht7407"
+          ],
           "available": [
             "asus-ascent-qn10",
             "humain-horizon"
@@ -1302,8 +1304,8 @@
         "omarchy": 56,
         "fromUpstream": 28,
         "added": 28,
-        "pull": 0,
-        "available": 2,
+        "pull": 1,
+        "available": 1,
         "upstream": 28,
         "channels": {
           "stable": 28,
@@ -1371,10 +1373,11 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
-          "available": [
-            "asus-ascent-qn10",
+          "pull": [
             "asus-proart-pz14-ht7407"
+          ],
+          "available": [
+            "asus-ascent-qn10"
           ]
         }
       },
@@ -1383,7 +1386,7 @@
         "fromUpstream": 1,
         "added": 50,
         "pull": 0,
-        "available": 1,
+        "available": 2,
         "upstream": 1,
         "channels": {
           "stable": 1,
@@ -1448,6 +1451,7 @@
           ],
           "pull": [],
           "available": [
+            "asus-proart-pz14-ht7407",
             "hp-omnibook-5-14-he1"
           ]
         }
@@ -1457,7 +1461,7 @@
         "fromUpstream": 1,
         "added": 49,
         "pull": 0,
-        "available": 0,
+        "available": 1,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1515,7 +1519,9 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": []
+          "available": [
+            "asus-proart-pz14-ht7407"
+          ]
         }
       }
     }
@@ -3918,25 +3924,33 @@
         "https://www.asus.com/laptops/for-creators/proart/proart-pz14-ht7407/techspec/",
         "https://www.notebookcheck.net/Powerful-creator-tablet-with-Snapdragon-X2-Elite-Asus-ProArt-PZ14-Review.1359622.0.html"
       ],
-      "notes": "No device tree yet. An owner sent a hardware report with the firmware list, and Windows is still on the tablet.",
+      "notes": "Nobody has booted its draft device tree yet. No sound profile, volume buttons or cameras yet.",
       "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "bootable": "pr",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2451",
+          "number": 2451,
+          "title": "Add the ASUS ProArt PZ14 (HT7407NA)"
+        },
         "ids": null,
-        "idsPull": null,
-        "firmware": "windows",
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2451",
+          "number": 2451,
+          "title": "Add the ASUS ProArt PZ14 (HT7407NA)"
+        },
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
-        "ids": "elsewhere",
-        "firmware": "none"
+        "deviceTree": "pr",
+        "ids": "pr",
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -3947,10 +3961,10 @@
         "ids": "collected",
         "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/35",
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "https://www.asus.com/laptops/for-creators/proart/proart-pz14-ht7407/helpdesk_download/",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -3963,12 +3977,22 @@
       },
       "variants": [
         {
+          "chip": "X2E-88-100",
+          "compatible": "asus,proart-pz14-ht7407na",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
           "bootChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2451",
+            "number": 2451,
+            "title": "Add the ASUS ProArt PZ14 (HT7407NA)"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2451",
+            "number": 2451,
+            "title": "Add the ASUS ProArt PZ14 (HT7407NA)"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],

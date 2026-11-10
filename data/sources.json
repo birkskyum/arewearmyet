@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-10T13:55:19.047Z",
+  "collected": "2026-11-10T14:19:22.037Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -6392,6 +6392,38 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.10.486/omarchy-edge-2026.11.10.486-aarch64.iso",
       "kernel": "7.3.0-43-omarchy"
     },
-    "pulls": []
+    "pulls": [
+      {
+        "number": 2451,
+        "title": "Add the ASUS ProArt PZ14 (HT7407NA)",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2451",
+        "draft": true,
+        "deviceTrees": [
+          {
+            "file": "glymur-asus-proart-pz14-ht7407na.dts",
+            "model": "ASUS ProArt PZ14 (HT7407NA)",
+            "compatible": [
+              "asus,proart-pz14-ht7407na",
+              "qcom,glymur"
+            ]
+          }
+        ],
+        "ids": [
+          {
+            "file": "glymur-asus-proart-pz14-ht7407na.json",
+            "compatible": "asus,proart-pz14-ht7407na"
+          }
+        ],
+        "firmware": [
+          "qcom/glymur/ASUSTeK/HT7407NA/adsp_dtbs.elf",
+          "qcom/glymur/ASUSTeK/HT7407NA/adspr.jsn",
+          "qcom/glymur/ASUSTeK/HT7407NA/adsps.jsn",
+          "qcom/glymur/ASUSTeK/HT7407NA/adspua.jsn",
+          "qcom/glymur/ASUSTeK/HT7407NA/cdsp_dtbs.elf",
+          "qcom/glymur/ASUSTeK/HT7407NA/qcadsp8480.mbn",
+          "qcom/glymur/ASUSTeK/HT7407NA/qccdsp8480.mbn"
+        ]
+      }
+    ]
   }
 }

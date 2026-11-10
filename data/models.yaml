@@ -436,8 +436,12 @@ models:
     chips: ["X2E-88-100"]
     model_numbers: ["HT7407NA"]
     acpi: ["hardware-reports/asus/proart-pz14-ht7407na", "firmware/asus-proart-pz14-ht7407"]
+    variants:
+      - { chip: "X2E-88-100", compatible: "asus,proart-pz14-ht7407na" }
+    firmware: ["qcom/glymur/ASUSTeK/HT7407NA"]
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/35"
-    notes: "No device tree yet. An owner sent a hardware report with the firmware list, and Windows is still on the tablet."
+    firmware_download: "https://www.asus.com/laptops/for-creators/proart/proart-pz14-ht7407/helpdesk_download/"
+    notes: "Nobody has booted its draft device tree yet. No sound profile, volume buttons or cameras yet."
     sources:
       - https://www.asus.com/laptops/for-creators/proart/proart-pz14-ht7407/techspec/
       - https://www.notebookcheck.net/Powerful-creator-tablet-with-Snapdragon-X2-Elite-Asus-ProArt-PZ14-Review.1359622.0.html
