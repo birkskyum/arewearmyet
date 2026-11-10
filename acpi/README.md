@@ -31,7 +31,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | ASUS Zenbook 14 (2026) | [asus-zenbook-14-ux3480qa](aarch64-laptops/asus-zenbook-14-ux3480qa) |
 | ASUS Zenbook A14 | [asus-zenbook-a14-ux3407q](aarch64-laptops/asus-zenbook-a14-ux3407q) |
 | ASUS Ascent QN10 | [asus-qn10-16e](aarch64-laptops/asus-qn10-16e) |
-| ASUS ProArt PZ14 | [firmware/asus-proart-pz14-ht7407](firmware/asus-proart-pz14-ht7407) |
+| ASUS ProArt PZ14 | [hardware-reports/asus/proart-pz14-ht7407na](../reports/asus/proart-pz14-ht7407na), [firmware/asus-proart-pz14-ht7407](firmware/asus-proart-pz14-ht7407) |
 | ASUS Vivobook S16 (S3607NA) | [firmware/asus-vivobook-s16-s3607na](firmware/asus-vivobook-s16-s3607na) |
 | ASUS Zenbook A14 (X2) | [asus-zenbook-a14-ux3407na](aarch64-laptops/asus-zenbook-a14-ux3407na) |
 | ASUS Zenbook A16 | [asus-zenbook-a16-ux3607oa](aarch64-laptops/asus-zenbook-a16-ux3607oa) |

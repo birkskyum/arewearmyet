@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-09T23:05:03.531Z",
+  "collected": "2026-11-10T13:55:19.047Z",
   "linuxNext": "20261109",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -9,9 +9,9 @@
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.08.484",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.08.484/omarchy-edge-2026.11.08.484-aarch64.iso",
-      "kernel": "7.3.0-37-omarchy"
+      "version": "2026.11.10.486",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.10.486/omarchy-edge-2026.11.10.486-aarch64.iso",
+      "kernel": "7.3.0-43-omarchy"
     },
     "channels": [
       {
@@ -1205,16 +1205,16 @@
     "problems": 7,
     "notYet": 31,
     "deviceTree": 59,
-    "ids": 57,
+    "ids": 58,
     "firmware": 52,
     "googlebooks": 2,
-    "acpi": 44,
-    "acpiWanted": 27,
+    "acpi": 45,
+    "acpiWanted": 26,
     "machine": {
       "team": 7,
-      "omarchy": 16,
+      "omarchy": 17,
       "linux": 34,
-      "nobody": 29
+      "nobody": 28
     },
     "byPiece": {
       "deviceTree": {
@@ -1303,7 +1303,7 @@
         "fromUpstream": 28,
         "added": 28,
         "pull": 0,
-        "available": 1,
+        "available": 2,
         "upstream": 28,
         "channels": {
           "stable": 28,
@@ -1373,7 +1373,8 @@
           ],
           "pull": [],
           "available": [
-            "asus-ascent-qn10"
+            "asus-ascent-qn10",
+            "asus-proart-pz14-ht7407"
           ]
         }
       },
@@ -3917,11 +3918,11 @@
         "https://www.asus.com/laptops/for-creators/proart/proart-pz14-ht7407/techspec/",
         "https://www.notebookcheck.net/Powerful-creator-tablet-with-Snapdragon-X2-Elite-Asus-ProArt-PZ14-Review.1359622.0.html"
       ],
-      "notes": null,
+      "notes": "No device tree yet. An owner sent a hardware report with the firmware list, and Windows is still on the tablet.",
       "outcome": "none",
       "bootable": "needs-deviceTree",
       "reports": [],
-      "machine": "nobody",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -3934,7 +3935,7 @@
       },
       "pieces": {
         "deviceTree": "none",
-        "ids": "none",
+        "ids": "elsewhere",
         "firmware": "none"
       },
       "upstream": {
@@ -3943,8 +3944,8 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": null,
         "devicetreeArchive": null,
-        "ids": "missing",
-        "idsCollected": null,
+        "ids": "collected",
+        "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/35",
         "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
@@ -3954,8 +3955,9 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "firmware",
+        "acpi": "collected",
         "acpiUrls": [
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/36",
           "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-proart-pz14-ht7407"
         ]
       },

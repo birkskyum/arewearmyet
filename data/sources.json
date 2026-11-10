@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-09T23:05:03.531Z",
+  "collected": "2026-11-10T13:55:19.047Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4185,6 +4185,18 @@
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
     },
     {
+      "folder": "hardware-reports/asus/proart-pz14-ht7407na",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/36",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "8db35d9cba3550100ae93182b84d5ef08f0dc3c4",
+      "dir": "reports/asus/proart-pz14-ht7407na/f79c37b6",
+      "pull": {
+        "number": 36,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
       "folder": "hardware-reports/samsung-electronics-co-ltd/galaxy-book4-edge/a220b319",
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/34",
       "repo": "turbineBMW/omarchy-hardware-reports",
@@ -6376,9 +6388,9 @@
       }
     ],
     "image": {
-      "version": "2026.11.08.484",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.08.484/omarchy-edge-2026.11.08.484-aarch64.iso",
-      "kernel": "7.3.0-37-omarchy"
+      "version": "2026.11.10.486",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.10.486/omarchy-edge-2026.11.10.486-aarch64.iso",
+      "kernel": "7.3.0-43-omarchy"
     },
     "pulls": []
   }
