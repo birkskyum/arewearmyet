@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-10T14:19:22.037Z",
+  "collected": "2026-11-10T15:12:02.195Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4765,10 +4765,11 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-43",
+        "kernel": "7.3-44",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
+          "glymur-asus-proart-pz14-ht7407na.dts",
           "glymur-asus-zenbook-a14-ux3407na.dts",
           "glymur-asus-zenbook-a16-ux3607oa.dts",
           "glymur-crd.dts",
@@ -4898,6 +4899,7 @@
         ],
         "carriedIds": [
           "glymur-anduril-bluechip.json",
+          "glymur-asus-proart-pz14-ht7407na.json",
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8-15.json",
           "glymur-microsoft-surface-laptop8.json",
@@ -5004,6 +5006,15 @@
             "qcom/x1p42100/ASUSTeK/proart-pz13/qcadsp8380.mbn",
             "qcom/x1p42100/ASUSTeK/proart-pz13/qccdsp8380.mbn",
             "qcom/x1p42100/ASUSTeK/proart-pz13/qcdxkmsucpurwa.mbn"
+          ],
+          "asus-proart-pz14-firmware": [
+            "qcom/glymur/ASUSTeK/HT7407NA/adsp_dtbs.elf",
+            "qcom/glymur/ASUSTeK/HT7407NA/adspr.jsn",
+            "qcom/glymur/ASUSTeK/HT7407NA/adsps.jsn",
+            "qcom/glymur/ASUSTeK/HT7407NA/adspua.jsn",
+            "qcom/glymur/ASUSTeK/HT7407NA/cdsp_dtbs.elf",
+            "qcom/glymur/ASUSTeK/HT7407NA/qcadsp8480.mbn",
+            "qcom/glymur/ASUSTeK/HT7407NA/qccdsp8480.mbn"
           ],
           "asus-vivobook-16-firmware": [
             "qcom/x126100/ASUSTeK/vivobook-16/adsp_dtbs.elf",
@@ -5927,6 +5938,15 @@
           "qcom,x1p42100"
         ],
         "patch": "2823-arm64-dts-qcom-Add-the-Lenovo-ThinkCentre-neo-50q-QC.patch"
+      },
+      {
+        "file": "glymur-asus-proart-pz14-ht7407na.dts",
+        "model": "ASUS ProArt PZ14 (HT7407NA)",
+        "compatible": [
+          "asus,proart-pz14-ht7407na",
+          "qcom,glymur"
+        ],
+        "patch": "2831-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ14-HT7407NA.patch"
       }
     ],
     "carriedIds": [
@@ -5945,6 +5965,18 @@
           "b2f01473-c24f-5adb-a1fd-eaa60da1a921",
           "473ae65d-b557-5883-afcb-bd99761da7fc",
           "888804a5-f928-546f-b9ac-6c06a8cf1bf0"
+        ]
+      },
+      {
+        "file": "glymur-asus-proart-pz14-ht7407na.json",
+        "name": "ASUS ProArt PZ14 HT7407NA",
+        "compatible": "asus,proart-pz14-ht7407na",
+        "hwids": [
+          "fe5f498c-9e87-54d8-96ab-66a2c20ab597",
+          "58c8aa55-813e-56cd-90c7-da03a83020e9",
+          "2df5f8d3-fbd1-5af3-9168-841b376cdee0",
+          "9a35a0bb-7b19-58ef-bc0c-6051ed101c7d",
+          "44e3c9d3-7f6f-5b1c-9dff-bf7dc533307b"
         ]
       },
       {
@@ -6392,38 +6424,6 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.10.486/omarchy-edge-2026.11.10.486-aarch64.iso",
       "kernel": "7.3.0-43-omarchy"
     },
-    "pulls": [
-      {
-        "number": 2451,
-        "title": "Add the ASUS ProArt PZ14 (HT7407NA)",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2451",
-        "draft": true,
-        "deviceTrees": [
-          {
-            "file": "glymur-asus-proart-pz14-ht7407na.dts",
-            "model": "ASUS ProArt PZ14 (HT7407NA)",
-            "compatible": [
-              "asus,proart-pz14-ht7407na",
-              "qcom,glymur"
-            ]
-          }
-        ],
-        "ids": [
-          {
-            "file": "glymur-asus-proart-pz14-ht7407na.json",
-            "compatible": "asus,proart-pz14-ht7407na"
-          }
-        ],
-        "firmware": [
-          "qcom/glymur/ASUSTeK/HT7407NA/adsp_dtbs.elf",
-          "qcom/glymur/ASUSTeK/HT7407NA/adspr.jsn",
-          "qcom/glymur/ASUSTeK/HT7407NA/adsps.jsn",
-          "qcom/glymur/ASUSTeK/HT7407NA/adspua.jsn",
-          "qcom/glymur/ASUSTeK/HT7407NA/cdsp_dtbs.elf",
-          "qcom/glymur/ASUSTeK/HT7407NA/qcadsp8480.mbn",
-          "qcom/glymur/ASUSTeK/HT7407NA/qccdsp8480.mbn"
-        ]
-      }
-    ]
+    "pulls": []
   }
 }

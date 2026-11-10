@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-10T14:19:22.037Z",
+  "collected": "2026-11-10T15:12:02.195Z",
   "linuxNext": "20261109",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-43",
+    "kernel": "7.3-44",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,10 +396,11 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-43",
+        "kernel": "7.3-44",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
+          "glymur-asus-proart-pz14-ht7407na.dts",
           "glymur-asus-zenbook-a14-ux3407na.dts",
           "glymur-asus-zenbook-a16-ux3607oa.dts",
           "glymur-crd.dts",
@@ -529,6 +530,7 @@
         ],
         "carriedIds": [
           "glymur-anduril-bluechip.json",
+          "glymur-asus-proart-pz14-ht7407na.json",
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8-15.json",
           "glymur-microsoft-surface-laptop8.json",
@@ -635,6 +637,15 @@
             "qcom/x1p42100/ASUSTeK/proart-pz13/qcadsp8380.mbn",
             "qcom/x1p42100/ASUSTeK/proart-pz13/qccdsp8380.mbn",
             "qcom/x1p42100/ASUSTeK/proart-pz13/qcdxkmsucpurwa.mbn"
+          ],
+          "asus-proart-pz14-firmware": [
+            "qcom/glymur/ASUSTeK/HT7407NA/adsp_dtbs.elf",
+            "qcom/glymur/ASUSTeK/HT7407NA/adspr.jsn",
+            "qcom/glymur/ASUSTeK/HT7407NA/adsps.jsn",
+            "qcom/glymur/ASUSTeK/HT7407NA/adspua.jsn",
+            "qcom/glymur/ASUSTeK/HT7407NA/cdsp_dtbs.elf",
+            "qcom/glymur/ASUSTeK/HT7407NA/qcadsp8480.mbn",
+            "qcom/glymur/ASUSTeK/HT7407NA/qccdsp8480.mbn"
           ],
           "asus-vivobook-16-firmware": [
             "qcom/x126100/ASUSTeK/vivobook-16/adsp_dtbs.elf",
@@ -1201,10 +1212,10 @@
     "nvidiaWorks": 2,
     "nvidiaExpected": 15,
     "works": 2,
-    "should": 46,
+    "should": 47,
     "problems": 7,
-    "notYet": 31,
-    "deviceTree": 59,
+    "notYet": 30,
+    "deviceTree": 60,
     "ids": 58,
     "firmware": 53,
     "googlebooks": 2,
@@ -1218,16 +1229,16 @@
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 57,
+        "omarchy": 58,
         "fromUpstream": 19,
-        "added": 38,
-        "pull": 1,
+        "added": 39,
+        "pull": 0,
         "available": 2,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 57
+          "edge": 58
         },
         "models": {
           "fromUpstream": [
@@ -1264,6 +1275,7 @@
             "asus-vivobook-s14-s3407qa",
             "asus-vivobook-s16-s3607qa",
             "asus-zenbook-14-ux3480qa",
+            "asus-proart-pz14-ht7407",
             "asus-zenbook-a14-ux3407na",
             "dell-inspiron-14-5441",
             "dell-latitude-5455",
@@ -1291,9 +1303,7 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "asus-proart-pz14-ht7407"
-          ],
+          "pull": [],
           "available": [
             "asus-ascent-qn10",
             "humain-horizon"
@@ -1301,16 +1311,16 @@
         }
       },
       "ids": {
-        "omarchy": 56,
+        "omarchy": 57,
         "fromUpstream": 28,
-        "added": 28,
-        "pull": 1,
+        "added": 29,
+        "pull": 0,
         "available": 1,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 56
+          "edge": 57
         },
         "models": {
           "fromUpstream": [
@@ -1354,6 +1364,7 @@
             "asus-vivobook-s14-s3407qa",
             "asus-vivobook-s16-s3607qa",
             "asus-zenbook-14-ux3480qa",
+            "asus-proart-pz14-ht7407",
             "dell-inspiron-14-5441",
             "hp-omnibook-3-14-hz0",
             "hp-omnibook-3-16-bz0",
@@ -1373,25 +1384,23 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "asus-proart-pz14-ht7407"
-          ],
+          "pull": [],
           "available": [
             "asus-ascent-qn10"
           ]
         }
       },
       "firmware": {
-        "omarchy": 51,
+        "omarchy": 52,
         "fromUpstream": 1,
-        "added": 50,
+        "added": 51,
         "pull": 0,
-        "available": 2,
+        "available": 1,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 51
+          "edge": 52
         },
         "models": {
           "fromUpstream": [
@@ -1411,6 +1420,7 @@
             "asus-vivobook-s16-s3607qa",
             "asus-zenbook-14-ux3480qa",
             "asus-zenbook-a14-ux3407",
+            "asus-proart-pz14-ht7407",
             "asus-zenbook-a14-ux3407na",
             "asus-zenbook-a16-ux3607oa",
             "dell-inspiron-14-5441",
@@ -1451,17 +1461,16 @@
           ],
           "pull": [],
           "available": [
-            "asus-proart-pz14-ht7407",
             "hp-omnibook-5-14-he1"
           ]
         }
       },
       "all": {
-        "omarchy": 50,
+        "omarchy": 51,
         "fromUpstream": 1,
-        "added": 49,
+        "added": 50,
         "pull": 0,
-        "available": 1,
+        "available": 0,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1481,6 +1490,7 @@
             "asus-vivobook-s16-s3607qa",
             "asus-zenbook-14-ux3480qa",
             "asus-zenbook-a14-ux3407",
+            "asus-proart-pz14-ht7407",
             "asus-zenbook-a14-ux3407na",
             "asus-zenbook-a16-ux3607oa",
             "dell-inspiron-14-5441",
@@ -1519,9 +1529,7 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": [
-            "asus-proart-pz14-ht7407"
-          ]
+          "available": []
         }
       }
     }
@@ -3924,40 +3932,34 @@
         "https://www.asus.com/laptops/for-creators/proart/proart-pz14-ht7407/techspec/",
         "https://www.notebookcheck.net/Powerful-creator-tablet-with-Snapdragon-X2-Elite-Asus-ProArt-PZ14-Review.1359622.0.html"
       ],
-      "notes": "Nobody has booted its draft device tree yet. No sound profile, volume buttons or cameras yet.",
-      "outcome": "none",
-      "bootable": "pr",
+      "notes": "Its device tree and hardware IDs are written from an owner's hardware report, on the Zenbook A14 X2's tree, and nobody has booted them yet. No sound profile, volume buttons or cameras yet.",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2451",
-          "number": 2451,
-          "title": "Add the ASUS ProArt PZ14 (HT7407NA)"
-        },
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2451",
-          "number": 2451,
-          "title": "Add the ASUS ProArt PZ14 (HT7407NA)"
-        },
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "deviceTree": "edge",
+        "deviceTreePull": null,
+        "ids": "edge",
+        "idsPull": null,
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "asus-proart-pz14-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "pr",
-        "ids": "pr",
-        "firmware": "elsewhere"
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2451",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-proart-pz14-ht7407",
         "ids": "collected",
         "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/35",
         "idsStubble": null,
@@ -3979,25 +3981,23 @@
         {
           "chip": "X2E-88-100",
           "compatible": "asus,proart-pz14-ht7407na",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2451",
-            "number": 2451,
-            "title": "Add the ASUS ProArt PZ14 (HT7407NA)"
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "glymur-asus-proart-pz14-ht7407na.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "2831-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ14-HT7407NA.patch"
           },
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2451",
-            "number": 2451,
-            "title": "Add the ASUS ProArt PZ14 (HT7407NA)"
-          },
-          "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],

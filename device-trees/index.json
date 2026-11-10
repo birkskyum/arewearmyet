@@ -104,6 +104,14 @@
       "glymur-asus-ascent-qn10.dts"
     ]
   },
+  "asus-proart-pz14-ht7407": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2451",
+    "files": [
+      "SOURCE.md",
+      "glymur-asus-proart-pz14-ht7407na.dts"
+    ]
+  },
   "dell-inspiron-14-5441": {
     "state": "posted",
     "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260508050828.7442-1-adamszyma@wp.pl/",

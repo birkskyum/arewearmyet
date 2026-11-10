@@ -439,9 +439,12 @@ models:
     variants:
       - { chip: "X2E-88-100", compatible: "asus,proart-pz14-ht7407na" }
     firmware: ["qcom/glymur/ASUSTeK/HT7407NA"]
+    devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2451"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/95b879723cf45701dbffc8a030126b85bffae9da/pkgbuilds/linux-omarchy-aarch64/2831-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ14-HT7407NA.patch#glymur-asus-proart-pz14-ht7407na.dts"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/35"
     firmware_download: "https://www.asus.com/laptops/for-creators/proart/proart-pz14-ht7407/helpdesk_download/"
-    notes: "Nobody has booted its draft device tree yet. No sound profile, volume buttons or cameras yet."
+    notes: "Its device tree and hardware IDs are written from an owner's hardware report, on the Zenbook A14 X2's tree, and nobody has booted them yet. No sound profile, volume buttons or cameras yet."
     sources:
       - https://www.asus.com/laptops/for-creators/proart/proart-pz14-ht7407/techspec/
       - https://www.notebookcheck.net/Powerful-creator-tablet-with-Snapdragon-X2-Elite-Asus-ProArt-PZ14-Review.1359622.0.html
