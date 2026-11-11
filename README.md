@@ -39,8 +39,9 @@ Each IP gets 300 requests a minute, and an answer of 429 means wait a minute. Se
 
 Each section is a group of machines that one guide can help along:
 
-- **Snapdragon X and X2** (and the older 8cx Gen 3) start through UEFI and need a device tree, hardware IDs and firmware; owners help through the "Add your model" form, with a hardware report from the [Omarchy Arm Installer](https://github.com/turbineBMW/omarchy-arm-installer) on Windows or the device tree they boot with on Linux.
+- **Snapdragon X and X2**, and the **Potato PCs** from before them (Snapdragon 8cx, 850, 835 and 7c), start through UEFI and need a device tree, hardware IDs and firmware; owners help through the "Add your model" form, with a hardware report from the [Omarchy Arm Installer](https://github.com/turbineBMW/omarchy-arm-installer) on Windows or the device tree they boot with on Linux.
 - **Googlebooks with Snapdragon** (`boot: android`) start like a Pixel, through Android's bootloader; owners help by reading the device tree Googlebook OS starts with ([owner guide](https://github.com/omacom/omarchy/discussions/16627)).
+- **Chromebooks with Snapdragon** (`boot: depthcharge`) start through ChromeOS's bootloader; Linux has their device trees, and they need a Linux image for that bootloader.
 - **NVIDIA N1x and GB10** start through ACPI and need no device tree; owners help by reporting whether the ARM image boots.
 
 ## How the data flows

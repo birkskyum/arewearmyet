@@ -13,7 +13,7 @@ type Model = {
   id: string;
   vendor: string;
   name: string;
-  generation: 'x1' | 'x2' | '8cx' | 'c' | '7c';
+  generation: 'x1' | 'x2' | '8cx' | 'c' | '7c' | '8cx-gen1' | '850' | '835';
   form?: string;
   released?: string | number;
   model_numbers?: string[];
@@ -442,7 +442,7 @@ const rows = models.map((model) => {
 
 const count = <T>(items: T[], test: (item: T) => boolean) => items.filter(test).length;
 type Row = (typeof rows)[number];
-const current = rows.filter((row) => row.generation !== '8cx' && row.generation !== 'c' && row.boot === 'uefi');
+const current = rows.filter((row) => ['x1', 'x2'].includes(row.generation) && row.boot === 'uefi');
 const summary = {
   models: current.length,
   nvidia: nvidia.length,

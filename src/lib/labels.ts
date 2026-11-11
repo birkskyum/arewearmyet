@@ -310,7 +310,7 @@ export function nvidiaLinuxCell(model: NvidiaModel): Cell {
   return cell(STATES.nvidiaLinux, model.linux);
 }
 
-export const GENERATION: Record<string, string> = { x1: 'Snapdragon X', x2: 'Snapdragon X2', '8cx': 'Snapdragon 8cx Gen 3', c: 'Snapdragon C', '7c': 'Snapdragon 7c', n1x: 'NVIDIA N1x', gb10: 'NVIDIA GB10' };
+export const GENERATION: Record<string, string> = { x1: 'Snapdragon X', x2: 'Snapdragon X2', '8cx': 'Snapdragon 8cx Gen 3', '8cx-gen1': 'Snapdragon 8cx Gen 1 and 2', '850': 'Snapdragon 850', '835': 'Snapdragon 835', c: 'Snapdragon C', '7c': 'Snapdragon 7c', n1x: 'NVIDIA N1x', gb10: 'NVIDIA GB10' };
 
 // The choices a column header's filter offers, one per state, in legend order. "Linux 6.x" and
 // "systemd 2xx" stand for any release, so their filter choices say so.

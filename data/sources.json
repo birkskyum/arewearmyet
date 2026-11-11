@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-11T03:45:03.402Z",
+  "collected": "2026-11-11T03:53:19.387Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -243,6 +243,45 @@
       "firmware": []
     },
     {
+      "file": "msm8998-asus-novago-tp370ql.dts",
+      "firstRelease": "v5.10",
+      "inNext": true,
+      "model": "Asus NovaGo TP370QL",
+      "compatible": [
+        "asus,novago-tp370ql",
+        "qcom,msm8998"
+      ],
+      "firmware": []
+    },
+    {
+      "file": "msm8998-hp-envy-x2.dts",
+      "firstRelease": "v5.10",
+      "inNext": true,
+      "model": "HP Envy x2",
+      "compatible": [
+        "hp,envy-x2",
+        "qcom,msm8998"
+      ],
+      "firmware": []
+    },
+    {
+      "file": "msm8998-lenovo-miix-630.dts",
+      "firstRelease": "v5.10",
+      "inNext": true,
+      "model": "Lenovo Miix 630",
+      "compatible": [
+        "lenovo,miix-630",
+        "qcom,msm8998"
+      ],
+      "firmware": [
+        "qcom/msm8998/LENOVO/81F1/qcadsp8998.mbn",
+        "qcom/msm8998/LENOVO/81F1/qcdsp1v28998.mbn",
+        "qcom/msm8998/LENOVO/81F1/qcdsp28998.mbn",
+        "qcom/msm8998/LENOVO/81F1/qcslpi8998.mbn",
+        "qcom/msm8998/LENOVO/81F1/qcvss8998.mbn"
+      ]
+    },
+    {
       "file": "purwa-iot-evk.dts",
       "firstRelease": "v7.1",
       "inNext": true,
@@ -253,6 +292,38 @@
         "qcom,x1p42100"
       ],
       "firmware": []
+    },
+    {
+      "file": "sc7180-acer-aspire1.dts",
+      "firstRelease": "v6.5",
+      "inNext": true,
+      "model": "Acer Aspire 1",
+      "compatible": [
+        "acer,aspire1",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180/acer/aspire1/qcdxkmsuc7180.mbn",
+        "qcom/sc7180/acer/aspire1/qcadsp7180.mbn",
+        "qcom/sc7180/acer/aspire1/qcmpss7180_nm.mbn",
+        "qcom/sc7180/acer/aspire1/qcvss7180.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-ecs-liva-qc710.dts",
+      "firstRelease": "v7.1",
+      "inNext": true,
+      "model": "ECS LIVA QC710",
+      "compatible": [
+        "ecs,liva-qc710",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180/ecs/liva-qc710/qcdxkmsuc7180.mbn",
+        "qcom/sc7180/ecs/liva-qc710/qcadsp7180.mbn",
+        "qcom/sc7180/ecs/liva-qc710/qcmpss7180_nm.mbn",
+        "qcom/sc7180/ecs/liva-qc710/qcvss7180.mbn"
+      ]
     },
     {
       "file": "sc7180-trogdor-coachz-r1-lte.dts",
@@ -1062,6 +1133,22 @@
       ]
     },
     {
+      "file": "sc8180x-lenovo-flex-5g.dts",
+      "firstRelease": "v6.5",
+      "inNext": true,
+      "model": "Lenovo Flex 5G",
+      "compatible": [
+        "lenovo,flex-5g",
+        "qcom,sc8180x"
+      ],
+      "firmware": [
+        "qcom/sc8180x/LENOVO/82AK/qcdxkmsuc8180.mbn",
+        "qcom/sc8180x/LENOVO/82AK/qcadsp8180.mbn",
+        "qcom/sc8180x/LENOVO/82AK/qccdsp8180.mbn",
+        "qcom/sc8180x/LENOVO/82AK/qcmpss8180_nm.mbn"
+      ]
+    },
+    {
       "file": "sc8280xp-crd.dts",
       "firstRelease": "v6.0",
       "inNext": true,
@@ -1132,6 +1219,64 @@
         "qcom/sc8280xp/microsoft/blackrock/qcdxkmsuc8280.mbn",
         "qcom/sc8280xp/microsoft/blackrock/qcadsp8280.mbn",
         "qcom/sc8280xp/microsoft/blackrock/qccdsp8280.mbn"
+      ]
+    },
+    {
+      "file": "sdm850-huawei-matebook-e-2019.dts",
+      "firstRelease": "v6.19",
+      "inNext": true,
+      "model": "Huawei MateBook E 2019",
+      "compatible": [
+        "huawei,planck",
+        "qcom,sdm845"
+      ],
+      "firmware": [
+        "qcom/sdm850/HUAWEI/AL09/qcadsp850.mbn",
+        "qcom/sdm850/HUAWEI/AL09/qccdsp850.mbn",
+        "qcom/sdm850/HUAWEI/AL09/qcdxkmsuc850.mbn",
+        "qcom/sdm850/HUAWEI/AL09/ipa_fws.elf",
+        "qcom/sdm850/HUAWEI/AL09/qcdsp1v2850.mbn",
+        "qcom/sdm850/HUAWEI/AL09/qcdsp2850.mbn",
+        "qcom/sdm850/HUAWEI/AL09/qcslpi850.mbn",
+        "qcom/sdm850/HUAWEI/AL09/qcvss850.mbn"
+      ]
+    },
+    {
+      "file": "sdm850-lenovo-yoga-c630.dts",
+      "firstRelease": "v5.10",
+      "inNext": true,
+      "model": "Lenovo Yoga C630",
+      "compatible": [
+        "lenovo,yoga-c630",
+        "qcom,sdm845"
+      ],
+      "firmware": [
+        "qcom/sdm850/LENOVO/81JL/qcadsp850.mbn",
+        "qcom/sdm850/LENOVO/81JL/qccdsp850.mbn",
+        "qcom/sdm850/LENOVO/81JL/qcdxkmsuc850.mbn",
+        "qcom/sdm850/LENOVO/81JL/ipa_fws.elf",
+        "qcom/sdm850/LENOVO/81JL/qcdsp1v2850.mbn",
+        "qcom/sdm850/LENOVO/81JL/qcdsp2850.mbn",
+        "qcom/sdm850/LENOVO/81JL/qcslpi850.mbn",
+        "qcom/sdm850/LENOVO/81JL/qcvss850.mbn"
+      ]
+    },
+    {
+      "file": "sdm850-samsung-w737.dts",
+      "firstRelease": "v5.18",
+      "inNext": true,
+      "model": "Samsung Galaxy Book2",
+      "compatible": [
+        "samsung,w737",
+        "qcom,sdm845"
+      ],
+      "firmware": [
+        "qcom/sdm850/samsung/w737/qcadsp850.mbn",
+        "qcom/sdm850/samsung/w737/qccdsp850.mbn",
+        "qcom/sdm850/samsung/w737/ipa_fws.elf",
+        "qcom/sdm850/samsung/w737/qcdsp1v2850.mbn",
+        "qcom/sdm850/samsung/w737/qcdsp2850.mbn",
+        "qcom/sdm850/samsung/w737/qcvss850.mbn"
       ]
     },
     {

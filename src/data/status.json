@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-11T03:45:03.402Z",
+  "collected": "2026-11-11T03:53:19.387Z",
   "linuxNext": "20261110",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -11720,6 +11720,2004 @@
             }
           ],
           "outcome": "should",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "acer-aspire-1-a114-61",
+      "vendor": "Acer",
+      "name": "Aspire 1",
+      "generation": "7c",
+      "form": "laptop",
+      "released": "2021",
+      "modelNumbers": [
+        "A114-61"
+      ],
+      "chips": [
+        "SC7180"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts",
+        "https://github.com/aarch64-laptops/build/tree/master/misc/acer-aspire-1"
+      ],
+      "notes": null,
+      "outcome": "notCarried",
+      "bootable": "carry",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": "stable",
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "elsewhere",
+        "ids": "stable",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.5",
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "listed",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc7180.mbn",
+          "qcadsp7180.mbn",
+          "qcmpss7180_nm.mbn",
+          "qcvss7180.mbn"
+        ],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-aspire-1"
+        ]
+      },
+      "variants": [
+        {
+          "compatible": "acer,aspire1",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": "stable",
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sc7180-acer-aspire1.dts",
+            "firstRelease": "v6.5",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180/acer/aspire1/qcdxkmsuc7180.mbn",
+            "qcom/sc7180/acer/aspire1/qcadsp7180.mbn",
+            "qcom/sc7180/acer/aspire1/qcmpss7180_nm.mbn",
+            "qcom/sc7180/acer/aspire1/qcvss7180.mbn"
+          ],
+          "ids": [
+            {
+              "file": "sc7180-acer-aspire1.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "acer,aspire1"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "sc7180-acer-aspire1.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc7180-acer-aspire1.json"
+            }
+          ],
+          "outcome": "notCarried",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "acer-spin-7-sp714-61na",
+      "vendor": "Acer",
+      "name": "Spin 7",
+      "generation": "8cx-gen1",
+      "form": "2-in-1",
+      "released": "2020",
+      "modelNumbers": [
+        "SP714-61NA"
+      ],
+      "chips": [
+        "SC8180X"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/aarch64-laptops/build/tree/master/misc/acer-spin-7-sp714-61na"
+      ],
+      "notes": null,
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-spin-7-sp714-61na"
+        ]
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "apcsilmic-dot-1",
+      "vendor": "Apcsilmic",
+      "name": "Dot 1",
+      "generation": "7c",
+      "form": "laptop",
+      "released": null,
+      "modelNumbers": [],
+      "chips": [
+        "SC7180"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/aarch64-laptops/build/tree/master/misc/apcsilmic-dot-1"
+      ],
+      "notes": null,
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/apcsilmic-dot-1"
+        ]
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "asus-novago-tp370ql",
+      "vendor": "ASUS",
+      "name": "NovaGo",
+      "generation": "835",
+      "form": "2-in-1",
+      "released": "2018",
+      "modelNumbers": [
+        "TP370QL"
+      ],
+      "chips": [
+        "MSM8998"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/msm8998-asus-novago-tp370ql.dts",
+        "https://github.com/aarch64-laptops/build/tree/master/misc/asus-tp370ql"
+      ],
+      "notes": null,
+      "outcome": "notCarried",
+      "bootable": "needs-ids",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "elsewhere",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v5.10",
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/asus-tp370ql"
+        ]
+      },
+      "variants": [
+        {
+          "compatible": "asus,novago-tp370ql",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "msm8998-asus-novago-tp370ql.dts",
+            "firstRelease": "v5.10",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "notCarried",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "dell-inspiron-14-3420-snapdragon",
+      "vendor": "Dell",
+      "name": "Inspiron 14 3420",
+      "generation": "8cx-gen1",
+      "form": "laptop",
+      "released": null,
+      "modelNumbers": [
+        "3420"
+      ],
+      "chips": [
+        "SC8180X"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/aarch64-laptops/build/tree/master/misc/dell-inspiron-14-3420"
+      ],
+      "notes": null,
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-3420"
+        ]
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "ecs-liva-qc710",
+      "vendor": "ECS",
+      "name": "LIVA QC710",
+      "generation": "7c",
+      "form": "desktop",
+      "released": "2021",
+      "modelNumbers": [
+        "QC710"
+      ],
+      "chips": [
+        "SC7180"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-ecs-liva-qc710.dts",
+        "https://github.com/aarch64-laptops/build/tree/master/misc/ecs-liva-qc710"
+      ],
+      "notes": null,
+      "outcome": "notCarried",
+      "bootable": "carry",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": "stable",
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "elsewhere",
+        "ids": "stable",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v7.1",
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "listed",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc7180.mbn",
+          "qcadsp7180.mbn",
+          "qcmpss7180_nm.mbn",
+          "qcvss7180.mbn"
+        ],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/ecs-liva-qc710"
+        ]
+      },
+      "variants": [
+        {
+          "compatible": "ecs,liva-qc710",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": "stable",
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sc7180-ecs-liva-qc710.dts",
+            "firstRelease": "v7.1",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180/ecs/liva-qc710/qcdxkmsuc7180.mbn",
+            "qcom/sc7180/ecs/liva-qc710/qcadsp7180.mbn",
+            "qcom/sc7180/ecs/liva-qc710/qcmpss7180_nm.mbn",
+            "qcom/sc7180/ecs/liva-qc710/qcvss7180.mbn"
+          ],
+          "ids": [
+            {
+              "file": "sc7180-ecs-liva-qc710.json",
+              "firstRelease": "v262",
+              "inMain": true,
+              "matches": true,
+              "compatible": "ecs,liva-qc710"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "sc7180-ecs-liva-qc710.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc7180-ecs-liva-qc710.json"
+            }
+          ],
+          "outcome": "notCarried",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "gateway-gwtn133-1",
+      "vendor": "Gateway",
+      "name": "GWTN133-1",
+      "generation": "850",
+      "form": "laptop",
+      "released": null,
+      "modelNumbers": [
+        "GWTN133-1"
+      ],
+      "chips": [
+        "SDM850"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/aarch64-laptops/build/tree/master/misc/acer-gateway-gwtn133-1"
+      ],
+      "notes": null,
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-gateway-gwtn133-1"
+        ]
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "hp-envy-x2-snapdragon",
+      "vendor": "HP",
+      "name": "Envy x2 (Snapdragon)",
+      "generation": "835",
+      "form": "2-in-1",
+      "released": "2018",
+      "modelNumbers": [],
+      "chips": [
+        "MSM8998"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dts",
+        "https://github.com/aarch64-laptops/build/tree/master/misc/hp-envy-x2"
+      ],
+      "notes": null,
+      "outcome": "notCarried",
+      "bootable": "needs-ids",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "elsewhere",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v5.10",
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-envy-x2"
+        ]
+      },
+      "variants": [
+        {
+          "compatible": "hp,envy-x2",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "msm8998-hp-envy-x2.dts",
+            "firstRelease": "v5.10",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "notCarried",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "huawei-matebook-e-2019",
+      "vendor": "Huawei",
+      "name": "MateBook E (2019)",
+      "generation": "850",
+      "form": "2-in-1",
+      "released": "2019",
+      "modelNumbers": [
+        "PAK-AL09"
+      ],
+      "chips": [
+        "SDM850"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sdm850-huawei-matebook-e-2019.dts",
+        "https://github.com/aarch64-laptops/build/tree/master/misc/huawei-matebooke-2019"
+      ],
+      "notes": null,
+      "outcome": "notCarried",
+      "bootable": "needs-ids",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "elsewhere",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.19",
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [
+          "qcadsp850.mbn",
+          "qccdsp850.mbn",
+          "qcdxkmsuc850.mbn",
+          "ipa_fws.elf",
+          "qcdsp1v2850.mbn",
+          "qcdsp2850.mbn",
+          "qcslpi850.mbn",
+          "qcvss850.mbn"
+        ],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/huawei-matebooke-2019"
+        ]
+      },
+      "variants": [
+        {
+          "compatible": "huawei,planck",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sdm850-huawei-matebook-e-2019.dts",
+            "firstRelease": "v6.19",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sdm850/HUAWEI/AL09/qcadsp850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qccdsp850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcdxkmsuc850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/ipa_fws.elf",
+            "qcom/sdm850/HUAWEI/AL09/qcdsp1v2850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcdsp2850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcslpi850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcvss850.mbn"
+          ],
+          "ids": [],
+          "stubble": [],
+          "outcome": "notCarried",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "lenovo-10w",
+      "vendor": "Lenovo",
+      "name": "10w",
+      "generation": "7c",
+      "form": "2-in-1",
+      "released": "2022",
+      "modelNumbers": [],
+      "chips": [
+        "SC7180"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-l10w"
+      ],
+      "notes": null,
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-l10w"
+        ]
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "lenovo-flex-5g",
+      "vendor": "Lenovo",
+      "name": "Flex 5G",
+      "generation": "8cx-gen1",
+      "form": "2-in-1",
+      "released": "2020",
+      "modelNumbers": [
+        "82AK",
+        "81XE"
+      ],
+      "chips": [
+        "SC8180X"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts",
+        "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-flex-5g"
+      ],
+      "notes": null,
+      "outcome": "notCarried",
+      "bootable": "carry",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": "stable",
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "elsewhere",
+        "ids": "stable",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v6.5",
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "listed",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8180.mbn",
+          "qcadsp8180.mbn",
+          "qccdsp8180.mbn",
+          "qcmpss8180_nm.mbn"
+        ],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-flex-5g"
+        ]
+      },
+      "variants": [
+        {
+          "compatible": "lenovo,flex-5g",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": "stable",
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sc8180x-lenovo-flex-5g.dts",
+            "firstRelease": "v6.5",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sc8180x/LENOVO/82AK/qcdxkmsuc8180.mbn",
+            "qcom/sc8180x/LENOVO/82AK/qcadsp8180.mbn",
+            "qcom/sc8180x/LENOVO/82AK/qccdsp8180.mbn",
+            "qcom/sc8180x/LENOVO/82AK/qcmpss8180_nm.mbn"
+          ],
+          "ids": [
+            {
+              "file": "sc8180x-lenovo-flex-5g-81xe.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,flex-5g"
+            },
+            {
+              "file": "sc8180x-lenovo-flex-5g-82ak.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,flex-5g"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "sc8180x-lenovo-flex-5g-81xe.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8180x-lenovo-flex-5g-81xe.json"
+            },
+            {
+              "file": "sc8180x-lenovo-flex-5g-82ak.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8180x-lenovo-flex-5g-82ak.json"
+            }
+          ],
+          "outcome": "notCarried",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "lenovo-ideapad-5g-14q8x05",
+      "vendor": "Lenovo",
+      "name": "IdeaPad 5G",
+      "generation": "8cx-gen1",
+      "form": "laptop",
+      "released": "2021",
+      "modelNumbers": [
+        "14Q8X05"
+      ],
+      "chips": [
+        "SC8180X"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-ideapad-5g",
+        "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-ideapad-5g-14q8x05"
+      ],
+      "notes": null,
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/pull/87",
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-ideapad-5g-14q8x05"
+        ]
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "lenovo-miix-630",
+      "vendor": "Lenovo",
+      "name": "Miix 630",
+      "generation": "835",
+      "form": "2-in-1",
+      "released": "2018",
+      "modelNumbers": [
+        "81F1"
+      ],
+      "chips": [
+        "MSM8998"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts",
+        "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-miix-630"
+      ],
+      "notes": null,
+      "outcome": "notCarried",
+      "bootable": "carry",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": "stable",
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "elsewhere",
+        "ids": "stable",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v5.10",
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "listed",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [
+          "qcadsp8998.mbn",
+          "qcdsp1v28998.mbn",
+          "qcdsp28998.mbn",
+          "qcslpi8998.mbn",
+          "qcvss8998.mbn"
+        ],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-miix-630"
+        ]
+      },
+      "variants": [
+        {
+          "compatible": "lenovo,miix-630",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": "stable",
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "msm8998-lenovo-miix-630.dts",
+            "firstRelease": "v5.10",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/msm8998/LENOVO/81F1/qcadsp8998.mbn",
+            "qcom/msm8998/LENOVO/81F1/qcdsp1v28998.mbn",
+            "qcom/msm8998/LENOVO/81F1/qcdsp28998.mbn",
+            "qcom/msm8998/LENOVO/81F1/qcslpi8998.mbn",
+            "qcom/msm8998/LENOVO/81F1/qcvss8998.mbn"
+          ],
+          "ids": [
+            {
+              "file": "msm8998-lenovo-miix-630-81f1.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,miix-630"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "msm8998-lenovo-miix-630-81f1.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/msm8998-lenovo-miix-630-81f1.json"
+            }
+          ],
+          "outcome": "notCarried",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "lenovo-yoga-c630",
+      "vendor": "Lenovo",
+      "name": "Yoga C630",
+      "generation": "850",
+      "form": "2-in-1",
+      "released": "2018",
+      "modelNumbers": [
+        "81JL"
+      ],
+      "chips": [
+        "SDM850"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts",
+        "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-yoga-c630"
+      ],
+      "notes": null,
+      "outcome": "notCarried",
+      "bootable": "carry",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": "stable",
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "elsewhere",
+        "ids": "stable",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v5.10",
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "listed",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [
+          "qcadsp850.mbn",
+          "qccdsp850.mbn",
+          "qcdxkmsuc850.mbn",
+          "ipa_fws.elf",
+          "qcdsp1v2850.mbn",
+          "qcdsp2850.mbn",
+          "qcslpi850.mbn",
+          "qcvss850.mbn"
+        ],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/lenovo-yoga-c630"
+        ]
+      },
+      "variants": [
+        {
+          "compatible": "lenovo,yoga-c630",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": "stable",
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sdm850-lenovo-yoga-c630.dts",
+            "firstRelease": "v5.10",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sdm850/LENOVO/81JL/qcadsp850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qccdsp850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qcdxkmsuc850.mbn",
+            "qcom/sdm850/LENOVO/81JL/ipa_fws.elf",
+            "qcom/sdm850/LENOVO/81JL/qcdsp1v2850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qcdsp2850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qcslpi850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qcvss850.mbn"
+          ],
+          "ids": [
+            {
+              "file": "sdm850-lenovo-yoga-c630.json",
+              "firstRelease": "v260",
+              "inMain": true,
+              "matches": true,
+              "compatible": "lenovo,yoga-c630"
+            }
+          ],
+          "stubble": [
+            {
+              "file": "sdm850-lenovo-yoga-c630.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sdm850-lenovo-yoga-c630.json"
+            }
+          ],
+          "outcome": "notCarried",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "microsoft-surface-pro-x",
+      "vendor": "Microsoft",
+      "name": "Surface Pro X",
+      "generation": "8cx-gen1",
+      "form": "tablet",
+      "released": "2019",
+      "modelNumbers": [],
+      "chips": [
+        "Microsoft SQ1",
+        "Microsoft SQ2"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/aarch64-laptops/build/tree/master/misc/microsoft-surface-prox",
+        "https://github.com/linux-surface/acpidumps/tree/master/surface_pro_x_sq1",
+        "https://github.com/linux-surface/acpidumps/tree/master/surface_pro_x_sq2"
+      ],
+      "notes": null,
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-prox",
+          "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_x_sq1",
+          "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_x_sq2"
+        ]
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "samsung-galaxy-book2-w737",
+      "vendor": "Samsung",
+      "name": "Galaxy Book2",
+      "generation": "850",
+      "form": "2-in-1",
+      "released": "2018",
+      "modelNumbers": [
+        "SM-W737"
+      ],
+      "chips": [
+        "SDM850"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sdm850-samsung-w737.dts",
+        "https://github.com/aarch64-laptops/build/tree/master/misc/samsung-galaxybook2"
+      ],
+      "notes": null,
+      "outcome": "notCarried",
+      "bootable": "needs-ids",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "elsewhere",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v5.18",
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [
+          "qcadsp850.mbn",
+          "qccdsp850.mbn",
+          "ipa_fws.elf",
+          "qcdsp1v2850.mbn",
+          "qcdsp2850.mbn",
+          "qcvss850.mbn"
+        ],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxybook2"
+        ]
+      },
+      "variants": [
+        {
+          "compatible": "samsung,w737",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sdm850-samsung-w737.dts",
+            "firstRelease": "v5.18",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sdm850/samsung/w737/qcadsp850.mbn",
+            "qcom/sdm850/samsung/w737/qccdsp850.mbn",
+            "qcom/sdm850/samsung/w737/ipa_fws.elf",
+            "qcom/sdm850/samsung/w737/qcdsp1v2850.mbn",
+            "qcom/sdm850/samsung/w737/qcdsp2850.mbn",
+            "qcom/sdm850/samsung/w737/qcvss850.mbn"
+          ],
+          "ids": [],
+          "stubble": [],
+          "outcome": "notCarried",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "samsung-galaxy-book2-go",
+      "vendor": "Samsung",
+      "name": "Galaxy Book2 Go",
+      "generation": "7c",
+      "form": "laptop",
+      "released": "2022",
+      "modelNumbers": [],
+      "chips": [
+        "SC7280"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/aarch64-laptops/build/tree/master/misc/samsung-galaxybook2-go"
+      ],
+      "notes": null,
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxybook2-go"
+        ]
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "samsung-galaxy-book-go",
+      "vendor": "Samsung",
+      "name": "Galaxy Book Go",
+      "generation": "7c",
+      "form": "laptop",
+      "released": "2021",
+      "modelNumbers": [
+        "NP340XLA"
+      ],
+      "chips": [
+        "SC7180"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/aarch64-laptops/build/tree/master/misc/samsung-galaxy-book-go"
+      ],
+      "notes": null,
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxy-book-go"
+        ]
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "samsung-galaxy-book-go-5g",
+      "vendor": "Samsung",
+      "name": "Galaxy Book Go 5G",
+      "generation": "8cx-gen1",
+      "form": "laptop",
+      "released": "2021",
+      "modelNumbers": [],
+      "chips": [
+        "SC8180X"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/aarch64-laptops/build/tree/master/misc/samsung-galaxy-book-go-5g"
+      ],
+      "notes": null,
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxy-book-go-5g"
+        ]
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "samsung-galaxy-book-s",
+      "vendor": "Samsung",
+      "name": "Galaxy Book S",
+      "generation": "8cx-gen1",
+      "form": "laptop",
+      "released": "2020",
+      "modelNumbers": [
+        "NP767XCM"
+      ],
+      "chips": [
+        "SC8180X"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/aarch64-laptops/build/tree/master/misc/samsung-galaxy-book-s"
+      ],
+      "notes": null,
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxy-book-s"
+        ]
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "tcl-book-14-go",
+      "vendor": "TCL",
+      "name": "Book 14 Go",
+      "generation": "7c",
+      "form": "laptop",
+      "released": "2021",
+      "modelNumbers": [],
+      "chips": [
+        "SC7180"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/aarch64-laptops/build/tree/master/misc/tcl-book-14-go"
+      ],
+      "notes": null,
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/tcl-book-14-go"
+        ]
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "xiaomi-book-s",
+      "vendor": "Xiaomi",
+      "name": "Book S",
+      "generation": "8cx-gen1",
+      "form": "2-in-1",
+      "released": "2022",
+      "modelNumbers": [],
+      "chips": [
+        "SC8180X"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/aarch64-laptops/build/tree/master/misc/xiaomi-book-s"
+      ],
+      "notes": null,
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/xiaomi-book-s"
+        ]
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
           "reports": []
         }
       ],
