@@ -94,7 +94,7 @@ RECIPES = {
     "hp-omnibook-x14-firmware": ("HP OmniBook X 14", ["qcom/x1e80100/hp/omnibook-x14", "qcom/x1p42100/hp/omnibook-x14"]),
     "hp-omnibook-x16-firmware": ("HP OmniBook X 16 (2026)", ["qcom/glymur/hp/omnibook-x16"]),
     "huawei-matebook-e-go-firmware": ("Huawei MateBook E Go", ["qcom/sc8280xp/HUAWEI/gaokun3"]),
-    "lenovo-ideacentre-mini-x-firmware": ("Lenovo IdeaCentre Mini x", ["qcom/x1e80100/LENOVO/91B6"]),
+    "lenovo-ideacentre-mini-x-firmware": ("Lenovo IdeaCentre Mini x", ["qcom/x1e80100/LENOVO/91B6", "qcom/x1p42100/LENOVO/91B6"]),
     "lenovo-thinkcentre-neo-50q-qc-firmware": ("Lenovo ThinkCentre neo 50q QC", ["qcom/x1p42100/LENOVO/13C8"]),
     "lenovo-thinkpad-t14s-gen7-firmware": ("Lenovo ThinkPad T14s Gen 7", ["qcom/glymur/LENOVO/22A8"]),
     "medion-sprchrgd-14-s1-firmware": ("Medion SPRCHRGD 14 S1", ["qcom/x1e80100/Medion/sprchrgd-14-s1"]),

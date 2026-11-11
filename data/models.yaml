@@ -994,7 +994,7 @@ models:
     variants:
       - { model: "X Plus", chip: "X1P-64-100", compatible: "lenovo,ideacentre-mini-01q8x10" }
       - { model: "Snapdragon X", chip: "X1-26-100", compatible: "lenovo,purwa-ideacentre-mini-01q8x10" }
-    firmware: ["qcom/x1e80100/LENOVO/91B6"]
+    firmware: ["qcom/x1e80100/LENOVO/91B6", "qcom/x1p42100/LENOVO/91B6"]
     acpi: ["lenovo-ideacentre-01q8x10"]
     devicetree_posted: "https://lore.kernel.org/all/20260905-x1-ideacentre-mini-prettify-v1-0-9a87882973bb@oldschoolsolutions.biz/"
     notes: "Jens Glathe's posted series splits the tree and adds the X1-26-100 (Purwa) model, which he runs on Ubuntu 26.10 and can test. systemd has the Purwa model's hardware IDs. The Purwa model needs its own GPU and DSP firmware, under qcom/x1p42100/LENOVO/91B6."

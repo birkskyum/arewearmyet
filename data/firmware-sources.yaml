@@ -1826,6 +1826,31 @@ folders:
         sha256: "21e2dc5b977009c716daa7ece02dc7136acc40b9349954809a8a4a2e034bd1b0"
         from:
           - { package: "lenovo-u9corggus14lcfc", member: "code$GetExtractPath$/Drivers/qcdx8380/qcvss8380_pa.mbn" }
+  - path: "qcom/x1p42100/LENOVO/91B6"
+    models: ["lenovo-ideacentre-mini-x-01q8x10"]
+    files:
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "08cedef477485c11dd0b2eccd9f01f2528e319e3b2d9b00fb0fa469904abad70"
+        from:
+          - { package: "lenovo-u9corggus14lcfc", member: "code$GetExtractPath$/Drivers/qcdx8380/qcdxkmsucpurwa.mbn" }
+          - { package: "lenovo-u9corhdus14lcfc", member: "code$GetExtractPath$/Drivers/qcdx8380/qcdxkmsucpurwa.mbn" }
+      - name: "qcvss8380_pa.mbn"
+        size: 2318952
+        sha256: "21e2dc5b977009c716daa7ece02dc7136acc40b9349954809a8a4a2e034bd1b0"
+        from:
+          - { package: "lenovo-u9corggus14lcfc", member: "code$GetExtractPath$/Drivers/qcdx8380/qcvss8380_pa.mbn" }
+          - { package: "lenovo-u9corhdus14lcfc", member: "code$GetExtractPath$/Drivers/qcdx8380/qcvss8380_pa.mbn" }
+    links:
+      - { name: "adsp_dtbs.elf", target: "../../../x1e80100/LENOVO/91B6/adsp_dtbs.elf" }
+      - { name: "adspr.jsn", target: "../../../x1e80100/LENOVO/91B6/adspr.jsn" }
+      - { name: "adsps.jsn", target: "../../../x1e80100/LENOVO/91B6/adsps.jsn" }
+      - { name: "adspua.jsn", target: "../../../x1e80100/LENOVO/91B6/adspua.jsn" }
+      - { name: "battmgr.jsn", target: "../../../x1e80100/LENOVO/91B6/battmgr.jsn" }
+      - { name: "cdsp_dtbs.elf", target: "../../../x1e80100/LENOVO/91B6/cdsp_dtbs.elf" }
+      - { name: "cdspr.jsn", target: "../../../x1e80100/LENOVO/91B6/cdspr.jsn" }
+      - { name: "qcadsp8380.mbn", target: "../../../x1e80100/LENOVO/91B6/qcadsp8380.mbn" }
+      - { name: "qccdsp8380.mbn", target: "../../../x1e80100/LENOVO/91B6/qccdsp8380.mbn" }
   - path: "qcom/x1p42100/Microsoft/Surface12"
     models: ["microsoft-surface-pro-12in-1st-edition"]
     files:
