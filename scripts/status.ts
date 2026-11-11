@@ -13,7 +13,7 @@ type Model = {
   id: string;
   vendor: string;
   name: string;
-  generation: 'x1' | 'x2' | '8cx' | 'c';
+  generation: 'x1' | 'x2' | '8cx' | 'c' | '7c';
   form?: string;
   released?: string | number;
   model_numbers?: string[];
@@ -28,7 +28,7 @@ type Model = {
   devicetree_posted?: string;
   devicetree_out_of_tree?: string;
   ids_collected?: string;
-  boot?: 'android';
+  boot?: 'android' | 'depthcharge';
   bootloader?: 'unlockable' | 'locked';
   linux_image?: 'boots' | 'none';
   discussion?: string;
@@ -442,7 +442,7 @@ const rows = models.map((model) => {
 
 const count = <T>(items: T[], test: (item: T) => boolean) => items.filter(test).length;
 type Row = (typeof rows)[number];
-const current = rows.filter((row) => row.generation !== '8cx' && row.generation !== 'c' && row.boot !== 'android');
+const current = rows.filter((row) => row.generation !== '8cx' && row.generation !== 'c' && row.boot === 'uefi');
 const summary = {
   models: current.length,
   nvidia: nvidia.length,
@@ -459,6 +459,7 @@ const summary = {
   firmware: count(current, (r) => ['linux-firmware', 'next-release', 'download', 'posted'].includes(r.upstream.firmware)),
   // Hardware IDs and Windows firmware only apply to models that start through UEFI
   googlebooks: count(rows, (r) => r.boot === 'android'),
+  chromebooks: count(rows, (r) => r.boot === 'depthcharge'),
   // Every dump collected counts, also once its model has a device tree; one is still wanted while a model
   // has no device tree anywhere, posted or out of tree included
   acpi: count(current, (r) => r.upstream.acpi === 'collected'),

@@ -1,6 +1,24 @@
 {
-  "collected": "2026-11-11T00:39:52.475Z",
+  "collected": "2026-11-11T03:45:03.402Z",
   "kernelReleases": [
+    "v5.10",
+    "v5.11",
+    "v5.12",
+    "v5.13",
+    "v5.14",
+    "v5.15",
+    "v5.16",
+    "v5.17",
+    "v5.18",
+    "v5.19",
+    "v6.0",
+    "v6.1",
+    "v6.2",
+    "v6.3",
+    "v6.4",
+    "v6.5",
+    "v6.6",
+    "v6.7",
     "v6.8",
     "v6.9",
     "v6.10",
@@ -26,7 +44,7 @@
     "v261",
     "v262"
   ],
-  "linuxNext": "20261109",
+  "linuxNext": "20261110",
   "deviceTrees": [
     {
       "file": "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -119,6 +137,17 @@
       "firmware": []
     },
     {
+      "file": "glymur-sip-crd.dts",
+      "firstRelease": null,
+      "inNext": true,
+      "model": "Qualcomm Technologies, Inc. Glymur CRD (SiP)",
+      "compatible": [
+        "qcom,glymur-sip-crd",
+        "qcom,glymur"
+      ],
+      "firmware": []
+    },
+    {
       "file": "hamoa-advantech-som-db5830.dts",
       "firstRelease": null,
       "inNext": true,
@@ -162,6 +191,19 @@
       ]
     },
     {
+      "file": "hamoa-som-db5830.dts",
+      "firstRelease": null,
+      "inNext": true,
+      "model": "Advantech SOM-6820 on SOM-DB5830",
+      "compatible": [
+        "advantech,som-db5830",
+        "advantech,som-6820",
+        "qcom,iq-x7181-evk-som",
+        "qcom,x1e80100"
+      ],
+      "firmware": []
+    },
+    {
       "file": "mahua-crd.dts",
       "firstRelease": "v7.1",
       "inNext": true,
@@ -190,6 +232,17 @@
       ]
     },
     {
+      "file": "mahua-qcb.dts",
+      "firstRelease": null,
+      "inNext": true,
+      "model": "Qualcomm Technologies, Inc. Mahua QCB",
+      "compatible": [
+        "qcom,mahua-qcb",
+        "qcom,mahua"
+      ],
+      "firmware": []
+    },
+    {
       "file": "purwa-iot-evk.dts",
       "firstRelease": "v7.1",
       "inNext": true,
@@ -202,8 +255,815 @@
       "firmware": []
     },
     {
+      "file": "sc7180-trogdor-coachz-r1-lte.dts",
+      "firstRelease": "v5.13",
+      "inNext": true,
+      "model": "Google CoachZ (rev1 - 2) with LTE",
+      "compatible": [
+        "google,coachz-rev1-sku0",
+        "google,coachz-rev2-sku0",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-coachz-r1.dts",
+      "firstRelease": "v5.13",
+      "inNext": true,
+      "model": "Google CoachZ (rev1 - 2)",
+      "compatible": [
+        "google,coachz-rev1",
+        "google,coachz-rev2",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-coachz-r2-lte.dts",
+      "firstRelease": "v5.13",
+      "inNext": false,
+      "compatible": [],
+      "firmware": []
+    },
+    {
+      "file": "sc7180-trogdor-coachz-r2.dts",
+      "firstRelease": "v5.13",
+      "inNext": false,
+      "compatible": [],
+      "firmware": []
+    },
+    {
+      "file": "sc7180-trogdor-coachz-r3-lte.dts",
+      "firstRelease": "v5.14",
+      "inNext": true,
+      "model": "Google CoachZ (rev3+) with LTE",
+      "compatible": [
+        "google,coachz-sku0",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-coachz-r3.dts",
+      "firstRelease": "v5.14",
+      "inNext": true,
+      "model": "Google CoachZ (rev3+)",
+      "compatible": [
+        "google,coachz",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-homestar-r2.dts",
+      "firstRelease": "v5.16",
+      "inNext": true,
+      "model": "Google Homestar (rev2)",
+      "compatible": [
+        "google,homestar-rev2",
+        "google,homestar-rev23",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-homestar-r3.dts",
+      "firstRelease": "v5.16",
+      "inNext": true,
+      "model": "Google Homestar (rev3)",
+      "compatible": [
+        "google,homestar-rev3",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-homestar-r4.dts",
+      "firstRelease": "v5.17",
+      "inNext": true,
+      "model": "Google Homestar (rev4+)",
+      "compatible": [
+        "google,homestar",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-kingoftown-r0.dts",
+      "firstRelease": "v6.0",
+      "inNext": false,
+      "compatible": [],
+      "firmware": []
+    },
+    {
+      "file": "sc7180-trogdor-kingoftown-r1.dts",
+      "firstRelease": "v6.0",
+      "inNext": false,
+      "compatible": [],
+      "firmware": []
+    },
+    {
+      "file": "sc7180-trogdor-kingoftown.dts",
+      "firstRelease": "v6.4",
+      "inNext": true,
+      "model": "Google Kingoftown",
+      "compatible": [
+        "google,kingoftown",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-limozeen-nots-r10.dts",
+      "firstRelease": "v6.7",
+      "inNext": true,
+      "model": "Google Lazor Limozeen without Touchscreen (rev10+)",
+      "compatible": [
+        "google,lazor-sku6",
+        "google,lazor-sku18",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-limozeen-nots-r4.dts",
+      "firstRelease": "v5.13",
+      "inNext": true,
+      "model": "Google Lazor Limozeen without Touchscreen (rev4)",
+      "compatible": [
+        "google,lazor-rev4-sku5",
+        "qcom,sc7180"
+      ],
+      "firmware": []
+    },
+    {
+      "file": "sc7180-trogdor-lazor-limozeen-nots-r5.dts",
+      "firstRelease": "v5.17",
+      "inNext": true,
+      "model": "Google Lazor Limozeen without Touchscreen (rev5 - rev8)",
+      "compatible": [
+        "google,lazor-rev5-sku5",
+        "google,lazor-rev5-sku6",
+        "google,lazor-rev6-sku6",
+        "google,lazor-rev7-sku6",
+        "google,lazor-rev8-sku6",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-limozeen-nots-r9.dts",
+      "firstRelease": "v5.17",
+      "inNext": true,
+      "model": "Google Lazor Limozeen without Touchscreen (rev9)",
+      "compatible": [
+        "google,lazor-rev9-sku6",
+        "google,lazor-rev9-sku18",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-limozeen-nots.dts",
+      "firstRelease": "v5.13",
+      "inNext": false,
+      "compatible": [],
+      "firmware": []
+    },
+    {
+      "file": "sc7180-trogdor-lazor-limozeen-r10.dts",
+      "firstRelease": "v6.7",
+      "inNext": true,
+      "model": "Google Lazor Limozeen (rev10+)",
+      "compatible": [
+        "google,lazor-sku4",
+        "google,lazor-sku15",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-limozeen-r4.dts",
+      "firstRelease": "v5.17",
+      "inNext": true,
+      "model": "Google Lazor Limozeen (rev4 - rev8)",
+      "compatible": [
+        "google,lazor-rev4-sku4",
+        "google,lazor-rev5-sku4",
+        "google,lazor-rev6-sku4",
+        "google,lazor-rev7-sku4",
+        "google,lazor-rev8-sku4",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-limozeen-r9.dts",
+      "firstRelease": "v5.17",
+      "inNext": true,
+      "model": "Google Lazor Limozeen (rev9)",
+      "compatible": [
+        "google,lazor-rev9-sku4",
+        "google,lazor-rev9-sku15",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-limozeen.dts",
+      "firstRelease": "v5.13",
+      "inNext": false,
+      "compatible": [],
+      "firmware": []
+    },
+    {
+      "file": "sc7180-trogdor-lazor-r0.dts",
+      "firstRelease": "v5.10",
+      "inNext": false,
+      "compatible": [],
+      "firmware": []
+    },
+    {
+      "file": "sc7180-trogdor-lazor-r1-kb.dts",
+      "firstRelease": "v5.10",
+      "inNext": true,
+      "model": "Google Lazor (rev1 - 2) with KB Backlight",
+      "compatible": [
+        "google,lazor-rev1-sku2",
+        "google,lazor-rev2-sku2",
+        "qcom,sc7180"
+      ],
+      "firmware": []
+    },
+    {
+      "file": "sc7180-trogdor-lazor-r1-lte.dts",
+      "firstRelease": "v5.10",
+      "inNext": true,
+      "model": "Google Lazor (rev1 - 2) with LTE",
+      "compatible": [
+        "google,lazor-rev1-sku0",
+        "google,lazor-rev2-sku0",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-r1.dts",
+      "firstRelease": "v5.10",
+      "inNext": true,
+      "model": "Google Lazor (rev1 - 2)",
+      "compatible": [
+        "google,lazor-rev1",
+        "google,lazor-rev2",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-r10-kb.dts",
+      "firstRelease": "v6.7",
+      "inNext": true,
+      "model": "Google Lazor (rev10+) with KB Backlight",
+      "compatible": [
+        "google,lazor-sku2",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-r10-lte.dts",
+      "firstRelease": "v6.7",
+      "inNext": true,
+      "model": "Google Lazor (rev10+) with LTE",
+      "compatible": [
+        "google,lazor-sku0",
+        "google,lazor-sku10",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-r10.dts",
+      "firstRelease": "v6.7",
+      "inNext": true,
+      "model": "Google Lazor (rev10+)",
+      "compatible": [
+        "google,lazor",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-r3-kb.dts",
+      "firstRelease": "v5.11",
+      "inNext": true,
+      "model": "Google Lazor (rev3 - 8) with KB Backlight",
+      "compatible": [
+        "google,lazor-rev3-sku2",
+        "google,lazor-rev4-sku2",
+        "google,lazor-rev5-sku2",
+        "google,lazor-rev6-sku2",
+        "google,lazor-rev7-sku2",
+        "google,lazor-rev8-sku2",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-r3-lte.dts",
+      "firstRelease": "v5.11",
+      "inNext": true,
+      "model": "Google Lazor (rev3 - 8) with LTE",
+      "compatible": [
+        "google,lazor-rev3-sku0",
+        "google,lazor-rev4-sku0",
+        "google,lazor-rev5-sku0",
+        "google,lazor-rev6-sku0",
+        "google,lazor-rev7-sku0",
+        "google,lazor-rev8-sku0",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-r3.dts",
+      "firstRelease": "v5.11",
+      "inNext": true,
+      "model": "Google Lazor (rev3 - 8)",
+      "compatible": [
+        "google,lazor-rev3",
+        "google,lazor-rev4",
+        "google,lazor-rev5",
+        "google,lazor-rev6",
+        "google,lazor-rev7",
+        "google,lazor-rev8",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-r9-kb.dts",
+      "firstRelease": "v5.17",
+      "inNext": true,
+      "model": "Google Lazor (rev9) with KB Backlight",
+      "compatible": [
+        "google,lazor-rev9-sku2",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-r9-lte.dts",
+      "firstRelease": "v5.17",
+      "inNext": true,
+      "model": "Google Lazor (rev9) with LTE",
+      "compatible": [
+        "google,lazor-rev9-sku0",
+        "google,lazor-rev9-sku10",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-lazor-r9.dts",
+      "firstRelease": "v5.17",
+      "inNext": true,
+      "model": "Google Lazor (rev9)",
+      "compatible": [
+        "google,lazor-rev9",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-mrbland-rev0-auo.dts",
+      "firstRelease": "v6.0",
+      "inNext": false,
+      "compatible": [],
+      "firmware": []
+    },
+    {
+      "file": "sc7180-trogdor-mrbland-rev0-boe.dts",
+      "firstRelease": "v6.0",
+      "inNext": false,
+      "compatible": [],
+      "firmware": []
+    },
+    {
+      "file": "sc7180-trogdor-mrbland-rev1-auo.dts",
+      "firstRelease": "v6.0",
+      "inNext": false,
+      "compatible": [],
+      "firmware": []
+    },
+    {
+      "file": "sc7180-trogdor-mrbland-rev1-boe.dts",
+      "firstRelease": "v6.0",
+      "inNext": false,
+      "compatible": [],
+      "firmware": []
+    },
+    {
+      "file": "sc7180-trogdor-pazquel-lte-parade.dts",
+      "firstRelease": "v6.0",
+      "inNext": true,
+      "model": "Google Pazquel (Parade,LTE)",
+      "compatible": [
+        "google,pazquel-sku6",
+        "google,pazquel-sku4",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-pazquel-lte-ti.dts",
+      "firstRelease": "v6.0",
+      "inNext": true,
+      "model": "Google Pazquel (TI,LTE)",
+      "compatible": [
+        "google,pazquel-sku0",
+        "google,pazquel-sku2",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-pazquel-parade.dts",
+      "firstRelease": "v6.0",
+      "inNext": true,
+      "model": "Google Pazquel (Parade)",
+      "compatible": [
+        "google,pazquel-sku5",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-pazquel-ti.dts",
+      "firstRelease": "v6.0",
+      "inNext": true,
+      "model": "Google Pazquel (TI)",
+      "compatible": [
+        "google,pazquel-sku1",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-pazquel360-lte.dts",
+      "firstRelease": "v6.2",
+      "inNext": true,
+      "model": "Google Pazquel (Parade,LTE)",
+      "compatible": [
+        "google,pazquel-sku22",
+        "google,pazquel-sku20",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-pazquel360-wifi.dts",
+      "firstRelease": "v6.2",
+      "inNext": true,
+      "model": "Google Pazquel (Parade,WIFI-only)",
+      "compatible": [
+        "google,pazquel-sku21",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-pompom-r1-lte.dts",
+      "firstRelease": "v5.13",
+      "inNext": true,
+      "model": "Google Pompom (rev1) with LTE",
+      "compatible": [
+        "google,pompom-rev1-sku0",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-pompom-r1.dts",
+      "firstRelease": "v5.13",
+      "inNext": true,
+      "model": "Google Pompom (rev1)",
+      "compatible": [
+        "google,pompom-rev1",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-pompom-r2-lte.dts",
+      "firstRelease": "v5.13",
+      "inNext": true,
+      "model": "Google Pompom (rev2) with LTE",
+      "compatible": [
+        "google,pompom-rev2-sku0",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-pompom-r2.dts",
+      "firstRelease": "v5.13",
+      "inNext": true,
+      "model": "Google Pompom (rev2)",
+      "compatible": [
+        "google,pompom-rev2",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-pompom-r3-lte.dts",
+      "firstRelease": "v5.14",
+      "inNext": true,
+      "model": "Google Pompom (rev3+) with LTE",
+      "compatible": [
+        "google,pompom-sku0",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-pompom-r3.dts",
+      "firstRelease": "v5.14",
+      "inNext": true,
+      "model": "Google Pompom (rev3+)",
+      "compatible": [
+        "google,pompom",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-quackingstick-r0-lte.dts",
+      "firstRelease": "v6.0",
+      "inNext": true,
+      "model": "Google Quackingstick (rev0+) with LTE",
+      "compatible": [
+        "google,quackingstick-sku1536",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-quackingstick-r0.dts",
+      "firstRelease": "v6.0",
+      "inNext": true,
+      "model": "Google Quackingstick (rev0+)",
+      "compatible": [
+        "google,quackingstick-sku1537",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-r1-lte.dts",
+      "firstRelease": "v5.10",
+      "inNext": true,
+      "model": "Google Trogdor (rev1+) with LTE",
+      "compatible": [
+        "google,trogdor-sku0",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-r1.dts",
+      "firstRelease": "v5.10",
+      "inNext": true,
+      "model": "Google Trogdor (rev1+)",
+      "compatible": [
+        "google,trogdor",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-wormdingler-rev0-boe.dts",
+      "firstRelease": "v6.0",
+      "inNext": false,
+      "compatible": [],
+      "firmware": []
+    },
+    {
+      "file": "sc7180-trogdor-wormdingler-rev0-inx.dts",
+      "firstRelease": "v6.0",
+      "inNext": false,
+      "compatible": [],
+      "firmware": []
+    },
+    {
+      "file": "sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts",
+      "firstRelease": "v6.0",
+      "inNext": true,
+      "model": "Google Wormdingler rev1+ (BOE, rt5682s)",
+      "compatible": [
+        "google,wormdingler-sku1025",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-wormdingler-rev1-boe.dts",
+      "firstRelease": "v6.0",
+      "inNext": true,
+      "model": "Google Wormdingler rev1+ BOE panel board",
+      "compatible": [
+        "google,wormdingler-sku1024",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts",
+      "firstRelease": "v6.0",
+      "inNext": true,
+      "model": "Google Wormdingler rev1+ (INX, rt5682s)",
+      "compatible": [
+        "google,wormdingler-sku1",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
+      "file": "sc7180-trogdor-wormdingler-rev1-inx.dts",
+      "firstRelease": "v6.0",
+      "inNext": true,
+      "model": "Google Wormdingler rev1+ INX panel board",
+      "compatible": [
+        "google,wormdingler-sku0",
+        "qcom,sc7180"
+      ],
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
+    },
+    {
       "file": "sc8280xp-crd.dts",
-      "firstRelease": "v6.8",
+      "firstRelease": "v6.0",
       "inNext": true,
       "model": "Qualcomm SC8280XP CRD",
       "compatible": [
@@ -229,7 +1089,7 @@
     },
     {
       "file": "sc8280xp-lenovo-thinkpad-x13s.dts",
-      "firstRelease": "v6.8",
+      "firstRelease": "v6.0",
       "inNext": true,
       "model": "Lenovo ThinkPad X13s",
       "compatible": [
@@ -533,6 +1393,7 @@
       ],
       "firmware": [
         "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/microsoft/Denali/qcvss8380.mbn",
         "qcom/x1e80100/microsoft/Denali/qcadsp8380.mbn",
         "qcom/x1e80100/microsoft/Denali/adsp_dtb.mbn",
         "qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn",
@@ -713,6 +1574,7 @@
       ],
       "firmware": [
         "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/microsoft/Denali/qcvss8380.mbn",
         "qcom/x1e80100/microsoft/Denali/qcadsp8380.mbn",
         "qcom/x1e80100/microsoft/Denali/adsp_dtb.mbn",
         "qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn",
@@ -4820,6 +5682,7 @@
           "mahua-hp-omnibook-5-bf1xxx.dts",
           "mahua-hp-omnibook-x16.dts",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
+          "purwa-lenovo-ideacentre-mini-01q8x10.dts",
           "sc8280xp-crd.dts",
           "sc8280xp-huawei-gaokun3.dts",
           "sc8280xp-lenovo-thinkpad-x13s.dts",
@@ -5367,7 +6230,18 @@
             "qcom/x1e80100/LENOVO/91B6/qcadsp8380.mbn",
             "qcom/x1e80100/LENOVO/91B6/qccdsp8380.mbn",
             "qcom/x1e80100/LENOVO/91B6/qcdxkmsuc8380.mbn",
-            "qcom/x1e80100/LENOVO/91B6/qcvss8380.mbn"
+            "qcom/x1e80100/LENOVO/91B6/qcvss8380.mbn",
+            "qcom/x1p42100/LENOVO/91B6/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/91B6/adspr.jsn",
+            "qcom/x1p42100/LENOVO/91B6/adsps.jsn",
+            "qcom/x1p42100/LENOVO/91B6/adspua.jsn",
+            "qcom/x1p42100/LENOVO/91B6/battmgr.jsn",
+            "qcom/x1p42100/LENOVO/91B6/cdsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/91B6/cdspr.jsn",
+            "qcom/x1p42100/LENOVO/91B6/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/91B6/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/91B6/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/91B6/qcvss8380_pa.mbn"
           ],
           "lenovo-thinkcentre-neo-50q-qc-firmware": [
             "qcom/x1p42100/LENOVO/13C8/adsp_dtbs.elf",

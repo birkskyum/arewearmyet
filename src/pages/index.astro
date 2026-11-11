@@ -7,7 +7,7 @@ import ChipIcon from '../assets/chip-icon.svg';
 import OmarchyIcon from '../assets/omarchy-icon.svg';
 import GitHubIcon from '../assets/github-icon.svg';
 import status from '../data/status.json';
-import { ANNOUNCED, FILTERS, GOOGLEBOOK_OMARCHY_LEGEND, GOOGLEBOOK_UPSTREAM_LEGEND, NVIDIA_OMARCHY_LEGEND, NVIDIA_UPSTREAM_LEGEND, OMARCHY_LEGEND, TONE, UPSTREAM_LEGEND } from '../lib/labels';
+import { ANNOUNCED, CHROMEBOOK_OMARCHY_LEGEND, FILTERS, GOOGLEBOOK_OMARCHY_LEGEND, GOOGLEBOOK_UPSTREAM_LEGEND, NVIDIA_OMARCHY_LEGEND, NVIDIA_UPSTREAM_LEGEND, OMARCHY_LEGEND, TONE, UPSTREAM_LEGEND } from '../lib/labels';
 import { PILL } from '../lib/tones';
 import { googlebookRows, nvidiaRows, snapdragonRows } from '../lib/rows';
 
@@ -22,6 +22,7 @@ const current = rows.filter((row) => row.generation !== '8cx' && row.generation 
 const older = rows.filter((row) => row.generation === '8cx');
 const entry = rows.filter((row) => row.generation === 'c');
 const googlebooks = googlebookRows().sort(byName);
+const chromebooks = googlebookRows('depthcharge').sort(byName);
 const nvidia = nvidiaRows().sort((a, b) => a.generation.localeCompare(b.generation) || byName(a, b));
 
 // Where each piece stands: in any Omarchy channel, in the releases every distro gets,
@@ -84,6 +85,10 @@ const googlebookViews = [
     { id: 'device-tree', header: 'Linux', question: GOOGLEBOOK_UPSTREAM_LEGEND[0].question, options: FILTERS.googlebookDeviceTree },
   ] },
 ];
+const chromebookViews = [
+  { ...googlebookViews[0], columns: googlebookViews[0].columns.map((column, i) => ({ ...column, question: CHROMEBOOK_OMARCHY_LEGEND[i].question })) },
+  { ...googlebookViews[1], columns: [{ ...googlebookViews[1].columns[0], options: FILTERS.chromebookDeviceTree }] },
+];
 const HELP = 'mt-2 max-w-3xl text-sm text-zinc-400';
 
 const collected = new Date(status.collected).toISOString().slice(0, 10);
@@ -111,6 +116,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
         <a href="#snapdragon-8cx" class={NAV}>Snapdragon 8cx Gen 3 <span class="text-zinc-500">{older.length}</span></a>
         <a href="#snapdragon-c" class={NAV}>Snapdragon C <span class="text-zinc-500">{entry.length}</span></a>
         <a href="#googlebooks" class={NAV}>Googlebooks <span class="text-zinc-500">{googlebooks.length}</span></a>
+        <a href="#chromebooks" class={NAV}>Chromebooks <span class="text-zinc-500">{chromebooks.length}</span></a>
         <a href="#nvidia" class={NAV}>NVIDIA N1x and GB10 <span class="text-zinc-500">{nvidia.length}</span></a>
         <a href="#apple" class={NAV}>Apple Silicon</a>
       </nav>
@@ -205,6 +211,23 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
         </div>
         <div class="mt-4">
           <StatusTable client:load rows={googlebooks} views={googlebookViews} chips={[{ key: 'x1', label: 'Snapdragon X' }, { key: 'x2', label: 'Snapdragon X2' }]} urlPrefix="googlebook-" exportName="arewearmyet-googlebooks" exportTitle="Googlebooks with Snapdragon" />
+        </div>
+      </div>
+    </Family>
+
+    <Family id="chromebooks" title="Chromebooks with Snapdragon" total={chromebooks.length}>
+      <p class="max-w-3xl text-sm text-zinc-400">
+        Arm Chromebooks start through ChromeOS's bootloader instead of UEFI, so like the Googlebooks they need no ACPI tables or hardware IDs, and Omarchy's ARM image doesn't start on them. Their device trees have been in Linux for years, so what they need is a Linux image built for that bootloader, which developer mode lets them start.
+      </p>
+      <div class="group/views mt-4" data-views data-view="omarchy">
+        <div class="group-data-[view=upstream]/views:hidden">
+          <Legend title="What the labels mean" groups={CHROMEBOOK_OMARCHY_LEGEND} />
+        </div>
+        <div class="hidden group-data-[view=upstream]/views:block">
+          <Legend title="What the labels mean" groups={GOOGLEBOOK_UPSTREAM_LEGEND} />
+        </div>
+        <div class="mt-4">
+          <StatusTable client:load rows={chromebooks} views={chromebookViews} chips={[{ key: '7c', label: 'Snapdragon 7c' }]} urlPrefix="chromebook-" exportName="arewearmyet-chromebooks" exportTitle="Chromebooks with Snapdragon" />
         </div>
       </div>
     </Family>

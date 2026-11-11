@@ -1,7 +1,7 @@
 # Every ARM PC model the board tracks. One entry per hardware model; variants
 # that Linux describes with separate device trees are listed inside it.
 #
-#   generation     x1 (Snapdragon X), x2 (Snapdragon X2), 8cx (8cx Gen 3) or c (Snapdragon C)
+#   generation     x1 (Snapdragon X), x2 (Snapdragon X2), 8cx (8cx Gen 3), c (Snapdragon C) or 7c (Snapdragon 7c)
 #   chips          the processors it's sold with
 #   variants       one per device tree: compatible is the tree's first
 #                  compatible string, also for trees that are only posted or
@@ -27,7 +27,8 @@
 #   discussion     where owners work on it, when that's a separate thread
 #   team_has_one   true when someone on the Omarchy team has the machine
 #   boot           android when it starts through Android's bootloader, like a Pixel,
-#                  instead of UEFI; those models get their own section, with
+#                  or depthcharge through ChromeOS's, like a Chromebook, instead of UEFI;
+#                  those models get their own section, with
 #   bootloader     unlockable or locked, and
 #   linux_image    boots or none: whether a Linux image starts on it yet
 #   status         set when it was announced but isn't confirmed shipping
@@ -100,6 +101,36 @@ models:
     model_numbers: ["AL14-11M"]
     sources:
       - https://www.notebookcheck.net/New-lightweight-laptop-launches-with-14-inch-display-and-Qualcomm-Snapdragon-X-Plus-chipset.1413302.0.html
+
+  - id: acer-chromebook-spin-513-cp513-1h
+    vendor: "Acer"
+    name: "Chromebook Spin 513"
+    generation: 7c
+    form: 2-in-1
+    released: "2021"
+    chips: ["SC7180"]
+    model_numbers: ["CP513-1H", "CP513-1HL", "N20Q4"]
+    variants:
+      - { compatible: "google,lazor-rev1" }
+      - { compatible: "google,lazor-rev1-sku2" }
+      - { compatible: "google,lazor-rev1-sku0" }
+      - { compatible: "google,lazor-rev3" }
+      - { compatible: "google,lazor-rev3-sku2" }
+      - { compatible: "google,lazor-rev3-sku0" }
+      - { compatible: "google,lazor-rev9" }
+      - { compatible: "google,lazor-rev9-sku2" }
+      - { compatible: "google,lazor-rev9-sku0" }
+      - { compatible: "google,lazor" }
+      - { compatible: "google,lazor-sku2" }
+      - { compatible: "google,lazor-sku0" }
+    boot: depthcharge
+    bootloader: unlockable
+    linux_image: boots
+    discussion: "https://github.com/birkskyum/arewearmyet/issues/9"
+    notes: "Google's board name for it is Lazor, and Linux has a tree for each board revision, with or without the keyboard backlight and LTE. An owner runs Debian 13 on it with Linux's own tree for revisions 3 to 8 with the keyboard backlight."
+    sources:
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
+      - https://github.com/birkskyum/arewearmyet/issues/9
 
   - id: acer-swift-14-ai-sf14-11
     vendor: "Acer"

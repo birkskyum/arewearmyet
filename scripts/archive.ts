@@ -428,7 +428,7 @@ const where = (folder: string) => {
 };
 const known = new Set(acpiDumps.map((dump) => dump.folder));
 // Googlebooks start through Android's bootloader and have no ACPI tables
-const rows = (models as Listed[]).filter((model) => model.boot !== 'android').map((model) => ({ model, dumps: (model.acpi ?? []).filter((folder) => known.has(folder)) }));
+const rows = (models as Listed[]).filter((model) => !model.boot).map((model) => ({ model, dumps: (model.acpi ?? []).filter((folder) => known.has(folder)) }));
 const claimed = new Set(rows.flatMap((row) => row.dumps));
 const unclaimed = [...new Set(acpiDumps.map((dump) => dump.folder))].filter((folder) => !claimed.has(folder) && !ignored.has(folder));
 writeFileSync('acpi/README.md', [

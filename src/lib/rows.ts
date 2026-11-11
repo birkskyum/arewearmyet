@@ -56,10 +56,10 @@ const modelRow = (model: Model, cells: Record<string, CellData>): TableRow => ({
   cells,
 });
 
-// Googlebooks start through Android's bootloader, so they get columns of their own
-export function googlebookRows(): TableRow[] {
+// Googlebooks start through Android's bootloader and Chromebooks through ChromeOS's, so they get columns of their own
+export function googlebookRows(boot: 'android' | 'depthcharge' = 'android'): TableRow[] {
   return status.models
-    .filter((model: Model) => model.boot === 'android')
+    .filter((model: Model) => model.boot === boot)
     .map((model: Model) => ({
       ...modelRow(model, {
         omarchy: plain(googlebookOmarchyCell(model)),
@@ -74,7 +74,7 @@ export function googlebookRows(): TableRow[] {
 
 export function snapdragonRows(): TableRow[] {
   return status.models
-    .filter((model: Model) => model.boot !== 'android')
+    .filter((model: Model) => model.boot === 'uefi')
     .map((model: Model) =>
       modelRow(model, {
         // The Omarchy view

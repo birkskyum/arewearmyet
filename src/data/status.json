@@ -1,6 +1,6 @@
 {
-  "collected": "2026-11-11T00:39:52.475Z",
-  "linuxNext": "20261109",
+  "collected": "2026-11-11T03:45:03.402Z",
+  "linuxNext": "20261110",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
@@ -415,6 +415,7 @@
           "mahua-hp-omnibook-5-bf1xxx.dts",
           "mahua-hp-omnibook-x16.dts",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
+          "purwa-lenovo-ideacentre-mini-01q8x10.dts",
           "sc8280xp-crd.dts",
           "sc8280xp-huawei-gaokun3.dts",
           "sc8280xp-lenovo-thinkpad-x13s.dts",
@@ -962,7 +963,18 @@
             "qcom/x1e80100/LENOVO/91B6/qcadsp8380.mbn",
             "qcom/x1e80100/LENOVO/91B6/qccdsp8380.mbn",
             "qcom/x1e80100/LENOVO/91B6/qcdxkmsuc8380.mbn",
-            "qcom/x1e80100/LENOVO/91B6/qcvss8380.mbn"
+            "qcom/x1e80100/LENOVO/91B6/qcvss8380.mbn",
+            "qcom/x1p42100/LENOVO/91B6/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/91B6/adspr.jsn",
+            "qcom/x1p42100/LENOVO/91B6/adsps.jsn",
+            "qcom/x1p42100/LENOVO/91B6/adspua.jsn",
+            "qcom/x1p42100/LENOVO/91B6/battmgr.jsn",
+            "qcom/x1p42100/LENOVO/91B6/cdsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/91B6/cdspr.jsn",
+            "qcom/x1p42100/LENOVO/91B6/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/91B6/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/91B6/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/91B6/qcvss8380_pa.mbn"
           ],
           "lenovo-thinkcentre-neo-50q-qc-firmware": [
             "qcom/x1p42100/LENOVO/13C8/adsp_dtbs.elf",
@@ -1217,8 +1229,9 @@
     "notYet": 30,
     "deviceTree": 60,
     "ids": 58,
-    "firmware": 53,
+    "firmware": 52,
     "googlebooks": 2,
+    "chromebooks": 1,
     "acpi": 45,
     "acpiWanted": 26,
     "machine": {
@@ -1391,16 +1404,16 @@
         }
       },
       "firmware": {
-        "omarchy": 52,
+        "omarchy": 51,
         "fromUpstream": 1,
-        "added": 51,
+        "added": 50,
         "pull": 0,
         "available": 1,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 52
+          "edge": 51
         },
         "models": {
           "fromUpstream": [
@@ -1450,7 +1463,6 @@
             "microsoft-surface-laptop-7-13",
             "microsoft-surface-laptop-7-15",
             "microsoft-surface-laptop-13in-1st-edition",
-            "microsoft-surface-pro-11",
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
@@ -1466,9 +1478,9 @@
         }
       },
       "all": {
-        "omarchy": 51,
+        "omarchy": 50,
         "fromUpstream": 1,
-        "added": 50,
+        "added": 49,
         "pull": 0,
         "available": 0,
         "upstream": 1,
@@ -1519,7 +1531,6 @@
             "microsoft-surface-laptop-7-13",
             "microsoft-surface-laptop-7-15",
             "microsoft-surface-laptop-13in-1st-edition",
-            "microsoft-surface-pro-11",
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
@@ -1889,6 +1900,369 @@
       "bootloader": null,
       "linuxImage": null,
       "discussion": null
+    },
+    {
+      "id": "acer-chromebook-spin-513-cp513-1h",
+      "vendor": "Acer",
+      "name": "Chromebook Spin 513",
+      "generation": "7c",
+      "form": "2-in-1",
+      "released": "2021",
+      "modelNumbers": [
+        "CP513-1H",
+        "CP513-1HL",
+        "N20Q4"
+      ],
+      "chips": [
+        "SC7180"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi",
+        "https://github.com/birkskyum/arewearmyet/issues/9"
+      ],
+      "notes": "Google's board name for it is Lazor, and Linux has a tree for each board revision, with or without the keyboard backlight and LTE. An owner runs Debian 13 on it with Linux's own tree for revisions 3 to 8 with the keyboard backlight.",
+      "outcome": "notCarried",
+      "bootable": "needs-ids",
+      "reports": [],
+      "machine": "linux",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "elsewhere",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "released",
+        "firstRelease": "v5.10",
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [
+          "mba.mbn",
+          "qdsp6sw.mbn",
+          "mba.mbn",
+          "qdsp6sw.mbn"
+        ],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "compatible": "google,lazor-rev1",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sc7180-trogdor-lazor-r1.dts",
+            "firstRelease": "v5.10",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+          ],
+          "ids": [],
+          "stubble": [],
+          "outcome": "notCarried",
+          "reports": []
+        },
+        {
+          "compatible": "google,lazor-rev1-sku2",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sc7180-trogdor-lazor-r1-kb.dts",
+            "firstRelease": "v5.10",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "notCarried",
+          "reports": []
+        },
+        {
+          "compatible": "google,lazor-rev1-sku0",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sc7180-trogdor-lazor-r1-lte.dts",
+            "firstRelease": "v5.10",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem/mba.mbn",
+            "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+          ],
+          "ids": [],
+          "stubble": [],
+          "outcome": "notCarried",
+          "reports": []
+        },
+        {
+          "compatible": "google,lazor-rev3",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sc7180-trogdor-lazor-r3.dts",
+            "firstRelease": "v5.11",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+          ],
+          "ids": [],
+          "stubble": [],
+          "outcome": "notCarried",
+          "reports": []
+        },
+        {
+          "compatible": "google,lazor-rev3-sku2",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sc7180-trogdor-lazor-r3-kb.dts",
+            "firstRelease": "v5.11",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+          ],
+          "ids": [],
+          "stubble": [],
+          "outcome": "notCarried",
+          "reports": []
+        },
+        {
+          "compatible": "google,lazor-rev3-sku0",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sc7180-trogdor-lazor-r3-lte.dts",
+            "firstRelease": "v5.11",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+            "qcom/sc7180-trogdor/modem/mba.mbn",
+            "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+          ],
+          "ids": [],
+          "stubble": [],
+          "outcome": "notCarried",
+          "reports": []
+        },
+        {
+          "compatible": "google,lazor-rev9",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sc7180-trogdor-lazor-r9.dts",
+            "firstRelease": "v5.17",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+          ],
+          "ids": [],
+          "stubble": [],
+          "outcome": "notCarried",
+          "reports": []
+        },
+        {
+          "compatible": "google,lazor-rev9-sku2",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sc7180-trogdor-lazor-r9-kb.dts",
+            "firstRelease": "v5.17",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+          ],
+          "ids": [],
+          "stubble": [],
+          "outcome": "notCarried",
+          "reports": []
+        },
+        {
+          "compatible": "google,lazor-rev9-sku0",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sc7180-trogdor-lazor-r9-lte.dts",
+            "firstRelease": "v5.17",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+            "qcom/sc7180-trogdor/modem/mba.mbn",
+            "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+          ],
+          "ids": [],
+          "stubble": [],
+          "outcome": "notCarried",
+          "reports": []
+        },
+        {
+          "compatible": "google,lazor",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sc7180-trogdor-lazor-r10.dts",
+            "firstRelease": "v6.7",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+          ],
+          "ids": [],
+          "stubble": [],
+          "outcome": "notCarried",
+          "reports": []
+        },
+        {
+          "compatible": "google,lazor-sku2",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sc7180-trogdor-lazor-r10-kb.dts",
+            "firstRelease": "v6.7",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+          ],
+          "ids": [],
+          "stubble": [],
+          "outcome": "notCarried",
+          "reports": []
+        },
+        {
+          "compatible": "google,lazor-sku0",
+          "computed": "notCarried",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "sc7180-trogdor-lazor-r10-lte.dts",
+            "firstRelease": "v6.7",
+            "inNext": true,
+            "upstream": true,
+            "patch": null
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+            "qcom/sc7180-trogdor/modem/mba.mbn",
+            "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+          ],
+          "ids": [],
+          "stubble": [],
+          "outcome": "notCarried",
+          "reports": []
+        }
+      ],
+      "boot": "depthcharge",
+      "bootloader": "unlockable",
+      "linuxImage": "boots",
+      "discussion": "https://github.com/birkskyum/arewearmyet/issues/9"
     },
     {
       "id": "acer-swift-14-ai-sf14-11",
@@ -9601,17 +9975,15 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "shipped",
-        "firmwareChannel": "edge",
-        "firmwarePackages": [
-          "microsoft-surface-pro-11-firmware"
-        ],
+        "firmware": "partial",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
         "firmwarePull": null
       },
       "pieces": {
         "deviceTree": "stable",
         "ids": "stable",
-        "firmware": "edge"
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "released",
@@ -9622,10 +9994,17 @@
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "download",
-        "firmwareMissing": [],
+        "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsuc8380.mbn",
+          "qcvss8380.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtb.mbn",
+          "qccdsp8380.mbn",
+          "cdsp_dtb.mbn"
+        ],
         "firmwareAudioOnly": false,
-        "firmwareDownload": "/firmware/#qcom-x1e80100-microsoft",
+        "firmwareDownload": null,
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -9657,6 +10036,7 @@
           },
           "firmwareNeeded": [
             "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/microsoft/Denali/qcvss8380.mbn",
             "qcom/x1e80100/microsoft/Denali/qcadsp8380.mbn",
             "qcom/x1e80100/microsoft/Denali/adsp_dtb.mbn",
             "qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn",
@@ -9707,6 +10087,7 @@
           },
           "firmwareNeeded": [
             "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/microsoft/Denali/qcvss8380.mbn",
             "qcom/x1e80100/microsoft/Denali/qcadsp8380.mbn",
             "qcom/x1e80100/microsoft/Denali/adsp_dtb.mbn",
             "qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn",
@@ -11035,7 +11416,7 @@
       },
       "upstream": {
         "deviceTree": "released",
-        "firstRelease": "v6.8",
+        "firstRelease": "v6.0",
         "devicetreePosted": null,
         "devicetreeOutOfTree": null,
         "devicetreeArchive": null,
@@ -11068,7 +11449,7 @@
           "idsPull": null,
           "deviceTree": {
             "file": "sc8280xp-lenovo-thinkpad-x13s.dts",
-            "firstRelease": "v6.8",
+            "firstRelease": "v6.0",
             "inNext": true,
             "upstream": true,
             "patch": null
@@ -11638,7 +12019,222 @@
     }
   ],
   "unmatched": {
-    "deviceTrees": [],
+    "deviceTrees": [
+      {
+        "file": "sc7180-trogdor-coachz-r1-lte.dts",
+        "model": "Google CoachZ (rev1 - 2) with LTE",
+        "compatible": "google,coachz-rev1-sku0"
+      },
+      {
+        "file": "sc7180-trogdor-coachz-r1.dts",
+        "model": "Google CoachZ (rev1 - 2)",
+        "compatible": "google,coachz-rev1"
+      },
+      {
+        "file": "sc7180-trogdor-coachz-r2-lte.dts"
+      },
+      {
+        "file": "sc7180-trogdor-coachz-r2.dts"
+      },
+      {
+        "file": "sc7180-trogdor-coachz-r3-lte.dts",
+        "model": "Google CoachZ (rev3+) with LTE",
+        "compatible": "google,coachz-sku0"
+      },
+      {
+        "file": "sc7180-trogdor-coachz-r3.dts",
+        "model": "Google CoachZ (rev3+)",
+        "compatible": "google,coachz"
+      },
+      {
+        "file": "sc7180-trogdor-homestar-r2.dts",
+        "model": "Google Homestar (rev2)",
+        "compatible": "google,homestar-rev2"
+      },
+      {
+        "file": "sc7180-trogdor-homestar-r3.dts",
+        "model": "Google Homestar (rev3)",
+        "compatible": "google,homestar-rev3"
+      },
+      {
+        "file": "sc7180-trogdor-homestar-r4.dts",
+        "model": "Google Homestar (rev4+)",
+        "compatible": "google,homestar"
+      },
+      {
+        "file": "sc7180-trogdor-kingoftown-r0.dts"
+      },
+      {
+        "file": "sc7180-trogdor-kingoftown-r1.dts"
+      },
+      {
+        "file": "sc7180-trogdor-kingoftown.dts",
+        "model": "Google Kingoftown",
+        "compatible": "google,kingoftown"
+      },
+      {
+        "file": "sc7180-trogdor-lazor-limozeen-nots-r10.dts",
+        "model": "Google Lazor Limozeen without Touchscreen (rev10+)",
+        "compatible": "google,lazor-sku6"
+      },
+      {
+        "file": "sc7180-trogdor-lazor-limozeen-nots-r4.dts",
+        "model": "Google Lazor Limozeen without Touchscreen (rev4)",
+        "compatible": "google,lazor-rev4-sku5"
+      },
+      {
+        "file": "sc7180-trogdor-lazor-limozeen-nots-r5.dts",
+        "model": "Google Lazor Limozeen without Touchscreen (rev5 - rev8)",
+        "compatible": "google,lazor-rev5-sku5"
+      },
+      {
+        "file": "sc7180-trogdor-lazor-limozeen-nots-r9.dts",
+        "model": "Google Lazor Limozeen without Touchscreen (rev9)",
+        "compatible": "google,lazor-rev9-sku6"
+      },
+      {
+        "file": "sc7180-trogdor-lazor-limozeen-nots.dts"
+      },
+      {
+        "file": "sc7180-trogdor-lazor-limozeen-r10.dts",
+        "model": "Google Lazor Limozeen (rev10+)",
+        "compatible": "google,lazor-sku4"
+      },
+      {
+        "file": "sc7180-trogdor-lazor-limozeen-r4.dts",
+        "model": "Google Lazor Limozeen (rev4 - rev8)",
+        "compatible": "google,lazor-rev4-sku4"
+      },
+      {
+        "file": "sc7180-trogdor-lazor-limozeen-r9.dts",
+        "model": "Google Lazor Limozeen (rev9)",
+        "compatible": "google,lazor-rev9-sku4"
+      },
+      {
+        "file": "sc7180-trogdor-lazor-limozeen.dts"
+      },
+      {
+        "file": "sc7180-trogdor-lazor-r0.dts"
+      },
+      {
+        "file": "sc7180-trogdor-mrbland-rev0-auo.dts"
+      },
+      {
+        "file": "sc7180-trogdor-mrbland-rev0-boe.dts"
+      },
+      {
+        "file": "sc7180-trogdor-mrbland-rev1-auo.dts"
+      },
+      {
+        "file": "sc7180-trogdor-mrbland-rev1-boe.dts"
+      },
+      {
+        "file": "sc7180-trogdor-pazquel-lte-parade.dts",
+        "model": "Google Pazquel (Parade,LTE)",
+        "compatible": "google,pazquel-sku6"
+      },
+      {
+        "file": "sc7180-trogdor-pazquel-lte-ti.dts",
+        "model": "Google Pazquel (TI,LTE)",
+        "compatible": "google,pazquel-sku0"
+      },
+      {
+        "file": "sc7180-trogdor-pazquel-parade.dts",
+        "model": "Google Pazquel (Parade)",
+        "compatible": "google,pazquel-sku5"
+      },
+      {
+        "file": "sc7180-trogdor-pazquel-ti.dts",
+        "model": "Google Pazquel (TI)",
+        "compatible": "google,pazquel-sku1"
+      },
+      {
+        "file": "sc7180-trogdor-pazquel360-lte.dts",
+        "model": "Google Pazquel (Parade,LTE)",
+        "compatible": "google,pazquel-sku22"
+      },
+      {
+        "file": "sc7180-trogdor-pazquel360-wifi.dts",
+        "model": "Google Pazquel (Parade,WIFI-only)",
+        "compatible": "google,pazquel-sku21"
+      },
+      {
+        "file": "sc7180-trogdor-pompom-r1-lte.dts",
+        "model": "Google Pompom (rev1) with LTE",
+        "compatible": "google,pompom-rev1-sku0"
+      },
+      {
+        "file": "sc7180-trogdor-pompom-r1.dts",
+        "model": "Google Pompom (rev1)",
+        "compatible": "google,pompom-rev1"
+      },
+      {
+        "file": "sc7180-trogdor-pompom-r2-lte.dts",
+        "model": "Google Pompom (rev2) with LTE",
+        "compatible": "google,pompom-rev2-sku0"
+      },
+      {
+        "file": "sc7180-trogdor-pompom-r2.dts",
+        "model": "Google Pompom (rev2)",
+        "compatible": "google,pompom-rev2"
+      },
+      {
+        "file": "sc7180-trogdor-pompom-r3-lte.dts",
+        "model": "Google Pompom (rev3+) with LTE",
+        "compatible": "google,pompom-sku0"
+      },
+      {
+        "file": "sc7180-trogdor-pompom-r3.dts",
+        "model": "Google Pompom (rev3+)",
+        "compatible": "google,pompom"
+      },
+      {
+        "file": "sc7180-trogdor-quackingstick-r0-lte.dts",
+        "model": "Google Quackingstick (rev0+) with LTE",
+        "compatible": "google,quackingstick-sku1536"
+      },
+      {
+        "file": "sc7180-trogdor-quackingstick-r0.dts",
+        "model": "Google Quackingstick (rev0+)",
+        "compatible": "google,quackingstick-sku1537"
+      },
+      {
+        "file": "sc7180-trogdor-r1-lte.dts",
+        "model": "Google Trogdor (rev1+) with LTE",
+        "compatible": "google,trogdor-sku0"
+      },
+      {
+        "file": "sc7180-trogdor-r1.dts",
+        "model": "Google Trogdor (rev1+)",
+        "compatible": "google,trogdor"
+      },
+      {
+        "file": "sc7180-trogdor-wormdingler-rev0-boe.dts"
+      },
+      {
+        "file": "sc7180-trogdor-wormdingler-rev0-inx.dts"
+      },
+      {
+        "file": "sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dts",
+        "model": "Google Wormdingler rev1+ (BOE, rt5682s)",
+        "compatible": "google,wormdingler-sku1025"
+      },
+      {
+        "file": "sc7180-trogdor-wormdingler-rev1-boe.dts",
+        "model": "Google Wormdingler rev1+ BOE panel board",
+        "compatible": "google,wormdingler-sku1024"
+      },
+      {
+        "file": "sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dts",
+        "model": "Google Wormdingler rev1+ (INX, rt5682s)",
+        "compatible": "google,wormdingler-sku1"
+      },
+      {
+        "file": "sc7180-trogdor-wormdingler-rev1-inx.dts",
+        "model": "Google Wormdingler rev1+ INX panel board",
+        "compatible": "google,wormdingler-sku0"
+      }
+    ],
     "ids": [],
     "firmware": [],
     "acpi": []

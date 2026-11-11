@@ -159,6 +159,11 @@ export const GOOGLEBOOK_OMARCHY_LEGEND: Group[] = [
   { column: 'Bootable', question: 'Has an owner reached the desktop on it? Tested on Omarchy so far.', states: Object.values(STATES.googlebookOmarchy) as State[] },
 ];
 
+// Chromebooks: the same columns, with ChromeOS's bootloader, which starts another system in developer mode
+export const CHROMEBOOK_OMARCHY_LEGEND: Group[] = GOOGLEBOOK_OMARCHY_LEGEND.map((group, i) =>
+  i === 0 ? { ...group, question: `Whether ChromeOS's bootloader lets owners start another system. Developer mode does, and turning it on wipes the laptop.` } : group,
+);
+
 // The upstream view: its device tree in Linux itself
 export const GOOGLEBOOK_UPSTREAM_LEGEND: Group[] = [
   { column: 'Linux', question: 'Its device tree in Linux itself.', states: Object.values(STATES.deviceTree) as State[] },
@@ -305,14 +310,15 @@ export function nvidiaLinuxCell(model: NvidiaModel): Cell {
   return cell(STATES.nvidiaLinux, model.linux);
 }
 
-export const GENERATION: Record<string, string> = { x1: 'Snapdragon X', x2: 'Snapdragon X2', '8cx': 'Snapdragon 8cx Gen 3', c: 'Snapdragon C', n1x: 'NVIDIA N1x', gb10: 'NVIDIA GB10' };
+export const GENERATION: Record<string, string> = { x1: 'Snapdragon X', x2: 'Snapdragon X2', '8cx': 'Snapdragon 8cx Gen 3', c: 'Snapdragon C', '7c': 'Snapdragon 7c', n1x: 'NVIDIA N1x', gb10: 'NVIDIA GB10' };
 
 // The choices a column header's filter offers, one per state, in legend order. "Linux 6.x" and
 // "systemd 2xx" stand for any release, so their filter choices say so.
 const options = (group: Record<string, State>, skip?: string) => Object.entries(group).filter(([key]) => key !== skip).map(([key, state]) => ({ key, label: state.label, tone: state.tone }));
 // Device trees and hardware IDs offer each release that occurs, oldest first, before their other states
-const uefi = status.models.filter((model) => model.boot !== 'android');
+const uefi = status.models.filter((model) => model.boot === 'uefi');
 const googlebooks = status.models.filter((model) => model.boot === 'android');
+const chromebooks = status.models.filter((model) => model.boot === 'depthcharge');
 const releases = (cells: { key: string; label: string; rank: number }[], prefix: string) =>
   [...new Map(cells.filter((c) => c.key.startsWith(prefix)).sort((a, b) => a.rank - b.rank).map((c) => [c.key, { key: c.key, label: c.label, tone: 'good' as Tone }])).values()];
 export const FILTERS = {
@@ -321,6 +327,7 @@ export const FILTERS = {
   ids: [...releases(uefi.map(idsCell), 'systemd-'), ...options(STATES.ids, 'listed')],
   googlebookOmarchy: options(STATES.googlebookOmarchy),
   googlebookDeviceTree: [...releases(googlebooks.map(deviceTreeCell), 'linux-'), ...options(STATES.deviceTree, 'released')],
+  chromebookDeviceTree: [...releases(chromebooks.map(deviceTreeCell), 'linux-'), ...options(STATES.deviceTree, 'released')],
   bootloader: options(STATES.bootloader),
   linuxImage: options(STATES.linuxImage),
   firmware: options(STATES.upstreamFirmware),

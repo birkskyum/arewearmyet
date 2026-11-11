@@ -10,9 +10,10 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-const KERNEL_RELEASES = ['v6.8', 'v6.9', 'v6.10', 'v6.11', 'v6.12', 'v6.13', 'v6.14', 'v6.15', 'v6.16', 'v6.17', 'v6.18', 'v6.19', 'v7.0', 'v7.1', 'v7.2', 'v7.3'];
+// From v5.10, for the Snapdragon 7c Chromebooks' trees, which Linux has had since then
+const KERNEL_RELEASES = ['v5.10', 'v5.11', 'v5.12', 'v5.13', 'v5.14', 'v5.15', 'v5.16', 'v5.17', 'v5.18', 'v5.19', 'v6.0', 'v6.1', 'v6.2', 'v6.3', 'v6.4', 'v6.5', 'v6.6', 'v6.7', 'v6.8', 'v6.9', 'v6.10', 'v6.11', 'v6.12', 'v6.13', 'v6.14', 'v6.15', 'v6.16', 'v6.17', 'v6.18', 'v6.19', 'v7.0', 'v7.1', 'v7.2', 'v7.3'];
 const SYSTEMD_RELEASES = ['v257', 'v258', 'v259', 'v260', 'v261', 'v262'];
-const DT_PATTERN = /^(x1|hamoa|purwa|glymur|mahua|sc8280xp).*\.dts$/;
+const DT_PATTERN = /^(x1|hamoa|purwa|glymur|mahua|sc8280xp|sc7180-trogdor).*\.dts$/;
 const DT_DIR = 'arch/arm64/boot/dts/qcom';
 const FIRMWARE_SOCS = ['x1e80100', 'x1p42100', 'x126100', 'glymur', 'sc8280xp'];
 // Omarchy's package channels: its own repository carries the kernel and the makers' firmware
