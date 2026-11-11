@@ -132,6 +132,55 @@ models:
       - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
       - https://github.com/birkskyum/arewearmyet/issues/9
 
+  - id: acer-chromebook-511-c741l
+    vendor: "Acer"
+    name: "Chromebook 511 (C741L)"
+    generation: 7c
+    released: "2021-06"
+    chips: ["SC7180"]
+    variants:
+      - { compatible: "google,lazor-rev4-sku4" }
+      - { compatible: "google,lazor-rev5-sku4" }
+      - { compatible: "google,lazor-rev6-sku4" }
+      - { compatible: "google,lazor-rev7-sku4" }
+      - { compatible: "google,lazor-rev8-sku4" }
+      - { compatible: "google,lazor-rev9-sku4" }
+      - { compatible: "google,lazor-rev9-sku15" }
+      - { compatible: "google,lazor-sku4" }
+      - { compatible: "google,lazor-sku15" }
+      - { compatible: "google,lazor-rev4-sku5" }
+      - { compatible: "google,lazor-rev5-sku5" }
+      - { compatible: "google,lazor-rev5-sku6" }
+      - { compatible: "google,lazor-rev6-sku6" }
+      - { compatible: "google,lazor-rev7-sku6" }
+      - { compatible: "google,lazor-rev8-sku6" }
+      - { compatible: "google,lazor-rev9-sku6" }
+      - { compatible: "google,lazor-rev9-sku18" }
+      - { compatible: "google,lazor-sku6" }
+      - { compatible: "google,lazor-sku18" }
+    boot: depthcharge
+    bootloader: unlockable
+    notes: "Google's board name for it is Limozeen, a Lazor variant. Linux has trees with and without the touchscreen."
+    sources:
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen.dts
+      - https://www.chromium.org/chromium-os/developer-library/reference/development/developer-information-for-chrome-os-devices/
+
+  - id: acer-chromebook-tab-510
+    vendor: "Acer"
+    name: "Chromebook Tab 510"
+    generation: 7c
+    form: tablet
+    chips: ["SC7180"]
+    variants:
+      - { compatible: "google,quackingstick-sku1537" }
+      - { compatible: "google,quackingstick-sku1536" }
+    boot: depthcharge
+    bootloader: unlockable
+    notes: "Google's board name for it is Quackingstick."
+    sources:
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
+      - https://helentech.jp/special/chromeos-board-codename-list/
+
   - id: acer-swift-14-ai-sf14-11
     vendor: "Acer"
     name: "Swift 14 AI"
@@ -659,6 +708,25 @@ models:
       - https://www.notebookcheck.net/Dynabook-XD5-first-Dynabook-laptop-powered-by-a-Snapdragon-X-Plus-processor.1189810.0.html
       - https://kakaku.com/item/K0001724657/
 
+  - id: dynabook-chromebook-c1
+    vendor: "Dynabook"
+    name: "Chromebook C1"
+    generation: 7c
+    chips: ["SC7180"]
+    variants:
+      - { compatible: "google,pompom-rev1" }
+      - { compatible: "google,pompom-rev1-sku0" }
+      - { compatible: "google,pompom-rev2" }
+      - { compatible: "google,pompom-rev2-sku0" }
+      - { compatible: "google,pompom" }
+      - { compatible: "google,pompom-sku0" }
+    boot: depthcharge
+    bootloader: unlockable
+    notes: "Google's board name for it is Pompom."
+    sources:
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
+      - https://helentech.jp/special/chromeos-board-codename-list/
+
 
   # Fujitsu
   - id: fujitsu-fmv-note-u-snapdragon
@@ -994,6 +1062,41 @@ models:
       - https://support.hp.com/au-en/document/ish_14096181-14096226-16
       - https://www.notebookcheck.net/HP-OmniBook-X-16-with-Snapdragon-X2-Elite-24-GB-RAM-OLED-drops-below-900.1356231.0.html
 
+  - id: hp-chromebook-x2-11
+    vendor: "HP"
+    name: "Chromebook x2 11"
+    generation: 7c
+    form: tablet
+    released: "2021-01"
+    chips: ["SC7180"]
+    variants:
+      - { compatible: "google,coachz-rev1" }
+      - { compatible: "google,coachz-rev2" }
+      - { compatible: "google,coachz-rev1-sku0" }
+      - { compatible: "google,coachz-rev2-sku0" }
+      - { compatible: "google,coachz" }
+      - { compatible: "google,coachz-sku0" }
+    boot: depthcharge
+    bootloader: unlockable
+    notes: "Google's board name for it is CoachZ."
+    sources:
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
+      - https://www.chromium.org/chromium-os/developer-library/reference/development/developer-information-for-chrome-os-devices/
+
+  - id: hp-fortis-11-g9-q-chromebook
+    vendor: "HP"
+    name: "Fortis 11 G9 Q Chromebook"
+    generation: 7c
+    chips: ["SC7180"]
+    variants:
+      - { compatible: "google,kingoftown" }
+    boot: depthcharge
+    bootloader: unlockable
+    notes: "Google's board name for it is Kingoftown."
+    sources:
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dts
+      - https://helentech.jp/special/chromeos-board-codename-list/
+
 
   # HUMAIN
   - id: humain-horizon
@@ -1275,6 +1378,44 @@ models:
       - https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/glymur-lenovo-yoga-slim7x.dts
       - https://www.xda-developers.com/lenovo-yoga-slim-7x-gen-11-review/
 
+  - id: lenovo-chromebook-duet-3
+    vendor: "Lenovo"
+    name: "Chromebook Duet 3"
+    generation: 7c
+    form: tablet
+    released: "2022-03"
+    chips: ["SC7180"]
+    variants:
+      - { compatible: "google,wormdingler-sku0" }
+      - { compatible: "google,wormdingler-sku1" }
+      - { compatible: "google,wormdingler-sku1024" }
+      - { compatible: "google,wormdingler-sku1025" }
+    boot: depthcharge
+    bootloader: unlockable
+    notes: "Google's board name for it is Wormdingler."
+    sources:
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
+      - https://www.chromium.org/chromium-os/developer-library/reference/development/developer-information-for-chrome-os-devices/
+
+  - id: lenovo-chromebook-duet-5
+    vendor: "Lenovo"
+    name: "Chromebook Duet 5"
+    generation: 7c
+    form: tablet
+    released: "2021-09"
+    chips: ["SC7180"]
+    variants:
+      - { compatible: "google,homestar-rev2" }
+      - { compatible: "google,homestar-rev23" }
+      - { compatible: "google,homestar-rev3" }
+      - { compatible: "google,homestar" }
+    boot: depthcharge
+    bootloader: unlockable
+    notes: "Google's board name for it is Homestar."
+    sources:
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
+      - https://www.chromium.org/chromium-os/developer-library/reference/development/developer-information-for-chrome-os-devices/
+
 
   # Medion
   - id: medion-sprchrgd-14-s1
@@ -1457,6 +1598,46 @@ models:
       - https://www.notebookcheck.net/Microsoft-Surface-Pro-13-OLED-Reviews-and-Specs.1403321.0.html
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
       - https://www.cdw.com/product/microsoft-surface-pro-for-business-12th-edition-copilot-pc-13-qua/9186879
+
+
+  # Orbic
+  - id: orbic-chromebook
+    vendor: "Orbic"
+    name: "Chromebook"
+    generation: 7c
+    chips: ["SC7180"]
+    variants:
+      - { compatible: "google,pazquel-sku0" }
+      - { compatible: "google,pazquel-sku1" }
+      - { compatible: "google,pazquel-sku2" }
+      - { compatible: "google,pazquel-sku4" }
+      - { compatible: "google,pazquel-sku5" }
+      - { compatible: "google,pazquel-sku6" }
+    boot: depthcharge
+    bootloader: unlockable
+    notes: "Google's board name for it is Pazquel. The same board is sold as the Libera-Merdeka Chromebook C100, C110, C120 and C150."
+    sources:
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
+      - https://helentech.jp/special/chromeos-board-codename-list/
+
+
+  # Prowise
+  - id: prowise-chromebook-360-g1
+    vendor: "Prowise"
+    name: "Chromebook 360 G1"
+    generation: 7c
+    form: 2-in-1
+    chips: ["SC7180"]
+    variants:
+      - { compatible: "google,pazquel-sku20" }
+      - { compatible: "google,pazquel-sku21" }
+      - { compatible: "google,pazquel-sku22" }
+    boot: depthcharge
+    bootloader: unlockable
+    notes: "Google's board name for it is Pazquel360."
+    sources:
+      - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel360.dtsi
+      - https://helentech.jp/special/chromeos-board-codename-list/
 
 
   # Qualcomm

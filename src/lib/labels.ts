@@ -280,7 +280,9 @@ export function acpiCell(model: Model): Cell {
 
 export function googlebookOmarchyCell(model: Model): Cell {
   const reported = model.reports.some((r) => r.state === 'problems') ? 'problems' : model.reports.some((r) => r.state === 'works') ? 'works' : model.linuxImage === 'boots' ? 'untested' : 'notyet';
-  const meaning = STATES.googlebookOmarchy[reported].meaning;
+  const meaning = reported === 'notyet' && model.boot === 'depthcharge'
+    ? 'Nothing starts on it yet. It needs a Linux image for ChromeOS\'s bootloader.'
+    : STATES.googlebookOmarchy[reported].meaning;
   const notes = reportNotes(model.reports);
   return cell(STATES.googlebookOmarchy, reported, { title: notes ? `${meaning} ${notes}` : meaning });
 }
