@@ -1653,7 +1653,7 @@
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/acer-aspire-16-ai",
         "https://www.pcmag.com/reviews/acer-aspire-16-ai"
       ],
-      "notes": "Wi-Fi needs a board file from Windows.",
+      "notes": "Its Wi-Fi card (1a3b:6580) isn't in linux-firmware's board data. An installed system gets it from Omarchy's ath12k board fallback, but the live image has no Wi-Fi yet.",
       "outcome": "should",
       "bootable": "edge",
       "reports": [],
@@ -2886,7 +2886,7 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1p42100-asus-vivobook-s15.dts",
         "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1e80100-asus-vivobook-s15.txt"
       ],
-      "notes": "The maker download has the X Elite model's firmware only.",
+      "notes": "Both models' firmware comes from ASUS's downloads. A fix that shows the disk unlock prompt on the X Elite model has been on edge since 2026-11-10, and no owner has tried it yet.",
       "outcome": "problems",
       "bootable": "problems",
       "reports": [
@@ -3321,7 +3321,7 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s3607q/techspec/",
         "https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/"
       ],
-      "notes": "Wi-Fi needs board data linux-firmware doesn't have yet.",
+      "notes": "Its Wi-Fi card is an ath11k one (105b:e130) that linux-firmware's board data doesn't list, and Omarchy's board fallback only covers ath12k cards.",
       "outcome": "should",
       "bootable": "edge",
       "reports": [],
