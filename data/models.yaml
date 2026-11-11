@@ -79,6 +79,18 @@ models:
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/acer-aspire-16-ai
       - https://www.pcmag.com/reviews/acer-aspire-16-ai
 
+  - id: acer-aspire-go-15-ag15-q31p
+    vendor: "Acer"
+    name: "Aspire Go 15"
+    generation: c
+    released: "2026-09"
+    chips: ["C1-10-100"]
+    model_numbers: ["AG15-Q31P"]
+    sources:
+      - https://news.acer.com/acer-broadens-portfolio
+      - https://www.acer.com/gb-en/laptops/aspire/aspire-go-snapdragon/pdp/NX.W3JEK.002
+      - https://the-gadgeteer.com/2026/08/08/acer-aspire-go-15-ag15-q31p-snapdragon-c/
+
   - id: acer-aspire-lite-14-ai-al14-11m
     vendor: "Acer"
     name: "Aspire Lite 14 AI"

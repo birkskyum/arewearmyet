@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-10T18:00:04.084Z",
+  "collected": "2026-11-11T00:39:52.475Z",
   "linuxNext": "20261109",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-44",
+    "kernel": "7.3-47",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-44",
+        "kernel": "7.3-47",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -1724,6 +1724,86 @@
             }
           ],
           "outcome": "should",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "acer-aspire-go-15-ag15-q31p",
+      "vendor": "Acer",
+      "name": "Aspire Go 15",
+      "generation": "c",
+      "form": "laptop",
+      "released": "2026-09",
+      "modelNumbers": [
+        "AG15-Q31P"
+      ],
+      "chips": [
+        "C1-10-100"
+      ],
+      "status": null,
+      "sources": [
+        "https://news.acer.com/acer-broadens-portfolio",
+        "https://www.acer.com/gb-en/laptops/aspire/aspire-go-snapdragon/pdp/NX.W3JEK.002",
+        "https://the-gadgeteer.com/2026/08/08/acer-aspire-go-15-ag15-q31p-snapdragon-c/"
+      ],
+      "notes": null,
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "nobody",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
           "reports": []
         }
       ],
@@ -9554,7 +9634,7 @@
         "acpiUrls": [
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-11",
           "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_11_qcom",
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/22"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/38"
         ]
       },
       "variants": [

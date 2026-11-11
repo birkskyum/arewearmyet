@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-10T18:00:04.084Z",
+  "collected": "2026-11-11T00:39:52.475Z",
   "kernelReleases": [
     "v6.8",
     "v6.9",
@@ -4209,6 +4209,18 @@
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
     },
     {
+      "folder": "hardware-reports/microsoft-corporation/microsoft-surface-pro-11th-edition",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/38",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "41da9334b930ebee72a1266b532c390b439721c5",
+      "dir": "reports/microsoft-corporation/microsoft-surface-pro-11th-edition/c23dc3d8",
+      "pull": {
+        "number": 38,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
       "folder": "hardware-reports/asus/proart-pz14-ht7407na",
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/36",
       "repo": "turbineBMW/omarchy-hardware-reports",
@@ -4789,7 +4801,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-44",
+        "kernel": "7.3-47",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -5976,7 +5988,7 @@
     "carriedIds": [
       {
         "file": "glymur-anduril-bluechip.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Anduril BlueChip",
         "compatible": "anduril,bluechip",
         "hwids": [
@@ -5994,7 +6006,7 @@
       },
       {
         "file": "glymur-asus-proart-pz14-ht7407na.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "ASUS ProArt PZ14 HT7407NA",
         "compatible": "asus,proart-pz14-ht7407na",
         "hwids": [
@@ -6007,7 +6019,7 @@
       },
       {
         "file": "glymur-hp-omnibook-ultra-kg0xxx.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "HP OmniBook Ultra 14-kg0xxx",
         "compatible": "hp,omnibook-ultra-kg0xxx",
         "hwids": [
@@ -6029,7 +6041,7 @@
       },
       {
         "file": "glymur-microsoft-surface-laptop8-15.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Microsoft Surface Laptop 8 15-inch (2037)",
         "compatible": "microsoft,surface-laptop-8-15",
         "hwids": [
@@ -6047,7 +6059,7 @@
       },
       {
         "file": "glymur-microsoft-surface-laptop8.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Microsoft Surface Laptop 8 13.8-inch (2036)",
         "compatible": "microsoft,surface-laptop-8-13p8",
         "hwids": [
@@ -6062,7 +6074,7 @@
       },
       {
         "file": "mahua-hp-omnibook-5-bf1xxx.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "HP OmniBook 5 16-bf1",
         "compatible": "hp,omnibook-5-16-bf1xxx",
         "hwids": [
@@ -6072,7 +6084,7 @@
       },
       {
         "file": "mahua-hp-omnibook-x16.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "HP OmniBook X 16-cp1",
         "compatible": "hp,omnibook-x16-cp1",
         "hwids": [
@@ -6094,7 +6106,7 @@
       },
       {
         "file": "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "LENOVO ThinkPad T14s Gen 7",
         "compatible": "lenovo,thinkpad-t14s-gen7-lcd",
         "hwids": [
@@ -6115,7 +6127,7 @@
       },
       {
         "file": "x126100-asus-vivobook-14.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "ASUS Vivobook 14 X1407QA",
         "compatible": "asus,vivobook-14-x1407qa",
         "hwids": [
@@ -6131,7 +6143,7 @@
       },
       {
         "file": "x126100-asus-vivobook-16.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "ASUS Vivobook 16 X1607QA",
         "compatible": "asus,vivobook-x16",
         "hwids": [
@@ -6149,7 +6161,7 @@
       },
       {
         "file": "x126100-lenovo-thinkcentre-neo-50q-qc.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Lenovo ThinkCentre neo 50q QC",
         "compatible": "lenovo,thinkcentre-neo-50q-qc",
         "hwids": [
@@ -6166,7 +6178,7 @@
       },
       {
         "file": "x1e78100-acer-sfa14-11.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Acer Swift 14 Go Pro AI",
         "compatible": "acer,swift-go-sfa14-11",
         "hwids": [
@@ -6187,7 +6199,7 @@
       },
       {
         "file": "x1e80100-samsung-galaxy-book4-edge-14.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "SAMSUNG ELECTRONICS CO., LTD. Galaxy Book4 Edge 14",
         "compatible": "samsung,galaxy-book4-edge-14",
         "hwids": [
@@ -6204,7 +6216,7 @@
       },
       {
         "file": "x1e84100-samsung-galaxy-book4-edge-16.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Samsung Galaxy Book4 Edge (16 inch, X1E84100)",
         "compatible": "samsung,galaxy-book4-edge-16",
         "hwids": [
@@ -6217,7 +6229,7 @@
       },
       {
         "file": "x1p42100-acer-aspire-14-ai.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Acer Aspire 14 AI (A14-11M)",
         "compatible": "acer,aspire-a14-11m",
         "hwids": [
@@ -6232,7 +6244,7 @@
       },
       {
         "file": "x1p42100-acer-aspire-16-ai.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Acer Aspire 16 AI (A16-11M)",
         "compatible": "acer,aspire-a16-11m",
         "hwids": [
@@ -6247,7 +6259,7 @@
       },
       {
         "file": "x1p42100-asus-proart-pz13.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "ASUS ProArt PZ13 HT5306QA",
         "compatible": "asus,proart-pz13-ht5306qa",
         "hwids": [
@@ -6259,7 +6271,7 @@
       },
       {
         "file": "x1p42100-asus-vivobook-s14.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "ASUS Vivobook S14 S3407QA",
         "compatible": "asus,vivobook-s14-s3407qa",
         "hwids": [
@@ -6269,7 +6281,7 @@
       },
       {
         "file": "x1p42100-asus-vivobook-s16-lcd.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "ASUS Vivobook S 16 S3607QA (LCD)",
         "compatible": "asus,vivobook-s16-s3607qa-lcd",
         "hwids": [
@@ -6279,7 +6291,7 @@
       },
       {
         "file": "x1p42100-asus-vivobook-s16.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "ASUS Vivobook S 16 S3607QA (OLED)",
         "compatible": "asus,vivobook-s16-s3607qa-oled",
         "hwids": [
@@ -6295,7 +6307,7 @@
       },
       {
         "file": "x1p42100-asus-zenbook-14-ux3480qa.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "ASUS Zenbook 14 UX3480QA",
         "compatible": "asus,zenbook-14-ux3480qa",
         "hwids": [
@@ -6323,7 +6335,7 @@
       },
       {
         "file": "x1p42100-dell-inspiron-14-plus-5441.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Dell Inspiron 14 5441 (X1P-42-100)",
         "compatible": "dell,purwa-inspiron-14-plus-5441",
         "hwids": [
@@ -6336,7 +6348,7 @@
       },
       {
         "file": "x1p42100-hp-omnibook-3-16.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "HP OmniBook 3 Laptop 16-bz0xxx",
         "compatible": "hp,omnibook-3-16-bz0",
         "hwids": [
@@ -6354,7 +6366,7 @@
       },
       {
         "file": "x1p42100-hp-omnibook-3-oled.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "HP OmniBook 3 Laptop 14-hz0xxx",
         "compatible": "hp,omnibook-3-oled",
         "hwids": [
@@ -6377,7 +6389,7 @@
       },
       {
         "file": "x1p42100-hp-omnibook-5.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "HP OmniBook 5 14-he0 and 16-bf0",
         "compatible": "hp,omnibook-5",
         "hwids": [
@@ -6400,7 +6412,7 @@
       },
       {
         "file": "x1p42100-hp-probook-4-g1q.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "HP ProBook 4 G1q",
         "compatible": "hp,elitebook-6-g1q",
         "hwids": [
@@ -6410,7 +6422,7 @@
       },
       {
         "file": "x1p42100-microsoft-surface-laptop-13.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Microsoft Surface Laptop 13-inch (2095)",
         "compatible": "microsoft,surface-laptop-13",
         "hwids": [
@@ -6420,7 +6432,7 @@
       },
       {
         "file": "x1p42100-microsoft-surface-pro-12in.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Microsoft Corporation Surface",
         "compatible": "microsoft,surface-pro-12in",
         "hwids": [
@@ -6441,7 +6453,7 @@
       },
       {
         "file": "x1p42100-samsung-galaxy-book4-edge-15.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "SAMSUNG ELECTRONICS CO., LTD. Galaxy Book4 Edge 15",
         "compatible": "samsung,galaxy-book4-edge-15",
         "hwids": [
@@ -6451,7 +6463,7 @@
       },
       {
         "file": "x1p64100-dell-inspiron-14-plus-5441.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Dell Inspiron 14 5441",
         "compatible": "dell,inspiron-14-plus-5441",
         "hwids": [
@@ -6464,7 +6476,7 @@
       },
       {
         "file": "x1p64100-microsoft-denali.json",
-        "recipe": "pkgbuilds/linux-omarchy-aarch64",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Microsoft Surface Pro 11th Edition (LCD)",
         "compatible": "microsoft,denali-lcd",
         "hwids": [
@@ -6479,125 +6491,6 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.10.486/omarchy-edge-2026.11.10.486-aarch64.iso",
       "kernel": "7.3.0-43-omarchy"
     },
-    "pulls": [
-      {
-        "number": 2343,
-        "title": "linux-omarchy-dtbs: ship the Snapdragon trees and hardware IDs in their own package",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2343",
-        "draft": true,
-        "deviceTrees": [],
-        "ids": [
-          {
-            "file": "glymur-anduril-bluechip.json",
-            "compatible": "anduril,bluechip"
-          },
-          {
-            "file": "glymur-hp-omnibook-ultra-kg0xxx.json",
-            "compatible": "hp,omnibook-ultra-kg0xxx"
-          },
-          {
-            "file": "glymur-microsoft-surface-laptop8-15.json",
-            "compatible": "microsoft,surface-laptop-8-15"
-          },
-          {
-            "file": "glymur-microsoft-surface-laptop8.json",
-            "compatible": "microsoft,surface-laptop-8-13p8"
-          },
-          {
-            "file": "mahua-hp-omnibook-5-bf1xxx.json",
-            "compatible": "hp,omnibook-5-16-bf1xxx"
-          },
-          {
-            "file": "mahua-hp-omnibook-x16.json",
-            "compatible": "hp,omnibook-x16-cp1"
-          },
-          {
-            "file": "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
-            "compatible": "lenovo,thinkpad-t14s-gen7-lcd"
-          },
-          {
-            "file": "x126100-asus-vivobook-14.json",
-            "compatible": "asus,vivobook-14-x1407qa"
-          },
-          {
-            "file": "x126100-asus-vivobook-16.json",
-            "compatible": "asus,vivobook-x16"
-          },
-          {
-            "file": "x1e78100-acer-sfa14-11.json",
-            "compatible": "acer,swift-go-sfa14-11"
-          },
-          {
-            "file": "x1e80100-samsung-galaxy-book4-edge-14.json",
-            "compatible": "samsung,galaxy-book4-edge-14"
-          },
-          {
-            "file": "x1e84100-samsung-galaxy-book4-edge-16.json",
-            "compatible": "samsung,galaxy-book4-edge-16"
-          },
-          {
-            "file": "x1p42100-acer-aspire-14-ai.json",
-            "compatible": "acer,aspire-a14-11m"
-          },
-          {
-            "file": "x1p42100-acer-aspire-16-ai.json",
-            "compatible": "acer,aspire-a16-11m"
-          },
-          {
-            "file": "x1p42100-asus-proart-pz13.json",
-            "compatible": "asus,proart-pz13-ht5306qa"
-          },
-          {
-            "file": "x1p42100-asus-vivobook-s14.json",
-            "compatible": "asus,vivobook-s14-s3407qa"
-          },
-          {
-            "file": "x1p42100-asus-vivobook-s16-lcd.json",
-            "compatible": "asus,vivobook-s16-s3607qa-lcd"
-          },
-          {
-            "file": "x1p42100-asus-vivobook-s16.json",
-            "compatible": "asus,vivobook-s16-s3607qa-oled"
-          },
-          {
-            "file": "x1p42100-asus-zenbook-14-ux3480qa.json",
-            "compatible": "asus,zenbook-14-ux3480qa"
-          },
-          {
-            "file": "x1p42100-hp-omnibook-3-16.json",
-            "compatible": "hp,omnibook-3-16-bz0"
-          },
-          {
-            "file": "x1p42100-hp-omnibook-3-oled.json",
-            "compatible": "hp,omnibook-3-oled"
-          },
-          {
-            "file": "x1p42100-hp-omnibook-5.json",
-            "compatible": "hp,omnibook-5"
-          },
-          {
-            "file": "x1p42100-hp-probook-4-g1q.json",
-            "compatible": "hp,elitebook-6-g1q"
-          },
-          {
-            "file": "x1p42100-microsoft-surface-laptop-13.json",
-            "compatible": "microsoft,surface-laptop-13"
-          },
-          {
-            "file": "x1p42100-microsoft-surface-pro-12in.json",
-            "compatible": "microsoft,surface-pro-12in"
-          },
-          {
-            "file": "x1p42100-samsung-galaxy-book4-edge-15.json",
-            "compatible": "samsung,galaxy-book4-edge-15"
-          },
-          {
-            "file": "x1p64100-dell-inspiron-14-plus-5441.json",
-            "compatible": "dell,inspiron-14-plus-5441"
-          }
-        ],
-        "firmware": []
-      }
-    ]
+    "pulls": []
   }
 }
