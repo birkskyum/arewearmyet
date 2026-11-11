@@ -9,7 +9,7 @@ values and can differ from a running machine where the firmware fills fields in 
 dumps published here first. Each folder's SOURCE.md says where its tables came from. The SoC serial number (SOSN)
 is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. Disassemble a table with `iasl -d`.
 
-68 of 92 models have at least one dump.
+90 of 115 models have at least one dump.
 
 | Model | Dumps |
 | --- | --- |
@@ -81,9 +81,32 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | Lenovo ThinkPad X13s | [lenovo-thinkpad-x13s](aarch64-laptops/lenovo-thinkpad-x13s) |
 | Microsoft Surface Pro 9 5G | [microsoft-surface-pro-9-5G](aarch64-laptops/microsoft-surface-pro-9-5G), [linux-surface/surface_pro_9_5g](linux-surface/surface_pro_9_5g) |
 | Microsoft Windows Dev Kit 2023 | [microsoft-devkit-2023](aarch64-laptops/microsoft-devkit-2023), [linux-surface/windows_dev_kit_2023](linux-surface/windows_dev_kit_2023) |
+| Acer Aspire 1 | [acer-aspire-1](aarch64-laptops/acer-aspire-1) |
+| Acer Spin 7 | [acer-spin-7-sp714-61na](aarch64-laptops/acer-spin-7-sp714-61na) |
+| Apcsilmic Dot 1 | [apcsilmic-dot-1](aarch64-laptops/apcsilmic-dot-1) |
+| ASUS NovaGo | [asus-tp370ql](aarch64-laptops/asus-tp370ql) |
+| Dell Inspiron 14 3420 | [dell-inspiron-14-3420](aarch64-laptops/dell-inspiron-14-3420) |
+| ECS LIVA QC710 | [ecs-liva-qc710](aarch64-laptops/ecs-liva-qc710) |
+| Gateway GWTN133-1 | [acer-gateway-gwtn133-1](aarch64-laptops/acer-gateway-gwtn133-1) |
+| HP Envy x2 (Snapdragon) | [hp-envy-x2](aarch64-laptops/hp-envy-x2) |
+| Huawei MateBook E (2019) | [huawei-matebooke-2019](aarch64-laptops/huawei-matebooke-2019) |
+| Lenovo 10w | [lenovo-l10w](aarch64-laptops/lenovo-l10w) |
+| Lenovo Flex 5G | [lenovo-flex-5g](aarch64-laptops/lenovo-flex-5g) |
+| Lenovo IdeaPad 5G | [lenovo-ideapad-5g](aarch64-laptops/lenovo-ideapad-5g), [lenovo-ideapad-5g-14q8x05](aarch64-laptops/lenovo-ideapad-5g-14q8x05) |
+| Lenovo Miix 630 | [lenovo-miix-630](aarch64-laptops/lenovo-miix-630) |
+| Lenovo Yoga C630 | [lenovo-yoga-c630](aarch64-laptops/lenovo-yoga-c630) |
+| Microsoft Surface Pro X | [microsoft-surface-prox](aarch64-laptops/microsoft-surface-prox), [linux-surface/surface_pro_x_sq1](linux-surface/surface_pro_x_sq1), [linux-surface/surface_pro_x_sq2](linux-surface/surface_pro_x_sq2) |
+| Samsung Galaxy Book2 | [samsung-galaxybook2](aarch64-laptops/samsung-galaxybook2) |
+| Samsung Galaxy Book2 Go | [samsung-galaxybook2-go](aarch64-laptops/samsung-galaxybook2-go) |
+| Samsung Galaxy Book Go | [samsung-galaxy-book-go](aarch64-laptops/samsung-galaxy-book-go) |
+| Samsung Galaxy Book Go 5G | [samsung-galaxy-book-go-5g](aarch64-laptops/samsung-galaxy-book-go-5g) |
+| Samsung Galaxy Book S | [samsung-galaxy-book-s](aarch64-laptops/samsung-galaxy-book-s) |
+| TCL Book 14 Go | [tcl-book-14-go](aarch64-laptops/tcl-book-14-go) |
+| Xiaomi Book S | [xiaomi-book-s](aarch64-laptops/xiaomi-book-s) |
 
 ## No dump yet
 
+- Acer Aspire Go 15
 - Acer Aspire Lite 14 AI
 - Acer Swift Go 14 AI
 - Acer Swift Spin 14 AI

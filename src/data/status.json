@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-11T03:53:19.387Z",
+  "collected": "2026-11-11T14:03:22.329Z",
   "linuxNext": "20261110",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -9,9 +9,9 @@
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.10.486",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.10.486/omarchy-edge-2026.11.10.486-aarch64.iso",
-      "kernel": "7.3.0-43-omarchy"
+      "version": "2026.11.11.487",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.11.487/omarchy-edge-2026.11.11.487-aarch64.iso",
+      "kernel": "7.3.0-47-omarchy"
     },
     "channels": [
       {
