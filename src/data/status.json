@@ -3744,7 +3744,7 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-14-x1407q/techspec/",
         "https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html"
       ],
-      "notes": "Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files, so its tree builds on the X1607QA's, with its IPS panel and PWM backlight. An owner's live USB reached the desktop on the Zenbook A14 tree, and that owner can test its own tree, in linux-omarchy 7.3-40 on edge. A second owner runs Omarchy on a tree made from the Zenbook A14 LCD's: display, keyboard, touchpad, battery, video decode and both cameras work, Wi-Fi with a borrowed board data file, suspend as s2idle only, and only the left speaker plays. That tree and the owner's notes are kept in data/device-trees/asus-vivobook-14-x1407qa.",
+      "notes": "Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files (an owner's Windows driver store holds the Vivobook 16's audio DSP, compute DSP and GPU files byte for byte), so its tree builds on the X1607QA's, with its IPS panel and PWM backlight. An owner's live USB reached the desktop on the Zenbook A14 tree, and that owner can test its own tree, in linux-omarchy 7.3-40 on edge. A second owner runs Omarchy on a tree made from the Zenbook A14 LCD's: display, keyboard, touchpad, battery, video decode and both cameras work, Wi-Fi with a borrowed board data file, suspend as s2idle only, and only the left speaker plays. That tree and the owner's notes are kept in data/device-trees/asus-vivobook-14-x1407qa.",
       "outcome": "should",
       "bootable": "edge",
       "reports": [],
