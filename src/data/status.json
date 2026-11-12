@@ -1227,8 +1227,8 @@
     "nvidiaWorks": 2,
     "nvidiaExpected": 15,
     "works": 2,
-    "should": 47,
-    "problems": 8,
+    "should": 46,
+    "problems": 9,
     "notYet": 29,
     "deviceTree": 60,
     "ids": 58,
@@ -1668,9 +1668,15 @@
         "https://www.pcmag.com/reviews/acer-aspire-16-ai"
       ],
       "notes": "Its Wi-Fi card (1a3b:6580) isn't in linux-firmware's board data. An installed system gets it from Omarchy's ath12k board fallback, but the live image has no Wi-Fi yet.",
-      "outcome": "should",
-      "bootable": "edge",
-      "reports": [],
+      "outcome": "problems",
+      "bootable": "problems",
+      "reports": [
+        {
+          "state": "problems",
+          "note": "Installs from the edge channel's image and reaches the desktop, with sound and Wi-Fi working. The screen stays dark at the disk password prompt until the password is typed.",
+          "checked": "2026-11"
+        }
+      ],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
@@ -1737,8 +1743,14 @@
               "url": "https://github.com/ubuntu/stubble/pull/102"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "problems",
+          "reports": [
+            {
+              "state": "problems",
+              "note": "Installs from the edge channel's image and reaches the desktop, with sound and Wi-Fi working. The screen stays dark at the disk password prompt until the password is typed.",
+              "checked": "2026-11"
+            }
+          ]
         }
       ],
       "boot": "uefi",

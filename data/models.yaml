@@ -75,6 +75,8 @@ models:
       - "https://gist.githubusercontent.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1/raw/x1p42100-acer-aspire-ai.dtsi"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/3"
     notes: "Its Wi-Fi card (1a3b:6580) isn't in linux-firmware's board data. An installed system gets it from Omarchy's ath12k board fallback, but the live image has no Wi-Fi yet."
+    reports:
+      - { state: "problems", note: "Installs from the edge channel's image and reaches the desktop, with sound and Wi-Fi working. The screen stays dark at the disk password prompt until the password is typed.", checked: "2026-11" }
     sources:
       - https://news.acer.com/acer-expands-aspire-ai-series-with-six-new-copilot-pcs-powered-by-next-gen-processors
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/acer-aspire-16-ai
