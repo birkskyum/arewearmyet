@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-11T14:03:22.329Z",
+  "collected": "2026-11-12T05:26:03.797Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -44,7 +44,7 @@
     "v261",
     "v262"
   ],
-  "linuxNext": "20261110",
+  "linuxNext": "20261111",
   "deviceTrees": [
     {
       "file": "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -3214,6 +3214,30 @@
       ]
     },
     {
+      "file": "spacemit-k3-com260-ifx.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/spacemit-k3-com260-ifx.json",
+      "name": "SpacemiT K3 CoM260 IFX",
+      "compatible": "spacemit,k3-com260-ifx",
+      "hwids": [
+        "6004a1b0-306c-5ab7-b173-88435f86b7ce",
+        "38bf9b48-ebb1-541c-9418-4453a6f13595",
+        "4f8487e9-73f8-5764-b54b-8487c1d93ba5",
+        "285de26f-d9e7-594b-9bca-09e0dea8659b",
+        "e78eab86-70ba-5023-b368-5f30f4fc7a5f",
+        "2a2fc9f1-6396-548d-975f-eb0460230307",
+        "255d28d0-39c0-5651-b5e8-3d3506d32845",
+        "00a02b12-5411-5b63-844a-92b7635669c1",
+        "a55ebcd1-0089-5a58-ad38-92f062040f0a",
+        "871c6dfa-1c65-504f-9b40-bbc15f245fd2",
+        "d1a23c21-bf83-5420-8aae-3fc7f69d0758",
+        "1f340263-9ead-5032-b58e-34724cd1fb57",
+        "0f30489d-deaa-5c01-b540-413ee62e4058",
+        "4226214c-087e-547b-b6e7-5dcb1efed8d5",
+        "5d3f5730-2413-5f27-8023-295fe65e5145"
+      ]
+    },
+    {
       "file": "spacemit-k3-pico-itx.json",
       "state": "merged",
       "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/spacemit-k3-pico-itx.json",
@@ -3943,30 +3967,6 @@
         "53c465c5-6425-51cd-b0aa-3382f3ad3622",
         "dfb300e4-c621-562c-a147-521e95ce6b7f",
         "838cf30a-6594-5200-8432-b94de34ce905"
-      ]
-    },
-    {
-      "file": "spacemit-k3-com260-ifx.json",
-      "state": "open",
-      "url": "https://github.com/ubuntu/stubble/pull/110",
-      "name": "SpacemiT K3 CoM260 IFX",
-      "compatible": "spacemit,k3-com260-ifx",
-      "hwids": [
-        "6004a1b0-306c-5ab7-b173-88435f86b7ce",
-        "38bf9b48-ebb1-541c-9418-4453a6f13595",
-        "4f8487e9-73f8-5764-b54b-8487c1d93ba5",
-        "285de26f-d9e7-594b-9bca-09e0dea8659b",
-        "e78eab86-70ba-5023-b368-5f30f4fc7a5f",
-        "2a2fc9f1-6396-548d-975f-eb0460230307",
-        "255d28d0-39c0-5651-b5e8-3d3506d32845",
-        "00a02b12-5411-5b63-844a-92b7635669c1",
-        "a55ebcd1-0089-5a58-ad38-92f062040f0a",
-        "871c6dfa-1c65-504f-9b40-bbc15f245fd2",
-        "d1a23c21-bf83-5420-8aae-3fc7f69d0758",
-        "1f340263-9ead-5032-b58e-34724cd1fb57",
-        "0f30489d-deaa-5c01-b540-413ee62e4058",
-        "4226214c-087e-547b-b6e7-5dcb1efed8d5",
-        "5d3f5730-2413-5f27-8023-295fe65e5145"
       ]
     },
     {
@@ -5808,7 +5808,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-47",
+        "kernel": "7.3-52",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -5986,6 +5986,9 @@
             "qcom/x1p42100/ACER/A14-11M/qcadsp8380.mbn",
             "qcom/x1p42100/ACER/A14-11M/qccdsp8380.mbn",
             "qcom/x1p42100/ACER/A14-11M/qcdxkmsucpurwa.mbn"
+          ],
+          "acer-aspire-16-ai-audio": [
+            "qcom/x1e80100/X1P42100-ACER-Aspire-16-AI-tplg.bin"
           ],
           "acer-aspire-16-ai-firmware": [
             "qcom/x1p42100/ACER/A16-11M/adsp_dtbs.elf",
@@ -7510,6 +7513,37 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.11.487/omarchy-edge-2026.11.11.487-aarch64.iso",
       "kernel": "7.3.0-47-omarchy"
     },
-    "pulls": []
+    "pulls": [
+      {
+        "number": 2578,
+        "title": "hp-omnibook-x14-firmware: install HP's Wi-Fi board data for the WCN6855 card",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2578",
+        "draft": true,
+        "deviceTrees": [],
+        "ids": [],
+        "firmware": [
+          "qcom/x1e80100/hp/omnibook-x14/adsp_dtbs.elf",
+          "qcom/x1e80100/hp/omnibook-x14/adspr.jsn",
+          "qcom/x1e80100/hp/omnibook-x14/adsps.jsn",
+          "qcom/x1e80100/hp/omnibook-x14/adspua.jsn",
+          "qcom/x1e80100/hp/omnibook-x14/battmgr.jsn",
+          "qcom/x1e80100/hp/omnibook-x14/cdsp_dtbs.elf",
+          "qcom/x1e80100/hp/omnibook-x14/cdspr.jsn",
+          "qcom/x1e80100/hp/omnibook-x14/qcadsp8380.mbn",
+          "qcom/x1e80100/hp/omnibook-x14/qccdsp8380.mbn",
+          "qcom/x1e80100/hp/omnibook-x14/qcdxkmsuc8380.mbn",
+          "qcom/x1p42100/hp/omnibook-x14/adsp_dtbs.elf",
+          "qcom/x1p42100/hp/omnibook-x14/adspr.jsn",
+          "qcom/x1p42100/hp/omnibook-x14/adsps.jsn",
+          "qcom/x1p42100/hp/omnibook-x14/adspua.jsn",
+          "qcom/x1p42100/hp/omnibook-x14/battmgr.jsn",
+          "qcom/x1p42100/hp/omnibook-x14/cdsp_dtbs.elf",
+          "qcom/x1p42100/hp/omnibook-x14/cdspr.jsn",
+          "qcom/x1p42100/hp/omnibook-x14/qcadsp8380.mbn",
+          "qcom/x1p42100/hp/omnibook-x14/qccdsp8380.mbn",
+          "qcom/x1p42100/hp/omnibook-x14/qcdxkmsucpurwa.mbn"
+        ]
+      }
+    ]
   }
 }

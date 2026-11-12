@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-11T14:03:22.329Z",
-  "linuxNext": "20261110",
+  "collected": "2026-11-12T05:26:03.797Z",
+  "linuxNext": "20261111",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-47",
+    "kernel": "7.3-52",
     "systemd": "262.1-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-47",
+        "kernel": "7.3-52",
         "systemd": "262.1-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -574,6 +574,9 @@
             "qcom/x1p42100/ACER/A14-11M/qcadsp8380.mbn",
             "qcom/x1p42100/ACER/A14-11M/qccdsp8380.mbn",
             "qcom/x1p42100/ACER/A14-11M/qcdxkmsucpurwa.mbn"
+          ],
+          "acer-aspire-16-ai-audio": [
+            "qcom/x1e80100/X1P42100-ACER-Aspire-16-AI-tplg.bin"
           ],
           "acer-aspire-16-ai-firmware": [
             "qcom/x1p42100/ACER/A16-11M/adsp_dtbs.elf",
