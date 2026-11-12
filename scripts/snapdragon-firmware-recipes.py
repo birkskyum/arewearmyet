@@ -59,8 +59,7 @@ DSP_SETS = {"audio DSP": re.compile(r"(qcadsp\d+\.mbn|adsp_dtbs?\.(elf|mbn))"), 
 TABLE_URL = "https://arewearmyet.com/firmware-sources.json"
 SCRIPT_URL = "https://github.com/birkskyum/arewearmyet/blob/main/scripts/snapdragon-firmware-recipes.py"
 
-# Recipe name -> the machines it is for, and the firmware folders their device trees load from,
-# plus an ath11k or ath12k folder for a Wi-Fi card whose board data linux-firmware doesn't list.
+# Recipe name -> the machines it is for, and the firmware folders their device trees load from.
 # Left out: glymur/ASUSTeK/UX3607OA, which asus-zenbook-a16-firmware ships, and
 # x1e80100/LENOVO/21N1, whose ThinkPad T14s Gen 6 set linux-firmware already ships.
 RECIPES = {
@@ -92,7 +91,7 @@ RECIPES = {
     "hp-omnibook-5-firmware": ("HP OmniBook 5 14 and 16", ["qcom/x1p42100/hp/omnibook-5"]),
     "hp-omnibook-5-16-bf1-firmware": ("HP OmniBook 5 16 (2026)", ["qcom/glymur/HP/omnibook-5-16-bf1xxx"]),
     "hp-omnibook-ultra-14-firmware": ("HP OmniBook Ultra 14", ["qcom/glymur/hp/omnibook-ultra-14-kg0xxx"]),
-    "hp-omnibook-x14-firmware": ("HP OmniBook X 14", ["qcom/x1e80100/hp/omnibook-x14", "qcom/x1p42100/hp/omnibook-x14", "ath11k/WCN6855/hw2.1"]),
+    "hp-omnibook-x14-firmware": ("HP OmniBook X 14", ["qcom/x1e80100/hp/omnibook-x14", "qcom/x1p42100/hp/omnibook-x14"]),
     "hp-omnibook-x16-firmware": ("HP OmniBook X 16 (2026)", ["qcom/glymur/hp/omnibook-x16"]),
     "huawei-matebook-e-go-firmware": ("Huawei MateBook E Go", ["qcom/sc8280xp/HUAWEI/gaokun3"]),
     "lenovo-ideacentre-mini-x-firmware": ("Lenovo IdeaCentre Mini x", ["qcom/x1e80100/LENOVO/91B6", "qcom/x1p42100/LENOVO/91B6"]),
@@ -133,7 +132,7 @@ PATTERNS = {
     "size": r"[0-9]+",
     "sha256": r"[0-9a-f]{64}",
     "fetched": r"[0-9]{4}-[0-9]{2}-[0-9]{2}",
-    "path": r"(qcom|ath11k|ath12k)(/[A-Za-z0-9._-]+)+",
+    "path": r"qcom(/[A-Za-z0-9._-]+)+",
     "name": r"[A-Za-z0-9._-]+",
     # Members only reach the recipe single-quoted, and Lenovo's installers name folders like
     # code$GetExtractPath$, so anything printable but quotes and backslashes
@@ -220,10 +219,6 @@ def contents(dests):
     return human_list(parts)
 
 
-def is_board(dest):
-    return re.match(r"ath1[12]k/", dest) is not None and os.path.basename(dest) == "board.bin"
-
-
 def comment(text):
     return ["# " + line for line in textwrap.wrap(text, 96, break_on_hyphens=False)]
 
@@ -287,23 +282,15 @@ def recipe(name, who, paths):
     version = max(packages[p]["fetched"] for p in chosen).replace("-", "")
     page = next((packages[p].get("page") for p in signers if packages[p].get("page")), None) or packages[signers[0]]["url"].split("?")[0]
 
-    what = contents([w["dest"] for w in wanted if not is_board(w["dest"])])
-    boards = [w["dest"] for w in wanted if is_board(w["dest"])]
-    title = what[0].upper() + what[1:] + " firmware" + (" and Wi-Fi board data" if boards else "")
+    what = contents([w["dest"] for w in wanted])
     L = []
     L += comment(
-        f"{title} for the {who}. The firmware only runs if it is signed for this "
+        f"{what[0].upper() + what[1:]} firmware for the {who}. The firmware only runs if it is signed for this "
         f"board by {human_list(makers)}, so linux-firmware cannot carry it until the OEM submits it. The OEM ships it "
         "in its Windows driver download, which this recipe unpacks without running. Each file is checked against the "
         "SHA-256 it was matched to and installed under the name the device tree requests, compressed with xz. The "
         "kernel tries a plain name, then .zst, then .xz, so once linux-firmware ships the same file, its copy is the "
         "one loaded, and the two packages never install the same path.")
-    if boards:
-        L += ["#"] + comment(
-            "The Wi-Fi board data is the file the OEM's Windows Wi-Fi driver loads for this laptop's card, "
-            "which linux-firmware's board-2.bin doesn't list. The driver looks the card up in board-2.bin first "
-            "and loads board.bin only when no record matches, so a record added to linux-firmware takes over, "
-            "and ath12k-board-fallback leaves the card to this file.")
     if provided:
         L += ["#"] + comment(
             "The board's own firmware starts the SoC control processor before Linux, so its images are not "
@@ -313,11 +300,11 @@ def recipe(name, who, paths):
         f"pkgname={name}",
         f"pkgver={version}",
         "pkgrel=@PKGREL@",
-        f"pkgdesc={q(title + ' for the ' + who)}",
+        f"pkgdesc={q(what[0].upper() + what[1:] + ' firmware for the ' + who)}",
         "arch=('aarch64')",
         f"url={q(page)}",
         "license=('LicenseRef-proprietary')",
-        "provides=(" + " ".join([q("qcom-firmware-" + p.removeprefix("qcom/").replace("/", "-").lower()) for p in paths if p.startswith("qcom/")]
+        "provides=(" + " ".join([q("qcom-firmware-" + p.removeprefix("qcom/").replace("/", "-").lower()) for p in paths]
                                 + [q(old) for old in RENAMED.get(name, [])]) + ")",
     ]
     conflicts = CONFLICTS.get(name, []) + RENAMED.get(name, [])

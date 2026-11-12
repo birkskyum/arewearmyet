@@ -10,8 +10,6 @@
 #             was found in, with its member path (archives inside the package joined with !/).
 #             A file with no package has a note on where it comes from instead
 #   links     names that are links to another file, as linux-firmware's WHENCE writes them
-#             Folders under ath11k/ and ath12k/ hold a Wi-Fi card's board data (board.bin) for a card
-#             linux-firmware's board-2.bin doesn't list, taken from the maker's Windows Wi-Fi driver
 # packages    the maker downloads: title, url, the maker's page when the url changes per version,
 #             size and SHA-256 as fetched, the date it was fetched, a note when fetching it
 #             needs care, and manual: true when the url is a page the download has to be started
@@ -24,16 +22,6 @@
 # the linux-firmware merge requests (!1331 to !1338 and !1341).
 
 folders:
-  - path: "ath11k/WCN6855/hw2.1"
-    models: ["hp-omnibook-x-14-fe"]
-    files:
-      - name: "board.bin"
-        size: 59872
-        sha256: "22ee4c2cc5a6d6f8e44a0ee55e8ff64c65505ee3f644fa109f23312240bdfb6e"
-        note: "The WCN6855 card 105b:e108. HP's driver INF gives it the NFA765a board file."
-        from:
-          - { package: "hp-sp171528", member: "src/Driver/WLAN_HSP/bdwlan_wcn685x_2p1_nfa765a.elf" }
-          - { package: "hp-sp171529", member: "src/Driver/WLAN_HSP/bdwlan_wcn685x_2p1_nfa765a.elf" }
   - path: "qcom/glymur/ASUSTeK/HT7407NA"
     models: ["asus-proart-pz14-ht7407"]
     files:
