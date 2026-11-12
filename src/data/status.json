@@ -1228,8 +1228,8 @@
     "nvidiaExpected": 15,
     "works": 2,
     "should": 47,
-    "problems": 7,
-    "notYet": 30,
+    "problems": 8,
+    "notYet": 29,
     "deviceTree": 60,
     "ids": 58,
     "firmware": 52,
@@ -1239,8 +1239,8 @@
     "acpiWanted": 26,
     "machine": {
       "team": 7,
-      "omarchy": 17,
-      "linux": 34,
+      "omarchy": 18,
+      "linux": 33,
       "nobody": 28
     },
     "byPiece": {
@@ -8886,10 +8886,17 @@
         "https://www.windowscentral.com/hardware/lenovo/lenovo-ideacentre-mini-x-review"
       ],
       "notes": "Jens Glathe's posted series splits the tree and adds the X1-26-100 (Purwa) model, which he runs on Ubuntu 26.10 and can test. systemd has the Purwa model's hardware IDs. The Purwa model needs its own GPU and DSP firmware, under qcom/x1p42100/LENOVO/91B6.",
-      "outcome": "manual",
-      "bootable": "needs-ids",
-      "reports": [],
-      "machine": "linux",
+      "outcome": "problems",
+      "bootable": "problems",
+      "reports": [
+        {
+          "state": "problems",
+          "variant": "Snapdragon X",
+          "note": "Installs from the edge channel's image and reaches the desktop on linux-omarchy 7.3, with the Adreno X1-45 driving an external display. The screen stays dark at the disk password prompt until the password is typed, and a Lenovo 40B0 dock's display doesn't come up yet.",
+          "checked": "2026-11"
+        }
+      ],
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -8990,8 +8997,15 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/purwa-lenovo-ideacentre-mini-01q8x10.json"
             }
           ],
-          "outcome": "none",
-          "reports": []
+          "outcome": "problems",
+          "reports": [
+            {
+              "state": "problems",
+              "variant": "Snapdragon X",
+              "note": "Installs from the edge channel's image and reaches the desktop on linux-omarchy 7.3, with the Adreno X1-45 driving an external display. The screen stays dark at the disk password prompt until the password is typed, and a Lenovo 40B0 dock's display doesn't come up yet.",
+              "checked": "2026-11"
+            }
+          ]
         }
       ],
       "boot": "uefi",
