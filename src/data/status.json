@@ -8904,7 +8904,7 @@
         {
           "state": "problems",
           "variant": "Snapdragon X",
-          "note": "Installs from the edge channel's image and reaches the desktop on linux-omarchy 7.3, with the Adreno X1-45 driving an external display. The screen stays dark at the disk password prompt until the password is typed, and a Lenovo 40B0 dock's display doesn't come up yet.",
+          "note": "Installs from the edge channel's image and reaches the desktop on linux-omarchy 7.3, with the Adreno X1-45 driving an external display. The screen stays dark at the disk password prompt until the password is typed. Its owner confirmed the fix for that, loading the display drivers before the disk is unlocked, which isn't on edge yet. A Lenovo 40B0 dock's display doesn't come up yet.",
           "checked": "2026-11"
         }
       ],
@@ -9014,7 +9014,7 @@
             {
               "state": "problems",
               "variant": "Snapdragon X",
-              "note": "Installs from the edge channel's image and reaches the desktop on linux-omarchy 7.3, with the Adreno X1-45 driving an external display. The screen stays dark at the disk password prompt until the password is typed, and a Lenovo 40B0 dock's display doesn't come up yet.",
+              "note": "Installs from the edge channel's image and reaches the desktop on linux-omarchy 7.3, with the Adreno X1-45 driving an external display. The screen stays dark at the disk password prompt until the password is typed. Its owner confirmed the fix for that, loading the display drivers before the disk is unlocked, which isn't on edge yet. A Lenovo 40B0 dock's display doesn't come up yet.",
               "checked": "2026-11"
             }
           ]
