@@ -1134,7 +1134,7 @@ models:
     acpi: ["lenovo-ideacentre-01q8x10"]
     devicetree_posted: "https://lore.kernel.org/all/20260905-x1-ideacentre-mini-prettify-v1-0-9a87882973bb@oldschoolsolutions.biz/"
     reports:
-      - { state: "problems", variant: "Snapdragon X", note: "Installs from the edge channel's image and reaches the desktop on linux-omarchy 7.3, with the Adreno X1-45 driving an external display. The screen stays dark at the disk password prompt until the password is typed. Its owner confirmed the fix for that, loading the display drivers before the disk is unlocked, which isn't on edge yet. A Lenovo 40B0 dock's display doesn't come up yet.", checked: "2026-11" }
+      - { state: "problems", variant: "Snapdragon X", note: "Installs from the edge channel's image and reaches the desktop on linux-omarchy 7.3, with the Adreno X1-45 driving an external display. The screen stays dark at the disk password prompt until the password is typed. Its owner confirmed the fix for that, loading the display drivers before the disk is unlocked, which isn't on edge yet. A Lenovo 40B0 dock's displays, sound and video work on linux-omarchy 7.3-59 once the audio DSP is started by hand. Omarchy keeps it off on this install because the root disk is on USB.", checked: "2026-11" }
     notes: "Jens Glathe's posted series splits the tree and adds the X1-26-100 (Purwa) model, which he runs on Ubuntu 26.10 and can test. systemd has the Purwa model's hardware IDs. The Purwa model needs its own GPU and DSP firmware, under qcom/x1p42100/LENOVO/91B6."
     sources:
       - https://psref.lenovo.com/Product/IdeaCentre/IdeaCentre_Mini_01Q8X10
