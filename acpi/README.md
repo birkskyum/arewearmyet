@@ -131,3 +131,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 - Samsung Galaxy Book4 Edge 15
 - Samsung Galaxy Book5 Edge 5G
 - Samsung Galaxy Book6 Edge 16
+
+## Not matched to a model yet
+
+- [hardware-reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa](../reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa)

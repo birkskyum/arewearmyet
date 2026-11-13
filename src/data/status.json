@@ -1,17 +1,17 @@
 {
-  "collected": "2026-11-12T05:26:03.797Z",
-  "linuxNext": "20261111",
+  "collected": "2026-11-13T05:25:59.997Z",
+  "linuxNext": "20261112",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-52",
-    "systemd": "262.1-1",
+    "kernel": "7.3-58",
+    "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.11.487",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.11.487/omarchy-edge-2026.11.11.487-aarch64.iso",
-      "kernel": "7.3.0-47-omarchy"
+      "version": "2026.11.12.488",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.12.488/omarchy-edge-2026.11.12.488-aarch64.iso",
+      "kernel": "7.3.0-52-omarchy"
     },
     "channels": [
       {
@@ -396,8 +396,8 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-52",
-        "systemd": "262.1-1",
+        "kernel": "7.3-58",
+        "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
           "glymur-asus-proart-pz14-ht7407na.dts",
@@ -15978,6 +15978,8 @@
     ],
     "ids": [],
     "firmware": [],
-    "acpi": []
+    "acpi": [
+      "hardware-reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa"
+    ]
   }
 }

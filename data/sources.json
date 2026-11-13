@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-12T05:26:03.797Z",
+  "collected": "2026-11-13T05:25:59.997Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -44,7 +44,7 @@
     "v261",
     "v262"
   ],
-  "linuxNext": "20261111",
+  "linuxNext": "20261112",
   "deviceTrees": [
     {
       "file": "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -5216,6 +5216,18 @@
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
     },
     {
+      "folder": "hardware-reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/40",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "7a8bae6046001d09f8b3844d3048d01be57c085a",
+      "dir": "reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa/208e5f19",
+      "pull": {
+        "number": 40,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
       "folder": "hardware-reports/microsoft-corporation/microsoft-surface-pro-11th-edition",
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/38",
       "repo": "turbineBMW/omarchy-hardware-reports",
@@ -5808,8 +5820,8 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-52",
-        "systemd": "262.1-1",
+        "kernel": "7.3-58",
+        "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
           "glymur-asus-proart-pz14-ht7407na.dts",
@@ -7509,41 +7521,10 @@
       }
     ],
     "image": {
-      "version": "2026.11.11.487",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.11.487/omarchy-edge-2026.11.11.487-aarch64.iso",
-      "kernel": "7.3.0-47-omarchy"
+      "version": "2026.11.12.488",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.12.488/omarchy-edge-2026.11.12.488-aarch64.iso",
+      "kernel": "7.3.0-52-omarchy"
     },
-    "pulls": [
-      {
-        "number": 2578,
-        "title": "hp-omnibook-x14-firmware: install HP's Wi-Fi board data for the WCN6855 card",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2578",
-        "draft": true,
-        "deviceTrees": [],
-        "ids": [],
-        "firmware": [
-          "qcom/x1e80100/hp/omnibook-x14/adsp_dtbs.elf",
-          "qcom/x1e80100/hp/omnibook-x14/adspr.jsn",
-          "qcom/x1e80100/hp/omnibook-x14/adsps.jsn",
-          "qcom/x1e80100/hp/omnibook-x14/adspua.jsn",
-          "qcom/x1e80100/hp/omnibook-x14/battmgr.jsn",
-          "qcom/x1e80100/hp/omnibook-x14/cdsp_dtbs.elf",
-          "qcom/x1e80100/hp/omnibook-x14/cdspr.jsn",
-          "qcom/x1e80100/hp/omnibook-x14/qcadsp8380.mbn",
-          "qcom/x1e80100/hp/omnibook-x14/qccdsp8380.mbn",
-          "qcom/x1e80100/hp/omnibook-x14/qcdxkmsuc8380.mbn",
-          "qcom/x1p42100/hp/omnibook-x14/adsp_dtbs.elf",
-          "qcom/x1p42100/hp/omnibook-x14/adspr.jsn",
-          "qcom/x1p42100/hp/omnibook-x14/adsps.jsn",
-          "qcom/x1p42100/hp/omnibook-x14/adspua.jsn",
-          "qcom/x1p42100/hp/omnibook-x14/battmgr.jsn",
-          "qcom/x1p42100/hp/omnibook-x14/cdsp_dtbs.elf",
-          "qcom/x1p42100/hp/omnibook-x14/cdspr.jsn",
-          "qcom/x1p42100/hp/omnibook-x14/qcadsp8380.mbn",
-          "qcom/x1p42100/hp/omnibook-x14/qccdsp8380.mbn",
-          "qcom/x1p42100/hp/omnibook-x14/qcdxkmsucpurwa.mbn"
-        ]
-      }
-    ]
+    "pulls": []
   }
 }
