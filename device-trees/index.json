@@ -52,6 +52,24 @@
       "x1-asus-proart-pz13.dtsi"
     ]
   },
+  "asus-v400-aio-vm441qa": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "x126100-asus-v400-aio-vm441qa.dts",
+      "x126100-asus-v400-aio.dtsi"
+    ]
+  },
+  "asus-v400-aio-vm471qa": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "x126100-asus-v400-aio-vm471qa.dts",
+      "x126100-asus-v400-aio.dtsi"
+    ]
+  },
   "asus-vivobook-14-x1407qa": {
     "state": "out-of-tree",
     "source": "https://github.com/omacom/omarchy-pkgs/pull/2340",
@@ -76,12 +94,48 @@
       "x1p42100-asus-vivobook-s14.dts"
     ]
   },
+  "asus-vivobook-s14-s5408qa": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "x126100-asus-vivobook-s14-s5408qa.dts",
+      "x126100-asus-vivobook-s5x08.dtsi"
+    ]
+  },
+  "asus-vivobook-s14-flip-tp5408qa": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "x126100-asus-vivobook-s14-flip-tp5408qa.dts",
+      "x126100-asus-vivobook-s5x08.dtsi"
+    ]
+  },
   "asus-vivobook-s16-s3607qa": {
     "state": "posted",
     "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261113214424.220241-3-ingo.kubbilun@gmail.com/",
     "files": [
       "series.mbox",
       "x1p42100-asus-vivobook-s16.dts"
+    ]
+  },
+  "asus-vivobook-s16-s5608qa": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "x126100-asus-vivobook-s16-s5608qa.dts",
+      "x126100-asus-vivobook-s5x08.dtsi"
+    ]
+  },
+  "asus-vivobook-s16-flip-tp5608qa": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "x126100-asus-vivobook-s16-flip-tp5608qa.dts",
+      "x126100-asus-vivobook-s5x08.dtsi"
     ]
   },
   "asus-zenbook-14-ux3480qa": {
@@ -108,6 +162,14 @@
       "glymur-asus-proart-pz14-ht7407na.dts"
     ]
   },
+  "asus-vivobook-s16-s3607na": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "glymur-asus-vivobook-s16-s3607na.dts"
+    ]
+  },
   "dell-inspiron-14-5441": {
     "state": "posted",
     "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260508050828.7442-1-adamszyma@wp.pl/",
@@ -130,6 +192,14 @@
     "files": [
       "SOURCE.md",
       "x1e80100-google-mica.dts"
+    ]
+  },
+  "dynabook-xd5": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "x1p42100-dynabook-xd5.dts"
     ]
   },
   "hp-elitebook-6-g1q": {
@@ -173,6 +243,14 @@
     "files": [
       "SOURCE.md",
       "x1p42100-hp-omnibook-5.dts"
+    ]
+  },
+  "hp-elitebook-6-g2q": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "mahua-hp-elitebook-6-g2q.dts"
     ]
   },
   "hp-omnibook-5-16-bf1": {
@@ -242,6 +320,24 @@
       "x1p42100-lenovo-ideapad-slim5x.dtsi"
     ]
   },
+  "lenovo-ideapad-vibe-14q8x12": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "x126100-lenovo-ideapad-vibe-14q8x12.dts",
+      "x126100-lenovo-ideapad-vibe.dtsi"
+    ]
+  },
+  "lenovo-ideapad-vibe-15q8x12": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "x126100-lenovo-ideapad-vibe-15q8x12.dts",
+      "x126100-lenovo-ideapad-vibe.dtsi"
+    ]
+  },
   "lenovo-thinkcentre-neo-50q-qc": {
     "state": "out-of-tree",
     "source": "https://github.com/omacom/omarchy-pkgs/pull/2404",
@@ -249,6 +345,44 @@
       "SOURCE.md",
       "x126100-lenovo-thinkcentre-neo-50q-qc.dts",
       "x1-lenovo-ideacentre-mini-01q8x10.dtsi"
+    ]
+  },
+  "lenovo-ideapad-5x-2-in-1-14q8y11": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "kalambo-lenovo-ideapad-5x-2in1-14q8y11.dts",
+      "kalambo.dtsi"
+    ]
+  },
+  "lenovo-ideapad-slim-5x-13q8y11": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "kalambo-lenovo-ideapad-slim5x-13q8y11.dts",
+      "kalambo-lenovo-ideapad-slim5x.dtsi",
+      "kalambo.dtsi"
+    ]
+  },
+  "lenovo-ideapad-slim-5x-15q8y11": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "kalambo-lenovo-ideapad-slim5x-15q8y11.dts",
+      "kalambo-lenovo-ideapad-slim5x.dtsi",
+      "kalambo.dtsi"
+    ]
+  },
+  "lenovo-thinkbook-14-gen-9-q8y": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "kalambo-lenovo-thinkbook-14-gen9.dts",
+      "kalambo.dtsi"
     ]
   },
   "lenovo-thinkpad-t14s-gen-7-snapdragon": {
@@ -267,6 +401,16 @@
       "x1p42100-microsoft-surface-laptop-13.dts"
     ]
   },
+  "microsoft-surface-laptop-13in-2nd-edition": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "kalambo-microsoft-surface-laptop-13in-2nd-edition.dts",
+      "kalambo-microsoft-surface.dtsi",
+      "kalambo.dtsi"
+    ]
+  },
   "microsoft-surface-laptop-8-13": {
     "state": "posted",
     "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261027-mahua-surface-laptop-v2-3-7dd903a12d22@oss.qualcomm.com/",
@@ -282,6 +426,24 @@
       "SOURCE.md",
       "glymur-microsoft-surface-laptop8-15.dts",
       "glymur-microsoft-surface-laptop8.dts"
+    ]
+  },
+  "microsoft-surface-pro-12in-2nd-edition": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "kalambo-microsoft-surface-pro-12in-2nd-edition.dts",
+      "kalambo-microsoft-surface.dtsi",
+      "kalambo.dtsi"
+    ]
+  },
+  "microsoft-surface-pro-12th-edition": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2770",
+    "files": [
+      "SOURCE.md",
+      "mahua-microsoft-surface-pro-12th-edition.dts"
     ]
   },
   "samsung-galaxy-book4-edge-15": {

@@ -1,0 +1,24 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+ * Copyright (c) 2026, Birk Skyum <birk.skyum@pm.me>
+ */
+
+/dts-v1/;
+
+#include "kalambo-lenovo-ideapad-slim5x.dtsi"
+
+/ {
+	model = "Lenovo IdeaPad Slim 5x 15 Gen 11 (15Q8Y11)";
+	compatible = "lenovo,ideapad-slim5x-15q8y11", "qcom,kalambo";
+};
+
+&remoteproc_adsp {
+	firmware-name = "qcom/glymur/LENOVO/83RL/qcadsp8480.mbn",
+			"qcom/glymur/LENOVO/83RL/adsp_dtbs.elf";
+};
+
+&remoteproc_cdsp {
+	firmware-name = "qcom/glymur/LENOVO/83RL/qccdsp8480.mbn",
+			"qcom/glymur/LENOVO/83RL/cdsp_dtbs.elf";
+};
