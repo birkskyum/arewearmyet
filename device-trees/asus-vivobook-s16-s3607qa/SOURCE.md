@@ -1,9 +1,9 @@
 # ASUS Vivobook S16 (S3607QA)
 
-Carried outside Linux and not sent there yet: https://gist.github.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3
+Posted to linux-arm-msm, not in Linux yet: [arm64: dts: qcom: Add ASUS Vivobook S16 S3607QA](https://patchwork.kernel.org/project/linux-arm-msm/patch/20261113214424.220241-3-ingo.kubbilun@gmail.com/)
 
-- x1p42100-asus-vivobook-s16.dts: from https://gist.githubusercontent.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3/raw/x1p42100-asus-vivobook-s16.dts
-- x1p42100-asus-vivobook-s16-lcd.dts: from https://gist.githubusercontent.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3/raw/x1p42100-asus-vivobook-s16-lcd.dts
-- x1p42100-asus-vivobook-s16.dtsi: from https://gist.githubusercontent.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3/raw/x1p42100-asus-vivobook-s16.dtsi
+- Version: 1, sent 2026-11-13 by Ingo A. Kubbilun
+- Patchwork state of this patch: new
+- Files: series.mbox (the whole series), x1p42100-asus-vivobook-s16.dts
 
 Copied by scripts/trees.ts. The device tree files keep their own licence lines.

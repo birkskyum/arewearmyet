@@ -1,7 +1,9 @@
 # ASUS Ascent QN10
 
-Carried outside Linux and not sent there yet: https://gist.github.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce
+Posted to linux-arm-msm, not in Linux yet: [arm64: dts: qcom: glymur: Add ASUS Ascent QN10](https://patchwork.kernel.org/project/linux-arm-msm/patch/20261113-qn10-v1-2-e09b2aa7ccbe@oss.qualcomm.com/)
 
-- glymur-asus-ascent-qn10.dts: from https://gist.githubusercontent.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce/raw/glymur-asus-ascent-qn10.dts
+- Version: 1, sent 2026-11-14 by Bjorn Andersson
+- Patchwork state of this patch: new
+- Files: series.mbox (the whole series), glymur-asus-ascent-qn10.dts
 
 Copied by scripts/trees.ts. The device tree files keep their own licence lines.

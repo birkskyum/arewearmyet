@@ -61,13 +61,11 @@
     ]
   },
   "asus-vivobook-16-x1607qa": {
-    "state": "out-of-tree",
-    "source": "https://github.com/jglathe/linux_ms_dev_kit/blob/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100-asus-vivobook-16.dts",
+    "state": "posted",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/6ffb6f7ab9794a49a50771d23b3a1e1f@gmail.com/",
     "files": [
-      "SOURCE.md",
-      "x126100-asus-vivobook-16.dts",
-      "x126100-asus-vivobook-16.dtsi",
-      "x126100.dtsi"
+      "series.mbox",
+      "x1p42100-asus-vivobook-16-x1607qa.dts"
     ]
   },
   "asus-vivobook-s14-s3407qa": {
@@ -79,13 +77,11 @@
     ]
   },
   "asus-vivobook-s16-s3607qa": {
-    "state": "out-of-tree",
-    "source": "https://gist.github.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3",
+    "state": "posted",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261113214424.220241-3-ingo.kubbilun@gmail.com/",
     "files": [
-      "SOURCE.md",
-      "x1p42100-asus-vivobook-s16.dts",
-      "x1p42100-asus-vivobook-s16-lcd.dts",
-      "x1p42100-asus-vivobook-s16.dtsi"
+      "series.mbox",
+      "x1p42100-asus-vivobook-s16.dts"
     ]
   },
   "asus-zenbook-14-ux3480qa": {
@@ -97,10 +93,10 @@
     ]
   },
   "asus-ascent-qn10": {
-    "state": "out-of-tree",
-    "source": "https://gist.github.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce",
+    "state": "posted",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261113-qn10-v1-2-e09b2aa7ccbe@oss.qualcomm.com/",
     "files": [
-      "SOURCE.md",
+      "series.mbox",
       "glymur-asus-ascent-qn10.dts"
     ]
   },
@@ -190,7 +186,7 @@
   },
   "hp-omnibook-ultra-14-kg0": {
     "state": "posted",
-    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260830-x2-hp-omnibook-ship-v1-2-9feada71dc79@oss.qualcomm.com/",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261108-hp-omnibook-v2-v3-2-f489fd0bdf33@oss.qualcomm.com/",
     "files": [
       "series.mbox",
       "glymur-hp-omnibook-ultra-kg0xxx.dts"
@@ -198,7 +194,7 @@
   },
   "hp-omnibook-x-16-cp": {
     "state": "posted",
-    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261028191800.27829-3-jeff.roach0@gmail.com/",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261114020509.632311-3-jeff.roach0@gmail.com/",
     "files": [
       "series.mbox",
       "mahua-hp-omnibook-x16.dts"
@@ -314,6 +310,25 @@
       "x1-samsung-galaxy-book4-edge.dtsi",
       "x1e80100-samsung-galaxy-book4-edge-14.dts",
       "x1e84100-samsung-galaxy-book4-edge-16.dts"
+    ]
+  },
+  "microsoft-surface-pro-x": {
+    "state": "posted",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261104070441.74127-3-val@packett.cool/",
+    "files": [
+      "series.mbox",
+      "sc8180x-microsoft-cambria.dts",
+      "sc8180x-microsoft-carina.dts",
+      "sc8180x-microsoft-caspar.dts",
+      "sc8180x-microsoft-surface-pro-x.dtsi"
+    ]
+  },
+  "samsung-galaxy-book2-go": {
+    "state": "posted",
+    "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261112-book2go-v2-1-12691134e34e@fairphone.com/",
+    "files": [
+      "series.mbox",
+      "sc7280-samsung-galaxy-book2-go.dts"
     ]
   }
 }

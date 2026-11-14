@@ -1,9 +1,9 @@
 # ASUS Vivobook 16
 
-Carried outside Linux and not sent there yet: https://github.com/jglathe/linux_ms_dev_kit/blob/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100-asus-vivobook-16.dts
+Posted to linux-arm-msm, not in Linux yet: [arm64: dts: qcom: add device tree for Asus Vivobook 16 X1607QA](https://patchwork.kernel.org/project/linux-arm-msm/patch/6ffb6f7ab9794a49a50771d23b3a1e1f@gmail.com/)
 
-- x126100-asus-vivobook-16.dts: from https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100-asus-vivobook-16.dts
-- x126100-asus-vivobook-16.dtsi: from https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100-asus-vivobook-16.dtsi
-- x126100.dtsi: from https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100.dtsi
+- Version: 4, sent 2026-11-14 by Daniel Carter
+- Patchwork state of this patch: new
+- Files: series.mbox (the whole series), x1p42100-asus-vivobook-16-x1607qa.dts
 
 Copied by scripts/trees.ts. The device tree files keep their own licence lines.

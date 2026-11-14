@@ -1,104 +1,102 @@
-From patchwork Wed Oct 28 19:17:59 2026
+From patchwork Sat Nov 14 02:05:07 2026
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-Patchwork-Submitter: Jeff Roach <jeff.roach0@gmail.com>
-X-Patchwork-Id: 14922402
+X-Patchwork-Id: 14982050
 Authentication-Results: smtp.subspace.kernel.org;
- arc=none smtp.remote-ip=209.85.160.52
+ arc=none smtp.remote-ip=209.85.167.171
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215132;
-	b=h4lIxjTJ5NOOc8IwGNM0oM+7ZTXurmJis/7sY0LY8RxCXL8BFkmgRo7aZbOrggeQeMav
-	 OuiAjDE2gn+zibtQUK1dqnA8Fg73sjqI/CXJ7S0q4YI5zeyQMRwsUX5rlwAtII5272ihS
-	 evhZgmGdUewhVgcbUFAIFrV6T9lvzAfb+p8R5vXECLLF9GHL/PcXYHqilroAglsRHFzhD
-	 JvGyJ5F8B3HQs4748dqFj2OPgKjHq0Rfpn6oYoGkTNrGXrpnd5ZVYu9ikuaKgI8VuB+NK
-	 NETrEhr4DyfdfdrQgQHcHXjca4I4rXpR+fJFN5ZH51HesG+SWlctEg+5D5snMpYK9hQ==
+	t=1794621969;
+	b=W+yAtCohXPGbglA9DgeZbHw1yKsjnz6ffX9O6FTe/uxOPHiqeLIXECyY9w/HZ26H0S5N
+	 bAAOHJ1Oo2AUpZ7z1WnY6eTAduM/BZatYJzzAPki30cXtcQhJRxaYtUzNrcKnCiTSUpk4
+	 tPesC7lMe0N/PDzer1u8Bgq/XwdC5SbeN26m0A7TeWTsEweU3ZMUe3kebxKc8UtWffIgg
+	 /dU5Shq8ZShFQqYCKzoio951bBKaXmTsLSsojugtcao3oMp0YYWcq31KTPMNWte44SGSp
+	 HmdRFbr/8XboyB4AlbTZaJYXJ9uDw0UYc6jK1uDHmdSUvOjkVgpy4EX7DiVVkLQp2jQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215132;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794621969;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6vZ6om9FYtHLuxxt/jURe4tARN2iOgMfaZorU75wv6Q=;
-	b=P2CfONa0Wb/wkXD6g24DzvIX+Ng1jt0BOeoQTIVa/m8BG2qF4TIJaOL/ZbGSCLgD29yQ
-	 LbjS5oW9J/77v5etMjzt9QBmIZewdj95geDetq/M6vlUTv+uVVV1BDqnOEqsidxw7eesZ
-	 mMQIelIpHPcRBWuOth4pmZK6HYemt4CMO55g+Mo9QKd9ePLJqkyTnEdq6/ZP6fj2XWYyP
-	 d5qr+ClBQsT8xpmyV0VtgC7DWqWDNeBvCdSfQ1ji708+BynftRAO5con8JDfBvPMsGR2L
-	 ToV83o7c1U4inhXGoQ8CB3T1KjSLFsHYiQt6BOlKLeyGNumv/ERAeQiefR4t2FURWQA==
+	bh=6vfZ2pfCdW0E1Bkxu7fl5iG/Vuzu2dNyvSDl3DRJkiE=;
+	b=19BQ67Brze7qkWCHqHIg0mi62NC4TEEFN0iuoTpk63j42t37HQog32JyxL80BhyWten0
+	 Y/TBawEiwEhLgMJSLnKYG0q+VOGkRtAdYs+mVjBhrzrmOpVuA2ppclQ9ht4EU3JUSrM4F
+	 M+mP59VxOq/4ph2rzAEKPDXgmel3f8DmCkovZRpGidUiZu2evHDS+FjAkcZz7/4MuHndz
+	 Z7jUAUnM+UaRAbTrnieskuNxQoLDA44a4TtaDx/Yx4jBu2EF+94sBkp/qt/6gZOCXOzdW
+	 I4Pfe1TczaPJt3AsO2bAPCcAmMLgoR0gxA0d+2/1gOI9IjZvXj7+82irslTL9MEWBIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org;
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
 	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20260707 header.b=J+RuMQEl;
-	arc=none smtp.remote-ip=209.85.160.52
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com
- [209.85.160.52])
+ header.s=20260707 header.b=0TAyfUtT;
+	arc=none smtp.remote-ip=209.85.167.171
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com
+ [209.85.167.171])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest
  SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BAF8606A32C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2026 19:18:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5BAF8606A32C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513CC606A32D
+	for <linux-arm-msm@vger.kernel.org>; Sat, 14 Nov 2026 02:06:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 513CC606A32D
 Authentication-Results: smtp.subspace.kernel.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
  spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key,
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20260707 header.b=J+RuMQEl
-Received: by mail-oa1-f52.google.com with SMTP id
- 586e51a60fabf-4932b13c4ccso821668fac.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com
+ header.a=rsa-sha256 header.s=20260707 header.b=0TAyfUtT
+Received: by mail-oi1-f171.google.com with SMTP id
+ 5614622812f47-57148b8ec14so447722b6e.3
         for <linux-arm-msm@vger.kernel.org>;
- Wed, 28 Oct 2026 12:18:51 -0700 (PDT)
+ Fri, 13 Nov 2026 18:06:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793215130; x=1793819930;
+        d=gmail.com; s=20260707; t=1794621968; x=1795226768;
  darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=6vZ6om9FYtHLuxxt/jURe4tARN2iOgMfaZorU75wv6Q=;
-        b=J+RuMQEl+CDTv1rs2v9if+ss4fqRXbOFUOBe2GhOpXnYmU7dtUpjkqOcgPbWfcEwsc
-         2xzL4Imz6fjBvp2J477zmWlEOZH6B/DAz+NKXHPQC+Rspn5nAQDRZICCmEmsZ6Pn7Ynr
-         cIwMSU1jE926r8CMKTJvIfv9Ga2Y50fEREkdeVEl3pLHRaMjjpflA8cGuFrvoOL75JHh
-         xfpk1o0RRm0eMi5kPKOe8qTawIUCfqpA/WT0b6bOKco5C25TzEAfTsfd9ldF62YfiqYk
-         7yECTGl5T68dL//nguthVLe5tM02V5NrTOallrtKk6xukvgJvDQ3plPQrdR8nN612JOg
-         zC9g==
+        bh=6vfZ2pfCdW0E1Bkxu7fl5iG/Vuzu2dNyvSDl3DRJkiE=;
+        b=0TAyfUtThdvqH6Ea5+y8CqCzygO9MSky6knt5TN60Nbo10Q/ilCBpjX6dhsnBSgAkM
+         G/wWoT8aCcFk8drGhMjc4gRFT/UJocS659rVt/n08QdmZFGQW3EbfRdhf12BPTWT9tB1
+         2ebW7/Sq5JGQpR2+tiZYSLuwYdyz4JvNwg4X7e1pZI2OoexRM+CaGd1dBl69LZpkjA0z
+         tmmeu9wncADkaaW8Y/fQq6s/xoRTyEVF4ky6OO+X+HFQJX4HF6ZnQUsQSyMw4KxitfC9
+         0XSLU2hyQU145m1Mf7zTMIVYhYr38zLWxFymQMwUfu0HRmWQ4pcyEu0OTXPHkMVYkJuo
+         yApQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793215130; x=1793819930;
+        d=1e100.net; s=20260707; t=1794621968; x=1795226768;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=6vZ6om9FYtHLuxxt/jURe4tARN2iOgMfaZorU75wv6Q=;
-        b=hWK0L5pGPfI1dM+8bElymFTv9tA02TIEsbOvKlznWQuzJqUeS0OnB+ay4Ve6KVit+s
-         /WNT4jfZuF1LVVxGoZql/i6vz+GtLRyBiJaCw8A76ea9VJxQmLpQcL6qoZsYjU7huzQN
-         /OvV47rmCKBxp1j+TjMDYCzXcKiQUmzGscyXoVjajKCtJK4YrD6aQXyEOY6LEj5T6OVG
-         FeHLXdP/MGH2UgOcxlTT0JfVZZ64ApGFMrmkANPMFWG50Qzz0V72I0rMl2cuQc7L1Rog
-         xGRco2ULs+Ll4pQyOtjVQ+B3K3+kWWurMqB/16CmqFujqhqXMW1kBxS2NmNqR9vCDxp3
-         /Whg==
+        bh=6vfZ2pfCdW0E1Bkxu7fl5iG/Vuzu2dNyvSDl3DRJkiE=;
+        b=2SSfWtoLnLhthhFkg4cI67CAP8gx66+rboUAF2QExxPRLVl5PORWXuqnvku8Jeon8s
+         FMIvjfRryU9XqxZBThPWRJxGd2gRhBbVSeFY4g+yRSrSZdonrnQ/ymaJeiQhJzc+Pxf3
+         quLu9g+Ua5eJWeZvcT8Tm3D3YjGwZExH3qfY/S/BG/ncrvsSUTWs4Go6+35fx2fLRNWx
+         nKoeAUeikUqAA1R/gM7PcWZohBHfXa5eIztsesK9xARKxjZlcd2GAn4t385tTeslo5Lg
+         Hyr0XL2sW4GNmEJYC8yMqhMimnGLwdpPo69gthc6DVDDPIwuDRYiF0PlneCNgRrQylj0
+         Ljsg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxknmPfSUZmaeBTC0uYeCPcXfhIknW3zo5IIR9IoomlG+W5kOnPB7gL6mt/LSokFwf1uodk9HcB9nhtTFAR@vger.kernel.org
-X-Gm-Message-State: AFq9FYJmyy8vUn4oCvriGQmDTy5fxQK4UKUUPBdWZmSx4HbeoDua6zxr
-	e1ww/ukF/vH0TrC8+PJvDcxait4Zedo+f9TAl54rrsuQL/EisnWx7CAy
-X-Gm-Gg: AYBFou0IYTOIsy7CZn/5CR8qd7Kak67l1/MGyFlQ0tdwfZZDw1FobUVrEBM/6/OBv8f
-	Fp+R3GOsnXbzfgEKtXHXI8zov2XajPbr6nJWonhx6iRl1AzrXrgDhEDv9IHwwF/gjtizEjA3msT
-	CVrfgRculzvZJrDFhPGEU5UAljo9wEAjGrmlmSAEglGvYtN3PA9KsdjYZfFGPJmv2VIG6jhc4be
-	ehfPPrsO8NxRqaR/lF28hmm/NowXdWh1r+GA5aw9GnzlcK8uq/r6CjedBOqJkGe+p1/nxOvLaEC
-	2BxnnMCTlpl4eRrfl+RZapnpcKhZJTSf3x6ZQQRBadBcloqOjM0SUfr9QbUJh+RM0L+NLFgFOWX
-	7BEEpT131e7wINqg8EcesUnO12BVizdqUNVPJpttEM+YUVwPCEDxJp/jt400moBenRG63i56JeY
-	HZbymhjHSzlf9XoN+iGUKGaQJgdcj/OLCNmyoT6ZI9uSycUPBxISXIvanfbTMObN+LAgZYCzdFT
-	xoPZMKncnDk3TIaPghq9PYdWkZvhYNnN1jzZpV5VENfpRHlkDn3Vc76cx6V3F483VMo18T7ZX9r
-	Zqie9t3bD6zMlB/8MTSaNXyijijURk+F9e9wofrn55i7jRAjdXzljPUz6w==
-X-Received: by 2002:a05:6870:f114:b0:49e:7c51:3b19 with SMTP id
- 586e51a60fabf-4a8bbb059c3mr2712734fac.48.1793215130440;
-        Wed, 28 Oct 2026 12:18:50 -0700 (PDT)
-Received: from jeffmr.mynetworksettings.com
- ([2600:1014:a112:1526:f26:718f:8dc1:b185])
+ AL+hErEnrtbF3EBULQ50/Ldhdd1sHoAdkhuvbHyHogxXHsjKOIWxjBqS6LFKobBx+tNm98lSf9RiQP+fVT8rlfvf@vger.kernel.org
+X-Gm-Message-State: APuU4Z8Npdk8Fi6Pypy0dfblrifCYeicP2A2rftiIoef1EOLpSiNLsrV
+	CXNAPB1g6R6Mv27qyKR37N6fnLy+iDonK/lH8ZQXOVV9eUtTkt0Ghac/
+X-Gm-Gg: AYBFou0iBSosB8Wyg/mSKXOBC0FqJr0vTPJUFH5qgNmSOllJnv3R6FgBk1AerLG2/wF
+	xyJgXS/MzHepUQL1e+ftPt5bNNx/oyNL358+41L19uAD941c/4MDkA8dn5fLCgH5yg3v+d5ae0S
+	+2ULaFDOKBIR8u/3wosWST7iUKH1VCj6v6fUsUgtoVz7KnV8kQH9Eu6eyF/zG7mBhKiChI/+Unf
+	SDuGpZzAL9udvttWf4rn+4P+5Vr25XJ1j85qg+5+OI/3ofii7YHnkxCjBmkfMwy36uknDusPOBD
+	EOHYrV2oyRfXgOgoNDtOcJG0TdHWr2ugut6roZOsShTAb+zMvxQ4krXQ7WRoBkvhG9Tc7URD/Rg
+	gP+wKeUhhdox6LMJV+E0KMWvUPI0s+CfGxULFXMOaAJ+fi4gOvexg0ZWRXHxqcjrHhmjwiagym6
+	kzBO23l9p48+lML59xvi9Fg8urZ3vgaKoy1rmz0bvltX9WYKKiQC/rq+IWOV43L2Z1H86hhfLvN
+	dnGDI4Ki5ZjWtYhnxA0GJbTB4vncLfTQJP4VKB42jlmDRPdN4sHOCMSBORBy+OQtyp6Ta8QjEHG
+	g0aByCZZRV5inRYk6XqkjlbLXUTRX94oT7xz9ewHEOK0DR9cKBXzIw==
+X-Received: by 2002:a05:6808:2220:b0:567:e9b5:37b6 with SMTP id
+ 5614622812f47-56e64f005fcmr3240210b6e.41.1794621968203;
+        Fri, 13 Nov 2026 18:06:08 -0800 (PST)
+Received: from jeffmr (63-152-14-173.cdrr.qwest.net. [63.152.14.173])
         by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-4a8b785d108sm3092916fac.9.2026.10.28.12.18.49
+ 5614622812f47-56e6fc3f179sm3385433b6e.6.2026.11.13.18.06.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2026 12:18:50 -0700 (PDT)
+        Fri, 13 Nov 2026 18:06:07 -0800 (PST)
 From: Jeff Roach <jeff.roach0@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>
@@ -109,12 +107,12 @@ Cc: Rob Herring <robh@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v3 1/2] dt-bindings: arm: qcom: Add HP OmniBook X 16-cp1
-Date: Wed, 28 Oct 2026 14:17:59 -0500
-Message-ID: <20261028191800.27829-2-jeff.roach0@gmail.com>
+Subject: [PATCH v5 1/2] dt-bindings: arm: qcom: Add HP OmniBook X 16-cp1
+Date: Fri, 13 Nov 2026 20:05:07 -0600
+Message-ID: <20261114020509.632311-2-jeff.roach0@gmail.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261028191800.27829-1-jeff.roach0@gmail.com>
-References: <20261028191800.27829-1-jeff.roach0@gmail.com>
+In-Reply-To: <20261114020509.632311-1-jeff.roach0@gmail.com>
+References: <20261114020509.632311-1-jeff.roach0@gmail.com>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Post: <mailto:linux-arm-msm@vger.kernel.org>
@@ -135,119 +133,117 @@ Signed-off-by: Jeff Roach <jeff.roach0@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 121ca557ce..4dd57e8663 100644
+index 7ffa4f6998..c3b6014ad6 100644
 --- a/Documentation/devicetree/bindings/arm/qcom.yaml
 +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -191,6 +191,7 @@ properties:
+@@ -212,6 +212,7 @@ properties:
  
        - items:
            - enum:
 +              - hp,omnibook-x16-cp1
+               - microsoft,surface-laptop-8-13p8
                - qcom,mahua-crd
-           - const: qcom,mahua
- 
+               - qcom,mahua-qcb
 
-From patchwork Wed Oct 28 19:18:00 2026
+From patchwork Sat Nov 14 02:05:08 2026
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-Patchwork-Submitter: Jeff Roach <jeff.roach0@gmail.com>
-X-Patchwork-Id: 14922403
+X-Patchwork-Id: 14982051
 Authentication-Results: smtp.subspace.kernel.org;
- arc=none smtp.remote-ip=209.85.160.51
+ arc=none smtp.remote-ip=209.85.167.177
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793215134;
-	b=0WQWktImh/bol8BWEhP5lnwDe/Vdi+eLDrEQ/ZSAcYsbcFQVHe8GdE+U7Zw73yyI97+T
-	 SFo2el56iWD8J3e4BxrdvtN6ludRvf3WGE/rJhBTqRtnlILnOd4J+9ERvu6R8tQ8d1mLu
-	 Q/nf9qS3RCEiaZh6Z2Z2/8sxfJH0HoGKF7V/YkA8M2x/lVxAmIafNuHDxiNOF95aaodAe
-	 lHZpqGZ+6TVp/WbXUudNXeCwAMnT/OqXlqeunL61V7P+tBTFgbSqiGp7SW8x2QoohggYA
-	 SLdzrZuZuPALAGV4pMa6KFUg+1l7GuxYRqoihnPnXbRKDbARrrz1K2+6xqi1f/x0+vw==
+	t=1794621971;
+	b=DCjAlPKaroAmEntzU/md1tWiNJ7S4KTcMto9UPoAgs1Q9nKksJigDvRwW04lbTi6PCFy
+	 BkGMH8VoIHx9opiy5wwk541JEyARZJ/prjz9UWfLJ9lsyzfH05R/nJ8Deu7qujQZF7OMF
+	 s//oaBjdF3TVI7Ek5Xbc1L3l2HuU9Kc1Rpbs0CDiiIo5W8WxbLXnN2Nw8cmwy3/sHaZEZ
+	 Up3BtXSiuqbceptT6G3x+YrGdYbN08sShSP7fwxO1MriqB+QLisdyFUqNhRaVJypuretH
+	 EdiQM9OXzI4mpAKvpak6NdgH9itySDZuLIJQMBSjWdDRtuLMdSsAquR5LFNvvbD3VPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793215134;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794621971;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZYHI5bthgcGlUFdwCEcqVujiOtr6xk1RG0rgDz64wGk=;
-	b=q0yKLfrDoVkJBEPvM1JvejlEOlP8XgdY6K+pA+GGyV6AvFL2mh1vw3+lwLrIonodKURv
-	 pg7eUSzakBDjTtyXtwqKMbQkk3GfjJbB5tifm9MauKsyUed4eU5o1ZESEHB+6kFVrZ6Qc
-	 EHhmUtqWC2Ft18CpjBRIXLZamq7x0vBR4mvy4FxXvNdb+Auz5YLfKlAbcpHujnzF1KypY
-	 soXZ0zc8LKJz8RHoluJL6nfU+bh6ZxbGcJ67AEIJPDZkXv4pKD+7Mtp4vWtw2ePGrMDaP
-	 iCcOe2lNmcKgsRmvJmCai4v6zCpuC4pPPBRXa+hN+6ImAacLf2prb/2WkIeOVfV2xsQ==
+	bh=+AqJaPo1Vq76xc8sc0TpBwwjASCHawiOJ7TFM/JvB8s=;
+	b=g3WqLba9A868cMZm7BkxQEGQCEeBO189n46K7PzCJTJHlixhPNWuuM3M+If/1sR6KwzM
+	 aerdXpOBSNd5iNzSO2JnrBqQCD4eSo4Z2jbkRlnB1X9id/yOs3KnaUVbNm/XZ5nds64x0
+	 LvQQqeI4gb5Kusck0+HNws6p8UCf8gHEDgXVjMZDLJQotiTuEF00laOQJNqsUracB9rla
+	 4WOiPoB922LWoD1o+W279GdK+3giXBGysH5LLDjen/LwRl0NaBjVvIgKdob0VQBce9bt9
+	 PKICpVtNjiwUuvcaeW4mLvK4f4aGeqOnJjNHc1iCcRXlyT+CwNCe8b8lPk11hyC5B5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org;
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
 	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20260707 header.b=juiFNz39;
-	arc=none smtp.remote-ip=209.85.160.51
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com
- [209.85.160.51])
+ header.s=20260707 header.b=zD+NnX02;
+	arc=none smtp.remote-ip=209.85.167.177
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com
+ [209.85.167.177])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest
  SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882E160A260B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Oct 2026 19:18:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 882E160A260B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22AA606A887
+	for <linux-arm-msm@vger.kernel.org>; Sat, 14 Nov 2026 02:06:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A22AA606A887
 Authentication-Results: smtp.subspace.kernel.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
  spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key,
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20260707 header.b=juiFNz39
-Received: by mail-oa1-f51.google.com with SMTP id
- 586e51a60fabf-483a66818edso685710fac.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com
+ header.a=rsa-sha256 header.s=20260707 header.b=zD+NnX02
+Received: by mail-oi1-f177.google.com with SMTP id
+ 5614622812f47-53a448f86e0so1906542b6e.1
         for <linux-arm-msm@vger.kernel.org>;
- Wed, 28 Oct 2026 12:18:53 -0700 (PDT)
+ Fri, 13 Nov 2026 18:06:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793215132; x=1793819932;
+        d=gmail.com; s=20260707; t=1794621969; x=1795226769;
  darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=ZYHI5bthgcGlUFdwCEcqVujiOtr6xk1RG0rgDz64wGk=;
-        b=juiFNz39AKwM+dqHTwN8/d6OG9ie6dhZ6+lULi2zJysTWXcudZlNhdB4Nel+4yTI01
-         gGa0n9rh2GiDm7eHToUitRqoDEh/+9vdx7FpdYBT4mVaDIsPc7jh8sWjqcSTJ1zJJTyF
-         QzHemOGEQVLttVT1jV4qe1FaA0jbPOKctn65TgR9alrfzq59yJ4VI3cjUc4/YQIzV6z2
-         smk7+iQXTojLusowV9QFkXZ/8l4QeazInd7Z+0oXo0RN3MslJZJUSzWBA6+KFUrUW95q
-         hJ/UFY9l58LVIRhhtUYNO2Dd+LD5jMOeW2VE6rMKxPWnPI1f6h1BOD+melA+lhKrBjXM
-         VLsw==
+        bh=+AqJaPo1Vq76xc8sc0TpBwwjASCHawiOJ7TFM/JvB8s=;
+        b=zD+NnX02te7aW8UF9fEx0T7tmeG7nlBi+TfDNmysPuGZWqYcnr3iKpOrVV+1xGtJ/q
+         NG3BKkE1GpmTfk/AhtWx8dMW9D44qU40CF8HImjWiAQxT9E0pNSYzcww7jFnIbGt30Wl
+         41mc6w6Ns3RfyiqldzVX1jS357g4Zqn2a3AV1U3+yu8GIBEIjHc3ZgepX2g2weCz4CPi
+         63G12lHy0SvexswlLwg0dFniR/NGTew/rGdRcvdmj4uJUXqnwMUHTi09J172+hYSRRg9
+         407CUZguwoxG/ob0M8WXgex7tOggTr3hlD2FafFfM//VOOo+702I4yer1cYFlLMA3GqY
+         b0YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793215132; x=1793819932;
+        d=1e100.net; s=20260707; t=1794621969; x=1795226769;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ZYHI5bthgcGlUFdwCEcqVujiOtr6xk1RG0rgDz64wGk=;
-        b=UbiZTk1RIzKrl9kc3F1KJzq3JHhnc+LRtH23Q4Kora6irAwyZ6b4KbTd0V9uPOcJKa
-         QxVpgBgu+6761TiJXmDsr5DL4Fa7bqu22f1o3F618adOsh/CvU+JTgV9tWEvvWUksq0o
-         6lCmYHjyYgOEfenRd2SQPyIjMTvAQBjHGQFBx/HbRP8KX0fg21JROdrEEqdZ1HGtv5Du
-         /j3sH51ujL3XViVwGOswQQ5uBymP9duOT8mUDZNcnlBg6fW7k0rBWLgDYYeUvI4mKSCL
-         y0vOZMSzAHKpl2OF6PP8vP8Y7r1E8h2eWk/pQGSwi7CDb9eLAwqcXm8Ybt8PtgvHJ3xL
-         Yd0g==
+        bh=+AqJaPo1Vq76xc8sc0TpBwwjASCHawiOJ7TFM/JvB8s=;
+        b=r1Z3ng4UvtSBeVAw6DVrd+GeuV4jxk+VFpw6z8JyAzFd4e0tGPCOkyDBsLGi46JSY1
+         wM3Ipcfcmz1aCfThA+YA/01+sEKyhWbXWih9ENIfUJL14caApRTuU6tJV0uTdqtFsEFm
+         Lj6HytkptHVwzjrD94z7fhEhKN4sngXJm4uQN65e77jNcV/qqtIbsHnPm3M1WfW6gHla
+         cODWgloMY4kW9KEwVP8FB8to95UTlsUcZKv+T79N2FzODpC8p403mbSDcMnFj5x3lFXW
+         16ZInSUyjxr5XFMPBD+UVeHco+08chOxNE0urpicBRMBLX8tqStCpulphhN+T4slmFJ8
+         ohqg==
 X-Forwarded-Encrypted: i=1;
- AKwUvByr6PlKNXXz79ejux9OfOpOc+MS7jjani+jBrzPSafpJ1WY2WBPMgwNtTMiJKNnUUwdlEufiee0MnnxXS9H@vger.kernel.org
-X-Gm-Message-State: AFq9FYJxR7rq38XQvKFt1E++xakvK4Nb5UXwB7jLBg1sH+4gVFRhGFe/
-	rqvQjFS6LiIadihtmHbh/CNc0v4xj8jrCi/DbJLM4RlsPB1DlGL0qE2DgPDRPjGB
-X-Gm-Gg: AYBFou3igJycyYiQ5fW/lm4A+tBDXKBpRPWWlo7YYjN+Egv62G0Ox/oY6q9W5vFLRRz
-	60a3N/dzAdboA9RydYfjnzCF9aGAdYnBMmNfpPu0P+5vhwxz62k54aRjRZWiO14ZPy9V9VfSRbM
-	lSn7AvdqTQQLucUwENPcSW086BmPr3B7LyYWGBIdNQ9Rf9wS3A2mIM0hFzH+/N8JCXseg2xZf0t
-	Rni+VihRvmcxJmo6R4EMfTAuYLTzKRbIpsf97JQ4Ouee/707V1CEX5Xa1DRBi+SB9QE0Fyk119S
-	Q5IM8UcM63XhHAaaKk9RIFBV6K47LwzRPCNmhwkY88bZdT1hFmtffloijHN1HxsIzbdEaYeWv3F
-	jtNcHYs15BkRcDbAJjntnAkFScRqEfYiXtj0WZ9lngQY/x2SNbpUs+arQwdxXuVLWDLMVW9Hrb8
-	GDLzglqmenFekg7OIzrUhMNBgKcNLgD2gSpxdckiM7WoC3x1P4KrSnxy8OQlHHhbtnaoYUn+nAm
-	zxTnJ/eOAM+HNKDXfMH08RAzVr7Oi+VTsok7K7saZQCnHffGd7jx7F9OpLqIixFVTFIGqBRcqUP
-	ojuWgLG5oQZCTQ9jFsCYNjzVQxg18COsJTXPwIUbQoSWeyQ3SJVT15YaOw==
-X-Received: by 2002:a05:6871:789:b0:451:22e0:9604 with SMTP id
- 586e51a60fabf-4a8bb59a626mr2492661fac.7.1793215132327;
-        Wed, 28 Oct 2026 12:18:52 -0700 (PDT)
-Received: from jeffmr.mynetworksettings.com
- ([2600:1014:a112:1526:f26:718f:8dc1:b185])
+ AL+hErG4VuHQrozbUQadDhp+2u1VD1n3zOAJN++O2ulTDY0/73j/EK5LZrxMiL/17WKjYBG99yjyxKS4/tQDHjVe@vger.kernel.org
+X-Gm-Message-State: APuU4Z9k1SSrkeZC8Z++0gCwfg4xGFBMB9YShn3FiRpi6YL8+6QeyTEJ
+	faEPTC4tgh6o4oQQc8Y/QjSR16Zq2EvEKjYOhLdLVb6YSiWzvM2oCae17oqG5lDs
+X-Gm-Gg: AYBFou3QXAyzjL1R9AWozUHo8RIhBnC/GZ8rY/3BJTNnRehai4BdcdnRNL6XIknCLHZ
+	K3Sc3rFd46Yb9YBF5XqXE+aUClhWxSt9/rTcXXp9r6wx2ZzxV4D4yohI0lKMuFcUdh/v0U1TXPT
+	zOpGFmRS0Zx28fTDJNEnyO0GmPfDcmc7zMIvfaNkK3Cy1Kun4ekIKv8wR3jIK96dN2b4xpLm8nc
+	AH9vVilPp95EU0i62DHHFbVcRkJTuBFb1vcbxR5syWvU5y6dn8ItaTKYnhALlQPDNlavlV6yWl0
+	oQvbA3ZDXQS4X96n5RyVeUvjTEsxJ9kf7Z2ScMfi4JefL2pIfNMqp1m4X8cdCYqI0w9ZCWZOwPC
+	Oi7+Ppruo8E6jjwdm5TWhyJo9SB1HfCc1+RD1W2Dq7Hu9kSObGKlsf6mbF9LrdiOQ/MHwHtgDD7
+	jtdFgbjH/HL5u9jYgFdDmBGNjqE39cIzDwj4rl0gz+xtag1O5A2xeSefKur+9LVWUU1kau2f9En
+	W64BIXSqnNSakA/SthMW8zJRfDLJS3hpBJDJVzyt2HUL7sbZ7IyAMIoKZQVmZufKW8mKRM9w2vm
+	zd7otggQ1vapJiyEYKRuZmiEpqsR8SobhmrKEVtD9lYq8+zvF5XI2A==
+X-Received: by 2002:a05:6808:309d:b0:533:87ee:d131 with SMTP id
+ 5614622812f47-56e64effd43mr4146215b6e.25.1794621969480;
+        Fri, 13 Nov 2026 18:06:09 -0800 (PST)
+Received: from jeffmr (63-152-14-173.cdrr.qwest.net. [63.152.14.173])
         by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-4a8b785d108sm3092916fac.9.2026.10.28.12.18.50
+ 5614622812f47-56e6fc3f179sm3385433b6e.6.2026.11.13.18.06.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2026 12:18:51 -0700 (PDT)
+        Fri, 13 Nov 2026 18:06:08 -0800 (PST)
 From: Jeff Roach <jeff.roach0@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>
@@ -258,12 +254,12 @@ Cc: Rob Herring <robh@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v3 2/2] arm64: dts: qcom: Add HP OmniBook X 16-cp1
-Date: Wed, 28 Oct 2026 14:18:00 -0500
-Message-ID: <20261028191800.27829-3-jeff.roach0@gmail.com>
+Subject: [PATCH v5 2/2] arm64: dts: qcom: Add HP OmniBook X 16-cp1
+Date: Fri, 13 Nov 2026 20:05:08 -0600
+Message-ID: <20261114020509.632311-3-jeff.roach0@gmail.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261028191800.27829-1-jeff.roach0@gmail.com>
-References: <20261028191800.27829-1-jeff.roach0@gmail.com>
+In-Reply-To: <20261114020509.632311-1-jeff.roach0@gmail.com>
+References: <20261114020509.632311-1-jeff.roach0@gmail.com>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Post: <mailto:linux-arm-msm@vger.kernel.org>
@@ -291,39 +287,36 @@ Supported and tested:
 - ADSP and CDSP remoteprocs
 - Two speakers (WSA8845) and two digital microphones
 
-The GPU is left disabled until Mahua's Adreno X2-85 is supported.
-
 This device tree was written with the help of an AI coding assistant
 (Claude), starting from glymur-hp-elitebook-x-g2q.dts and the laptop's
-ACPI tables. The regulator voltages were checked against the power
-votes in the ACPI tables, where they are listed. I reviewed it and
-tested every feature listed above on the laptop.
+ACPI tables. I reviewed it and tested every feature listed above on the
+laptop.
 
 Signed-off-by: Jeff Roach <jeff.roach0@gmail.com>
 ---
  arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/mahua-hp-omnibook-x16.dts   | 855 ++++++++++++++++++
- 2 files changed, 856 insertions(+)
+ .../boot/dts/qcom/mahua-hp-omnibook-x16.dts   | 647 ++++++++++++++++++
+ 2 files changed, 648 insertions(+)
  create mode 100644 arch/arm64/boot/dts/qcom/mahua-hp-omnibook-x16.dts
 
 diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 88230c4e00..a3ba955451 100644
+index 8329c06b60..e84836e5c5 100644
 --- a/arch/arm64/boot/dts/qcom/Makefile
 +++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -64,6 +64,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-el2.dtb
+@@ -74,6 +74,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-el2.dtb
  lemans-evk-ifp-mezzanine-dtbs	:= lemans-evk.dtb lemans-evk-ifp-mezzanine.dtbo
  dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-ifp-mezzanine.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= mahua-crd.dtb
 +dtb-$(CONFIG_ARCH_QCOM)	+= mahua-hp-omnibook-x16.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= mahua-lenovo-thinkpad-t14s-gen7-lcd.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= mahua-qcb.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= milos-fairphone-fp6.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= milos-nothing-asteroids.dtb
 diff --git a/arch/arm64/boot/dts/qcom/mahua-hp-omnibook-x16.dts b/arch/arm64/boot/dts/qcom/mahua-hp-omnibook-x16.dts
 new file mode 100644
-index 0000000000..010f8e7562
+index 0000000000..fd0ee66473
 --- /dev/null
 +++ b/arch/arm64/boot/dts/qcom/mahua-hp-omnibook-x16.dts
-@@ -0,0 +1,855 @@
+@@ -0,0 +1,647 @@
 +// SPDX-License-Identifier: BSD-3-Clause
 +/*
 + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
@@ -333,27 +326,11 @@ index 0000000000..010f8e7562
 +
 +#include "mahua.dtsi"
 +
-+#include "pmcx0102.dtsi"
-+#include "pmh0101.dtsi"
-+#include "pmh0110-glymur.dtsi"
-+#include "pmh0104-glymur.dtsi"
-+#include "pmk8850.dtsi"
-+#include "smb2370.dtsi"
-+
 +#include <dt-bindings/gpio/gpio.h>
 +#include <dt-bindings/input/gpio-keys.h>
 +#include <dt-bindings/input/input.h>
 +#include <dt-bindings/interrupt-controller/irq.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
 +#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
-+
-+/* PMICs tied to Glymur's cluster2 are absent on Mahua. */
-+/delete-node/ &pmcx0102_d_e0;
-+/delete-node/ &pmcx0102_d0_thermal;
-+/delete-node/ &pmh0104_i_e0;
-+/delete-node/ &pmh0104_i0_thermal;
-+/delete-node/ &pmh0104_j_e0;
-+/delete-node/ &pmh0104_j0_thermal;
 +
 +/ {
 +	model = "HP OmniBook X 16-cp1";
@@ -542,7 +519,7 @@ index 0000000000..010f8e7562
 +	wlan-connector {
 +		compatible = "pcie-m2-e-connector";
 +		vpcie3v3-supply = <&vreg_wcn_3p3>;
-+		vpcie1v8-supply = <&vreg_l15b_e0_1p8>;
++		vpcie1v8-supply = <&vreg_l15b0>;
 +
 +		w-disable1-gpios = <&tlmm 117 GPIO_ACTIVE_LOW>;
 +		w-disable2-gpios = <&tlmm 116 GPIO_ACTIVE_LOW>;
@@ -577,139 +554,6 @@ index 0000000000..010f8e7562
 +			};
 +		};
 +	};
-+};
-+
-+&apps_rsc {
-+	regulators-0 {
-+		compatible = "qcom,pmh0101-rpmh-regulators";
-+		qcom,pmic-id = "B_E0";
-+
-+		vreg_l1b_e0_1p8: ldo1 {
-+			regulator-name = "vreg_l1b_e0_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7b_e0_3p1: ldo7 {
-+			regulator-name = "vreg_l7b_e0_3p1";
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3072000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l15b_e0_1p8: ldo15 {
-+			regulator-name = "vreg_l15b_e0_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l18b_e0_1p2: ldo18 {
-+			regulator-name = "vreg_l18b_e0_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-1 {
-+		compatible = "qcom,pmcx0102-rpmh-regulators";
-+		qcom,pmic-id = "C_E1";
-+
-+		vreg_l1c_e1_0p91: ldo1 {
-+			regulator-name = "vreg_l1c_e1_0p91";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l4c_e1_0p91: ldo4 {
-+			regulator-name = "vreg_l4c_e1_0p91";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-2 {
-+		compatible = "qcom,pmh0110-rpmh-regulators";
-+		qcom,pmic-id = "F_E0";
-+
-+		vreg_l2f_e0_0p94: ldo2 {
-+			regulator-name = "vreg_l2f_e0_0p94";
-+			regulator-min-microvolt = <936000>;
-+			regulator-max-microvolt = <936000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3f_e0_0p91: ldo3 {
-+			regulator-name = "vreg_l3f_e0_0p91";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-3 {
-+		compatible = "qcom,pmh0110-rpmh-regulators";
-+		qcom,pmic-id = "F_E1";
-+
-+		vreg_l1f_e1_0p9: ldo1 {
-+			regulator-name = "vreg_l1f_e1_0p9";
-+			regulator-min-microvolt = <904000>;
-+			regulator-max-microvolt = <904000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2f_e1_0p88: ldo2 {
-+			regulator-name = "vreg_l2f_e1_0p88";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l4f_e1_1p2: ldo4 {
-+			regulator-name = "vreg_l4f_e1_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-4 {
-+		compatible = "qcom,pmh0110-rpmh-regulators";
-+		qcom,pmic-id = "H_E0";
-+
-+		vreg_l1h_e0_0p94: ldo1 {
-+			regulator-name = "vreg_l1h_e0_0p94";
-+			regulator-min-microvolt = <936000>;
-+			regulator-max-microvolt = <936000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2h_e0_0p88: ldo2 {
-+			regulator-name = "vreg_l2h_e0_0p88";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l4h_e0_1p2: ldo4 {
-+			regulator-name = "vreg_l4h_e0_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+};
-+
-+&gmu {
-+	status = "disabled";
-+};
-+
-+&gpu {
-+	status = "disabled";
 +};
 +
 +&i2c0 {
@@ -770,8 +614,6 @@ index 0000000000..010f8e7562
 +};
 +
 +&lpass_vamacro {
-+	vdd-micb-supply = <&vreg_l1b_e0_1p8>;
-+
 +	pinctrl-0 = <&dmic01_default>;
 +	pinctrl-names = "default";
 +
@@ -829,9 +671,6 @@ index 0000000000..010f8e7562
 +};
 +
 +&mdss_dp3_phy {
-+	vdda-phy-supply = <&vreg_l2f_e1_0p88>;
-+	vdda-pll-supply = <&vreg_l4f_e1_1p2>;
-+
 +	status = "okay";
 +};
 +
@@ -843,19 +682,18 @@ index 0000000000..010f8e7562
 +};
 +
 +&pcie4_phy {
-+	vdda-phy-supply = <&vreg_l1c_e1_0p91>;
-+	vdda-pll-supply = <&vreg_l4f_e1_1p2>;
-+
 +	status = "okay";
 +};
 +
 +&pcie4_port0 {
 +	reset-gpios = <&tlmm 146 GPIO_ACTIVE_LOW>;
 +	wake-gpios = <&tlmm 148 GPIO_ACTIVE_LOW>;
-+};
 +
-+&pcie4_port0_ep {
-+	remote-endpoint = <&m2_e_pcie_ep>;
++	port {
++		pcie4_port0_ep: endpoint {
++			remote-endpoint = <&m2_e_pcie_ep>;
++		};
++	};
 +};
 +
 +&pcie5 {
@@ -866,9 +704,6 @@ index 0000000000..010f8e7562
 +};
 +
 +&pcie5_phy {
-+	vdda-phy-supply = <&vreg_l2f_e0_0p94>;
-+	vdda-pll-supply = <&vreg_l4h_e0_1p2>;
-+
 +	status = "okay";
 +};
 +
@@ -897,16 +732,6 @@ index 0000000000..010f8e7562
 +	status = "okay";
 +};
 +
-+&smb2370_j_e2_eusb2_repeater {
-+	vdd18-supply = <&vreg_l15b_e0_1p8>;
-+	vdd3-supply = <&vreg_l7b_e0_3p1>;
-+};
-+
-+&smb2370_k_e2_eusb2_repeater {
-+	vdd18-supply = <&vreg_l15b_e0_1p8>;
-+	vdd3-supply = <&vreg_l7b_e0_3p1>;
-+};
-+
 +&swr0 {
 +	status = "okay";
 +
@@ -917,8 +742,8 @@ index 0000000000..010f8e7562
 +		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
 +		#sound-dai-cells = <0>;
 +		sound-name-prefix = "SpkrLeft";
-+		vdd-1p8-supply = <&vreg_l15b_e0_1p8>;
-+		vdd-io-supply = <&vreg_l18b_e0_1p2>;
++		vdd-1p8-supply = <&vreg_l15b0>;
++		vdd-io-supply = <&vreg_l18b0>;
 +		qcom,port-mapping = <1 2 3 7 12 14>;
 +	};
 +
@@ -929,26 +754,10 @@ index 0000000000..010f8e7562
 +		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
 +		#sound-dai-cells = <0>;
 +		sound-name-prefix = "SpkrRight";
-+		vdd-1p8-supply = <&vreg_l15b_e0_1p8>;
-+		vdd-io-supply = <&vreg_l18b_e0_1p2>;
++		vdd-1p8-supply = <&vreg_l15b0>;
++		vdd-io-supply = <&vreg_l18b0>;
 +		qcom,port-mapping = <4 5 6 7 13 15>;
 +	};
-+};
-+
-+&tcsr {
-+	vdda-qrefrpt0-0p9-supply = <&vreg_l2f_e1_0p88>;
-+	vdda-qrefrpt1-0p9-supply = <&vreg_l2f_e1_0p88>;
-+	vdda-qrefrpt2-0p9-supply = <&vreg_l2f_e1_0p88>;
-+	vdda-qrefrpt3-0p9-supply = <&vreg_l1f_e1_0p9>;
-+	vdda-qrefrpt4-0p9-supply = <&vreg_l2h_e0_0p88>;
-+	vdda-qrefrpt5-0p9-supply = <&vreg_l2h_e0_0p88>;
-+	vdda-qrefrx0-0p9-supply = <&vreg_l2f_e1_0p88>;
-+	vdda-qrefrx1-0p9-supply = <&vreg_l2f_e1_0p88>;
-+	vdda-qrefrx2-0p9-supply = <&vreg_l2f_e1_0p88>;
-+	vdda-qrefrx3-0p9-supply = <&vreg_l2h_e0_0p88>;
-+	vdda-qreftx1-0p9-supply = <&vreg_l1f_e1_0p9>;
-+	vdda-refgen3-0p9-supply = <&vreg_l1f_e1_0p9>;
-+	vdda-refgen3-1p2-supply = <&vreg_l4f_e1_1p2>;
 +};
 +
 +&tlmm {
@@ -1075,19 +884,12 @@ index 0000000000..010f8e7562
 +};
 +
 +&usb_0_hsphy {
-+	vdd-supply = <&vreg_l3f_e0_0p91>;
-+	vdda12-supply = <&vreg_l4h_e0_1p2>;
-+
 +	phys = <&smb2370_j_e2_eusb2_repeater>;
 +
 +	status = "okay";
 +};
 +
 +&usb_0_qmpphy {
-+	vdda-phy-supply = <&vreg_l3f_e0_0p91>;
-+	vdda-pll-supply = <&vreg_l4h_e0_1p2>;
-+	refgen-supply = <&vreg_l2f_e0_0p94>;
-+
 +	status = "okay";
 +};
 +
@@ -1104,19 +906,12 @@ index 0000000000..010f8e7562
 +};
 +
 +&usb_1_hsphy {
-+	vdd-supply = <&vreg_l3f_e0_0p91>;
-+	vdda12-supply = <&vreg_l4h_e0_1p2>;
-+
 +	phys = <&smb2370_k_e2_eusb2_repeater>;
 +
 +	status = "okay";
 +};
 +
 +&usb_1_qmpphy {
-+	vdda-phy-supply = <&vreg_l1h_e0_0p94>;
-+	vdda-pll-supply = <&vreg_l4h_e0_1p2>;
-+	refgen-supply = <&vreg_l2f_e0_0p94>;
-+
 +	status = "okay";
 +};
 +
@@ -1134,17 +929,10 @@ index 0000000000..010f8e7562
 +};
 +
 +&usb_2_hsphy {
-+	vdd-supply = <&vreg_l4c_e1_0p91>;
-+	vdda12-supply = <&vreg_l4f_e1_1p2>;
-+
 +	status = "okay";
 +};
 +
 +&usb_2_qmpphy {
-+	vdda-phy-supply = <&vreg_l4c_e1_0p91>;
-+	vdda-pll-supply = <&vreg_l4f_e1_1p2>;
-+	refgen-supply = <&vreg_l1c_e1_0p91>;
-+
 +	/delete-property/ mode-switch;
 +	/delete-property/ orientation-switch;
 +
@@ -1174,8 +962,5 @@ index 0000000000..010f8e7562
 +};
 +
 +&usb_hs_phy {
-+	vdd-supply = <&vreg_l2h_e0_0p88>;
-+	vdda12-supply = <&vreg_l4h_e0_1p2>;
-+
 +	status = "okay";
 +};

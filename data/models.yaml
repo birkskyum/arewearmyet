@@ -323,7 +323,7 @@ models:
     variants:
       - { chip: "X1-26-100", compatible: "asus,vivobook-14-x1407qa" }
     firmware: ["qcom/x1e80100/ASUSTeK/vivobook-16"]
-    acpi: ["firmware/asus-vivobook-14-x1407qa"]
+    acpi: ["hardware-reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa", "firmware/asus-vivobook-14-x1407qa"]
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2340"
     devicetree_files:
       - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/6c50f70430edbe3a9854df5834a2946afb34570e/pkgbuilds/linux-omarchy-aarch64/2801-arm64-dts-qcom-Add-the-ASUS-Vivobook-14-X1407QA.patch#x126100-asus-vivobook-14.dts"
@@ -343,6 +343,7 @@ models:
     variants:
       - { chip: "X1-26-100", compatible: "asus,vivobook-x16", ids: ["x1p42100-asus-vivobook-16.json"] }
     firmware: ["qcom/x1e80100/ASUSTeK/vivobook-16"]
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/6ffb6f7ab9794a49a50771d23b3a1e1f@gmail.com/"
     devicetree_out_of_tree: "https://github.com/jglathe/linux_ms_dev_kit/blob/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100-asus-vivobook-16.dts"
     devicetree_files:
       - "https://raw.githubusercontent.com/jglathe/linux_ms_dev_kit/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100-asus-vivobook-16.dts"
@@ -426,6 +427,7 @@ models:
       - { model: "OLED", chip: "X1-26-100", compatible: "asus,vivobook-s16-s3607qa-oled" }
       - { model: "LCD", chip: "X1-26-100", compatible: "asus,vivobook-s16-s3607qa-lcd" }
     acpi: ["hardware-reports/asustek-computer-inc/asus-vivobook-s-16-s3607qa-s3607qa"]
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261113214424.220241-3-ingo.kubbilun@gmail.com/"
     devicetree_out_of_tree: "https://gist.github.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3"
     devicetree_files:
       - "https://gist.githubusercontent.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3/raw/x1p42100-asus-vivobook-s16.dts"
@@ -511,11 +513,11 @@ models:
     variants:
       - { chip: "X2E-88-100", compatible: "asus,ascent-qn10" }
     acpi: ["asus-qn10-16e"]
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261113-qn10-v1-2-e09b2aa7ccbe@oss.qualcomm.com/"
     devicetree_out_of_tree: "https://gist.github.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce"
     devicetree_files:
       - "https://gist.githubusercontent.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce/raw/glymur-asus-ascent-qn10.dts"
     ids_collected: "https://gist.github.com/Sonicadvance1/3e8e7ba00d388d9da88a5f394b350adc"
-    notes: "Nobody has booted its draft device tree yet."
     sources:
       - https://www.asus.com/displays-desktops/mini-pcs/ascent-series/asus-ascent-qn10/techspec/
       - https://eshop.asus.com/us/90ms03e2-m000b0-asus-ascent-qn10.html
@@ -772,6 +774,7 @@ models:
       - { chip: "X1P-42-100", compatible: "hp,elitebook-6-g1q" }
     acpi: ["hp-elitebook-6-g1q"]
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261013-add-elitebook-6-dts-v1-2-f22e67fc7f9d@canonical.com/"
+    notes: "Its tree is for the X1P-42-100. An X1E-78-100 unit (SKU B16T2AV) matches the same hardware IDs and boots it, but then finds no Wi-Fi board data or DSP firmware, so the X Elite units need a tree on the X1E chip."
     firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1333"
     sources:
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4005529
@@ -999,7 +1002,7 @@ models:
     notes: "Its tree is for the 18-core X2E-90-100. The X2E-84-100 and X2P-64-100 units have Mahua chips, which need a tree on mahua.dtsi."
     acpi: ["arewearmyet/hp-omnibook-ultra-14-kg0"]
     ids_collected: "https://github.com/birkskyum/arewearmyet/tree/main/acpi/hp-omnibook-ultra-14-kg0"
-    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260830-x2-hp-omnibook-ship-v1-2-9feada71dc79@oss.qualcomm.com/"
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261108-hp-omnibook-v2-v3-2-f489fd0bdf33@oss.qualcomm.com/"
     firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1333"
     reports:
       - { state: "problems", note: "Installs from the edge channel's nightly image and reaches the desktop, but the screen stayed dark at the disk password prompt. The fix for that, loading the USB-C display drivers before the disk is unlocked, is on edge and not yet checked on this laptop.", checked: "2026-11" }
@@ -1056,7 +1059,7 @@ models:
     variants:
       - { model: "16-cp1", compatible: "hp,omnibook-x16-cp1" }
     notes: "Its tree is for the Mahua chips. The X2P-42-100 units have the 6-core Kalambo chip and need a tree on kalambo.dtsi. The 2025 16-cp0 is a Snapdragon X model on board 8F45, listed on its own."
-    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261028191800.27829-3-jeff.roach0@gmail.com/"
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261114020509.632311-3-jeff.roach0@gmail.com/"
     firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1333"
     ids_collected: "https://bugs.launchpad.net/ubuntu-concept/+bug/2170451"
     sources:
@@ -1550,6 +1553,7 @@ models:
     variants:
       - { compatible: "microsoft,surface-laptop-8-13p8" }
     acpi: ["microsoft-surface-8-x2e-80-100"]
+    ids_collected: "https://github.com/ubuntu/stubble/pull/97"
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261027-mahua-surface-laptop-v2-3-7dd903a12d22@oss.qualcomm.com/"
     sources:
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
@@ -1993,6 +1997,11 @@ models:
     form: tablet
     released: "2019"
     chips: ["Microsoft SQ1", "Microsoft SQ2"]
+    variants:
+      - { model: "SQ1", chip: "Microsoft SQ1", compatible: "microsoft,cambria" }
+      - { model: "SQ2", chip: "Microsoft SQ2", compatible: "microsoft,carina" }
+      - { model: "Wi-Fi", chip: "Microsoft SQ1", compatible: "microsoft,caspar" }
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261104070441.74127-3-val@packett.cool/"
     acpi: ["microsoft-surface-prox", "linux-surface/surface_pro_x_sq1", "linux-surface/surface_pro_x_sq2"]
     sources:
       - https://github.com/aarch64-laptops/build/tree/master/misc/microsoft-surface-prox
@@ -2020,6 +2029,10 @@ models:
     generation: 7c
     released: "2022"
     chips: ["SC7280"]
+    variants:
+      - { chip: "SC7280", compatible: "samsung,galaxy-book2-go" }
+    devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261112-book2go-v2-1-12691134e34e@fairphone.com/"
+    ids_collected: "https://github.com/ubuntu/stubble/issues/32"
     acpi: ["samsung-galaxybook2-go"]
     sources:
       - https://github.com/aarch64-laptops/build/tree/master/misc/samsung-galaxybook2-go
@@ -2032,6 +2045,7 @@ models:
     chips: ["SC7180"]
     model_numbers: ["NP340XLA"]
     acpi: ["samsung-galaxy-book-go"]
+    ids_collected: "https://github.com/ubuntu/stubble/issues/32"
     sources:
       - https://github.com/aarch64-laptops/build/tree/master/misc/samsung-galaxy-book-go
 
@@ -2074,6 +2088,7 @@ models:
     released: "2022"
     chips: ["SC8180X"]
     acpi: ["xiaomi-book-s"]
+    ids_collected: "https://github.com/ubuntu/stubble/issues/33"
     sources:
       - https://github.com/aarch64-laptops/build/tree/master/misc/xiaomi-book-s
 
@@ -2197,8 +2212,9 @@ nvidia:
     name: "ProArt P16"
     generation: n1x
     released: "2026-10"
-    omarchy: expected
+    omarchy: works
     linux: omarchy
+    notes: "Owners run Omarchy on it. With 128 GB, its BIOS keeps 96 GiB for the GPU whatever the reservation is set to, and suspend wakes up again within seconds."
     sources:
       - https://www.notebookcheck.net/Asus-ProArt-P16-RTX-Spark-Laptop-Review-The-future-of-multimedia-laptops.1422366.0.html
       - https://www.computerbase.de/artikel/notebooks/nvidia-rtx-spark-n1x-test.99679/
@@ -2207,11 +2223,11 @@ nvidia:
     vendor: "Dell"
     name: "XPS 16 Creator Edition"
     generation: n1x
-    released: "2026"
+    released: "2026-10"
     omarchy: expected
     linux: omarchy
-    status: "announced 2026-05-31 for \"this fall\""
     sources:
+      - https://notebookcheck.net/Dell-launches-Nvidia-RTX-Spark-laptop-with-18-core-CPU-3-2K-120Hz-OLED-display-and-99-Wh-battery.1418563.0.html
       - https://nvidianews.nvidia.com/news/nvidia-microsoft-windows-pcs-agents-rtx-spark
       - https://blogs.windows.com/windowsexperience/2026/05/31/introducing-a-powerful-new-chapter-for-windows-pcs-accelerated-by-nvidia-rtx-spark/
 
@@ -2220,8 +2236,9 @@ nvidia:
     name: "OmniBook Ultra 16"
     generation: n1x
     released: "2026-10"
-    omarchy: expected
+    omarchy: works
     linux: omarchy
+    notes: "An owner runs Omarchy 4.5 on it. Battery, charging, temperature and fan readings are missing, because every embedded controller call fails in its ACPI tables."
     sources:
       - https://www.hp.com/us-en/shop/pdp/hp-omnibook-ultra-laptop-next-gen-ai-16-bk000-16-bg9s9av-1
       - https://www.notebookcheck.net/NVIDIA-RTX-Spark-N1X-6144-Core-Blackwell-GPU-Benchmarks-and-Specs.1428028.0.html
@@ -2252,7 +2269,7 @@ nvidia:
     name: "Surface Laptop Ultra"
     generation: n1x
     released: "2026-10"
-    omarchy: expected
+    omarchy: works
     linux: omarchy
     sources:
       - https://www.microsoft.com/en-us/surface/devices/surface-laptop-ultra
@@ -2278,11 +2295,72 @@ nvidia:
     generation: n1x
     form: 2-in-1
     released: "2026"
+    omarchy: works
+    linux: omarchy
+    notes: "Runs Omarchy with 4K at 120 Hz, sound, touchpad and CUDA. On AC power the GPU stays near 780 MHz."
+    sources:
+      - https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop
+      - https://blogs.windows.com/windowsexperience/2026/05/31/introducing-a-powerful-new-chapter-for-windows-pcs-accelerated-by-nvidia-rtx-spark/
+
+  - id: asus-proart-gr1x
+    vendor: "ASUS"
+    name: "ProArt GR1X"
+    generation: n1x
+    form: desktop
+    released: "2026"
     omarchy: expected
     linux: omarchy
-    status: "announced 2026-05-31 for fall 2026"
+    status: "announced at IFA 2026, shipping before the end of the year"
     sources:
-      - https://blogs.windows.com/windowsexperience/2026/05/31/introducing-a-powerful-new-chapter-for-windows-pcs-accelerated-by-nvidia-rtx-spark/
+      - https://www.notebookcheck.net/New-Asus-ProArt-GR1X-release-details-revealed-with-up-to-128-GB-RAM-and-20-core-RTX-Spark.1419176.0.html
+      - https://www.techradar.com/pro/asus-proart-gr1x-joins-a-crowded-rtx-spark-field-sans-a-price-tag-while-amds-gorgon-halo-boxes-already-offer-192gb
+
+  - id: dell-creator-edition-desktop
+    vendor: "Dell"
+    name: "Creator Edition Desktop"
+    generation: n1x
+    form: desktop
+    released: "2026"
+    omarchy: expected
+    linux: omarchy
+    status: "announced 2026-10 as coming soon"
+    sources:
+      - https://www.notebookcheck.net/Dell-launches-powerful-new-mini-PC-with-128-GB-RAM-and-Nvidia-RTX-Spark.1419181.0.html
+
+  - id: gigabyte-ai-top-aero
+    vendor: "Gigabyte"
+    name: "AI TOP AERO"
+    generation: n1x
+    form: desktop
+    released: "2026-11"
+    omarchy: expected
+    linux: omarchy
+    sources:
+      - https://www.gigabyte.com/press/news/2467
+
+  - id: lenovo-yoga-9n-2-in-1
+    vendor: "Lenovo"
+    name: "Yoga 9n 2-in-1"
+    generation: n1x
+    form: 2-in-1
+    released: "2026-10"
+    omarchy: expected
+    linux: omarchy
+    sources:
+      - https://www.notebookcheck.net/Lenovo-launches-powerful-2-in-1-laptop-globally-with-up-to-64-GB-RAM-and-20-core-RTX-Spark-N1X.1418562.0.html
+      - https://www.notebookcheck.net/Lenovo-Yoga-9n-2-in-1-brings-RTX-Spark-hardware-to-a-16-inch-OLED-convertible.1387142.0.html
+
+  - id: msi-edgemesa-n-ai-plus
+    vendor: "MSI"
+    name: "EdgeMesa N AI+"
+    generation: n1x
+    form: desktop
+    released: "2026-11"
+    omarchy: expected
+    linux: omarchy
+    sources:
+      - https://www.msi.com/news/detail/MSI-Unveils-EdgeMesa-N-AI--Mini-PC-Powered-by-NVIDIA-RTX-Spark-at-COMPUTEX-2026-148987
+      - https://notebookcheck.net/MSI-releases-new-compact-desktop-PC-with-Nvidia-RTX-Spark-and-6-144-CUDA-cores.1447829.0.html
 
 # Source entries the board leaves out on purpose: Qualcomm's reference boards.
 # Also left out: Qualcomm's internal reference designs and industrial boards,
