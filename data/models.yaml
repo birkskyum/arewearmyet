@@ -299,8 +299,8 @@ models:
       - { compatible: "asus,v400-aio-vm441qa" }
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
     devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-ASUS-V400-AiO-VM441QA-.patch#x126100-asus-v400-aio-vm441qa.dts"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-ASUS-V400-AiO-VM441QA-.patch#x126100-asus-v400-aio.dtsi"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0018-arm64-dts-qcom-Add-the-ASUS-V400-AiO-VM441QA-.patch#x126100-asus-v400-aio-vm441qa.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0018-arm64-dts-qcom-Add-the-ASUS-V400-AiO-VM441QA-.patch#x126100-asus-v400-aio.dtsi"
     model_numbers: ["VM441QA"]
     acpi: ["firmware/asus-v400-aio-vm441qa"]
     sources:
@@ -318,8 +318,8 @@ models:
       - { compatible: "asus,v400-aio-vm471qa" }
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
     devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-ASUS-V400-AiO-VM441QA-.patch#x126100-asus-v400-aio-vm471qa.dts"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-ASUS-V400-AiO-VM441QA-.patch#x126100-asus-v400-aio.dtsi"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0018-arm64-dts-qcom-Add-the-ASUS-V400-AiO-VM441QA-.patch#x126100-asus-v400-aio-vm471qa.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0018-arm64-dts-qcom-Add-the-ASUS-V400-AiO-VM441QA-.patch#x126100-asus-v400-aio.dtsi"
     model_numbers: ["VM471QA"]
     acpi: ["firmware/asus-v400-aio-vm471qa"]
     sources:
@@ -415,8 +415,8 @@ models:
       - { compatible: "asus,vivobook-s14-s5408qa" }
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
     devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch#x126100-asus-vivobook-s14-s5408qa.dts"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch#x126100-asus-vivobook-s5x08.dtsi"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch#x126100-asus-vivobook-s14-s5408qa.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch#x126100-asus-vivobook-s5x08.dtsi"
     model_numbers: ["S5408QA"]
     acpi: ["firmware/asus-vivobook-s14-s5408qa"]
     sources:
@@ -433,8 +433,8 @@ models:
       - { compatible: "asus,vivobook-s14-flip-tp5408qa" }
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
     devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch#x126100-asus-vivobook-s14-flip-tp5408qa.dts"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch#x126100-asus-vivobook-s5x08.dtsi"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch#x126100-asus-vivobook-s14-flip-tp5408qa.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch#x126100-asus-vivobook-s5x08.dtsi"
     model_numbers: ["TP5408QA"]
     acpi: ["firmware/asus-vivobook-s14-flip-tp5408qa"]
     sources:
@@ -473,8 +473,8 @@ models:
       - { compatible: "asus,vivobook-s16-s5608qa" }
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
     devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch#x126100-asus-vivobook-s16-s5608qa.dts"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch#x126100-asus-vivobook-s5x08.dtsi"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch#x126100-asus-vivobook-s16-s5608qa.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch#x126100-asus-vivobook-s5x08.dtsi"
     model_numbers: ["S5608QA"]
     acpi: ["firmware/asus-vivobook-s16-s5608qa"]
     sources:
@@ -491,8 +491,8 @@ models:
       - { compatible: "asus,vivobook-s16-flip-tp5608qa" }
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
     devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch#x126100-asus-vivobook-s16-flip-tp5608qa.dts"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch#x126100-asus-vivobook-s5x08.dtsi"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch#x126100-asus-vivobook-s16-flip-tp5608qa.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch#x126100-asus-vivobook-s5x08.dtsi"
     model_numbers: ["TP5608QA"]
     acpi: ["firmware/asus-vivobook-s16-flip-tp5608qa"]
     sources:
@@ -591,7 +591,7 @@ models:
       - { compatible: "asus,vivobook-s16-s3607na" }
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
     devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0014-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S360.patch#glymur-asus-vivobook-s16-s3607na.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0014-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S360.patch#glymur-asus-vivobook-s16-s3607na.dts"
     model_numbers: ["S3607NA"]
     acpi: ["firmware/asus-vivobook-s16-s3607na"]
     sources:
@@ -750,7 +750,7 @@ models:
       - { compatible: "dynabook,xd5" }
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
     devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0018-arm64-dts-qcom-Add-the-Dynabook-XD5.patch#x1p42100-dynabook-xd5.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0017-arm64-dts-qcom-Add-the-Dynabook-XD5.patch#x1p42100-dynabook-xd5.dts"
     model_numbers: ["P1D5APBL", "W6XDZA5BAM-K"]
     acpi: ["firmware/dynabook-xd5"]
     sources:
@@ -988,7 +988,7 @@ models:
       - { compatible: "hp,elitebook-6-g2q" }
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
     devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0013-arm64-dts-qcom-Add-the-HP-EliteBook-6-G2q.patch#mahua-hp-elitebook-6-g2q.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0013-arm64-dts-qcom-Add-the-HP-EliteBook-6-G2q.patch#mahua-hp-elitebook-6-g2q.dts"
     model_numbers: ["HSN-I68C"]
     acpi: ["firmware/hp-elitebook-6-g2q"]
     sources:
@@ -1269,8 +1269,8 @@ models:
       - { compatible: "lenovo,ideapad-vibe-14q8x12" }
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
     devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0017-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Vibe-14.patch#x126100-lenovo-ideapad-vibe-14q8x12.dts"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0017-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Vibe-14.patch#x126100-lenovo-ideapad-vibe.dtsi"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Vibe-14.patch#x126100-lenovo-ideapad-vibe-14q8x12.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Vibe-14.patch#x126100-lenovo-ideapad-vibe.dtsi"
     model_numbers: ["14Q8X12", "84A9"]
     acpi: ["firmware/lenovo-ideapad-vibe-14q8x12"]
     notes: "Its BIOS (VGCN13WW) is the IdeaPad Slim 3x 15Q8X10's LCFC platform, so that tree is the closest start, with a second USB-C port, the touchscreen at 0x24 and its own panel and EC."
@@ -1287,8 +1287,8 @@ models:
       - { compatible: "lenovo,ideapad-vibe-15q8x12" }
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
     devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0017-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Vibe-14.patch#x126100-lenovo-ideapad-vibe-15q8x12.dts"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0017-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Vibe-14.patch#x126100-lenovo-ideapad-vibe.dtsi"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Vibe-14.patch#x126100-lenovo-ideapad-vibe-15q8x12.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Vibe-14.patch#x126100-lenovo-ideapad-vibe.dtsi"
     model_numbers: ["15Q8X12", "84AA"]
     acpi: ["firmware/lenovo-ideapad-vibe-14q8x12"]
     notes: "Shares the IdeaPad Vibe 14's BIOS (VGCN13WW) and DSDT."
@@ -1378,8 +1378,8 @@ models:
       - { compatible: "lenovo,ideapad-5x-2in1-14q8y11" }
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
     devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0020-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch#kalambo-lenovo-ideapad-5x-2in1-14q8y11.dts"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0012-arm64-dts-qcom-Add-Kalambo-SoC.patch#kalambo.dtsi"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch#kalambo-lenovo-ideapad-5x-2in1-14q8y11.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0012-arm64-dts-qcom-Add-Kalambo-SoC.patch#kalambo.dtsi"
     model_numbers: ["14Q8Y11", "83UK"]
     acpi: ["firmware/lenovo-ideapad-5x-2-in-1-14q8y11"]
     sources:
@@ -1396,9 +1396,9 @@ models:
       - { compatible: "lenovo,ideapad-slim5x-13q8y11" }
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
     devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0020-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch#kalambo-lenovo-ideapad-slim5x-13q8y11.dts"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0020-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch#kalambo-lenovo-ideapad-slim5x.dtsi"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0012-arm64-dts-qcom-Add-Kalambo-SoC.patch#kalambo.dtsi"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch#kalambo-lenovo-ideapad-slim5x-13q8y11.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch#kalambo-lenovo-ideapad-slim5x.dtsi"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0012-arm64-dts-qcom-Add-Kalambo-SoC.patch#kalambo.dtsi"
     model_numbers: ["13Q8Y11", "83RK"]
     acpi: ["firmware/lenovo-ideapad-slim-5x-13q8y11"]
     sources:
@@ -1415,9 +1415,9 @@ models:
       - { compatible: "lenovo,ideapad-slim5x-15q8y11" }
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
     devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0020-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch#kalambo-lenovo-ideapad-slim5x-15q8y11.dts"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0020-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch#kalambo-lenovo-ideapad-slim5x.dtsi"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0012-arm64-dts-qcom-Add-Kalambo-SoC.patch#kalambo.dtsi"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch#kalambo-lenovo-ideapad-slim5x-15q8y11.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch#kalambo-lenovo-ideapad-slim5x.dtsi"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0012-arm64-dts-qcom-Add-Kalambo-SoC.patch#kalambo.dtsi"
     model_numbers: ["15Q8Y11", "83RL"]
     acpi: ["firmware/lenovo-ideapad-slim-5x-15q8y11"]
     sources:
@@ -1434,8 +1434,8 @@ models:
       - { compatible: "lenovo,thinkbook-14-gen9-q8y" }
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
     devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0020-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch#kalambo-lenovo-thinkbook-14-gen9.dts"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0012-arm64-dts-qcom-Add-Kalambo-SoC.patch#kalambo.dtsi"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch#kalambo-lenovo-thinkbook-14-gen9.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0012-arm64-dts-qcom-Add-Kalambo-SoC.patch#kalambo.dtsi"
     model_numbers: ["22BB"]
     acpi: ["firmware/lenovo-thinkbook-14-gen-9-q8y"]
     sources:
@@ -1624,13 +1624,6 @@ models:
     generation: x2
     released: "2026-10"
     chips: ["X2P-42-100"]
-    variants:
-      - { compatible: "microsoft,surface-laptop-13in-2nd-edition" }
-    devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
-    devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0021-arm64-dts-qcom-Add-the-Surface-Laptop-13in-an.patch#kalambo-microsoft-surface-laptop-13in-2nd-edition.dts"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0021-arm64-dts-qcom-Add-the-Surface-Laptop-13in-an.patch#kalambo-microsoft-surface.dtsi"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0012-arm64-dts-qcom-Add-Kalambo-SoC.patch#kalambo.dtsi"
     model_numbers: ["2145"]
     acpi: ["firmware/microsoft-surface-laptop-13in-2nd-edition"]
     sources:
@@ -1683,13 +1676,6 @@ models:
     form: tablet
     released: "2026-10"
     chips: ["X2P-42-100"]
-    variants:
-      - { compatible: "microsoft,surface-pro-12in-2nd-edition" }
-    devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
-    devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0021-arm64-dts-qcom-Add-the-Surface-Laptop-13in-an.patch#kalambo-microsoft-surface-pro-12in-2nd-edition.dts"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0021-arm64-dts-qcom-Add-the-Surface-Laptop-13in-an.patch#kalambo-microsoft-surface.dtsi"
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0012-arm64-dts-qcom-Add-Kalambo-SoC.patch#kalambo.dtsi"
     model_numbers: ["2148", "2149"]
     acpi: ["firmware/microsoft-surface-pro-12in-2nd-edition"]
     sources:
@@ -1703,11 +1689,6 @@ models:
     form: tablet
     released: "2026-06"
     chips: ["X2P-64-100", "X2E-78-100"]
-    variants:
-      - { compatible: "microsoft,surface-pro-12th-edition" }
-    devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
-    devicetree_files:
-      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/548b4fe7/pkgbuilds/linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-Microsoft-Surface-Pro-.patch#mahua-microsoft-surface-pro-12th-edition.dts"
     model_numbers: ["2076", "2140", "2085", "2141"]
     acpi: ["firmware/microsoft-surface-pro-12th-edition"]
     sources:
