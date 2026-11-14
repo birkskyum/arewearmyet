@@ -20,7 +20,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | Anduril BlueChip | [hardware-reports/anduril/qualcomm-glymur](../reports/anduril/qualcomm-glymur) |
 | ASUS V400 AiO (VM441QA) | [firmware/asus-v400-aio-vm441qa](firmware/asus-v400-aio-vm441qa) |
 | ASUS V400 AiO (VM471QA) | [firmware/asus-v400-aio-vm471qa](firmware/asus-v400-aio-vm471qa) |
-| ASUS Vivobook 14 | [firmware/asus-vivobook-14-x1407qa](firmware/asus-vivobook-14-x1407qa) |
+| ASUS Vivobook 14 | [hardware-reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa](../reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa), [firmware/asus-vivobook-14-x1407qa](firmware/asus-vivobook-14-x1407qa) |
 | ASUS Vivobook S 15 | [asus-vivobook-s-15](aarch64-laptops/asus-vivobook-s-15), [asus-vivobook-s15-q5507](aarch64-laptops/asus-vivobook-s15-q5507), [asus-vivobook-s15-s5507](aarch64-laptops/asus-vivobook-s15-s5507) |
 | ASUS Vivobook S14 (S3407QA) | [arewearmyet/asus-vivobook-s14-s3407qa](asus-vivobook-s14-s3407qa) |
 | ASUS Vivobook S14 (S5408QA) | [firmware/asus-vivobook-s14-s5408qa](firmware/asus-vivobook-s14-s5408qa) |
@@ -131,7 +131,3 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 - Samsung Galaxy Book4 Edge 15
 - Samsung Galaxy Book5 Edge 5G
 - Samsung Galaxy Book6 Edge 16
-
-## Not matched to a model yet
-
-- [hardware-reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa](../reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa)
