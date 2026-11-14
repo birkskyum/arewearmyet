@@ -1,0 +1,90 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Microsoft Surface Laptop 8, 15-inch model with the 12-core Snapdragon X2
+ * Elite (Mahua).
+ *
+ * The laptop's ACPI tables are the 13.8-inch model's, with board ID 3 where
+ * the 13.8-inch reads 5, 8, 9 or 12. The board ID changes the touchscreen,
+ * the panel configuration Windows loads and a power switch the touchscreen
+ * shares with the panel, so this tree is the 13.8-inch one with those parts
+ * replaced.
+ */
+
+#include "glymur-microsoft-surface-laptop8.dts"
+
+/ {
+	compatible = "microsoft,surface-laptop-8-15", "qcom,mahua";
+	model = "Microsoft Surface Laptop 8 (15in, Snapdragon X2 Elite)";
+
+	/*
+	 * ACPI power resource TDPR: TLMM 49, then 150 ms. Both the touchscreen
+	 * (MSHW0774) and the panel (GPU0.MON0) depend on it, so it stays on.
+	 */
+	vreg_touch_display: regulator-touch-display {
+		compatible = "regulator-fixed";
+
+		regulator-name = "VREG_TOUCH_DISPLAY";
+
+		gpio = <&tlmm 49 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+		startup-delay-us = <150000>;
+
+		pinctrl-0 = <&touch_display_pwr_en>;
+		pinctrl-names = "default";
+
+		regulator-always-on;
+		regulator-boot-on;
+	};
+};
+
+/* The 13.8-inch model's touchscreen, MSHW0776, and its power switch. */
+/delete-node/ &vreg_ts;
+/delete-node/ &ts_default;
+/delete-node/ &ts_pwr_en;
+/delete-node/ &ts_reset_n;
+
+&i2c8 {
+	/delete-node/ touchscreen@41;
+
+	/*
+	 * ACPI MSHW0774, "Surface Touch Screen Device": 0x34 at 400 kHz, HID
+	 * descriptor register 0 (its _DSM function 1 returns 0), interrupt
+	 * TLMM 51 level low with a pull-up. _PS0 drives TLMM 31 high and _PS3
+	 * drives it low, then waits 5 ms.
+	 */
+	touchscreen@34 {
+		compatible = "hid-over-i2c";
+		reg = <0x34>;
+		hid-descr-addr = <0x0>;
+		interrupts-extended = <&tlmm 51 IRQ_TYPE_LEVEL_LOW>;
+		reset-gpios = <&tlmm 31 GPIO_ACTIVE_LOW>;
+
+		vdd-supply = <&vreg_touch_display>;
+
+		pinctrl-0 = <&ts_int_n>, <&ts_reset_n_15>;
+		pinctrl-names = "default";
+	};
+};
+
+&tlmm {
+	touch_display_pwr_en: touch-display-pwr-en-state {
+		pins = "gpio49";
+		function = "gpio";
+		drive-strength = <4>;
+		bias-disable;
+	};
+
+	ts_int_n: ts-int-n-state {
+		pins = "gpio51";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-pull-up;
+	};
+
+	ts_reset_n_15: ts-reset-n-15-state {
+		pins = "gpio31";
+		function = "gpio";
+		drive-strength = <16>;
+		bias-disable;
+	};
+};

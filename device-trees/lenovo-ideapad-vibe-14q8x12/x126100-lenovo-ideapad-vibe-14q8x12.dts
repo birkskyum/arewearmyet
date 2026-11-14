@@ -1,0 +1,31 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2026, Birk Skyum <birk.skyum@pm.me>
+ */
+
+/dts-v1/;
+
+#include "x126100-lenovo-ideapad-vibe.dtsi"
+
+/ {
+	model = "Lenovo IdeaPad Vibe 14Q8X12";
+	compatible = "lenovo,ideapad-vibe-14q8x12", "qcom,x126100", "qcom,x1p42100";
+};
+
+&gpu_zap_shader {
+	firmware-name = "qcom/x1p42100/LENOVO/84A9/qcdxkmsucpurwa.mbn";
+};
+
+&iris {
+	firmware-name = "qcom/x1p42100/LENOVO/84A9/qcvss8380_pa.mbn";
+};
+
+&remoteproc_adsp {
+	firmware-name = "qcom/x1p42100/LENOVO/84A9/qcadsp8380.mbn",
+			"qcom/x1p42100/LENOVO/84A9/adsp_dtbs.elf";
+};
+
+&remoteproc_cdsp {
+	firmware-name = "qcom/x1p42100/LENOVO/84A9/qccdsp8380.mbn",
+			"qcom/x1p42100/LENOVO/84A9/cdsp_dtbs.elf";
+};

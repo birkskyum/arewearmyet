@@ -29,3 +29,4 @@ scripts/og/*.ttf
 # wrangler types worker/worker-configuration.d.ts
 worker/worker-configuration.d.ts
 .wrangler/
+device-trees.new/

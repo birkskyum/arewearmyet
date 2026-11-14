@@ -1232,7 +1232,7 @@
     "notYet": 29,
     "deviceTree": 75,
     "ids": 58,
-    "firmware": 51,
+    "firmware": 50,
     "googlebooks": 2,
     "chromebooks": 10,
     "acpi": 46,
@@ -1422,16 +1422,16 @@
         }
       },
       "firmware": {
-        "omarchy": 49,
+        "omarchy": 48,
         "fromUpstream": 1,
-        "added": 48,
+        "added": 47,
         "pull": 0,
         "available": 2,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 49
+          "edge": 48
         },
         "models": {
           "fromUpstream": [
@@ -1481,7 +1481,6 @@
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
-            "microsoft-surface-pro-12th-edition",
             "qualcomm-snapdragon-dev-kit-for-windows",
             "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
@@ -11957,17 +11956,12 @@
         "firstRelease": null,
         "devicetreePosted": null,
         "devicetreeOutOfTree": null,
-        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/microsoft-surface-laptop-13in-2nd-edition",
+        "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
         "firmware": "windows",
-        "firmwareMissing": [
-          "qcadsp8480.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8480.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwarePosted": null,
@@ -12239,17 +12233,12 @@
         "firstRelease": null,
         "devicetreePosted": null,
         "devicetreeOutOfTree": null,
-        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/microsoft-surface-pro-12in-2nd-edition",
+        "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
         "firmware": "windows",
-        "firmwareMissing": [
-          "qcadsp8480.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8480.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwarePosted": null,
@@ -12315,31 +12304,29 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "shipped",
-        "firmwareChannel": "edge",
-        "firmwarePackages": [
-          "microsoft-surface-laptop-8-firmware"
-        ],
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
         "firmwarePull": null
       },
       "pieces": {
         "deviceTree": "none",
         "ids": "none",
-        "firmware": "edge"
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "missing",
         "firstRelease": null,
         "devicetreePosted": null,
         "devicetreeOutOfTree": null,
-        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/microsoft-surface-pro-12th-edition",
+        "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "download",
+        "firmware": "windows",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": "/firmware/#qcom-glymur-microsoft-mahua",
+        "firmwareDownload": null,
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],

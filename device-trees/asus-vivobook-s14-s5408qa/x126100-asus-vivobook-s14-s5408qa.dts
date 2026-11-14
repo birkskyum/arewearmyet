@@ -1,0 +1,39 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * ASUS Vivobook S14 (S5408QA), Snapdragon X X1-26-101.
+ *
+ * BIOS S5408QA.304, DSDT SKU "S54". The board is described in
+ * x126100-asus-vivobook-s5x08.dtsi.
+ */
+
+#include "x126100-asus-vivobook-s5x08.dtsi"
+
+/ {
+	model = "ASUS Vivobook S14 (S5408QA)";
+	compatible = "asus,vivobook-s14-s5408qa", "qcom,x126100", "qcom,x1p42100";
+};
+
+&gpu_zap_shader {
+	firmware-name = "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/qcdxkmsucpurwa.mbn";
+};
+
+&iris {
+	firmware-name = "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/qcvss8380.mbn";
+};
+
+/* The BIOS's SMBIOS board data name is BDF_AS_SA_S5408QA */
+&pcie4_port0 {
+	wifi@0 {
+		qcom,calibration-variant = "AS_SA_S5408QA";
+	};
+};
+
+&remoteproc_adsp {
+	firmware-name = "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/qcadsp8380.mbn",
+			"qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/adsp_dtbs.elf";
+};
+
+&remoteproc_cdsp {
+	firmware-name = "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/qccdsp8380.mbn",
+			"qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/cdsp_dtbs.elf";
+};

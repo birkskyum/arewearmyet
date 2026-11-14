@@ -4,7 +4,7 @@
 // for status.ts. A devicetree_files entry is a file URL, a path under data/device-trees/ for a tree sent in
 // to this repository, or a patch URL and #path to cut one new file out.
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { parse } from 'yaml';
@@ -101,19 +101,23 @@ async function outOfTree(model: Model, dir: string): Promise<Entry> {
   return { state: 'out-of-tree', source: model.devicetree_out_of_tree!, files: ['SOURCE.md', ...files], note };
 }
 
+// Written next to the old copy and swapped in at the end, so a failed fetch leaves the old copy in place
+const OUT = 'device-trees.new';
 const index: Record<string, Entry> = {};
-rmSync('device-trees', { recursive: true, force: true });
+rmSync(OUT, { recursive: true, force: true });
 for (const model of models) {
   if (!model.devicetree_posted && !model.devicetree_out_of_tree) continue;
-  const dir = `device-trees/${model.id}`;
+  const dir = `${OUT}/${model.id}`;
   mkdirSync(dir, { recursive: true });
   index[model.id] = model.devicetree_posted ? await posted(model, dir) : await outOfTree(model, dir);
   console.log(`${model.id}: ${index[model.id].state}, ${index[model.id].files.join(', ')}`);
 }
-writeFileSync('device-trees/index.json', JSON.stringify(index, null, 2) + '\n');
-writeFileSync('device-trees/README.md', [
+writeFileSync(`${OUT}/index.json`, JSON.stringify(index, null, 2) + '\n');
+writeFileSync(`${OUT}/README.md`, [
   '# Device trees not in Linux yet', '',
   'A copy of every device tree the board links that Linux doesn\'t have yet: the series posted to linux-arm-msm',
   'and the trees other kernels carry. scripts/trees.ts rewrites this folder from data/models.yaml every day.',
   'Each folder\'s SOURCE.md says where its files came from.', '',
 ].join('\n'));
+rmSync('device-trees', { recursive: true, force: true });
+renameSync(OUT, 'device-trees');

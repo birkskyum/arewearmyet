@@ -1,0 +1,83 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * ASUS Vivobook S14 Flip (TP5408QA), Snapdragon X X1-26-100.
+ *
+ * BIOS TP5408QA.305, DSDT SKU "TP54". The board is described in
+ * x126100-asus-vivobook-s5x08.dtsi.
+ */
+
+#include "x126100-asus-vivobook-s5x08.dtsi"
+
+/ {
+	model = "ASUS Vivobook S14 Flip (TP5408QA)";
+	compatible = "asus,vivobook-s14-flip-tp5408qa", "qcom,x126100", "qcom,x1p42100";
+};
+
+&gpu_zap_shader {
+	firmware-name = "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/qcdxkmsucpurwa.mbn";
+};
+
+/*
+ * TSC1: ILIT2901, an Ilitek controller on I2C9 at 0x10, _DSM HID
+ * descriptor address 0x1, interrupt TLMM 51 (level, low, wake), and the PEP
+ * drives TLMM 48 low and then high, an active-low reset. Its stylus is
+ * the ASUS Pen SA205H (MPP 2.6), which reports through this controller.
+ * The bus held the A14's keyboard, which the UX3480QA keeps disabled.
+ */
+&i2c8 {
+	status = "okay";
+
+	/delete-node/ keyboard@15;
+
+	touchscreen@10 {
+		compatible = "hid-over-i2c";
+		reg = <0x10>;
+
+		hid-descr-addr = <0x1>;
+		interrupts-extended = <&tlmm 51 IRQ_TYPE_LEVEL_LOW>;
+
+		pinctrl-0 = <&ts_default>;
+		pinctrl-names = "default";
+
+		wakeup-source;
+	};
+};
+
+&iris {
+	firmware-name = "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/qcvss8380.mbn";
+};
+
+/* The BIOS's SMBIOS board data name is BDF_AS_SA_TP5408QA */
+&pcie4_port0 {
+	wifi@0 {
+		qcom,calibration-variant = "AS_SA_TP5408QA";
+	};
+};
+
+&remoteproc_adsp {
+	firmware-name = "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/qcadsp8380.mbn",
+			"qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/adsp_dtbs.elf";
+};
+
+&remoteproc_cdsp {
+	firmware-name = "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/qccdsp8380.mbn",
+			"qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/cdsp_dtbs.elf";
+};
+
+&tlmm {
+	ts_default: ts-default-state {
+		int-n-pins {
+			pins = "gpio51";
+			function = "gpio";
+			bias-pull-up;
+		};
+
+		reset-n-pins {
+			pins = "gpio48";
+			function = "gpio";
+			drive-strength = <2>;
+			bias-disable;
+			output-high;
+		};
+	};
+};

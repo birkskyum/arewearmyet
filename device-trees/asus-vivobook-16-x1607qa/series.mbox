@@ -1,0 +1,731 @@
+From patchwork Sat Nov 14 08:30:20 2026
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Patchwork-Submitter: Daniel Carter <yass27106@gmail.com>
+X-Patchwork-Id: 14982488
+Authentication-Results: smtp.subspace.kernel.org;
+ arc=none smtp.remote-ip=74.125.225.139
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794645024;
+	b=ba6YrHSzZi6dAtAMuaQPQx5bnfCUBdfAQhQhp7pwpyQDFen+aTLgY/nc8KrP2XQQuLv5
+	 qZpnz5rOH70PRTOqdrz8lZDIrjdLhJUf4vy/lUvpuSjaR62RhynS6zmXhEVtF7TGLqrum
+	 4XaSJnTnCSwoZ3U5A4adJ64I87z2GixI2UocEIo4N5VcO2x2+n1IOYXlPyGPmft4wMK7g
+	 H1WSmMUJqT+OC5WGaqBoNesfL+21CnL04+CeRx/hmnMp283QipXdfHLCp5H54Y3XCkr+6
+	 x3dkYz76EjP36B1Uved0gcedTTSWHM0Le26ZMyd4NKkTKRcS1UonAKR0XjJrc/xUxAA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794645024;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:Content-Type:MIME-Version:Content-Transfer-Encoding:From:To:Cc:
+	 Subject:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Disposition;
+	bh=ma8eOStbqsLgqHn7ahQBI4zgMkUeHZjSXOgEoYt70mw=;
+	b=qySpVmI1gBbwv1+MsjMk3SrIlSiNbNaTC9vV79oHJJmGoMPh288+G0dqKKNn6F4gTVzD
+	 +ecb5aTJ14714fUpbP/YJMiweKRF4OvSVcs0XFwc9934VKVRxY7bxrowuApXqeu4fsHVH
+	 kZDsM7d2gkZJZL759cWHpfZJ/1EGAYABCZ9fTElgtQ69QRW3xIINA5Av8PRXRX9+amnIy
+	 4AtxwO6o2pzEwem4k2RWs4euiahIPsI/yzp29HTylldtF3mPII80v0CE1gSOBBwHuLo/b
+	 wzBOSvomUFZuHHqMSpRitphFkArOXhT+c3GsSNO7uO3gppCtEyoxJwpPrAt9r4+JtBw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org;
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20260707 header.b=0qR56hQY;
+	arc=none smtp.remote-ip=74.125.225.139
+Received: from mail-wm2-f11.google.com (mail-wm2-f11.google.com
+ [74.125.225.139])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest
+ SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B692606A333
+	for <linux-arm-msm@vger.kernel.org>; Sat, 14 Nov 2026 08:30:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1B692606A333
+Authentication-Results: smtp.subspace.kernel.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+ spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com
+ header.a=rsa-sha256 header.s=20260707 header.b=0qR56hQY
+Received: by mail-wm2-f11.google.com with SMTP id
+ 5b1f17b1804b1-4b769975b2bso5555655e9.1
+        for <linux-arm-msm@vger.kernel.org>;
+ Sat, 14 Nov 2026 00:30:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794645022; x=1795249822;
+ darn=vger.kernel.org;
+        h=content-disposition:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:content-transfer-encoding
+         :mime-version:content-type:date:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=ma8eOStbqsLgqHn7ahQBI4zgMkUeHZjSXOgEoYt70mw=;
+        b=0qR56hQYIKWdOxVpc5j13KSOTAd8LvtSa09xdM/++9azQASY01VaY2/N7bIxkzHVQV
+         uneV7DRJvWG+VRc6KRO66LSYMhG9aTuwpSiOFSv73W/DzetcCerEDzEnoxAr8js528EH
+         nUTPKaAk8M3xhZbjAxaodYkT3bJ3vZzUrc8MD3nwb5I89mxzZ8VSalVq5w8Os3SC7Yv5
+         Qab1tXA+MtQNKeBlFZJ32hBa4E++V/vEjpv+ymFD9oARpQcuAHbq1J9fnvsG2w1J6B2B
+         xudgu0dFaFOYv9/QgA48S9Cxy+NlxC5paDnWBPdOaMkesuzTTvsuRwlZ24sDoPMGS3qR
+         kEbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794645022; x=1795249822;
+        h=content-disposition:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:content-transfer-encoding
+         :mime-version:content-type:date:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=ma8eOStbqsLgqHn7ahQBI4zgMkUeHZjSXOgEoYt70mw=;
+        b=o47pZfsWVKLD8/x88pSzkw4c4SCLOAq7Usvd8xLBkPAXBkwyQiNAegnidw08DQyfXV
+         EHGGQRi8GF52+c31W5KLtdrUJqz3Ttmqqo2P2Xit+skNaE9IDe7KQCh42rTi4m4pp5xX
+         xET6inUUq8uirwEBU6mPjsqM3Mrbfp5oZRQudA1SWDYeYPCXw1F7iFmxM8u7aC5RKVLt
+         qwFxWuoNgtkwN9qGelEWsY+lsvOS99QjL5zgz1JZFR8qCijib1ni7BQNg2jvOsRWVJ40
+         auuFjOpql2QcKjwt3+2DhgdyviL0KliE1xuHgFiSr2gmh75X7r+RGNukuvFi7LJm8goi
+         PF3Q==
+X-Forwarded-Encrypted: i=1;
+ AL+hErFYLUuBhvxPQh5+gTD62ZK27malZK78YI3MLRu8yvI7SuUKR8XaMJ30V1IPnHFy/ohcWtHaWDfzagxWvxvs@vger.kernel.org
+X-Gm-Message-State: APuU4Z8HyvHWFOv/rrvXtYRNmZuVaEThHfb9hKt1AuFSinuyJJha+/eO
+	0AHJBqiyRrK6K96Whxfwsa8f7BvS+VTw1rvJGk2M/ou5ZMrVvLade0/S
+X-Gm-Gg: AYBFou0bSwFSBxLptC1Fw+YJXJ8N++fu7YF8sG8bbaUO20BZToL1ubTjQZiNeBXHGgX
+	/yJaxYUrQE9LoBzfAWAdYAqZEnFMTWaCddRjHlAQLKRC45HlpVIJGT3q2m5kNK0/qnHa3Cb5+KS
+	yFktBdePY4OcuUVfc/LrmYH5AnH+AQpr2IBmiZmHvNLrbREe95z6TNnJNe+yQOoIYWnhdbZeEEi
+	Z83oaUAym4sGmXWHfZOWWPRMOvIWUMBF+l2sqzoRsyHlcVWtZ1oV2XhQhDqyVXeigN9E89bkNwD
+	gnlhDE+0GrQwCF3twkiOPRzkLbgGaCZ6SFulqrNo4M2SCWEuKkBb/YhLGCpDmVouMdkftROq0t8
+	GKXea5znC4iMofYxik5HBQOcrUXBHcZojc8YuUolqZHxcoE42idLnmTx441VHJAE6HANRyIF6qw
+	SMfsqFALIrVDkNeAher+UDH4hD8dGo6jtwR+y7+axsiFAjVbiV2iISG/nD7FVGc2Zug5a59Hcrn
+	81tmZUQIK4x8xjwfoSR6SRt3NZoSNEdZa3qNx2SrqxNaN3SdZTh
+X-Received: by 2002:a05:600c:2c7:b0:4a7:8fe8:130c with SMTP id
+ 5b1f17b1804b1-4bb55a71180mr65200945e9.28.1794645022425;
+        Sat, 14 Nov 2026 00:30:22 -0800 (PST)
+Received: from [127.0.1.1] ([165.50.16.69])
+        by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-49c609c8a77sm9834201f8f.49.2026.11.14.00.30.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Nov 2026 00:30:20 -0800 (PST)
+Date: Sat, 14 Nov 2026 00:30:20 -0800 (PST)
+X-Mailing-List: linux-arm-msm@vger.kernel.org
+List-Id: <linux-arm-msm.vger.kernel.org>
+List-Post: <mailto:linux-arm-msm@vger.kernel.org>
+List-Help: <mailto:linux-arm-msm+help@vger.kernel.org>
+List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
+List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+List-Owner: <mailto:linux-arm-msm+owner@vger.kernel.org>
+Precedence: list
+MIME-Version: 1.0
+From: Daniel Carter <yass27106@gmail.com>
+To: krzk@kernel.org, andersson@kernel.org, broonie@kernel.org,
+ srini@kernel.org, konradybcio@kernel.org
+Cc: robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, tiwai@suse.com,
+ perex@perex.cz, lgirdwood@gmail.com, pierre-louis.bossart@linux.dev,
+ yung-chuan.liao@linux.intel.com, abelvesa@kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, yass27106@gmail.com
+Subject: [PATCH v4 1/3] dt-bindings: arm: qcom: document Asus Vivobook 16
+ X1607QA
+Message-ID: <ffa1da6790284f668c860bd21203014e@gmail.com>
+In-Reply-To: <2dc9301fc1ec46cdb66dc49a85f721b1@gmail.com>
+References: <2dc9301fc1ec46cdb66dc49a85f721b1@gmail.com>
+MIME-Version: 1.0
+Content-Disposition: inline
+
+Document the compatible for the Asus Vivobook 16 X1607QA laptop,
+based on the Qualcomm X1P42100 (Purwa) SoC.
+
+Signed-off-by: Daniel Carter <yass27106@gmail.com>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 121ca557ce1..d22f1b0b4ef 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -1306,6 +1306,7 @@ properties:
+ 
+       - items:
+           - enum:
++              - asus,vivobook-16-x1607qa
+               - asus,vivobook-s15-x1p4
+               - hp,omnibook-x14-fe1
+               - lenovo,thinkbook-16
+
+From patchwork Sat Nov 14 08:30:28 2026
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Patchwork-Submitter: Daniel Carter <yass27106@gmail.com>
+X-Patchwork-Id: 14982489
+Authentication-Results: smtp.subspace.kernel.org;
+ arc=none smtp.remote-ip=209.85.221.52
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794645031;
+	b=Ae+wq/793FgA1szyXMpKLaPP4FcU3MHw6kO14m6Qv/Pb4B99J4oOeNvbsBJOj4Wqv0UZ
+	 /+vstngjopIQJobuBjAhh9wMSNMyc2DimyhUOVS2tE//VI3gXTAAFnowELPXAFrT76Sph
+	 CdpHet+FD3tLrUCO/jfgil7U35WGkUzMeoljRDP+gx+/VaUM+CVmGDUoS6Kvu47i8Mh1j
+	 767MqXx6fgCT9r0eulZY6GE+sUuEhBKJUl/aBnK1Ktg5iKwyWOI2rj+gCnPaUiiDvijr7
+	 HkmVsbRsjAdYHCfpKgjAQVuWkCHFb+3U2YszgweP7RcTnRPlLYW4/sPh/W/O5HqWsJg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794645031;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:Content-Type:MIME-Version:Content-Transfer-Encoding:From:To:Cc:
+	 Subject:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Disposition;
+	bh=DYOFA8KvThmkeyCH0QeQRdAQcRef4Z3pWaKY43bWJHw=;
+	b=5WmEWqQMP+XG3XS5Xc4DugloA1WlbufYbsomtJrTrVP2z732J/JrkCA0hZDLLFz/pfaS
+	 tJn7cYlPqJQyYtFC6+OYUpNPVqB3JX+ZLrZp0FzCi4GSmFqzBQmadvxCw3qrzrPZ1NzLj
+	 k1szoL8srJQdJNdG3ENbo/0YaBSrDOYeqJoWjdmRzgFDAAtmit+ATZd9dj3COW0bZzmm4
+	 BTz+YETZUtWtsOpGdZl7bAvJO8epR+vPoNAXtBcpOIPPCKkxFUGUaeZOLqzw4uMTFDAlV
+	 fZ11axmMr/o4opILzcumD73SyMvAeEM7re23lGGtCNL/s9yZ5UC8YEo2tsSbu0kCuPQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org;
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20260707 header.b=MFvqNyat;
+	arc=none smtp.remote-ip=209.85.221.52
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com
+ [209.85.221.52])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest
+ SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B79606A32D
+	for <linux-arm-msm@vger.kernel.org>; Sat, 14 Nov 2026 08:30:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 49B79606A32D
+Authentication-Results: smtp.subspace.kernel.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+ spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com
+ header.a=rsa-sha256 header.s=20260707 header.b=MFvqNyat
+Received: by mail-wr1-f52.google.com with SMTP id
+ ffacd0b85a97d-498f5fa4f70so2213258f8f.0
+        for <linux-arm-msm@vger.kernel.org>;
+ Sat, 14 Nov 2026 00:30:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794645029; x=1795249829;
+ darn=vger.kernel.org;
+        h=content-disposition:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:content-transfer-encoding
+         :mime-version:content-type:date:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=DYOFA8KvThmkeyCH0QeQRdAQcRef4Z3pWaKY43bWJHw=;
+        b=MFvqNyatvp84kWCbwEmI4H086Y3dYegpY60PjyZB0h4nN6UVJK/hmPB30/rWTgTqdX
+         NXj6mPjwRi8ZZDfSvrKycZqMZiFVvbd/sROJNF/VmvUoaV3UfpgeHMSMMuODXrLVtGdw
+         eLX7bPi8YjXLwJ5qiDvnLKnIbhiZBaUc52ySYlSnZOlx6pNXADjc7Un0rFd1RLesq/vV
+         fGImuUrTA8bEnxsUDkx8NAEOhTf3dsN6LFWM1T+l9BOABYgFr1SxvMCKEDUTe0wi2Vrp
+         0CmIlxAx2j9Yk5L/rvOQqw6N7MoDhcRST3Y/q8UCV0N2++XJf/Gky96W+2lRjx6sp285
+         j1lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794645029; x=1795249829;
+        h=content-disposition:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:content-transfer-encoding
+         :mime-version:content-type:date:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=DYOFA8KvThmkeyCH0QeQRdAQcRef4Z3pWaKY43bWJHw=;
+        b=RFEe2Kwzq3HSluAZj4Egv575jj9oNIUuhTzzuYbFJ+EAVe6WTtNqWSLWybn02ouBBO
+         6xqYag+p9OxFoglZvzMPl9qdMM7qZ5RKYEbOkDdEHGClfhiJFupvO6yQFbfXmktF4Deh
+         HXo8Q6is4z0oSGSJCbLmEUBH7VvEFa7R4n6uk9gKsiUZ6dJUBhq0vEeeH07zYrwz39hP
+         Rs5QlVLYGdWoDS2JGYJSmxMM+C93Ui16kaSCWf59n4tOHb4yyRN+QD9e6hl9/tRXxk0W
+         72k/hOlbcjOKa0hkHmh9L1TBbUOFpHgL+Icmf/GrvRYD3oVGL1ckf8YcGEbQhI30E3B7
+         TDyA==
+X-Forwarded-Encrypted: i=1;
+ AL+hErE6pTcwmYfFNWzywLQ3MD/RsgzcGqt53e93bmt64cYxnnMm/Vk+dOGLkfiNY1UH0Gk9YOyYuWqY4u4MTiPx@vger.kernel.org
+X-Gm-Message-State: APuU4Z8SajQZfSXIqJCq93aJeHg9XjV1+J2B8vkPhjVvfA+3vdMhxYYa
+	vZREBxCWHB3jLvXBt1zGLONxpkWzLfno9PYRb7LGQ0dZAeq39+lmK8+2
+X-Gm-Gg: AYBFou0W/3Yd8ZegPss3bUqJwAEpR6DC8ObMGmhGfvL2xzZHx3cNisirtlvg6zypDBN
+	dSHh5fROl3NgCb2/B7e+o8b0Ndfjp7vhrqBT/8FwviIqzLxce0vEGgLE1Uyihf5neacgdXUJCtZ
+	4SCgrOfYBM7+ubkGv1l7UWWp27zf6sfIWzEgpgxE5utt9xuyLCWv3Oi6iuvKOSbbqfyXF3jDUga
+	yoigCkXjIWUspQgnf77NsefQyQTnWnh3qSNM0QS92FM4C5/2B+G2lAI/8CTvxvvJT4tT+TyFuic
+	i/FMicbj3bUkp7fCkJSCl+gNRHOQ170UUlLoftQYdHe5gV95AsG4TTsDsbFfO9CZ4+HPUeGZ/xx
+	wV1eO28+JJa/wloOrJg2/dJYT/iIwt9a8CNNi6K45aGGb6kJfyX/fF+nT8IuAsTUp7ZGSDhmFjE
+	6F+68i7ea62w2x3t0WpTWW2im4t1Doeu6IiiVb2hmgydJjO4MP+PSD8texSxZaJuKI7hPjvXlc/
+	t4jVIvV8Sw3jnOo5tgLF/u+EcqhPOv/hANLsG/tF7WPwdVEXHinGZWXHRJXIAvtPzfhNGGL2Q==
+X-Received: by 2002:a5d:5d0a:0:b0:491:6b1b:7f25 with SMTP id
+ ffacd0b85a97d-49c72e85578mr11017957f8f.45.1794645028611;
+        Sat, 14 Nov 2026 00:30:28 -0800 (PST)
+Received: from [127.0.1.1] ([165.50.16.69])
+        by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-49c609c8a77sm9834201f8f.49.2026.11.14.00.30.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Nov 2026 00:30:28 -0800 (PST)
+Date: Sat, 14 Nov 2026 00:30:28 -0800 (PST)
+X-Mailing-List: linux-arm-msm@vger.kernel.org
+List-Id: <linux-arm-msm.vger.kernel.org>
+List-Post: <mailto:linux-arm-msm@vger.kernel.org>
+List-Help: <mailto:linux-arm-msm+help@vger.kernel.org>
+List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
+List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+List-Owner: <mailto:linux-arm-msm+owner@vger.kernel.org>
+Precedence: list
+MIME-Version: 1.0
+From: Daniel Carter <yass27106@gmail.com>
+To: krzk@kernel.org, andersson@kernel.org, broonie@kernel.org,
+ srini@kernel.org, konradybcio@kernel.org
+Cc: robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, tiwai@suse.com,
+ perex@perex.cz, lgirdwood@gmail.com, pierre-louis.bossart@linux.dev,
+ yung-chuan.liao@linux.intel.com, abelvesa@kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, yass27106@gmail.com
+Subject: [PATCH v4 2/3] arm64: dts: qcom: add device tree for Asus Vivobook 16
+ X1607QA
+Message-ID: <6ffb6f7ab9794a49a50771d23b3a1e1f@gmail.com>
+In-Reply-To: <ffa1da6790284f668c860bd21203014e@gmail.com>
+References: <2dc9301fc1ec46cdb66dc49a85f721b1@gmail.com>
+MIME-Version: 1.0
+Content-Disposition: inline
+
+The Asus Vivobook 16 X1607QA is a 16-inch laptop based on the
+Qualcomm X1P-42-100 (Purwa) SoC, an 8-core derivative of the
+X1E80100 (hamoa) platform. Its board design is close to the Vivobook
+S 15 (X1P42100), so the device tree builds on the shared
+x1-asus-vivobook-s15.dtsi.
+
+Supported so far:
+- the 2x WSA8845 speaker and WCD9385 headset codec audio stack over
+  SoundWire, including the VA macro DMIC input
+- the ADSP and CDSP remote processors with the ASUS firmware paths
+- the Adreno GPU with the zapped shader firmware
+
+The pmc8380_6 PMIC (and its thermal and die-temp nodes) belongs to
+the third CPU cluster, which is unpopulated on this 8-core part; its
+nodes are deleted as on the Vivobook S 15.
+
+Signed-off-by: Daniel Carter <yass27106@gmail.com>
+---
+ arch/arm64/boot/dts/qcom/Makefile             |   2 +
+ .../x1p42100-asus-vivobook-16-x1607qa.dts     | 232 ++++++++++++++++++
+ 2 files changed, 234 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/x1p42100-asus-vivobook-16-x1607qa.dts
+
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 88230c4e00e..4405eaab62d 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -507,6 +507,8 @@ x1e80100-microsoft-romulus15-el2-dtbs	:= x1e80100-microsoft-romulus15.dtb x1-el2
+ dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-microsoft-romulus15.dtb x1e80100-microsoft-romulus15-el2.dtb
+ x1e80100-qcp-el2-dtbs	:= x1e80100-qcp.dtb x1-el2.dtbo
+ dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-qcp.dtb x1e80100-qcp-el2.dtb
++x1p42100-asus-vivobook-16-x1607qa-el2-dtbs	:= x1p42100-asus-vivobook-16-x1607qa.dtb x1-el2.dtbo
++dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-asus-vivobook-16-x1607qa.dtb x1p42100-asus-vivobook-16-x1607qa-el2.dtb
+ x1p42100-asus-vivobook-s15-el2-dtbs	:= x1p42100-asus-vivobook-s15.dtb x1-el2.dtbo
+ dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-asus-vivobook-s15.dtb x1p42100-asus-vivobook-s15-el2.dtb
+ x1p42100-asus-zenbook-a14-el2-dtbs	:= x1p42100-asus-zenbook-a14.dtb x1-el2.dtbo
+diff --git a/arch/arm64/boot/dts/qcom/x1p42100-asus-vivobook-16-x1607qa.dts b/arch/arm64/boot/dts/qcom/x1p42100-asus-vivobook-16-x1607qa.dts
+new file mode 100644
+index 00000000000..3877809dcb3
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/x1p42100-asus-vivobook-16-x1607qa.dts
+@@ -0,0 +1,232 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Copyright (c) 2026, Daniel Carter <yass27106@gmail.com>
++ */
++
++/dts-v1/;
++
++#include "purwa.dtsi"
++#include "x1-asus-vivobook-s15.dtsi"
++
++/delete-node/ &pmc8380_6;
++/delete-node/ &pmc8380_6_thermal;
++/delete-node/ &pmc8380_6_die_temp;
++
++/ {
++	model = "ASUS Vivobook 16 (X1607QA)";
++	compatible = "asus,vivobook-16-x1607qa", "qcom,x1p42100";
++
++	wcd938x: audio-codec {
++		compatible = "qcom,wcd9385-codec";
++
++		pinctrl-0 = <&wcd_default>;
++		pinctrl-names = "default";
++
++		qcom,micbias1-microvolt = <1800000>;
++		qcom,micbias2-microvolt = <1800000>;
++		qcom,micbias3-microvolt = <1800000>;
++		qcom,micbias4-microvolt = <1800000>;
++		qcom,mbhc-buttons-vthreshold-microvolt =
++			<75000 150000 237000 500000 500000 500000 500000 500000>;
++		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
++		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
++		qcom,rx-device = <&wcd_rx>;
++		qcom,tx-device = <&wcd_tx>;
++
++		reset-gpios = <&tlmm 191 GPIO_ACTIVE_LOW>;
++
++		vdd-buck-supply = <&vreg_l15b_1p8>;
++		vdd-rxtx-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l15b_1p8>;
++		vdd-mic-bias-supply = <&vreg_bob1>;
++
++		#sound-dai-cells = <1>;
++	};
++
++	sound {
++		compatible = "qcom,x1e80100-sndcard";
++		model = "X1P42100-ASUS-Vivobook-16";
++		audio-routing = "SpkrLeft IN", "WSA WSA_SPK1 OUT",
++				"SpkrRight IN", "WSA WSA_SPK2 OUT",
++				"IN1_HPHL", "HPHL_OUT",
++				"IN2_HPHR", "HPHR_OUT",
++				"AMIC2", "MIC BIAS2",
++				"VA DMIC0", "MIC BIAS1",
++				"VA DMIC1", "MIC BIAS1",
++				"VA DMIC0", "VA MIC BIAS1",
++				"VA DMIC1", "VA MIC BIAS1",
++				"TX SWR_INPUT1", "ADC2_OUTPUT";
++
++		wcd-playback-dai-link {
++			link-name = "WCD Playback";
++
++			codec {
++				sound-dai = <&wcd938x 0>, <&swr1 0>, <&lpass_rxmacro 0>;
++			};
++
++			cpu {
++				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		wcd-capture-dai-link {
++			link-name = "WCD Capture";
++
++			codec {
++				sound-dai = <&wcd938x 1>, <&swr2 1>, <&lpass_txmacro 0>;
++			};
++
++			cpu {
++				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		va-dai-link {
++			link-name = "VA Capture";
++
++			codec {
++				sound-dai = <&lpass_vamacro 0>;
++			};
++
++			cpu {
++				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		wsa-dai-link {
++			link-name = "WSA Playback";
++
++			codec {
++				sound-dai = <&left_spkr>, <&right_spkr>,
++						<&swr0 0>, <&lpass_wsamacro 0>;
++			};
++
++			cpu {
++				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++	};
++};
++
++&apps_rsc {
++	regulators-0 {
++		vreg_l12b_1p2: ldo12 {
++			regulator-name = "vreg_l12b_1p2";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
++		};
++	};
++};
++
++&gpu_zap_shader {
++	firmware-name = "qcom/x1p42100/ASUSTeK/vivobook-16-x1607qa/qcdxkmsucpurwa.mbn";
++};
++
++&lpass_tlmm {
++	spkr_01_sd_n_active: spkr-01-sd-n-active-state {
++		pins = "gpio12";
++		function = "gpio";
++		drive-strength = <16>;
++		bias-disable;
++		output-low;
++	};
++};
++
++&lpass_vamacro {
++	pinctrl-0 = <&dmic01_default>;
++	pinctrl-names = "default";
++	qcom,dmic-sample-rate = <4800000>;
++	vdd-micb-supply = <&vreg_bob1>;
++};
++
++&remoteproc_adsp {
++	firmware-name = "qcom/x1p42100/ASUSTeK/vivobook-16-x1607qa/qcadsp8380.mbn",
++			"qcom/x1p42100/ASUSTeK/vivobook-16-x1607qa/adsp_dtbs.elf";
++	status = "okay";
++};
++
++&remoteproc_cdsp {
++	firmware-name = "qcom/x1p42100/ASUSTeK/vivobook-16-x1607qa/qccdsp8380.mbn",
++			"qcom/x1p42100/ASUSTeK/vivobook-16-x1607qa/cdsp_dtbs.elf";
++	status = "okay";
++};
++
++&swr0 {
++	pinctrl-0 = <&wsa_swr_active>, <&spkr_01_sd_n_active>;
++	pinctrl-names = "default";
++	status = "okay";
++
++	/* WSA8845, Left Speaker */
++	left_spkr: speaker@0,0 {
++		compatible = "sdw20217020400";
++		reg = <0 0>;
++		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
++		#sound-dai-cells = <0>;
++		sound-name-prefix = "SpkrLeft";
++		vdd-1p8-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l12b_1p2>;
++		qcom,port-mapping = <1 2 3 7 10 13>;
++	};
++
++	/* WSA8845, Right Speaker */
++	right_spkr: speaker@0,1 {
++		compatible = "sdw20217020400";
++		reg = <0 1>;
++		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
++		#sound-dai-cells = <0>;
++		sound-name-prefix = "SpkrRight";
++		vdd-1p8-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l12b_1p2>;
++		qcom,port-mapping = <4 5 6 7 11 13>;
++	};
++};
++
++&swr1 {
++	status = "okay";
++
++	/* WCD9385 RX */
++	wcd_rx: codec@0,4 {
++		compatible = "sdw20217010d00";
++		reg = <0 4>;
++		qcom,rx-port-mapping = <1 2 3 4 5>;
++	};
++};
++
++&swr2 {
++	status = "okay";
++
++	/* WCD9385 TX */
++	wcd_tx: codec@0,3 {
++		compatible = "sdw20217010d00";
++		reg = <0 3>;
++		qcom,tx-port-mapping = <2 2 3 4>;
++	};
++};
++
++&tlmm {
++	wcd_default: wcd-reset-n-active-state {
++		pins = "gpio191";
++		function = "gpio";
++		drive-strength = <16>;
++		bias-disable;
++		output-low;
++	};
++};
+
+From patchwork Sat Nov 14 08:30:33 2026
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Patchwork-Submitter: Daniel Carter <yass27106@gmail.com>
+X-Patchwork-Id: 14982490
+Authentication-Results: smtp.subspace.kernel.org;
+ arc=none smtp.remote-ip=209.85.128.54
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794645036;
+	b=AYs2v6UwNrUiBZFzfjxfthaL1VSYI81akru1zMzuGU7qJj7QiLbXpKzSsL7BRVtSGnR/
+	 jxuUkkrmzpuhMB3XnYFLsTDMEYFl8ErJtBfv6mo5qcp1PwSDjB51jVZpfOJKMOeHWgzUn
+	 0GRKCUyD5o4V5iZQQpgD9Yabhso+phkhMQeEsz45fun/wWDRf/z7/1Ge+3J5w7WHrezmb
+	 M7JfNTs/tVT1nkZ8Q0wtbPEulJC8y2nXZ0t9JoYMUtYOe1CgFXEE/RNidZFE9va7XEByb
+	 kYjQ/20rmHjcxGaZwDoD3iP3Z8+XMlMMUFcjpRaSPUZCF0tvYxKBcQgcuz5q4JyRACA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794645036;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:Content-Type:MIME-Version:Content-Transfer-Encoding:From:To:Cc:
+	 Subject:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Disposition;
+	bh=BY9gGrhDfHOEmb3K6vpfodrup03WQ2q9F2M4gkFNfjw=;
+	b=YqiY3AevmliW7zKdStU/l+dzqKaHb02/V4vb3NunDqCNyY4CCf6ayplh+p4sROGmxWhG
+	 uwRAqza7VYsn72oA3tPr8FICYQbFZUZ6Hd/XqaVtB8MVaCDO2fxgRbPIZwqR3E6454122
+	 2xZEXOO+nKuJgV1hW6DDlWNPNET4B0lgCf1D8cj7QP26xPxnX4Ypx8ZIELvzrYeZv2H4S
+	 q1zlKwp65HoHJXp5ruD+HqJbeX9Xz1NEEc5RMn1YeckR+kZhTl+QHDimBRy7pkdJDuRNK
+	 Xay3x+qfI66tT5LdhvVV7xgQVEwHikCMrDzB9YBKps8yxIZ8zsPyEk53EvuqSD2R57w==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org;
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20260707 header.b=tocbLiPW;
+	arc=none smtp.remote-ip=209.85.128.54
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com
+ [209.85.128.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest
+ SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19858606A880
+	for <linux-arm-msm@vger.kernel.org>; Sat, 14 Nov 2026 08:30:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 19858606A880
+Authentication-Results: smtp.subspace.kernel.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+ spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com
+ header.a=rsa-sha256 header.s=20260707 header.b=tocbLiPW
+Received: by mail-wm1-f54.google.com with SMTP id
+ 5b1f17b1804b1-4a210470b49so14194335e9.2
+        for <linux-arm-msm@vger.kernel.org>;
+ Sat, 14 Nov 2026 00:30:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794645034; x=1795249834;
+ darn=vger.kernel.org;
+        h=content-disposition:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:content-transfer-encoding
+         :mime-version:content-type:date:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=BY9gGrhDfHOEmb3K6vpfodrup03WQ2q9F2M4gkFNfjw=;
+        b=tocbLiPWz7ToPwlLUt4j3nC0wlhd5a0f/WMe6qNDoYiksejbN6KiVYB3r/nQ3y7vRi
+         +P/YyAfi5aEPGSnuaul5LfAtsvSrVNtkSdCVZC7247HwGw/8FusEKtY9sHJGft/jHWL/
+         b9PiN/M+pAFCnPtT8zrCdBW8W787JTVvC9gkCM/CnjqLqvJ8KG9Mrazz8GzD/qsm/3Et
+         0tLVHQQR+oFgnxqcXFlr36bIRjK5kxhY8CaOsrygmT20GncZPAUocwSKnrMNHo1+EKOA
+         xzHtSwaF9zeWsBktj0/bsdKGln21AzboydY0vo85JG5akHgme7Tffts74cHnbwtBEys0
+         Qv0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794645034; x=1795249834;
+        h=content-disposition:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:content-transfer-encoding
+         :mime-version:content-type:date:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=BY9gGrhDfHOEmb3K6vpfodrup03WQ2q9F2M4gkFNfjw=;
+        b=tOG1N40iAjP8gPPfdQ2nIX7vymTZ4EYgvAVuBF8T7eZ/3QN6iKWakZrnjdQgitwlzE
+         Z+GhouuCGy9ZaKDagRyzh1rKermwDMhCPkE0L1xOTCZQqYAao954EzTnFZ5IPi6+chJs
+         Q7AhVGTc/Cv8bm8Bwjtza7ijOKwWI/8XhEb7h6beZrmh9RZP19bgpE5vi/iM7QJqPQtr
+         reVy+JeDMAN4zoLIw50CtUEr8dduD0tx4+C3mkbxY50viq6lamOCnHVRefiRFw9dgqHV
+         S9YEniSGmbDYFxAufNsyhWF56QjGrQzZxwk2tivDtxTbHfuqI/fmmMR/pH8hq9zlTj49
+         mTbQ==
+X-Forwarded-Encrypted: i=1;
+ AL+hErGOKkAhQEq/Rh98CvJIuPF8hoYq5f2wt08vnL/1+lD5NTko2f+nIEWy25Z+NLMkmmghBHs9szXzSKlutzex@vger.kernel.org
+X-Gm-Message-State: APuU4Z+vE9kTmpiDrPpEU/bscpw6PQWB2gYHjXVKxHvjNkO3iKB9ZSQZ
+	fsHNAsLisDaW6w4LBrr/0dqFe9cjpTNcZhiq/WRalpEEmyCVgBJl5QNV
+X-Gm-Gg: AYBFou2ZLuIBbX+ugJxHukESb58RvcBvlJpdQyT0+rK6pzclBuMJz8rD7OrqlJaG7at
+	ZI/xImK+Y2SkwO8TO9UW20zRdQ4p3novbTgZ463zXqny1IMf0dueRR/OlMsqra2mzn52iISF+fO
+	1XEFq9WCaMGB7F4uMzarGtyqUFRU8GjbrG1lgWszIVEmhdVLAuBGImwOrRPkE02tvjgfF9NtFwV
+	WCnCFlmDboPq3fP5elZamsiYyqRnwO2xeZLL7T7R1t1yWdC2wMGKbCCJjCh0+UAvPQH+DUGJRY5
+	wC9v/ynlrQ2SQjGrLd7TcfsiQky26eP6/YhBOxariKz3UkoY/r5oPWud6ac2fyOrL4Npilhe7XL
+	JMav9d3yk5VFUipdMdarbxIfcEc1q7YWYOtpPinOMDcFfWL4V70RiyBfp8icgF0v8CTybdF6NO2
+	zuoE1Sxw+GQiG2HP8APzHNetvODgnTFeBdctE+7rU3/+Pthl7jn1o6moAiB0z/YBqQ+9gZq3gU1
+	XOf+JAB849SXUAZ7fp0lJdcZU+n8wFZpmVmwAyZoR1TD9L39V54
+X-Received: by 2002:a05:6000:25f1:b0:48a:fba3:d5b1 with SMTP id
+ ffacd0b85a97d-49c7381a73amr9429791f8f.55.1794645034503;
+        Sat, 14 Nov 2026 00:30:34 -0800 (PST)
+Received: from [127.0.1.1] ([165.50.16.69])
+        by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-49c609c8a77sm9834201f8f.49.2026.11.14.00.30.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Nov 2026 00:30:33 -0800 (PST)
+Date: Sat, 14 Nov 2026 00:30:33 -0800 (PST)
+X-Mailing-List: linux-arm-msm@vger.kernel.org
+List-Id: <linux-arm-msm.vger.kernel.org>
+List-Post: <mailto:linux-arm-msm@vger.kernel.org>
+List-Help: <mailto:linux-arm-msm+help@vger.kernel.org>
+List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
+List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+List-Owner: <mailto:linux-arm-msm+owner@vger.kernel.org>
+Precedence: list
+MIME-Version: 1.0
+From: Daniel Carter <yass27106@gmail.com>
+To: krzk@kernel.org, andersson@kernel.org, broonie@kernel.org,
+ srini@kernel.org, konradybcio@kernel.org
+Cc: robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, tiwai@suse.com,
+ perex@perex.cz, lgirdwood@gmail.com, pierre-louis.bossart@linux.dev,
+ yung-chuan.liao@linux.intel.com, abelvesa@kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, yass27106@gmail.com
+Subject: [PATCH v4 3/3] soundwire: qcom: check clk_prepare_enable() return
+ values
+Message-ID: <d5888e6336644236bcb3dad4e28fdb5f@gmail.com>
+In-Reply-To: <6ffb6f7ab9794a49a50771d23b3a1e1f@gmail.com>
+References: <2dc9301fc1ec46cdb66dc49a85f721b1@gmail.com>
+MIME-Version: 1.0
+Content-Disposition: inline
+
+clk_prepare_enable() can fail; unchecked, the driver proceeds to
+touch registers with the interface clock off, which aborts on arm64.
+Check the return value in the interrupt handler (returning IRQ_NONE,
+as the interrupt status is not read or cleared on that path), in
+probe, and in the runtime resume path (returning the error without
+unmasking the level-high wake IRQ, which would storm while the slave
+keeps driving the line).
+
+Fixes: 02efb49aa805 ("soundwire: qcom: add support for SoundWire controller")
+Fixes: 74e79da9fd46 ("soundwire: qcom: add runtime pm support")
+Signed-off-by: Daniel Carter <yass27106@gmail.com>
+---
+ drivers/soundwire/qcom.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index 6e0c5fb10ef..62a44f64dd8 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -778,7 +778,9 @@ static irqreturn_t qcom_swrm_irq_handler(int irq, void *dev_id)
+ 	u32 i;
+ 	int devnum;
+ 	int ret = IRQ_HANDLED;
+-	clk_prepare_enable(ctrl->hclk);
++
++	if (clk_prepare_enable(ctrl->hclk))
++		return IRQ_NONE;
+ 
+ 	ctrl->reg_read(ctrl, ctrl->reg_layout[SWRM_REG_INTERRUPT_STATUS],
+ 		       &intr_sts);
+@@ -1675,7 +1677,11 @@ static int qcom_swrm_probe(struct platform_device *pdev)
+ 		goto err_init;
+ 	}
+ 
+-	clk_prepare_enable(ctrl->hclk);
++	ret = clk_prepare_enable(ctrl->hclk);
++	if (ret) {
++		dev_err(dev, "unable to enable iface clock\n");
++		goto err_init;
++	}
+ 
+ 	ctrl->dev = dev;
+ 	dev_set_drvdata(&pdev->dev, ctrl);
+@@ -1800,7 +1806,9 @@ static int __maybe_unused swrm_runtime_resume(struct device *dev)
+ 			disable_irq_nosync(ctrl->wake_irq);
+ 	}
+ 
+-	clk_prepare_enable(ctrl->hclk);
++	ret = clk_prepare_enable(ctrl->hclk);
++	if (ret)
++		return ret;
+ 
+ 	if (ctrl->clock_stop_not_supported) {
+ 		reinit_completion(&ctrl->enumeration);
