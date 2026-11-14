@@ -14,7 +14,7 @@ import { join } from 'node:path';
 const KERNEL_RELEASES = ['v5.10', 'v5.11', 'v5.12', 'v5.13', 'v5.14', 'v5.15', 'v5.16', 'v5.17', 'v5.18', 'v5.19', 'v6.0', 'v6.1', 'v6.2', 'v6.3', 'v6.4', 'v6.5', 'v6.6', 'v6.7', 'v6.8', 'v6.9', 'v6.10', 'v6.11', 'v6.12', 'v6.13', 'v6.14', 'v6.15', 'v6.16', 'v6.17', 'v6.18', 'v6.19', 'v7.0', 'v7.1', 'v7.2', 'v7.3'];
 const SYSTEMD_RELEASES = ['v257', 'v258', 'v259', 'v260', 'v261', 'v262'];
 // Snapdragon X, X2 and 8cx Gen 3, the 7c Chromebooks, and the older Windows laptops' trees
-const DT_PATTERN = /^(x1|hamoa|purwa|glymur|mahua|sc8280xp|sc7180-trogdor|sc7180-acer|sc7180-ecs|sc8180x-lenovo|sdm850|msm8998-(asus|hp|lenovo)).*\.dts$/;
+const DT_PATTERN = /^(x1|hamoa|purwa|glymur|mahua|kalambo|sc8280xp|sc7180-trogdor|sc7180-acer|sc7180-ecs|sc8180x-lenovo|sdm850|msm8998-(asus|hp|lenovo)).*\.dts$/;
 const DT_DIR = 'arch/arm64/boot/dts/qcom';
 const FIRMWARE_SOCS = ['x1e80100', 'x1p42100', 'x126100', 'glymur', 'sc8280xp'];
 // Omarchy's package channels: its own repository carries the kernel and the makers' firmware
@@ -286,8 +286,9 @@ function patchRoot(source: string, added: Map<string, string>) {
   return own;
 }
 
-// Device trees the linux-omarchy recipe adds on top of the Linux release it builds, and the hardware
-// ID files it installs next to systemd's
+// Device trees the linux-omarchy and linux-omarchy-dtbs recipes add on top of the Linux release they
+// build from, and the hardware ID files they install next to systemd's. New trees go in the dtbs
+// recipe since linux-omarchy 7.3-47
 function omarchyKernelRecipe() {
   const dir = join(tmpdir(), 'arewearmyet-omarchy-pkgs');
   if (existsSync(join(dir, '.git'))) {
@@ -297,10 +298,11 @@ function omarchyKernelRecipe() {
     execFileSync('git', ['clone', '-q', '--depth', '1', '--filter=blob:none', '--sparse', 'https://github.com/omacom/omarchy-pkgs.git', dir], { stdio: 'inherit' });
   }
   execFileSync('git', ['-C', dir, 'sparse-checkout', 'set', OMARCHY_KERNEL_RECIPE, OMARCHY_TREES_RECIPE], { stdio: 'inherit' });
-  const recipe = join(dir, OMARCHY_KERNEL_RECIPE);
   const added = [];
-  for (const patch of readdirSync(recipe).filter((name) => name.endsWith('.patch')).sort()) {
-    added.push(...patchDeviceTrees(readFileSync(join(recipe, patch), 'utf8')).map((dt) => ({ ...dt, patch })));
+  for (const folder of [OMARCHY_KERNEL_RECIPE, OMARCHY_TREES_RECIPE].filter((folder) => existsSync(join(dir, folder)))) {
+    for (const patch of readdirSync(join(dir, folder)).filter((name) => name.endsWith('.patch')).sort()) {
+      added.push(...patchDeviceTrees(readFileSync(join(dir, folder, patch), 'utf8')).map((dt) => ({ ...dt, patch: `${folder.split('/').pop()}/${patch}` })));
+    }
   }
   const ids = [OMARCHY_KERNEL_RECIPE, OMARCHY_TREES_RECIPE].filter((folder) => existsSync(join(dir, folder))).flatMap((folder) =>
     readdirSync(join(dir, folder)).filter((name) => name.endsWith('.json')).map((file) => {

@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-14T22:12:21.437Z",
+  "collected": "2026-11-14T22:27:10.836Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -200,6 +200,17 @@
         "advantech,som-6820",
         "qcom,iq-x7181-evk-som",
         "qcom,x1e80100"
+      ],
+      "firmware": []
+    },
+    {
+      "file": "kalambo-crd.dts",
+      "firstRelease": null,
+      "inNext": true,
+      "model": "Qualcomm Technologies, Inc. Kalambo CRD",
+      "compatible": [
+        "qcom,kalambo-crd",
+        "qcom,kalambo"
       ],
       "firmware": []
     },
@@ -5848,6 +5859,10 @@
           "glymur-microsoft-surface-laptop8-15.dts",
           "hamoa-iot-evk.dts",
           "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
+          "kalambo-lenovo-ideapad-5x-2in1-14q8y11.dts",
+          "kalambo-lenovo-ideapad-slim5x-13q8y11.dts",
+          "kalambo-lenovo-ideapad-slim5x-15q8y11.dts",
+          "kalambo-lenovo-thinkbook-14-gen9.dts",
           "mahua-crd.dts",
           "mahua-hp-elitebook-6-g2q.dts",
           "mahua-hp-omnibook-5-bf1xxx.dts",
@@ -6676,7 +6691,7 @@
           "microsoft,surface-laptop-8-13p8",
           "qcom,mahua"
         ],
-        "patch": "2384-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8.patch"
+        "patch": "linux-omarchy-aarch64/2384-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8.patch"
       },
       {
         "file": "x1p42100-acer-aspire-14-ai.dts",
@@ -6685,7 +6700,7 @@
           "acer,aspire-a14-11m",
           "qcom,x1p42100"
         ],
-        "patch": "2512-arm64-dts-qcom-Add-the-Acer-Aspire-14-AI-and-16-AI.patch"
+        "patch": "linux-omarchy-aarch64/2512-arm64-dts-qcom-Add-the-Acer-Aspire-14-AI-and-16-AI.patch"
       },
       {
         "file": "x1p42100-acer-aspire-16-ai.dts",
@@ -6694,7 +6709,7 @@
           "acer,aspire-a16-11m",
           "qcom,x1p42100"
         ],
-        "patch": "2512-arm64-dts-qcom-Add-the-Acer-Aspire-14-AI-and-16-AI.patch"
+        "patch": "linux-omarchy-aarch64/2512-arm64-dts-qcom-Add-the-Acer-Aspire-14-AI-and-16-AI.patch"
       },
       {
         "file": "x1p42100-acer-swift-go14-01.dts",
@@ -6705,7 +6720,7 @@
           "qcom,x1p42100",
           "qcom,x1e80100"
         ],
-        "patch": "2513-arm64-dts-qcom-x1-acer-swift-14-Add-support-for-Acer-Swift-14.patch"
+        "patch": "linux-omarchy-aarch64/2513-arm64-dts-qcom-x1-acer-swift-14-Add-support-for-Acer-Swift-14.patch"
       },
       {
         "file": "x1p64100-acer-swift-sf14-11.dts",
@@ -6716,7 +6731,7 @@
           "qcom,x1p64100",
           "qcom,x1e80100"
         ],
-        "patch": "2513-arm64-dts-qcom-x1-acer-swift-14-Add-support-for-Acer-Swift-14.patch"
+        "patch": "linux-omarchy-aarch64/2513-arm64-dts-qcom-x1-acer-swift-14-Add-support-for-Acer-Swift-14.patch"
       },
       {
         "file": "x1p42100-hp-elitebook-6-g1q.dts",
@@ -6725,7 +6740,7 @@
           "hp,elitebook-6-g1q",
           "qcom,x1p42100"
         ],
-        "patch": "2521-arm64-dts-qcom-Add-dts-for-HP-EliteBook-6-G1q.patch"
+        "patch": "linux-omarchy-aarch64/2521-arm64-dts-qcom-Add-dts-for-HP-EliteBook-6-G1q.patch"
       },
       {
         "file": "x1p64100-dell-latitude-5455.dts",
@@ -6734,7 +6749,7 @@
           "dell,latitude-5455",
           "qcom,x1e80100"
         ],
-        "patch": "2530-arm64-dts-qcom-Add-the-Dell-Latitude-5455.patch"
+        "patch": "linux-omarchy-aarch64/2530-arm64-dts-qcom-Add-the-Dell-Latitude-5455.patch"
       },
       {
         "file": "glymur-hp-elitebook-x-g2q.dts",
@@ -6743,7 +6758,7 @@
           "hp,elitebook-x-g2q",
           "qcom,glymur"
         ],
-        "patch": "2541-arm64-dts-qcom-Add-HP-EliteBook-X-G2q-14-AI.patch"
+        "patch": "linux-omarchy-aarch64/2541-arm64-dts-qcom-Add-HP-EliteBook-X-G2q-14-AI.patch"
       },
       {
         "file": "glymur-lenovo-yoga-slim7x.dts",
@@ -6752,7 +6767,7 @@
           "lenovo,yoga-slim7x-gen11",
           "qcom,glymur"
         ],
-        "patch": "2551-arm64-dts-qcom-glymur-Add-Lenovo-Yoga-Slim-7x-Gen11.patch"
+        "patch": "linux-omarchy-aarch64/2551-arm64-dts-qcom-glymur-Add-Lenovo-Yoga-Slim-7x-Gen11.patch"
       },
       {
         "file": "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
@@ -6762,7 +6777,7 @@
           "lenovo,thinkpad-t14s-gen7",
           "qcom,mahua"
         ],
-        "patch": "2561-arm64-dts-qcom-Add-Lenovo-ThinkPad-T14s-Gen-7.patch"
+        "patch": "linux-omarchy-aarch64/2561-arm64-dts-qcom-Add-Lenovo-ThinkPad-T14s-Gen-7.patch"
       },
       {
         "file": "mahua-hp-omnibook-x16.dts",
@@ -6771,7 +6786,7 @@
           "hp,omnibook-x16-cp1",
           "qcom,mahua"
         ],
-        "patch": "2571-arm64-dts-qcom-Add-HP-OmniBook-X-16-cp1.patch"
+        "patch": "linux-omarchy-aarch64/2571-arm64-dts-qcom-Add-HP-OmniBook-X-16-cp1.patch"
       },
       {
         "file": "x1e78100-acer-sfa14-11.dts",
@@ -6781,7 +6796,7 @@
           "qcom,x1e78100",
           "qcom,x1e80100"
         ],
-        "patch": "2581-arm64-dts-qcom-Add-support-for-Acer-Swift-Go-Pro-AI-.patch"
+        "patch": "linux-omarchy-aarch64/2581-arm64-dts-qcom-Add-support-for-Acer-Swift-Go-Pro-AI-.patch"
       },
       {
         "file": "x1e80100-samsung-galaxy-book4-edge-14.dts",
@@ -6791,7 +6806,7 @@
           "samsung,galaxy-book4-edge",
           "qcom,x1e80100"
         ],
-        "patch": "2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
+        "patch": "linux-omarchy-aarch64/2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
       },
       {
         "file": "x1e84100-samsung-galaxy-book4-edge-16.dts",
@@ -6801,7 +6816,7 @@
           "samsung,galaxy-book4-edge",
           "qcom,x1e80100"
         ],
-        "patch": "2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
+        "patch": "linux-omarchy-aarch64/2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
       },
       {
         "file": "x1p42100-lenovo-ideapad-slim5x-lcd.dts",
@@ -6811,7 +6826,7 @@
           "lenovo,ideapad-5",
           "qcom,x1p42100"
         ],
-        "patch": "2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch"
+        "patch": "linux-omarchy-aarch64/2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch"
       },
       {
         "file": "x1p42100-lenovo-ideapad-slim5x-oled.dts",
@@ -6821,7 +6836,7 @@
           "lenovo,ideapad-5",
           "qcom,x1p42100"
         ],
-        "patch": "2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch"
+        "patch": "linux-omarchy-aarch64/2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch"
       },
       {
         "file": "x1p64100-dell-inspiron-14-plus-5441.dts",
@@ -6831,7 +6846,7 @@
           "qcom,x1p64100",
           "qcom,x1e80100"
         ],
-        "patch": "2610-arm64-dts-qcom-Add-Dell-Inspiron-14-Plus-5441.patch"
+        "patch": "linux-omarchy-aarch64/2610-arm64-dts-qcom-Add-Dell-Inspiron-14-Plus-5441.patch"
       },
       {
         "file": "glymur-hp-omnibook-ultra-kg0xxx.dts",
@@ -6840,7 +6855,7 @@
           "hp,omnibook-ultra-kg0xxx",
           "qcom,glymur"
         ],
-        "patch": "2631-arm64-dts-qcom-add-HP-OmniBook-Ultra-14-kg0xxx.patch"
+        "patch": "linux-omarchy-aarch64/2631-arm64-dts-qcom-add-HP-OmniBook-Ultra-14-kg0xxx.patch"
       },
       {
         "file": "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -6849,7 +6864,7 @@
           "asus,zenbook-a14-ux3407na",
           "qcom,glymur"
         ],
-        "patch": "2641-arm64-dts-qcom-glymur-Add-Asus-Zenbook-A14-UX3407NA.patch"
+        "patch": "linux-omarchy-aarch64/2641-arm64-dts-qcom-glymur-Add-Asus-Zenbook-A14-UX3407NA.patch"
       },
       {
         "file": "x1p42100-hp-omnibook-5.dts",
@@ -6859,7 +6874,7 @@
           "lenovo,thinkpad-t14s",
           "qcom,x1p42100"
         ],
-        "patch": "2651-arm64-dts-qcom-Add-the-HP-OmniBook-5-14.patch"
+        "patch": "linux-omarchy-aarch64/2651-arm64-dts-qcom-Add-the-HP-OmniBook-5-14.patch"
       },
       {
         "file": "x1p42100-asus-vivobook-s16-lcd.dts",
@@ -6869,7 +6884,7 @@
           "asus,vivobook-s16-s3607qa",
           "qcom,x1p42100"
         ],
-        "patch": "2662-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S3607QA.patch"
+        "patch": "linux-omarchy-aarch64/2662-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S3607QA.patch"
       },
       {
         "file": "x1p42100-asus-vivobook-s16.dts",
@@ -6879,7 +6894,7 @@
           "asus,vivobook-s16-s3607qa",
           "qcom,x1p42100"
         ],
-        "patch": "2662-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S3607QA.patch"
+        "patch": "linux-omarchy-aarch64/2662-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S3607QA.patch"
       },
       {
         "file": "x1p42100-lenovo-ideapad-5-2in1.dts",
@@ -6889,7 +6904,7 @@
           "lenovo,thinkpad-t14s",
           "qcom,x1p42100"
         ],
-        "patch": "2671-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-5x-2-in-1.patch"
+        "patch": "linux-omarchy-aarch64/2671-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-5x-2-in-1.patch"
       },
       {
         "file": "x126100-lenovo-ideapad-slim3.dts",
@@ -6900,7 +6915,7 @@
           "qcom,x126100",
           "qcom,x1p42100"
         ],
-        "patch": "2681-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Slim-3x.patch"
+        "patch": "linux-omarchy-aarch64/2681-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Slim-3x.patch"
       },
       {
         "file": "x126100-asus-vivobook-16.dts",
@@ -6909,7 +6924,7 @@
           "asus,vivobook-x16",
           "qcom,x126100"
         ],
-        "patch": "2691-arm64-dts-qcom-Add-the-ASUS-Vivobook-16-X1607QA.patch"
+        "patch": "linux-omarchy-aarch64/2691-arm64-dts-qcom-Add-the-ASUS-Vivobook-16-X1607QA.patch"
       },
       {
         "file": "mahua-hp-omnibook-5-bf1xxx.dts",
@@ -6918,7 +6933,7 @@
           "hp,omnibook-5-16-bf1xxx",
           "qcom,mahua"
         ],
-        "patch": "2711-arm64-dts-qcom-Add-the-HP-OmniBook-5-16-bf1xxx.patch"
+        "patch": "linux-omarchy-aarch64/2711-arm64-dts-qcom-Add-the-HP-OmniBook-5-16-bf1xxx.patch"
       },
       {
         "file": "glymur-anduril-bluechip.dts",
@@ -6927,7 +6942,7 @@
           "anduril,bluechip",
           "qcom,glymur"
         ],
-        "patch": "2722-arm64-dts-qcom-glymur-Add-the-Anduril-BlueChip.patch"
+        "patch": "linux-omarchy-aarch64/2722-arm64-dts-qcom-glymur-Add-the-Anduril-BlueChip.patch"
       },
       {
         "file": "x1p42100-asus-proart-pz13.dts",
@@ -6936,7 +6951,7 @@
           "asus,proart-pz13-ht5306qa",
           "qcom,x1p42100"
         ],
-        "patch": "2732-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ13.patch"
+        "patch": "linux-omarchy-aarch64/2732-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ13.patch"
       },
       {
         "file": "x1p42100-hp-omnibook-3-oled.dts",
@@ -6947,7 +6962,7 @@
           "lenovo,thinkpad-t14s",
           "qcom,x1p42100"
         ],
-        "patch": "2742-arm64-dts-qcom-Add-the-HP-OmniBook-3-14.patch"
+        "patch": "linux-omarchy-aarch64/2742-arm64-dts-qcom-Add-the-HP-OmniBook-3-14.patch"
       },
       {
         "file": "x1p42100-hp-omnibook-3-16.dts",
@@ -6957,7 +6972,7 @@
           "qcom,x126100",
           "qcom,x1p42100"
         ],
-        "patch": "2744-arm64-dts-qcom-Add-the-HP-OmniBook-3-16.patch"
+        "patch": "linux-omarchy-aarch64/2744-arm64-dts-qcom-Add-the-HP-OmniBook-3-16.patch"
       },
       {
         "file": "x1p42100-asus-zenbook-14-ux3480qa.dts",
@@ -6966,7 +6981,7 @@
           "asus,zenbook-14-ux3480qa",
           "qcom,x1p42100"
         ],
-        "patch": "2751-arm64-dts-qcom-Add-the-ASUS-Zenbook-14-UX3480QA.patch"
+        "patch": "linux-omarchy-aarch64/2751-arm64-dts-qcom-Add-the-ASUS-Zenbook-14-UX3480QA.patch"
       },
       {
         "file": "glymur-microsoft-surface-laptop8-15.dts",
@@ -6975,7 +6990,7 @@
           "microsoft,surface-laptop-8-15",
           "qcom,mahua"
         ],
-        "patch": "2764-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8-15-inch.patch"
+        "patch": "linux-omarchy-aarch64/2764-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8-15-inch.patch"
       },
       {
         "file": "x1p42100-microsoft-surface-laptop-13.dts",
@@ -6984,7 +6999,7 @@
           "microsoft,surface-laptop-13",
           "qcom,x1p42100"
         ],
-        "patch": "2772-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-13-inch.patch"
+        "patch": "linux-omarchy-aarch64/2772-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-13-inch.patch"
       },
       {
         "file": "x1p42100-samsung-galaxy-book4-edge-15.dts",
@@ -6993,7 +7008,7 @@
           "samsung,galaxy-book4-edge-15",
           "qcom,x1p42100"
         ],
-        "patch": "2792-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book4-Edge-15.patch"
+        "patch": "linux-omarchy-aarch64/2792-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book4-Edge-15.patch"
       },
       {
         "file": "x1p42100-asus-vivobook-s14.dts",
@@ -7002,7 +7017,7 @@
           "asus,vivobook-s14-s3407qa",
           "qcom,x1p42100"
         ],
-        "patch": "2796-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-S3407QA.patch"
+        "patch": "linux-omarchy-aarch64/2796-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-S3407QA.patch"
       },
       {
         "file": "x126100-asus-vivobook-14.dts",
@@ -7012,7 +7027,7 @@
           "qcom,x126100",
           "qcom,x1p42100"
         ],
-        "patch": "2801-arm64-dts-qcom-Add-the-ASUS-Vivobook-14-X1407QA.patch"
+        "patch": "linux-omarchy-aarch64/2801-arm64-dts-qcom-Add-the-ASUS-Vivobook-14-X1407QA.patch"
       },
       {
         "file": "x1p42100-dell-inspiron-14-plus-5441.dts",
@@ -7021,7 +7036,7 @@
           "dell,purwa-inspiron-14-plus-5441",
           "qcom,x1p42100"
         ],
-        "patch": "2811-arm64-dts-qcom-Add-the-Dell-Inspiron-14-Plus-5441-X1.patch"
+        "patch": "linux-omarchy-aarch64/2811-arm64-dts-qcom-Add-the-Dell-Inspiron-14-Plus-5441-X1.patch"
       },
       {
         "file": "x126100-lenovo-thinkcentre-neo-50q-qc.dts",
@@ -7031,7 +7046,7 @@
           "qcom,x126100",
           "qcom,x1p42100"
         ],
-        "patch": "2823-arm64-dts-qcom-Add-the-Lenovo-ThinkCentre-neo-50q-QC.patch"
+        "patch": "linux-omarchy-aarch64/2823-arm64-dts-qcom-Add-the-Lenovo-ThinkCentre-neo-50q-QC.patch"
       },
       {
         "file": "glymur-asus-proart-pz14-ht7407na.dts",
@@ -7040,7 +7055,160 @@
           "asus,proart-pz14-ht7407na",
           "qcom,glymur"
         ],
-        "patch": "2831-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ14-HT7407NA.patch"
+        "patch": "linux-omarchy-aarch64/2831-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ14-HT7407NA.patch"
+      },
+      {
+        "file": "purwa-lenovo-ideacentre-mini-01q8x10.dts",
+        "model": "Lenovo IdeaCentre Mini 01Q8X10 (Purwa)",
+        "compatible": [
+          "lenovo,purwa-ideacentre-mini-01q8x10",
+          "lenovo,ideacentre-mini-01q8x10",
+          "qcom,x1p42100"
+        ],
+        "patch": "linux-omarchy-dtbs/0002-arm64-dts-qcom-Add-the-Purwa-IdeaCentre-Mini-01Q8X10.patch"
+      },
+      {
+        "file": "mahua-hp-elitebook-6-g2q.dts",
+        "model": "HP EliteBook 6 G2q",
+        "compatible": [
+          "hp,elitebook-6-g2q",
+          "qcom,mahua"
+        ],
+        "patch": "linux-omarchy-dtbs/0013-arm64-dts-qcom-Add-the-HP-EliteBook-6-G2q.patch"
+      },
+      {
+        "file": "glymur-asus-vivobook-s16-s3607na.dts",
+        "model": "ASUS Vivobook S16 (S3607NA)",
+        "compatible": [
+          "asus,vivobook-s16-s3607na",
+          "qcom,glymur"
+        ],
+        "patch": "linux-omarchy-dtbs/0014-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S360.patch"
+      },
+      {
+        "file": "x126100-asus-vivobook-s14-flip-tp5408qa.dts",
+        "model": "ASUS Vivobook S14 Flip (TP5408QA)",
+        "compatible": [
+          "asus,vivobook-s14-flip-tp5408qa",
+          "qcom,x126100",
+          "qcom,x1p42100"
+        ],
+        "patch": "linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch"
+      },
+      {
+        "file": "x126100-asus-vivobook-s14-s5408qa.dts",
+        "model": "ASUS Vivobook S14 (S5408QA)",
+        "compatible": [
+          "asus,vivobook-s14-s5408qa",
+          "qcom,x126100",
+          "qcom,x1p42100"
+        ],
+        "patch": "linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch"
+      },
+      {
+        "file": "x126100-asus-vivobook-s16-flip-tp5608qa.dts",
+        "model": "ASUS Vivobook S16 Flip (TP5608QA)",
+        "compatible": [
+          "asus,vivobook-s16-flip-tp5608qa",
+          "qcom,x126100",
+          "qcom,x1p42100"
+        ],
+        "patch": "linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch"
+      },
+      {
+        "file": "x126100-asus-vivobook-s16-s5608qa.dts",
+        "model": "ASUS Vivobook S16 (S5608QA)",
+        "compatible": [
+          "asus,vivobook-s16-s5608qa",
+          "qcom,x126100",
+          "qcom,x1p42100"
+        ],
+        "patch": "linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch"
+      },
+      {
+        "file": "x126100-lenovo-ideapad-vibe-14q8x12.dts",
+        "model": "Lenovo IdeaPad Vibe 14Q8X12",
+        "compatible": [
+          "lenovo,ideapad-vibe-14q8x12",
+          "qcom,x126100",
+          "qcom,x1p42100"
+        ],
+        "patch": "linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Vibe-14.patch"
+      },
+      {
+        "file": "x126100-lenovo-ideapad-vibe-15q8x12.dts",
+        "model": "Lenovo IdeaPad Vibe 15Q8X12",
+        "compatible": [
+          "lenovo,ideapad-vibe-15q8x12",
+          "qcom,x126100",
+          "qcom,x1p42100"
+        ],
+        "patch": "linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Vibe-14.patch"
+      },
+      {
+        "file": "x1p42100-dynabook-xd5.dts",
+        "model": "Dynabook XD5",
+        "compatible": [
+          "dynabook,xd5",
+          "qcom,x1p42100"
+        ],
+        "patch": "linux-omarchy-dtbs/0017-arm64-dts-qcom-Add-the-Dynabook-XD5.patch"
+      },
+      {
+        "file": "x126100-asus-v400-aio-vm441qa.dts",
+        "model": "ASUS V400 AiO (VM441QA)",
+        "compatible": [
+          "asus,v400-aio-vm441qa",
+          "qcom,x126100",
+          "qcom,x1p42100"
+        ],
+        "patch": "linux-omarchy-dtbs/0018-arm64-dts-qcom-Add-the-ASUS-V400-AiO-VM441QA-.patch"
+      },
+      {
+        "file": "x126100-asus-v400-aio-vm471qa.dts",
+        "model": "ASUS V400 AiO (VM471QA)",
+        "compatible": [
+          "asus,v400-aio-vm471qa",
+          "qcom,x126100",
+          "qcom,x1p42100"
+        ],
+        "patch": "linux-omarchy-dtbs/0018-arm64-dts-qcom-Add-the-ASUS-V400-AiO-VM441QA-.patch"
+      },
+      {
+        "file": "kalambo-lenovo-ideapad-5x-2in1-14q8y11.dts",
+        "model": "Lenovo IdeaPad 5x 2-in-1 Gen 11 (14Q8Y11)",
+        "compatible": [
+          "lenovo,ideapad-5x-2in1-14q8y11",
+          "qcom,kalambo"
+        ],
+        "patch": "linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch"
+      },
+      {
+        "file": "kalambo-lenovo-ideapad-slim5x-13q8y11.dts",
+        "model": "Lenovo IdeaPad Slim 5x 13 Gen 11 (13Q8Y11)",
+        "compatible": [
+          "lenovo,ideapad-slim5x-13q8y11",
+          "qcom,kalambo"
+        ],
+        "patch": "linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch"
+      },
+      {
+        "file": "kalambo-lenovo-ideapad-slim5x-15q8y11.dts",
+        "model": "Lenovo IdeaPad Slim 5x 15 Gen 11 (15Q8Y11)",
+        "compatible": [
+          "lenovo,ideapad-slim5x-15q8y11",
+          "qcom,kalambo"
+        ],
+        "patch": "linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch"
+      },
+      {
+        "file": "kalambo-lenovo-thinkbook-14-gen9.dts",
+        "model": "Lenovo ThinkBook 14 Gen 9 Q8Y",
+        "compatible": [
+          "lenovo,thinkbook-14-gen9-q8y",
+          "qcom,kalambo"
+        ],
+        "patch": "linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch"
       }
     ],
     "carriedIds": [

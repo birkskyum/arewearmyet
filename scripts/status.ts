@@ -68,8 +68,9 @@ if (!sources.kernelReleases.includes(kernelBase)) throw new Error(`Omarchy's ${O
 if (!sources.systemdReleases.includes(systemdRelease)) throw new Error(`Omarchy's ${OMARCHY_CHANNEL} systemd ${channel.systemd} is ${systemdRelease}, which SYSTEMD_RELEASES in scripts/collect.ts doesn't list`);
 
 // Release order, so "first in v6.15" can be compared with "Omarchy builds v7.2"
-// Where Omarchy's kernel keeps the device trees it adds on top of a Linux release
-const OMARCHY_PATCHES = 'https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/';
+// Where Omarchy's recipes keep the device trees they add on top of a Linux release; a patch is named
+// by its recipe folder and file, such as linux-omarchy-dtbs/0013-....patch
+const OMARCHY_PATCHES = 'https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/';
 const kernelRank = (release: string | null) => (release ? sources.kernelReleases.indexOf(release) : Infinity);
 
 type DeviceTree = { file: string; firstRelease: string | null; inNext: boolean; model?: string; compatible: string[]; firmware?: string[]; patch?: string };

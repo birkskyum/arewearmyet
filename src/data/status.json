@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-14T22:12:21.437Z",
+  "collected": "2026-11-14T22:27:10.836Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -412,6 +412,10 @@
           "glymur-microsoft-surface-laptop8-15.dts",
           "hamoa-iot-evk.dts",
           "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
+          "kalambo-lenovo-ideapad-5x-2in1-14q8y11.dts",
+          "kalambo-lenovo-ideapad-slim5x-13q8y11.dts",
+          "kalambo-lenovo-ideapad-slim5x-15q8y11.dts",
+          "kalambo-lenovo-thinkbook-14-gen9.dts",
           "mahua-crd.dts",
           "mahua-hp-elitebook-6-g2q.dts",
           "mahua-hp-omnibook-5-bf1xxx.dts",
@@ -1257,16 +1261,16 @@
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 58,
+        "omarchy": 73,
         "fromUpstream": 19,
-        "added": 39,
+        "added": 54,
         "pull": 0,
-        "available": 17,
+        "available": 2,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 58
+          "edge": 73
         },
         "models": {
           "fromUpstream": [
@@ -1298,21 +1302,30 @@
             "acer-swift-go-14-ai-sfg14-01",
             "anduril-bluechip",
             "asus-proart-pz13-ht5306",
+            "asus-v400-aio-vm441qa",
+            "asus-v400-aio-vm471qa",
             "asus-vivobook-14-x1407qa",
             "asus-vivobook-16-x1607qa",
             "asus-vivobook-s14-s3407qa",
+            "asus-vivobook-s14-s5408qa",
+            "asus-vivobook-s14-flip-tp5408qa",
             "asus-vivobook-s16-s3607qa",
+            "asus-vivobook-s16-s5608qa",
+            "asus-vivobook-s16-flip-tp5608qa",
             "asus-zenbook-14-ux3480qa",
             "asus-proart-pz14-ht7407",
+            "asus-vivobook-s16-s3607na",
             "asus-zenbook-a14-ux3407na",
             "dell-inspiron-14-5441",
             "dell-latitude-5455",
+            "dynabook-xd5",
             "hp-elitebook-6-g1q",
             "hp-omnibook-3-14-hz0",
             "hp-omnibook-3-16-bz0",
             "hp-omnibook-5-14-he0",
             "hp-omnibook-5-16-bf0",
             "hp-probook-4-g1q",
+            "hp-elitebook-6-g2q",
             "hp-elitebook-x-g2q",
             "hp-omnibook-5-16-bf1",
             "hp-omnibook-ultra-14-kg0",
@@ -1321,7 +1334,13 @@
             "lenovo-ideapad-5x-2-in-1-14q8x9",
             "lenovo-ideapad-slim-3x-15q8x10",
             "lenovo-ideapad-slim-5x-14q8x9",
+            "lenovo-ideapad-vibe-14q8x12",
+            "lenovo-ideapad-vibe-15q8x12",
             "lenovo-thinkcentre-neo-50q-qc",
+            "lenovo-ideapad-5x-2-in-1-14q8y11",
+            "lenovo-ideapad-slim-5x-13q8y11",
+            "lenovo-ideapad-slim-5x-15q8y11",
+            "lenovo-thinkbook-14-gen-9-q8y",
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
             "lenovo-yoga-slim-7x-14q8y11",
             "microsoft-surface-laptop-13in-1st-edition",
@@ -1333,23 +1352,8 @@
           ],
           "pull": [],
           "available": [
-            "asus-v400-aio-vm441qa",
-            "asus-v400-aio-vm471qa",
-            "asus-vivobook-s14-s5408qa",
-            "asus-vivobook-s14-flip-tp5408qa",
-            "asus-vivobook-s16-s5608qa",
-            "asus-vivobook-s16-flip-tp5608qa",
             "asus-ascent-qn10",
-            "asus-vivobook-s16-s3607na",
-            "dynabook-xd5",
-            "hp-elitebook-6-g2q",
-            "humain-horizon",
-            "lenovo-ideapad-vibe-14q8x12",
-            "lenovo-ideapad-vibe-15q8x12",
-            "lenovo-ideapad-5x-2-in-1-14q8y11",
-            "lenovo-ideapad-slim-5x-13q8y11",
-            "lenovo-ideapad-slim-5x-15q8y11",
-            "lenovo-thinkbook-14-gen-9-q8y"
+            "humain-horizon"
           ]
         }
       },
@@ -1651,7 +1655,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2512-arm64-dts-qcom-Add-the-Acer-Aspire-14-AI-and-16-AI.patch"
+            "patch": "linux-omarchy-aarch64/2512-arm64-dts-qcom-Add-the-Acer-Aspire-14-AI-and-16-AI.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -1756,7 +1760,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2512-arm64-dts-qcom-Add-the-Acer-Aspire-14-AI-and-16-AI.patch"
+            "patch": "linux-omarchy-aarch64/2512-arm64-dts-qcom-Add-the-Acer-Aspire-14-AI-and-16-AI.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -3057,7 +3061,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2513-arm64-dts-qcom-x1-acer-swift-14-Add-support-for-Acer-Swift-14.patch"
+            "patch": "linux-omarchy-aarch64/2513-arm64-dts-qcom-x1-acer-swift-14-Add-support-for-Acer-Swift-14.patch"
           },
           "firmwareNeeded": [],
           "ids": [
@@ -3094,7 +3098,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2513-arm64-dts-qcom-x1-acer-swift-14-Add-support-for-Acer-Swift-14.patch"
+            "patch": "linux-omarchy-aarch64/2513-arm64-dts-qcom-x1-acer-swift-14-Add-support-for-Acer-Swift-14.patch"
           },
           "firmwareNeeded": [],
           "ids": [
@@ -3211,7 +3215,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2581-arm64-dts-qcom-Add-support-for-Acer-Swift-Go-Pro-AI-.patch"
+            "patch": "linux-omarchy-aarch64/2581-arm64-dts-qcom-Add-support-for-Acer-Swift-Go-Pro-AI-.patch"
           },
           "firmwareNeeded": [],
           "stubble": [],
@@ -3301,7 +3305,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2513-arm64-dts-qcom-x1-acer-swift-14-Add-support-for-Acer-Swift-14.patch"
+            "patch": "linux-omarchy-aarch64/2513-arm64-dts-qcom-x1-acer-swift-14-Add-support-for-Acer-Swift-14.patch"
           },
           "firmwareNeeded": [],
           "ids": [
@@ -3485,7 +3489,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2722-arm64-dts-qcom-glymur-Add-the-Anduril-BlueChip.patch"
+            "patch": "linux-omarchy-aarch64/2722-arm64-dts-qcom-glymur-Add-the-Anduril-BlueChip.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -3580,7 +3584,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2732-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ13.patch"
+            "patch": "linux-omarchy-aarch64/2732-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ13.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -3619,12 +3623,12 @@
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-aio-vm441qa"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
@@ -3634,7 +3638,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "none",
         "firmware": "none"
       },
@@ -3670,17 +3674,23 @@
       "variants": [
         {
           "compatible": "asus,v400-aio-vm441qa",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x126100-asus-v400-aio-vm441qa.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0018-arm64-dts-qcom-Add-the-ASUS-V400-AiO-VM441QA-.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -3707,12 +3717,12 @@
         "https://www.asus.com/displays-desktops/all-in-one-pcs/asus-aio/asus-v400-aio-vm471qa/techspec/"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
@@ -3722,7 +3732,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "none",
         "firmware": "none"
       },
@@ -3758,17 +3768,23 @@
       "variants": [
         {
           "compatible": "asus,v400-aio-vm471qa",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x126100-asus-v400-aio-vm471qa.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0018-arm64-dts-qcom-Add-the-ASUS-V400-AiO-VM441QA-.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -3856,7 +3872,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2801-arm64-dts-qcom-Add-the-ASUS-Vivobook-14-X1407QA.patch"
+            "patch": "linux-omarchy-aarch64/2801-arm64-dts-qcom-Add-the-ASUS-Vivobook-14-X1407QA.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -3955,7 +3971,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2691-arm64-dts-qcom-Add-the-ASUS-Vivobook-16-X1607QA.patch"
+            "patch": "linux-omarchy-aarch64/2691-arm64-dts-qcom-Add-the-ASUS-Vivobook-16-X1607QA.patch"
           },
           "firmwareNeeded": [],
           "stubble": [],
@@ -4234,7 +4250,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2796-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-S3407QA.patch"
+            "patch": "linux-omarchy-aarch64/2796-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-S3407QA.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -4266,12 +4282,12 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s14-s5408-qualcomm/techspec/"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
@@ -4281,7 +4297,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "none",
         "firmware": "none"
       },
@@ -4323,17 +4339,23 @@
       "variants": [
         {
           "compatible": "asus,vivobook-s14-s5408qa",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x126100-asus-vivobook-s14-s5408qa.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -4360,12 +4382,12 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s14-flip-tp5408-qualcomm/techspec/"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
@@ -4375,7 +4397,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "none",
         "firmware": "none"
       },
@@ -4417,17 +4439,23 @@
       "variants": [
         {
           "compatible": "asus,vivobook-s14-flip-tp5408qa",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x126100-asus-vivobook-s14-flip-tp5408qa.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -4519,7 +4547,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2662-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S3607QA.patch"
+            "patch": "linux-omarchy-aarch64/2662-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S3607QA.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -4548,7 +4576,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2662-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S3607QA.patch"
+            "patch": "linux-omarchy-aarch64/2662-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S3607QA.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -4586,12 +4614,12 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s5608-qualcomm/techspec/"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
@@ -4601,7 +4629,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "none",
         "firmware": "none"
       },
@@ -4643,17 +4671,23 @@
       "variants": [
         {
           "compatible": "asus,vivobook-s16-s5608qa",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x126100-asus-vivobook-s16-s5608qa.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -4680,12 +4714,12 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-flip-tp5608-qualcomm/techspec/"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
@@ -4695,7 +4729,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "none",
         "firmware": "none"
       },
@@ -4737,17 +4771,23 @@
       "variants": [
         {
           "compatible": "asus,vivobook-s16-flip-tp5608qa",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x126100-asus-vivobook-s16-flip-tp5608qa.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -4840,7 +4880,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2751-arm64-dts-qcom-Add-the-ASUS-Zenbook-14-UX3480QA.patch"
+            "patch": "linux-omarchy-aarch64/2751-arm64-dts-qcom-Add-the-ASUS-Zenbook-14-UX3480QA.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -5238,7 +5278,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2831-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ14-HT7407NA.patch"
+            "patch": "linux-omarchy-aarch64/2831-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ14-HT7407NA.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -5271,12 +5311,12 @@
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-vivobook-s16"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
@@ -5286,7 +5326,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "none",
         "firmware": "none"
       },
@@ -5320,17 +5360,23 @@
       "variants": [
         {
           "compatible": "asus,vivobook-s16-s3607na",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "glymur-asus-vivobook-s16-s3607na.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0014-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S360.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -5649,7 +5695,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2811-arm64-dts-qcom-Add-the-Dell-Inspiron-14-Plus-5441-X1.patch"
+            "patch": "linux-omarchy-aarch64/2811-arm64-dts-qcom-Add-the-Dell-Inspiron-14-Plus-5441-X1.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -5671,7 +5717,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2610-arm64-dts-qcom-Add-Dell-Inspiron-14-Plus-5441.patch"
+            "patch": "linux-omarchy-aarch64/2610-arm64-dts-qcom-Add-Dell-Inspiron-14-Plus-5441.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -5900,7 +5946,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2530-arm64-dts-qcom-Add-the-Dell-Latitude-5455.patch"
+            "patch": "linux-omarchy-aarch64/2530-arm64-dts-qcom-Add-the-Dell-Latitude-5455.patch"
           },
           "firmwareNeeded": [],
           "ids": [
@@ -6283,12 +6329,12 @@
         "https://kakaku.com/item/K0001724657/"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
@@ -6298,7 +6344,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "none",
         "firmware": "none"
       },
@@ -6333,17 +6379,23 @@
       "variants": [
         {
           "compatible": "dynabook,xd5",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x1p42100-dynabook-xd5.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0017-arm64-dts-qcom-Add-the-Dynabook-XD5.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -6841,7 +6893,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2521-arm64-dts-qcom-Add-dts-for-HP-EliteBook-6-G1q.patch"
+            "patch": "linux-omarchy-aarch64/2521-arm64-dts-qcom-Add-dts-for-HP-EliteBook-6-G1q.patch"
           },
           "firmwareNeeded": [],
           "ids": [
@@ -7139,7 +7191,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2742-arm64-dts-qcom-Add-the-HP-OmniBook-3-14.patch"
+            "patch": "linux-omarchy-aarch64/2742-arm64-dts-qcom-Add-the-HP-OmniBook-3-14.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -7230,7 +7282,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2744-arm64-dts-qcom-Add-the-HP-OmniBook-3-16.patch"
+            "patch": "linux-omarchy-aarch64/2744-arm64-dts-qcom-Add-the-HP-OmniBook-3-16.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -7406,7 +7458,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2651-arm64-dts-qcom-Add-the-HP-OmniBook-5-14.patch"
+            "patch": "linux-omarchy-aarch64/2651-arm64-dts-qcom-Add-the-HP-OmniBook-5-14.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -7504,7 +7556,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2651-arm64-dts-qcom-Add-the-HP-OmniBook-5-14.patch"
+            "patch": "linux-omarchy-aarch64/2651-arm64-dts-qcom-Add-the-HP-OmniBook-5-14.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -7765,7 +7817,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2521-arm64-dts-qcom-Add-dts-for-HP-EliteBook-6-G1q.patch"
+            "patch": "linux-omarchy-aarch64/2521-arm64-dts-qcom-Add-dts-for-HP-EliteBook-6-G1q.patch"
           },
           "firmwareNeeded": [],
           "stubble": [],
@@ -7798,12 +7850,12 @@
         "https://shop.avoira.com/hp-elitebook-6-g2q-14-next-gen-ai-copilot-pc-snapdragon-x2p-64-100-laptop-35-6-cm-14-wuxga-16-gb-lpddr5x-sdram-512-gb-ssd-wi-fi-7-802-11be-windows-11-pro-silver-dq0b5et-abu.html"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
@@ -7813,7 +7865,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "none",
         "firmware": "none"
       },
@@ -7847,17 +7899,23 @@
       "variants": [
         {
           "compatible": "hp,elitebook-6-g2q",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "mahua-hp-elitebook-6-g2q.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0013-arm64-dts-qcom-Add-the-HP-EliteBook-6-G2q.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -8133,7 +8191,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2711-arm64-dts-qcom-Add-the-HP-OmniBook-5-16-bf1xxx.patch"
+            "patch": "linux-omarchy-aarch64/2711-arm64-dts-qcom-Add-the-HP-OmniBook-5-16-bf1xxx.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -8238,7 +8296,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2631-arm64-dts-qcom-add-HP-OmniBook-Ultra-14-kg0xxx.patch"
+            "patch": "linux-omarchy-aarch64/2631-arm64-dts-qcom-add-HP-OmniBook-Ultra-14-kg0xxx.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -8495,7 +8553,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2571-arm64-dts-qcom-Add-HP-OmniBook-X-16-cp1.patch"
+            "patch": "linux-omarchy-aarch64/2571-arm64-dts-qcom-Add-HP-OmniBook-X-16-cp1.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -8587,7 +8645,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2571-arm64-dts-qcom-Add-HP-OmniBook-X-16-cp1.patch"
+            "patch": "linux-omarchy-aarch64/2571-arm64-dts-qcom-Add-HP-OmniBook-X-16-cp1.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -9053,7 +9111,7 @@
         "deviceTree": "released",
         "firstRelease": "v7.1",
         "devicetreePosted": "https://lore.kernel.org/all/20260905-x1-ideacentre-mini-prettify-v1-0-9a87882973bb@oldschoolsolutions.biz/",
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-dtbs/0002-arm64-dts-qcom-Add-the-Purwa-IdeaCentre-Mini-01Q8X10.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/lenovo-ideacentre-mini-x-01q8x10",
         "ids": "listed",
         "idsCollected": null,
@@ -9108,13 +9166,19 @@
           "model": "Snapdragon X",
           "chip": "X1-26-100",
           "compatible": "lenovo,purwa-ideacentre-mini-01q8x10",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
           "idsChannel": "stable",
-          "bootChannel": null,
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "purwa-lenovo-ideacentre-mini-01q8x10.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0002-arm64-dts-qcom-Add-the-Purwa-IdeaCentre-Mini-01Q8X10.patch"
+          },
           "firmwareNeeded": [],
           "ids": [
             {
@@ -9232,7 +9296,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2671-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-5x-2-in-1.patch"
+            "patch": "linux-omarchy-aarch64/2671-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-5x-2-in-1.patch"
           },
           "firmwareNeeded": [],
           "ids": [
@@ -9344,7 +9408,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2681-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Slim-3x.patch"
+            "patch": "linux-omarchy-aarch64/2681-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Slim-3x.patch"
           },
           "firmwareNeeded": [],
           "ids": [
@@ -9459,7 +9523,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch"
+            "patch": "linux-omarchy-aarch64/2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch"
           },
           "firmwareNeeded": [],
           "ids": [
@@ -9496,7 +9560,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch"
+            "patch": "linux-omarchy-aarch64/2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -9608,12 +9672,12 @@
         "https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Vibe_14Q8X12"
       ],
       "notes": "Its BIOS (VGCN13WW) is the IdeaPad Slim 3x 15Q8X10's LCFC platform, so that tree is the closest start, with a second USB-C port, the touchscreen at 0x24 and its own panel and EC.",
-      "outcome": "none",
+      "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
@@ -9623,7 +9687,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "none",
         "firmware": "none"
       },
@@ -9659,17 +9723,23 @@
       "variants": [
         {
           "compatible": "lenovo,ideapad-vibe-14q8x12",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x126100-lenovo-ideapad-vibe-14q8x12.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Vibe-14.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -9698,12 +9768,12 @@
         "https://download.lenovo.com/consumer/mobiles/vgcn13ww.exe"
       ],
       "notes": "Shares the IdeaPad Vibe 14's BIOS (VGCN13WW) and DSDT.",
-      "outcome": "none",
+      "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
@@ -9713,7 +9783,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "none",
         "firmware": "none"
       },
@@ -9749,17 +9819,23 @@
       "variants": [
         {
           "compatible": "lenovo,ideapad-vibe-15q8x12",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "x126100-lenovo-ideapad-vibe-15q8x12.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Vibe-14.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -9964,7 +10040,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2823-arm64-dts-qcom-Add-the-Lenovo-ThinkCentre-neo-50q-QC.patch"
+            "patch": "linux-omarchy-aarch64/2823-arm64-dts-qcom-Add-the-Lenovo-ThinkCentre-neo-50q-QC.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -10306,12 +10382,12 @@
         "https://www.notebookcheck.net/Lenovo-releases-new-14-inch-laptop-globally-with-Snapdragon-X2-and-over-33-hours-battery-life.1360398.0.html"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
@@ -10321,7 +10397,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "none",
         "firmware": "none"
       },
@@ -10355,17 +10431,23 @@
       "variants": [
         {
           "compatible": "lenovo,ideapad-5x-2in1-14q8y11",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "kalambo-lenovo-ideapad-5x-2in1-14q8y11.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -10394,12 +10476,12 @@
         "https://www.notebookcheck.net/Lenovo-IdeaPad-Slim-5-13Q8Y11.1311036.0.html"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
@@ -10409,7 +10491,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "none",
         "firmware": "none"
       },
@@ -10443,17 +10525,23 @@
       "variants": [
         {
           "compatible": "lenovo,ideapad-slim5x-13q8y11",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "kalambo-lenovo-ideapad-slim5x-13q8y11.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -10482,12 +10570,12 @@
         "https://www.pcmag.com/reviews/lenovo-ideapad-slim-5x-gen-11"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
@@ -10497,7 +10585,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "none",
         "firmware": "none"
       },
@@ -10531,17 +10619,23 @@
       "variants": [
         {
           "compatible": "lenovo,ideapad-slim5x-15q8y11",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "kalambo-lenovo-ideapad-slim5x-15q8y11.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -10568,12 +10662,12 @@
         "https://psref.lenovo.com/Product/ThinkBook/ThinkBook_14_G9_Q8Y"
       ],
       "notes": null,
-      "outcome": "none",
+      "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
@@ -10583,7 +10677,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "none",
         "firmware": "none"
       },
@@ -10617,17 +10711,23 @@
       "variants": [
         {
           "compatible": "lenovo,thinkbook-14-gen9-q8y",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "kalambo-lenovo-thinkbook-14-gen9.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -11628,7 +11728,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2772-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-13-inch.patch"
+            "patch": "linux-omarchy-aarch64/2772-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-13-inch.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -12087,7 +12187,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2384-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8.patch"
+            "patch": "linux-omarchy-aarch64/2384-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -12187,7 +12287,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2764-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8-15-inch.patch"
+            "patch": "linux-omarchy-aarch64/2764-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8-15-inch.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -12924,7 +13024,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2792-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book4-Edge-15.patch"
+            "patch": "linux-omarchy-aarch64/2792-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book4-Edge-15.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -13020,7 +13120,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
+            "patch": "linux-omarchy-aarch64/2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -13122,7 +13222,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
+            "patch": "linux-omarchy-aarch64/2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
@@ -13158,7 +13258,7 @@
             "firstRelease": null,
             "inNext": false,
             "upstream": false,
-            "patch": "2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
+            "patch": "linux-omarchy-aarch64/2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
           },
           "firmwareNeeded": [],
           "ids": [],
