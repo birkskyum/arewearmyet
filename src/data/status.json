@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-14T22:27:10.836Z",
+  "collected": "2026-11-14T23:15:30.332Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-61",
+    "kernel": "7.3-62",
     "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-61",
+        "kernel": "7.3-62",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -416,11 +416,14 @@
           "kalambo-lenovo-ideapad-slim5x-13q8y11.dts",
           "kalambo-lenovo-ideapad-slim5x-15q8y11.dts",
           "kalambo-lenovo-thinkbook-14-gen9.dts",
+          "kalambo-microsoft-surface-laptop-13in-2nd-edition.dts",
+          "kalambo-microsoft-surface-pro-12in-2nd-edition.dts",
           "mahua-crd.dts",
           "mahua-hp-elitebook-6-g2q.dts",
           "mahua-hp-omnibook-5-bf1xxx.dts",
           "mahua-hp-omnibook-x16.dts",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
+          "mahua-microsoft-surface-pro-12th-edition.dts",
           "purwa-lenovo-ideacentre-mini-01q8x10.dts",
           "sc8280xp-crd.dts",
           "sc8280xp-huawei-gaokun3.dts",
@@ -550,9 +553,12 @@
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8-15.json",
           "glymur-microsoft-surface-laptop8.json",
+          "kalambo-microsoft-surface-laptop-13in-2nd-edition.json",
+          "kalambo-microsoft-surface-pro-12in-2nd-edition.json",
           "mahua-hp-omnibook-5-bf1xxx.json",
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
+          "mahua-microsoft-surface-pro-12th-edition.json",
           "x126100-asus-vivobook-14.json",
           "x126100-asus-vivobook-16.json",
           "x126100-lenovo-thinkcentre-neo-50q-qc.json",
@@ -905,6 +911,9 @@
             "qcom/x1p42100/hp/omnibook-3-16-bz0/qccdsp8380.mbn",
             "qcom/x1p42100/hp/omnibook-3-16-bz0/qcdxkmsucpurwa.mbn"
           ],
+          "hp-omnibook-3-audio": [
+            "qcom/x1e80100/X1E80100-HP-OMNIBOOK-3-tplg.bin"
+          ],
           "hp-omnibook-5-16-bf1-firmware": [
             "qcom/glymur/HP/omnibook-5-16-bf1xxx/adsp_dtbs.elf",
             "qcom/glymur/HP/omnibook-5-16-bf1xxx/adspr.jsn",
@@ -1177,9 +1186,6 @@
             "qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn",
             "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn"
           ],
-          "microsoft-surface-pro-11-support": [
-            "qcom/x1e80100/X1E80100-Microsoft-Surface-Pro-11-tplg.bin"
-          ],
           "microsoft-surface-pro-12in-firmware": [
             "qcom/x1p42100/Microsoft/Surface12/adsp_dtbs.elf",
             "qcom/x1p42100/Microsoft/Surface12/adspr.jsn",
@@ -1243,34 +1249,34 @@
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
     "works": 2,
-    "should": 46,
+    "should": 49,
     "problems": 9,
-    "notYet": 29,
-    "deviceTree": 75,
+    "notYet": 26,
+    "deviceTree": 78,
     "ids": 58,
-    "firmware": 50,
+    "firmware": 51,
     "googlebooks": 2,
     "chromebooks": 10,
     "acpi": 46,
-    "acpiWanted": 11,
+    "acpiWanted": 8,
     "machine": {
       "team": 7,
       "omarchy": 18,
-      "linux": 48,
-      "nobody": 13
+      "linux": 51,
+      "nobody": 10
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 73,
+        "omarchy": 76,
         "fromUpstream": 19,
-        "added": 54,
+        "added": 57,
         "pull": 0,
         "available": 2,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 73
+          "edge": 76
         },
         "models": {
           "fromUpstream": [
@@ -1344,8 +1350,11 @@
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
             "lenovo-yoga-slim-7x-14q8y11",
             "microsoft-surface-laptop-13in-1st-edition",
+            "microsoft-surface-laptop-13in-2nd-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
+            "microsoft-surface-pro-12in-2nd-edition",
+            "microsoft-surface-pro-12th-edition",
             "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
@@ -1358,16 +1367,16 @@
         }
       },
       "ids": {
-        "omarchy": 57,
+        "omarchy": 60,
         "fromUpstream": 28,
-        "added": 29,
+        "added": 32,
         "pull": 0,
         "available": 1,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 57
+          "edge": 60
         },
         "models": {
           "fromUpstream": [
@@ -1425,8 +1434,11 @@
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
             "microsoft-surface-laptop-13in-1st-edition",
             "microsoft-surface-pro-12in-1st-edition",
+            "microsoft-surface-laptop-13in-2nd-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
+            "microsoft-surface-pro-12in-2nd-edition",
+            "microsoft-surface-pro-12th-edition",
             "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
@@ -1438,16 +1450,16 @@
         }
       },
       "firmware": {
-        "omarchy": 48,
+        "omarchy": 49,
         "fromUpstream": 1,
-        "added": 47,
+        "added": 48,
         "pull": 0,
         "available": 2,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 48
+          "edge": 49
         },
         "models": {
           "fromUpstream": [
@@ -1497,6 +1509,7 @@
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
+            "microsoft-surface-pro-12th-edition",
             "qualcomm-snapdragon-dev-kit-for-windows",
             "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
@@ -1510,9 +1523,9 @@
         }
       },
       "all": {
-        "omarchy": 47,
+        "omarchy": 48,
         "fromUpstream": 1,
-        "added": 46,
+        "added": 47,
         "pull": 0,
         "available": 1,
         "upstream": 1,
@@ -1563,6 +1576,7 @@
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
+            "microsoft-surface-pro-12th-edition",
             "qualcomm-snapdragon-dev-kit-for-windows",
             "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
@@ -12044,14 +12058,14 @@
         "https://www.abt.com/Microsoft-Surface-Laptop-13-inch-Snapdragon-X2-Plus-6-core-16GB-RAM-256GB-SSD-Windows-11-2nd-Edition-in-Black-EP285663/p/249297.html"
       ],
       "notes": null,
-      "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
-      "machine": "nobody",
+      "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -12059,21 +12073,26 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
-        "ids": "none",
+        "deviceTree": "edge",
+        "ids": "edge",
         "firmware": "none"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2774",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/microsoft-surface-laptop-13in-2nd-edition",
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
         "firmware": "windows",
-        "firmwareMissing": [],
+        "firmwareMissing": [
+          "qcadsp8480.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8480.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwarePosted": null,
@@ -12087,17 +12106,24 @@
       },
       "variants": [
         {
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "compatible": "microsoft,surface-laptop-13in-2nd-edition",
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "kalambo-microsoft-surface-laptop-13in-2nd-edition.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0021-arm64-dts-qcom-Add-the-Surface-Laptop-13in-an.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -12321,14 +12347,14 @@
         "https://learn.microsoft.com/en-us/surface/surface-system-sku-reference"
       ],
       "notes": null,
-      "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
-      "machine": "nobody",
+      "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -12336,21 +12362,26 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
-        "ids": "none",
+        "deviceTree": "edge",
+        "ids": "edge",
         "firmware": "none"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2774",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/microsoft-surface-pro-12in-2nd-edition",
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
         "firmware": "windows",
-        "firmwareMissing": [],
+        "firmwareMissing": [
+          "qcadsp8480.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8480.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwarePosted": null,
@@ -12364,17 +12395,24 @@
       },
       "variants": [
         {
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "compatible": "microsoft,surface-pro-12in-2nd-edition",
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "kalambo-microsoft-surface-pro-12in-2nd-edition.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0021-arm64-dts-qcom-Add-the-Surface-Laptop-13in-an.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -12407,38 +12445,40 @@
         "https://www.cdw.com/product/microsoft-surface-pro-for-business-12th-edition-copilot-pc-13-qua/9186879"
       ],
       "notes": null,
-      "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
-      "machine": "nobody",
+      "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
-        "firmware": "windows",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "microsoft-surface-laptop-8-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
-        "ids": "none",
-        "firmware": "none"
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2774",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/microsoft-surface-pro-12th-edition",
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-glymur-microsoft-mahua",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -12450,17 +12490,24 @@
       },
       "variants": [
         {
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "compatible": "microsoft,surface-pro-12th-edition",
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "mahua-microsoft-surface-pro-12th-edition.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0020-arm64-dts-qcom-Add-the-Microsoft-Surface-Pro-.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],

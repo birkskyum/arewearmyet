@@ -401,6 +401,16 @@
       "x1p42100-microsoft-surface-laptop-13.dts"
     ]
   },
+  "microsoft-surface-laptop-13in-2nd-edition": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2774",
+    "files": [
+      "SOURCE.md",
+      "kalambo-microsoft-surface-laptop-13in-2nd-edition.dts",
+      "kalambo-microsoft-surface.dtsi",
+      "kalambo.dtsi"
+    ]
+  },
   "microsoft-surface-laptop-8-13": {
     "state": "posted",
     "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261027-mahua-surface-laptop-v2-3-7dd903a12d22@oss.qualcomm.com/",
@@ -416,6 +426,24 @@
       "SOURCE.md",
       "glymur-microsoft-surface-laptop8-15.dts",
       "glymur-microsoft-surface-laptop8.dts"
+    ]
+  },
+  "microsoft-surface-pro-12in-2nd-edition": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2774",
+    "files": [
+      "SOURCE.md",
+      "kalambo-microsoft-surface-pro-12in-2nd-edition.dts",
+      "kalambo-microsoft-surface.dtsi",
+      "kalambo.dtsi"
+    ]
+  },
+  "microsoft-surface-pro-12th-edition": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2774",
+    "files": [
+      "SOURCE.md",
+      "mahua-microsoft-surface-pro-12th-edition.dts"
     ]
   },
   "samsung-galaxy-book4-edge-15": {

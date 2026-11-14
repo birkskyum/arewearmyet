@@ -313,8 +313,9 @@ function omarchyKernelRecipe() {
   return { added, ids };
 }
 
-// Open pull requests on omarchy-pkgs that add what a model needs: a kernel patch with its device tree,
-// a hardware ID file for the kernel package, or a maker's firmware package, by the files it installs
+// Open pull requests on omarchy-pkgs that add what a model needs: a kernel or device tree package patch
+// with its device tree, a hardware ID file for either package, or a maker's firmware package, by the files
+// it installs
 async function collectOmarchyPulls() {
   const pulls: any[] = [];
   for (let page = 1; ; page++) {
@@ -337,7 +338,7 @@ async function collectOmarchyPulls() {
     const firmware: string[] = [];
     for (const { filename, status } of changes) {
       if (status === 'removed') continue;
-      if (filename.startsWith(`${OMARCHY_KERNEL_RECIPE}/`) && /(dts|arm64-qcom).*\.patch$/i.test(filename)) {
+      if ([OMARCHY_KERNEL_RECIPE, OMARCHY_TREES_RECIPE].some((folder) => filename.startsWith(`${folder}/`)) && /(dts|arm64-qcom).*\.patch$/i.test(filename)) {
         deviceTrees.push(...patchDeviceTrees(await raw(repo, pull.head.sha, filename)));
       } else if ([OMARCHY_KERNEL_RECIPE, OMARCHY_TREES_RECIPE].some((folder) => filename.startsWith(`${folder}/`)) && /^[^/]+\/[^/]+\/[^/]+\.json$/.test(filename)) {
         const entry = JSON.parse(await raw(repo, pull.head.sha, filename));

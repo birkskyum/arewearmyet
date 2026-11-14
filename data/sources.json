@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-14T22:27:10.836Z",
+  "collected": "2026-11-14T23:15:30.332Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -5843,7 +5843,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-61",
+        "kernel": "7.3-62",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -5863,11 +5863,14 @@
           "kalambo-lenovo-ideapad-slim5x-13q8y11.dts",
           "kalambo-lenovo-ideapad-slim5x-15q8y11.dts",
           "kalambo-lenovo-thinkbook-14-gen9.dts",
+          "kalambo-microsoft-surface-laptop-13in-2nd-edition.dts",
+          "kalambo-microsoft-surface-pro-12in-2nd-edition.dts",
           "mahua-crd.dts",
           "mahua-hp-elitebook-6-g2q.dts",
           "mahua-hp-omnibook-5-bf1xxx.dts",
           "mahua-hp-omnibook-x16.dts",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
+          "mahua-microsoft-surface-pro-12th-edition.dts",
           "purwa-lenovo-ideacentre-mini-01q8x10.dts",
           "sc8280xp-crd.dts",
           "sc8280xp-huawei-gaokun3.dts",
@@ -5997,9 +6000,12 @@
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8-15.json",
           "glymur-microsoft-surface-laptop8.json",
+          "kalambo-microsoft-surface-laptop-13in-2nd-edition.json",
+          "kalambo-microsoft-surface-pro-12in-2nd-edition.json",
           "mahua-hp-omnibook-5-bf1xxx.json",
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
+          "mahua-microsoft-surface-pro-12th-edition.json",
           "x126100-asus-vivobook-14.json",
           "x126100-asus-vivobook-16.json",
           "x126100-lenovo-thinkcentre-neo-50q-qc.json",
@@ -6352,6 +6358,9 @@
             "qcom/x1p42100/hp/omnibook-3-16-bz0/qccdsp8380.mbn",
             "qcom/x1p42100/hp/omnibook-3-16-bz0/qcdxkmsucpurwa.mbn"
           ],
+          "hp-omnibook-3-audio": [
+            "qcom/x1e80100/X1E80100-HP-OMNIBOOK-3-tplg.bin"
+          ],
           "hp-omnibook-5-16-bf1-firmware": [
             "qcom/glymur/HP/omnibook-5-16-bf1xxx/adsp_dtbs.elf",
             "qcom/glymur/HP/omnibook-5-16-bf1xxx/adspr.jsn",
@@ -6623,9 +6632,6 @@
             "qcom/x1e80100/microsoft/Denali/qcadsp8380.mbn",
             "qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn",
             "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn"
-          ],
-          "microsoft-surface-pro-11-support": [
-            "qcom/x1e80100/X1E80100-Microsoft-Surface-Pro-11-tplg.bin"
           ],
           "microsoft-surface-pro-12in-firmware": [
             "qcom/x1p42100/Microsoft/Surface12/adsp_dtbs.elf",
@@ -7209,6 +7215,33 @@
           "qcom,kalambo"
         ],
         "patch": "linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch"
+      },
+      {
+        "file": "mahua-microsoft-surface-pro-12th-edition.dts",
+        "model": "Microsoft Surface Pro 12th Edition (13in, Snapdragon X2)",
+        "compatible": [
+          "microsoft,surface-pro-12th-edition",
+          "qcom,mahua"
+        ],
+        "patch": "linux-omarchy-dtbs/0020-arm64-dts-qcom-Add-the-Microsoft-Surface-Pro-.patch"
+      },
+      {
+        "file": "kalambo-microsoft-surface-laptop-13in-2nd-edition.dts",
+        "model": "Microsoft Surface Laptop 13in 2nd Edition",
+        "compatible": [
+          "microsoft,surface-laptop-13in-2nd-edition",
+          "qcom,kalambo"
+        ],
+        "patch": "linux-omarchy-dtbs/0021-arm64-dts-qcom-Add-the-Surface-Laptop-13in-an.patch"
+      },
+      {
+        "file": "kalambo-microsoft-surface-pro-12in-2nd-edition.dts",
+        "model": "Microsoft Surface Pro 12in 2nd Edition",
+        "compatible": [
+          "microsoft,surface-pro-12in-2nd-edition",
+          "qcom,kalambo"
+        ],
+        "patch": "linux-omarchy-dtbs/0021-arm64-dts-qcom-Add-the-Surface-Laptop-13in-an.patch"
       }
     ],
     "carriedIds": [
@@ -7299,6 +7332,30 @@
         ]
       },
       {
+        "file": "kalambo-microsoft-surface-laptop-13in-2nd-edition.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Microsoft Surface Laptop 13in 2nd Edition (Snapdragon)",
+        "compatible": "microsoft,surface-laptop-13in-2nd-edition",
+        "hwids": [
+          "ee4e2dc6-3d7b-5e98-b14d-37ab0e504980",
+          "79c617ca-699d-58ff-8a0d-d0908e43b197",
+          "c24677ea-5c6d-5558-87ab-b63b5e1afe29",
+          "d0ee16f0-9bd3-5410-b8a6-0bc4425ee71b"
+        ]
+      },
+      {
+        "file": "kalambo-microsoft-surface-pro-12in-2nd-edition.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Microsoft Surface Pro 12in 2nd Edition (Snapdragon)",
+        "compatible": "microsoft,surface-pro-12in-2nd-edition",
+        "hwids": [
+          "bbc1b2b0-68e1-5ddf-b7f3-19143e7c93db",
+          "3880dbf7-8e22-519a-a0c2-b531bc1042bf",
+          "95edccf3-8fe9-5602-b2e6-8d005591b11e",
+          "38285a33-06a2-59ac-83c9-52f5b73bb601"
+        ]
+      },
+      {
         "file": "mahua-hp-omnibook-5-bf1xxx.json",
         "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "HP OmniBook 5 16-bf1",
@@ -7349,6 +7406,20 @@
           "9891628b-598a-5ea6-bb16-1a260a065bc6",
           "05971a07-7799-5be2-b976-7904e308fdd2",
           "c59ec72f-56bb-514e-9854-3e7ace90c684"
+        ]
+      },
+      {
+        "file": "mahua-microsoft-surface-pro-12th-edition.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Microsoft Surface Pro 12th Edition (Snapdragon)",
+        "compatible": "microsoft,surface-pro-12th-edition",
+        "hwids": [
+          "2cb60605-dd88-5cd1-be39-ffe0403fed02",
+          "977ddc72-2f26-5cd5-9b99-bb0cade87846",
+          "025fa00e-7b4e-52b4-b944-c3594e7bd5dd",
+          "e28782dd-88ea-50c5-be98-c2e359138487",
+          "acfec04d-274f-589e-ac72-c3defc92ee0c",
+          "bd8bb66f-bc54-5034-a2d9-e4494cb5c7f1"
         ]
       },
       {
