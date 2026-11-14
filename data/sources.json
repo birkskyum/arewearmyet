@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-13T05:25:59.997Z",
+  "collected": "2026-11-14T05:25:51.673Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -44,7 +44,7 @@
     "v261",
     "v262"
   ],
-  "linuxNext": "20261112",
+  "linuxNext": "20261113",
   "deviceTrees": [
     {
       "file": "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -5216,6 +5216,18 @@
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
     },
     {
+      "folder": "hardware-reports/microsoft-corporation/microsoft-surface-pro-11th-edition",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/42",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "408215264926a0584a09b7747a246570340097f3",
+      "dir": "reports/microsoft-corporation/microsoft-surface-pro-11th-edition/7c32cf76",
+      "pull": {
+        "number": 42,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
       "folder": "hardware-reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa",
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/40",
       "repo": "turbineBMW/omarchy-hardware-reports",
@@ -5820,7 +5832,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-58",
+        "kernel": "7.3-60",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -7521,9 +7533,9 @@
       }
     ],
     "image": {
-      "version": "2026.11.12.488",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.12.488/omarchy-edge-2026.11.12.488-aarch64.iso",
-      "kernel": "7.3.0-52-omarchy"
+      "version": "2026.11.13.489",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.13.489/omarchy-edge-2026.11.13.489-aarch64.iso",
+      "kernel": "7.3.0-58-omarchy"
     },
     "pulls": []
   }

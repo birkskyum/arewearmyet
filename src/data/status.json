@@ -1,17 +1,17 @@
 {
-  "collected": "2026-11-13T05:25:59.997Z",
-  "linuxNext": "20261112",
+  "collected": "2026-11-14T05:25:51.673Z",
+  "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-58",
+    "kernel": "7.3-60",
     "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.12.488",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.12.488/omarchy-edge-2026.11.12.488-aarch64.iso",
-      "kernel": "7.3.0-52-omarchy"
+      "version": "2026.11.13.489",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.13.489/omarchy-edge-2026.11.13.489-aarch64.iso",
+      "kernel": "7.3.0-58-omarchy"
     },
     "channels": [
       {
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-58",
+        "kernel": "7.3-60",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -11557,7 +11557,7 @@
         "acpiUrls": [
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-11",
           "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_11_qcom",
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/38"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/42"
         ]
       },
       "variants": [
