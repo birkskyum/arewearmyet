@@ -1850,6 +1850,11 @@ folders:
         sha256: "de957e0a25c2a42f417f8e95ccf1cbdfeed5a4a6d77a84e215389b8b78fc8bf4"
         from:
           - { package: "acer-a16-11m-multimedia-driver-31.0.152.0", member: "Base Driver_Qualcomm_31.0.152.0_W11ARM64_(MultiMedia Driver)/qcdx8380/qcdxkmsucpurwa.mbn" }
+      - name: "qcvss8380_pa.mbn"
+        size: 2327144
+        sha256: "48a7de17a895996699c20d1d1213b426c302e29e65cd879f31fe05330e1d6bec"
+        from:
+          - { package: "dell-2chk7", member: "16299/Drivers/MUP/qcdx8380/qcvss8380_pa.mbn" }
   - path: "qcom/x1p42100/ASUSTeK/proart-pz13"
     models: ["asus-proart-pz13-ht5306"]
     files:
