@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-15T00:47:04.069Z",
+  "collected": "2026-11-15T01:01:20.725Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -7381,6 +7381,33 @@
           "qcom,kalambo"
         ],
         "patch": "linux-omarchy-dtbs/0021-arm64-dts-qcom-Add-the-Surface-Laptop-13in-an.patch"
+      },
+      {
+        "file": "x1p42100-hp-omnibook-x14-kr0.dts",
+        "model": "HP OmniBook X Laptop 14-kr0xxx",
+        "compatible": [
+          "hp,omnibook-x14-kr0",
+          "qcom,x1p42100"
+        ],
+        "patch": "linux-omarchy-dtbs/0023-arm64-dts-qcom-Add-the-HP-OmniBook-X-14-kr0-and-X-16.patch"
+      },
+      {
+        "file": "x1p42100-hp-omnibook-x16-cp0.dts",
+        "model": "HP OmniBook X Laptop 16-cp0xxx",
+        "compatible": [
+          "hp,omnibook-x16-cp0",
+          "qcom,x1p42100"
+        ],
+        "patch": "linux-omarchy-dtbs/0023-arm64-dts-qcom-Add-the-HP-OmniBook-X-14-kr0-and-X-16.patch"
+      },
+      {
+        "file": "kalambo-hp-omnibook-5-14-he1xxx.dts",
+        "model": "HP OmniBook 5 Laptop 14-he1xxx",
+        "compatible": [
+          "hp,omnibook-5-14-he1xxx",
+          "qcom,kalambo"
+        ],
+        "patch": "linux-omarchy-dtbs/0024-arm64-dts-qcom-Add-the-HP-OmniBook-5-14-he1.patch"
       }
     ],
     "carriedIds": [
@@ -7468,6 +7495,16 @@
           "4bc647da-0871-56d4-8da8-53f61b7a3767",
           "41931424-2cbe-50cc-a426-7ba09e0c6e4e",
           "e5479a7c-5982-58e2-8953-036b5bddb159"
+        ]
+      },
+      {
+        "file": "kalambo-hp-omnibook-5-14-he1xxx.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "HP OmniBook 5 14-he1",
+        "compatible": "hp,omnibook-5-14-he1xxx",
+        "hwids": [
+          "7f3e6682-7a14-51bd-aaec-a416db0d45ad",
+          "2e37ded3-631e-5e2e-b006-cb749115ab5a"
         ]
       },
       {
@@ -7943,6 +7980,26 @@
         ]
       },
       {
+        "file": "x1p42100-hp-omnibook-x14-kr0.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "HP OmniBook X 14-kr0",
+        "compatible": "hp,omnibook-x14-kr0",
+        "hwids": [
+          "f3fe0853-482b-547b-9f96-c05676c5b5f5",
+          "3d067df0-27e7-5e5b-a2e8-c4b283bb3222"
+        ]
+      },
+      {
+        "file": "x1p42100-hp-omnibook-x16-cp0.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "HP OmniBook X 16-cp0",
+        "compatible": "hp,omnibook-x16-cp0",
+        "hwids": [
+          "0f3eb150-3a66-58d9-9aa0-af5c9594b833",
+          "0e5fd2e3-566a-5e14-976d-ca756aef88c6"
+        ]
+      },
+      {
         "file": "x1p42100-hp-probook-4-g1q.json",
         "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "HP ProBook 4 G1q",
@@ -8023,54 +8080,6 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.14.490/omarchy-edge-2026.11.14.490-aarch64.iso",
       "kernel": "7.3.0-60-omarchy"
     },
-    "pulls": [
-      {
-        "number": 2784,
-        "title": "linux-omarchy-dtbs: add the HP OmniBook X 14-kr0, X 16-cp0 and OmniBook 5 14-he1",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2784",
-        "draft": true,
-        "deviceTrees": [
-          {
-            "file": "x1p42100-hp-omnibook-x14-kr0.dts",
-            "model": "HP OmniBook X Laptop 14-kr0xxx",
-            "compatible": [
-              "hp,omnibook-x14-kr0",
-              "qcom,x1p42100"
-            ]
-          },
-          {
-            "file": "x1p42100-hp-omnibook-x16-cp0.dts",
-            "model": "HP OmniBook X Laptop 16-cp0xxx",
-            "compatible": [
-              "hp,omnibook-x16-cp0",
-              "qcom,x1p42100"
-            ]
-          },
-          {
-            "file": "kalambo-hp-omnibook-5-14-he1xxx.dts",
-            "model": "HP OmniBook 5 Laptop 14-he1xxx",
-            "compatible": [
-              "hp,omnibook-5-14-he1xxx",
-              "qcom,kalambo"
-            ]
-          }
-        ],
-        "ids": [
-          {
-            "file": "kalambo-hp-omnibook-5-14-he1xxx.json",
-            "compatible": "hp,omnibook-5-14-he1xxx"
-          },
-          {
-            "file": "x1p42100-hp-omnibook-x14-kr0.json",
-            "compatible": "hp,omnibook-x14-kr0"
-          },
-          {
-            "file": "x1p42100-hp-omnibook-x16-cp0.json",
-            "compatible": "hp,omnibook-x16-cp0"
-          }
-        ],
-        "firmware": []
-      }
-    ]
+    "pulls": []
   }
 }
