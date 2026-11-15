@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-15T21:47:05.458Z",
+  "collected": "2026-11-15T23:06:59.869Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-63",
+    "kernel": "7.3-65",
     "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-63",
+        "kernel": "7.3-65",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -430,6 +430,9 @@
           "mahua-microsoft-surface-pro-12th-edition.dts",
           "purwa-lenovo-ideacentre-mini-01q8x10.dts",
           "sc8180x-lenovo-flex-5g.dts",
+          "sc8180x-microsoft-cambria.dts",
+          "sc8180x-microsoft-carina.dts",
+          "sc8180x-microsoft-caspar.dts",
           "sc8280xp-crd.dts",
           "sc8280xp-huawei-gaokun3.dts",
           "sc8280xp-lenovo-thinkpad-x13s.dts",
@@ -577,6 +580,8 @@
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
           "mahua-microsoft-surface-pro-12th-edition.json",
+          "sc8180x-microsoft-cambria.json",
+          "sc8180x-microsoft-caspar.json",
           "x126100-asus-v400-aio-vm441qa.json",
           "x126100-asus-vivobook-14.json",
           "x126100-asus-vivobook-16.json",
@@ -1429,6 +1434,23 @@
             "qcom/sc8280xp/MICROSOFT/SurfacePro9/qccdsp8280.mbn",
             "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcdxkmsuc8280.mbn"
           ],
+          "microsoft-surface-pro-x-firmware": [
+            "qcom/sc8180x/microsoft/cambria/qcadsp8180.mbn",
+            "qcom/sc8180x/microsoft/cambria/qccdsp8180.mbn",
+            "qcom/sc8180x/microsoft/cambria/qcdxkmsuc8180.mbn",
+            "qcom/sc8180x/microsoft/cambria/qcmpss8180.mbn",
+            "qcom/sc8180x/microsoft/cambria/qcslpi8180.mbn",
+            "qcom/sc8180x/microsoft/carina/qcadsp8180.mbn",
+            "qcom/sc8180x/microsoft/carina/qccdsp8180.mbn",
+            "qcom/sc8180x/microsoft/carina/qcdxkmsuc8180.mbn",
+            "qcom/sc8180x/microsoft/carina/qcmpss8180.mbn",
+            "qcom/sc8180x/microsoft/carina/qcslpi8180.mbn",
+            "qcom/sc8180x/microsoft/caspar/qcadsp8180.mbn",
+            "qcom/sc8180x/microsoft/caspar/qccdsp8180.mbn",
+            "qcom/sc8180x/microsoft/caspar/qcdxkmsuc8180.mbn",
+            "qcom/sc8180x/microsoft/caspar/qcmpss8180_nm.mbn",
+            "qcom/sc8180x/microsoft/caspar/qcslpi8180.mbn"
+          ],
           "microsoft-windows-dev-kit-2023-firmware": [
             "qcom/sc8280xp/microsoft/blackrock/qcadsp8280.mbn",
             "qcom/sc8280xp/microsoft/blackrock/qccdsp8280.mbn",
@@ -1872,6 +1894,136 @@
           ],
           "pull": [],
           "available": []
+        }
+      }
+    },
+    "older": 26,
+    "byPieceOlder": {
+      "deviceTree": {
+        "omarchy": 6,
+        "fromUpstream": 5,
+        "added": 1,
+        "pull": 0,
+        "available": 9,
+        "upstream": 13,
+        "channels": {
+          "stable": 4,
+          "rc": 4,
+          "edge": 6
+        },
+        "models": {
+          "fromUpstream": [
+            "huawei-matebook-e-go",
+            "lenovo-thinkpad-x13s-gen-1",
+            "microsoft-surface-pro-9-5g",
+            "microsoft-windows-dev-kit-2023",
+            "lenovo-flex-5g"
+          ],
+          "added": [
+            "microsoft-surface-pro-x"
+          ],
+          "pull": [],
+          "available": [
+            "acer-aspire-1-a114-61",
+            "asus-novago-tp370ql",
+            "ecs-liva-qc710",
+            "hp-envy-x2-snapdragon",
+            "huawei-matebook-e-2019",
+            "lenovo-miix-630",
+            "lenovo-yoga-c630",
+            "samsung-galaxy-book2-w737",
+            "samsung-galaxy-book2-go"
+          ]
+        }
+      },
+      "ids": {
+        "omarchy": 10,
+        "fromUpstream": 9,
+        "added": 1,
+        "pull": 0,
+        "available": 3,
+        "upstream": 9,
+        "channels": {
+          "stable": 9,
+          "rc": 9,
+          "edge": 10
+        },
+        "models": {
+          "fromUpstream": [
+            "huawei-matebook-e-go",
+            "lenovo-thinkpad-x13s-gen-1",
+            "microsoft-surface-pro-9-5g",
+            "microsoft-windows-dev-kit-2023",
+            "acer-aspire-1-a114-61",
+            "ecs-liva-qc710",
+            "lenovo-flex-5g",
+            "lenovo-miix-630",
+            "lenovo-yoga-c630"
+          ],
+          "added": [
+            "microsoft-surface-pro-x"
+          ],
+          "pull": [],
+          "available": [
+            "samsung-galaxy-book2-go",
+            "samsung-galaxy-book-go",
+            "xiaomi-book-s"
+          ]
+        }
+      },
+      "firmware": {
+        "omarchy": 6,
+        "fromUpstream": 1,
+        "added": 5,
+        "pull": 0,
+        "available": 2,
+        "upstream": 1,
+        "channels": {
+          "stable": 1,
+          "rc": 1,
+          "edge": 6
+        },
+        "models": {
+          "fromUpstream": [
+            "lenovo-thinkpad-x13s-gen-1"
+          ],
+          "added": [
+            "huawei-matebook-e-go",
+            "microsoft-surface-pro-9-5g",
+            "microsoft-windows-dev-kit-2023",
+            "lenovo-flex-5g",
+            "microsoft-surface-pro-x"
+          ],
+          "pull": [],
+          "available": [
+            "lenovo-miix-630",
+            "lenovo-yoga-c630"
+          ]
+        }
+      },
+      "all": {
+        "omarchy": 6,
+        "fromUpstream": 1,
+        "added": 5,
+        "pull": 0,
+        "available": 2,
+        "upstream": 1,
+        "models": {
+          "fromUpstream": [
+            "lenovo-thinkpad-x13s-gen-1"
+          ],
+          "added": [
+            "huawei-matebook-e-go",
+            "microsoft-surface-pro-9-5g",
+            "microsoft-windows-dev-kit-2023",
+            "lenovo-flex-5g",
+            "microsoft-surface-pro-x"
+          ],
+          "pull": [],
+          "available": [
+            "lenovo-miix-630",
+            "lenovo-yoga-c630"
+          ]
         }
       }
     }
@@ -15913,31 +16065,33 @@
         "https://github.com/linux-surface/acpidumps/tree/master/surface_pro_x_sq1",
         "https://github.com/linux-surface/acpidumps/tree/master/surface_pro_x_sq2"
       ],
-      "notes": null,
-      "outcome": "none",
-      "bootable": "needs-ids",
+      "notes": "Its device trees are Val Packett's posted series from Maximilian Luz's linux-surface work, with the two fixes Haipeng Lin's test found, and its firmware comes from the bundles Microsoft publishes on Windows Update. The SQ2 with cellular shares the SQ1's SKU, so it boots the SQ1's tree at the SQ1's top clock. Its keyboard, battery and sensor DSP need linux-omarchy 7.3-65 (omacom/omarchy-pkgs#2860). Nobody has booted Omarchy on it yet.",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "microsoft-surface-pro-x-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
-        "ids": "none",
-        "firmware": "elsewhere"
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "posted",
         "firstRelease": null,
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261104070441.74127-3-val@packett.cool/",
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2859",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/microsoft-surface-pro-x",
         "ids": "missing",
         "idsCollected": null,
@@ -15945,7 +16099,7 @@
         "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": "/firmware/#qcom-sc8180x-microsoft-caspar",
+        "firmwareDownload": "/firmware/#qcom-sc8180x-microsoft-cambria",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -15962,51 +16116,87 @@
           "model": "SQ1",
           "chip": "Microsoft SQ1",
           "compatible": "microsoft,cambria",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "sc8180x-microsoft-cambria.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0038-arm64-dts-qcom-sc8180x-Add-Microsoft-Surface-Pro-X.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/sc8180x/microsoft/cambria/qcdxkmsuc8180.mbn",
+            "qcom/sc8180x/microsoft/cambria/qcadsp8180.mbn",
+            "qcom/sc8180x/microsoft/cambria/qccdsp8180.mbn",
+            "qcom/sc8180x/microsoft/cambria/qcmpss8180.mbn",
+            "qcom/sc8180x/microsoft/cambria/qcslpi8180.mbn"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         },
         {
           "model": "SQ2",
           "chip": "Microsoft SQ2",
           "compatible": "microsoft,carina",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "sc8180x-microsoft-carina.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0038-arm64-dts-qcom-sc8180x-Add-Microsoft-Surface-Pro-X.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/sc8180x/microsoft/carina/qcdxkmsuc8180.mbn",
+            "qcom/sc8180x/microsoft/carina/qcadsp8180.mbn",
+            "qcom/sc8180x/microsoft/carina/qccdsp8180.mbn",
+            "qcom/sc8180x/microsoft/carina/qcmpss8180.mbn",
+            "qcom/sc8180x/microsoft/carina/qcslpi8180.mbn"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         },
         {
           "model": "Wi-Fi",
           "chip": "Microsoft SQ1",
           "compatible": "microsoft,caspar",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "sc8180x-microsoft-caspar.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0038-arm64-dts-qcom-sc8180x-Add-Microsoft-Surface-Pro-X.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/sc8180x/microsoft/caspar/qcdxkmsuc8180.mbn",
+            "qcom/sc8180x/microsoft/caspar/qcadsp8180.mbn",
+            "qcom/sc8180x/microsoft/caspar/qccdsp8180.mbn",
+            "qcom/sc8180x/microsoft/caspar/qcmpss8180_nm.mbn",
+            "qcom/sc8180x/microsoft/caspar/qcslpi8180.mbn"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],

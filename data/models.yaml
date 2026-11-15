@@ -2146,6 +2146,13 @@ models:
       - { model: "SQ2", chip: "Microsoft SQ2", compatible: "microsoft,carina" }
       - { model: "Wi-Fi", chip: "Microsoft SQ1", compatible: "microsoft,caspar" }
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261104070441.74127-3-val@packett.cool/"
+    devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2859"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/12ed0f96/pkgbuilds/linux-omarchy-dtbs/0038-arm64-dts-qcom-sc8180x-Add-Microsoft-Surface-Pro-X.patch#sc8180x-microsoft-cambria.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/12ed0f96/pkgbuilds/linux-omarchy-dtbs/0038-arm64-dts-qcom-sc8180x-Add-Microsoft-Surface-Pro-X.patch#sc8180x-microsoft-carina.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/12ed0f96/pkgbuilds/linux-omarchy-dtbs/0038-arm64-dts-qcom-sc8180x-Add-Microsoft-Surface-Pro-X.patch#sc8180x-microsoft-caspar.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/12ed0f96/pkgbuilds/linux-omarchy-dtbs/0038-arm64-dts-qcom-sc8180x-Add-Microsoft-Surface-Pro-X.patch#sc8180x-microsoft-surface-pro-x.dtsi"
+    notes: "Its device trees are Val Packett's posted series from Maximilian Luz's linux-surface work, with the two fixes Haipeng Lin's test found, and its firmware comes from the bundles Microsoft publishes on Windows Update. The SQ2 with cellular shares the SQ1's SKU, so it boots the SQ1's tree at the SQ1's top clock. Its keyboard, battery and sensor DSP need linux-omarchy 7.3-65 (omacom/omarchy-pkgs#2860). Nobody has booted Omarchy on it yet."
     acpi: ["microsoft-surface-prox", "linux-surface/surface_pro_x_sq1", "linux-surface/surface_pro_x_sq2"]
     sources:
       - https://github.com/aarch64-laptops/build/tree/master/misc/microsoft-surface-prox

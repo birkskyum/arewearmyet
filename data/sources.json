@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-15T21:47:05.458Z",
+  "collected": "2026-11-15T23:06:59.869Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -5891,7 +5891,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-63",
+        "kernel": "7.3-65",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -5925,6 +5925,9 @@
           "mahua-microsoft-surface-pro-12th-edition.dts",
           "purwa-lenovo-ideacentre-mini-01q8x10.dts",
           "sc8180x-lenovo-flex-5g.dts",
+          "sc8180x-microsoft-cambria.dts",
+          "sc8180x-microsoft-carina.dts",
+          "sc8180x-microsoft-caspar.dts",
           "sc8280xp-crd.dts",
           "sc8280xp-huawei-gaokun3.dts",
           "sc8280xp-lenovo-thinkpad-x13s.dts",
@@ -6072,6 +6075,8 @@
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
           "mahua-microsoft-surface-pro-12th-edition.json",
+          "sc8180x-microsoft-cambria.json",
+          "sc8180x-microsoft-caspar.json",
           "x126100-asus-v400-aio-vm441qa.json",
           "x126100-asus-vivobook-14.json",
           "x126100-asus-vivobook-16.json",
@@ -6923,6 +6928,23 @@
             "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcadsp8280.mbn",
             "qcom/sc8280xp/MICROSOFT/SurfacePro9/qccdsp8280.mbn",
             "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcdxkmsuc8280.mbn"
+          ],
+          "microsoft-surface-pro-x-firmware": [
+            "qcom/sc8180x/microsoft/cambria/qcadsp8180.mbn",
+            "qcom/sc8180x/microsoft/cambria/qccdsp8180.mbn",
+            "qcom/sc8180x/microsoft/cambria/qcdxkmsuc8180.mbn",
+            "qcom/sc8180x/microsoft/cambria/qcmpss8180.mbn",
+            "qcom/sc8180x/microsoft/cambria/qcslpi8180.mbn",
+            "qcom/sc8180x/microsoft/carina/qcadsp8180.mbn",
+            "qcom/sc8180x/microsoft/carina/qccdsp8180.mbn",
+            "qcom/sc8180x/microsoft/carina/qcdxkmsuc8180.mbn",
+            "qcom/sc8180x/microsoft/carina/qcmpss8180.mbn",
+            "qcom/sc8180x/microsoft/carina/qcslpi8180.mbn",
+            "qcom/sc8180x/microsoft/caspar/qcadsp8180.mbn",
+            "qcom/sc8180x/microsoft/caspar/qccdsp8180.mbn",
+            "qcom/sc8180x/microsoft/caspar/qcdxkmsuc8180.mbn",
+            "qcom/sc8180x/microsoft/caspar/qcmpss8180_nm.mbn",
+            "qcom/sc8180x/microsoft/caspar/qcslpi8180.mbn"
           ],
           "microsoft-windows-dev-kit-2023-firmware": [
             "qcom/sc8280xp/microsoft/blackrock/qcadsp8280.mbn",
@@ -8034,6 +8056,54 @@
           "qcom/glymur/ASUSTeK/QN10/qccdsp8480.mbn",
           "qcom/glymur/ASUSTeK/QN10/cdsp_dtbs.elf"
         ]
+      },
+      {
+        "file": "sc8180x-microsoft-cambria.dts",
+        "model": "Microsoft Surface Pro X (SQ1)",
+        "compatible": [
+          "microsoft,cambria",
+          "qcom,sc8180x"
+        ],
+        "patch": "linux-omarchy-dtbs/0038-arm64-dts-qcom-sc8180x-Add-Microsoft-Surface-Pro-X.patch",
+        "firmware": [
+          "qcom/sc8180x/microsoft/cambria/qcdxkmsuc8180.mbn",
+          "qcom/sc8180x/microsoft/cambria/qcadsp8180.mbn",
+          "qcom/sc8180x/microsoft/cambria/qccdsp8180.mbn",
+          "qcom/sc8180x/microsoft/cambria/qcmpss8180.mbn",
+          "qcom/sc8180x/microsoft/cambria/qcslpi8180.mbn"
+        ]
+      },
+      {
+        "file": "sc8180x-microsoft-carina.dts",
+        "model": "Microsoft Surface Pro X (SQ2)",
+        "compatible": [
+          "microsoft,carina",
+          "qcom,sc8180x"
+        ],
+        "patch": "linux-omarchy-dtbs/0038-arm64-dts-qcom-sc8180x-Add-Microsoft-Surface-Pro-X.patch",
+        "firmware": [
+          "qcom/sc8180x/microsoft/carina/qcdxkmsuc8180.mbn",
+          "qcom/sc8180x/microsoft/carina/qcadsp8180.mbn",
+          "qcom/sc8180x/microsoft/carina/qccdsp8180.mbn",
+          "qcom/sc8180x/microsoft/carina/qcmpss8180.mbn",
+          "qcom/sc8180x/microsoft/carina/qcslpi8180.mbn"
+        ]
+      },
+      {
+        "file": "sc8180x-microsoft-caspar.dts",
+        "model": "Microsoft Surface Pro X (Wi-Fi)",
+        "compatible": [
+          "microsoft,caspar",
+          "qcom,sc8180x"
+        ],
+        "patch": "linux-omarchy-dtbs/0038-arm64-dts-qcom-sc8180x-Add-Microsoft-Surface-Pro-X.patch",
+        "firmware": [
+          "qcom/sc8180x/microsoft/caspar/qcdxkmsuc8180.mbn",
+          "qcom/sc8180x/microsoft/caspar/qcadsp8180.mbn",
+          "qcom/sc8180x/microsoft/caspar/qccdsp8180.mbn",
+          "qcom/sc8180x/microsoft/caspar/qcmpss8180_nm.mbn",
+          "qcom/sc8180x/microsoft/caspar/qcslpi8180.mbn"
+        ]
       }
     ],
     "carriedIds": [
@@ -8311,6 +8381,30 @@
           "e28782dd-88ea-50c5-be98-c2e359138487",
           "acfec04d-274f-589e-ac72-c3defc92ee0c",
           "bd8bb66f-bc54-5034-a2d9-e4494cb5c7f1"
+        ]
+      },
+      {
+        "file": "sc8180x-microsoft-cambria.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Microsoft Surface Pro X (Surface_Pro_X_1876)",
+        "compatible": "microsoft,cambria",
+        "hwids": [
+          "21c23c53-98d5-5f92-8e8b-60bbea3509fe",
+          "1dc8ec42-9eeb-51b1-9490-0cb33bd7d23a",
+          "cfd77e02-45cc-5a46-9102-bf5881241933",
+          "38d5909b-b425-5db8-b533-1133e81465e8"
+        ]
+      },
+      {
+        "file": "sc8180x-microsoft-caspar.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Microsoft Surface Pro X Wi-Fi (Surface_Pro_X_2010)",
+        "compatible": "microsoft,caspar",
+        "hwids": [
+          "75b4817e-50ec-5e63-a904-1175cd1abff6",
+          "cdf510a8-d41c-54bf-b2c5-61ba10957019",
+          "69c2fd0d-8593-575f-b6af-5f70f0299ea4",
+          "aa2c30e9-117c-5aeb-a8aa-4b01761cf493"
         ]
       },
       {

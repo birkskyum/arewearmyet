@@ -446,6 +446,65 @@ const rows = models.map((model) => {
 const count = <T>(items: T[], test: (item: T) => boolean) => items.filter(test).length;
 type Row = (typeof rows)[number];
 const current = rows.filter((row) => ['x1', 'x2'].includes(row.generation) && row.boot === 'uefi');
+const older = rows.filter((row) => ['8cx', '8cx-gen1', '850', '835', '7c'].includes(row.generation) && row.boot === 'uefi');
+// Where each piece stands for a set of models: in an Omarchy channel, in the releases of Linux, systemd and
+// linux-firmware that any distro can ship, in an open pull request or elsewhere, and all three together
+function byPiece(set: Row[]) {
+  const omarchy = {
+    deviceTree: (r: Row) => r.omarchy.deviceTree !== null,
+    ids: (r: Row) => r.omarchy.ids !== null,
+    firmware: (r: Row) => r.omarchy.firmwareChannel !== null,
+  };
+  const upstream = {
+    deviceTree: (r: Row) => r.upstream.deviceTree === 'released',
+    ids: (r: Row) => r.variants.some((v) => v.ids.some((entry) => entry.matches && entry.firstRelease)),
+    firmware: (r: Row) => r.upstream.firmwareUpstream === 'released',
+  };
+  // Exists elsewhere, but Omarchy doesn't carry it yet and no pull request adds it: a tree in Linux, linux-next,
+  // a posted patch or out of tree, hardware IDs anywhere, firmware in a maker's download or on its way to linux-firmware
+  const available = {
+    deviceTree: (r: Row) => !omarchy.deviceTree(r) && !pull.deviceTree(r) && r.upstream.deviceTree !== 'missing',
+    ids: (r: Row) => !omarchy.ids(r) && !pull.ids(r) && r.upstream.ids !== 'missing',
+    firmware: (r: Row) => !omarchy.firmware(r) && !pull.firmware(r) && (r.upstream.firmwareDownload !== null || ['next-release', 'posted'].includes(r.upstream.firmwareUpstream)),
+  };
+  const pieces = ['deviceTree', 'ids', 'firmware'] as const;
+  // Omarchy's count split into what it has from upstream and what it adds
+  const split = (ours: (r: Row) => boolean, theirs: (r: Row) => boolean, open: (r: Row) => boolean, elsewhere: (r: Row) => boolean, channels?: Record<string, number>) => ({
+    omarchy: count(set, ours),
+    fromUpstream: count(set, (r) => ours(r) && theirs(r)),
+    added: count(set, (r) => ours(r) && !theirs(r)),
+    pull: count(set, open),
+    available: count(set, elsewhere),
+    upstream: count(set, theirs),
+    ...(channels ? { channels } : {}),
+    // Which models make up each part, so the page can draw one cell per model
+    models: {
+      fromUpstream: ids((r) => ours(r) && theirs(r)),
+      added: ids((r) => ours(r) && !theirs(r)),
+      pull: ids(open),
+      available: ids(elsewhere),
+    },
+  });
+  const ids = (test: (r: Row) => boolean) => set.filter(test).map((r) => r.id);
+  const byChannel = (piece: (typeof pieces)[number]) =>
+    Object.fromEntries(CHANNELS.map((name) => [name, count(set, (r) => channelRank(piece === 'firmware' ? r.omarchy.firmwareChannel : r.omarchy[piece]) <= channelRank(name))]));
+  // Not shipped yet, but an open omarchy-pkgs pull request adds it
+  const pull = {
+    deviceTree: (r: Row) => !omarchy.deviceTree(r) && r.omarchy.deviceTreePull !== null,
+    ids: (r: Row) => !omarchy.ids(r) && r.omarchy.idsPull !== null,
+    firmware: (r: Row) => r.omarchy.firmware === 'pr',
+  };
+  return {
+    ...Object.fromEntries(pieces.map((piece) => [piece, split(omarchy[piece], upstream[piece], pull[piece], available[piece], byChannel(piece))])),
+    all: split(
+      (r) => pieces.every((piece) => omarchy[piece](r)),
+      (r) => pieces.every((piece) => upstream[piece](r)),
+      (r) => pieces.every((piece) => omarchy[piece](r) || pull[piece](r)) && pieces.some((piece) => pull[piece](r)),
+      (r) => pieces.every((piece) => omarchy[piece](r) || pull[piece](r) || available[piece](r)) && pieces.some((piece) => available[piece](r)),
+    ),
+  };
+}
+
 const summary = {
   models: current.length,
   nvidia: nvidia.length,
@@ -469,63 +528,10 @@ const summary = {
   acpi: count(current, (r) => r.upstream.acpi === 'collected'),
   acpiWanted: count(current, (r) => r.upstream.deviceTree === 'missing' && r.upstream.acpi !== 'collected'),
   machine: Object.fromEntries(['team', 'omarchy', 'linux', 'nobody'].map((who) => [who, count(current, (r) => r.machine === who)])),
-  // Where each piece stands: in an Omarchy channel, in the releases of Linux, systemd and linux-firmware
-  // that any distro can ship, in an open pull request or elsewhere, and all three together
-  byPiece: (() => {
-    const omarchy = {
-      deviceTree: (r: Row) => r.omarchy.deviceTree !== null,
-      ids: (r: Row) => r.omarchy.ids !== null,
-      firmware: (r: Row) => r.omarchy.firmwareChannel !== null,
-    };
-    const upstream = {
-      deviceTree: (r: Row) => r.upstream.deviceTree === 'released',
-      ids: (r: Row) => r.variants.some((v) => v.ids.some((entry) => entry.matches && entry.firstRelease)),
-      firmware: (r: Row) => r.upstream.firmwareUpstream === 'released',
-    };
-    // Exists elsewhere, but Omarchy doesn't carry it yet and no pull request adds it: a tree in Linux, linux-next,
-    // a posted patch or out of tree, hardware IDs anywhere, firmware in a maker's download or on its way to linux-firmware
-    const available = {
-      deviceTree: (r: Row) => !omarchy.deviceTree(r) && !pull.deviceTree(r) && r.upstream.deviceTree !== 'missing',
-      ids: (r: Row) => !omarchy.ids(r) && !pull.ids(r) && r.upstream.ids !== 'missing',
-      firmware: (r: Row) => !omarchy.firmware(r) && !pull.firmware(r) && (r.upstream.firmwareDownload !== null || ['next-release', 'posted'].includes(r.upstream.firmwareUpstream)),
-    };
-    const pieces = ['deviceTree', 'ids', 'firmware'] as const;
-    // Omarchy's count split into what it has from upstream and what it adds
-    const split = (ours: (r: Row) => boolean, theirs: (r: Row) => boolean, open: (r: Row) => boolean, elsewhere: (r: Row) => boolean, channels?: Record<string, number>) => ({
-      omarchy: count(current, ours),
-      fromUpstream: count(current, (r) => ours(r) && theirs(r)),
-      added: count(current, (r) => ours(r) && !theirs(r)),
-      pull: count(current, open),
-      available: count(current, elsewhere),
-      upstream: count(current, theirs),
-      ...(channels ? { channels } : {}),
-      // Which models make up each part, so the page can draw one cell per model
-      models: {
-        fromUpstream: ids((r) => ours(r) && theirs(r)),
-        added: ids((r) => ours(r) && !theirs(r)),
-        pull: ids(open),
-        available: ids(elsewhere),
-      },
-    });
-    const ids = (test: (r: Row) => boolean) => current.filter(test).map((r) => r.id);
-    const byChannel = (piece: (typeof pieces)[number]) =>
-      Object.fromEntries(CHANNELS.map((name) => [name, count(current, (r) => channelRank(piece === 'firmware' ? r.omarchy.firmwareChannel : r.omarchy[piece]) <= channelRank(name))]));
-    // Not shipped yet, but an open omarchy-pkgs pull request adds it
-    const pull = {
-      deviceTree: (r: Row) => !omarchy.deviceTree(r) && r.omarchy.deviceTreePull !== null,
-      ids: (r: Row) => !omarchy.ids(r) && r.omarchy.idsPull !== null,
-      firmware: (r: Row) => r.omarchy.firmware === 'pr',
-    };
-    return {
-      ...Object.fromEntries(pieces.map((piece) => [piece, split(omarchy[piece], upstream[piece], pull[piece], available[piece], byChannel(piece))])),
-      all: split(
-        (r) => pieces.every((piece) => omarchy[piece](r)),
-        (r) => pieces.every((piece) => upstream[piece](r)),
-        (r) => pieces.every((piece) => omarchy[piece](r) || pull[piece](r)) && pieces.some((piece) => pull[piece](r)),
-        (r) => pieces.every((piece) => omarchy[piece](r) || pull[piece](r) || available[piece](r)) && pieces.some((piece) => available[piece](r)),
-      ),
-    };
-  })(),
+  byPiece: byPiece(current),
+  // The same for the Windows on Arm PCs from before Snapdragon X
+  older: older.length,
+  byPieceOlder: byPiece(older),
 };
 
 // Anything the sources know that no model claims yet, so the list can be completed
