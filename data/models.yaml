@@ -751,8 +751,9 @@ models:
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2770"
     devicetree_files:
       - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/8bfbfd75/pkgbuilds/linux-omarchy-dtbs/0017-arm64-dts-qcom-Add-the-Dynabook-XD5.patch#x1p42100-dynabook-xd5.dts"
-    model_numbers: ["P1D5APBL", "W6XDZA5BAM-K"]
+    model_numbers: ["P1D5APBL", "P1D5ARBL", "W6XDZA5BAM-K", "W6XDZA7CAM"]
     acpi: ["firmware/dynabook-xd5"]
+    notes: "Dynabook also sells its board (DBIFXN00) directly as the dynabook XD/ZA, sometimes with the X1E-78-100. That version reports another product name and needs an X1E tree."
     sources:
       - https://pc.watch.impress.co.jp/docs/news/2072007.html
       - https://www.notebookcheck.net/Dynabook-XD5-first-Dynabook-laptop-powered-by-a-Snapdragon-X-Plus-processor.1189810.0.html
@@ -785,9 +786,11 @@ models:
     generation: x1
     released: "2026-01"
     chips: ["X1-26-100"]
-    model_numbers: ["WU6-L1", "UQ-L1", "FMVUQSL1WA", "FMVUQSL1BA", "FMVUQSL1BC"]
+    model_numbers: ["WU6-L1", "UQ-L1", "FMVUQSL1WA", "FMVUQSL1BA", "FMVUQSL1BC", "UQ-L3B", "WU6-L3", "K0NG0000JP"]
+    notes: "The autumn 2026 UQ-L3B and WU6-L3 keep the X1-26-100 and the same Qualcomm system software package."
     sources:
       - https://pc.watch.impress.co.jp/docs/column/ubiq/2077242.html
+      - https://www.fmworld.net/fmv/note_u_q/2610/spec/
 
 
   # Honor
@@ -1079,8 +1082,9 @@ models:
     name: "OmniBook X 16 (16-cp0)"
     generation: x1
     released: "2025"
+    chips: ["X1P-42-100"]
     model_numbers: ["16-cp0xxx", "8F45"]
-    notes: "HP builds it on board 8F45 with the OmniBook X 14 14-kr0 (driver pack sp172628). Sold with a Snapdragon X Plus, exact chip not confirmed. Nobody has published a tree, hardware IDs or ACPI dump for it."
+    notes: "HP builds it on board 8F45 with the OmniBook X 14 14-kr0 (driver pack sp172628). Every unit seen runs the X1P-42-100. HP's driver pack carries the board's BIOS and DSP firmware, so a tree can be written from its ACPI tables."
     sources:
       - https://www.bestbuy.com/product/hp-omnibook-x-16-2k-oled-touchscreen-laptop-snapdragon-x-plus-2025-16gb-memory-512gb-ssd-copilot-pc-deep-espresso/JJGWKY446Z
       - https://ftp.hp.com/pub/softpaq/sp172501-173000/sp172628.cva

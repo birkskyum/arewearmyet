@@ -6331,7 +6331,9 @@
       "released": "2025-12",
       "modelNumbers": [
         "P1D5APBL",
-        "W6XDZA5BAM-K"
+        "P1D5ARBL",
+        "W6XDZA5BAM-K",
+        "W6XDZA7CAM"
       ],
       "chips": [
         "X1P-42-100"
@@ -6342,7 +6344,7 @@
         "https://www.notebookcheck.net/Dynabook-XD5-first-Dynabook-laptop-powered-by-a-Snapdragon-X-Plus-processor.1189810.0.html",
         "https://kakaku.com/item/K0001724657/"
       ],
-      "notes": null,
+      "notes": "Dynabook also sells its board (DBIFXN00) directly as the dynabook XD/ZA, sometimes with the X1E-78-100. That version reports another product name and needs an X1E tree.",
       "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
@@ -6642,16 +6644,20 @@
         "UQ-L1",
         "FMVUQSL1WA",
         "FMVUQSL1BA",
-        "FMVUQSL1BC"
+        "FMVUQSL1BC",
+        "UQ-L3B",
+        "WU6-L3",
+        "K0NG0000JP"
       ],
       "chips": [
         "X1-26-100"
       ],
       "status": null,
       "sources": [
-        "https://pc.watch.impress.co.jp/docs/column/ubiq/2077242.html"
+        "https://pc.watch.impress.co.jp/docs/column/ubiq/2077242.html",
+        "https://www.fmworld.net/fmv/note_u_q/2610/spec/"
       ],
-      "notes": null,
+      "notes": "The autumn 2026 UQ-L3B and WU6-L3 keep the X1-26-100 and the same Qualcomm system software package.",
       "outcome": "none",
       "bootable": "needs-deviceTree",
       "reports": [],
@@ -8421,13 +8427,15 @@
         "16-cp0xxx",
         "8F45"
       ],
-      "chips": [],
+      "chips": [
+        "X1P-42-100"
+      ],
       "status": null,
       "sources": [
         "https://www.bestbuy.com/product/hp-omnibook-x-16-2k-oled-touchscreen-laptop-snapdragon-x-plus-2025-16gb-memory-512gb-ssd-copilot-pc-deep-espresso/JJGWKY446Z",
         "https://ftp.hp.com/pub/softpaq/sp172501-173000/sp172628.cva"
       ],
-      "notes": "HP builds it on board 8F45 with the OmniBook X 14 14-kr0 (driver pack sp172628). Sold with a Snapdragon X Plus, exact chip not confirmed. Nobody has published a tree, hardware IDs or ACPI dump for it.",
+      "notes": "HP builds it on board 8F45 with the OmniBook X 14 14-kr0 (driver pack sp172628). Every unit seen runs the X1P-42-100. HP's driver pack carries the board's BIOS and DSP firmware, so a tree can be written from its ACPI tables.",
       "outcome": "none",
       "bootable": "needs-deviceTree",
       "reports": [],
