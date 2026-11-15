@@ -1262,7 +1262,7 @@
     "notYet": 18,
     "deviceTree": 78,
     "ids": 58,
-    "firmware": 51,
+    "firmware": 63,
     "googlebooks": 2,
     "chromebooks": 10,
     "acpi": 46,
@@ -1470,7 +1470,7 @@
         "fromUpstream": 1,
         "added": 48,
         "pull": 0,
-        "available": 2,
+        "available": 14,
         "upstream": 1,
         "channels": {
           "stable": 1,
@@ -1533,8 +1533,20 @@
           ],
           "pull": [],
           "available": [
+            "asus-v400-aio-vm441qa",
+            "asus-v400-aio-vm471qa",
             "asus-vivobook-14-x1407qa",
-            "hp-omnibook-5-14-he1"
+            "asus-vivobook-s14-s5408qa",
+            "asus-vivobook-s14-flip-tp5408qa",
+            "asus-vivobook-s16-s5608qa",
+            "asus-vivobook-s16-flip-tp5608qa",
+            "asus-vivobook-s16-s3607na",
+            "hp-elitebook-6-g2q",
+            "hp-omnibook-5-14-he1",
+            "hp-omnibook-x-14-kr0",
+            "hp-omnibook-x-16-cp0",
+            "microsoft-surface-laptop-13in-2nd-edition",
+            "microsoft-surface-pro-12in-2nd-edition"
           ]
         }
       },
@@ -1543,7 +1555,7 @@
         "fromUpstream": 1,
         "added": 47,
         "pull": 0,
-        "available": 1,
+        "available": 4,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1600,7 +1612,10 @@
           ],
           "pull": [],
           "available": [
-            "asus-vivobook-14-x1407qa"
+            "asus-vivobook-14-x1407qa",
+            "hp-elitebook-6-g2q",
+            "microsoft-surface-laptop-13in-2nd-edition",
+            "microsoft-surface-pro-12in-2nd-edition"
           ]
         }
       }
@@ -3662,7 +3677,7 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -3670,7 +3685,7 @@
       "pieces": {
         "deviceTree": "edge",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -3681,17 +3696,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsucpurwa.mbn",
-          "qcvss8380_pa.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x126100-ASUSTeK-VM441QA",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -3756,7 +3764,7 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -3764,7 +3772,7 @@
       "pieces": {
         "deviceTree": "edge",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -3775,17 +3783,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsucpurwa.mbn",
-          "qcvss8380_pa.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x126100-ASUSTeK-VM471QA",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -4329,7 +4330,7 @@
       "pieces": {
         "deviceTree": "edge",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -4340,23 +4341,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsucpurwa.mbn",
-          "qcvss8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf",
-          "qcvss8380.mbn",
-          "qcdxkmsucpurwa.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x126100-ASUSTeK-vivobook-s14-s5408qa",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -4429,7 +4417,7 @@
       "pieces": {
         "deviceTree": "edge",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -4440,23 +4428,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsucpurwa.mbn",
-          "qcvss8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf",
-          "qcvss8380.mbn",
-          "qcdxkmsucpurwa.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x126100-ASUSTeK-vivobook-s14-flip-tp5408qa",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -4661,7 +4636,7 @@
       "pieces": {
         "deviceTree": "edge",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -4672,23 +4647,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsucpurwa.mbn",
-          "qcvss8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf",
-          "qcvss8380.mbn",
-          "qcdxkmsucpurwa.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x126100-ASUSTeK-vivobook-s16-s5608qa",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -4761,7 +4723,7 @@
       "pieces": {
         "deviceTree": "edge",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -4772,23 +4734,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsucpurwa.mbn",
-          "qcvss8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf",
-          "qcvss8380.mbn",
-          "qcdxkmsucpurwa.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x126100-ASUSTeK-vivobook-s16-flip-tp5608qa",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -5350,7 +5299,7 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -5358,7 +5307,7 @@
       "pieces": {
         "deviceTree": "edge",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -5369,15 +5318,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcadsp8480.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8480.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-glymur-ASUSTeK-S3607NA",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -7895,7 +7839,7 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -7903,7 +7847,7 @@
       "pieces": {
         "deviceTree": "edge",
         "ids": "edge",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -7914,15 +7858,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcadsp8480.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8480.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-glymur-hp-elitebook-6-g2q",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -8381,7 +8320,7 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -8389,7 +8328,7 @@
       "pieces": {
         "deviceTree": "none",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -8400,10 +8339,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x1p42100-hp-omnibook-x16-cp0",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -8461,7 +8400,7 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -8469,7 +8408,7 @@
       "pieces": {
         "deviceTree": "none",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -8480,10 +8419,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x1p42100-hp-omnibook-x16-cp0",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -12091,7 +12030,7 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -12099,7 +12038,7 @@
       "pieces": {
         "deviceTree": "edge",
         "ids": "edge",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -12110,15 +12049,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcadsp8480.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8480.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-kalambo-Microsoft-SurfaceLaptop13",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -12380,7 +12314,7 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -12388,7 +12322,7 @@
       "pieces": {
         "deviceTree": "edge",
         "ids": "edge",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -12399,15 +12333,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcadsp8480.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8480.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-kalambo-Microsoft-Surface12",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],

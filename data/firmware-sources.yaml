@@ -39,16 +39,21 @@ folders:
         size: 536
         sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
         from:
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
           - { package: "asus-socpackage-52286", member: "QualcommBSP/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
         sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
         from:
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
           - { package: "asus-socpackage-52286", member: "QualcommBSP/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
       - name: "cdsp_dtbs.elf"
         size: 69432
         sha256: "9bee104a48d4aac647287d6c1454df170c1cff7158a2352711fd1e2163ea6d1d"
         from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/NPU/qcnspmcdm8480/cdsp_dtbs.elf" }
           - { package: "asus-socpackage-52286", member: "QualcommBSP/qcnspmcdm8480/cdsp_dtbs.elf" }
       - name: "qcadsp8480.mbn"
         size: 19965864
@@ -59,6 +64,7 @@ folders:
         size: 3252504
         sha256: "acf13d29288d283793f418a36650e8a261eed927d30de109a59cb2210f458794"
         from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/NPU/qcnspmcdm8480/qccdsp8480.mbn" }
           - { package: "asus-socpackage-52286", member: "QualcommBSP/qcnspmcdm8480/qccdsp8480.mbn" }
   - path: "qcom/glymur/ASUSTeK/QN10"
     models: ["asus-ascent-qn10"]
@@ -68,6 +74,7 @@ folders:
         sha256: "9bee104a48d4aac647287d6c1454df170c1cff7158a2352711fd1e2163ea6d1d"
         note: "ASUS publishes no drivers for the QN10, so this is Qualcomm's generic X2 compute DSP, signed for any maker and installed by the qcnspmcdm8480 extension that matches every X2 NPU. The QN10's DSDT gives its compute DSP CRD08480. Its audio DSP (board 89401043) is in no ASUS package."
         from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/NPU/qcnspmcdm8480/cdsp_dtbs.elf" }
           - { package: "asus-socpackage-50616", member: "QualcommBSP/NPU/qcnspmcdm8480/cdsp_dtbs.elf" }
           - { package: "asus-socpackage-51123", member: "QualcommBSP/NPU/qcnspmcdm8480/cdsp_dtbs.elf" }
       - name: "qccdsp8480.mbn"
@@ -75,8 +82,69 @@ folders:
         sha256: "acf13d29288d283793f418a36650e8a261eed927d30de109a59cb2210f458794"
         note: "ASUS publishes no drivers for the QN10, so this is Qualcomm's generic X2 compute DSP, signed for any maker and installed by the qcnspmcdm8480 extension that matches every X2 NPU. The QN10's DSDT gives its compute DSP CRD08480. Its audio DSP (board 89401043) is in no ASUS package."
         from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/NPU/qcnspmcdm8480/qccdsp8480.mbn" }
           - { package: "asus-socpackage-50616", member: "QualcommBSP/NPU/qcnspmcdm8480/qccdsp8480.mbn" }
           - { package: "asus-socpackage-51123", member: "QualcommBSP/NPU/qcnspmcdm8480/qccdsp8480.mbn" }
+  - path: "qcom/glymur/ASUSTeK/S3607NA"
+    models: ["asus-vivobook-s16-s3607na"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 225080
+        sha256: "213b2eba8f82a387806b6e334d5fdcaf6325acdb5f03a3c1d03a9ecb9c611a18"
+        from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 513
+        sha256: "66ce8531efb7979d234e0f0eabbe18d038ac97da771a8a194f613df8f0724e81"
+        from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspr.jsn" }
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspr.jsn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 515
+        sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
+        from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 703
+        sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
+        from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 69432
+        sha256: "9bee104a48d4aac647287d6c1454df170c1cff7158a2352711fd1e2163ea6d1d"
+        from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/NPU/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/NPU/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/NPU/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-52286", member: "QualcommBSP/qcnspmcdm8480/cdsp_dtbs.elf" }
+      - name: "qcadsp8480.mbn"
+        size: 21338072
+        sha256: "6e98746ddb4a4c1b8c11f13f99319a1bf2e13ea6e9911865e120dfb27972b34d"
+        from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/qcadsp8480.mbn" }
+      - name: "qccdsp8480.mbn"
+        size: 3252504
+        sha256: "acf13d29288d283793f418a36650e8a261eed927d30de109a59cb2210f458794"
+        from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/NPU/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/NPU/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/NPU/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "asus-socpackage-52286", member: "QualcommBSP/qcnspmcdm8480/qccdsp8480.mbn" }
   - path: "qcom/glymur/ASUSTeK/UX3407NA"
     models: ["asus-zenbook-a14-ux3407na"]
     files:
@@ -90,24 +158,36 @@ folders:
         size: 513
         sha256: "66ce8531efb7979d234e0f0eabbe18d038ac97da771a8a194f613df8f0724e81"
         from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspr.jsn" }
           - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspr.jsn" }
           - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspr.jsn" }
       - name: "adsps.jsn"
         size: 515
         sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
         from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
           - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
           - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
       - name: "adspua.jsn"
         size: 703
         sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
         from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
           - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
           - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
       - name: "cdsp_dtbs.elf"
         size: 69432
         sha256: "9bee104a48d4aac647287d6c1454df170c1cff7158a2352711fd1e2163ea6d1d"
         from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/NPU/qcnspmcdm8480/cdsp_dtbs.elf" }
           - { package: "asus-socpackage-50616", member: "QualcommBSP/NPU/qcnspmcdm8480/cdsp_dtbs.elf" }
           - { package: "asus-socpackage-51123", member: "QualcommBSP/NPU/qcnspmcdm8480/cdsp_dtbs.elf" }
       - name: "qcadsp8480.mbn"
@@ -120,6 +200,7 @@ folders:
         size: 3252504
         sha256: "acf13d29288d283793f418a36650e8a261eed927d30de109a59cb2210f458794"
         from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/NPU/qcnspmcdm8480/qccdsp8480.mbn" }
           - { package: "asus-socpackage-50616", member: "QualcommBSP/NPU/qcnspmcdm8480/qccdsp8480.mbn" }
           - { package: "asus-socpackage-51123", member: "QualcommBSP/NPU/qcnspmcdm8480/qccdsp8480.mbn" }
   - path: "qcom/glymur/ASUSTeK/UX3607OA"
@@ -162,16 +243,19 @@ folders:
         sha256: "66ce8531efb7979d234e0f0eabbe18d038ac97da771a8a194f613df8f0724e81"
         from:
           - { package: "hp-sp173974", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspr.jsn" }
+          - { package: "hp-sp174817", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspr.jsn" }
       - name: "adsps.jsn"
         size: 515
         sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
         from:
           - { package: "hp-sp173974", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adsps.jsn" }
+          - { package: "hp-sp174817", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adsps.jsn" }
       - name: "adspua.jsn"
         size: 703
         sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
         from:
           - { package: "hp-sp173974", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspua.jsn" }
+          - { package: "hp-sp174817", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspua.jsn" }
       - name: "cdsp_dtbs.elf"
         size: 69432
         sha256: "9bee104a48d4aac647287d6c1454df170c1cff7158a2352711fd1e2163ea6d1d"
@@ -230,6 +314,56 @@ folders:
         sha256: "acf13d29288d283793f418a36650e8a261eed927d30de109a59cb2210f458794"
         from:
           - { package: "lenovo-n4pqq02w", member: "code$GetExtractPath$/N4PQQ02W/N4PQC20W/Core_drivers/qcnspmcdm8480/qccdsp8480.mbn" }
+  - path: "qcom/glymur/hp/elitebook-6-g2q"
+    models: ["hp-elitebook-6-g2q"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 225080
+        sha256: "00bf5b3216feeb47b2a9be06b86190ff1da16b28f80be710968c379341a7fbac"
+        from:
+          - { package: "hp-sp174817", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 513
+        sha256: "66ce8531efb7979d234e0f0eabbe18d038ac97da771a8a194f613df8f0724e81"
+        from:
+          - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspr.jsn" }
+          - { package: "hp-sp173974", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspr.jsn" }
+          - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adspr.jsn" }
+          - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspr.jsn" }
+          - { package: "hp-sp174817", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 515
+        sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
+        from:
+          - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adsps.jsn" }
+          - { package: "hp-sp173974", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adsps.jsn" }
+          - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adsps.jsn" }
+          - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "hp-sp174817", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 703
+        sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
+        from:
+          - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspua.jsn" }
+          - { package: "hp-sp173974", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspua.jsn" }
+          - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adspua.jsn" }
+          - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "hp-sp174817", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspua.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 69432
+        sha256: "a10da41b26547dd88f9287f66cf92cd8ba17cc1dce5eeff4d46621c3ae2258c2"
+        from:
+          - { package: "hp-sp174817", member: "src/driver/regrouped_driver/qcnspmcdm8480/cdsp_dtbs.elf" }
+      - name: "qcadsp8480.mbn"
+        size: 20527016
+        sha256: "75ecf1c174a62d116a9e510083cecca817d93a5cb24dc229110dc2ace74d5501"
+        from:
+          - { package: "hp-sp174817", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/qcadsp8480.mbn" }
+      - name: "qccdsp8480.mbn"
+        size: 3272984
+        sha256: "fae8fb92104ce23839ec384eea83c01be7fe92d0b7d5329b9a200b9b3ab83986"
+        from:
+          - { package: "hp-sp174817", member: "src/driver/regrouped_driver/qcnspmcdm8480/qccdsp8480.mbn" }
   - path: "qcom/glymur/hp/elitebook-x-g2q"
     models: ["hp-elitebook-x-g2q"]
     files:
@@ -245,6 +379,7 @@ folders:
           - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspr.jsn" }
           - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adspr.jsn" }
           - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspr.jsn" }
+          - { package: "hp-sp174817", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspr.jsn" }
       - name: "adsps.jsn"
         size: 515
         sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
@@ -252,6 +387,7 @@ folders:
           - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adsps.jsn" }
           - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adsps.jsn" }
           - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "hp-sp174817", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adsps.jsn" }
       - name: "adspua.jsn"
         size: 703
         sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
@@ -259,6 +395,7 @@ folders:
           - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspua.jsn" }
           - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adspua.jsn" }
           - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "hp-sp174817", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspua.jsn" }
       - name: "cdsp_dtbs.elf"
         size: 69432
         sha256: "0de06fca0ce8778beaae9122bc40ebf8c4e3a6b241be47e8e89725dac87cdc64"
@@ -317,6 +454,7 @@ folders:
           - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspr.jsn" }
           - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adspr.jsn" }
           - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspr.jsn" }
+          - { package: "hp-sp174817", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspr.jsn" }
       - name: "adsps.jsn"
         size: 515
         sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
@@ -324,6 +462,7 @@ folders:
           - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adsps.jsn" }
           - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adsps.jsn" }
           - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "hp-sp174817", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adsps.jsn" }
       - name: "adspua.jsn"
         size: 703
         sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
@@ -331,6 +470,7 @@ folders:
           - { package: "hp-sp172895", member: "src/Driver/qcsubsys_ext_adsp8480_4500R_HDCP_WHQL/adspua.jsn" }
           - { package: "hp-sp174082", member: "src/Driver/qcsubsys_ext_adsp8480_fix_listen_WHQL/adspua.jsn" }
           - { package: "hp-sp174694", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "hp-sp174817", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8480/adspua.jsn" }
       - name: "cdsp_dtbs.elf"
         size: 69432
         sha256: "9bee104a48d4aac647287d6c1454df170c1cff7158a2352711fd1e2163ea6d1d"
@@ -361,31 +501,43 @@ folders:
         size: 697
         sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
         from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
           - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
           - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
           - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspr.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
       - name: "adsps.jsn"
         size: 536
         sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
         from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
           - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
           - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
           - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adsps.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
         sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
         from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
           - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
           - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
           - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspua.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
       - name: "cdsp_dtbs.elf"
         size: 69432
         sha256: "dfd345ab5ee9dba7fc7d717a35a3b9bb96f195a1d2cde18af41be1945d8599db"
         from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
           - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
       - name: "qcadsp8480.mbn"
         size: 20645848
         sha256: "617a7a8ec5cd27f09cb6b5d7b7e07dff38e4c6f0869851f55e62aa257802aa26"
@@ -395,7 +547,205 @@ folders:
         size: 3252504
         sha256: "2798125b8458d47b4e1adbd3ae2451fdb20ee6add9ea4dc6211c96d96210a2b9"
         from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
           - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
+  - path: "qcom/glymur/microsoft/surface-pro-12th-edition"
+    models: ["microsoft-surface-pro-12th-edition"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 225080
+        sha256: "03a76a8d9ed13cd904530880d7122f16cb81b63829c455e4af09d86ed69b3fe9"
+        from:
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "microsoft-surfacelaptop-13in-1st-edition", member: "SurfaceUpdate/surfaceproextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspr.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "microsoft-surfacelaptop-13in-1st-edition", member: "SurfaceUpdate/surfaceproextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adsps.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "microsoft-surfacelaptop-13in-1st-edition", member: "SurfaceUpdate/surfaceproextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspua.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 69432
+        sha256: "dfd345ab5ee9dba7fc7d717a35a3b9bb96f195a1d2cde18af41be1945d8599db"
+        from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
+      - name: "qcadsp8480.mbn"
+        size: 20789160
+        sha256: "f2d6dcb59218dbc1bf599af157f1de59ae04c8f1b0ac090f1f775c5f5631d351"
+        from:
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/qcadsp8480.mbn" }
+      - name: "qccdsp8480.mbn"
+        size: 3252504
+        sha256: "2798125b8458d47b4e1adbd3ae2451fdb20ee6add9ea4dc6211c96d96210a2b9"
+        from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
+  - path: "qcom/kalambo/Microsoft/Surface12"
+    models: ["microsoft-surface-pro-12in-2nd-edition"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 225080
+        sha256: "dcc7d0ff49ddac9fc3f2789ae18007f5e0291eb0113dca2ba24b951307f7e2bc"
+        from:
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "microsoft-surfacelaptop-13in-1st-edition", member: "SurfaceUpdate/surfaceproextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspr.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "microsoft-surfacelaptop-13in-1st-edition", member: "SurfaceUpdate/surfaceproextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adsps.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "microsoft-surfacelaptop-13in-1st-edition", member: "SurfaceUpdate/surfaceproextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspua.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 69432
+        sha256: "dfd345ab5ee9dba7fc7d717a35a3b9bb96f195a1d2cde18af41be1945d8599db"
+        from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
+      - name: "qcadsp8480.mbn"
+        size: 20797352
+        sha256: "5f51ccdc6d1dbafc217d53157213ac99a4a08e6b2976fc89af1e13f6e40e746a"
+        from:
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/qcadsp8480.mbn" }
+      - name: "qccdsp8480.mbn"
+        size: 3252504
+        sha256: "2798125b8458d47b4e1adbd3ae2451fdb20ee6add9ea4dc6211c96d96210a2b9"
+        from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
+  - path: "qcom/kalambo/Microsoft/SurfaceLaptop13"
+    models: ["microsoft-surface-laptop-13in-2nd-edition"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 225080
+        sha256: "dc2230da43b08c8c0fdf80a27f73d69a2acd74e98eec2462480220d71b20c6d6"
+        from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "microsoft-surfacelaptop-13in-1st-edition", member: "SurfaceUpdate/surfaceproextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspr.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "microsoft-surfacelaptop-13in-1st-edition", member: "SurfaceUpdate/surfaceproextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adsps.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "microsoft-surfacelaptop-13in-1st-edition", member: "SurfaceUpdate/surfaceproextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspua.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 69432
+        sha256: "dfd345ab5ee9dba7fc7d717a35a3b9bb96f195a1d2cde18af41be1945d8599db"
+        from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/cdsp_dtbs.elf" }
+      - name: "qcadsp8480.mbn"
+        size: 20645848
+        sha256: "4755dc27cf447fa2f54236c33d16434d8223971b1c0b364f03fa2afba45499f2"
+        from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/qcadsp8480.mbn" }
+      - name: "qccdsp8480.mbn"
+        size: 3252504
+        sha256: "2798125b8458d47b4e1adbd3ae2451fdb20ee6add9ea4dc6211c96d96210a2b9"
+        from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
   - path: "qcom/x1e80100/ACER/SF14-11"
     models: ["acer-swift-14-ai-sf14-11"]
     files:
@@ -583,6 +933,8 @@ folders:
           - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adsps.jsn" }
           - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
           - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
         sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
@@ -590,6 +942,8 @@ folders:
           - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adspua.jsn" }
           - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
           - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
         sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
@@ -609,6 +963,12 @@ folders:
           - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
           - { package: "asus-socpackage-48168", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
           - { package: "asus-socpackage-50096", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
       - name: "qcadsp8380.mbn"
         size: 21879224
         sha256: "4ddea417cedc2eb965f3e6559ca92ea1a112c4c3bd8b901ddb5eca06d50970f7"
@@ -651,6 +1011,8 @@ folders:
           - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adsps.jsn" }
           - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
           - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
         sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
@@ -658,6 +1020,8 @@ folders:
           - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adspua.jsn" }
           - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
           - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
         sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
@@ -677,6 +1041,12 @@ folders:
           - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
           - { package: "asus-socpackage-48168", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
           - { package: "asus-socpackage-50096", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
       - name: "qcadsp8380.mbn"
         size: 22342024
         sha256: "537f48ff493a779163cdff068eea4a4d3c93f9b4585a146bbebb91b57ee4d9fa"
@@ -1106,6 +1476,7 @@ folders:
         from:
           - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adspr.jsn" }
           - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adspr.jsn" }
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adspr.jsn" }
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adspr.jsn" }
       - name: "adsps.jsn"
         size: 536
@@ -1113,6 +1484,7 @@ folders:
         from:
           - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adsps.jsn" }
           - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adsps.jsn" }
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adsps.jsn" }
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
@@ -1120,6 +1492,7 @@ folders:
         from:
           - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adspua.jsn" }
           - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adspua.jsn" }
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adspua.jsn" }
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
@@ -1127,6 +1500,7 @@ folders:
         from:
           - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/battmgr.jsn" }
           - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/battmgr.jsn" }
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/battmgr.jsn" }
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/battmgr.jsn" }
       - name: "cdsp_dtbs.elf"
         size: 40760
@@ -1140,6 +1514,7 @@ folders:
         from:
           - { package: "hp-sp171528", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdspr.jsn" }
           - { package: "hp-sp171529", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdspr.jsn" }
+          - { package: "hp-sp172628", member: "src/OSPart/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
       - name: "qcadsp8380.mbn"
         size: 22169992
@@ -1177,26 +1552,35 @@ folders:
         size: 697
         sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
         from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
           - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
           - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
           - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspr.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
       - name: "adsps.jsn"
         size: 536
         sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
         from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
           - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
           - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
           - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adsps.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
         sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
         from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
           - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
           - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
           - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspua.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
         sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
@@ -1240,26 +1624,35 @@ folders:
         size: 697
         sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
         from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
           - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
           - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
           - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspr.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
       - name: "adsps.jsn"
         size: 536
         sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
         from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
           - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
           - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
           - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adsps.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
         sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
         from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
           - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
           - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
           - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspua.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
         sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
@@ -1427,11 +1820,15 @@ folders:
         sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
         from:
           - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
         sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
         from:
           - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
         sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
@@ -1447,6 +1844,12 @@ folders:
         sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
         from:
           - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
       - name: "qcadsp8380.mbn"
         size: 22329736
         sha256: "c0dd5c1a6da54fb5f5bf0a1c4087423b68b80d19f45026cff53f79b3637be430"
@@ -1483,12 +1886,16 @@ folders:
         from:
           - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
           - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
         sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
         from:
           - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
           - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
         sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
@@ -1507,6 +1914,12 @@ folders:
         from:
           - { package: "asus-socpackage-50069", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
           - { package: "asus-socpackage-50070", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
       - name: "qcadsp8380.mbn"
         size: 22075832
         sha256: "5799e03a04e0f66dfec6a6230abd13dc742e6bb347d509e86d826382749c2b8b"
@@ -1546,12 +1959,16 @@ folders:
         from:
           - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
           - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
         sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
         from:
           - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
           - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
         sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
@@ -1570,6 +1987,12 @@ folders:
         from:
           - { package: "asus-socpackage-50070", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
           - { package: "asus-socpackage-50069", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
       - name: "qcadsp8380.mbn"
         size: 22075832
         sha256: "5799e03a04e0f66dfec6a6230abd13dc742e6bb347d509e86d826382749c2b8b"
@@ -1612,11 +2035,15 @@ folders:
         sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
         from:
           - { package: "asus-socpackage-44984", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_QAD_Signed/adsps.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
         sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
         from:
           - { package: "asus-socpackage-44984", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_QAD_Signed/adspua.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
         sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
@@ -1632,6 +2059,12 @@ folders:
         sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
         from:
           - { package: "asus-socpackage-44984", member: "Driver/QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
       - name: "qcadsp8380.mbn"
         size: 21879224
         sha256: "d8e2d3d5403f5da9e2f5194e26920e45bfa77d93fe71fdb742c4976bf13a05f7"
@@ -1674,6 +2107,8 @@ folders:
           - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adsps.jsn" }
           - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
           - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
         sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
@@ -1681,6 +2116,8 @@ folders:
           - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adspua.jsn" }
           - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
           - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
         sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
@@ -1700,6 +2137,12 @@ folders:
           - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
           - { package: "asus-socpackage-48168", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
           - { package: "asus-socpackage-50096", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
       - name: "qcadsp8380.mbn"
         size: 22530488
         sha256: "7542e84611c797cb04d4fd83491dcf929db763d8784816847d40b906dae1a035"
@@ -1728,16 +2171,30 @@ folders:
         sha256: "549bb9c8e32dc6253d0d0ddde2ce5c26f75f8333d3e55861f297e169a9f3e5c0"
         from:
           - { package: "asus-socpackage-50883", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
       - name: "adsps.jsn"
         size: 515
         sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
         from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
           - { package: "asus-socpackage-50883", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
       - name: "adspua.jsn"
         size: 703
         sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
         from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
           - { package: "asus-socpackage-50883", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 516
         sha256: "be8c6fba330908e4683fb6282761cb08485a302d6a66e09721e102e342f27236"
@@ -1748,11 +2205,21 @@ folders:
         sha256: "c1e3cdeee17e61ee5f9426fef78e5e35eaf9fdd49d3d39b9bd82dcad04c71647"
         from:
           - { package: "asus-socpackage-50883", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
       - name: "cdspr.jsn"
         size: 534
         sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
         from:
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
           - { package: "asus-socpackage-50883", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
       - name: "qcadsp8380.mbn"
         size: 22047160
         sha256: "204cafa21a5129b78194a9e668f656176cea251515e784cce4e287e0c0cbcefc"
@@ -1763,16 +2230,28 @@ folders:
         sha256: "4d2aa10aa60245177ca253d4a8f7ee15c0a0390e877efec29fa25c7d4b725568"
         from:
           - { package: "asus-socpackage-50883", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
       - name: "qcdxkmsucpurwa.mbn"
         size: 12088
         sha256: "848341997c48213d818168ed0ec48ee722c30738e5ffede40550d38252e3ac71"
         from:
           - { package: "asus-socpackage-50883", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
       - name: "qcvss8380.mbn"
         size: 2323048
         sha256: "fa5e78c9743c5ca3439baadfe7f1e118591f8a1ad976e9f87b75937945d42e8b"
         from:
           - { package: "asus-socpackage-50883", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
   - path: "qcom/x1p42100/LENOVO/13C8"
     models: ["lenovo-thinkcentre-neo-50q-qc"]
     files:
@@ -1863,26 +2342,35 @@ folders:
         size: 697
         sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
         from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
           - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
           - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
           - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspr.jsn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspr.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
       - name: "adsps.jsn"
         size: 536
         sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
         from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
           - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
           - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
           - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adsps.jsn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adsps.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
         sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
         from:
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
           - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
           - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
           - { package: "microsoft-surfacepro-12in-1st-edition", member: "SurfaceUpdate/proextadsp8380/adspua.jsn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/proextadsp/adspua.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
         sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
@@ -1930,16 +2418,25 @@ folders:
         sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
         from:
           - { package: "microsoft-surfacelaptop-13in-1st-edition", member: "SurfaceUpdate/surfaceproextadsp8380/adspr.jsn" }
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspr.jsn" }
       - name: "adsps.jsn"
         size: 536
         sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
         from:
           - { package: "microsoft-surfacelaptop-13in-1st-edition", member: "SurfaceUpdate/surfaceproextadsp8380/adsps.jsn" }
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
         sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
         from:
           - { package: "microsoft-surfacelaptop-13in-1st-edition", member: "SurfaceUpdate/surfaceproextadsp8380/adspua.jsn" }
+          - { package: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
+          - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/proextadsp8480/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
         sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
@@ -2095,6 +2592,7 @@ folders:
         from:
           - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adspr.jsn" }
           - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adspr.jsn" }
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adspr.jsn" }
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adspr.jsn" }
       - name: "adsps.jsn"
         size: 536
@@ -2102,6 +2600,7 @@ folders:
         from:
           - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adsps.jsn" }
           - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adsps.jsn" }
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adsps.jsn" }
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
@@ -2109,6 +2608,7 @@ folders:
         from:
           - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adspua.jsn" }
           - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adspua.jsn" }
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adspua.jsn" }
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
@@ -2116,6 +2616,7 @@ folders:
         from:
           - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/battmgr.jsn" }
           - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/battmgr.jsn" }
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/battmgr.jsn" }
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/battmgr.jsn" }
       - name: "cdsp_dtbs.elf"
         size: 40760
@@ -2128,6 +2629,7 @@ folders:
         from:
           - { package: "hp-sp171528", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdspr.jsn" }
           - { package: "hp-sp171529", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdspr.jsn" }
+          - { package: "hp-sp172628", member: "src/OSPart/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
       - name: "qcadsp8380.mbn"
         size: 22313352
@@ -2156,21 +2658,25 @@ folders:
         size: 697
         sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adspr.jsn" }
           - { package: "hp-sp174443", member: "drivers/qcsubsys_ext_adsp8380/adspr.jsn" }
       - name: "adsps.jsn"
         size: 536
         sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adsps.jsn" }
           - { package: "hp-sp174443", member: "drivers/qcsubsys_ext_adsp8380/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
         sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adspua.jsn" }
           - { package: "hp-sp174443", member: "drivers/qcsubsys_ext_adsp8380/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
         sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/battmgr.jsn" }
           - { package: "hp-sp174443", member: "drivers/qcsubsys_ext_adsp8380/battmgr.jsn" }
       - name: "cdsp_dtbs.elf"
         size: 40760
@@ -2181,6 +2687,7 @@ folders:
         size: 534
         sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
           - { package: "hp-sp174443", member: "drivers/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
       - name: "qcadsp8380.mbn"
         size: 22129032
@@ -2209,21 +2716,25 @@ folders:
         size: 697
         sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adspr.jsn" }
           - { package: "hp-sp174413", member: "src/Driver/qcsubsys_ext_adsp8380/adspr.jsn" }
       - name: "adsps.jsn"
         size: 536
         sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adsps.jsn" }
           - { package: "hp-sp174413", member: "src/Driver/qcsubsys_ext_adsp8380/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
         sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adspua.jsn" }
           - { package: "hp-sp174413", member: "src/Driver/qcsubsys_ext_adsp8380/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
         sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/battmgr.jsn" }
           - { package: "hp-sp174413", member: "src/Driver/qcsubsys_ext_adsp8380/battmgr.jsn" }
       - name: "cdsp_dtbs.elf"
         size: 40760
@@ -2234,6 +2745,7 @@ folders:
         size: 534
         sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
           - { package: "hp-sp174413", member: "src/Driver/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
       - name: "qcadsp8380.mbn"
         size: 22309256
@@ -2257,51 +2769,61 @@ folders:
         size: 73528
         sha256: "65d545429dc8cc58860799e5006373cc140884d1a8ea1fbb0b78861533f15404"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adsp_dtbs.elf" }
           - { package: "hp-sp173598", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adsp_dtbs.elf" }
       - name: "adspr.jsn"
         size: 697
         sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adspr.jsn" }
           - { package: "hp-sp173598", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adspr.jsn" }
       - name: "adsps.jsn"
         size: 536
         sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adsps.jsn" }
           - { package: "hp-sp173598", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
         sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adspua.jsn" }
           - { package: "hp-sp173598", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
         sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/battmgr.jsn" }
           - { package: "hp-sp173598", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/battmgr.jsn" }
       - name: "cdsp_dtbs.elf"
         size: 40760
         sha256: "8880a7a2252e7951b1bc7c14869c8c37062583ba26b21fee6194c593e3447a7e"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
           - { package: "hp-sp173598", member: "src/OSPart/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
       - name: "cdspr.jsn"
         size: 534
         sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
           - { package: "hp-sp173598", member: "src/OSPart/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
       - name: "qcadsp8380.mbn"
         size: 22325640
         sha256: "bfd20acacaa2c4323650652a25db0e0a4ad01ed98e46c269c6850569d4e8421d"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/qcadsp8380.mbn" }
           - { package: "hp-sp173598", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/qcadsp8380.mbn" }
       - name: "qccdsp8380.mbn"
         size: 3195304
         sha256: "8a4465f747dbf43441fdba7d5c0312057d2cd1bb1e42cb4833d9ebdb7253388e"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
           - { package: "hp-sp173598", member: "src/OSPart/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
       - name: "qcdxkmsucpurwa.mbn"
         size: 12088
         sha256: "63d53b1908d2c053099680e4403b410a3f59f18ecd395586bb3d2ed33a86fea6"
         from:
+          - { package: "hp-sp172628", member: "src/OSPart/qcdx8380/qcdxkmsucpurwa.mbn" }
           - { package: "hp-sp173598", member: "src/OSPart/qcdx8380/qcdxkmsucpurwa.mbn" }
   - path: "qcom/x1p42100/hp/omnibook-x14"
     models: ["hp-omnibook-x-14-fe"]
@@ -2317,6 +2839,7 @@ folders:
         from:
           - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adspr.jsn" }
           - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adspr.jsn" }
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adspr.jsn" }
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adspr.jsn" }
       - name: "adsps.jsn"
         size: 536
@@ -2324,6 +2847,7 @@ folders:
         from:
           - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adsps.jsn" }
           - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adsps.jsn" }
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adsps.jsn" }
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adsps.jsn" }
       - name: "adspua.jsn"
         size: 731
@@ -2331,6 +2855,7 @@ folders:
         from:
           - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/adspua.jsn" }
           - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/adspua.jsn" }
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/adspua.jsn" }
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 537
@@ -2338,6 +2863,7 @@ folders:
         from:
           - { package: "hp-sp171528", member: "src/Driver/1ADSP_8600_1.0_1115/battmgr.jsn" }
           - { package: "hp-sp171529", member: "src/Driver/1ADSP_8600_1.1_1115/battmgr.jsn" }
+          - { package: "hp-sp172628", member: "src/OSPart/qcsubsys_ext_adsp8380_DUA_Efuse_WHQL/battmgr.jsn" }
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcsubsys_ext_adsp8380/battmgr.jsn" }
       - name: "cdsp_dtbs.elf"
         size: 40760
@@ -2351,6 +2877,7 @@ folders:
         from:
           - { package: "hp-sp171528", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdspr.jsn" }
           - { package: "hp-sp171529", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdspr.jsn" }
+          - { package: "hp-sp172628", member: "src/OSPart/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
           - { package: "hp-sp174046", member: "src/driver/regrouped_driver/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
       - name: "qcadsp8380.mbn"
         size: 22169992
@@ -2368,6 +2895,123 @@ folders:
         sha256: "d937f9f15aed83fbb4f9066937cbb3f25174a8e6bb2d2475a960124cfd8fdb79"
         from:
           - { package: "hp-sp171529", member: "src/Driver/qcdx8380/qcdxkmsucpurwa.mbn" }
+  - path: "qcom/x1p42100/hp/omnibook-x16-cp0"
+    models: ["hp-omnibook-x-14-kr0", "hp-omnibook-x-16-cp0"]
+    links:
+      - { name: "adsp_dtbs.elf", target: "../omnibook-5/adsp_dtbs.elf" }
+      - { name: "adspr.jsn", target: "../omnibook-5/adspr.jsn" }
+      - { name: "adsps.jsn", target: "../omnibook-5/adsps.jsn" }
+      - { name: "adspua.jsn", target: "../omnibook-5/adspua.jsn" }
+      - { name: "battmgr.jsn", target: "../omnibook-5/battmgr.jsn" }
+      - { name: "cdsp_dtbs.elf", target: "../omnibook-5/cdsp_dtbs.elf" }
+      - { name: "cdspr.jsn", target: "../omnibook-5/cdspr.jsn" }
+      - { name: "qcadsp8380.mbn", target: "../omnibook-5/qcadsp8380.mbn" }
+      - { name: "qccdsp8380.mbn", target: "../omnibook-5/qccdsp8380.mbn" }
+      - { name: "qcdxkmsucpurwa.mbn", target: "../omnibook-5/qcdxkmsucpurwa.mbn" }
+  - path: "qcom/x126100/ASUSTeK/VM441QA"
+    models: ["asus-v400-aio-vm441qa"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "8d88e7b2c524bad1eca5a5b9356b48e02d02d4934badeef387846d0d0fb0eb5a"
+        from:
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 534
+        sha256: "4b9566fcfdc1656c38d8158d79db6964e9c4b57a6e42b46241e8d63aabc42d8d"
+        from:
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adsps.jsn" }
+          - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-44984", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_QAD_Signed/adsps.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-52286", member: "QualcommBSP/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adspua.jsn" }
+          - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-44984", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_QAD_Signed/adspua.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-52286", member: "QualcommBSP/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/adspua.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "9ea41f43725e0210de43714ea232e60f7610eb118f79df4f7877db88a8eda87d"
+        from:
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-44984", member: "Driver/QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22083976
+        sha256: "b2ef4fc7a033bd8f6f2c9f06a66d8d693e8b5bc31cc4144ca22b4279b8d8c02b"
+        from:
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "efcffa4cb458ee1f2b3ac7f81b14873662e7898426ff801695bfb6d6719cabbe"
+        from:
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "376de9d57d2b9249a92871a17d78200d8d5c750b3ceca49aa0f6799facf7c844"
+        from:
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcdx8380/qcdxkmsucpurwa.mbn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcdx8380/qcdxkmsucpurwa.mbn" }
+      - name: "qcvss8380_pa.mbn"
+        size: 2318952
+        sha256: "5c4b6370b851c47f4884e6c6530b2ac4b83321770274a6e0e0642542fd3d2396"
+        from:
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcdx8380/qcvss8380_pa.mbn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcdx8380/qcvss8380_pa.mbn" }
+  - path: "qcom/x126100/ASUSTeK/VM471QA"
+    models: ["asus-v400-aio-vm471qa"]
+    links:
+      - { name: "adsp_dtbs.elf", target: "../VM441QA/adsp_dtbs.elf" }
+      - { name: "adspr.jsn", target: "../VM441QA/adspr.jsn" }
+      - { name: "adsps.jsn", target: "../VM441QA/adsps.jsn" }
+      - { name: "adspua.jsn", target: "../VM441QA/adspua.jsn" }
+      - { name: "cdsp_dtbs.elf", target: "../VM441QA/cdsp_dtbs.elf" }
+      - { name: "cdspr.jsn", target: "../VM441QA/cdspr.jsn" }
+      - { name: "qcadsp8380.mbn", target: "../VM441QA/qcadsp8380.mbn" }
+      - { name: "qccdsp8380.mbn", target: "../VM441QA/qccdsp8380.mbn" }
+      - { name: "qcdxkmsucpurwa.mbn", target: "../VM441QA/qcdxkmsucpurwa.mbn" }
+      - { name: "qcvss8380_pa.mbn", target: "../VM441QA/qcvss8380_pa.mbn" }
   - path: "qcom/x126100/ASUSTeK/vivobook-16"
     models: ["asus-vivobook-16-x1607qa", "asus-vivobook-14-x1407qa"]
     files:
@@ -2396,6 +3040,236 @@ folders:
         sha256: "5b8b1ea1de11b9acc74fdd4919aa4aeac924520e4b11cf27782c593640e11e44"
         from:
           - { package: "asus-socpackage-50068", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+  - path: "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa"
+    models: ["asus-vivobook-s14-flip-tp5408qa"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "c39f3953179a1d4924cb47a8c08cf69fdcf2bda453ec04ff674c35bb627db39b"
+        from:
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 670
+        sha256: "549bb9c8e32dc6253d0d0ddde2ce5c26f75f8333d3e55861f297e169a9f3e5c0"
+        from:
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 515
+        sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
+        from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 703
+        sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
+        from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "c1e3cdeee17e61ee5f9426fef78e5e35eaf9fdd49d3d39b9bd82dcad04c71647"
+        from:
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-44984", member: "Driver/QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22247816
+        sha256: "83bf4d7a5ca5d4607d90af6625b90d6b05e190a44c37f0932e1c2af72945ede5"
+        from:
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "4d2aa10aa60245177ca253d4a8f7ee15c0a0390e877efec29fa25c7d4b725568"
+        from:
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "848341997c48213d818168ed0ec48ee722c30738e5ffede40550d38252e3ac71"
+        from:
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+      - name: "qcvss8380.mbn"
+        size: 2323048
+        sha256: "fa5e78c9743c5ca3439baadfe7f1e118591f8a1ad976e9f87b75937945d42e8b"
+        from:
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+  - path: "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa"
+    models: ["asus-vivobook-s14-s5408qa"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "c92e8f7b0208a4093d4d84d495c97851a14aadbd3de141d61da9a656fe3cc613"
+        from:
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 670
+        sha256: "549bb9c8e32dc6253d0d0ddde2ce5c26f75f8333d3e55861f297e169a9f3e5c0"
+        from:
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 515
+        sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
+        from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 703
+        sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
+        from:
+          - { package: "asus-socpackage-48976", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "asus-socpackage-50616", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "asus-socpackage-51123", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8480/adspua.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "c1e3cdeee17e61ee5f9426fef78e5e35eaf9fdd49d3d39b9bd82dcad04c71647"
+        from:
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-43841", member: "Driver/QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-44984", member: "Driver/QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-48168", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50096", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50150", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+          - { package: "asus-socpackage-52327", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22055352
+        sha256: "5439f9585d12b1329394a12b8c2be24e2e27144a41add82c95185a0cb68ba3a7"
+        from:
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/Subsystem/qcsubsys_ext_adsp8380/qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3195304
+        sha256: "4d2aa10aa60245177ca253d4a8f7ee15c0a0390e877efec29fa25c7d4b725568"
+        from:
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/NPU/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "848341997c48213d818168ed0ec48ee722c30738e5ffede40550d38252e3ac71"
+        from:
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
+      - name: "qcvss8380.mbn"
+        size: 2323048
+        sha256: "fa5e78c9743c5ca3439baadfe7f1e118591f8a1ad976e9f87b75937945d42e8b"
+        from:
+          - { package: "asus-socpackage-50883", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+          - { package: "asus-socpackage-51016", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+          - { package: "asus-socpackage-51017", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+          - { package: "asus-socpackage-51031", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+          - { package: "asus-socpackage-51032", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+  - path: "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa"
+    models: ["asus-vivobook-s16-flip-tp5608qa"]
+    links:
+      - { name: "adsp_dtbs.elf", target: "../vivobook-s14-flip-tp5408qa/adsp_dtbs.elf" }
+      - { name: "adspr.jsn", target: "../vivobook-s14-flip-tp5408qa/adspr.jsn" }
+      - { name: "adsps.jsn", target: "../vivobook-s14-flip-tp5408qa/adsps.jsn" }
+      - { name: "adspua.jsn", target: "../vivobook-s14-flip-tp5408qa/adspua.jsn" }
+      - { name: "cdsp_dtbs.elf", target: "../vivobook-s14-flip-tp5408qa/cdsp_dtbs.elf" }
+      - { name: "cdspr.jsn", target: "../vivobook-s14-flip-tp5408qa/cdspr.jsn" }
+      - { name: "qcadsp8380.mbn", target: "../vivobook-s14-flip-tp5408qa/qcadsp8380.mbn" }
+      - { name: "qccdsp8380.mbn", target: "../vivobook-s14-flip-tp5408qa/qccdsp8380.mbn" }
+      - { name: "qcdxkmsucpurwa.mbn", target: "../vivobook-s14-flip-tp5408qa/qcdxkmsucpurwa.mbn" }
+      - { name: "qcvss8380.mbn", target: "../vivobook-s14-flip-tp5408qa/qcvss8380.mbn" }
+  - path: "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa"
+    models: ["asus-vivobook-s16-s5608qa"]
+    links:
+      - { name: "adsp_dtbs.elf", target: "../vivobook-s14-s5408qa/adsp_dtbs.elf" }
+      - { name: "adspr.jsn", target: "../vivobook-s14-s5408qa/adspr.jsn" }
+      - { name: "adsps.jsn", target: "../vivobook-s14-s5408qa/adsps.jsn" }
+      - { name: "adspua.jsn", target: "../vivobook-s14-s5408qa/adspua.jsn" }
+      - { name: "cdsp_dtbs.elf", target: "../vivobook-s14-s5408qa/cdsp_dtbs.elf" }
+      - { name: "cdspr.jsn", target: "../vivobook-s14-s5408qa/cdspr.jsn" }
+      - { name: "qcadsp8380.mbn", target: "../vivobook-s14-s5408qa/qcadsp8380.mbn" }
+      - { name: "qccdsp8380.mbn", target: "../vivobook-s14-s5408qa/qccdsp8380.mbn" }
+      - { name: "qcdxkmsucpurwa.mbn", target: "../vivobook-s14-s5408qa/qcdxkmsucpurwa.mbn" }
+      - { name: "qcvss8380.mbn", target: "../vivobook-s14-s5408qa/qcvss8380.mbn" }
   - path: "qcom/sc8280xp/microsoft/blackrock"
     models: ["microsoft-windows-dev-kit-2023"]
     files:
@@ -2597,6 +3471,13 @@ packages:
     size: 375072688
     sha256: "ce4593e948157ede6d936bec0db03b09bcbb39c3b11fab5d89c52b8954e72fde"
     fetched: "2026-11-02"
+  - id: "asus-socpackage-48976"
+    maker: "ASUS"
+    title: "S3607NA V1.309.4500.0"
+    url: "https://dlcdnets.asus.com/pub/ASUS/nb/Image/Driver/DriverPackage/48976/SOCPackage_forWebSite_Qualcomm_Z_V1.309.4500.0_48976.exe"
+    size: 413770672
+    sha256: "3be6e7b17ea332999beee48cca8bc70a40bfd1d76ba740056b404bed3adbada0"
+    fetched: "2026-11-14"
   - id: "asus-socpackage-50069"
     maker: "ASUS"
     title: "S3407QA V1.311.8800.0"
@@ -2618,6 +3499,13 @@ packages:
     size: 390565296
     sha256: "a4da90754407bd0348c507fc97989459c20c90be39023ca11068072306ad722d"
     fetched: "2026-11-02"
+  - id: "asus-socpackage-50150"
+    maker: "ASUS"
+    title: "VM471QA V1.202.8600.0"
+    url: "https://dlcdnets.asus.com/pub/ASUS/All-In-One/Image/Driver/DriverPackage/50150/SOCPackage_forWebSite_CC_Qualcomm_F_V1.202.8600.0_50150.exe"
+    size: 402672048
+    sha256: "a0f68997b7a812d00b39c9398a89eed4342be7e70fa59eb6632bcf15cd871e25"
+    fetched: "2026-11-14"
   - id: "asus-socpackage-50616"
     maker: "ASUS"
     title: "UX3607OA V1.312.4500.0"
@@ -2632,6 +3520,34 @@ packages:
     size: 386888624
     sha256: "6d0eb7e86116fa108e13a064a023312c328efaf44c6358e5c0e2832de0ad4390"
     fetched: "2026-11-06"
+  - id: "asus-socpackage-51016"
+    maker: "ASUS"
+    title: "S5408QA V1.304.9300.0"
+    url: "https://dlcdnets.asus.com/pub/ASUS/nb/Image/Driver/DriverPackage/51016/SOCPackage_forWebSite_Qualcomm_Z_V1.304.9300.0_51016.exe"
+    size: 387626416
+    sha256: "969e1eecb2c32576a02f0d90805e569f5e8958d54ba559c303e3b36f93750fb1"
+    fetched: "2026-11-14"
+  - id: "asus-socpackage-51017"
+    maker: "ASUS"
+    title: "S5608QA V1.304.9300.0"
+    url: "https://dlcdnets.asus.com/pub/ASUS/nb/Image/Driver/DriverPackage/51017/SOCPackage_forWebSite_Qualcomm_Z_V1.304.9300.0_51017.exe"
+    size: 387636656
+    sha256: "589c427dfc105d1791f80f340edbeb3d4f7bd729fe7d1920460f539a36b87acd"
+    fetched: "2026-11-14"
+  - id: "asus-socpackage-51031"
+    maker: "ASUS"
+    title: "TP5408QA V1.305.9300.0"
+    url: "https://dlcdnets.asus.com/pub/ASUS/nb/Image/Driver/DriverPackage/51031/SOCPackage_forWebSite_Qualcomm_Z_V1.305.9300.0_51031.exe"
+    size: 387788208
+    sha256: "a2b5dbd232923eed04949904da3281b43f1cea1a0b17c9887e041bcafe300035"
+    fetched: "2026-11-14"
+  - id: "asus-socpackage-51032"
+    maker: "ASUS"
+    title: "TP5608QA V1.305.9300.0"
+    url: "https://dlcdnets.asus.com/pub/ASUS/nb/Image/Driver/DriverPackage/51032/SOCPackage_forWebSite_Qualcomm_Z_V1.305.9300.0_51032.exe"
+    size: 387792816
+    sha256: "d46215ac1ca85f29d7b9abfe7ee1ac37d1568c1e47219b6092695774208b0edc"
+    fetched: "2026-11-14"
   - id: "asus-socpackage-51123"
     maker: "ASUS"
     title: "UX3407NA V1.315.4500.0"
@@ -2646,6 +3562,13 @@ packages:
     size: 439040432
     sha256: "379ff10e604bd5c31c0c649ba473a7b7553ff8c3c351ba1b3cb7ee4b94da13fc"
     fetched: "2026-11-10"
+  - id: "asus-socpackage-52327"
+    maker: "ASUS"
+    title: "VM441QA V1.301.8600.0"
+    url: "https://dlcdnets.asus.com/pub/ASUS/All-In-One/Image/Driver/DriverPackage/52327/SOCPackage_forWebSite_CC_Qualcomm_F_V1.301.8600.0_52327.exe"
+    size: 384217008
+    sha256: "eccefbecd75a2bf8d938cb8589f761192b143972baeeb46367bddd8018179fa3"
+    fetched: "2026-11-14"
   - id: "dell-10wkv"
     maker: "Dell"
     title: "Qualcomm Chipset Driver 10WKV"
@@ -2716,6 +3639,13 @@ packages:
     size: 455298456
     sha256: "d73e829080f4a40a879f5bb3ba1db92296f5b592af8dacc45b4bb0f46eb0b32f"
     fetched: "2026-11-02"
+  - id: "hp-sp172628"
+    maker: "HP"
+    title: "Qualcomm Driver Pack sp172628"
+    url: "https://ftp.hp.com/pub/softpaq/sp172501-173000/sp172628.exe"
+    size: 240178144
+    sha256: "3df5f938c7597ca2fba7ecefae5aa8a1d0cf13a0c22284f91812d535b6c273f4"
+    fetched: "2026-11-14"
   - id: "hp-sp172895"
     maker: "HP"
     title: "Qualcomm Driver Pack sp172895"
@@ -2772,6 +3702,13 @@ packages:
     size: 506669432
     sha256: "bfbfd3321339f663ee56977917646265262ef9c5468d5f292ee679b1e2d28b2d"
     fetched: "2026-11-02"
+  - id: "hp-sp174817"
+    maker: "HP"
+    title: "Qualcomm BSP Software Pack sp174817"
+    url: "https://ftp.hp.com/pub/softpaq/sp174501-175000/sp174817.exe"
+    size: 298002488
+    sha256: "618091167b61fb9773a81c91dc4ea93ba0837b3cd2ad0ad81263abb529a60bea"
+    fetched: "2026-11-14"
   - id: "lenovo-n42qq22w"
     maker: "Lenovo"
     title: "Qualcomm Integrated System Software and Firmware Package 1.0.0.22"
@@ -2816,6 +3753,15 @@ packages:
     sha256: "7ca4d76e425bd7bf05403900e2505eac47bd595c9838d78ce044934ae8d2f3ae"
     fetched: "2026-11-07"
     note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+  - id: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon"
+    maker: "Microsoft"
+    title: "Surface Laptop 13-inch 2nd Edition with Snapdragon"
+    url: "https://download.microsoft.com/download/30ff24b5-e65e-4fde-9c22-491e6ac81c16/SurfaceLaptop13in2ndEditionwithSnapdragon_Win11_28000_26.083.37733.0.msi"
+    page: "https://www.microsoft.com/en-us/download/details.aspx?id=108876"
+    size: 687312896
+    sha256: "6301570ca49f810c6b63b0eb5c2f729bb3072508e42cdfa980be65af8f1950ef"
+    fetched: "2026-11-14"
+    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
   - id: "microsoft-surfacelaptop7"
     maker: "Microsoft"
     title: "Surface Laptop 7th Edition"
@@ -2851,6 +3797,24 @@ packages:
     size: 647004160
     sha256: "8b299016027a4a87f50cf168f69ca1fb8dedc9a0612fcd6cff89b9bc64135ec2"
     fetched: "2026-11-02"
+    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+  - id: "microsoft-surfacepro12in2ndeditionwithsnapdragon"
+    maker: "Microsoft"
+    title: "Surface Pro 12-inch 2nd Edition with Snapdragon"
+    url: "https://download.microsoft.com/download/3df31041-667b-4bf4-b99e-a2722059ab53/SurfacePro12in2ndEditionwithSnapdragon_Win11_28000_26.083.37733.0.msi"
+    page: "https://www.microsoft.com/en-us/download/details.aspx?id=108877"
+    size: 808103936
+    sha256: "2f39eb38825a355499a45ba0e186a35d22b3bfa6309d11a5f564e7f7a893edb4"
+    fetched: "2026-11-14"
+    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+  - id: "microsoft-surfacepro12withsnapdragon"
+    maker: "Microsoft"
+    title: "Surface Pro 12th Edition with Snapdragon"
+    url: "https://download.microsoft.com/download/85364b00-7e11-4a77-8115-bfcece673d91/SurfacePro12withSnapdragon_Win11_28000_26.091.14453.0.msi"
+    page: "https://www.microsoft.com/en-us/download/details.aspx?id=108706"
+    size: 690786304
+    sha256: "a35da2faa0af7c05b701ac9b451b70c335d8795b025427da082739b665d2a51a"
+    fetched: "2026-11-14"
     note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
   - id: "samsung-basw-a4325a01-1063"
     maker: "Samsung"
