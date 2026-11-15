@@ -43,6 +43,14 @@
       "x1-acer-swift-14.dtsi"
     ]
   },
+  "acer-swift-spin-14-ai-sfsp14-q51t": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2786",
+    "files": [
+      "SOURCE.md",
+      "mahua-acer-swift-sfsp14-q51t.dts"
+    ]
+  },
   "asus-proart-pz13-ht5306": {
     "state": "out-of-tree",
     "source": "https://github.com/agrucza/asus-proart-pz13-linux",

@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-15T01:01:20.725Z",
+  "collected": "2026-11-15T01:17:36.161Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -5391,6 +5391,10 @@
       "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/hp-omnibook-ultra-14-kg0"
     },
     {
+      "folder": "firmware/acer-swift-spin-14-ai-sfsp14-q51t",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/acer-swift-spin-14-ai-sfsp14-q51t"
+    },
+    {
       "folder": "firmware/asus-proart-pz14-ht7407",
       "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-proart-pz14-ht7407"
     },
@@ -5879,6 +5883,7 @@
           "glymur-microsoft-surface-laptop8-15.dts",
           "hamoa-iot-evk.dts",
           "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
+          "kalambo-hp-omnibook-5-14-he1xxx.dts",
           "kalambo-lenovo-ideapad-5x-2in1-14q8y11.dts",
           "kalambo-lenovo-ideapad-slim5x-13q8y11.dts",
           "kalambo-lenovo-ideapad-slim5x-15q8y11.dts",
@@ -5949,6 +5954,8 @@
           "x1p42100-hp-omnibook-3-oled.dts",
           "x1p42100-hp-omnibook-5.dts",
           "x1p42100-hp-omnibook-x14.dts",
+          "x1p42100-hp-omnibook-x14-kr0.dts",
+          "x1p42100-hp-omnibook-x16-cp0.dts",
           "x1p42100-lenovo-ideapad-5-2in1.dts",
           "x1p42100-lenovo-ideapad-slim5x-lcd.dts",
           "x1p42100-lenovo-ideapad-slim5x-oled.dts",
@@ -6020,6 +6027,7 @@
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8-15.json",
           "glymur-microsoft-surface-laptop8.json",
+          "kalambo-hp-omnibook-5-14-he1xxx.json",
           "kalambo-lenovo-ideapad-5x-2in1-14q8y11.json",
           "kalambo-lenovo-ideapad-slim5x-13q8y11.json",
           "kalambo-lenovo-ideapad-slim5x-15q8y11.json",
@@ -6052,6 +6060,8 @@
           "x1p42100-hp-omnibook-3-16.json",
           "x1p42100-hp-omnibook-3-oled.json",
           "x1p42100-hp-omnibook-5.json",
+          "x1p42100-hp-omnibook-x14-kr0.json",
+          "x1p42100-hp-omnibook-x16-cp0.json",
           "x1p42100-hp-probook-4-g1q.json",
           "x1p42100-microsoft-surface-laptop-13.json",
           "x1p42100-microsoft-surface-pro-12in.json",
@@ -8080,6 +8090,47 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.14.490/omarchy-edge-2026.11.14.490-aarch64.iso",
       "kernel": "7.3.0-60-omarchy"
     },
-    "pulls": []
+    "pulls": [
+      {
+        "number": 2787,
+        "title": "Add the Acer Swift Spin 14 AI firmware package",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2787",
+        "draft": true,
+        "deviceTrees": [],
+        "ids": [],
+        "firmware": [
+          "qcom/glymur/ACER/SFSP14-Q51T/adsp_dtbs.elf",
+          "qcom/glymur/ACER/SFSP14-Q51T/adspr.jsn",
+          "qcom/glymur/ACER/SFSP14-Q51T/adsps.jsn",
+          "qcom/glymur/ACER/SFSP14-Q51T/adspua.jsn",
+          "qcom/glymur/ACER/SFSP14-Q51T/cdsp_dtbs.elf",
+          "qcom/glymur/ACER/SFSP14-Q51T/qcadsp8480.mbn",
+          "qcom/glymur/ACER/SFSP14-Q51T/qccdsp8480.mbn"
+        ]
+      },
+      {
+        "number": 2786,
+        "title": "linux-omarchy-dtbs: add the Acer Swift Spin 14 AI",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2786",
+        "draft": true,
+        "deviceTrees": [
+          {
+            "file": "mahua-acer-swift-sfsp14-q51t.dts",
+            "model": "Acer Swift Spin 14 AI (SFSP14-Q51T)",
+            "compatible": [
+              "acer,swift-sfsp14-q51t",
+              "qcom,mahua"
+            ]
+          }
+        ],
+        "ids": [
+          {
+            "file": "mahua-acer-swift-sfsp14-q51t.json",
+            "compatible": "acer,swift-sfsp14-q51t"
+          }
+        ],
+        "firmware": []
+      }
+    ]
   }
 }

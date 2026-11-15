@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-15T01:01:20.725Z",
+  "collected": "2026-11-15T01:17:36.161Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -412,6 +412,7 @@
           "glymur-microsoft-surface-laptop8-15.dts",
           "hamoa-iot-evk.dts",
           "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
+          "kalambo-hp-omnibook-5-14-he1xxx.dts",
           "kalambo-lenovo-ideapad-5x-2in1-14q8y11.dts",
           "kalambo-lenovo-ideapad-slim5x-13q8y11.dts",
           "kalambo-lenovo-ideapad-slim5x-15q8y11.dts",
@@ -482,6 +483,8 @@
           "x1p42100-hp-omnibook-3-oled.dts",
           "x1p42100-hp-omnibook-5.dts",
           "x1p42100-hp-omnibook-x14.dts",
+          "x1p42100-hp-omnibook-x14-kr0.dts",
+          "x1p42100-hp-omnibook-x16-cp0.dts",
           "x1p42100-lenovo-ideapad-5-2in1.dts",
           "x1p42100-lenovo-ideapad-slim5x-lcd.dts",
           "x1p42100-lenovo-ideapad-slim5x-oled.dts",
@@ -553,6 +556,7 @@
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8-15.json",
           "glymur-microsoft-surface-laptop8.json",
+          "kalambo-hp-omnibook-5-14-he1xxx.json",
           "kalambo-lenovo-ideapad-5x-2in1-14q8y11.json",
           "kalambo-lenovo-ideapad-slim5x-13q8y11.json",
           "kalambo-lenovo-ideapad-slim5x-15q8y11.json",
@@ -585,6 +589,8 @@
           "x1p42100-hp-omnibook-3-16.json",
           "x1p42100-hp-omnibook-3-oled.json",
           "x1p42100-hp-omnibook-5.json",
+          "x1p42100-hp-omnibook-x14-kr0.json",
+          "x1p42100-hp-omnibook-x16-cp0.json",
           "x1p42100-hp-probook-4-g1q.json",
           "x1p42100-microsoft-surface-laptop-13.json",
           "x1p42100-microsoft-surface-pro-12in.json",
@@ -1368,34 +1374,34 @@
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
     "works": 2,
-    "should": 57,
+    "should": 60,
     "problems": 9,
-    "notYet": 18,
-    "deviceTree": 81,
+    "notYet": 15,
+    "deviceTree": 82,
     "ids": 58,
     "firmware": 64,
     "googlebooks": 2,
     "chromebooks": 10,
     "acpi": 46,
-    "acpiWanted": 5,
+    "acpiWanted": 4,
     "machine": {
       "team": 7,
       "omarchy": 18,
-      "linux": 54,
-      "nobody": 7
+      "linux": 55,
+      "nobody": 6
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 76,
+        "omarchy": 79,
         "fromUpstream": 19,
-        "added": 57,
-        "pull": 0,
-        "available": 5,
+        "added": 60,
+        "pull": 1,
+        "available": 2,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 76
+          "edge": 79
         },
         "models": {
           "fromUpstream": [
@@ -1452,8 +1458,11 @@
             "hp-probook-4-g1q",
             "hp-elitebook-6-g2q",
             "hp-elitebook-x-g2q",
+            "hp-omnibook-5-14-he1",
             "hp-omnibook-5-16-bf1",
             "hp-omnibook-ultra-14-kg0",
+            "hp-omnibook-x-14-kr0",
+            "hp-omnibook-x-16-cp0",
             "hp-omnibook-x-14-kr",
             "hp-omnibook-x-16-cp",
             "lenovo-ideapad-5x-2-in-1-14q8x9",
@@ -1478,27 +1487,26 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "acer-swift-spin-14-ai-sfsp14-q51t"
+          ],
           "available": [
             "asus-ascent-qn10",
-            "hp-omnibook-5-14-he1",
-            "hp-omnibook-x-14-kr0",
-            "hp-omnibook-x-16-cp0",
             "humain-horizon"
           ]
         }
       },
       "ids": {
-        "omarchy": 68,
+        "omarchy": 71,
         "fromUpstream": 28,
-        "added": 40,
-        "pull": 0,
+        "added": 43,
+        "pull": 1,
         "available": 1,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 68
+          "edge": 71
         },
         "models": {
           "fromUpstream": [
@@ -1551,8 +1559,11 @@
             "hp-omnibook-5-16-bf0",
             "hp-probook-4-g1q",
             "hp-elitebook-6-g2q",
+            "hp-omnibook-5-14-he1",
             "hp-omnibook-5-16-bf1",
             "hp-omnibook-ultra-14-kg0",
+            "hp-omnibook-x-14-kr0",
+            "hp-omnibook-x-16-cp0",
             "hp-omnibook-x-16-cp",
             "lenovo-ideapad-vibe-14q8x12",
             "lenovo-ideapad-vibe-15q8x12",
@@ -1573,7 +1584,9 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "acer-swift-spin-14-ai-sfsp14-q51t"
+          ],
           "available": [
             "asus-ascent-qn10"
           ]
@@ -1583,8 +1596,8 @@
         "omarchy": 60,
         "fromUpstream": 1,
         "added": 59,
-        "pull": 0,
-        "available": 4,
+        "pull": 1,
+        "available": 3,
         "upstream": 1,
         "channels": {
           "stable": 1,
@@ -1656,9 +1669,10 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "acer-swift-spin-14-ai-sfsp14-q51t"
+          ],
           "available": [
-            "acer-swift-spin-14-ai-sfsp14-q51t",
             "asus-vivobook-14-x1407qa",
             "microsoft-surface-laptop-13in-2nd-edition",
             "microsoft-surface-pro-12in-2nd-edition"
@@ -1666,10 +1680,10 @@
         }
       },
       "all": {
-        "omarchy": 49,
+        "omarchy": 52,
         "fromUpstream": 1,
-        "added": 48,
-        "pull": 0,
+        "added": 51,
+        "pull": 1,
         "available": 3,
         "upstream": 1,
         "models": {
@@ -1706,8 +1720,11 @@
             "hp-probook-4-g1q",
             "hp-elitebook-6-g2q",
             "hp-elitebook-x-g2q",
+            "hp-omnibook-5-14-he1",
             "hp-omnibook-5-16-bf1",
             "hp-omnibook-ultra-14-kg0",
+            "hp-omnibook-x-14-kr0",
+            "hp-omnibook-x-16-cp0",
             "hp-omnibook-x-16-cp",
             "lenovo-ideacentre-mini-x-01q8x10",
             "lenovo-thinkcentre-neo-50q-qc",
@@ -1726,7 +1743,9 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "acer-swift-spin-14-ai-sfsp14-q51t"
+          ],
           "available": [
             "asus-vivobook-14-x1407qa",
             "microsoft-surface-laptop-13in-2nd-edition",
@@ -3513,30 +3532,42 @@
       ],
       "notes": null,
       "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "bootable": "pr",
       "reports": [],
-      "machine": "nobody",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2786",
+          "number": 2786,
+          "title": "linux-omarchy-dtbs: add the Acer Swift Spin 14 AI"
+        },
         "ids": null,
-        "idsPull": null,
-        "firmware": "download",
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2786",
+          "number": 2786,
+          "title": "linux-omarchy-dtbs: add the Acer Swift Spin 14 AI"
+        },
+        "firmware": "pr",
         "firmwareChannel": null,
         "firmwarePackages": [],
-        "firmwarePull": null
+        "firmwarePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2787",
+          "number": 2787,
+          "title": "Add the Acer Swift Spin 14 AI firmware package"
+        }
       },
       "pieces": {
-        "deviceTree": "none",
-        "ids": "none",
-        "firmware": "elsewhere"
+        "deviceTree": "pr",
+        "ids": "pr",
+        "firmware": "pr"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2786",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/acer-swift-spin-14-ai-sfsp14-q51t",
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
@@ -3548,17 +3579,28 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/acer-swift-spin-14-ai-sfsp14-q51t"
+        ]
       },
       "variants": [
         {
+          "compatible": "acer,swift-sfsp14-q51t",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
           "bootChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2786",
+            "number": 2786,
+            "title": "linux-omarchy-dtbs: add the Acer Swift Spin 14 AI"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2786",
+            "number": 2786,
+            "title": "linux-omarchy-dtbs: add the Acer Swift Spin 14 AI"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
@@ -8166,14 +8208,14 @@
         "https://9to5google.com/2026/01/05/hp-unveils-its-new-snapdragon-x2-intel-powered-laptops-and-some-chromebooks-too/"
       ],
       "notes": "HP builds it on the OmniBook 5 16's mainboard (board 8F47, driver pack sp173974), but its X2P-42-100 is the 6-core Kalambo chip, which the 16's Mahua tree doesn't describe. Its tree carries the 16's board over onto kalambo.dtsi. The hardware IDs come from Geekbench units.",
-      "outcome": "notCarried",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
@@ -8183,8 +8225,8 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
-        "ids": "none",
+        "deviceTree": "edge",
+        "ids": "edge",
         "firmware": "edge"
       },
       "upstream": {
@@ -8212,10 +8254,10 @@
       "variants": [
         {
           "compatible": "hp,omnibook-5-14-he1xxx",
-          "computed": "notCarried",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -8228,7 +8270,7 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "notCarried",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -8457,14 +8499,14 @@
         "https://ftp.hp.com/pub/softpaq/sp172501-173000/sp172628.cva"
       ],
       "notes": "HP builds it on board 8F45 with the OmniBook X 16 16-cp0 (driver pack sp172628), a different mainboard from the 14-fe's. Its tables, taken from the BIOS in that driver pack, match the OmniBook 5 14-he0's board, so its tree builds on that one. The hardware IDs come from Geekbench units.",
-      "outcome": "notCarried",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
@@ -8475,8 +8517,8 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
-        "ids": "none",
+        "deviceTree": "edge",
+        "ids": "edge",
         "firmware": "edge"
       },
       "upstream": {
@@ -8504,10 +8546,10 @@
       "variants": [
         {
           "compatible": "hp,omnibook-x14-kr0",
-          "computed": "notCarried",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -8520,7 +8562,7 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "notCarried",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -8549,14 +8591,14 @@
         "https://ftp.hp.com/pub/softpaq/sp172501-173000/sp172628.cva"
       ],
       "notes": "HP builds it on board 8F45 with the OmniBook X 14 14-kr0 (driver pack sp172628). Every unit seen runs the X1P-42-100. Its tables, taken from the BIOS in that driver pack, match the OmniBook 5 14-he0's board, so its tree builds on that one. The hardware IDs come from Geekbench units.",
-      "outcome": "notCarried",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
@@ -8567,8 +8609,8 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
-        "ids": "none",
+        "deviceTree": "edge",
+        "ids": "edge",
         "firmware": "edge"
       },
       "upstream": {
@@ -8596,10 +8638,10 @@
       "variants": [
         {
           "compatible": "hp,omnibook-x16-cp0",
-          "computed": "notCarried",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -8612,7 +8654,7 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "notCarried",
+          "outcome": "should",
           "reports": []
         }
       ],
