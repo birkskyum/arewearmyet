@@ -16,11 +16,11 @@ const { summary } = status;
 const image = status.omarchy.image;
 const byName = <T extends { vendor: string; name: string }>(a: T, b: T) => a.vendor.localeCompare(b.vendor) || a.name.localeCompare(b.name);
 const rows = snapdragonRows().sort(byName);
-// The potato PCs are the Windows on Arm machines from before Snapdragon X, and Snapdragon C is the entry line beside
+// The Snapdragon 7c, 8cx, 835 and 850 machines are the Windows on Arm PCs from before Snapdragon X, and Snapdragon C is the entry line beside
 // it, so both get their own table and stay out of the totals
-const POTATO = ['8cx', '8cx-gen1', '850', '835', '7c'];
+const OLDER = ['8cx', '8cx-gen1', '850', '835', '7c'];
 const current = rows.filter((row) => row.generation === 'x1' || row.generation === 'x2');
-const older = rows.filter((row) => POTATO.includes(row.generation));
+const older = rows.filter((row) => OLDER.includes(row.generation));
 const entry = rows.filter((row) => row.generation === 'c');
 const googlebooks = googlebookRows().sort(byName);
 const chromebooks = googlebookRows('depthcharge').sort(byName);
@@ -114,7 +114,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
       <p class="mt-3 text-lg text-zinc-400">Omarchy on ARM PCs, model by model.</p>
       <nav class="mt-5 flex flex-wrap gap-2 text-sm">
         <a href="#snapdragon" class={NAV}>Snapdragon X and X2 <span class="text-zinc-500">{current.length}</span></a>
-        <a href="#potato-pcs" class={NAV}>Potato PCs <span class="text-zinc-500">{older.length}</span></a>
+        <a href="#snapdragon-7c-8cx-835-850" class={NAV}>Snapdragon 7c, 8cx, 835 and 850 <span class="text-zinc-500">{older.length}</span></a>
         <a href="#snapdragon-c" class={NAV}>Snapdragon C <span class="text-zinc-500">{entry.length}</span></a>
         <a href="#googlebooks" class={NAV}>Googlebooks <span class="text-zinc-500">{googlebooks.length}</span></a>
         <a href="#chromebooks" class={NAV}>Chromebooks <span class="text-zinc-500">{chromebooks.length}</span></a>
@@ -178,12 +178,12 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
       </div>
     </Family>
 
-    <Family id="potato-pcs" title="Potato PCs" total={older.length}>
+    <Family id="snapdragon-7c-8cx-835-850" title="Snapdragon 7c, 8cx, 835 and 850" total={older.length}>
       <p class="max-w-3xl text-sm text-zinc-400">
-        The Windows on Arm machines from before Snapdragon X, with the Snapdragon 8cx, 850, 835 and 7c. They start through UEFI like the models above, so they need the same pieces and use the same views and labels. Linux already has device trees for several of them, but Omarchy's kernel doesn't build them yet.
+        The Windows on Arm machines from before Snapdragon X, with the Snapdragon 8cx, 850, 835 and 7c. They start through UEFI like the models above, so they need the same pieces and use the same views and labels. Linux already has device trees for several of them. Omarchy's kernel builds the 8cx ones, not yet those for the 850, 835 and 7c.
       </p>
       <div class="mt-4">
-        <StatusTable client:load rows={older} views={snapdragonViews} chips={[{ key: '8cx', label: '8cx Gen 3' }, { key: '8cx-gen1', label: '8cx Gen 1 and 2' }, { key: '850', label: '850' }, { key: '835', label: '835' }, { key: '7c', label: '7c' }]} urlPrefix="8cx-" exportName="arewearmyet-potato-pcs" exportTitle="Potato PCs" />
+        <StatusTable client:load rows={older} views={snapdragonViews} chips={[{ key: '8cx', label: '8cx Gen 3' }, { key: '8cx-gen1', label: '8cx Gen 1 and 2' }, { key: '850', label: '850' }, { key: '835', label: '835' }, { key: '7c', label: '7c' }]} urlPrefix="8cx-" exportName="arewearmyet-snapdragon-7c-8cx-835-850" exportTitle="Snapdragon 7c, 8cx, 835 and 850" />
       </div>
     </Family>
 

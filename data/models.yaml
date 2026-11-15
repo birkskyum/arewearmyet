@@ -1951,7 +1951,7 @@ models:
       - https://www.cnx-software.com/2022/10/25/600-windows-dev-kit-2023-is-powered-by-qualcomm-snapdragon-8cx-gen-3-processor/
 
 
-  # Potato PCs: Windows on Arm machines from before Snapdragon X, with the Snapdragon 835, 850, 8cx Gen 1 and 2, and 7c
+  # Snapdragon 7c, 8cx, 835 and 850: Windows on Arm machines from before Snapdragon X
   - id: acer-aspire-1-a114-61
     vendor: "Acer"
     name: "Aspire 1"
