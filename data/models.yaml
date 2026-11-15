@@ -558,9 +558,11 @@ models:
       - { chip: "X2E-88-100", compatible: "asus,ascent-qn10" }
     acpi: ["asus-qn10-16e"]
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261113-qn10-v1-2-e09b2aa7ccbe@oss.qualcomm.com/"
-    devicetree_out_of_tree: "https://gist.github.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce"
+    devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2854"
     devicetree_files:
-      - "https://gist.githubusercontent.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce/raw/glymur-asus-ascent-qn10.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/9c8d516a/pkgbuilds/linux-omarchy-dtbs/0035-arm64-dts-qcom-glymur-Add-ASUS-Ascent-QN10.patch#glymur-asus-ascent-qn10.dts"
+      - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/9c8d516a/pkgbuilds/linux-omarchy-dtbs/0034-arm64-dts-qcom-Add-glymur-cob.dtsi.patch#glymur-cob.dtsi"
+    notes: "Its device tree is Bjorn Andersson's, as posted to linux-arm-msm, and its hardware ID comes from the manufacturer and product name in an owner's boot log. ASUS publishes only a BIOS for it and Windows Update has no driver bundle, so its DSP firmware comes from its own Windows at install. Nobody has booted Omarchy on it yet."
     ids_collected: "https://gist.github.com/Sonicadvance1/3e8e7ba00d388d9da88a5f394b350adc"
     sources:
       - https://www.asus.com/displays-desktops/mini-pcs/ascent-series/asus-ascent-qn10/techspec/

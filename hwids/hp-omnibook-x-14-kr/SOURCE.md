@@ -1,4 +1,4 @@
-# HP OmniBook X 16 (2026)
+# HP OmniBook X 14 (2026)
 
 Hardware IDs systemd's list doesn't have yet, in stubble's format.
 

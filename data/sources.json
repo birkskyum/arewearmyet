@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-15T16:22:59.571Z",
+  "collected": "2026-11-15T21:47:05.458Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -5227,6 +5227,18 @@
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
     },
     {
+      "folder": "hardware-reports/microsoft-corporation/surface-pro-x",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/48",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "7b374c19a811eb33ee6637057a77ad46116672e9",
+      "dir": "reports/microsoft-corporation/surface-pro-x/eeb66301",
+      "pull": {
+        "number": 48,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
       "folder": "hardware-reports/hp/hp-omnibook-x-laptop-14-kr1xxx",
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/46",
       "repo": "turbineBMW/omarchy-hardware-reports",
@@ -5883,6 +5895,7 @@
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
+          "glymur-asus-ascent-qn10.dts",
           "glymur-asus-proart-pz14-ht7407na.dts",
           "glymur-asus-vivobook-s16-s3607na.dts",
           "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -5896,6 +5909,7 @@
           "hamoa-iot-evk.dts",
           "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
           "kalambo-hp-omnibook-5-14-he1xxx.dts",
+          "kalambo-hp-omnibook-x14-kr1xxx.dts",
           "kalambo-lenovo-ideapad-5x-2in1-14q8y11.dts",
           "kalambo-lenovo-ideapad-slim5x-13q8y11.dts",
           "kalambo-lenovo-ideapad-slim5x-15q8y11.dts",
@@ -5965,6 +5979,7 @@
           "x1p42100-dynabook-xd5.dts",
           "x1p42100-hp-elitebook-6-g1q.dts",
           "x1p42100-hp-omnibook-3-16.dts",
+          "x1p42100-hp-omnibook-3-lcd.dts",
           "x1p42100-hp-omnibook-3-oled.dts",
           "x1p42100-hp-omnibook-5.dts",
           "x1p42100-hp-omnibook-x14.dts",
@@ -6037,12 +6052,14 @@
         ],
         "carriedIds": [
           "glymur-anduril-bluechip.json",
+          "glymur-asus-ascent-qn10.json",
           "glymur-asus-proart-pz14-ht7407na.json",
           "glymur-asus-vivobook-s16-s3607na.json",
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8-15.json",
           "glymur-microsoft-surface-laptop8.json",
           "kalambo-hp-omnibook-5-14-he1xxx.json",
+          "kalambo-hp-omnibook-x14-kr1xxx.json",
           "kalambo-lenovo-ideapad-5x-2in1-14q8y11.json",
           "kalambo-lenovo-ideapad-slim5x-13q8y11.json",
           "kalambo-lenovo-ideapad-slim5x-15q8y11.json",
@@ -6078,6 +6095,7 @@
           "x1p42100-dell-inspiron-14-plus-5441.json",
           "x1p42100-dynabook-xd5.json",
           "x1p42100-hp-omnibook-3-16.json",
+          "x1p42100-hp-omnibook-3-lcd.json",
           "x1p42100-hp-omnibook-3-oled.json",
           "x1p42100-hp-omnibook-5.json",
           "x1p42100-hp-omnibook-x14-kr0.json",
@@ -6843,6 +6861,7 @@
             "qcom/x1e80100/microsoft/Romulus/cdspr.jsn",
             "qcom/x1e80100/microsoft/Romulus/qcadsp8380.mbn",
             "qcom/x1e80100/microsoft/Romulus/qccdsp8380.mbn",
+            "qcom/x1e80100/microsoft/Romulus/qcvss8380.mbn",
             "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn"
           ],
           "microsoft-surface-laptop-8-firmware": [
@@ -7968,6 +7987,53 @@
           "qcom/glymur/ACER/SFSP14-Q51T/qccdsp8480.mbn",
           "qcom/glymur/ACER/SFSP14-Q51T/cdsp_dtbs.elf"
         ]
+      },
+      {
+        "file": "kalambo-hp-omnibook-x14-kr1xxx.dts",
+        "model": "HP OmniBook X Laptop 14-kr1xxx",
+        "compatible": [
+          "hp,omnibook-x14-kr1xxx",
+          "qcom,kalambo"
+        ],
+        "patch": "linux-omarchy-dtbs/0032-arm64-dts-qcom-Add-the-HP-OmniBook-X-14-kr1.patch",
+        "firmware": [
+          "qcom/glymur/hp/omnibook-x16/qcadsp8480.mbn",
+          "qcom/glymur/hp/omnibook-x16/adsp_dtbs.elf",
+          "qcom/glymur/hp/omnibook-x16/qccdsp8480.mbn",
+          "qcom/glymur/hp/omnibook-x16/cdsp_dtbs.elf"
+        ]
+      },
+      {
+        "file": "x1p42100-hp-omnibook-3-lcd.dts",
+        "model": "HP OmniBook 3 Laptop 14-hz0xxx",
+        "compatible": [
+          "hp,omnibook-3-lcd",
+          "qcom,x126100",
+          "qcom,x1p42100"
+        ],
+        "patch": "linux-omarchy-dtbs/0033-arm64-dts-qcom-Add-the-HP-OmniBook-3-14-LCD.patch",
+        "firmware": [
+          "qcom/x1p42100/hp/omnibook-3/qcdxkmsucpurwa.mbn",
+          "qcom/x1p42100/hp/omnibook-3/qcadsp8380.mbn",
+          "qcom/x1p42100/hp/omnibook-3/adsp_dtbs.elf",
+          "qcom/x1p42100/hp/omnibook-3/qccdsp8380.mbn",
+          "qcom/x1p42100/hp/omnibook-3/cdsp_dtbs.elf"
+        ]
+      },
+      {
+        "file": "glymur-asus-ascent-qn10.dts",
+        "model": "ASUS Ascent QN10",
+        "compatible": [
+          "asus,ascent-qn10",
+          "qcom,glymur"
+        ],
+        "patch": "linux-omarchy-dtbs/0035-arm64-dts-qcom-glymur-Add-ASUS-Ascent-QN10.patch",
+        "firmware": [
+          "qcom/glymur/ASUSTeK/QN10/qcadsp8480.mbn",
+          "qcom/glymur/ASUSTeK/QN10/adsp_dtbs.elf",
+          "qcom/glymur/ASUSTeK/QN10/qccdsp8480.mbn",
+          "qcom/glymur/ASUSTeK/QN10/cdsp_dtbs.elf"
+        ]
       }
     ],
     "carriedIds": [
@@ -7987,6 +8053,15 @@
           "b2f01473-c24f-5adb-a1fd-eaa60da1a921",
           "473ae65d-b557-5883-afcb-bd99761da7fc",
           "888804a5-f928-546f-b9ac-6c06a8cf1bf0"
+        ]
+      },
+      {
+        "file": "glymur-asus-ascent-qn10.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "ASUS Ascent QN10",
+        "compatible": "asus,ascent-qn10",
+        "hwids": [
+          "f6189706-7dd6-5524-a5e8-3ab0f23d82ae"
         ]
       },
       {
@@ -8075,6 +8150,18 @@
         "hwids": [
           "7f3e6682-7a14-51bd-aaec-a416db0d45ad",
           "2e37ded3-631e-5e2e-b006-cb749115ab5a"
+        ]
+      },
+      {
+        "file": "kalambo-hp-omnibook-x14-kr1xxx.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "HP OmniBook X 14-kr1 (X2P-42-100, D33Y9UA)",
+        "compatible": "hp,omnibook-x14-kr1xxx",
+        "hwids": [
+          "c670a299-d233-5486-a9b8-e38247f6698b",
+          "d411f91d-8f4e-50e3-8048-899da9b5ed1e",
+          "937bcf47-6a53-56a5-8e7e-fd08337f4c11",
+          "c93fa3f8-11c7-586c-b067-0c09b31a2e93"
         ]
       },
       {
@@ -8553,6 +8640,18 @@
         ]
       },
       {
+        "file": "x1p42100-hp-omnibook-3-lcd.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "HP OmniBook 3 Laptop 14-hz0xxx with the LCD (D34G6UAR)",
+        "compatible": "hp,omnibook-3-lcd",
+        "hwids": [
+          "e0660fe0-2675-581e-994a-f48a96ae6453",
+          "871c13ef-da13-5b04-8bdb-f0153f4adb22",
+          "55966ad4-e29d-55a6-9106-5e925dc305e2",
+          "b158dbe5-293d-5d6c-9075-12b4fa7b1074"
+        ]
+      },
+      {
         "file": "x1p42100-hp-omnibook-3-oled.json",
         "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "HP OmniBook 3 Laptop 14-hz0xxx",
@@ -8699,28 +8798,6 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.14.490/omarchy-edge-2026.11.14.490-aarch64.iso",
       "kernel": "7.3.0-60-omarchy"
     },
-    "pulls": [
-      {
-        "number": 2821,
-        "title": "microsoft-surface-laptop-7-firmware: follow the new driver download, and add the video firmware",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/2821",
-        "draft": true,
-        "deviceTrees": [],
-        "ids": [],
-        "firmware": [
-          "qcom/x1e80100/microsoft/Romulus/adsp_dtbs.elf",
-          "qcom/x1e80100/microsoft/Romulus/adspr.jsn",
-          "qcom/x1e80100/microsoft/Romulus/adsps.jsn",
-          "qcom/x1e80100/microsoft/Romulus/adspua.jsn",
-          "qcom/x1e80100/microsoft/Romulus/battmgr.jsn",
-          "qcom/x1e80100/microsoft/Romulus/cdsp_dtbs.elf",
-          "qcom/x1e80100/microsoft/Romulus/cdspr.jsn",
-          "qcom/x1e80100/microsoft/Romulus/qcadsp8380.mbn",
-          "qcom/x1e80100/microsoft/Romulus/qccdsp8380.mbn",
-          "qcom/x1e80100/microsoft/Romulus/qcvss8380.mbn",
-          "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn"
-        ]
-      }
-    ]
+    "pulls": []
   }
 }

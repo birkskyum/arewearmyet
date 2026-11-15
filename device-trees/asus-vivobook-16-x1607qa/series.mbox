@@ -686,6 +686,7 @@ keeps driving the line).
 Fixes: 02efb49aa805 ("soundwire: qcom: add support for SoundWire controller")
 Fixes: 74e79da9fd46 ("soundwire: qcom: add runtime pm support")
 Signed-off-by: Daniel Carter <yass27106@gmail.com>
+Reviewed-by: Srinivas Kandagatla<srinivas.kandagatla@oss.qualcomm.com>
 ---
  drivers/soundwire/qcom.c | 14 +++++++++++---
  1 file changed, 11 insertions(+), 3 deletions(-)

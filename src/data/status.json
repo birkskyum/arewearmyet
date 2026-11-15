@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-15T16:22:59.571Z",
+  "collected": "2026-11-15T21:47:05.458Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -400,6 +400,7 @@
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
+          "glymur-asus-ascent-qn10.dts",
           "glymur-asus-proart-pz14-ht7407na.dts",
           "glymur-asus-vivobook-s16-s3607na.dts",
           "glymur-asus-zenbook-a14-ux3407na.dts",
@@ -413,6 +414,7 @@
           "hamoa-iot-evk.dts",
           "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
           "kalambo-hp-omnibook-5-14-he1xxx.dts",
+          "kalambo-hp-omnibook-x14-kr1xxx.dts",
           "kalambo-lenovo-ideapad-5x-2in1-14q8y11.dts",
           "kalambo-lenovo-ideapad-slim5x-13q8y11.dts",
           "kalambo-lenovo-ideapad-slim5x-15q8y11.dts",
@@ -482,6 +484,7 @@
           "x1p42100-dynabook-xd5.dts",
           "x1p42100-hp-elitebook-6-g1q.dts",
           "x1p42100-hp-omnibook-3-16.dts",
+          "x1p42100-hp-omnibook-3-lcd.dts",
           "x1p42100-hp-omnibook-3-oled.dts",
           "x1p42100-hp-omnibook-5.dts",
           "x1p42100-hp-omnibook-x14.dts",
@@ -554,12 +557,14 @@
         ],
         "carriedIds": [
           "glymur-anduril-bluechip.json",
+          "glymur-asus-ascent-qn10.json",
           "glymur-asus-proart-pz14-ht7407na.json",
           "glymur-asus-vivobook-s16-s3607na.json",
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8-15.json",
           "glymur-microsoft-surface-laptop8.json",
           "kalambo-hp-omnibook-5-14-he1xxx.json",
+          "kalambo-hp-omnibook-x14-kr1xxx.json",
           "kalambo-lenovo-ideapad-5x-2in1-14q8y11.json",
           "kalambo-lenovo-ideapad-slim5x-13q8y11.json",
           "kalambo-lenovo-ideapad-slim5x-15q8y11.json",
@@ -595,6 +600,7 @@
           "x1p42100-dell-inspiron-14-plus-5441.json",
           "x1p42100-dynabook-xd5.json",
           "x1p42100-hp-omnibook-3-16.json",
+          "x1p42100-hp-omnibook-3-lcd.json",
           "x1p42100-hp-omnibook-3-oled.json",
           "x1p42100-hp-omnibook-5.json",
           "x1p42100-hp-omnibook-x14-kr0.json",
@@ -1360,6 +1366,7 @@
             "qcom/x1e80100/microsoft/Romulus/cdspr.jsn",
             "qcom/x1e80100/microsoft/Romulus/qcadsp8380.mbn",
             "qcom/x1e80100/microsoft/Romulus/qccdsp8380.mbn",
+            "qcom/x1e80100/microsoft/Romulus/qcvss8380.mbn",
             "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn"
           ],
           "microsoft-surface-laptop-8-firmware": [
@@ -1468,10 +1475,10 @@
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
     "works": 2,
-    "should": 67,
+    "should": 68,
     "workaround": 6,
     "problems": 3,
-    "notYet": 8,
+    "notYet": 7,
     "deviceTree": 82,
     "ids": 59,
     "firmware": 71,
@@ -1487,16 +1494,16 @@
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 80,
+        "omarchy": 81,
         "fromUpstream": 19,
-        "added": 61,
+        "added": 62,
         "pull": 0,
-        "available": 2,
+        "available": 1,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 80
+          "edge": 81
         },
         "models": {
           "fromUpstream": [
@@ -1540,6 +1547,7 @@
             "asus-vivobook-s16-s5608qa",
             "asus-vivobook-s16-flip-tp5608qa",
             "asus-zenbook-14-ux3480qa",
+            "asus-ascent-qn10",
             "asus-proart-pz14-ht7407",
             "asus-vivobook-s16-s3607na",
             "asus-zenbook-a14-ux3407na",
@@ -1585,22 +1593,21 @@
           ],
           "pull": [],
           "available": [
-            "asus-ascent-qn10",
             "humain-horizon"
           ]
         }
       },
       "ids": {
-        "omarchy": 78,
+        "omarchy": 79,
         "fromUpstream": 28,
-        "added": 50,
+        "added": 51,
         "pull": 0,
-        "available": 1,
+        "available": 0,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 78
+          "edge": 79
         },
         "models": {
           "fromUpstream": [
@@ -1649,6 +1656,7 @@
             "asus-vivobook-s16-s3607qa",
             "asus-vivobook-s16-s5608qa",
             "asus-zenbook-14-ux3480qa",
+            "asus-ascent-qn10",
             "asus-proart-pz14-ht7407",
             "asus-vivobook-s16-s3607na",
             "dell-inspiron-14-5441",
@@ -1686,9 +1694,7 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": [
-            "asus-ascent-qn10"
-          ]
+          "available": []
         }
       },
       "firmware": {
@@ -5500,15 +5506,15 @@
         "https://eshop.asus.com/us/90ms03e2-m000b0-asus-ascent-qn10.html",
         "https://videocardz.com/newz/asus-launches-first-snapdragon-x2-elite-mini-pc-ascent-qn10-costs-1350"
       ],
-      "notes": null,
-      "outcome": "none",
-      "bootable": "carry",
+      "notes": "Its device tree is Bjorn Andersson's, as posted to linux-arm-msm, and its hardware ID comes from the manufacturer and product name in an owner's boot log. ASUS publishes only a BIOS for it and Windows Update has no driver bundle, so its DSP firmware comes from its own Windows at install. Nobody has booted Omarchy on it yet.",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -5516,15 +5522,15 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
-        "ids": "elsewhere",
+        "deviceTree": "edge",
+        "ids": "edge",
         "firmware": "none"
       },
       "upstream": {
         "deviceTree": "posted",
         "firstRelease": null,
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261113-qn10-v1-2-e09b2aa7ccbe@oss.qualcomm.com/",
-        "devicetreeOutOfTree": "https://gist.github.com/birkskyum/4bc397b8c56451e35d77997f94c5d0ce",
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2854",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/asus-ascent-qn10",
         "ids": "collected",
         "idsCollected": "https://gist.github.com/Sonicadvance1/3e8e7ba00d388d9da88a5f394b350adc",
@@ -5551,17 +5557,28 @@
         {
           "chip": "X2E-88-100",
           "compatible": "asus,ascent-qn10",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "glymur-asus-ascent-qn10.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0035-arm64-dts-qcom-glymur-Add-ASUS-Ascent-QN10.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/glymur/ASUSTeK/QN10/qcadsp8480.mbn",
+            "qcom/glymur/ASUSTeK/QN10/adsp_dtbs.elf",
+            "qcom/glymur/ASUSTeK/QN10/qccdsp8480.mbn",
+            "qcom/glymur/ASUSTeK/QN10/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -17030,6 +17047,7 @@
       "qcom/x1e80100/ASUSTeK/vivobook-16"
     ],
     "acpi": [
+      "hardware-reports/microsoft-corporation/surface-pro-x",
       "hardware-reports/hp/hp-omnibook-x-laptop-14-kr1xxx",
       "hardware-reports/hp/hp-omnibook-3-laptop-14-hz0xxx"
     ]
