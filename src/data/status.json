@@ -1410,7 +1410,7 @@
     "notYet": 14,
     "deviceTree": 82,
     "ids": 58,
-    "firmware": 71,
+    "firmware": 70,
     "googlebooks": 2,
     "chromebooks": 10,
     "acpi": 46,
@@ -1626,7 +1626,7 @@
         "fromUpstream": 1,
         "added": 66,
         "pull": 0,
-        "available": 4,
+        "available": 3,
         "upstream": 1,
         "channels": {
           "stable": 1,
@@ -1709,7 +1709,6 @@
           "available": [
             "lenovo-ideapad-5x-2-in-1-14q8x9",
             "lenovo-ideapad-slim-3x-15q8x10",
-            "lenovo-ideapad-slim-5x-14q8x9",
             "lenovo-thinkbook-16-gen-7-qoy"
           ]
         }
@@ -1719,7 +1718,7 @@
         "fromUpstream": 1,
         "added": 58,
         "pull": 0,
-        "available": 4,
+        "available": 3,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1789,7 +1788,6 @@
           "available": [
             "lenovo-ideapad-5x-2-in-1-14q8x9",
             "lenovo-ideapad-slim-3x-15q8x10",
-            "lenovo-ideapad-slim-5x-14q8x9",
             "lenovo-thinkbook-16-gen-7-qoy"
           ]
         }
@@ -9920,7 +9918,7 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "download",
+        "firmware": "windows",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -9928,7 +9926,7 @@
       "pieces": {
         "deviceTree": "edge",
         "ids": "stable",
-        "firmware": "elsewhere"
+        "firmware": "none"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -9939,10 +9937,17 @@
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "download",
-        "firmwareMissing": [],
+        "firmware": "windows",
+        "firmwareMissing": [
+          "qcdxkmsucpurwa.mbn",
+          "qcvss8380.mbn",
+          "qcadsp8380.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8380.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": false,
-        "firmwareDownload": "/firmware/#qcom-x1p42100-LENOVO-83HL",
+        "firmwareDownload": null,
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -15396,7 +15401,7 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -15404,7 +15409,7 @@
       "pieces": {
         "deviceTree": "elsewhere",
         "ids": "stable",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "released",
@@ -15415,15 +15420,10 @@
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8180.mbn",
-          "qcadsp8180.mbn",
-          "qccdsp8180.mbn",
-          "qcmpss8180_nm.mbn"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-sc8180x-LENOVO-82AK",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],

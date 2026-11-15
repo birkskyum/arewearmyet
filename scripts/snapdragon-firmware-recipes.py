@@ -105,6 +105,7 @@ RECIPES = {
     "hp-omnibook-x16-firmware": ("HP OmniBook X 16 (2026)", ["qcom/glymur/hp/omnibook-x16"]),
     "hp-omnibook-x16-cp0-firmware": ("HP OmniBook X 14 and 16 (2025)", ["qcom/x1p42100/hp/omnibook-x16-cp0"]),
     "huawei-matebook-e-go-firmware": ("Huawei MateBook E Go", ["qcom/sc8280xp/HUAWEI/gaokun3"]),
+    "lenovo-flex-5g-firmware": ("Lenovo Flex 5G and Yoga 5G", ["qcom/sc8180x/LENOVO/82AK"]),
     "lenovo-ideacentre-mini-x-firmware": ("Lenovo IdeaCentre Mini x", ["qcom/x1e80100/LENOVO/91B6", "qcom/x1p42100/LENOVO/91B6"]),
     "lenovo-ideapad-5x-2-in-1-firmware": ("Lenovo IdeaPad 5x 2-in-1 14Q8X9", ["qcom/x1p42100/LENOVO/83GH"]),
     "lenovo-ideapad-slim-3x-firmware": ("Lenovo IdeaPad Slim 3x 15Q8X10", ["qcom/x1p42100/LENOVO/83N3"]),
@@ -243,6 +244,8 @@ def contents(dests):
         parts.append("GPU")
     if any(b.startswith("qcvss") for b in base):
         parts.append("video")
+    if any(b.startswith("qcmpss") for b in base):
+        parts.append("modem")
     return human_list(parts)
 
 
