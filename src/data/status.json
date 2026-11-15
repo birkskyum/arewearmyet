@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-15T02:23:03.077Z",
+  "collected": "2026-11-15T05:25:31.271Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -1321,6 +1321,7 @@
             "qcom/x1e80100/microsoft/Denali/cdspr.jsn",
             "qcom/x1e80100/microsoft/Denali/qcadsp8380.mbn",
             "qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn",
+            "qcom/x1e80100/microsoft/Denali/qcvss8380.mbn",
             "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn"
           ],
           "microsoft-surface-pro-12in-2nd-edition-firmware": [
@@ -1409,7 +1410,7 @@
     "notYet": 14,
     "deviceTree": 82,
     "ids": 58,
-    "firmware": 66,
+    "firmware": 67,
     "googlebooks": 2,
     "chromebooks": 10,
     "acpi": 46,
@@ -1621,16 +1622,16 @@
         }
       },
       "firmware": {
-        "omarchy": 66,
+        "omarchy": 67,
         "fromUpstream": 1,
-        "added": 65,
+        "added": 66,
         "pull": 0,
         "available": 0,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 66
+          "edge": 67
         },
         "models": {
           "fromUpstream": [
@@ -1692,6 +1693,7 @@
             "microsoft-surface-laptop-7-13",
             "microsoft-surface-laptop-7-15",
             "microsoft-surface-laptop-13in-1st-edition",
+            "microsoft-surface-pro-11",
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-13in-2nd-edition",
             "microsoft-surface-laptop-8-13",
@@ -1708,9 +1710,9 @@
         }
       },
       "all": {
-        "omarchy": 58,
+        "omarchy": 59,
         "fromUpstream": 1,
-        "added": 57,
+        "added": 58,
         "pull": 0,
         "available": 0,
         "upstream": 1,
@@ -1766,6 +1768,7 @@
             "microsoft-surface-laptop-7-13",
             "microsoft-surface-laptop-7-15",
             "microsoft-surface-laptop-13in-1st-edition",
+            "microsoft-surface-pro-11",
             "microsoft-surface-pro-12in-1st-edition",
             "microsoft-surface-laptop-13in-2nd-edition",
             "microsoft-surface-laptop-8-13",
@@ -12297,15 +12300,17 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "partial",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "microsoft-surface-pro-11-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
         "deviceTree": "stable",
         "ids": "stable",
-        "firmware": "none"
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -12316,17 +12321,10 @@
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8380.mbn",
-          "qcvss8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtb.mbn",
-          "qccdsp8380.mbn",
-          "cdsp_dtb.mbn"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x1e80100-microsoft",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -16979,6 +16977,7 @@
       "qcom/x1e80100/ASUSTeK/vivobook-16"
     ],
     "acpi": [
+      "hardware-reports/hp/hp-omnibook-x-laptop-14-kr1xxx",
       "hardware-reports/hp/hp-omnibook-3-laptop-14-hz0xxx"
     ]
   }

@@ -134,4 +134,5 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 
 ## Not matched to a model yet
 
+- [hardware-reports/hp/hp-omnibook-x-laptop-14-kr1xxx](../reports/hp/hp-omnibook-x-laptop-14-kr1xxx)
 - [hardware-reports/hp/hp-omnibook-3-laptop-14-hz0xxx](../reports/hp/hp-omnibook-3-laptop-14-hz0xxx)

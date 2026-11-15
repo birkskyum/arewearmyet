@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-15T02:23:03.077Z",
+  "collected": "2026-11-15T05:25:31.271Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -5227,6 +5227,18 @@
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
     },
     {
+      "folder": "hardware-reports/hp/hp-omnibook-x-laptop-14-kr1xxx",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/46",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "2876e32b03ec9e967b57a8c710a1d3aa6fb90319",
+      "dir": "reports/hp/hp-omnibook-x-laptop-14-kr1xxx/5202d43e",
+      "pull": {
+        "number": 46,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
       "folder": "hardware-reports/hp/hp-omnibook-3-laptop-14-hz0xxx",
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/44",
       "repo": "turbineBMW/omarchy-hardware-reports",
@@ -6792,6 +6804,7 @@
             "qcom/x1e80100/microsoft/Denali/cdspr.jsn",
             "qcom/x1e80100/microsoft/Denali/qcadsp8380.mbn",
             "qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn",
+            "qcom/x1e80100/microsoft/Denali/qcvss8380.mbn",
             "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn"
           ],
           "microsoft-surface-pro-12in-2nd-edition-firmware": [
