@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-15T05:25:31.271Z",
+  "collected": "2026-11-15T15:30:12.823Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -5879,7 +5879,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-62",
+        "kernel": "7.3-63",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -5910,6 +5910,7 @@
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
           "mahua-microsoft-surface-pro-12th-edition.dts",
           "purwa-lenovo-ideacentre-mini-01q8x10.dts",
+          "sc8180x-lenovo-flex-5g.dts",
           "sc8280xp-crd.dts",
           "sc8280xp-huawei-gaokun3.dts",
           "sc8280xp-lenovo-thinkpad-x13s.dts",
@@ -6591,6 +6592,12 @@
             "qcom/sc8280xp/HUAWEI/gaokun3/qccdsp8280.mbn",
             "qcom/sc8280xp/HUAWEI/gaokun3/qcdxkmsuc8280.mbn"
           ],
+          "lenovo-flex-5g-firmware": [
+            "qcom/sc8180x/LENOVO/82AK/qcadsp8180.mbn",
+            "qcom/sc8180x/LENOVO/82AK/qccdsp8180.mbn",
+            "qcom/sc8180x/LENOVO/82AK/qcdxkmsuc8180.mbn",
+            "qcom/sc8180x/LENOVO/82AK/qcmpss8180_nm.mbn"
+          ],
           "lenovo-ideacentre-mini-x-firmware": [
             "qcom/x1e80100/LENOVO/91B6/adsp_dtbs.elf",
             "qcom/x1e80100/LENOVO/91B6/adspr.jsn",
@@ -6614,6 +6621,57 @@
             "qcom/x1p42100/LENOVO/91B6/qccdsp8380.mbn",
             "qcom/x1p42100/LENOVO/91B6/qcdxkmsucpurwa.mbn",
             "qcom/x1p42100/LENOVO/91B6/qcvss8380_pa.mbn"
+          ],
+          "lenovo-ideapad-5x-2-in-1-firmware": [
+            "qcom/x1p42100/LENOVO/83GH/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/83GH/adspr.jsn",
+            "qcom/x1p42100/LENOVO/83GH/adsps.jsn",
+            "qcom/x1p42100/LENOVO/83GH/adspua.jsn",
+            "qcom/x1p42100/LENOVO/83GH/battmgr.jsn",
+            "qcom/x1p42100/LENOVO/83GH/cdsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/83GH/cdspr.jsn",
+            "qcom/x1p42100/LENOVO/83GH/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83GH/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83GH/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/83GH/qcvss8380_pa.mbn"
+          ],
+          "lenovo-ideapad-slim-3x-firmware": [
+            "qcom/x1p42100/LENOVO/83N3/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/83N3/adspr.jsn",
+            "qcom/x1p42100/LENOVO/83N3/adsps.jsn",
+            "qcom/x1p42100/LENOVO/83N3/adspua.jsn",
+            "qcom/x1p42100/LENOVO/83N3/battmgr.jsn",
+            "qcom/x1p42100/LENOVO/83N3/cdsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/83N3/cdspr.jsn",
+            "qcom/x1p42100/LENOVO/83N3/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83N3/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83N3/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/83N3/qcvss8380_pa.mbn"
+          ],
+          "lenovo-ideapad-slim-5x-firmware": [
+            "qcom/x1p42100/LENOVO/83HL/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/83HL/adspr.jsn",
+            "qcom/x1p42100/LENOVO/83HL/adsps.jsn",
+            "qcom/x1p42100/LENOVO/83HL/adspua.jsn",
+            "qcom/x1p42100/LENOVO/83HL/battmgr.jsn",
+            "qcom/x1p42100/LENOVO/83HL/cdsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/83HL/cdspr.jsn",
+            "qcom/x1p42100/LENOVO/83HL/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83HL/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83HL/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/83HL/qcvss8380_pa.mbn"
+          ],
+          "lenovo-thinkbook-16-g7-qoy-firmware": [
+            "qcom/x1p42100/LENOVO/21NH/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/21NH/adspr.jsn",
+            "qcom/x1p42100/LENOVO/21NH/adsps.jsn",
+            "qcom/x1p42100/LENOVO/21NH/adspua.jsn",
+            "qcom/x1p42100/LENOVO/21NH/battmgr.jsn",
+            "qcom/x1p42100/LENOVO/21NH/cdsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/21NH/cdspr.jsn",
+            "qcom/x1p42100/LENOVO/21NH/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/21NH/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/21NH/qcdxkmsucpurwa.mbn"
           ],
           "lenovo-thinkcentre-neo-50q-qc-firmware": [
             "qcom/x1p42100/LENOVO/13C8/adsp_dtbs.elf",
@@ -7129,7 +7187,7 @@
         "patch": "linux-omarchy-aarch64/2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch",
         "firmware": [
           "qcom/x1p42100/LENOVO/83HL/qcdxkmsucpurwa.mbn",
-          "qcom/x1p42100/LENOVO/83HL/qcvss8380.mbn",
+          "qcom/x1p42100/LENOVO/83HL/qcvss8380_pa.mbn",
           "qcom/x1p42100/LENOVO/83HL/qcadsp8380.mbn",
           "qcom/x1p42100/LENOVO/83HL/adsp_dtbs.elf",
           "qcom/x1p42100/LENOVO/83HL/qccdsp8380.mbn",
@@ -7147,7 +7205,7 @@
         "patch": "linux-omarchy-aarch64/2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch",
         "firmware": [
           "qcom/x1p42100/LENOVO/83HL/qcdxkmsucpurwa.mbn",
-          "qcom/x1p42100/LENOVO/83HL/qcvss8380.mbn",
+          "qcom/x1p42100/LENOVO/83HL/qcvss8380_pa.mbn",
           "qcom/x1p42100/LENOVO/83HL/qcadsp8380.mbn",
           "qcom/x1p42100/LENOVO/83HL/adsp_dtbs.elf",
           "qcom/x1p42100/LENOVO/83HL/qccdsp8380.mbn",

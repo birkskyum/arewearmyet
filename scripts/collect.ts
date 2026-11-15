@@ -16,7 +16,7 @@ const SYSTEMD_RELEASES = ['v257', 'v258', 'v259', 'v260', 'v261', 'v262'];
 // Snapdragon X, X2 and 8cx Gen 3, the 7c Chromebooks, and the older Windows laptops' trees
 const DT_PATTERN = /^(x1|hamoa|purwa|glymur|mahua|kalambo|sc8280xp|sc7180-trogdor|sc7180-acer|sc7180-ecs|sc8180x-lenovo|sdm850|msm8998-(asus|hp|lenovo)).*\.dts$/;
 const DT_DIR = 'arch/arm64/boot/dts/qcom';
-const FIRMWARE_SOCS = ['x1e80100', 'x1p42100', 'x126100', 'glymur', 'kalambo', 'sc8280xp'];
+const FIRMWARE_SOCS = ['x1e80100', 'x1p42100', 'x126100', 'glymur', 'kalambo', 'sc8280xp', 'sc8180x'];
 // Omarchy's package channels: its own repository carries the kernel and the makers' firmware
 // packages, its Arch Linux ARM mirror carries systemd, whose hardware ID list decides which device
 // tree boots, and linux-firmware. Their files databases list what each package installs.
@@ -189,7 +189,11 @@ async function firmwareFiles(ref: string): Promise<string[]> {
       files.push(...batch.filter((entry) => entry.type === 'blob').map((entry) => entry.path));
     }
   }
-  const whence = await (await fetchRetrying(`https://gitlab.com/kernel-firmware/linux-firmware/-/raw/${ref}/WHENCE`)).text();
+  // Through the API, which takes the token; GitLab rate-limits its raw file URLs per address
+  const headers: Record<string, string> = process.env.GITLAB_TOKEN ? { 'PRIVATE-TOKEN': process.env.GITLAB_TOKEN } : {};
+  const whenceResponse = await fetchRetrying(`${LINUX_FIRMWARE}/repository/files/WHENCE/raw?ref=${ref}`, { headers });
+  if (!whenceResponse.ok) throw new Error(`${whenceResponse.status} WHENCE at ${ref}`);
+  const whence = await whenceResponse.text();
   const links = [...whence.matchAll(/^Link: (qcom\/\S+) ->/gm)].map((m) => m[1]).filter((path) => FIRMWARE_SOCS.some((soc) => path.startsWith(`qcom/${soc}/`)));
   return [...new Set([...files, ...links])].sort();
 }

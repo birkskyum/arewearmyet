@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-15T05:25:31.271Z",
+  "collected": "2026-11-15T15:30:12.823Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-62",
+    "kernel": "7.3-63",
     "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-62",
+        "kernel": "7.3-63",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -427,6 +427,7 @@
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
           "mahua-microsoft-surface-pro-12th-edition.dts",
           "purwa-lenovo-ideacentre-mini-01q8x10.dts",
+          "sc8180x-lenovo-flex-5g.dts",
           "sc8280xp-crd.dts",
           "sc8280xp-huawei-gaokun3.dts",
           "sc8280xp-lenovo-thinkpad-x13s.dts",
@@ -1108,6 +1109,12 @@
             "qcom/sc8280xp/HUAWEI/gaokun3/qccdsp8280.mbn",
             "qcom/sc8280xp/HUAWEI/gaokun3/qcdxkmsuc8280.mbn"
           ],
+          "lenovo-flex-5g-firmware": [
+            "qcom/sc8180x/LENOVO/82AK/qcadsp8180.mbn",
+            "qcom/sc8180x/LENOVO/82AK/qccdsp8180.mbn",
+            "qcom/sc8180x/LENOVO/82AK/qcdxkmsuc8180.mbn",
+            "qcom/sc8180x/LENOVO/82AK/qcmpss8180_nm.mbn"
+          ],
           "lenovo-ideacentre-mini-x-firmware": [
             "qcom/x1e80100/LENOVO/91B6/adsp_dtbs.elf",
             "qcom/x1e80100/LENOVO/91B6/adspr.jsn",
@@ -1131,6 +1138,57 @@
             "qcom/x1p42100/LENOVO/91B6/qccdsp8380.mbn",
             "qcom/x1p42100/LENOVO/91B6/qcdxkmsucpurwa.mbn",
             "qcom/x1p42100/LENOVO/91B6/qcvss8380_pa.mbn"
+          ],
+          "lenovo-ideapad-5x-2-in-1-firmware": [
+            "qcom/x1p42100/LENOVO/83GH/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/83GH/adspr.jsn",
+            "qcom/x1p42100/LENOVO/83GH/adsps.jsn",
+            "qcom/x1p42100/LENOVO/83GH/adspua.jsn",
+            "qcom/x1p42100/LENOVO/83GH/battmgr.jsn",
+            "qcom/x1p42100/LENOVO/83GH/cdsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/83GH/cdspr.jsn",
+            "qcom/x1p42100/LENOVO/83GH/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83GH/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83GH/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/83GH/qcvss8380_pa.mbn"
+          ],
+          "lenovo-ideapad-slim-3x-firmware": [
+            "qcom/x1p42100/LENOVO/83N3/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/83N3/adspr.jsn",
+            "qcom/x1p42100/LENOVO/83N3/adsps.jsn",
+            "qcom/x1p42100/LENOVO/83N3/adspua.jsn",
+            "qcom/x1p42100/LENOVO/83N3/battmgr.jsn",
+            "qcom/x1p42100/LENOVO/83N3/cdsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/83N3/cdspr.jsn",
+            "qcom/x1p42100/LENOVO/83N3/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83N3/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83N3/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/83N3/qcvss8380_pa.mbn"
+          ],
+          "lenovo-ideapad-slim-5x-firmware": [
+            "qcom/x1p42100/LENOVO/83HL/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/83HL/adspr.jsn",
+            "qcom/x1p42100/LENOVO/83HL/adsps.jsn",
+            "qcom/x1p42100/LENOVO/83HL/adspua.jsn",
+            "qcom/x1p42100/LENOVO/83HL/battmgr.jsn",
+            "qcom/x1p42100/LENOVO/83HL/cdsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/83HL/cdspr.jsn",
+            "qcom/x1p42100/LENOVO/83HL/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83HL/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83HL/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/83HL/qcvss8380_pa.mbn"
+          ],
+          "lenovo-thinkbook-16-g7-qoy-firmware": [
+            "qcom/x1p42100/LENOVO/21NH/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/21NH/adspr.jsn",
+            "qcom/x1p42100/LENOVO/21NH/adsps.jsn",
+            "qcom/x1p42100/LENOVO/21NH/adspua.jsn",
+            "qcom/x1p42100/LENOVO/21NH/battmgr.jsn",
+            "qcom/x1p42100/LENOVO/21NH/cdsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/21NH/cdspr.jsn",
+            "qcom/x1p42100/LENOVO/21NH/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/21NH/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/21NH/qcdxkmsucpurwa.mbn"
           ],
           "lenovo-thinkcentre-neo-50q-qc-firmware": [
             "qcom/x1p42100/LENOVO/13C8/adsp_dtbs.elf",
@@ -1410,7 +1468,7 @@
     "notYet": 14,
     "deviceTree": 82,
     "ids": 58,
-    "firmware": 70,
+    "firmware": 71,
     "googlebooks": 2,
     "chromebooks": 10,
     "acpi": 46,
@@ -1622,16 +1680,16 @@
         }
       },
       "firmware": {
-        "omarchy": 67,
+        "omarchy": 71,
         "fromUpstream": 1,
-        "added": 66,
+        "added": 70,
         "pull": 0,
-        "available": 3,
+        "available": 0,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 67
+          "edge": 71
         },
         "models": {
           "fromUpstream": [
@@ -1686,6 +1744,10 @@
             "hp-omnibook-x-14-kr",
             "hp-omnibook-x-16-cp",
             "lenovo-ideacentre-mini-x-01q8x10",
+            "lenovo-ideapad-5x-2-in-1-14q8x9",
+            "lenovo-ideapad-slim-3x-15q8x10",
+            "lenovo-ideapad-slim-5x-14q8x9",
+            "lenovo-thinkbook-16-gen-7-qoy",
             "lenovo-thinkcentre-neo-50q-qc",
             "lenovo-yoga-slim-7x-14q8x9",
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
@@ -1706,19 +1768,15 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": [
-            "lenovo-ideapad-5x-2-in-1-14q8x9",
-            "lenovo-ideapad-slim-3x-15q8x10",
-            "lenovo-thinkbook-16-gen-7-qoy"
-          ]
+          "available": []
         }
       },
       "all": {
-        "omarchy": 59,
+        "omarchy": 63,
         "fromUpstream": 1,
-        "added": 58,
+        "added": 62,
         "pull": 0,
-        "available": 3,
+        "available": 0,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1765,6 +1823,10 @@
             "hp-omnibook-x-16-cp0",
             "hp-omnibook-x-16-cp",
             "lenovo-ideacentre-mini-x-01q8x10",
+            "lenovo-ideapad-5x-2-in-1-14q8x9",
+            "lenovo-ideapad-slim-3x-15q8x10",
+            "lenovo-ideapad-slim-5x-14q8x9",
+            "lenovo-thinkbook-16-gen-7-qoy",
             "lenovo-thinkcentre-neo-50q-qc",
             "lenovo-yoga-slim-7x-14q8x9",
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
@@ -1785,11 +1847,7 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": [
-            "lenovo-ideapad-5x-2-in-1-14q8x9",
-            "lenovo-ideapad-slim-3x-15q8x10",
-            "lenovo-thinkbook-16-gen-7-qoy"
-          ]
+          "available": []
         }
       }
     }
@@ -9693,15 +9751,17 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "lenovo-ideapad-5x-2-in-1-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
         "deviceTree": "edge",
         "ids": "stable",
-        "firmware": "elsewhere"
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -9805,15 +9865,17 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "lenovo-ideapad-slim-3x-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
         "deviceTree": "edge",
         "ids": "stable",
-        "firmware": "elsewhere"
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -9918,15 +9980,17 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "windows",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "lenovo-ideapad-slim-5x-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
         "deviceTree": "edge",
         "ids": "stable",
-        "firmware": "none"
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -9937,17 +10001,10 @@
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsucpurwa.mbn",
-          "qcvss8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x1p42100-LENOVO-83HL",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -9978,7 +10035,7 @@
           },
           "firmwareNeeded": [
             "qcom/x1p42100/LENOVO/83HL/qcdxkmsucpurwa.mbn",
-            "qcom/x1p42100/LENOVO/83HL/qcvss8380.mbn",
+            "qcom/x1p42100/LENOVO/83HL/qcvss8380_pa.mbn",
             "qcom/x1p42100/LENOVO/83HL/qcadsp8380.mbn",
             "qcom/x1p42100/LENOVO/83HL/adsp_dtbs.elf",
             "qcom/x1p42100/LENOVO/83HL/qccdsp8380.mbn",
@@ -10022,7 +10079,7 @@
           },
           "firmwareNeeded": [
             "qcom/x1p42100/LENOVO/83HL/qcdxkmsucpurwa.mbn",
-            "qcom/x1p42100/LENOVO/83HL/qcvss8380.mbn",
+            "qcom/x1p42100/LENOVO/83HL/qcvss8380_pa.mbn",
             "qcom/x1p42100/LENOVO/83HL/qcadsp8380.mbn",
             "qcom/x1p42100/LENOVO/83HL/adsp_dtbs.elf",
             "qcom/x1p42100/LENOVO/83HL/qccdsp8380.mbn",
@@ -10352,15 +10409,17 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "lenovo-thinkbook-16-g7-qoy-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
         "deviceTree": "stable",
         "ids": "stable",
-        "firmware": "elsewhere"
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -15392,24 +15451,26 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-flex-5g"
       ],
       "notes": null,
-      "outcome": "notCarried",
-      "bootable": "carry",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "lenovo-flex-5g-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "stable",
-        "firmware": "elsewhere"
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -15436,10 +15497,10 @@
       "variants": [
         {
           "compatible": "lenovo,flex-5g",
-          "computed": "notCarried",
-          "treeChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
           "idsChannel": "stable",
-          "bootChannel": null,
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -15483,7 +15544,7 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8180x-lenovo-flex-5g-82ak.json"
             }
           ],
-          "outcome": "notCarried",
+          "outcome": "should",
           "reports": []
         }
       ],
