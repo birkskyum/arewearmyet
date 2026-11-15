@@ -22,6 +22,44 @@
 # the linux-firmware merge requests (!1331 to !1338 and !1341).
 
 folders:
+  - path: "qcom/glymur/ACER/SFSP14-Q51T"
+    models: ["acer-swift-spin-14-ai-sfsp14-q51t"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 225080
+        sha256: "9fbeaada8541c03ce5cbe78079d9cc6f4f2ea4b8280d84d154dbec111277b70e"
+        from:
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/longcheer/qcsubsys_ext_adsp8480/adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 513
+        sha256: "66ce8531efb7979d234e0f0eabbe18d038ac97da771a8a194f613df8f0724e81"
+        from:
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/longcheer/qcsubsys_ext_adsp8480/adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 515
+        sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
+        from:
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/longcheer/qcsubsys_ext_adsp8480/adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 703
+        sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
+        from:
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/longcheer/qcsubsys_ext_adsp8480/adspua.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 69432
+        sha256: "9bee104a48d4aac647287d6c1454df170c1cff7158a2352711fd1e2163ea6d1d"
+        from:
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/QC/qcnspmcdm8480/cdsp_dtbs.elf" }
+      - name: "qcadsp8480.mbn"
+        size: 19998680
+        sha256: "5b61be789919d3d0486e99f342063708974065f6f6312ca4aebe638e55547f5d"
+        from:
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/longcheer/qcsubsys_ext_adsp8480/qcadsp8480.mbn" }
+      - name: "qccdsp8480.mbn"
+        size: 3252504
+        sha256: "acf13d29288d283793f418a36650e8a261eed927d30de109a59cb2210f458794"
+        from:
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/QC/qcnspmcdm8480/qccdsp8480.mbn" }
   - path: "qcom/glymur/ASUSTeK/HT7407NA"
     models: ["asus-proart-pz14-ht7407"]
     files:
@@ -764,11 +802,13 @@ folders:
         sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
         from:
           - { package: "acer-sf14-11-adsp-2.0.7800.0002", member: "ADSP_Qualcomm_2.0.7800.0002_W11ARM64/Formal_SA/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/longcheer/qcsubsys_ext_adsp8480/adsps.jsn" }
       - name: "adspua.jsn"
         size: 703
         sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
         from:
           - { package: "acer-sf14-11-adsp-2.0.7800.0002", member: "ADSP_Qualcomm_2.0.7800.0002_W11ARM64/Formal_SA/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/longcheer/qcsubsys_ext_adsp8480/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 516
         sha256: "be8c6fba330908e4683fb6282761cb08485a302d6a66e09721e102e342f27236"
@@ -817,11 +857,13 @@ folders:
         sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
         from:
           - { package: "acer-others-acer-2.0-w11x64-a", member: "SFA14-11_Drivers/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/longcheer/qcsubsys_ext_adsp8480/adsps.jsn" }
       - name: "adspua.jsn"
         size: 703
         sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
         from:
           - { package: "acer-others-acer-2.0-w11x64-a", member: "SFA14-11_Drivers/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/longcheer/qcsubsys_ext_adsp8480/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 516
         sha256: "be8c6fba330908e4683fb6282761cb08485a302d6a66e09721e102e342f27236"
@@ -875,11 +917,13 @@ folders:
         sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
         from:
           - { package: "acer-sfg14-01-adsp-2.0.7800.0002", member: "ADSP_Qualcomm_2.0.7800.0002_W11ARM64/Formal_SA/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/longcheer/qcsubsys_ext_adsp8480/adsps.jsn" }
       - name: "adspua.jsn"
         size: 703
         sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
         from:
           - { package: "acer-sfg14-01-adsp-2.0.7800.0002", member: "ADSP_Qualcomm_2.0.7800.0002_W11ARM64/Formal_SA/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/longcheer/qcsubsys_ext_adsp8480/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 516
         sha256: "be8c6fba330908e4683fb6282761cb08485a302d6a66e09721e102e342f27236"
@@ -1705,12 +1749,14 @@ folders:
         from:
           - { package: "acer-a14-11m-adsp-2.0.9100.0001", member: "ADSP_Qualcomm_2.0.9100.0001_W11ARM64/qcsubsys_ext_adsp8380/adsps.jsn" }
           - { package: "acer-a14-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/longcheer/qcsubsys_ext_adsp8480/adsps.jsn" }
       - name: "adspua.jsn"
         size: 703
         sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
         from:
           - { package: "acer-a14-11m-adsp-2.0.9100.0001", member: "ADSP_Qualcomm_2.0.9100.0001_W11ARM64/qcsubsys_ext_adsp8380/adspua.jsn" }
           - { package: "acer-a14-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/longcheer/qcsubsys_ext_adsp8480/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 516
         sha256: "be8c6fba330908e4683fb6282761cb08485a302d6a66e09721e102e342f27236"
@@ -1764,12 +1810,14 @@ folders:
         from:
           - { package: "acer-a16-11m-adsp-2.0.9100.0001", member: "ADSP_Qualcomm_2.0.9100.0001_W11ARM64/qcsubsys_ext_adsp8380/adsps.jsn" }
           - { package: "acer-a16-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcsubsys_ext_adsp8380/adsps.jsn" }
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/longcheer/qcsubsys_ext_adsp8480/adsps.jsn" }
       - name: "adspua.jsn"
         size: 703
         sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
         from:
           - { package: "acer-a16-11m-adsp-2.0.9100.0001", member: "ADSP_Qualcomm_2.0.9100.0001_W11ARM64/qcsubsys_ext_adsp8380/adspua.jsn" }
           - { package: "acer-a16-11m-qualcomm-base-driver-0.9100.1", member: "Base Driver_Qualcomm_0.9100.1_W11ARM64_(Qualcomm Base Driver)/qcsubsys_ext_adsp8380/adspua.jsn" }
+          - { package: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0", member: "Base Driver_Qualcomm_685.13804.40.0_W11ARM64_(Qualcomm Base Driver)/longcheer/qcsubsys_ext_adsp8480/adspua.jsn" }
       - name: "battmgr.jsn"
         size: 516
         sha256: "be8c6fba330908e4683fb6282761cb08485a302d6a66e09721e102e342f27236"
@@ -3433,6 +3481,15 @@ packages:
     size: 163904468
     sha256: "3d55e8f45d3cb36df820514b8ec27eafa5629c92b02e6dc17d09594037a9f355"
     fetched: "2026-11-02"
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+  - id: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0"
+    maker: "Acer"
+    title: "Qualcomm Base Driver 685.13804.40.0 for the SFSP14-Q51T"
+    url: "https://global-download.acer.com/GDFiles/Driver/Base%20Driver/Base%20Driver_Qualcomm_685.13804.40.0_W11ARM64_A.zip?acerid=639186471105972146&Step1=&Step2=&Step3=SWIFT%20SFSP14-Q51T&OS=ALL&LC=en&BC=ACER&SC=PA_6"
+    page: "https://www.acer.com/us-en/support/product-support/SFSP14-Q51T"
+    size: 426339986
+    sha256: "58d0aa896171fc3b895ccb0423ff506e5282bc0edcd2dcc5357bec35a10faeb9"
+    fetched: "2026-11-15"
     note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
   - id: "acer-others-acer-2.0-w11x64-a"
     maker: "Acer"
