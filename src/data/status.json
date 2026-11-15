@@ -1410,7 +1410,7 @@
     "notYet": 14,
     "deviceTree": 82,
     "ids": 58,
-    "firmware": 67,
+    "firmware": 71,
     "googlebooks": 2,
     "chromebooks": 10,
     "acpi": 46,
@@ -1626,7 +1626,7 @@
         "fromUpstream": 1,
         "added": 66,
         "pull": 0,
-        "available": 0,
+        "available": 4,
         "upstream": 1,
         "channels": {
           "stable": 1,
@@ -1706,7 +1706,12 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": []
+          "available": [
+            "lenovo-ideapad-5x-2-in-1-14q8x9",
+            "lenovo-ideapad-slim-3x-15q8x10",
+            "lenovo-ideapad-slim-5x-14q8x9",
+            "lenovo-thinkbook-16-gen-7-qoy"
+          ]
         }
       },
       "all": {
@@ -1714,7 +1719,7 @@
         "fromUpstream": 1,
         "added": 58,
         "pull": 0,
-        "available": 0,
+        "available": 4,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1781,7 +1786,12 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": []
+          "available": [
+            "lenovo-ideapad-5x-2-in-1-14q8x9",
+            "lenovo-ideapad-slim-3x-15q8x10",
+            "lenovo-ideapad-slim-5x-14q8x9",
+            "lenovo-thinkbook-16-gen-7-qoy"
+          ]
         }
       }
     }
@@ -9685,7 +9695,7 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -9693,7 +9703,7 @@
       "pieces": {
         "deviceTree": "edge",
         "ids": "stable",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -9704,17 +9714,10 @@
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsucpurwa.mbn",
-          "qcvss8380_pa.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x1p42100-LENOVO-83GH",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -9804,7 +9807,7 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -9812,7 +9815,7 @@
       "pieces": {
         "deviceTree": "edge",
         "ids": "stable",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -9823,17 +9826,10 @@
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsucpurwa.mbn",
-          "qcvss8380_pa.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x1p42100-LENOVO-83N3",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -9924,7 +9920,7 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -9932,7 +9928,7 @@
       "pieces": {
         "deviceTree": "edge",
         "ids": "stable",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -9943,17 +9939,10 @@
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsucpurwa.mbn",
-          "qcvss8380.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x1p42100-LENOVO-83HL",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -10358,7 +10347,7 @@
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -10366,7 +10355,7 @@
       "pieces": {
         "deviceTree": "stable",
         "ids": "stable",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "released",
@@ -10377,16 +10366,10 @@
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsucpurwa.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x1p42100-LENOVO-21NH",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],

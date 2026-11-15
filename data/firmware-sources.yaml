@@ -13,9 +13,11 @@
 # packages    the maker downloads: title, url, the maker's page when the url changes per version,
 #             size and SHA-256 as fetched, the date it was fetched, a note when fetching it
 #             needs care, and manual: true when the url is a page the download has to be started
-#             from by hand
+#             from by hand. A url wu://<update ID>/<revision>/<SHA-1> is a file of an update on
+#             Windows Update, which hands out short-lived links only;
+#             https://github.com/birkskyum/wudrivers fetches a fresh one with `wudrivers fetch`
 #
-# Packages unpack with 7-Zip, except Lenovo's (innoextract) and Microsoft's MSIs (msiextract).
+# Packages unpack with 7-Zip (Windows Update's driver cabinets too), except Lenovo's (innoextract) and Microsoft's MSIs (msiextract).
 # ASUS's are executables with a 7-Zip archive appended. A member ending in !xz@N is an XZ stream
 # that starts N bytes into that file: the SoC control processor images sit like that inside the
 # BIOS images in HP's and ASUS's packages. The files were matched byte for byte to the ones in
@@ -2363,6 +2365,233 @@ folders:
         sha256: "21e2dc5b977009c716daa7ece02dc7136acc40b9349954809a8a4a2e034bd1b0"
         from:
           - { package: "lenovo-u9corggus14lcfc", member: "code$GetExtractPath$/Drivers/qcdx8380/qcvss8380_pa.mbn" }
+  - path: "qcom/x1p42100/LENOVO/21NH"
+    models: ["lenovo-thinkbook-16-gen-7-qoy"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "09b0518af0362fb34b0492d1c4081033313ba32fd94dc07a51b05a3122e55033"
+        from:
+          - { package: "lenovo-21nh-wu-200.0.21.0-qcsubsys-ext-adsp8380", member: "adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 534
+        sha256: "4b9566fcfdc1656c38d8158d79db6964e9c4b57a6e42b46241e8d63aabc42d8d"
+        from:
+          - { package: "lenovo-21nh-wu-200.0.21.0-qcsubsys-ext-adsp8380", member: "adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "lenovo-21nh-wu-200.0.21.0-qcsubsys-ext-adsp8380", member: "adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "lenovo-21nh-wu-200.0.21.0-qcsubsys-ext-adsp8380", member: "adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "lenovo-21nh-wu-200.0.21.0-qcsubsys-ext-adsp8380", member: "battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "1e0535bd2a8adcd14d6079ffa99f6fce5c6561d4759a60f6076dcfbaa4437f8a"
+        from:
+          - { package: "lenovo-21nh-wu-200.0.21.0-qcnspmcdm-ext-cdsp8380", member: "cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "lenovo-21nh-wu-200.0.21.0-qcnspmcdm-ext-cdsp8380", member: "cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22092168
+        sha256: "4e0af6492355e4264a183728b6251a416a6cb2fa4ee2a4baca076cfb8d433c64"
+        from:
+          - { package: "lenovo-21nh-wu-200.0.21.0-qcsubsys-ext-adsp8380", member: "qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3174824
+        sha256: "4387fa1a234aacbff50f8a215b96536d17c4b25b6b798392e15a162e4adcd7a0"
+        from:
+          - { package: "lenovo-21nh-wu-200.0.21.0-qcnspmcdm-ext-cdsp8380", member: "qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "f9342cb44a79f5abdd1f0ae888c6c3df8e60f28a6c3a5077591369268d1b5c0a"
+        from:
+          - { package: "lenovo-21nh-wu-200.0.21.0-qcdx8380", member: "qcdxkmsucpurwa.mbn" }
+  - path: "qcom/x1p42100/LENOVO/83GH"
+    models: ["lenovo-ideapad-5x-2-in-1-14q8x9"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "6a705ccbeec2a6a7e51038d56d368e5627ee21f910d30e73e24f7524ae1a8bd2"
+        from:
+          - { package: "lenovo-83gh-wu-200.0.20.0-qcsubsys-ext-adsp8380", member: "adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 534
+        sha256: "4b9566fcfdc1656c38d8158d79db6964e9c4b57a6e42b46241e8d63aabc42d8d"
+        from:
+          - { package: "lenovo-83gh-wu-200.0.20.0-qcsubsys-ext-adsp8380", member: "adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "lenovo-83gh-wu-200.0.20.0-qcsubsys-ext-adsp8380", member: "adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "lenovo-83gh-wu-200.0.20.0-qcsubsys-ext-adsp8380", member: "adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "lenovo-83gh-wu-200.0.20.0-qcsubsys-ext-adsp8380", member: "battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "1e0535bd2a8adcd14d6079ffa99f6fce5c6561d4759a60f6076dcfbaa4437f8a"
+        from:
+          - { package: "lenovo-83gh-wu-200.0.20.0-qcnspmcdm-ext-cdsp8380", member: "cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "lenovo-83gh-wu-200.0.20.0-qcnspmcdm-ext-cdsp8380", member: "cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22083976
+        sha256: "96e09e600d011bb47da4d629ac6c05cac4fbb50de254320dbe358e01c5b248fa"
+        from:
+          - { package: "lenovo-83gh-wu-200.0.20.0-qcsubsys-ext-adsp8380", member: "qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3174824
+        sha256: "4387fa1a234aacbff50f8a215b96536d17c4b25b6b798392e15a162e4adcd7a0"
+        from:
+          - { package: "lenovo-83gh-wu-200.0.20.0-qcnspmcdm-ext-cdsp8380", member: "qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "f9342cb44a79f5abdd1f0ae888c6c3df8e60f28a6c3a5077591369268d1b5c0a"
+        from:
+          - { package: "lenovo-83gh-wu-200.0.20.0-qcdx8380", member: "qcdxkmsucpurwa.mbn" }
+      - name: "qcvss8380_pa.mbn"
+        size: 2314856
+        sha256: "60ef91ee42fe360f87cf8ff5ee8ec399f90df7160b533f0dbca3cc30a4c5a4ff"
+        from:
+          - { package: "lenovo-83gh-wu-200.0.20.0-qcdx8380", member: "qcvss8380_pa.mbn" }
+  - path: "qcom/x1p42100/LENOVO/83HL"
+    models: ["lenovo-ideapad-slim-5x-14q8x9"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "27a676b110165d38723f01d88543a40603596e892c00019f67fa6013c591b6ab"
+        from:
+          - { package: "lenovo-83hl-wu-200.0.20.0-qcsubsys-ext-adsp8380", member: "adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 670
+        sha256: "549bb9c8e32dc6253d0d0ddde2ce5c26f75f8333d3e55861f297e169a9f3e5c0"
+        from:
+          - { package: "lenovo-83hl-wu-200.0.20.0-qcsubsys-ext-adsp8380", member: "adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 515
+        sha256: "12ac2f3ae8ced12aa4b06b3ab3a01bc4d8efe1c92ebea503c002f209a6ec176f"
+        from:
+          - { package: "lenovo-83hl-wu-200.0.20.0-qcsubsys-ext-adsp8380", member: "adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 703
+        sha256: "982a99853495e34726b8e44697fdfad303334de0a67cbf6cde306c8f1731000b"
+        from:
+          - { package: "lenovo-83hl-wu-200.0.20.0-qcsubsys-ext-adsp8380", member: "adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 516
+        sha256: "be8c6fba330908e4683fb6282761cb08485a302d6a66e09721e102e342f27236"
+        from:
+          - { package: "lenovo-83hl-wu-200.0.20.0-qcsubsys-ext-adsp8380", member: "battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "1e0535bd2a8adcd14d6079ffa99f6fce5c6561d4759a60f6076dcfbaa4437f8a"
+        from:
+          - { package: "lenovo-83hl-wu-200.0.20.0-qcnspmcdm-ext-cdsp8380", member: "cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "lenovo-83hl-wu-200.0.20.0-qcnspmcdm-ext-cdsp8380", member: "cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 22088072
+        sha256: "fd71bd1a2d8224ca58c9f5aee6ad14f151a093dfbee792169b64745c86e51a29"
+        from:
+          - { package: "lenovo-83hl-wu-200.0.20.0-qcsubsys-ext-adsp8380", member: "qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3174824
+        sha256: "4387fa1a234aacbff50f8a215b96536d17c4b25b6b798392e15a162e4adcd7a0"
+        from:
+          - { package: "lenovo-83hl-wu-200.0.20.0-qcnspmcdm-ext-cdsp8380", member: "qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "23788d4891403545c6d28cf09d97c5f6e81d9aed9d5f155c21fc8b39d03ef2a7"
+        from:
+          - { package: "lenovo-83hl-wu-200.0.20.0-qcdx8380", member: "qcdxkmsucpurwa.mbn" }
+      - name: "qcvss8380.mbn"
+        size: 2318952
+        sha256: "52d91d02e7470b615999208981877dc83d5450107122542e9780fa951303dd6a"
+        from:
+          - { package: "lenovo-83hl-wu-200.0.20.0-qcdx8380", member: "qcvss8380.mbn" }
+  - path: "qcom/x1p42100/LENOVO/83N3"
+    models: ["lenovo-ideapad-slim-3x-15q8x10"]
+    files:
+      - name: "adsp_dtbs.elf"
+        size: 73528
+        sha256: "98b71f2ec3078582c0463f8405ee155008bef1e84b9d33413fdee0acf053414a"
+        from:
+          - { package: "lenovo-83n3-wu-200.0.6.0-qcsubsys-ext-adsp8380", member: "adsp_dtbs.elf" }
+      - name: "adspr.jsn"
+        size: 697
+        sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
+        from:
+          - { package: "lenovo-83n3-wu-200.0.6.0-qcsubsys-ext-adsp8380", member: "adspr.jsn" }
+      - name: "adsps.jsn"
+        size: 536
+        sha256: "19b1396b5e2c0d14fb8a4eb8e47181df7f62989f4af519b439cf0ee45a46f76e"
+        from:
+          - { package: "lenovo-83n3-wu-200.0.6.0-qcsubsys-ext-adsp8380", member: "adsps.jsn" }
+      - name: "adspua.jsn"
+        size: 731
+        sha256: "d65dc1aedce2c1131da8ffaed7dcffc05cc9c58da491e0c39acb2ac5b3f4bc1d"
+        from:
+          - { package: "lenovo-83n3-wu-200.0.6.0-qcsubsys-ext-adsp8380", member: "adspua.jsn" }
+      - name: "battmgr.jsn"
+        size: 537
+        sha256: "b8aad1d149128f414eb1fd6fcbb6e0a5b7dabcd2cba001599e1ce9a0e2e291a4"
+        from:
+          - { package: "lenovo-83n3-wu-200.0.6.0-qcsubsys-ext-adsp8380", member: "battmgr.jsn" }
+      - name: "cdsp_dtbs.elf"
+        size: 40760
+        sha256: "1e0535bd2a8adcd14d6079ffa99f6fce5c6561d4759a60f6076dcfbaa4437f8a"
+        from:
+          - { package: "lenovo-83n3-wu-200.0.6.0-qcnspmcdm-ext-cdsp8380", member: "cdsp_dtbs.elf" }
+      - name: "cdspr.jsn"
+        size: 534
+        sha256: "7e46c515ab1bb012768be6e961eca69b1c8aad9af1cbac886b3b5ae8d4228f64"
+        from:
+          - { package: "lenovo-83n3-wu-200.0.6.0-qcnspmcdm-ext-cdsp8380", member: "cdspr.jsn" }
+      - name: "qcadsp8380.mbn"
+        size: 17684680
+        sha256: "e1a4202109101a97a85e8b913d66de56d906d1b009090ad4281f7a2b12350714"
+        from:
+          - { package: "lenovo-83n3-wu-200.0.6.0-qcsubsys-ext-adsp8380", member: "qcadsp8380.mbn" }
+      - name: "qccdsp8380.mbn"
+        size: 3174824
+        sha256: "4387fa1a234aacbff50f8a215b96536d17c4b25b6b798392e15a162e4adcd7a0"
+        from:
+          - { package: "lenovo-83n3-wu-200.0.6.0-qcnspmcdm-ext-cdsp8380", member: "qccdsp8380.mbn" }
+      - name: "qcdxkmsucpurwa.mbn"
+        size: 12088
+        sha256: "f9342cb44a79f5abdd1f0ae888c6c3df8e60f28a6c3a5077591369268d1b5c0a"
+        from:
+          - { package: "lenovo-83n3-wu-200.0.6.0-qcdx8380", member: "qcdxkmsucpurwa.mbn" }
+      - name: "qcvss8380_pa.mbn"
+        size: 2314856
+        sha256: "60ef91ee42fe360f87cf8ff5ee8ec399f90df7160b533f0dbca3cc30a4c5a4ff"
+        from:
+          - { package: "lenovo-83n3-wu-200.0.6.0-qcdx8380", member: "qcvss8380_pa.mbn" }
   - path: "qcom/x1p42100/LENOVO/91B6"
     models: ["lenovo-ideacentre-mini-x-01q8x10"]
     files:
@@ -3776,6 +4005,102 @@ packages:
     size: 298002488
     sha256: "618091167b61fb9773a81c91dc4ea93ba0837b3cd2ad0ad81263abb529a60bea"
     fetched: "2026-11-14"
+  - id: "lenovo-21nh-wu-200.0.21.0-qcdx8380"
+    maker: "Lenovo"
+    title: "Qualcomm Adreno graphics driver 31.0.96.0 for the 21NH (Windows Update 200.0.21.0)"
+    url: "wu://ee26dfb9-8d80-4eb7-8017-6ba24022412c/1/e4da45e7d76bb3d109312897dbfa15e7446df9d9"
+    size: 86352685
+    sha256: "aa86b26d1a91ce66990a915e4f26798ff547779e537aebadb175d30e56ad09d8"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {11788bd3-612e-5b33-8d26-b8dd53d88ba0}_arm64, a CHID of the 21NH. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-21nh-wu-200.0.21.0-qcnspmcdm-ext-cdsp8380"
+    maker: "Lenovo"
+    title: "Qualcomm Compute DSP Subsystem extension 30.0.0140.1000 for the 21NH (Windows Update 200.0.21.0)"
+    url: "wu://ee26dfb9-8d80-4eb7-8017-6ba24022412c/1/747466cde047783a391760230cbca3195a2df7b3"
+    size: 11823849
+    sha256: "d6e5f7c9affca5d3aa93f384841676bf93750e285acc2e26461081c3857cf00a"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {11788bd3-612e-5b33-8d26-b8dd53d88ba0}_arm64, a CHID of the 21NH. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-21nh-wu-200.0.21.0-qcsubsys-ext-adsp8380"
+    maker: "Lenovo"
+    title: "Qualcomm Audio DSP Subsystem extension 2.0.4248.1000 for the 21NH (Windows Update 200.0.21.0)"
+    url: "wu://ee26dfb9-8d80-4eb7-8017-6ba24022412c/1/26e4b6286ce79b6d0112552e8133a6018395c38e"
+    size: 14919824
+    sha256: "fdbac05da6490bf621d715112ea68fef19fc3de025f5768386e5700855abad9e"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {11788bd3-612e-5b33-8d26-b8dd53d88ba0}_arm64, a CHID of the 21NH. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-83gh-wu-200.0.20.0-qcdx8380"
+    maker: "Lenovo"
+    title: "Qualcomm Adreno graphics driver 31.0.96.0 for the 83GH (Windows Update 200.0.20.0)"
+    url: "wu://8ac5f653-c97b-4f51-b034-fe17f2f70501/1/e4da45e7d76bb3d109312897dbfa15e7446df9d9"
+    size: 86352685
+    sha256: "aa86b26d1a91ce66990a915e4f26798ff547779e537aebadb175d30e56ad09d8"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {9b723570-d493-5541-ae58-49087512f816}_arm64, a CHID of the 83GH. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-83gh-wu-200.0.20.0-qcnspmcdm-ext-cdsp8380"
+    maker: "Lenovo"
+    title: "Qualcomm Compute DSP Subsystem extension 30.0.0140.1000 for the 83GH (Windows Update 200.0.20.0)"
+    url: "wu://8ac5f653-c97b-4f51-b034-fe17f2f70501/1/747466cde047783a391760230cbca3195a2df7b3"
+    size: 11823849
+    sha256: "d6e5f7c9affca5d3aa93f384841676bf93750e285acc2e26461081c3857cf00a"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {9b723570-d493-5541-ae58-49087512f816}_arm64, a CHID of the 83GH. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-83gh-wu-200.0.20.0-qcsubsys-ext-adsp8380"
+    maker: "Lenovo"
+    title: "Qualcomm Audio DSP Subsystem extension 2.0.4248.1000 for the 83GH (Windows Update 200.0.20.0)"
+    url: "wu://8ac5f653-c97b-4f51-b034-fe17f2f70501/1/54ea7e6822ea1e5cd936c610cde762b28710e07e"
+    size: 14887570
+    sha256: "b2268520ac0cee1ad89c69418021cb3a77f2aaa49b59a387015ed50a6c4a79fd"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {9b723570-d493-5541-ae58-49087512f816}_arm64, a CHID of the 83GH. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-83hl-wu-200.0.20.0-qcdx8380"
+    maker: "Lenovo"
+    title: "Qualcomm Adreno graphics driver 31.0.98.1 for the 83HL (Windows Update 200.0.20.0)"
+    url: "wu://96d7ff14-22cd-4939-a225-706d86c26a7e/1/4b62ce39ab5c4fc4494918680e4be1a83b71cea8"
+    size: 86515939
+    sha256: "20c61a5de20d33d359b1c0848710098c2c82169af686dca68090f9efdee15db2"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {eaa30ed1-62b1-51e2-9d1f-8308a1202657}_arm64, a CHID of the 83HL. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-83hl-wu-200.0.20.0-qcnspmcdm-ext-cdsp8380"
+    maker: "Lenovo"
+    title: "Qualcomm Compute DSP Subsystem extension 30.0.0140.1000 for the 83HL (Windows Update 200.0.20.0)"
+    url: "wu://96d7ff14-22cd-4939-a225-706d86c26a7e/1/747466cde047783a391760230cbca3195a2df7b3"
+    size: 11823849
+    sha256: "d6e5f7c9affca5d3aa93f384841676bf93750e285acc2e26461081c3857cf00a"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {eaa30ed1-62b1-51e2-9d1f-8308a1202657}_arm64, a CHID of the 83HL. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-83hl-wu-200.0.20.0-qcsubsys-ext-adsp8380"
+    maker: "Lenovo"
+    title: "Qualcomm Audio DSP Subsystem extension 2.0.7800.0002 for the 83HL (Windows Update 200.0.20.0)"
+    url: "wu://96d7ff14-22cd-4939-a225-706d86c26a7e/1/5c9d4b84b92ca212f76cfb0614ada8f5ad955e1f"
+    size: 14923742
+    sha256: "d2678c170b1403d604acffb244ccfe4b4c661ddbc60010692dc9abaa9f406bc5"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {eaa30ed1-62b1-51e2-9d1f-8308a1202657}_arm64, a CHID of the 83HL. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-83n3-wu-200.0.6.0-qcdx8380"
+    maker: "Lenovo"
+    title: "Qualcomm Adreno graphics driver 31.0.96.0 for the 83N3 (Windows Update 200.0.6.0)"
+    url: "wu://b5874bc0-e234-4dd1-9e1a-d3b99dc1ae5e/1/e4da45e7d76bb3d109312897dbfa15e7446df9d9"
+    size: 86352685
+    sha256: "aa86b26d1a91ce66990a915e4f26798ff547779e537aebadb175d30e56ad09d8"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {0549a586-ab3b-5606-a55a-f9374515909c}_arm64, a CHID of the 83N3. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-83n3-wu-200.0.6.0-qcnspmcdm-ext-cdsp8380"
+    maker: "Lenovo"
+    title: "Qualcomm Compute DSP Subsystem extension 30.0.0140.1000 for the 83N3 (Windows Update 200.0.6.0)"
+    url: "wu://b5874bc0-e234-4dd1-9e1a-d3b99dc1ae5e/1/747466cde047783a391760230cbca3195a2df7b3"
+    size: 11823849
+    sha256: "d6e5f7c9affca5d3aa93f384841676bf93750e285acc2e26461081c3857cf00a"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {0549a586-ab3b-5606-a55a-f9374515909c}_arm64, a CHID of the 83N3. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-83n3-wu-200.0.6.0-qcsubsys-ext-adsp8380"
+    maker: "Lenovo"
+    title: "Qualcomm Audio DSP Subsystem extension 2.0.4237.8401 for the 83N3 (Windows Update 200.0.6.0)"
+    url: "wu://b5874bc0-e234-4dd1-9e1a-d3b99dc1ae5e/1/2667a3e8dd58387fdc8a48f19e3e5240c6fb5522"
+    size: 12167822
+    sha256: "8ca34935f8319b95a1305b2dce7f9b6a4a6801cf353cad284019ebea2304ce09"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {0549a586-ab3b-5606-a55a-f9374515909c}_arm64, a CHID of the 83N3. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
   - id: "lenovo-n42qq22w"
     maker: "Lenovo"
     title: "Qualcomm Integrated System Software and Firmware Package 1.0.0.22"

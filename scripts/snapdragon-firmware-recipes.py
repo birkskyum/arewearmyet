@@ -57,6 +57,7 @@ in_linux_firmware = linux_firmware_names(args.linux_firmware)
 DSP_SETS = {"audio DSP": re.compile(r"(qcadsp\d+\.mbn|adsp_dtbs?\.(elf|mbn))"), "compute DSP": re.compile(r"(qccdsp\d+\.mbn|cdsp_dtbs?\.(elf|mbn))")}
 
 TABLE_URL = "https://arewearmyet.com/firmware-sources.json"
+WUDRIVERS_URL = "https://github.com/birkskyum/wudrivers"
 SCRIPT_URL = "https://github.com/birkskyum/arewearmyet/blob/main/scripts/snapdragon-firmware-recipes.py"
 
 # Recipe name -> the machines it is for, and the firmware folders their device trees load from.
@@ -105,7 +106,11 @@ RECIPES = {
     "hp-omnibook-x16-cp0-firmware": ("HP OmniBook X 14 and 16 (2025)", ["qcom/x1p42100/hp/omnibook-x16-cp0"]),
     "huawei-matebook-e-go-firmware": ("Huawei MateBook E Go", ["qcom/sc8280xp/HUAWEI/gaokun3"]),
     "lenovo-ideacentre-mini-x-firmware": ("Lenovo IdeaCentre Mini x", ["qcom/x1e80100/LENOVO/91B6", "qcom/x1p42100/LENOVO/91B6"]),
+    "lenovo-ideapad-5x-2-in-1-firmware": ("Lenovo IdeaPad 5x 2-in-1 14Q8X9", ["qcom/x1p42100/LENOVO/83GH"]),
+    "lenovo-ideapad-slim-3x-firmware": ("Lenovo IdeaPad Slim 3x 15Q8X10", ["qcom/x1p42100/LENOVO/83N3"]),
+    "lenovo-ideapad-slim-5x-firmware": ("Lenovo IdeaPad Slim 5x 14Q8X9", ["qcom/x1p42100/LENOVO/83HL"]),
     "lenovo-thinkcentre-neo-50q-qc-firmware": ("Lenovo ThinkCentre neo 50q QC", ["qcom/x1p42100/LENOVO/13C8"]),
+    "lenovo-thinkbook-16-g7-qoy-firmware": ("Lenovo ThinkBook 16 G7 QOY", ["qcom/x1p42100/LENOVO/21NH"]),
     "lenovo-thinkpad-t14s-gen7-firmware": ("Lenovo ThinkPad T14s Gen 7", ["qcom/glymur/LENOVO/22A8"]),
     "medion-sprchrgd-14-s1-firmware": ("Medion SPRCHRGD 14 S1", ["qcom/x1e80100/Medion/sprchrgd-14-s1"]),
     "microsoft-surface-laptop-7-firmware": ("Microsoft Surface Laptop 7", ["qcom/x1e80100/microsoft/Romulus", "qcom/x1e80100/microsoft"]),
@@ -141,7 +146,8 @@ packages = {p["id"]: p for p in table["packages"]}
 PATTERNS = {
     "id": r"[a-z0-9][a-z0-9._-]*",
     "maker": r"[A-Za-z][A-Za-z ]*",
-    "url": r"https://[A-Za-z0-9.-]+/[A-Za-z0-9._~%/()+,=&?:-]*",
+    # A maker's download, or a file of a Windows Update update as wu://<update ID>/<revision>/<SHA-1>
+    "url": r"https://[A-Za-z0-9.-]+/[A-Za-z0-9._~%/()+,=&?:-]*|wu://[0-9a-f-]{36}/[0-9]+/[0-9a-f]{40}",
     "size": r"[0-9]+",
     "sha256": r"[0-9a-f]{64}",
     "fetched": r"[0-9]{4}-[0-9]{2}-[0-9]{2}",
@@ -193,6 +199,12 @@ def resolve(path, name, depth=0):
     raise KeyError(f"{path}/{name}")
 
 
+# Windows Update hands out short-lived links only, so its files are fetched by update ID, revision
+# and SHA-1 with wudrivers.
+def windows_update(pkg):
+    return pkg["url"].startswith("wu://")
+
+
 def unpack_kind(pkg):
     path = pkg["url"].split("?")[0].lower()
     if path.endswith(".msi"):
@@ -205,6 +217,8 @@ def unpack_kind(pkg):
 
 
 def ext(pkg):
+    if windows_update(pkg):
+        return ".cab"
     m = re.search(r"(\.[A-Za-z0-9]+)$", pkg["url"].split("?")[0])
     return m.group(1).lower() if m else ".bin"
 
@@ -243,12 +257,19 @@ def provide(path):
 # The README.package.md the recipe installs: where each file comes from and when the package can go.
 def readme(name, who, paths, what, makers, chosen, wanted, provided):
     by = human_list(makers)
+    wu = all(windows_update(packages[p]) for p in chosen)
+    origin = f"the driver bundle {by} publishes for it on Windows Update" if wu else f"{by}'s own Windows driver download"
     L = [f"# {name}", "",
-         f"{what[0].upper() + what[1:]} firmware for the {who}, from {by}'s own Windows driver download.", "",
+         f"{what[0].upper() + what[1:]} firmware for the {who}, from {origin}.", "",
          f"The firmware only runs if {by} signed it for this board, so linux-firmware cannot carry it until {by} "
-         "submits it. The package holds no firmware itself. Its recipe downloads the driver package below when the "
-         "package is built, unpacks it without running it, checks every file against the SHA-256 it was matched to "
+         "submits it. The package holds no firmware itself. Its recipe downloads the driver "
+         + ("cabinets below" if len(chosen) > 1 else "package below") + " when the "
+         "package is built, unpacks " + ("them" if len(chosen) > 1 else "it") + " without running anything, checks every file against the SHA-256 it was matched to "
          "and installs it under the name the device tree asks for, compressed with xz.", ""]
+    if any(windows_update(packages[p]) for p in chosen):
+        L += ["Windows Update hands out short-lived links only, so a `wu://` source names the update ID, revision and "
+              f"SHA-1 of a file, and [wudrivers]({WUDRIVERS_URL}) fetches a fresh link for it when the package builds. "
+              "makepkg then checks the file against its SHA-256 like any other source.", ""]
     shared = sorted({os.path.normpath(os.path.join(path, os.path.dirname(link["target"]))) for path in paths for link in folders[path].get("links", [])})
     if shared:
         L += ["Its files are byte for byte the ones in " + human_list([f"`{s}`" for s in shared]) + ", which the "
@@ -257,6 +278,10 @@ def readme(name, who, paths, what, makers, chosen, wanted, provided):
     L += ["## Source", ""]
     for p in chosen:
         pkg = packages[p]
+        if windows_update(pkg):
+            line = f"- {pkg['title']}, `{pkg['url']}`, {max(pkg['size'] // 1000000, 1)} MB, SHA-256 `{pkg['sha256']}`, checked {pkg['fetched']}."
+            L.append(line)
+            continue
         line = f"- [{pkg['title']}]({pkg['url']}), {pkg['size'] // 1000000} MB, SHA-256 `{pkg['sha256']}`, checked {pkg['fetched']}."
         if pkg.get("page"):
             line += f" The link changes with every version, and [the download page]({pkg['page']}) lists the current one."
@@ -335,17 +360,23 @@ def recipe(name, who, paths):
     signers = [p for p in chosen if p in signed] or chosen
     makers = sorted({packages[p]["maker"] for p in signers})
     kinds = {p: unpack_kind(packages[p]) for p in chosen}
-    makedepends = ["7zip"] + (["innoextract"] if "inno" in kinds.values() else []) + (["msitools"] if "msi" in kinds.values() else [])
+    from_wu = any(windows_update(packages[p]) for p in chosen)
+    makedepends = (["7zip"] + (["innoextract"] if "inno" in kinds.values() else []) + (["msitools"] if "msi" in kinds.values() else [])
+                   + (["wudrivers"] if from_wu else []))
     local = {p: f"{p}{ext(packages[p])}" for p in chosen}
     version = max(packages[p]["fetched"] for p in chosen).replace("-", "")
-    page = next((packages[p].get("page") for p in signers if packages[p].get("page")), None) or packages[signers[0]]["url"].split("?")[0]
+    page = (next((packages[p].get("page") for p in signers if packages[p].get("page")), None)
+            or (WUDRIVERS_URL if windows_update(packages[signers[0]]) else packages[signers[0]]["url"].split("?")[0]))
 
     what = contents([w["dest"] for w in wanted])
     L = []
+    shipped_in = ("in the driver bundle it publishes for the machine on Windows Update, whose cabinets this recipe fetches "
+                  "with wudrivers and unpacks without running anything" if all(windows_update(packages[p]) for p in chosen)
+                  else "in its Windows driver download, which this recipe unpacks without running")
     L += comment(
         f"{what[0].upper() + what[1:]} firmware for the {who}. The firmware only runs if it is signed for this "
         f"board by {human_list(makers)}, so linux-firmware cannot carry it until the OEM submits it. The OEM ships it "
-        "in its Windows driver download, which this recipe unpacks without running. Each file is checked against the "
+        f"{shipped_in}. Each file is checked against the "
         "SHA-256 it was matched to and installed under the name the device tree requests, compressed with xz. The "
         "kernel tries a plain name, then .zst, then .xz, so once linux-firmware ships the same file, its copy is the "
         "one loaded, and the two packages never install the same path.")
@@ -378,6 +409,11 @@ def recipe(name, who, paths):
         L += [
             "# dl.dell.com turns away clients that do not name a browser.",
             "DLAGENTS=('https::/usr/bin/curl -qgb \"\" -A Mozilla/5.0 -fLC - --retry 3 --retry-delay 3 -o %o %u')",
+        ]
+    if from_wu:
+        L += [
+            "# Windows Update's links are short-lived, so wudrivers fetches a fresh one by update ID, revision and SHA-1.",
+            "DLAGENTS+=('wu::/usr/bin/wudrivers fetch %u -o %o')",
         ]
     L.append("source=(")
     for p in chosen:
