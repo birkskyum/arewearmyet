@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-15T15:43:08.412Z",
+  "collected": "2026-11-15T16:22:59.571Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -555,6 +555,7 @@
         "carriedIds": [
           "glymur-anduril-bluechip.json",
           "glymur-asus-proart-pz14-ht7407na.json",
+          "glymur-asus-vivobook-s16-s3607na.json",
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8-15.json",
           "glymur-microsoft-surface-laptop8.json",
@@ -571,8 +572,12 @@
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
           "mahua-microsoft-surface-pro-12th-edition.json",
+          "x126100-asus-v400-aio-vm441qa.json",
           "x126100-asus-vivobook-14.json",
           "x126100-asus-vivobook-16.json",
+          "x126100-asus-vivobook-s14-flip-tp5408qa.json",
+          "x126100-asus-vivobook-s14-s5408qa.json",
+          "x126100-asus-vivobook-s16-s5608qa.json",
           "x126100-lenovo-ideapad-vibe-14q8x12.json",
           "x126100-lenovo-ideapad-vibe-15q8x12.json",
           "x126100-lenovo-thinkcentre-neo-50q-qc.json",
@@ -1463,9 +1468,9 @@
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
     "works": 2,
-    "should": 62,
+    "should": 67,
     "problems": 9,
-    "notYet": 13,
+    "notYet": 8,
     "deviceTree": 82,
     "ids": 59,
     "firmware": 71,
@@ -1585,16 +1590,16 @@
         }
       },
       "ids": {
-        "omarchy": 73,
+        "omarchy": 78,
         "fromUpstream": 28,
-        "added": 45,
+        "added": 50,
         "pull": 0,
         "available": 1,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 73
+          "edge": 78
         },
         "models": {
           "fromUpstream": [
@@ -1634,12 +1639,17 @@
             "acer-swift-spin-14-ai-sfsp14-q51t",
             "anduril-bluechip",
             "asus-proart-pz13-ht5306",
+            "asus-v400-aio-vm441qa",
             "asus-vivobook-14-x1407qa",
             "asus-vivobook-16-x1607qa",
             "asus-vivobook-s14-s3407qa",
+            "asus-vivobook-s14-s5408qa",
+            "asus-vivobook-s14-flip-tp5408qa",
             "asus-vivobook-s16-s3607qa",
+            "asus-vivobook-s16-s5608qa",
             "asus-zenbook-14-ux3480qa",
             "asus-proart-pz14-ht7407",
+            "asus-vivobook-s16-s3607na",
             "dell-inspiron-14-5441",
             "dynabook-xd5",
             "hp-omnibook-3-14-hz0",
@@ -1773,9 +1783,9 @@
         }
       },
       "all": {
-        "omarchy": 64,
+        "omarchy": 69,
         "fromUpstream": 1,
-        "added": 63,
+        "added": 68,
         "pull": 0,
         "available": 0,
         "upstream": 1,
@@ -1791,14 +1801,19 @@
             "acer-swift-go-14-ai-sfg14-01",
             "acer-swift-spin-14-ai-sfsp14-q51t",
             "asus-proart-pz13-ht5306",
+            "asus-v400-aio-vm441qa",
             "asus-vivobook-14-x1407qa",
             "asus-vivobook-16-x1607qa",
             "asus-vivobook-s15-s5507",
             "asus-vivobook-s14-s3407qa",
+            "asus-vivobook-s14-s5408qa",
+            "asus-vivobook-s14-flip-tp5408qa",
             "asus-vivobook-s16-s3607qa",
+            "asus-vivobook-s16-s5608qa",
             "asus-zenbook-14-ux3480qa",
             "asus-zenbook-a14-ux3407",
             "asus-proart-pz14-ht7407",
+            "asus-vivobook-s16-s3607na",
             "asus-zenbook-a14-ux3407na",
             "asus-zenbook-a16-ux3607oa",
             "dell-inspiron-14-5441",
@@ -3961,14 +3976,14 @@
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-aio-vm441qa"
       ],
       "notes": null,
-      "outcome": "manual",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
@@ -3979,7 +3994,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "none",
+        "ids": "edge",
         "firmware": "edge"
       },
       "upstream": {
@@ -4007,10 +4022,10 @@
       "variants": [
         {
           "compatible": "asus,v400-aio-vm441qa",
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -4030,7 +4045,7 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -4636,14 +4651,14 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s14-s5408-qualcomm/techspec/"
       ],
       "notes": null,
-      "outcome": "manual",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
@@ -4654,7 +4669,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "none",
+        "ids": "edge",
         "firmware": "edge"
       },
       "upstream": {
@@ -4682,10 +4697,10 @@
       "variants": [
         {
           "compatible": "asus,vivobook-s14-s5408qa",
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -4705,7 +4720,7 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -4732,14 +4747,14 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s14-flip-tp5408-qualcomm/techspec/"
       ],
       "notes": null,
-      "outcome": "manual",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
@@ -4750,7 +4765,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "none",
+        "ids": "edge",
         "firmware": "edge"
       },
       "upstream": {
@@ -4778,10 +4793,10 @@
       "variants": [
         {
           "compatible": "asus,vivobook-s14-flip-tp5408qa",
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -4801,7 +4816,7 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -4969,14 +4984,14 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s5608-qualcomm/techspec/"
       ],
       "notes": null,
-      "outcome": "manual",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
@@ -4987,7 +5002,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "none",
+        "ids": "edge",
         "firmware": "edge"
       },
       "upstream": {
@@ -5015,10 +5030,10 @@
       "variants": [
         {
           "compatible": "asus,vivobook-s16-s5608qa",
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -5038,7 +5053,7 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -5670,14 +5685,14 @@
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-vivobook-s16"
       ],
       "notes": null,
-      "outcome": "manual",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
@@ -5688,7 +5703,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "none",
+        "ids": "edge",
         "firmware": "edge"
       },
       "upstream": {
@@ -5716,10 +5731,10 @@
       "variants": [
         {
           "compatible": "asus,vivobook-s16-s3607na",
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -5737,7 +5752,7 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],

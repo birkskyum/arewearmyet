@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-15T15:43:08.412Z",
+  "collected": "2026-11-15T16:22:59.571Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -6038,6 +6038,7 @@
         "carriedIds": [
           "glymur-anduril-bluechip.json",
           "glymur-asus-proart-pz14-ht7407na.json",
+          "glymur-asus-vivobook-s16-s3607na.json",
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8-15.json",
           "glymur-microsoft-surface-laptop8.json",
@@ -6054,8 +6055,12 @@
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
           "mahua-microsoft-surface-pro-12th-edition.json",
+          "x126100-asus-v400-aio-vm441qa.json",
           "x126100-asus-vivobook-14.json",
           "x126100-asus-vivobook-16.json",
+          "x126100-asus-vivobook-s14-flip-tp5408qa.json",
+          "x126100-asus-vivobook-s14-s5408qa.json",
+          "x126100-asus-vivobook-s16-s5608qa.json",
           "x126100-lenovo-ideapad-vibe-14q8x12.json",
           "x126100-lenovo-ideapad-vibe-15q8x12.json",
           "x126100-lenovo-thinkcentre-neo-50q-qc.json",
@@ -7998,6 +8003,16 @@
         ]
       },
       {
+        "file": "glymur-asus-vivobook-s16-s3607na.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "ASUS Vivobook S16 S3607NA",
+        "compatible": "asus,vivobook-s16-s3607na",
+        "hwids": [
+          "be6c9db8-5407-551c-8a31-e6baf2be10fb",
+          "185f7553-ed73-5379-ab10-77cbe7f3a2f0"
+        ]
+      },
+      {
         "file": "glymur-hp-omnibook-ultra-kg0xxx.json",
         "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "HP OmniBook Ultra 14-kg0xxx",
@@ -8212,6 +8227,16 @@
         ]
       },
       {
+        "file": "x126100-asus-v400-aio-vm441qa.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "ASUS AIO VM441QA",
+        "compatible": "asus,v400-aio-vm441qa",
+        "hwids": [
+          "0df7c3c8-0b80-520c-903e-6221c29c9768",
+          "1c72e65a-64ce-518e-b023-1d5127e13d46"
+        ]
+      },
+      {
         "file": "x126100-asus-vivobook-14.json",
         "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "ASUS Vivobook 14 X1407QA",
@@ -8243,6 +8268,36 @@
           "9ddffa55-b50a-59a2-85f8-3fe038d9fd22",
           "ef3ad04c-cb6b-5981-a15a-71c7ee95190e",
           "f8d95087-670f-5015-987f-7cad2ecde912"
+        ]
+      },
+      {
+        "file": "x126100-asus-vivobook-s14-flip-tp5408qa.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "ASUS Vivobook S14 Flip TP5408QA",
+        "compatible": "asus,vivobook-s14-flip-tp5408qa",
+        "hwids": [
+          "d692997c-bfb8-5147-a761-23e1d01af24b",
+          "c5a64119-cae0-5e9a-81c9-e43ea490b89a"
+        ]
+      },
+      {
+        "file": "x126100-asus-vivobook-s14-s5408qa.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "ASUS Vivobook S14 S5408QA",
+        "compatible": "asus,vivobook-s14-s5408qa",
+        "hwids": [
+          "8ed7fec9-ef73-5159-81c1-b829ff004efa",
+          "ddfe1b48-f33b-5318-85e0-a40fc9ea97bd"
+        ]
+      },
+      {
+        "file": "x126100-asus-vivobook-s16-s5608qa.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "ASUS Vivobook S16 S5608QA",
+        "compatible": "asus,vivobook-s16-s5608qa",
+        "hwids": [
+          "2bb46a04-f79b-5f22-bd73-6dba2196b8b3",
+          "5229fd81-993a-5f1b-8660-5a2ea0b0b5b2"
         ]
       },
       {
@@ -8644,6 +8699,28 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.14.490/omarchy-edge-2026.11.14.490-aarch64.iso",
       "kernel": "7.3.0-60-omarchy"
     },
-    "pulls": []
+    "pulls": [
+      {
+        "number": 2821,
+        "title": "microsoft-surface-laptop-7-firmware: follow the new driver download, and add the video firmware",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2821",
+        "draft": true,
+        "deviceTrees": [],
+        "ids": [],
+        "firmware": [
+          "qcom/x1e80100/microsoft/Romulus/adsp_dtbs.elf",
+          "qcom/x1e80100/microsoft/Romulus/adspr.jsn",
+          "qcom/x1e80100/microsoft/Romulus/adsps.jsn",
+          "qcom/x1e80100/microsoft/Romulus/adspua.jsn",
+          "qcom/x1e80100/microsoft/Romulus/battmgr.jsn",
+          "qcom/x1e80100/microsoft/Romulus/cdsp_dtbs.elf",
+          "qcom/x1e80100/microsoft/Romulus/cdspr.jsn",
+          "qcom/x1e80100/microsoft/Romulus/qcadsp8380.mbn",
+          "qcom/x1e80100/microsoft/Romulus/qccdsp8380.mbn",
+          "qcom/x1e80100/microsoft/Romulus/qcvss8380.mbn",
+          "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn"
+        ]
+      }
+    ]
   }
 }
