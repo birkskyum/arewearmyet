@@ -1373,7 +1373,7 @@
     "notYet": 18,
     "deviceTree": 81,
     "ids": 58,
-    "firmware": 63,
+    "firmware": 64,
     "googlebooks": 2,
     "chromebooks": 10,
     "acpi": 46,
@@ -1584,7 +1584,7 @@
         "fromUpstream": 1,
         "added": 59,
         "pull": 0,
-        "available": 3,
+        "available": 4,
         "upstream": 1,
         "channels": {
           "stable": 1,
@@ -1658,6 +1658,7 @@
           ],
           "pull": [],
           "available": [
+            "acer-swift-spin-14-ai-sfsp14-q51t",
             "asus-vivobook-14-x1407qa",
             "microsoft-surface-laptop-13in-2nd-edition",
             "microsoft-surface-pro-12in-2nd-edition"
@@ -3520,7 +3521,7 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -3528,7 +3529,7 @@
       "pieces": {
         "deviceTree": "none",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -3539,10 +3540,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-glymur-ACER-SFSP14-Q51T",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],

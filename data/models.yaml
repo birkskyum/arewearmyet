@@ -246,6 +246,7 @@ models:
     released: "2026-07"
     chips: ["X2E-78-100"]
     model_numbers: ["SFSP14-Q51T"]
+    acpi: ["firmware/acer-swift-spin-14-ai-sfsp14-q51t"]
     sources:
       - https://news.acer.com/acer-broadens-portfolio
       - https://www.notebookcheck.net/Acer-Swift-Spin-14-AI-SFSP14-Q51T-Reviews-and-Specs.1393057.0.html
