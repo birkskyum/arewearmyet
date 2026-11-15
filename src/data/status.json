@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-15T01:33:24.072Z",
+  "collected": "2026-11-15T02:23:03.077Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -626,7 +626,8 @@
             "qcom/x1p42100/ACER/A16-11M/cdspr.jsn",
             "qcom/x1p42100/ACER/A16-11M/qcadsp8380.mbn",
             "qcom/x1p42100/ACER/A16-11M/qccdsp8380.mbn",
-            "qcom/x1p42100/ACER/A16-11M/qcdxkmsucpurwa.mbn"
+            "qcom/x1p42100/ACER/A16-11M/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ACER/A16-11M/qcvss8380_pa.mbn"
           ],
           "acer-swift-14-ai-firmware": [
             "qcom/x1e80100/ACER/SF14-11/adsp_dtbs.elf",
@@ -1265,6 +1266,15 @@
             "qcom/x1e80100/Medion/sprchrgd-14-s1/qcdxkmsuc8380.mbn",
             "qcom/x1e80100/Medion/sprchrgd-14-s1/qcvss8380.mbn"
           ],
+          "microsoft-surface-laptop-13-2nd-edition-firmware": [
+            "qcom/kalambo/Microsoft/SurfaceLaptop13/adsp_dtbs.elf",
+            "qcom/kalambo/Microsoft/SurfaceLaptop13/adspr.jsn",
+            "qcom/kalambo/Microsoft/SurfaceLaptop13/adsps.jsn",
+            "qcom/kalambo/Microsoft/SurfaceLaptop13/adspua.jsn",
+            "qcom/kalambo/Microsoft/SurfaceLaptop13/cdsp_dtbs.elf",
+            "qcom/kalambo/Microsoft/SurfaceLaptop13/qcadsp8480.mbn",
+            "qcom/kalambo/Microsoft/SurfaceLaptop13/qccdsp8480.mbn"
+          ],
           "microsoft-surface-laptop-13-firmware": [
             "qcom/x1p42100/Microsoft/SurfaceLaptop13/adsp_dtbs.elf",
             "qcom/x1p42100/Microsoft/SurfaceLaptop13/adspr.jsn",
@@ -1312,6 +1322,15 @@
             "qcom/x1e80100/microsoft/Denali/qcadsp8380.mbn",
             "qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn",
             "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn"
+          ],
+          "microsoft-surface-pro-12in-2nd-edition-firmware": [
+            "qcom/kalambo/Microsoft/Surface12/adsp_dtbs.elf",
+            "qcom/kalambo/Microsoft/Surface12/adspr.jsn",
+            "qcom/kalambo/Microsoft/Surface12/adsps.jsn",
+            "qcom/kalambo/Microsoft/Surface12/adspua.jsn",
+            "qcom/kalambo/Microsoft/Surface12/cdsp_dtbs.elf",
+            "qcom/kalambo/Microsoft/Surface12/qcadsp8480.mbn",
+            "qcom/kalambo/Microsoft/Surface12/qccdsp8480.mbn"
           ],
           "microsoft-surface-pro-12in-firmware": [
             "qcom/x1p42100/Microsoft/Surface12/adsp_dtbs.elf",
@@ -1390,7 +1409,7 @@
     "notYet": 14,
     "deviceTree": 82,
     "ids": 58,
-    "firmware": 64,
+    "firmware": 66,
     "googlebooks": 2,
     "chromebooks": 10,
     "acpi": 46,
@@ -1602,16 +1621,16 @@
         }
       },
       "firmware": {
-        "omarchy": 61,
+        "omarchy": 66,
         "fromUpstream": 1,
-        "added": 60,
+        "added": 65,
         "pull": 0,
-        "available": 3,
+        "available": 0,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 61
+          "edge": 66
         },
         "models": {
           "fromUpstream": [
@@ -1627,10 +1646,13 @@
             "asus-proart-pz13-ht5306",
             "asus-v400-aio-vm441qa",
             "asus-v400-aio-vm471qa",
+            "asus-vivobook-14-x1407qa",
+            "asus-vivobook-16-x1607qa",
             "asus-vivobook-s15-s5507",
             "asus-vivobook-s14-s3407qa",
             "asus-vivobook-s14-s5408qa",
             "asus-vivobook-s14-flip-tp5408qa",
+            "asus-vivobook-s16-s3607qa",
             "asus-vivobook-s16-s5608qa",
             "asus-vivobook-s16-flip-tp5608qa",
             "asus-zenbook-14-ux3480qa",
@@ -1671,8 +1693,10 @@
             "microsoft-surface-laptop-7-15",
             "microsoft-surface-laptop-13in-1st-edition",
             "microsoft-surface-pro-12in-1st-edition",
+            "microsoft-surface-laptop-13in-2nd-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
+            "microsoft-surface-pro-12in-2nd-edition",
             "microsoft-surface-pro-12th-edition",
             "qualcomm-snapdragon-dev-kit-for-windows",
             "samsung-galaxy-book4-edge-15",
@@ -1680,19 +1704,15 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": [
-            "asus-vivobook-14-x1407qa",
-            "microsoft-surface-laptop-13in-2nd-edition",
-            "microsoft-surface-pro-12in-2nd-edition"
-          ]
+          "available": []
         }
       },
       "all": {
-        "omarchy": 53,
+        "omarchy": 58,
         "fromUpstream": 1,
-        "added": 52,
+        "added": 57,
         "pull": 0,
-        "available": 3,
+        "available": 0,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -1706,8 +1726,11 @@
             "acer-swift-go-14-ai-sfg14-01",
             "acer-swift-spin-14-ai-sfsp14-q51t",
             "asus-proart-pz13-ht5306",
+            "asus-vivobook-14-x1407qa",
+            "asus-vivobook-16-x1607qa",
             "asus-vivobook-s15-s5507",
             "asus-vivobook-s14-s3407qa",
+            "asus-vivobook-s16-s3607qa",
             "asus-zenbook-14-ux3480qa",
             "asus-zenbook-a14-ux3407",
             "asus-proart-pz14-ht7407",
@@ -1744,8 +1767,10 @@
             "microsoft-surface-laptop-7-15",
             "microsoft-surface-laptop-13in-1st-edition",
             "microsoft-surface-pro-12in-1st-edition",
+            "microsoft-surface-laptop-13in-2nd-edition",
             "microsoft-surface-laptop-8-13",
             "microsoft-surface-laptop-8-15",
+            "microsoft-surface-pro-12in-2nd-edition",
             "microsoft-surface-pro-12th-edition",
             "qualcomm-snapdragon-dev-kit-for-windows",
             "samsung-galaxy-book4-edge-15",
@@ -1753,11 +1778,7 @@
             "samsung-galaxy-book4-edge-14"
           ],
           "pull": [],
-          "available": [
-            "asus-vivobook-14-x1407qa",
-            "microsoft-surface-laptop-13in-2nd-edition",
-            "microsoft-surface-pro-12in-2nd-edition"
-          ]
+          "available": []
         }
       }
     }
@@ -1843,7 +1864,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2512-arm64-dts-qcom-Add-the-Acer-Aspire-14-AI-and-16-AI.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/ACER/A14-11M/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ACER/A14-11M/qcadsp8380.mbn",
+            "qcom/x1p42100/ACER/A14-11M/adsp_dtbs.elf",
+            "qcom/x1p42100/ACER/A14-11M/qccdsp8380.mbn",
+            "qcom/x1p42100/ACER/A14-11M/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [
             {
@@ -1948,7 +1975,14 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2512-arm64-dts-qcom-Add-the-Acer-Aspire-14-AI-and-16-AI.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/ACER/A16-11M/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ACER/A16-11M/qcvss8380_pa.mbn",
+            "qcom/x1p42100/ACER/A16-11M/qcadsp8380.mbn",
+            "qcom/x1p42100/ACER/A16-11M/adsp_dtbs.elf",
+            "qcom/x1p42100/ACER/A16-11M/qccdsp8380.mbn",
+            "qcom/x1p42100/ACER/A16-11M/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [
             {
@@ -3249,7 +3283,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2513-arm64-dts-qcom-x1-acer-swift-14-Add-support-for-Acer-Swift-14.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1e80100/ACER/SF14-11/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/ACER/SF14-11/qcadsp8380.mbn",
+            "qcom/x1e80100/ACER/SF14-11/adsp_dtbs.elf",
+            "qcom/x1e80100/ACER/SF14-11/qccdsp8380.mbn",
+            "qcom/x1e80100/ACER/SF14-11/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1p64100-acer-swift-sf14-11.json",
@@ -3286,7 +3326,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2513-arm64-dts-qcom-x1-acer-swift-14-Add-support-for-Acer-Swift-14.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1e80100/ACER/SF14-11/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/ACER/SF14-11/qcadsp8380.mbn",
+            "qcom/x1e80100/ACER/SF14-11/adsp_dtbs.elf",
+            "qcom/x1e80100/ACER/SF14-11/qccdsp8380.mbn",
+            "qcom/x1e80100/ACER/SF14-11/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1p64100-acer-swift-sf14-11.json",
@@ -3403,7 +3449,14 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2581-arm64-dts-qcom-Add-support-for-Acer-Swift-Go-Pro-AI-.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1e80100/ACER/SFA14-11/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/ACER/SFA14-11/qcvss8380.mbn",
+            "qcom/x1e80100/ACER/SFA14-11/qcadsp8380.mbn",
+            "qcom/x1e80100/ACER/SFA14-11/adsp_dtbs.elf",
+            "qcom/x1e80100/ACER/SFA14-11/qccdsp8380.mbn",
+            "qcom/x1e80100/ACER/SFA14-11/cdsp_dtbs.elf"
+          ],
           "stubble": [],
           "outcome": "should",
           "reports": []
@@ -3493,7 +3546,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2513-arm64-dts-qcom-x1-acer-swift-14-Add-support-for-Acer-Swift-14.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1e80100/ACER/SFG14-01/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/ACER/SFG14-01/qcadsp8380.mbn",
+            "qcom/x1e80100/ACER/SFG14-01/adsp_dtbs.elf",
+            "qcom/x1e80100/ACER/SFG14-01/qccdsp8380.mbn",
+            "qcom/x1e80100/ACER/SFG14-01/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1p42100-acer-swift-go14-01.json",
@@ -3597,7 +3656,12 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0025-arm64-dts-qcom-Add-the-Acer-Swift-Spin-14-AI.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/glymur/ACER/SFSP14-Q51T/qcadsp8480.mbn",
+            "qcom/glymur/ACER/SFSP14-Q51T/adsp_dtbs.elf",
+            "qcom/glymur/ACER/SFSP14-Q51T/qccdsp8480.mbn",
+            "qcom/glymur/ACER/SFSP14-Q51T/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -3783,7 +3847,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2732-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ13.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/ASUSTeK/proart-pz13/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/proart-pz13/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/proart-pz13/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/proart-pz13/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/proart-pz13/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [
             {
@@ -3879,7 +3949,14 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0018-arm64-dts-qcom-Add-the-ASUS-V400-AiO-VM441QA-.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x126100/ASUSTeK/VM441QA/qcdxkmsucpurwa.mbn",
+            "qcom/x126100/ASUSTeK/VM441QA/qcvss8380_pa.mbn",
+            "qcom/x126100/ASUSTeK/VM441QA/qcadsp8380.mbn",
+            "qcom/x126100/ASUSTeK/VM441QA/adsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/VM441QA/qccdsp8380.mbn",
+            "qcom/x126100/ASUSTeK/VM441QA/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "manual",
@@ -3968,7 +4045,14 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0018-arm64-dts-qcom-Add-the-ASUS-V400-AiO-VM441QA-.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x126100/ASUSTeK/VM471QA/qcdxkmsucpurwa.mbn",
+            "qcom/x126100/ASUSTeK/VM471QA/qcvss8380_pa.mbn",
+            "qcom/x126100/ASUSTeK/VM471QA/qcadsp8380.mbn",
+            "qcom/x126100/ASUSTeK/VM471QA/adsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/VM471QA/qccdsp8380.mbn",
+            "qcom/x126100/ASUSTeK/VM471QA/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "manual",
@@ -3999,7 +4083,7 @@
         "https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-14-x1407q/techspec/",
         "https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html"
       ],
-      "notes": "Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files (an owner's Windows driver store holds the Vivobook 16's audio DSP, compute DSP and GPU files byte for byte), so its tree builds on the X1607QA's, with its IPS panel and PWM backlight. An owner's live USB reached the desktop on the Zenbook A14 tree, and that owner can test its own tree, in linux-omarchy 7.3-40 on edge. A second owner runs Omarchy on a tree made from the Zenbook A14 LCD's: display, keyboard, touchpad, battery, video decode and both cameras work, Wi-Fi with a borrowed board data file, suspend as s2idle only, and only the left speaker plays. That tree and the owner's notes are kept in data/device-trees/asus-vivobook-14-x1407qa.",
+      "notes": "Its tree builds on the Vivobook 16 X1607QA's, since ASUS ships both the same firmware files.",
       "outcome": "should",
       "bootable": "edge",
       "reports": [],
@@ -4009,15 +4093,17 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "asus-vivobook-16-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
         "deviceTree": "edge",
         "ids": "edge",
-        "firmware": "elsewhere"
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -4035,9 +4121,7 @@
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
-        "firmwareFolders": [
-          "qcom/x1e80100/ASUSTeK/vivobook-16"
-        ],
+        "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
           "https://github.com/turbineBMW/omarchy-hardware-reports/pull/40",
@@ -4061,7 +4145,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2801-arm64-dts-qcom-Add-the-ASUS-Vivobook-14-X1407QA.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x126100/ASUSTeK/vivobook-16/qcadsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-16/adsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-16/qccdsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-16/cdsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-16/qcdxkmsucpurwa.mbn"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -4104,15 +4194,17 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "windows",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "asus-vivobook-16-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
         "deviceTree": "edge",
         "ids": "edge",
-        "firmware": "none"
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -4123,22 +4215,14 @@
         "ids": "collected",
         "idsCollected": "https://github.com/ubuntu/stubble/pull/100",
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsucpurwa.mbn",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
-        "firmwareAudioOnly": true,
-        "firmwareDownload": null,
+        "firmware": "download",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": "/firmware/#qcom-x126100-ASUSTeK-vivobook-16",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
-        "firmwareFolders": [
-          "qcom/x1e80100/ASUSTeK/vivobook-16"
-        ],
+        "firmwareFolders": [],
         "acpi": "missing",
         "acpiUrls": []
       },
@@ -4160,7 +4244,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2691-arm64-dts-qcom-Add-the-ASUS-Vivobook-16-X1607QA.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x126100/ASUSTeK/vivobook-16/qcadsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-16/adsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-16/qccdsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-16/cdsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-16/qcdxkmsucpurwa.mbn"
+          ],
           "stubble": [],
           "outcome": "should",
           "reports": []
@@ -4439,7 +4529,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2796-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-S3407QA.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/ASUSTeK/vivobook-s14/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s14/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s14/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/vivobook-s14/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s14/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -4481,8 +4577,7 @@
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
-          "asus-vivobook-s14-s5408qa-firmware",
-          "asus-zenbook-14-ux3480qa-firmware"
+          "asus-vivobook-s14-s5408qa-firmware"
         ],
         "firmwarePull": null
       },
@@ -4529,7 +4624,14 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/qcdxkmsucpurwa.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/qcvss8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/qcadsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/adsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/qccdsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "manual",
@@ -4571,8 +4673,7 @@
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
-          "asus-vivobook-s14-flip-firmware",
-          "asus-zenbook-14-ux3480qa-firmware"
+          "asus-vivobook-s14-flip-firmware"
         ],
         "firmwarePull": null
       },
@@ -4619,7 +4720,14 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/qcdxkmsucpurwa.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/qcvss8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/qcadsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/adsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/qccdsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "manual",
@@ -4659,15 +4767,17 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "partial",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "asus-vivobook-s16-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
         "deviceTree": "edge",
         "ids": "edge",
-        "firmware": "none"
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -4678,17 +4788,10 @@
         "ids": "posted",
         "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/2",
         "idsStubble": "https://github.com/ubuntu/stubble/pull/103",
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsucpurwa.mbn",
-          "nfa765",
-          "qcadsp8380.mbn",
-          "adsp_dtbs.elf",
-          "qccdsp8380.mbn",
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x1p42100-ASUSTeK-vivobook-s16",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -4716,7 +4819,14 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2662-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S3607QA.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/qcvss8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [
             {
@@ -4745,7 +4855,14 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2662-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S3607QA.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/qcvss8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/vivobook-s16/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [
             {
@@ -4793,8 +4910,7 @@
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
-          "asus-vivobook-s16-s5608qa-firmware",
-          "asus-zenbook-14-ux3480qa-firmware"
+          "asus-vivobook-s16-s5608qa-firmware"
         ],
         "firmwarePull": null
       },
@@ -4841,7 +4957,14 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/qcdxkmsucpurwa.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/qcvss8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/qcadsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/adsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/qccdsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "manual",
@@ -4883,8 +5006,7 @@
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
-          "asus-vivobook-s16-flip-firmware",
-          "asus-zenbook-14-ux3480qa-firmware"
+          "asus-vivobook-s16-flip-firmware"
         ],
         "firmwarePull": null
       },
@@ -4931,7 +5053,14 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0015-arm64-dts-qcom-Add-the-ASUS-Vivobook-S14-and-.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/qcdxkmsucpurwa.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/qcvss8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/qcadsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/adsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/qccdsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "manual",
@@ -5029,7 +5158,14 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2751-arm64-dts-qcom-Add-the-ASUS-Zenbook-14-UX3480QA.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcvss8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [
             {
@@ -5427,7 +5563,12 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2831-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ14-HT7407NA.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/glymur/ASUSTeK/HT7407NA/qcadsp8480.mbn",
+            "qcom/glymur/ASUSTeK/HT7407NA/adsp_dtbs.elf",
+            "qcom/glymur/ASUSTeK/HT7407NA/qccdsp8480.mbn",
+            "qcom/glymur/ASUSTeK/HT7407NA/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -5517,7 +5658,12 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0014-arm64-dts-qcom-Add-the-ASUS-Vivobook-S16-S360.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/glymur/ASUSTeK/S3607NA/qcadsp8480.mbn",
+            "qcom/glymur/ASUSTeK/S3607NA/adsp_dtbs.elf",
+            "qcom/glymur/ASUSTeK/S3607NA/qccdsp8480.mbn",
+            "qcom/glymur/ASUSTeK/S3607NA/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "manual",
@@ -5812,7 +5958,7 @@
         "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": "/firmware/#qcom-x1e80100-dell-inspiron-14-plus-5441",
+        "firmwareDownload": "/firmware/#qcom-x1p42100-dell-inspiron-14-plus-5441",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -5841,7 +5987,14 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2811-arm64-dts-qcom-Add-the-Dell-Inspiron-14-Plus-5441-X1.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/qcvss8380_pa.mbn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/qcadsp8380.mbn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/adsp_dtbs.elf",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/qccdsp8380.mbn",
+            "qcom/x1p42100/dell/inspiron-14-plus-5441/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -5863,7 +6016,14 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2610-arm64-dts-qcom-Add-Dell-Inspiron-14-Plus-5441.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/qcvss8380.mbn",
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/qcadsp8380.mbn",
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/adsp_dtbs.elf",
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/qccdsp8380.mbn",
+            "qcom/x1e80100/dell/inspiron-14-plus-5441/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [
             {
@@ -6092,7 +6252,14 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2530-arm64-dts-qcom-Add-the-Dell-Latitude-5455.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1e80100/dell/latitude-5455/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/dell/latitude-5455/qcvss8380.mbn",
+            "qcom/x1e80100/dell/latitude-5455/qcadsp8380.mbn",
+            "qcom/x1e80100/dell/latitude-5455/adsp_dtbs.elf",
+            "qcom/x1e80100/dell/latitude-5455/qccdsp8380.mbn",
+            "qcom/x1e80100/dell/latitude-5455/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1p64100-dell-latitude-5455.json",
@@ -6538,7 +6705,13 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0017-arm64-dts-qcom-Add-the-Dynabook-XD5.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/dynabook/xd5/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/dynabook/xd5/qcadsp8380.mbn",
+            "qcom/x1p42100/dynabook/xd5/adsp_dtbs.elf",
+            "qcom/x1p42100/dynabook/xd5/qccdsp8380.mbn",
+            "qcom/x1p42100/dynabook/xd5/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -7045,7 +7218,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2521-arm64-dts-qcom-Add-dts-for-HP-EliteBook-6-G1q.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/hp/elitebook-6-g1q/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/hp/elitebook-6-g1q/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/elitebook-6-g1q/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/elitebook-6-g1q/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/elitebook-6-g1q/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1p42100-hp-elitebook-6-g1q.json",
@@ -7343,7 +7522,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2742-arm64-dts-qcom-Add-the-HP-OmniBook-3-14.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/hp/omnibook-3/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/hp/omnibook-3/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-3/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-3/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-3/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -7434,7 +7619,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2744-arm64-dts-qcom-Add-the-HP-OmniBook-3-16.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-3-16-bz0/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -7610,7 +7801,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2651-arm64-dts-qcom-Add-the-HP-OmniBook-5-14.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/hp/omnibook-5/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/hp/omnibook-5/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-5/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-5/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-5/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [
             {
@@ -7708,7 +7905,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2651-arm64-dts-qcom-Add-the-HP-OmniBook-5-14.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/hp/omnibook-5/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/hp/omnibook-5/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-5/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-5/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-5/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [
             {
@@ -7969,7 +8172,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2521-arm64-dts-qcom-Add-dts-for-HP-EliteBook-6-G1q.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/hp/elitebook-6-g1q/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/hp/elitebook-6-g1q/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/elitebook-6-g1q/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/elitebook-6-g1q/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/elitebook-6-g1q/cdsp_dtbs.elf"
+          ],
           "stubble": [],
           "outcome": "should",
           "reports": []
@@ -8059,7 +8268,12 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0013-arm64-dts-qcom-Add-the-HP-EliteBook-6-G2q.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/glymur/hp/elitebook-6-g2q/qcadsp8480.mbn",
+            "qcom/glymur/hp/elitebook-6-g2q/adsp_dtbs.elf",
+            "qcom/glymur/hp/elitebook-6-g2q/qccdsp8480.mbn",
+            "qcom/glymur/hp/elitebook-6-g2q/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -8262,7 +8476,12 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0024-arm64-dts-qcom-Add-the-HP-OmniBook-5-14-he1.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/glymur/HP/omnibook-5-16-bf1xxx/qcadsp8480.mbn",
+            "qcom/glymur/HP/omnibook-5-16-bf1xxx/adsp_dtbs.elf",
+            "qcom/glymur/HP/omnibook-5-16-bf1xxx/qccdsp8480.mbn",
+            "qcom/glymur/HP/omnibook-5-16-bf1xxx/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -8351,7 +8570,12 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2711-arm64-dts-qcom-Add-the-HP-OmniBook-5-16-bf1xxx.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/glymur/HP/omnibook-5-16-bf1xxx/qcadsp8480.mbn",
+            "qcom/glymur/HP/omnibook-5-16-bf1xxx/adsp_dtbs.elf",
+            "qcom/glymur/HP/omnibook-5-16-bf1xxx/qccdsp8480.mbn",
+            "qcom/glymur/HP/omnibook-5-16-bf1xxx/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [
             {
@@ -8456,7 +8680,12 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2631-arm64-dts-qcom-add-HP-OmniBook-Ultra-14-kg0xxx.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/glymur/hp/omnibook-ultra-14-kg0xxx/qcadsp8480.mbn",
+            "qcom/glymur/hp/omnibook-ultra-14-kg0xxx/adsp_dtbs.elf",
+            "qcom/glymur/hp/omnibook-ultra-14-kg0xxx/qccdsp8480.mbn",
+            "qcom/glymur/hp/omnibook-ultra-14-kg0xxx/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "problems",
@@ -8506,7 +8735,6 @@
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
-          "hp-omnibook-5-firmware",
           "hp-omnibook-x16-cp0-firmware"
         ],
         "firmwarePull": null
@@ -8554,7 +8782,13 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0023-arm64-dts-qcom-Add-the-HP-OmniBook-X-14-kr0-and-X-16.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/hp/omnibook-x16-cp0/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -8598,7 +8832,6 @@
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
-          "hp-omnibook-5-firmware",
           "hp-omnibook-x16-cp0-firmware"
         ],
         "firmwarePull": null
@@ -8646,7 +8879,13 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0023-arm64-dts-qcom-Add-the-HP-OmniBook-X-14-kr0-and-X-16.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/hp/omnibook-x16-cp0/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -8739,7 +8978,12 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2571-arm64-dts-qcom-Add-HP-OmniBook-X-16-cp1.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/glymur/hp/omnibook-x16/qcadsp8480.mbn",
+            "qcom/glymur/hp/omnibook-x16/adsp_dtbs.elf",
+            "qcom/glymur/hp/omnibook-x16/qccdsp8480.mbn",
+            "qcom/glymur/hp/omnibook-x16/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "manual",
@@ -8831,7 +9075,12 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2571-arm64-dts-qcom-Add-HP-OmniBook-X-16-cp1.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/glymur/hp/omnibook-x16/qcadsp8480.mbn",
+            "qcom/glymur/hp/omnibook-x16/adsp_dtbs.elf",
+            "qcom/glymur/hp/omnibook-x16/qccdsp8480.mbn",
+            "qcom/glymur/hp/omnibook-x16/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [
             {
@@ -9363,7 +9612,14 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0002-arm64-dts-qcom-Add-the-Purwa-IdeaCentre-Mini-01Q8X10.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/LENOVO/91B6/qcvss8380_pa.mbn",
+            "qcom/x1p42100/LENOVO/91B6/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/91B6/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/91B6/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/91B6/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/91B6/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "purwa-lenovo-ideacentre-mini-01q8x10.json",
@@ -9482,7 +9738,14 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2671-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-5x-2-in-1.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/LENOVO/83GH/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/83GH/qcvss8380_pa.mbn",
+            "qcom/x1p42100/LENOVO/83GH/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83GH/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/83GH/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83GH/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1p42100-lenovo-ideapad-5-2in1.json",
@@ -9594,7 +9857,14 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2681-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Slim-3x.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/LENOVO/83N3/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/83N3/qcvss8380_pa.mbn",
+            "qcom/x1p42100/LENOVO/83N3/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83N3/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/83N3/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83N3/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x126100-lenovo-ideapad-slim3.json",
@@ -9709,7 +9979,14 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/LENOVO/83HL/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/83HL/qcvss8380.mbn",
+            "qcom/x1p42100/LENOVO/83HL/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83HL/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/83HL/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83HL/cdsp_dtbs.elf"
+          ],
           "ids": [
             {
               "file": "x1p42100-lenovo-ideapad-slim-5-oled.json",
@@ -9746,7 +10023,14 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2602-arm64-dts-qcom-Add-Lenovo-IdeaPad-Slim-5x-14Q8X9.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/LENOVO/83HL/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/83HL/qcvss8380.mbn",
+            "qcom/x1p42100/LENOVO/83HL/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83HL/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/83HL/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/83HL/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "manual",
@@ -9920,7 +10204,14 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Vibe-14.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/LENOVO/84A9/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/84A9/qcvss8380_pa.mbn",
+            "qcom/x1p42100/LENOVO/84A9/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/84A9/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/84A9/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/84A9/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -10016,7 +10307,14 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0016-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-Vibe-14.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/LENOVO/84AA/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/84AA/qcvss8380_pa.mbn",
+            "qcom/x1p42100/LENOVO/84AA/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/84AA/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/84AA/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/84AA/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -10226,7 +10524,14 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2823-arm64-dts-qcom-Add-the-Lenovo-ThinkCentre-neo-50q-QC.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/LENOVO/13C8/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/LENOVO/13C8/qcvss8380_pa.mbn",
+            "qcom/x1p42100/LENOVO/13C8/qcadsp8380.mbn",
+            "qcom/x1p42100/LENOVO/13C8/adsp_dtbs.elf",
+            "qcom/x1p42100/LENOVO/13C8/qccdsp8380.mbn",
+            "qcom/x1p42100/LENOVO/13C8/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -10628,7 +10933,12 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/glymur/LENOVO/83UK/qcadsp8480.mbn",
+            "qcom/glymur/LENOVO/83UK/adsp_dtbs.elf",
+            "qcom/glymur/LENOVO/83UK/qccdsp8480.mbn",
+            "qcom/glymur/LENOVO/83UK/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -10722,7 +11032,12 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/glymur/LENOVO/83RK/qcadsp8480.mbn",
+            "qcom/glymur/LENOVO/83RK/adsp_dtbs.elf",
+            "qcom/glymur/LENOVO/83RK/qccdsp8480.mbn",
+            "qcom/glymur/LENOVO/83RK/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -10816,7 +11131,12 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/glymur/LENOVO/83RL/qcadsp8480.mbn",
+            "qcom/glymur/LENOVO/83RL/adsp_dtbs.elf",
+            "qcom/glymur/LENOVO/83RL/qccdsp8480.mbn",
+            "qcom/glymur/LENOVO/83RL/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -10908,7 +11228,12 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0019-arm64-dts-qcom-Add-the-Lenovo-Kalambo-laptops.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/glymur/LENOVO/22BB/qcadsp8480.mbn",
+            "qcom/glymur/LENOVO/22BB/adsp_dtbs.elf",
+            "qcom/glymur/LENOVO/22BB/qccdsp8480.mbn",
+            "qcom/glymur/LENOVO/22BB/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -11914,7 +12239,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2772-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-13-inch.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/qcadsp8380.mbn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/adsp_dtbs.elf",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/qccdsp8380.mbn",
+            "qcom/x1p42100/Microsoft/SurfaceLaptop13/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -12237,15 +12568,17 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "microsoft-surface-laptop-13-2nd-edition-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
         "deviceTree": "edge",
         "ids": "edge",
-        "firmware": "elsewhere"
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -12285,7 +12618,12 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0021-arm64-dts-qcom-Add-the-Surface-Laptop-13in-an.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/kalambo/Microsoft/SurfaceLaptop13/qcadsp8480.mbn",
+            "qcom/kalambo/Microsoft/SurfaceLaptop13/adsp_dtbs.elf",
+            "qcom/kalambo/Microsoft/SurfaceLaptop13/qccdsp8480.mbn",
+            "qcom/kalambo/Microsoft/SurfaceLaptop13/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -12380,7 +12718,12 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2384-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/glymur/microsoft/mahua/qcadsp8480.mbn",
+            "qcom/glymur/microsoft/mahua/adsp_dtbs.elf",
+            "qcom/glymur/microsoft/mahua/qccdsp8480.mbn",
+            "qcom/glymur/microsoft/mahua/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [
             {
@@ -12521,15 +12864,17 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "microsoft-surface-pro-12in-2nd-edition-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
         "deviceTree": "edge",
         "ids": "edge",
-        "firmware": "elsewhere"
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -12569,7 +12914,12 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0021-arm64-dts-qcom-Add-the-Surface-Laptop-13in-an.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/kalambo/Microsoft/Surface12/qcadsp8480.mbn",
+            "qcom/kalambo/Microsoft/Surface12/adsp_dtbs.elf",
+            "qcom/kalambo/Microsoft/Surface12/qccdsp8480.mbn",
+            "qcom/kalambo/Microsoft/Surface12/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -12617,7 +12967,7 @@
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
-          "microsoft-surface-laptop-8-firmware"
+          "microsoft-surface-pro-12th-edition-firmware"
         ],
         "firmwarePull": null
       },
@@ -12638,7 +12988,7 @@
         "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": "/firmware/#qcom-glymur-microsoft-mahua",
+        "firmwareDownload": "/firmware/#qcom-glymur-microsoft-surface-pro-12th-edition",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -12664,7 +13014,12 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0020-arm64-dts-qcom-Add-the-Microsoft-Surface-Pro-.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/glymur/microsoft/surface-pro-12th-edition/qcadsp8480.mbn",
+            "qcom/glymur/microsoft/surface-pro-12th-edition/adsp_dtbs.elf",
+            "qcom/glymur/microsoft/surface-pro-12th-edition/qccdsp8480.mbn",
+            "qcom/glymur/microsoft/surface-pro-12th-edition/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -13233,7 +13588,14 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2792-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book4-Edge-15.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcvss8380_pa.mbn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -13329,7 +13691,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn",
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn",
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -13431,7 +13799,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn",
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn",
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [
             {
@@ -13467,7 +13841,13 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2592-arm64-dts-qcom-Add-hamoa-Samsung-Galaxy-Book4-Edge-d.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcdxkmsuc8380.mbn",
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn",
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn",
+            "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [
             {
@@ -16595,7 +16975,9 @@
       }
     ],
     "ids": [],
-    "firmware": [],
+    "firmware": [
+      "qcom/x1e80100/ASUSTeK/vivobook-16"
+    ],
     "acpi": [
       "hardware-reports/hp/hp-omnibook-3-laptop-14-hz0xxx"
     ]

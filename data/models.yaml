@@ -340,13 +340,13 @@ models:
     model_numbers: ["X1407QA", "A1407QA"]
     variants:
       - { chip: "X1-26-100", compatible: "asus,vivobook-14-x1407qa" }
-    firmware: ["qcom/x1e80100/ASUSTeK/vivobook-16"]
+    firmware: ["qcom/x126100/ASUSTeK/vivobook-16"]
     acpi: ["hardware-reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa", "firmware/asus-vivobook-14-x1407qa"]
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2340"
     devicetree_files:
       - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/6c50f70430edbe3a9854df5834a2946afb34570e/pkgbuilds/linux-omarchy-aarch64/2801-arm64-dts-qcom-Add-the-ASUS-Vivobook-14-X1407QA.patch#x126100-asus-vivobook-14.dts"
     ids_collected: "https://github.com/birkskyum/arewearmyet/issues/7"
-    notes: "Its BIOS DSDT differs from the Vivobook 16 X1607QA's in 26 lines and ASUS ships it the same firmware files (an owner's Windows driver store holds the Vivobook 16's audio DSP, compute DSP and GPU files byte for byte), so its tree builds on the X1607QA's, with its IPS panel and PWM backlight. An owner's live USB reached the desktop on the Zenbook A14 tree, and that owner can test its own tree, in linux-omarchy 7.3-40 on edge. A second owner runs Omarchy on a tree made from the Zenbook A14 LCD's: display, keyboard, touchpad, battery, video decode and both cameras work, Wi-Fi with a borrowed board data file, suspend as s2idle only, and only the left speaker plays. That tree and the owner's notes are kept in data/device-trees/asus-vivobook-14-x1407qa."
+    notes: "Its tree builds on the Vivobook 16 X1607QA's, since ASUS ships both the same firmware files."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-14-x1407q/techspec/
       - https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html
@@ -360,7 +360,7 @@ models:
     model_numbers: ["X1607QA", "F1607QA", "A1607QA"]
     variants:
       - { chip: "X1-26-100", compatible: "asus,vivobook-x16", ids: ["x1p42100-asus-vivobook-16.json"] }
-    firmware: ["qcom/x1e80100/ASUSTeK/vivobook-16"]
+    firmware: ["qcom/x126100/ASUSTeK/vivobook-16"]
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/6ffb6f7ab9794a49a50771d23b3a1e1f@gmail.com/"
     devicetree_out_of_tree: "https://github.com/jglathe/linux_ms_dev_kit/blob/52e2c99056465d931592030e03bb9e1973deead4/arch/arm64/boot/dts/qcom/x126100-asus-vivobook-16.dts"
     devicetree_files:

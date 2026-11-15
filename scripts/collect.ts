@@ -6,7 +6,7 @@
 // dumps collected by the aarch64-laptops project, linux-surface and the ARM installer's reports.
 
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -16,7 +16,7 @@ const SYSTEMD_RELEASES = ['v257', 'v258', 'v259', 'v260', 'v261', 'v262'];
 // Snapdragon X, X2 and 8cx Gen 3, the 7c Chromebooks, and the older Windows laptops' trees
 const DT_PATTERN = /^(x1|hamoa|purwa|glymur|mahua|kalambo|sc8280xp|sc7180-trogdor|sc7180-acer|sc7180-ecs|sc8180x-lenovo|sdm850|msm8998-(asus|hp|lenovo)).*\.dts$/;
 const DT_DIR = 'arch/arm64/boot/dts/qcom';
-const FIRMWARE_SOCS = ['x1e80100', 'x1p42100', 'x126100', 'glymur', 'sc8280xp'];
+const FIRMWARE_SOCS = ['x1e80100', 'x1p42100', 'x126100', 'glymur', 'kalambo', 'sc8280xp'];
 // Omarchy's package channels: its own repository carries the kernel and the makers' firmware
 // packages, its Arch Linux ARM mirror carries systemd, whose hardware ID list decides which device
 // tree boots, and linux-firmware. Their files databases list what each package installs.
@@ -299,11 +299,26 @@ function omarchyKernelRecipe() {
   }
   execFileSync('git', ['-C', dir, 'sparse-checkout', 'set', OMARCHY_KERNEL_RECIPE, OMARCHY_TREES_RECIPE], { stdio: 'inherit' });
   const added = [];
+  // The tree files the patches add, replayed in the order the recipes apply them, so a tree's firmware
+  // takes in a later patch's change to it and a .dtsi that another patch adds
+  const replay = mkdtempSync(join(tmpdir(), 'arewearmyet-replay-'));
   for (const folder of [OMARCHY_KERNEL_RECIPE, OMARCHY_TREES_RECIPE].filter((folder) => existsSync(join(dir, folder)))) {
     for (const patch of readdirSync(join(dir, folder)).filter((name) => name.endsWith('.patch')).sort()) {
-      added.push(...patchDeviceTrees(readFileSync(join(dir, folder, patch), 'utf8')).map((dt) => ({ ...dt, patch: `${folder.split('/').pop()}/${patch}` })));
+      const text = readFileSync(join(dir, folder, patch), 'utf8');
+      added.push(...patchDeviceTrees(text).map((dt) => ({ ...dt, patch: `${folder.split('/').pop()}/${patch}` })));
+      for (const section of text.split(/^diff --git /m).slice(1)) {
+        const path = section.match(/^\+\+\+ b\/(arch\/arm64\/boot\/dts\/qcom\/\S+\.dtsi?)$/m)?.[1];
+        if (!path || (!/^--- \/dev\/null$/m.test(section) && !existsSync(join(replay, path)))) continue;
+        try {
+          execFileSync('patch', ['-p1', '-s', '-f', '-d', replay], { input: 'diff --git ' + section, stdio: ['pipe', 'ignore', 'pipe'] });
+        } catch {
+          console.warn(`${patch}: its change to ${path} doesn't apply, keeping the version before it`);
+        }
+      }
     }
   }
+  for (const dt of added) dt.firmware = dtFirmware(join(replay, 'arch/arm64/boot/dts/qcom'), dt.file);
+  rmSync(replay, { recursive: true, force: true });
   const ids = [OMARCHY_KERNEL_RECIPE, OMARCHY_TREES_RECIPE].filter((folder) => existsSync(join(dir, folder))).flatMap((folder) =>
     readdirSync(join(dir, folder)).filter((name) => name.endsWith('.json')).map((file) => {
       const entry = JSON.parse(readFileSync(join(dir, folder, file), 'utf8'));
