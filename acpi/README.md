@@ -9,7 +9,7 @@ values and can differ from a running machine where the firmware fills fields in 
 dumps published here first. Each folder's SOURCE.md says where its tables came from. The SoC serial number (SOSN)
 is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. Disassemble a table with `iasl -d`.
 
-93 of 115 models have at least one dump.
+94 of 115 models have at least one dump.
 
 | Model | Dumps |
 | --- | --- |
@@ -17,6 +17,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | Acer Aspire 16 AI | [hardware-reports/acer/aspire-a16-11m](../reports/acer/aspire-a16-11m) |
 | Acer Swift 14 AI | [hardware-reports/acer/swift-sf14-11t](../reports/acer/swift-sf14-11t) |
 | Acer Swift 14 Go Pro AI | [acer-sfa14-11](aarch64-laptops/acer-sfa14-11), [acer-swift-sfa14-11](aarch64-laptops/acer-swift-sfa14-11) |
+| Acer Swift Spin 14 AI | [firmware/acer-swift-spin-14-ai-sfsp14-q51t](firmware/acer-swift-spin-14-ai-sfsp14-q51t) |
 | Anduril BlueChip | [hardware-reports/anduril/qualcomm-glymur](../reports/anduril/qualcomm-glymur) |
 | ASUS V400 AiO (VM441QA) | [firmware/asus-v400-aio-vm441qa](firmware/asus-v400-aio-vm441qa) |
 | ASUS V400 AiO (VM471QA) | [firmware/asus-v400-aio-vm471qa](firmware/asus-v400-aio-vm471qa) |
@@ -112,7 +113,6 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 - Acer Aspire Go 15
 - Acer Aspire Lite 14 AI
 - Acer Swift Go 14 AI
-- Acer Swift Spin 14 AI
 - ASUS ProArt PZ13
 - ASUS Vivobook 16
 - Fujitsu FMV Note U

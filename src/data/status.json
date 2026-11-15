@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-15T01:17:36.161Z",
+  "collected": "2026-11-15T01:33:24.072Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -419,6 +419,7 @@
           "kalambo-lenovo-thinkbook-14-gen9.dts",
           "kalambo-microsoft-surface-laptop-13in-2nd-edition.dts",
           "kalambo-microsoft-surface-pro-12in-2nd-edition.dts",
+          "mahua-acer-swift-sfsp14-q51t.dts",
           "mahua-crd.dts",
           "mahua-hp-elitebook-6-g2q.dts",
           "mahua-hp-omnibook-5-bf1xxx.dts",
@@ -563,6 +564,7 @@
           "kalambo-lenovo-thinkbook-14-gen9.json",
           "kalambo-microsoft-surface-laptop-13in-2nd-edition.json",
           "kalambo-microsoft-surface-pro-12in-2nd-edition.json",
+          "mahua-acer-swift-sfsp14-q51t.json",
           "mahua-hp-elitebook-6-g2q.json",
           "mahua-hp-omnibook-5-bf1xxx.json",
           "mahua-hp-omnibook-x16.json",
@@ -662,6 +664,15 @@
             "qcom/x1e80100/ACER/SFG14-01/qcadsp8380.mbn",
             "qcom/x1e80100/ACER/SFG14-01/qccdsp8380.mbn",
             "qcom/x1e80100/ACER/SFG14-01/qcdxkmsuc8380.mbn"
+          ],
+          "acer-swift-spin-14-ai-firmware": [
+            "qcom/glymur/ACER/SFSP14-Q51T/adsp_dtbs.elf",
+            "qcom/glymur/ACER/SFSP14-Q51T/adspr.jsn",
+            "qcom/glymur/ACER/SFSP14-Q51T/adsps.jsn",
+            "qcom/glymur/ACER/SFSP14-Q51T/adspua.jsn",
+            "qcom/glymur/ACER/SFSP14-Q51T/cdsp_dtbs.elf",
+            "qcom/glymur/ACER/SFSP14-Q51T/qcadsp8480.mbn",
+            "qcom/glymur/ACER/SFSP14-Q51T/qccdsp8480.mbn"
           ],
           "asus-proart-pz13-audio": [
             "qcom/x1e80100/X1P42100-ASUS-ProArt-PZ13-tplg.bin"
@@ -1374,9 +1385,9 @@
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
     "works": 2,
-    "should": 60,
+    "should": 61,
     "problems": 9,
-    "notYet": 15,
+    "notYet": 14,
     "deviceTree": 82,
     "ids": 58,
     "firmware": 64,
@@ -1392,16 +1403,16 @@
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 79,
+        "omarchy": 80,
         "fromUpstream": 19,
-        "added": 60,
-        "pull": 1,
+        "added": 61,
+        "pull": 0,
         "available": 2,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 79
+          "edge": 80
         },
         "models": {
           "fromUpstream": [
@@ -1431,6 +1442,7 @@
             "acer-swift-14-ai-sf14-11",
             "acer-swift-go-pro-ai-sfa14-11",
             "acer-swift-go-14-ai-sfg14-01",
+            "acer-swift-spin-14-ai-sfsp14-q51t",
             "anduril-bluechip",
             "asus-proart-pz13-ht5306",
             "asus-v400-aio-vm441qa",
@@ -1487,9 +1499,7 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "acer-swift-spin-14-ai-sfsp14-q51t"
-          ],
+          "pull": [],
           "available": [
             "asus-ascent-qn10",
             "humain-horizon"
@@ -1497,16 +1507,16 @@
         }
       },
       "ids": {
-        "omarchy": 71,
+        "omarchy": 72,
         "fromUpstream": 28,
-        "added": 43,
-        "pull": 1,
+        "added": 44,
+        "pull": 0,
         "available": 1,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 71
+          "edge": 72
         },
         "models": {
           "fromUpstream": [
@@ -1543,6 +1553,7 @@
             "acer-aspire-14-ai-a14-11m",
             "acer-aspire-16-ai-a16-11m",
             "acer-swift-go-pro-ai-sfa14-11",
+            "acer-swift-spin-14-ai-sfsp14-q51t",
             "anduril-bluechip",
             "asus-proart-pz13-ht5306",
             "asus-vivobook-14-x1407qa",
@@ -1584,25 +1595,23 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "acer-swift-spin-14-ai-sfsp14-q51t"
-          ],
+          "pull": [],
           "available": [
             "asus-ascent-qn10"
           ]
         }
       },
       "firmware": {
-        "omarchy": 60,
+        "omarchy": 61,
         "fromUpstream": 1,
-        "added": 59,
-        "pull": 1,
+        "added": 60,
+        "pull": 0,
         "available": 3,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 60
+          "edge": 61
         },
         "models": {
           "fromUpstream": [
@@ -1614,6 +1623,7 @@
             "acer-swift-14-ai-sf14-11",
             "acer-swift-go-pro-ai-sfa14-11",
             "acer-swift-go-14-ai-sfg14-01",
+            "acer-swift-spin-14-ai-sfsp14-q51t",
             "asus-proart-pz13-ht5306",
             "asus-v400-aio-vm441qa",
             "asus-v400-aio-vm471qa",
@@ -1669,9 +1679,7 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "acer-swift-spin-14-ai-sfsp14-q51t"
-          ],
+          "pull": [],
           "available": [
             "asus-vivobook-14-x1407qa",
             "microsoft-surface-laptop-13in-2nd-edition",
@@ -1680,10 +1688,10 @@
         }
       },
       "all": {
-        "omarchy": 52,
+        "omarchy": 53,
         "fromUpstream": 1,
-        "added": 51,
-        "pull": 1,
+        "added": 52,
+        "pull": 0,
         "available": 3,
         "upstream": 1,
         "models": {
@@ -1696,6 +1704,7 @@
             "acer-swift-14-ai-sf14-11",
             "acer-swift-go-pro-ai-sfa14-11",
             "acer-swift-go-14-ai-sfg14-01",
+            "acer-swift-spin-14-ai-sfsp14-q51t",
             "asus-proart-pz13-ht5306",
             "asus-vivobook-s15-s5507",
             "asus-vivobook-s14-s3407qa",
@@ -1743,9 +1752,7 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [
-            "acer-swift-spin-14-ai-sfsp14-q51t"
-          ],
+          "pull": [],
           "available": [
             "asus-vivobook-14-x1407qa",
             "microsoft-surface-laptop-13in-2nd-edition",
@@ -3531,36 +3538,26 @@
         "https://www.notebookcheck.net/Acer-Swift-Spin-14-AI-SFSP14-Q51T-Reviews-and-Specs.1393057.0.html"
       ],
       "notes": null,
-      "outcome": "none",
-      "bootable": "pr",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2786",
-          "number": 2786,
-          "title": "linux-omarchy-dtbs: add the Acer Swift Spin 14 AI"
-        },
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2786",
-          "number": 2786,
-          "title": "linux-omarchy-dtbs: add the Acer Swift Spin 14 AI"
-        },
-        "firmware": "pr",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
-        "firmwarePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2787",
-          "number": 2787,
-          "title": "Add the Acer Swift Spin 14 AI firmware package"
-        }
+        "deviceTree": "edge",
+        "deviceTreePull": null,
+        "ids": "edge",
+        "idsPull": null,
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "acer-swift-spin-14-ai-firmware"
+        ],
+        "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "pr",
-        "ids": "pr",
-        "firmware": "pr"
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -3587,25 +3584,23 @@
       "variants": [
         {
           "compatible": "acer,swift-sfsp14-q51t",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2786",
-            "number": 2786,
-            "title": "linux-omarchy-dtbs: add the Acer Swift Spin 14 AI"
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": {
+            "file": "mahua-acer-swift-sfsp14-q51t.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0025-arm64-dts-qcom-Add-the-Acer-Swift-Spin-14-AI.patch"
           },
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2786",
-            "number": 2786,
-            "title": "linux-omarchy-dtbs: add the Acer Swift Spin 14 AI"
-          },
-          "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
