@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-15T00:20:21.781Z",
+  "collected": "2026-11-15T00:38:06.660Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -6140,6 +6140,30 @@
             "qcom/glymur/ASUSTeK/HT7407NA/qcadsp8480.mbn",
             "qcom/glymur/ASUSTeK/HT7407NA/qccdsp8480.mbn"
           ],
+          "asus-v400-aio-vm441qa-firmware": [
+            "qcom/x126100/ASUSTeK/VM441QA/adsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/VM441QA/adspr.jsn",
+            "qcom/x126100/ASUSTeK/VM441QA/adsps.jsn",
+            "qcom/x126100/ASUSTeK/VM441QA/adspua.jsn",
+            "qcom/x126100/ASUSTeK/VM441QA/cdsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/VM441QA/cdspr.jsn",
+            "qcom/x126100/ASUSTeK/VM441QA/qcadsp8380.mbn",
+            "qcom/x126100/ASUSTeK/VM441QA/qccdsp8380.mbn",
+            "qcom/x126100/ASUSTeK/VM441QA/qcdxkmsucpurwa.mbn",
+            "qcom/x126100/ASUSTeK/VM441QA/qcvss8380_pa.mbn"
+          ],
+          "asus-v400-aio-vm471qa-firmware": [
+            "qcom/x126100/ASUSTeK/VM471QA/adsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/VM471QA/adspr.jsn",
+            "qcom/x126100/ASUSTeK/VM471QA/adsps.jsn",
+            "qcom/x126100/ASUSTeK/VM471QA/adspua.jsn",
+            "qcom/x126100/ASUSTeK/VM471QA/cdsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/VM471QA/cdspr.jsn",
+            "qcom/x126100/ASUSTeK/VM471QA/qcadsp8380.mbn",
+            "qcom/x126100/ASUSTeK/VM471QA/qccdsp8380.mbn",
+            "qcom/x126100/ASUSTeK/VM471QA/qcdxkmsucpurwa.mbn",
+            "qcom/x126100/ASUSTeK/VM471QA/qcvss8380_pa.mbn"
+          ],
           "asus-vivobook-16-firmware": [
             "qcom/x126100/ASUSTeK/vivobook-16/adsp_dtbs.elf",
             "qcom/x126100/ASUSTeK/vivobook-16/cdsp_dtbs.elf",
@@ -6158,6 +6182,30 @@
             "qcom/x1p42100/ASUSTeK/vivobook-s14/qcadsp8380.mbn",
             "qcom/x1p42100/ASUSTeK/vivobook-s14/qccdsp8380.mbn",
             "qcom/x1p42100/ASUSTeK/vivobook-s14/qcdxkmsucpurwa.mbn"
+          ],
+          "asus-vivobook-s14-flip-firmware": [
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/adsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/adspr.jsn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/adsps.jsn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/adspua.jsn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/cdsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/cdspr.jsn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/qcadsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/qccdsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/qcdxkmsucpurwa.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/qcvss8380.mbn"
+          ],
+          "asus-vivobook-s14-s5408qa-firmware": [
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/adsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/adspr.jsn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/adsps.jsn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/adspua.jsn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/cdsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/cdspr.jsn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/qcadsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/qccdsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/qcdxkmsucpurwa.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/qcvss8380.mbn"
           ],
           "asus-vivobook-s15-firmware": [
             "qcom/x1e80100/ASUSTeK/vivobook-s15/adsp_dtbs.elf",
@@ -6195,6 +6243,39 @@
             "qcom/x1p42100/ASUSTeK/vivobook-s16/qccdsp8380.mbn",
             "qcom/x1p42100/ASUSTeK/vivobook-s16/qcdxkmsucpurwa.mbn",
             "qcom/x1p42100/ASUSTeK/vivobook-s16/qcvss8380.mbn"
+          ],
+          "asus-vivobook-s16-flip-firmware": [
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/adsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/adspr.jsn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/adsps.jsn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/adspua.jsn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/cdsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/cdspr.jsn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/qcadsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/qccdsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/qcdxkmsucpurwa.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/qcvss8380.mbn"
+          ],
+          "asus-vivobook-s16-s3607na-firmware": [
+            "qcom/glymur/ASUSTeK/S3607NA/adsp_dtbs.elf",
+            "qcom/glymur/ASUSTeK/S3607NA/adspr.jsn",
+            "qcom/glymur/ASUSTeK/S3607NA/adsps.jsn",
+            "qcom/glymur/ASUSTeK/S3607NA/adspua.jsn",
+            "qcom/glymur/ASUSTeK/S3607NA/cdsp_dtbs.elf",
+            "qcom/glymur/ASUSTeK/S3607NA/qcadsp8480.mbn",
+            "qcom/glymur/ASUSTeK/S3607NA/qccdsp8480.mbn"
+          ],
+          "asus-vivobook-s16-s5608qa-firmware": [
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/adsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/adspr.jsn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/adsps.jsn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/adspua.jsn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/cdsp_dtbs.elf",
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/cdspr.jsn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/qcadsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/qccdsp8380.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/qcdxkmsucpurwa.mbn",
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/qcvss8380.mbn"
           ],
           "asus-zenbook-14-ux3480qa-firmware": [
             "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf",
@@ -6332,6 +6413,15 @@
             "qcom/x1p42100/hp/elitebook-6-g1q/qccdsp8380.mbn",
             "qcom/x1p42100/hp/elitebook-6-g1q/qcdxkmsucpurwa.mbn"
           ],
+          "hp-elitebook-6-g2q-firmware": [
+            "qcom/glymur/hp/elitebook-6-g2q/adsp_dtbs.elf",
+            "qcom/glymur/hp/elitebook-6-g2q/adspr.jsn",
+            "qcom/glymur/hp/elitebook-6-g2q/adsps.jsn",
+            "qcom/glymur/hp/elitebook-6-g2q/adspua.jsn",
+            "qcom/glymur/hp/elitebook-6-g2q/cdsp_dtbs.elf",
+            "qcom/glymur/hp/elitebook-6-g2q/qcadsp8480.mbn",
+            "qcom/glymur/hp/elitebook-6-g2q/qccdsp8480.mbn"
+          ],
           "hp-elitebook-ultra-g1q-firmware": [
             "qcom/x1e80100/hp/elitebook-ultra-g1q/adsp_dtbs.elf",
             "qcom/x1e80100/hp/elitebook-ultra-g1q/adspr.jsn",
@@ -6432,6 +6522,18 @@
             "qcom/x1p42100/hp/omnibook-x14/qcadsp8380.mbn",
             "qcom/x1p42100/hp/omnibook-x14/qccdsp8380.mbn",
             "qcom/x1p42100/hp/omnibook-x14/qcdxkmsucpurwa.mbn"
+          ],
+          "hp-omnibook-x16-cp0-firmware": [
+            "qcom/x1p42100/hp/omnibook-x16-cp0/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/adspr.jsn",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/adsps.jsn",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/adspua.jsn",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/battmgr.jsn",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/cdsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/cdspr.jsn",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-x16-cp0/qcdxkmsucpurwa.mbn"
           ],
           "hp-omnibook-x16-firmware": [
             "qcom/glymur/hp/omnibook-x16/adsp_dtbs.elf",
@@ -6664,6 +6766,15 @@
             "qcom/x1p42100/Microsoft/Surface12/qcadsp8380.mbn",
             "qcom/x1p42100/Microsoft/Surface12/qccdsp8380.mbn",
             "qcom/x1p42100/Microsoft/Surface12/qcdxkmsucpurwa.mbn"
+          ],
+          "microsoft-surface-pro-12th-edition-firmware": [
+            "qcom/glymur/microsoft/surface-pro-12th-edition/adsp_dtbs.elf",
+            "qcom/glymur/microsoft/surface-pro-12th-edition/adspr.jsn",
+            "qcom/glymur/microsoft/surface-pro-12th-edition/adsps.jsn",
+            "qcom/glymur/microsoft/surface-pro-12th-edition/adspua.jsn",
+            "qcom/glymur/microsoft/surface-pro-12th-edition/cdsp_dtbs.elf",
+            "qcom/glymur/microsoft/surface-pro-12th-edition/qcadsp8480.mbn",
+            "qcom/glymur/microsoft/surface-pro-12th-edition/qccdsp8480.mbn"
           ],
           "microsoft-surface-pro-9-5g-firmware": [
             "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcadsp8280.mbn",
