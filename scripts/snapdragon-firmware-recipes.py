@@ -111,6 +111,8 @@ RECIPES = {
     "lenovo-ideapad-slim-3x-firmware": ("Lenovo IdeaPad Slim 3x 15Q8X10", ["qcom/x1p42100/LENOVO/83N3"]),
     "lenovo-ideapad-slim-5x-firmware": ("Lenovo IdeaPad Slim 5x 14Q8X9", ["qcom/x1p42100/LENOVO/83HL"]),
     "lenovo-thinkcentre-neo-50q-qc-firmware": ("Lenovo ThinkCentre neo 50q QC", ["qcom/x1p42100/LENOVO/13C8"]),
+    "lenovo-miix-630-firmware": ("Lenovo Miix 630", ["qcom/msm8998/LENOVO/81F1"]),
+    "lenovo-yoga-c630-firmware": ("Lenovo Yoga C630", ["qcom/sdm850/LENOVO/81JL"]),
     "lenovo-thinkbook-16-g7-qoy-firmware": ("Lenovo ThinkBook 16 G7 QOY", ["qcom/x1p42100/LENOVO/21NH"]),
     "lenovo-thinkpad-t14s-gen7-firmware": ("Lenovo ThinkPad T14s Gen 7", ["qcom/glymur/LENOVO/22A8"]),
     "medion-sprchrgd-14-s1-firmware": ("Medion SPRCHRGD 14 S1", ["qcom/x1e80100/Medion/sprchrgd-14-s1"]),
@@ -244,8 +246,10 @@ def contents(dests):
         parts.append("GPU")
     if any(b.startswith("qcvss") for b in base):
         parts.append("video")
-    if any(b.startswith("qcmpss") for b in base):
+    if any(b.startswith(("qcmpss", "qcdsp1v2", "qcdsp2", "ipa_fws")) for b in base):
         parts.append("modem")
+    if any(b.startswith("qcslpi") for b in base):
+        parts.append("sensor DSP")
     return human_list(parts)
 
 

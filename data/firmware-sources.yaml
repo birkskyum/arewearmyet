@@ -786,6 +786,34 @@ folders:
           - { package: "microsoft-surfacelaptop8withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
           - { package: "microsoft-surfacepro12in2ndeditionwithsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
           - { package: "microsoft-surfacepro12withsnapdragon", member: "SurfaceUpdate/qcnspmcdm8480/qccdsp8480.mbn" }
+  - path: "qcom/msm8998/LENOVO/81F1"
+    models: ["lenovo-miix-630"]
+    files:
+      - name: "qcadsp8998.mbn"
+        size: 9797632
+        sha256: "3d1abb4d4686e2877126d845c2e5b2b0d7ee034fe2faf8a01aa8db2e4d02fc13"
+        from:
+          - { package: "lenovo-81f1-wu-200.0.6.0-qcsubsys8998", member: "qcadsp8998.mbn" }
+      - name: "qcdsp1v28998.mbn"
+        size: 230056
+        sha256: "0c3b54feea9a6fa0afb76f19f54431ef775dbbef6a2bef5e5dff7537609bb3f7"
+        from:
+          - { package: "lenovo-81f1-wu-200.0.6.0-qcsubsys8998", member: "qcdsp1v28998.mbn" }
+      - name: "qcdsp28998.mbn"
+        size: 57098464
+        sha256: "4abbf58e88c18885264d3d7552d5cc43bd25bcc6c6bd23ecfbe20a1d758ce8be"
+        from:
+          - { package: "lenovo-81f1-wu-200.0.6.0-qcsubsys8998", member: "qcdsp28998.mbn" }
+      - name: "qcslpi8998.mbn"
+        size: 4258508
+        sha256: "42ce2584bb7809ebce958e3e5ebfa4acf8360412b8e9d48d7bda790e11d9ed54"
+        from:
+          - { package: "lenovo-81f1-wu-200.0.6.0-qcsubsys8998", member: "qcslpi8998.mbn" }
+      - name: "qcvss8998.mbn"
+        size: 961408
+        sha256: "5536f18357f0c495eec416c5bbcae3b44970eaa9139e3e56c3feb6064312a334"
+        from:
+          - { package: "lenovo-81f1-wu-200.0.6.0-qcdx8998", member: "qcvss8998.mbn" }
   - path: "qcom/sc8180x/LENOVO/82AK"
     models: ["lenovo-flex-5g"]
     files:
@@ -809,6 +837,49 @@ folders:
         sha256: "fc819b43e639212d9f32a5c356db26aaef6ba0cf89aa7392575b735ac76b2c92"
         from:
           - { package: "lenovo-82ak-wu-200.0.11.0-qcsubsys-ext-mpss8180", member: "qcmpss8180_nm.mbn" }
+  - path: "qcom/sdm850/LENOVO/81JL"
+    models: ["lenovo-yoga-c630"]
+    files:
+      - name: "ipa_fws.elf"
+        size: 33088
+        sha256: "74c8c6774b255fc328dc1b2a2826249e137348bee093f2817632f5a563e06838"
+        from:
+          - { package: "lenovo-81jl-wu-200.0.16.0-qcipa850", member: "ipa_fws.elf" }
+      - name: "qcadsp850.mbn"
+        size: 10552580
+        sha256: "f733b9ba8288c58e9ed18c5ef4a2a85668007d32944002290b311f1e2105bb82"
+        from:
+          - { package: "lenovo-81jl-wu-200.0.16.0-qcsubsys850", member: "qcadsp850.mbn" }
+      - name: "qccdsp850.mbn"
+        size: 2717204
+        sha256: "4f45c8d6e14e655c6913aab556ed5cbf6ee216837aeda24eb03540f8103c664a"
+        from:
+          - { package: "lenovo-81jl-wu-200.0.16.0-qcsubsys850", member: "qccdsp850.mbn" }
+      - name: "qcdsp1v2850.mbn"
+        size: 242400
+        sha256: "934004f04eecc6c1d801a65dea58eb960ddef55836832d83b5490b33aae2ebb2"
+        from:
+          - { package: "lenovo-81jl-wu-200.0.16.0-qcsubsys850", member: "qcdsp1v2850.mbn" }
+      - name: "qcdsp2850.mbn"
+        size: 60055760
+        sha256: "d4ecfa7bf247acb50998076925776919f15f33924346f3a96ec6f1ab86926ff0"
+        from:
+          - { package: "lenovo-81jl-wu-200.0.16.0-qcsubsys850", member: "qcdsp2850.mbn" }
+      - name: "qcdxkmsuc850.mbn"
+        size: 14240
+        sha256: "42cc524529adea502442c7c0541af1ac1d0b1365cebae830fcc523f062a13ace"
+        from:
+          - { package: "lenovo-81jl-wu-200.0.16.0-qcdx850", member: "qcdxkmsuc850.mbn" }
+      - name: "qcslpi850.mbn"
+        size: 6783124
+        sha256: "edb1632cb8a30d85875826a3cfae24605443955551a2f5fe7c5f4ae80e85be8b"
+        from:
+          - { package: "lenovo-81jl-wu-200.0.16.0-qcsubsys850", member: "qcslpi850.mbn" }
+      - name: "qcvss850.mbn"
+        size: 891140
+        sha256: "caf0cfac983c90ea1097ab4a2d184754151288c81a85a5daa053dd2fcc007ca3"
+        from:
+          - { package: "lenovo-81jl-wu-200.0.16.0-qcdx850", member: "qcvss850.mbn" }
   - path: "qcom/x1e80100/ACER/SF14-11"
     models: ["acer-swift-14-ai-sf14-11"]
     files:
@@ -4052,6 +4123,46 @@ packages:
     sha256: "fdbac05da6490bf621d715112ea68fef19fc3de025f5768386e5700855abad9e"
     fetched: "2026-11-15"
     note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {11788bd3-612e-5b33-8d26-b8dd53d88ba0}_arm64, a CHID of the 21NH. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-81f1-wu-200.0.6.0-qcdx8998"
+    maker: "Lenovo"
+    title: "Qualcomm Adreno graphics driver 22.18.1083.0000 for the 81F1 (Windows Update 200.0.6.0)"
+    url: "wu://b35ca847-d890-43ab-91c3-858924b39741/1/8961681f6435a99e58354a7c54d8017afab3ab71"
+    size: 27680626
+    sha256: "72689ef44a7eae8be5a6eb81a0ee3dc372cfbef988c3f3f39b4ab985b2d2bc4e"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {c4c9a6be-5383-5de7-af35-c2de505edec8}_arm64, a CHID of the 81F1. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-81f1-wu-200.0.6.0-qcsubsys8998"
+    maker: "Lenovo"
+    title: "Qualcomm Subsystem driver 2.0.1075.0009 for the 81F1 (Windows Update 200.0.6.0)"
+    url: "wu://b35ca847-d890-43ab-91c3-858924b39741/1/d755c12923fbf74d32dcddf6179e428b96d7f99e"
+    size: 77778098
+    sha256: "13c356d1e716ce6b3457d4e74eec8dd0c7e9916b534d273c27430df03317ecd5"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {c4c9a6be-5383-5de7-af35-c2de505edec8}_arm64, a CHID of the 81F1. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-81jl-wu-200.0.16.0-qcdx850"
+    maker: "Lenovo"
+    title: "Qualcomm Adreno graphics driver 25.18.10440.0000 for the 81JL (Windows Update 200.0.16.0)"
+    url: "wu://9fdf0fab-06de-463a-948a-b08a3fea73ac/1/ec8ddf9a902ecec56bc1f5e2de8f9f18d6c70585"
+    size: 29552048
+    sha256: "8eeba54f315a905f71acb230f4597540cd8b68ec0cdf04b0e0fc0cad19ab08af"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {43b71948-9c47-5372-a5cb-18db47bb873f}_arm64, a CHID of the 81JL. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-81jl-wu-200.0.16.0-qcipa850"
+    maker: "Lenovo"
+    title: "Qualcomm IPA driver 1.0.10440.0000 for the 81JL (Windows Update 200.0.16.0)"
+    url: "wu://9fdf0fab-06de-463a-948a-b08a3fea73ac/1/ba6078acaba6fa9e6a3ae480cf0ef942bb32df26"
+    size: 141471
+    sha256: "cf523bc799ecb5d834f7a1eec76133e3969e85e7ad6ecd61d1fd42447da28827"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {43b71948-9c47-5372-a5cb-18db47bb873f}_arm64, a CHID of the 81JL. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-81jl-wu-200.0.16.0-qcsubsys850"
+    maker: "Lenovo"
+    title: "Qualcomm Subsystem driver 1.0.10440.0000 for the 81JL (Windows Update 200.0.16.0)"
+    url: "wu://9fdf0fab-06de-463a-948a-b08a3fea73ac/1/d4b09fb5172dc20174961b7689c1c52c9e31af34"
+    size: 45810285
+    sha256: "2cea11f9aa914534603d1fade853ceface9c770ae1cc132f3f6f89e764bd764a"
+    fetched: "2026-11-15"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {43b71948-9c47-5372-a5cb-18db47bb873f}_arm64, a CHID of the 81JL. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
   - id: "lenovo-82ak-wu-200.0.11.0-qcdx8180"
     maker: "Lenovo"
     title: "Qualcomm Adreno graphics driver 27.20.1460.0000 for the 82AK (Windows Update 200.0.11.0)"
