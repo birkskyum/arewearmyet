@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-14T23:15:30.332Z",
+  "collected": "2026-11-15T00:20:21.781Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -5227,6 +5227,18 @@
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
     },
     {
+      "folder": "hardware-reports/hp/hp-omnibook-3-laptop-14-hz0xxx",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/44",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "45720e4055f94b64e4f2c2676e4d3c45bb928c8e",
+      "dir": "reports/hp/hp-omnibook-3-laptop-14-hz0xxx/3a1d0c54",
+      "pull": {
+        "number": 44,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
       "folder": "hardware-reports/microsoft-corporation/microsoft-surface-pro-11th-edition",
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/42",
       "repo": "turbineBMW/omarchy-hardware-reports",
@@ -6000,14 +6012,21 @@
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8-15.json",
           "glymur-microsoft-surface-laptop8.json",
+          "kalambo-lenovo-ideapad-5x-2in1-14q8y11.json",
+          "kalambo-lenovo-ideapad-slim5x-13q8y11.json",
+          "kalambo-lenovo-ideapad-slim5x-15q8y11.json",
+          "kalambo-lenovo-thinkbook-14-gen9.json",
           "kalambo-microsoft-surface-laptop-13in-2nd-edition.json",
           "kalambo-microsoft-surface-pro-12in-2nd-edition.json",
+          "mahua-hp-elitebook-6-g2q.json",
           "mahua-hp-omnibook-5-bf1xxx.json",
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
           "mahua-microsoft-surface-pro-12th-edition.json",
           "x126100-asus-vivobook-14.json",
           "x126100-asus-vivobook-16.json",
+          "x126100-lenovo-ideapad-vibe-14q8x12.json",
+          "x126100-lenovo-ideapad-vibe-15q8x12.json",
           "x126100-lenovo-thinkcentre-neo-50q-qc.json",
           "x1e78100-acer-sfa14-11.json",
           "x1e80100-microsoft-denali-5g.json",
@@ -6021,6 +6040,7 @@
           "x1p42100-asus-vivobook-s16.json",
           "x1p42100-asus-zenbook-14-ux3480qa.json",
           "x1p42100-dell-inspiron-14-plus-5441.json",
+          "x1p42100-dynabook-xd5.json",
           "x1p42100-hp-omnibook-3-16.json",
           "x1p42100-hp-omnibook-3-oled.json",
           "x1p42100-hp-omnibook-5.json",
@@ -7332,6 +7352,45 @@
         ]
       },
       {
+        "file": "kalambo-lenovo-ideapad-5x-2in1-14q8y11.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Lenovo IdeaPad 5x 2-in-1 Gen 11 (83UK)",
+        "compatible": "lenovo,ideapad-5x-2in1-14q8y11",
+        "hwids": [
+          "b9f5740e-aaf1-5799-8ff0-7a2bc11cfc8a",
+          "84ec2966-e360-5016-80e5-97c62479b0e5"
+        ]
+      },
+      {
+        "file": "kalambo-lenovo-ideapad-slim5x-13q8y11.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Lenovo IdeaPad Slim 5x 13 Gen 11 (83RK)",
+        "compatible": "lenovo,ideapad-slim5x-13q8y11",
+        "hwids": [
+          "8aa74fef-a3cc-5ba6-b666-ed3c799dd8a8",
+          "628ae4c0-01fc-58de-a6d7-03dd4c4bce50"
+        ]
+      },
+      {
+        "file": "kalambo-lenovo-ideapad-slim5x-15q8y11.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Lenovo IdeaPad Slim 5x 15 Gen 11 (83RL)",
+        "compatible": "lenovo,ideapad-slim5x-15q8y11",
+        "hwids": [
+          "67907f36-f1fa-5036-a068-9d8232d88f1b",
+          "c90fcf83-53a4-5a26-9d30-059261278212"
+        ]
+      },
+      {
+        "file": "kalambo-lenovo-thinkbook-14-gen9.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Lenovo ThinkBook 14 G9 Q8Y (22BB)",
+        "compatible": "lenovo,thinkbook-14-gen9-q8y",
+        "hwids": [
+          "f6e3f356-c87f-5966-9362-a4118fe92e64"
+        ]
+      },
+      {
         "file": "kalambo-microsoft-surface-laptop-13in-2nd-edition.json",
         "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Microsoft Surface Laptop 13in 2nd Edition (Snapdragon)",
@@ -7353,6 +7412,16 @@
           "3880dbf7-8e22-519a-a0c2-b531bc1042bf",
           "95edccf3-8fe9-5602-b2e6-8d005591b11e",
           "38285a33-06a2-59ac-83c9-52f5b73bb601"
+        ]
+      },
+      {
+        "file": "mahua-hp-elitebook-6-g2q.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "HP EliteBook 6 G2q 14 inch Notebook Next Gen AI PC",
+        "compatible": "hp,elitebook-6-g2q",
+        "hwids": [
+          "b1d90d47-3b5b-5ba4-99e5-9bb1a75f3536",
+          "48bbefb8-27af-5402-97fe-69256474c802"
         ]
       },
       {
@@ -7454,6 +7523,24 @@
           "9ddffa55-b50a-59a2-85f8-3fe038d9fd22",
           "ef3ad04c-cb6b-5981-a15a-71c7ee95190e",
           "f8d95087-670f-5015-987f-7cad2ecde912"
+        ]
+      },
+      {
+        "file": "x126100-lenovo-ideapad-vibe-14q8x12.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Lenovo IdeaPad Vibe 14Q8X12 (84A9)",
+        "compatible": "lenovo,ideapad-vibe-14q8x12",
+        "hwids": [
+          "523a73cd-d8ea-5fc2-b15c-aff7f71831f4"
+        ]
+      },
+      {
+        "file": "x126100-lenovo-ideapad-vibe-15q8x12.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Lenovo IdeaPad Vibe 15Q8X12 (84AA)",
+        "compatible": "lenovo,ideapad-vibe-15q8x12",
+        "hwids": [
+          "449d010d-23f4-5a1a-b77b-962d84b85845"
         ]
       },
       {
@@ -7660,6 +7747,16 @@
           "f110a06d-0540-5b88-9dab-25f4f1f2073d",
           "11c02816-fd4f-554c-945d-06331bb5089a",
           "402dea86-8a39-50fc-84b4-2e373e1bb25a"
+        ]
+      },
+      {
+        "file": "x1p42100-dynabook-xd5.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Dynabook XD5",
+        "compatible": "dynabook,xd5",
+        "hwids": [
+          "1ce7d798-ba2a-539f-8b1d-6dc23250a84a",
+          "84f6d7e2-ee27-5562-a938-44a41c195728"
         ]
       },
       {

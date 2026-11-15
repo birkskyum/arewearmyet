@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-14T23:15:30.332Z",
+  "collected": "2026-11-15T00:20:21.781Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -553,14 +553,21 @@
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8-15.json",
           "glymur-microsoft-surface-laptop8.json",
+          "kalambo-lenovo-ideapad-5x-2in1-14q8y11.json",
+          "kalambo-lenovo-ideapad-slim5x-13q8y11.json",
+          "kalambo-lenovo-ideapad-slim5x-15q8y11.json",
+          "kalambo-lenovo-thinkbook-14-gen9.json",
           "kalambo-microsoft-surface-laptop-13in-2nd-edition.json",
           "kalambo-microsoft-surface-pro-12in-2nd-edition.json",
+          "mahua-hp-elitebook-6-g2q.json",
           "mahua-hp-omnibook-5-bf1xxx.json",
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
           "mahua-microsoft-surface-pro-12th-edition.json",
           "x126100-asus-vivobook-14.json",
           "x126100-asus-vivobook-16.json",
+          "x126100-lenovo-ideapad-vibe-14q8x12.json",
+          "x126100-lenovo-ideapad-vibe-15q8x12.json",
           "x126100-lenovo-thinkcentre-neo-50q-qc.json",
           "x1e78100-acer-sfa14-11.json",
           "x1e80100-microsoft-denali-5g.json",
@@ -574,6 +581,7 @@
           "x1p42100-asus-vivobook-s16.json",
           "x1p42100-asus-zenbook-14-ux3480qa.json",
           "x1p42100-dell-inspiron-14-plus-5441.json",
+          "x1p42100-dynabook-xd5.json",
           "x1p42100-hp-omnibook-3-16.json",
           "x1p42100-hp-omnibook-3-oled.json",
           "x1p42100-hp-omnibook-5.json",
@@ -1249,9 +1257,9 @@
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
     "works": 2,
-    "should": 49,
+    "should": 57,
     "problems": 9,
-    "notYet": 26,
+    "notYet": 18,
     "deviceTree": 78,
     "ids": 58,
     "firmware": 51,
@@ -1367,16 +1375,16 @@
         }
       },
       "ids": {
-        "omarchy": 60,
+        "omarchy": 68,
         "fromUpstream": 28,
-        "added": 32,
+        "added": 40,
         "pull": 0,
         "available": 1,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 60
+          "edge": 68
         },
         "models": {
           "fromUpstream": [
@@ -1422,15 +1430,23 @@
             "asus-zenbook-14-ux3480qa",
             "asus-proart-pz14-ht7407",
             "dell-inspiron-14-5441",
+            "dynabook-xd5",
             "hp-omnibook-3-14-hz0",
             "hp-omnibook-3-16-bz0",
             "hp-omnibook-5-14-he0",
             "hp-omnibook-5-16-bf0",
             "hp-probook-4-g1q",
+            "hp-elitebook-6-g2q",
             "hp-omnibook-5-16-bf1",
             "hp-omnibook-ultra-14-kg0",
             "hp-omnibook-x-16-cp",
+            "lenovo-ideapad-vibe-14q8x12",
+            "lenovo-ideapad-vibe-15q8x12",
             "lenovo-thinkcentre-neo-50q-qc",
+            "lenovo-ideapad-5x-2-in-1-14q8y11",
+            "lenovo-ideapad-slim-5x-13q8y11",
+            "lenovo-ideapad-slim-5x-15q8y11",
+            "lenovo-thinkbook-14-gen-9-q8y",
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
             "microsoft-surface-laptop-13in-1st-edition",
             "microsoft-surface-pro-12in-1st-edition",
@@ -6345,14 +6361,14 @@
         "https://kakaku.com/item/K0001724657/"
       ],
       "notes": "Dynabook also sells its board (DBIFXN00) directly as the dynabook XD/ZA, sometimes with the X1E-78-100. That version reports another product name and needs an X1E tree.",
-      "outcome": "manual",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -6361,7 +6377,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "none",
+        "ids": "edge",
         "firmware": "none"
       },
       "upstream": {
@@ -6395,10 +6411,10 @@
       "variants": [
         {
           "compatible": "dynabook,xd5",
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -6411,7 +6427,7 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -7870,14 +7886,14 @@
         "https://shop.avoira.com/hp-elitebook-6-g2q-14-next-gen-ai-copilot-pc-snapdragon-x2p-64-100-laptop-35-6-cm-14-wuxga-16-gb-lpddr5x-sdram-512-gb-ssd-wi-fi-7-802-11be-windows-11-pro-silver-dq0b5et-abu.html"
       ],
       "notes": null,
-      "outcome": "manual",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -7886,7 +7902,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "none",
+        "ids": "edge",
         "firmware": "none"
       },
       "upstream": {
@@ -7919,10 +7935,10 @@
       "variants": [
         {
           "compatible": "hp,elitebook-6-g2q",
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -7935,7 +7951,7 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -9694,14 +9710,14 @@
         "https://psref.lenovo.com/Product/IdeaPad/IdeaPad_Vibe_14Q8X12"
       ],
       "notes": "Its BIOS (VGCN13WW) is the IdeaPad Slim 3x 15Q8X10's LCFC platform, so that tree is the closest start, with a second USB-C port, the touchscreen at 0x24 and its own panel and EC.",
-      "outcome": "manual",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -9710,7 +9726,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "none",
+        "ids": "edge",
         "firmware": "none"
       },
       "upstream": {
@@ -9745,10 +9761,10 @@
       "variants": [
         {
           "compatible": "lenovo,ideapad-vibe-14q8x12",
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -9761,7 +9777,7 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -9790,14 +9806,14 @@
         "https://download.lenovo.com/consumer/mobiles/vgcn13ww.exe"
       ],
       "notes": "Shares the IdeaPad Vibe 14's BIOS (VGCN13WW) and DSDT.",
-      "outcome": "manual",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -9806,7 +9822,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "none",
+        "ids": "edge",
         "firmware": "none"
       },
       "upstream": {
@@ -9841,10 +9857,10 @@
       "variants": [
         {
           "compatible": "lenovo,ideapad-vibe-15q8x12",
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -9857,7 +9873,7 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -10404,14 +10420,14 @@
         "https://www.notebookcheck.net/Lenovo-releases-new-14-inch-laptop-globally-with-Snapdragon-X2-and-over-33-hours-battery-life.1360398.0.html"
       ],
       "notes": null,
-      "outcome": "manual",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -10420,7 +10436,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "none",
+        "ids": "edge",
         "firmware": "none"
       },
       "upstream": {
@@ -10453,10 +10469,10 @@
       "variants": [
         {
           "compatible": "lenovo,ideapad-5x-2in1-14q8y11",
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -10469,7 +10485,7 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -10498,14 +10514,14 @@
         "https://www.notebookcheck.net/Lenovo-IdeaPad-Slim-5-13Q8Y11.1311036.0.html"
       ],
       "notes": null,
-      "outcome": "manual",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -10514,7 +10530,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "none",
+        "ids": "edge",
         "firmware": "none"
       },
       "upstream": {
@@ -10547,10 +10563,10 @@
       "variants": [
         {
           "compatible": "lenovo,ideapad-slim5x-13q8y11",
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -10563,7 +10579,7 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -10592,14 +10608,14 @@
         "https://www.pcmag.com/reviews/lenovo-ideapad-slim-5x-gen-11"
       ],
       "notes": null,
-      "outcome": "manual",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -10608,7 +10624,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "none",
+        "ids": "edge",
         "firmware": "none"
       },
       "upstream": {
@@ -10641,10 +10657,10 @@
       "variants": [
         {
           "compatible": "lenovo,ideapad-slim5x-15q8y11",
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -10657,7 +10673,7 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -10684,14 +10700,14 @@
         "https://psref.lenovo.com/Product/ThinkBook/ThinkBook_14_G9_Q8Y"
       ],
       "notes": null,
-      "outcome": "manual",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -10700,7 +10716,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "none",
+        "ids": "edge",
         "firmware": "none"
       },
       "upstream": {
@@ -10733,10 +10749,10 @@
       "variants": [
         {
           "compatible": "lenovo,thinkbook-14-gen9-q8y",
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -10749,7 +10765,7 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -16444,6 +16460,8 @@
     ],
     "ids": [],
     "firmware": [],
-    "acpi": []
+    "acpi": [
+      "hardware-reports/hp/hp-omnibook-3-laptop-14-hz0xxx"
+    ]
   }
 }
