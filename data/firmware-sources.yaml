@@ -1218,7 +1218,6 @@ folders:
           - { package: "lenovo-n42qq22w", member: "code$GetExtractPath$/N42QQ22W/N42QG16W/Core_drivers/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
           - { package: "dell-drc2v", member: "16299/Drivers/arm64/qcnspmcdm_ext_cdsp8380/cdsp_dtbs.elf" }
           - { package: "hp-sp171528", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/cdsp_dtbs.elf" }
-          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdsp_dtbs.elf" }
       - name: "qcadsp8380.mbn"
         size: 21977528
         sha256: "544fc0a4ade82c207c450c42f1baa70864ce46aaa2425979a0bff6974af74994"
@@ -1232,7 +1231,6 @@ folders:
           - { package: "lenovo-n42qq22w", member: "code$GetExtractPath$/N42QQ22W/N42QG16W/Core_drivers/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
           - { package: "dell-drc2v", member: "16299/Drivers/arm64/qcnspmcdm_ext_cdsp8380/qccdsp8380.mbn" }
           - { package: "hp-sp171528", member: "src/Driver/1qcnspmcdm_ext_cdsp8380_8700/qccdsp8380.mbn" }
-          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
       - name: "qcdxkmsuc8380.mbn"
         size: 12088
         sha256: "255d848d194d825b21413fbb02e87cb45c2557d1e7de2d5ce15c77eb5c659bdc"
@@ -1732,7 +1730,6 @@ folders:
         size: 40760
         sha256: "93941f040da14b8305d39579686d886706d22954a538b03da676c1aaa191797f"
         from:
-          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdsp_dtbs.elf" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdsp_dtbs.elf" }
       - name: "cdspr.jsn"
         size: 534
@@ -1750,7 +1747,6 @@ folders:
         size: 3195304
         sha256: "4a67a03367f2eff2f8a0e867ca25d2bf2fcd5aee3e41e2c9f436c804e257c789"
         from:
-          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
       - name: "qcvss8380.mbn"
         size: 2323048
@@ -1809,7 +1805,6 @@ folders:
         size: 40760
         sha256: "93941f040da14b8305d39579686d886706d22954a538b03da676c1aaa191797f"
         from:
-          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdsp_dtbs.elf" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/cdsp_dtbs.elf" }
       - name: "cdspr.jsn"
         size: 534
@@ -1827,8 +1822,12 @@ folders:
         size: 3195304
         sha256: "4a67a03367f2eff2f8a0e867ca25d2bf2fcd5aee3e41e2c9f436c804e257c789"
         from:
-          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
+      - name: "qcvss8380.mbn"
+        size: 2323048
+        sha256: "d52c28872ebbaf8087a30bf196d15ee24839fd62a2d91b605edfa73c09bbd8d4"
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcdx8380/qcvss8380.mbn" }
   - path: "qcom/x1p42100/ACER/A14-11M"
     models: ["acer-aspire-14-ai-a14-11m"]
     files:
@@ -4323,11 +4322,11 @@ packages:
   - id: "microsoft-surfacelaptop7"
     maker: "Microsoft"
     title: "Surface Laptop 7th Edition"
-    url: "https://download.microsoft.com/download/b7ca2c3f-d320-4795-be0f-529a0117abb4/SurfaceLaptop7_ARM_Win11_26100_26.091.9400.0.msi"
+    url: "https://download.microsoft.com/download/b7ca2c3f-d320-4795-be0f-529a0117abb4/SurfaceLaptop7_ARM_Win11_26100_26.101.6391.0.msi"
     page: "https://www.microsoft.com/en-us/download/details.aspx?id=106120"
-    size: 524234752
-    sha256: "0917d206fb35278b4df4be980240318475300f3a130a86edac836519059a453d"
-    fetched: "2026-11-02"
+    size: 530989056
+    sha256: "4c4640205fa181cc7ac9bc14c35903d3147537cbe2ae8940ba2ade8e7ae25305"
+    fetched: "2026-11-15"
     note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
   - id: "microsoft-surfacelaptop8withsnapdragon"
     maker: "Microsoft"
