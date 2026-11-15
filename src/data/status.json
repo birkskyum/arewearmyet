@@ -15923,7 +15923,7 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -15931,7 +15931,7 @@
       "pieces": {
         "deviceTree": "elsewhere",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -15942,26 +15942,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc8180.mbn",
-          "qcadsp8180.mbn",
-          "qccdsp8180.mbn",
-          "qcmpss8180_nm.mbn",
-          "qcslpi8180.mbn",
-          "qcdxkmsuc8180.mbn",
-          "qcadsp8180.mbn",
-          "qccdsp8180.mbn",
-          "qcmpss8180.mbn",
-          "qcslpi8180.mbn",
-          "qcdxkmsuc8180.mbn",
-          "qcadsp8180.mbn",
-          "qccdsp8180.mbn",
-          "qcmpss8180.mbn",
-          "qcslpi8180.mbn"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-sc8180x-microsoft-caspar",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],

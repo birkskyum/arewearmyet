@@ -110,6 +110,7 @@ RECIPES = {
     "lenovo-ideapad-5x-2-in-1-firmware": ("Lenovo IdeaPad 5x 2-in-1 14Q8X9", ["qcom/x1p42100/LENOVO/83GH"]),
     "lenovo-ideapad-slim-3x-firmware": ("Lenovo IdeaPad Slim 3x 15Q8X10", ["qcom/x1p42100/LENOVO/83N3"]),
     "lenovo-ideapad-slim-5x-firmware": ("Lenovo IdeaPad Slim 5x 14Q8X9", ["qcom/x1p42100/LENOVO/83HL"]),
+    "microsoft-surface-pro-x-firmware": ("Microsoft Surface Pro X", ["qcom/sc8180x/microsoft/cambria", "qcom/sc8180x/microsoft/carina", "qcom/sc8180x/microsoft/caspar"]),
     "lenovo-thinkcentre-neo-50q-qc-firmware": ("Lenovo ThinkCentre neo 50q QC", ["qcom/x1p42100/LENOVO/13C8"]),
     "lenovo-miix-630-firmware": ("Lenovo Miix 630", ["qcom/msm8998/LENOVO/81F1"]),
     "lenovo-yoga-c630-firmware": ("Lenovo Yoga C630", ["qcom/sdm850/LENOVO/81JL"]),
