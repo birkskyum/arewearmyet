@@ -70,10 +70,17 @@ RECIPES = {
     "acer-swift-go-14-firmware": ("Acer Swift Go 14", ["qcom/x1e80100/ACER/SFG14-01"]),
     "asus-proart-pz13-firmware": ("ASUS ProArt PZ13", ["qcom/x1p42100/ASUSTeK/proart-pz13"]),
     "asus-proart-pz14-firmware": ("ASUS ProArt PZ14", ["qcom/glymur/ASUSTeK/HT7407NA"]),
+    "asus-v400-aio-vm441qa-firmware": ("ASUS V400 AiO VM441QA", ["qcom/x126100/ASUSTeK/VM441QA"]),
+    "asus-v400-aio-vm471qa-firmware": ("ASUS V400 AiO VM471QA", ["qcom/x126100/ASUSTeK/VM471QA"]),
     "asus-vivobook-s14-firmware": ("ASUS Vivobook S 14", ["qcom/x1p42100/ASUSTeK/vivobook-s14"]),
+    "asus-vivobook-s14-s5408qa-firmware": ("ASUS Vivobook S14 S5408QA", ["qcom/x126100/ASUSTeK/vivobook-s14-s5408qa"]),
+    "asus-vivobook-s14-flip-firmware": ("ASUS Vivobook S14 Flip TP5408QA", ["qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa"]),
     "asus-vivobook-s15-firmware": ("ASUS Vivobook S 15", ["qcom/x1e80100/ASUSTeK/vivobook-s15", "qcom/x1p42100/ASUSTeK/vivobook-s15"]),
     "asus-vivobook-16-firmware": ("ASUS Vivobook 16", ["qcom/x126100/ASUSTeK/vivobook-16"]),
     "asus-vivobook-s16-firmware": ("ASUS Vivobook S 16", ["qcom/x1p42100/ASUSTeK/vivobook-s16"]),
+    "asus-vivobook-s16-s3607na-firmware": ("ASUS Vivobook S16 S3607NA", ["qcom/glymur/ASUSTeK/S3607NA"]),
+    "asus-vivobook-s16-s5608qa-firmware": ("ASUS Vivobook S16 S5608QA", ["qcom/x126100/ASUSTeK/vivobook-s16-s5608qa"]),
+    "asus-vivobook-s16-flip-firmware": ("ASUS Vivobook S16 Flip TP5608QA", ["qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa"]),
     "asus-zenbook-14-ux3480qa-firmware": ("ASUS Zenbook 14 UX3480QA", ["qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa"]),
     "asus-zenbook-a14-firmware": ("ASUS Zenbook A14", ["qcom/x1e80100/ASUSTeK/zenbook-a14", "qcom/x1p42100/ASUSTeK/zenbook-a14"]),
     "asus-zenbook-a14-ux3407na-firmware": ("ASUS Zenbook A14 UX3407NA", ["qcom/glymur/ASUSTeK/UX3407NA"]),
@@ -84,6 +91,7 @@ RECIPES = {
     "dell-xps-13-9345-firmware": ("Dell XPS 13 9345", ["qcom/x1e80100/dell/xps13-9345"]),
     "honor-magicbook-art-14-firmware": ("Honor MagicBook Art 14", ["qcom/x1e80100/HONOR/MRO-XXX"]),
     "hp-elitebook-6-g1q-firmware": ("HP EliteBook 6 G1q", ["qcom/x1p42100/hp/elitebook-6-g1q"]),
+    "hp-elitebook-6-g2q-firmware": ("HP EliteBook 6 G2q", ["qcom/glymur/hp/elitebook-6-g2q"]),
     "hp-elitebook-ultra-g1q-firmware": ("HP EliteBook Ultra G1q", ["qcom/x1e80100/hp/elitebook-ultra-g1q"]),
     "hp-elitebook-x-g2q-firmware": ("HP EliteBook X G2q", ["qcom/glymur/hp/elitebook-x-g2q"]),
     "hp-omnibook-3-14-firmware": ("HP OmniBook 3 14", ["qcom/x1p42100/hp/omnibook-3"]),
@@ -93,6 +101,7 @@ RECIPES = {
     "hp-omnibook-ultra-14-firmware": ("HP OmniBook Ultra 14", ["qcom/glymur/hp/omnibook-ultra-14-kg0xxx"]),
     "hp-omnibook-x14-firmware": ("HP OmniBook X 14", ["qcom/x1e80100/hp/omnibook-x14", "qcom/x1p42100/hp/omnibook-x14"]),
     "hp-omnibook-x16-firmware": ("HP OmniBook X 16 (2026)", ["qcom/glymur/hp/omnibook-x16"]),
+    "hp-omnibook-x16-cp0-firmware": ("HP OmniBook X 14 and 16 (2025)", ["qcom/x1p42100/hp/omnibook-x16-cp0"]),
     "huawei-matebook-e-go-firmware": ("Huawei MateBook E Go", ["qcom/sc8280xp/HUAWEI/gaokun3"]),
     "lenovo-ideacentre-mini-x-firmware": ("Lenovo IdeaCentre Mini x", ["qcom/x1e80100/LENOVO/91B6", "qcom/x1p42100/LENOVO/91B6"]),
     "lenovo-thinkcentre-neo-50q-qc-firmware": ("Lenovo ThinkCentre neo 50q QC", ["qcom/x1p42100/LENOVO/13C8"]),
@@ -100,11 +109,14 @@ RECIPES = {
     "medion-sprchrgd-14-s1-firmware": ("Medion SPRCHRGD 14 S1", ["qcom/x1e80100/Medion/sprchrgd-14-s1"]),
     "microsoft-surface-laptop-7-firmware": ("Microsoft Surface Laptop 7", ["qcom/x1e80100/microsoft/Romulus", "qcom/x1e80100/microsoft"]),
     "microsoft-surface-laptop-13-firmware": ("Microsoft Surface Laptop 13-inch", ["qcom/x1p42100/Microsoft/SurfaceLaptop13"]),
+    "microsoft-surface-laptop-13-2nd-edition-firmware": ("Microsoft Surface Laptop 13-inch 2nd Edition", ["qcom/kalambo/Microsoft/SurfaceLaptop13"]),
     "microsoft-surface-laptop-8-firmware": ("Microsoft Surface Laptop 8", ["qcom/glymur/microsoft/mahua"]),
     "microsoft-surface-pro-9-5g-firmware": ("Microsoft Surface Pro 9 with 5G", ["qcom/sc8280xp/MICROSOFT/SurfacePro9"]),
     "microsoft-windows-dev-kit-2023-firmware": ("Microsoft Windows Dev Kit 2023", ["qcom/sc8280xp/microsoft/blackrock"]),
     "microsoft-surface-pro-11-firmware": ("Microsoft Surface Pro 11th Edition", ["qcom/x1e80100/microsoft/Denali", "qcom/x1e80100/microsoft"]),
     "microsoft-surface-pro-12in-firmware": ("Microsoft Surface Pro 12-inch", ["qcom/x1p42100/Microsoft/Surface12"]),
+    "microsoft-surface-pro-12in-2nd-edition-firmware": ("Microsoft Surface Pro 12-inch 2nd Edition", ["qcom/kalambo/Microsoft/Surface12"]),
+    "microsoft-surface-pro-12th-edition-firmware": ("Microsoft Surface Pro 12th Edition", ["qcom/glymur/microsoft/surface-pro-12th-edition"]),
     "qualcomm-snapdragon-dev-kit-firmware": ("Qualcomm Snapdragon Dev Kit for Windows", ["qcom/x1e80100/Thundercomm/DEVKIT"]),
     "samsung-galaxy-book4-edge-firmware": ("Samsung Galaxy Book4 Edge", ["qcom/x1e80100/SAMSUNG/galaxy-book4-edge"]),
     "samsung-galaxy-book4-edge-15-firmware": ("Samsung Galaxy Book4 Edge 15", ["qcom/x1p42100/SAMSUNG/galaxy-book4-edge"]),
@@ -223,6 +235,51 @@ def comment(text):
     return ["# " + line for line in textwrap.wrap(text, 96, break_on_hyphens=False)]
 
 
+def provide(path):
+    return "qcom-firmware-" + path.removeprefix("qcom/").replace("/", "-").lower()
+
+
+# The README.package.md the recipe installs: where each file comes from and when the package can go.
+def readme(name, who, paths, what, makers, chosen, wanted, provided):
+    by = human_list(makers)
+    L = [f"# {name}", "",
+         f"{what[0].upper() + what[1:]} firmware for the {who}, from {by}'s own Windows driver download.", "",
+         f"The firmware only runs if {by} signed it for this board, so linux-firmware cannot carry it until {by} "
+         "submits it. The package holds no firmware itself. Its recipe downloads the driver package below when the "
+         "package is built, unpacks it without running it, checks every file against the SHA-256 it was matched to "
+         "and installs it under the name the device tree asks for, compressed with xz.", ""]
+    shared = sorted({os.path.normpath(os.path.join(path, os.path.dirname(link["target"]))) for path in paths for link in folders[path].get("links", [])})
+    if shared:
+        L += ["Its files are byte for byte the ones in " + human_list([f"`{s}`" for s in shared]) + ", which the "
+              "table links them to as linux-firmware's WHENCE would, so the recipe can take them from another "
+              "machine's download, the smallest that holds them.", ""]
+    L += ["## Source", ""]
+    for p in chosen:
+        pkg = packages[p]
+        line = f"- [{pkg['title']}]({pkg['url']}), {pkg['size'] // 1000000} MB, SHA-256 `{pkg['sha256']}`, checked {pkg['fetched']}."
+        if pkg.get("page"):
+            line += f" The link changes with every version, and [the download page]({pkg['page']}) lists the current one."
+        L.append(line)
+    L += ["", "## Files", "", "| File | SHA-256 | From |", "| --- | --- | --- |"]
+    for w in sorted(wanted, key=lambda w: w["dest"]):
+        p, member = w["src"]
+        L.append(f"| `{w['dest']}` | `{w['sha256']}` | {packages[p]['title']}, `{member}` |")
+    if provided:
+        L += ["", "The board's own firmware starts the SoC control processor before Linux, so its images are not "
+              "installed, and the package's provided.d list tells qcom-firmware-extract not to look for them."]
+    L += ["", "## How Omarchy installs it", "",
+          "The package provides " + human_list([f"`{provide(path)}`" for path in paths]) + ". Omarchy's "
+          "`install/hardware/qualcomm/oem-firmware.sh` takes the folders the machine's device tree loads firmware "
+          "from, as `qcom-firmware-extract --list-missing` prints them, and installs the package that provides each "
+          "folder's name, so the machine needs no step of its own.", "",
+          "## Retirement", "",
+          "The kernel tries the plain name, then `.zst`, then `.xz`, so once linux-firmware ships the same files, its "
+          f"copies are the ones loaded. The recipe is generated from [the firmware table]({TABLE_URL}) by "
+          f"[snapdragon-firmware-recipes.py]({SCRIPT_URL}), which leaves out what linux-firmware ships and says when "
+          "nothing is left. Drop the package then."]
+    return "\n".join(L) + "\n"
+
+
 def recipe(name, who, paths):
     wanted, provided = [], []
     for path in paths:
@@ -304,7 +361,7 @@ def recipe(name, who, paths):
         "arch=('aarch64')",
         f"url={q(page)}",
         "license=('LicenseRef-proprietary')",
-        "provides=(" + " ".join([q("qcom-firmware-" + p.removeprefix("qcom/").replace("/", "-").lower()) for p in paths]
+        "provides=(" + " ".join([q(provide(p)) for p in paths]
                                 + [q(old) for old in RENAMED.get(name, [])]) + ")",
     ]
     conflicts = CONFLICTS.get(name, []) + RENAMED.get(name, [])
@@ -327,10 +384,12 @@ def recipe(name, who, paths):
     L.append(")")
     if provided:
         L.append(f"source+=({q(COMPATIBLE[name] + '.list')})")
+    L.append("source+=('README.package.md')")
     L.append("noextract=(" + " ".join(q(local[p]) for p in chosen) + ")")
     L.append("sha256sums=(" + " ".join(q(packages[p]["sha256"]) for p in chosen) + ")")
     if provided:
         L.append("sha256sums+=('SKIP')")
+    L.append("sha256sums+=('SKIP')")
     L += [
         "",
         "# Unpack an OEM download the way it is packed: MSIs with msiextract, Lenovo's installers with",
@@ -370,6 +429,7 @@ def recipe(name, who, paths):
     L += ["SUMS", "  )", "", '  find "$fw" -type f -exec xz -C crc32 {} +']
     if provided:
         L += ["", f'  install -Dm644 -t "$pkgdir/usr/share/qcom-firmware-extract/provided.d" {q(COMPATIBLE[name] + ".list")}']
+    L += ["", '  install -Dm644 README.package.md "$pkgdir/usr/share/doc/$pkgname/README.md"']
     L += ["}", ""]
 
     d = os.path.join(out, name)
@@ -387,6 +447,7 @@ def recipe(name, who, paths):
                 pkgrel += 1
     open(old_path, "w").write(text.replace("pkgrel=@PKGREL@", f"pkgrel={pkgrel}"))
     open(os.path.join(d, ".omarchy", "package.json"), "w").write('{\n  "source": "local"\n}\n')
+    open(os.path.join(d, "README.package.md"), "w").write(readme(name, who, paths, what, makers, chosen, wanted, provided))
     if provided:
         open(os.path.join(d, COMPATIBLE[name] + ".list"), "w").write(
             "# The board's own firmware starts the SoC control processor before Linux.\n" + "\n".join(provided) + "\n")
