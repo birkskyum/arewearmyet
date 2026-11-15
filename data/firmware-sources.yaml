@@ -1656,6 +1656,11 @@ folders:
         from:
           - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
           - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/qcnspmcdmextcdsp8380/qccdsp8380.mbn" }
+      - name: "qcvss8380.mbn"
+        size: 2323048
+        sha256: "2e37684e8c84b7d945396da24c295c3267e97087a537386bb10ad1fa5ef85ebc"
+        from:
+          - { package: "microsoft-surfacepro11", member: "SurfaceUpdate/qcdx/qcvss8380.mbn" }
   - path: "qcom/x1e80100/microsoft/Romulus"
     models: ["microsoft-surface-laptop-7-13", "microsoft-surface-laptop-7-15"]
     files:
