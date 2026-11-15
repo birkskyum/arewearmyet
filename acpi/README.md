@@ -9,7 +9,7 @@ values and can differ from a running machine where the firmware fills fields in 
 dumps published here first. Each folder's SOURCE.md says where its tables came from. The SoC serial number (SOSN)
 is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. Disassemble a table with `iasl -d`.
 
-90 of 115 models have at least one dump.
+93 of 115 models have at least one dump.
 
 | Model | Dumps |
 | --- | --- |
@@ -48,7 +48,10 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | HP OmniBook 5 14 | [hp-omnibook-5-14-he0xxx](aarch64-laptops/hp-omnibook-5-14-he0xxx), [hardware-reports/hp/hp-omnibook-5-laptop-14-he0xxx](../reports/hp/hp-omnibook-5-laptop-14-he0xxx) |
 | HP OmniBook X 14 | [hp-omnibook-x14-fe0xxx](aarch64-laptops/hp-omnibook-x14-fe0xxx) |
 | HP EliteBook 6 G2q | [firmware/hp-elitebook-6-g2q](firmware/hp-elitebook-6-g2q) |
+| HP OmniBook 5 14 (2026) | [firmware/hp-omnibook-5-14-he1](firmware/hp-omnibook-5-14-he1) |
 | HP OmniBook Ultra 14 | [arewearmyet/hp-omnibook-ultra-14-kg0](hp-omnibook-ultra-14-kg0) |
+| HP OmniBook X 14 (14-kr0) | [firmware/hp-omnibook-x-14-kr0](firmware/hp-omnibook-x-14-kr0) |
+| HP OmniBook X 16 (16-cp0) | [firmware/hp-omnibook-x-14-kr0](firmware/hp-omnibook-x-14-kr0) |
 | Lenovo IdeaCentre Mini x | [lenovo-ideacentre-01q8x10](aarch64-laptops/lenovo-ideacentre-01q8x10) |
 | Lenovo IdeaPad 5x 2-in-1 | [lenovo-ideapad-5-2in1-83GH-14Q8X9](aarch64-laptops/lenovo-ideapad-5-2in1-83GH-14Q8X9) |
 | Lenovo IdeaPad Slim 3x | [lenovo-ideapad-slim3x-15q8x10-WCN7850](aarch64-laptops/lenovo-ideapad-slim3x-15q8x10-WCN7850) |
@@ -118,10 +121,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 - HP OmniBook 5 16
 - HP ProBook 4 G1q
 - HP EliteBook X G2q
-- HP OmniBook 5 14 (2026)
 - HP OmniBook 5 16 (2026)
-- HP OmniBook X 14 (14-kr0)
-- HP OmniBook X 16 (16-cp0)
 - HP OmniBook X 14 (2026)
 - HP OmniBook X 16 (2026)
 - HUMAIN Horizon

@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-15T00:38:06.660Z",
+  "collected": "2026-11-15T00:47:04.069Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -1371,25 +1371,25 @@
     "should": 57,
     "problems": 9,
     "notYet": 18,
-    "deviceTree": 78,
+    "deviceTree": 81,
     "ids": 58,
     "firmware": 63,
     "googlebooks": 2,
     "chromebooks": 10,
     "acpi": 46,
-    "acpiWanted": 8,
+    "acpiWanted": 5,
     "machine": {
       "team": 7,
       "omarchy": 18,
-      "linux": 51,
-      "nobody": 10
+      "linux": 54,
+      "nobody": 7
     },
     "byPiece": {
       "deviceTree": {
         "omarchy": 76,
         "fromUpstream": 19,
         "added": 57,
-        "pull": 0,
+        "pull": 3,
         "available": 2,
         "upstream": 19,
         "channels": {
@@ -1478,7 +1478,11 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "hp-omnibook-5-14-he1",
+            "hp-omnibook-x-14-kr0",
+            "hp-omnibook-x-16-cp0"
+          ],
           "available": [
             "asus-ascent-qn10",
             "humain-horizon"
@@ -1489,7 +1493,7 @@
         "omarchy": 68,
         "fromUpstream": 28,
         "added": 40,
-        "pull": 0,
+        "pull": 3,
         "available": 1,
         "upstream": 28,
         "channels": {
@@ -1570,23 +1574,27 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "hp-omnibook-5-14-he1",
+            "hp-omnibook-x-14-kr0",
+            "hp-omnibook-x-16-cp0"
+          ],
           "available": [
             "asus-ascent-qn10"
           ]
         }
       },
       "firmware": {
-        "omarchy": 57,
+        "omarchy": 60,
         "fromUpstream": 1,
-        "added": 56,
+        "added": 59,
         "pull": 0,
-        "available": 6,
+        "available": 3,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 57
+          "edge": 60
         },
         "models": {
           "fromUpstream": [
@@ -1629,8 +1637,11 @@
             "hp-probook-4-g1q",
             "hp-elitebook-6-g2q",
             "hp-elitebook-x-g2q",
+            "hp-omnibook-5-14-he1",
             "hp-omnibook-5-16-bf1",
             "hp-omnibook-ultra-14-kg0",
+            "hp-omnibook-x-14-kr0",
+            "hp-omnibook-x-16-cp0",
             "hp-omnibook-x-14-kr",
             "hp-omnibook-x-16-cp",
             "lenovo-ideacentre-mini-x-01q8x10",
@@ -1653,9 +1664,6 @@
           "pull": [],
           "available": [
             "asus-vivobook-14-x1407qa",
-            "hp-omnibook-5-14-he1",
-            "hp-omnibook-x-14-kr0",
-            "hp-omnibook-x-16-cp0",
             "microsoft-surface-laptop-13in-2nd-edition",
             "microsoft-surface-pro-12in-2nd-edition"
           ]
@@ -1665,7 +1673,7 @@
         "omarchy": 49,
         "fromUpstream": 1,
         "added": 48,
-        "pull": 0,
+        "pull": 3,
         "available": 3,
         "upstream": 1,
         "models": {
@@ -1722,7 +1730,11 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "hp-omnibook-5-14-he1",
+            "hp-omnibook-x-14-kr0",
+            "hp-omnibook-x-16-cp0"
+          ],
           "available": [
             "asus-vivobook-14-x1407qa",
             "microsoft-surface-laptop-13in-2nd-edition",
@@ -8161,32 +8173,42 @@
         "https://www.bruneau.fr/product/pc-portable-hp-omnibook-5-14-he1003nfx-14-oled-copilot-pc-snapdragon-ai-x2-16-go-ram-512-go-ssd-argent/8573172",
         "https://9to5google.com/2026/01/05/hp-unveils-its-new-snapdragon-x2-intel-powered-laptops-and-some-chromebooks-too/"
       ],
-      "notes": "HP builds it on the OmniBook 5 16's mainboard (board 8F47, driver pack sp173974), but its X2P-42-100 is the 6-core Kalambo chip, which the 16's Mahua tree doesn't describe. It needs the 16's board on kalambo.dtsi, which linux-omarchy-dtbs carries since 7.3-20.",
+      "notes": "HP builds it on the OmniBook 5 16's mainboard (board 8F47, driver pack sp173974), but its X2P-42-100 is the 6-core Kalambo chip, which the 16's Mahua tree doesn't describe. Its tree carries the 16's board over onto kalambo.dtsi. The hardware IDs come from Geekbench units.",
       "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "bootable": "pr",
       "reports": [],
-      "machine": "nobody",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+          "number": 2784,
+          "title": "linux-omarchy-dtbs: add the HP OmniBook X 14-kr0, X 16-cp0 and OmniBook 5 14-he1"
+        },
         "ids": null,
-        "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+          "number": 2784,
+          "title": "linux-omarchy-dtbs: add the HP OmniBook X 14-kr0, X 16-cp0 and OmniBook 5 14-he1"
+        },
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-omnibook-5-16-bf1-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
-        "ids": "none",
-        "firmware": "elsewhere"
+        "deviceTree": "pr",
+        "ids": "pr",
+        "firmware": "edge"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-5-14-he1",
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
@@ -8198,17 +8220,28 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/hp-omnibook-5-14-he1"
+        ]
       },
       "variants": [
         {
+          "compatible": "hp,omnibook-5-14-he1xxx",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
           "bootChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+            "number": 2784,
+            "title": "linux-omarchy-dtbs: add the HP OmniBook X 14-kr0, X 16-cp0 and OmniBook 5 14-he1"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+            "number": 2784,
+            "title": "linux-omarchy-dtbs: add the HP OmniBook X 14-kr0, X 16-cp0 and OmniBook 5 14-he1"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
@@ -8441,32 +8474,43 @@
         "https://www.bestbuy.com/product/hp-omnibook-x-14-2k-oled-touchscreen-laptop-snapdragon-x-plus-2025-16gb-memory-512gb-ssd-copilot-pc-meteor-silver/JJGWKY44RC",
         "https://ftp.hp.com/pub/softpaq/sp172501-173000/sp172628.cva"
       ],
-      "notes": "HP builds it on board 8F45 with the OmniBook X 16 16-cp0 (driver pack sp172628), a different mainboard from the 14-fe's. Nobody has published a tree, hardware IDs or ACPI dump for it.",
+      "notes": "HP builds it on board 8F45 with the OmniBook X 16 16-cp0 (driver pack sp172628), a different mainboard from the 14-fe's. Its tables, taken from the BIOS in that driver pack, match the OmniBook 5 14-he0's board, so its tree builds on that one. The hardware IDs come from Geekbench units.",
       "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "bootable": "pr",
       "reports": [],
-      "machine": "nobody",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+          "number": 2784,
+          "title": "linux-omarchy-dtbs: add the HP OmniBook X 14-kr0, X 16-cp0 and OmniBook 5 14-he1"
+        },
         "ids": null,
-        "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+          "number": 2784,
+          "title": "linux-omarchy-dtbs: add the HP OmniBook X 14-kr0, X 16-cp0 and OmniBook 5 14-he1"
+        },
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-omnibook-5-firmware",
+          "hp-omnibook-x16-cp0-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
-        "ids": "none",
-        "firmware": "elsewhere"
+        "deviceTree": "pr",
+        "ids": "pr",
+        "firmware": "edge"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-x-14-kr0",
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
@@ -8478,17 +8522,28 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/hp-omnibook-x-14-kr0"
+        ]
       },
       "variants": [
         {
+          "compatible": "hp,omnibook-x14-kr0",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
           "bootChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+            "number": 2784,
+            "title": "linux-omarchy-dtbs: add the HP OmniBook X 14-kr0, X 16-cp0 and OmniBook 5 14-he1"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+            "number": 2784,
+            "title": "linux-omarchy-dtbs: add the HP OmniBook X 14-kr0, X 16-cp0 and OmniBook 5 14-he1"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],
@@ -8521,32 +8576,43 @@
         "https://www.bestbuy.com/product/hp-omnibook-x-16-2k-oled-touchscreen-laptop-snapdragon-x-plus-2025-16gb-memory-512gb-ssd-copilot-pc-deep-espresso/JJGWKY446Z",
         "https://ftp.hp.com/pub/softpaq/sp172501-173000/sp172628.cva"
       ],
-      "notes": "HP builds it on board 8F45 with the OmniBook X 14 14-kr0 (driver pack sp172628). Every unit seen runs the X1P-42-100. HP's driver pack carries the board's BIOS and DSP firmware, so a tree can be written from its ACPI tables.",
+      "notes": "HP builds it on board 8F45 with the OmniBook X 14 14-kr0 (driver pack sp172628). Every unit seen runs the X1P-42-100. Its tables, taken from the BIOS in that driver pack, match the OmniBook 5 14-he0's board, so its tree builds on that one. The hardware IDs come from Geekbench units.",
       "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "bootable": "pr",
       "reports": [],
-      "machine": "nobody",
+      "machine": "linux",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+          "number": 2784,
+          "title": "linux-omarchy-dtbs: add the HP OmniBook X 14-kr0, X 16-cp0 and OmniBook 5 14-he1"
+        },
         "ids": null,
-        "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+          "number": 2784,
+          "title": "linux-omarchy-dtbs: add the HP OmniBook X 14-kr0, X 16-cp0 and OmniBook 5 14-he1"
+        },
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-omnibook-5-firmware",
+          "hp-omnibook-x16-cp0-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
-        "ids": "none",
-        "firmware": "elsewhere"
+        "deviceTree": "pr",
+        "ids": "pr",
+        "firmware": "edge"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/hp-omnibook-x-16-cp0",
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
@@ -8558,17 +8624,28 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "firmware",
+        "acpiUrls": [
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/hp-omnibook-x-14-kr0"
+        ]
       },
       "variants": [
         {
+          "compatible": "hp,omnibook-x16-cp0",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
           "bootChannel": null,
-          "treePull": null,
-          "idsPull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+            "number": 2784,
+            "title": "linux-omarchy-dtbs: add the HP OmniBook X 14-kr0, X 16-cp0 and OmniBook 5 14-he1"
+          },
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+            "number": 2784,
+            "title": "linux-omarchy-dtbs: add the HP OmniBook X 14-kr0, X 16-cp0 and OmniBook 5 14-he1"
+          },
           "deviceTree": null,
           "firmwareNeeded": [],
           "ids": [],

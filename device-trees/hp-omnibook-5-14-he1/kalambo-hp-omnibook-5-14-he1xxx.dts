@@ -1,0 +1,18 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * HP OmniBook 5 14 (2026, 14-he1xxx), 6-core Snapdragon X2 Plus
+ * X2P-42-100 (Kalambo).
+ *
+ * Board 8F47, BIOS F.06. The board is described in
+ * kalambo-hp-omnibook-5-8f47.dtsi. On the 14-inch \_SB.SPID is 1, which
+ * gives the ELAN0143 touchpad at the 16-bf1's address, and the panel is
+ * the brightness table's other Samsung OLED (KW02, SDC 0x4213).
+ */
+/dts-v1/;
+
+#include "kalambo-hp-omnibook-5-8f47.dtsi"
+
+/ {
+	model = "HP OmniBook 5 Laptop 14-he1xxx";
+	compatible = "hp,omnibook-5-14-he1xxx", "qcom,kalambo";
+};

@@ -1,0 +1,14 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * HP OmniBook X 14 (14-kr0xxx), Snapdragon X Plus X1P-42-100.
+ *
+ * Board 8F45, BIOS F.03. The board is described in
+ * x1p42100-hp-omnibook-x-8f45.dtsi.
+ */
+
+#include "x1p42100-hp-omnibook-x-8f45.dtsi"
+
+/ {
+	model = "HP OmniBook X Laptop 14-kr0xxx";
+	compatible = "hp,omnibook-x14-kr0", "qcom,x1p42100";
+};

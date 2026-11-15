@@ -253,6 +253,16 @@
       "mahua-hp-elitebook-6-g2q.dts"
     ]
   },
+  "hp-omnibook-5-14-he1": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+    "files": [
+      "SOURCE.md",
+      "kalambo-hp-omnibook-5-14-he1xxx.dts",
+      "kalambo-hp-omnibook-5-8f47.dtsi",
+      "kalambo.dtsi"
+    ]
+  },
   "hp-omnibook-5-16-bf1": {
     "state": "out-of-tree",
     "source": "https://github.com/theflyingrahul/linux-hp-omnibook-5-glymur",
@@ -268,6 +278,24 @@
     "files": [
       "series.mbox",
       "glymur-hp-omnibook-ultra-kg0xxx.dts"
+    ]
+  },
+  "hp-omnibook-x-14-kr0": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+    "files": [
+      "SOURCE.md",
+      "x1p42100-hp-omnibook-x14-kr0.dts",
+      "x1p42100-hp-omnibook-x-8f45.dtsi"
+    ]
+  },
+  "hp-omnibook-x-16-cp0": {
+    "state": "out-of-tree",
+    "source": "https://github.com/omacom/omarchy-pkgs/pull/2784",
+    "files": [
+      "SOURCE.md",
+      "x1p42100-hp-omnibook-x16-cp0.dts",
+      "x1p42100-hp-omnibook-x-8f45.dtsi"
     ]
   },
   "hp-omnibook-x-16-cp": {
