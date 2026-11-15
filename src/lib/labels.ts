@@ -20,7 +20,8 @@ const STATES = {
     rc: { label: 'RC', tone: 'good', meaning: `Omarchy's RC channel, the current install image, ships its device tree and hardware IDs, so its install image picks the tree by itself. Not every feature has to work yet.` },
     edge: { label: 'Edge', tone: 'good', meaning: `Omarchy's edge channel, the nightly image, ships its device tree and hardware IDs, so its install image picks the tree by itself. Not every feature has to work yet.` },
     works: { label: 'Yes', tone: 'good', meaning: `An owner booted into the Omarchy desktop, with a device tree or hardware IDs Omarchy doesn't ship yet.` },
-    problems: { label: 'Problems', tone: 'wanted', meaning: `An owner couldn't get to the Omarchy desktop on the current release without a workaround.` },
+    workaround: { label: 'Workaround', tone: 'close', meaning: `An owner reached the Omarchy desktop on the current release with a workaround, such as typing the disk password while the screen is dark. The notes say which.` },
+    problems: { label: 'Problems', tone: 'wanted', meaning: `An owner tried the current release and couldn't get to the Omarchy desktop.` },
     pr: { label: 'After PRs', tone: 'close', meaning: 'Open pull requests on omarchy-pkgs add the device tree or hardware IDs it still lacks.' },
     carry: { label: 'Not carried', tone: 'close', meaning: `Its device tree and hardware IDs exist, in a newer Linux, a posted patch, systemd or sent in here, but Omarchy doesn't carry them yet.` },
     'needs-ids': { label: 'Needs IDs', tone: 'wanted', meaning: `Nobody has sent its hardware IDs yet, so the install image can't pick its device tree by itself.` },
@@ -107,6 +108,7 @@ const STATES = {
   },
   googlebookOmarchy: {
     works: { label: 'Yes', tone: 'good', meaning: 'An owner booted into Omarchy on it. Not every feature has to work yet.' },
+    workaround: { label: 'Workaround', tone: 'close', meaning: 'An owner booted into Omarchy on it with a workaround, which the notes describe.' },
     problems: { label: 'Problems', tone: 'wanted', meaning: `An owner tried it and couldn't get to the Omarchy desktop.` },
     untested: { label: 'Not tested', tone: 'muted', meaning: 'A Linux image starts on it, but nobody has tried Omarchy on it yet.' },
     notyet: { label: 'Not yet', tone: 'wanted', meaning: `Nothing starts on it yet. It needs a device tree and a Linux image for its Android-style bootloader.` },
@@ -130,7 +132,7 @@ const ACPI_GROUP: Group = { column: 'Hardware report', question: `The laptop's o
 // The legend names the channel cells once, as Stable, RC and Edge share a meaning
 const BOOTABLE_LEGEND: State[] = [
   { ...STATES.bootable.edge, meaning: `The most stable Omarchy channel, Stable, RC or Edge, whose install image picks its device tree by itself. Pointing at it says whether an owner has reached the desktop yet. Not every feature has to work yet.` },
-  ...(['works', 'problems', 'pr', 'carry', 'needs-ids', 'needs-deviceTree'] as const).map((key) => STATES.bootable[key] as State),
+  ...(['works', 'workaround', 'problems', 'pr', 'carry', 'needs-ids', 'needs-deviceTree'] as const).map((key) => STATES.bootable[key] as State),
 ];
 const BOOTABLE_GROUP: Group = { column: 'Bootable', question: `Which Omarchy channel boots it, and otherwise what it still needs. Reports from any distro are welcome. Booting needs no firmware, and features like suspend and USB4 come next.`, states: BOOTABLE_LEGEND };
 
@@ -195,7 +197,7 @@ const reportNotes = (reports: { note: string; variant?: string }[]) => reports.m
 export function bootableCell(model: Model): Cell {
   const key = model.bootable as keyof typeof STATES.bootable;
   const meaning = STATES.bootable[key].meaning;
-  const notes = model.outcome === 'works' || model.outcome === 'problems' ? reportNotes(model.reports) : '';
+  const notes = ['works', 'workaround', 'problems'].includes(model.outcome) ? reportNotes(model.reports) : '';
   // A channel says whether an owner has confirmed it
   const confirmed = ['stable', 'rc', 'edge'].includes(key) ? (model.outcome === 'works' ? 'An owner reached the desktop on it.' : 'No owner has confirmed it boots yet.') : '';
   // Each piece it still needs, and the pull request that adds it
@@ -279,7 +281,7 @@ export function acpiCell(model: Model): Cell {
 }
 
 export function googlebookOmarchyCell(model: Model): Cell {
-  const reported = model.reports.some((r) => r.state === 'problems') ? 'problems' : model.reports.some((r) => r.state === 'works') ? 'works' : model.linuxImage === 'boots' ? 'untested' : 'notyet';
+  const reported = model.reports.some((r) => r.state === 'problems') ? 'problems' : model.reports.some((r) => r.state === 'workaround') ? 'workaround' : model.reports.some((r) => r.state === 'works') ? 'works' : model.linuxImage === 'boots' ? 'untested' : 'notyet';
   const meaning = reported === 'notyet' && model.boot === 'depthcharge'
     ? 'Nothing starts on it yet. It needs a Linux image for ChromeOS\'s bootloader.'
     : STATES.googlebookOmarchy[reported].meaning;

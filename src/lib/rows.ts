@@ -13,7 +13,7 @@ export type TableRow = {
   discussion: string | null;
   subtitle: string;
   generation: string;
-  outcome: 'works' | 'should' | 'problems' | 'notyet';
+  outcome: 'works' | 'should' | 'workaround' | 'problems' | 'notyet';
   variants: { text: string; tone: 'good' | 'close' | 'wanted' | 'muted'; state: string }[];
   notes: string | null;
   search: string;
@@ -29,6 +29,7 @@ const announcedTitle = (statusText: string | null) => (statusText ? `${ANNOUNCED
 const VARIANT: Record<string, { tone: TableRow['variants'][number]['tone']; state: string }> = {
   works: { tone: 'good', state: 'yes' },
   should: { tone: 'good', state: 'yes' },
+  workaround: { tone: 'close', state: 'workaround' },
   problems: { tone: 'wanted', state: 'problems' },
   manual: { tone: 'wanted', state: 'needs IDs' },
   notCarried: { tone: 'close', state: 'not carried' },
@@ -48,7 +49,7 @@ const modelRow = (model: Model, cells: Record<string, CellData>): TableRow => ({
   discussion: model.discussion,
   subtitle: [GENERATION[model.generation], year(model.released), model.chips.join(', '), model.modelNumbers.slice(0, 3).join(', ')].filter(Boolean).join(' · '),
   generation: model.generation,
-  outcome: (['works', 'should', 'problems'].includes(model.outcome) ? model.outcome : 'notyet') as TableRow['outcome'],
+  outcome: (['works', 'should', 'workaround', 'problems'].includes(model.outcome) ? model.outcome : 'notyet') as TableRow['outcome'],
   variants: model.variants.length > 1 ? model.variants.map((v) => ({ text: [v.model, v.chip].filter(Boolean).join(' · '), ...variantState(v) })) : [],
   notes: model.notes,
   search: [model.vendor, model.name, ...model.modelNumbers, ...model.chips, ...model.variants.map((v) => `${v.model ?? ''} ${v.chip ?? ''}`)].join(' ').toLowerCase(),

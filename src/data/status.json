@@ -1469,7 +1469,8 @@
     "nvidiaExpected": 16,
     "works": 2,
     "should": 67,
-    "problems": 9,
+    "workaround": 6,
+    "problems": 3,
     "notYet": 8,
     "deviceTree": 82,
     "ids": 59,
@@ -1995,11 +1996,11 @@
         "https://www.pcmag.com/reviews/acer-aspire-16-ai"
       ],
       "notes": "Its Wi-Fi card (1a3b:6580) isn't in linux-firmware's board data. An installed system gets it from Omarchy's ath12k board fallback, but the live image has no Wi-Fi yet.",
-      "outcome": "problems",
-      "bootable": "problems",
+      "outcome": "workaround",
+      "bootable": "workaround",
       "reports": [
         {
-          "state": "problems",
+          "state": "workaround",
           "note": "Installs from the edge channel's image and reaches the desktop, with sound and Wi-Fi working. The screen stays dark at the disk password prompt until the password is typed.",
           "checked": "2026-11"
         }
@@ -2077,10 +2078,10 @@
               "url": "https://github.com/ubuntu/stubble/pull/102"
             }
           ],
-          "outcome": "problems",
+          "outcome": "workaround",
           "reports": [
             {
-              "state": "problems",
+              "state": "workaround",
               "note": "Installs from the edge channel's image and reaches the desktop, with sound and Wi-Fi working. The screen stays dark at the disk password prompt until the password is typed.",
               "checked": "2026-11"
             }
@@ -3775,11 +3776,11 @@
         "https://www.anduril.com/bluechip"
       ],
       "notes": null,
-      "outcome": "problems",
-      "bootable": "problems",
+      "outcome": "workaround",
+      "bootable": "workaround",
       "reports": [
         {
-          "state": "problems",
+          "state": "workaround",
           "note": "Installs from the edge channel's image and reaches the desktop. Battery, Bluetooth and graphics work. The speakers and microphones don't work yet. The screen stayed dark at the disk password prompt until the password was typed. The fix for that, loading the USB-C display drivers before the disk is unlocked, is on edge and not yet checked on this laptop.",
           "checked": "2026-11"
         }
@@ -3841,10 +3842,10 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "problems",
+          "outcome": "workaround",
           "reports": [
             {
-              "state": "problems",
+              "state": "workaround",
               "note": "Installs from the edge channel's image and reaches the desktop. Battery, Bluetooth and graphics work. The speakers and microphones don't work yet. The screen stayed dark at the disk password prompt until the password was typed. The fix for that, loading the USB-C display drivers before the disk is unlocked, is on edge and not yet checked on this laptop.",
               "checked": "2026-11"
             }
@@ -8701,11 +8702,11 @@
         "https://www.tomshardware.com/laptops/hp-omnibook-ultra-14-snapdragon-x2-elite-2026-review"
       ],
       "notes": "Its tree is for the 18-core X2E-90-100. The X2E-84-100 and X2P-64-100 units have Mahua chips, which need a tree on mahua.dtsi.",
-      "outcome": "problems",
-      "bootable": "problems",
+      "outcome": "workaround",
+      "bootable": "workaround",
       "reports": [
         {
-          "state": "problems",
+          "state": "workaround",
           "note": "Installs from the edge channel's nightly image and reaches the desktop, but the screen stayed dark at the disk password prompt. The fix for that, loading the USB-C display drivers before the disk is unlocked, is on edge and not yet checked on this laptop.",
           "checked": "2026-11"
         }
@@ -8774,10 +8775,10 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "problems",
+          "outcome": "workaround",
           "reports": [
             {
-              "state": "problems",
+              "state": "workaround",
               "note": "Installs from the edge channel's nightly image and reaches the desktop, but the screen stayed dark at the disk password prompt. The fix for that, loading the USB-C display drivers before the disk is unlocked, is on edge and not yet checked on this laptop.",
               "checked": "2026-11"
             }
@@ -9604,11 +9605,11 @@
         "https://www.windowscentral.com/hardware/lenovo/lenovo-ideacentre-mini-x-review"
       ],
       "notes": "Jens Glathe's posted series splits the tree and adds the X1-26-100 (Purwa) model, which he runs on Ubuntu 26.10 and can test. systemd has the Purwa model's hardware IDs. The Purwa model needs its own GPU and DSP firmware, under qcom/x1p42100/LENOVO/91B6.",
-      "outcome": "problems",
-      "bootable": "problems",
+      "outcome": "workaround",
+      "bootable": "workaround",
       "reports": [
         {
-          "state": "problems",
+          "state": "workaround",
           "variant": "Snapdragon X",
           "note": "Installs from the edge channel's image and reaches the desktop on linux-omarchy 7.3, with the Adreno X1-45 driving an external display. The screen stays dark at the disk password prompt until the password is typed. Its owner confirmed the fix for that, loading the display drivers before the disk is unlocked, which isn't on edge yet. A Lenovo 40B0 dock's displays, sound and video work on linux-omarchy 7.3-59 once the audio DSP is started by hand. Omarchy keeps it off on this install because the root disk is on USB.",
           "checked": "2026-11"
@@ -9728,10 +9729,10 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/purwa-lenovo-ideacentre-mini-01q8x10.json"
             }
           ],
-          "outcome": "problems",
+          "outcome": "workaround",
           "reports": [
             {
-              "state": "problems",
+              "state": "workaround",
               "variant": "Snapdragon X",
               "note": "Installs from the edge channel's image and reaches the desktop on linux-omarchy 7.3, with the Adreno X1-45 driving an external display. The screen stays dark at the disk password prompt until the password is typed. Its owner confirmed the fix for that, loading the display drivers before the disk is unlocked, which isn't on edge yet. A Lenovo 40B0 dock's displays, sound and video work on linux-omarchy 7.3-59 once the audio DSP is started by hand. Omarchy keeps it off on this install because the root disk is on USB.",
               "checked": "2026-11"
@@ -12003,11 +12004,11 @@
         "https://galaxus.it/en/s1/product/microsoft-surface-laptop-copilot-pc-7-edition-1380-snapdragon-x-elite-x1e-80-100-16-gb-1000-gb-de-no-45967365"
       ],
       "notes": null,
-      "outcome": "problems",
-      "bootable": "problems",
+      "outcome": "workaround",
+      "bootable": "workaround",
       "reports": [
         {
-          "state": "problems",
+          "state": "workaround",
           "note": "The screen stays dark after install; the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.",
           "checked": "2026-10"
         }
@@ -12094,10 +12095,10 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-microsoft-romulus13.json"
             }
           ],
-          "outcome": "problems",
+          "outcome": "workaround",
           "reports": [
             {
-              "state": "problems",
+              "state": "workaround",
               "note": "The screen stays dark after install; the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.",
               "checked": "2026-10"
             }
@@ -12129,11 +12130,11 @@
         "https://galaxus.it/en/s1/product/microsoft-surface-laptop-copilot-pc-7-edition-15-snapdragon-x-elite-x1e-80-100-16-gb-256-gb-de-noteb-45967360"
       ],
       "notes": null,
-      "outcome": "problems",
-      "bootable": "problems",
+      "outcome": "workaround",
+      "bootable": "workaround",
       "reports": [
         {
-          "state": "problems",
+          "state": "workaround",
           "note": "Installed from the edge nightly and used daily since 14 November (omacom/omarchy#18966). On a stock install the disk unlock prompt is black and the built-in keyboard is dead there, Wi-Fi only works after the first update, the touchpad is a one-finger mouse, Wi-Fi and Bluetooth have no fixed address (Bluetooth doesn't work), the touchscreen, camera and video decode are missing, and suspend wakes by itself. The Surface Pro 11's unlock and address fixes, iptsd and three device tree additions make all but suspend work. The touchpad's physical click still fails under iptsd.",
           "checked": "2026-11"
         }
@@ -12220,10 +12221,10 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-microsoft-romulus15.json"
             }
           ],
-          "outcome": "problems",
+          "outcome": "workaround",
           "reports": [
             {
-              "state": "problems",
+              "state": "workaround",
               "note": "Installed from the edge nightly and used daily since 14 November (omacom/omarchy#18966). On a stock install the disk unlock prompt is black and the built-in keyboard is dead there, Wi-Fi only works after the first update, the touchpad is a one-finger mouse, Wi-Fi and Bluetooth have no fixed address (Bluetooth doesn't work), the touchscreen, camera and video decode are missing, and suspend wakes by itself. The Surface Pro 11's unlock and address fixes, iptsd and three device tree additions make all but suspend work. The touchpad's physical click still fails under iptsd.",
               "checked": "2026-11"
             }

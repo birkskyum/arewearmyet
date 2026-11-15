@@ -36,7 +36,7 @@ type Model = {
   notes?: string;
   reports?: Report[];
 };
-type Report = { state: 'works' | 'problems'; variant?: string; note: string; checked?: string };
+type Report = { state: 'works' | 'workaround' | 'problems'; variant?: string; note: string; checked?: string };
 
 const sources = JSON.parse(readFileSync('data/sources.json', 'utf8'));
 const list = parse(readFileSync('data/models.yaml', 'utf8'));
@@ -178,12 +178,13 @@ function variantStatus(variant: Variant) {
 }
 
 // What an owner saw outranks what the pieces predict; a model shows its best variant
-const OUTCOMES = ['works', 'should', 'problems', 'manual', 'notCarried', 'none'] as const;
+const OUTCOMES = ['works', 'should', 'workaround', 'problems', 'manual', 'notCarried', 'none'] as const;
 type Outcome = (typeof OUTCOMES)[number];
 const best = (values: Outcome[]) => [...values].sort((a, b) => OUTCOMES.indexOf(a) - OUTCOMES.indexOf(b))[0];
 
 function outcome(computed: string, reports: Report[]): Outcome {
   if (reports.some((r) => r.state === 'problems')) return 'problems';
+  if (reports.some((r) => r.state === 'workaround')) return 'workaround';
   if (reports.some((r) => r.state === 'works')) return 'works';
   return computed as Outcome;
 }
@@ -307,6 +308,7 @@ const acpiDumps: { folder: string; url: string }[] = sources.acpiDumps;
 type Piece = Channel | 'pr' | 'elsewhere' | 'none';
 function bootable(outcome: Outcome, channel: Channel | null, pieces: Record<'deviceTree' | 'ids', Piece>) {
   if (outcome === 'problems') return 'problems';
+  if (outcome === 'workaround') return 'workaround';
   if (channel) return channel;
   if (outcome === 'works') return 'works';
   const values = [pieces.deviceTree, pieces.ids];
@@ -451,6 +453,7 @@ const summary = {
   nvidiaExpected: count(nvidia, (m) => m.omarchy === 'expected'),
   works: count(current, (r) => r.outcome === 'works'),
   should: count(current, (r) => r.outcome === 'should'),
+  workaround: count(current, (r) => r.outcome === 'workaround'),
   problems: count(current, (r) => r.outcome === 'problems'),
   notYet: count(current, (r) => ['manual', 'notCarried', 'none'].includes(r.outcome)),
   // What we have to run each model, wherever it is: a device tree in Linux or out of tree, hardware IDs
