@@ -68,6 +68,7 @@ RECIPES = {
     "acer-swift-14-go-pro-ai-firmware": ("Acer Swift 14 Go Pro AI", ["qcom/x1e80100/ACER/SFA14-11"]),
     "acer-aspire-14-ai-firmware": ("Acer Aspire 14 AI", ["qcom/x1p42100/ACER/A14-11M"]),
     "acer-aspire-16-ai-firmware": ("Acer Aspire 16 AI", ["qcom/x1p42100/ACER/A16-11M"]),
+    "acer-aspire-lite-14-ai-firmware": ("Acer Aspire Lite 14 AI", ["qcom/x1p42100/ACER/AL14-11M"]),
     "acer-swift-14-ai-firmware": ("Acer Swift 14 AI", ["qcom/x1e80100/ACER/SF14-11"]),
     "acer-swift-go-14-firmware": ("Acer Swift Go 14", ["qcom/x1e80100/ACER/SFG14-01"]),
     "acer-swift-spin-14-ai-firmware": ("Acer Swift Spin 14 AI", ["qcom/glymur/ACER/SFSP14-Q51T"]),

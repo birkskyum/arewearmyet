@@ -1648,7 +1648,7 @@
     "notYet": 8,
     "deviceTree": 83,
     "ids": 59,
-    "firmware": 72,
+    "firmware": 73,
     "googlebooks": 2,
     "chromebooks": 10,
     "acpi": 46,
@@ -1872,7 +1872,7 @@
         "fromUpstream": 1,
         "added": 71,
         "pull": 0,
-        "available": 0,
+        "available": 1,
         "upstream": 1,
         "channels": {
           "stable": 1,
@@ -1957,7 +1957,9 @@
             "samsung-galaxy-book5-edge-5g"
           ],
           "pull": [],
-          "available": []
+          "available": [
+            "acer-aspire-lite-14-ai-al14-11m"
+          ]
         }
       },
       "all": {
@@ -2538,13 +2540,15 @@
         "AL14-11M"
       ],
       "chips": [
-        "X1-26-101"
+        "X1-26-100"
       ],
       "status": null,
       "sources": [
-        "https://www.notebookcheck.net/New-lightweight-laptop-launches-with-14-inch-display-and-Qualcomm-Snapdragon-X-Plus-chipset.1413302.0.html"
+        "https://www.notebookcheck.net/New-lightweight-laptop-launches-with-14-inch-display-and-Qualcomm-Snapdragon-X-Plus-chipset.1413302.0.html",
+        "https://www.acer.com/us-en/support/product-support/AL14-11M",
+        "https://browser.geekbench.com/v7/cpu/758268"
       ],
-      "notes": null,
+      "notes": "Windows names it Acer Aspire AL14-11M on a board of the same name (Geekbench), where the Aspire 14 AI reports the ODM board SX1 Tiguan_SX1, so it needs a tree of its own, written from its ACPI tables. Acer offers no BIOS download to take them from and doesn't publish its Snapdragon drivers on Windows Update, so neither the tables nor the hardware IDs can be confirmed without an owner. Acer's Qualcomm pack for it has the Aspire 14 AI's audio and compute DSP setup, but its own battery settings (4.40 V float voltage, where the Aspire 14 AI's is 4.48 V), so it can't run on the Aspire 14 AI's firmware either. Both Geekbench units run the X1-26-100.",
       "outcome": "none",
       "bootable": "needs-deviceTree",
       "reports": [],
@@ -2554,7 +2558,7 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -2562,7 +2566,7 @@
       "pieces": {
         "deviceTree": "none",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "missing",
@@ -2573,10 +2577,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x1p42100-ACER-AL14-11M",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
