@@ -16,7 +16,8 @@ const SYSTEMD_RELEASES = ['v257', 'v258', 'v259', 'v260', 'v261', 'v262'];
 // Snapdragon X, X2 and 8cx Gen 3, the 7c Chromebooks, and the older Windows laptops' trees
 const DT_PATTERN = /^(x1|hamoa|purwa|glymur|mahua|kalambo|sc8280xp|sc7180-trogdor|sc7180-(acer|ecs|samsung|lenovo|tcl|apcsilmic)|sc8180x-(lenovo|microsoft|samsung)|sc8180xp-(dell|acer|lenovo|samsung|xiaomi)|sc7280-samsung|sdm850|msm8998-(asus|hp|lenovo)).*\.dts$/;
 const DT_DIR = 'arch/arm64/boot/dts/qcom';
-const FIRMWARE_SOCS = ['x1e80100', 'x1p42100', 'x126100', 'glymur', 'kalambo', 'sc8280xp', 'sc8180x', 'sc8180xp', 'sc7180', 'sc7180-trogdor', 'sdm850', 'msm8998'];
+// samsung is the Galaxy Book S's folder (qcom/samsung/w767), which its tree has always named
+const FIRMWARE_SOCS = ['x1e80100', 'x1p42100', 'x126100', 'glymur', 'kalambo', 'sc8280xp', 'sc8180x', 'sc8180xp', 'sc7180', 'sc7180-trogdor', 'sc7280', 'sdm850', 'msm8998', 'samsung'];
 // Omarchy's package channels: its own repository carries the kernel and the makers' firmware
 // packages, its Arch Linux ARM mirror carries systemd, whose hardware ID list decides which device
 // tree boots, and linux-firmware. Their files databases list what each package installs.
@@ -99,13 +100,16 @@ function parseDts(source: string): { model?: string; compatible: string[] } {
 }
 
 // The vendor-specific firmware a device tree loads, from its firmware-name lines and those of
-// the .dtsi files it includes from the same folder
-function dtFirmware(dir: string, file: string, seen = new Set<string>()): string[] {
-  if (seen.has(file) || !existsSync(join(dir, file))) return [];
+// the files it includes from the same folder, a .dtsi or another board's .dts
+// A tree an Omarchy patch adds can include one from Linux, so the folders are searched in order.
+function dtFirmware(dir: string | string[], file: string, seen = new Set<string>()): string[] {
+  const dirs = Array.isArray(dir) ? dir : [dir];
+  const found = dirs.find((d) => existsSync(join(d, file)));
+  if (seen.has(file) || !found) return [];
   seen.add(file);
-  const source = readFileSync(join(dir, file), 'utf8');
+  const source = readFileSync(join(found, file), 'utf8');
   const names = [...source.matchAll(/firmware-name\s*=\s*([^;]+);/g)].flatMap((m) => [...m[1].matchAll(/"([^"]+)"/g)].map((n) => n[1]));
-  const included = [...source.matchAll(/^#include "([^"]+\.dtsi)"/gm)].flatMap((m) => dtFirmware(dir, m[1], seen));
+  const included = [...source.matchAll(/^#include "([^"]+\.dtsi?)"/gm)].flatMap((m) => dtFirmware(dirs, m[1], seen));
   return [...new Set([...names, ...included])].filter((name) => name.startsWith('qcom/') && name.split('/').length >= 4);
 }
 
@@ -321,7 +325,8 @@ function omarchyKernelRecipe() {
       }
     }
   }
-  for (const dt of added) dt.firmware = dtFirmware(join(replay, 'arch/arm64/boot/dts/qcom'), dt.file);
+  const linuxTrees = join(tmpdir(), 'arewearmyet-linux-next', DT_DIR);
+  for (const dt of added) dt.firmware = dtFirmware([join(replay, 'arch/arm64/boot/dts/qcom'), linuxTrees], dt.file);
   rmSync(replay, { recursive: true, force: true });
   const ids = [OMARCHY_KERNEL_RECIPE, OMARCHY_TREES_RECIPE].filter((folder) => existsSync(join(dir, folder))).flatMap((folder) =>
     readdirSync(join(dir, folder)).filter((name) => name.endsWith('.json')).map((file) => {

@@ -690,7 +690,7 @@ models:
     acpi: ["dell-latitude-5455"]
     devicetree_out_of_tree: "https://github.com/ubuntu/stubble/blob/main/hwids/txt/x1p64100-dell-latitude-5455.txt"
     devicetree_files:
-      - "https://raw.githubusercontent.com/3thanRam/DELL-Latitude-5455-Ubuntu/main/x1p64100-dell-latitude-5455.dts"
+      - "https://raw.githubusercontent.com/3thanRam/DELL-Latitude-5455-Ubuntu/main/dts/x1p64100-dell-latitude-5455.dts"
     sources:
       - https://www.delltechnologies.com/asset/en-us/products/laptops-and-2-in-1s/technical-support/latitude-5455-spec-sheet.pdf
       - https://www.notebookcheck.net/Dell-Latitude-5455-arrives-later-this-month-in-Snapdragon-X-Plus-X1P-64-100-and-X1P-42-100-options.883656.0.html

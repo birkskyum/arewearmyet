@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-16T14:33:14.815Z",
+  "collected": "2026-11-16T18:33:13.846Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -1575,6 +1575,21 @@
             "qcom/sc7180/Samsung/galaxy-book-go/qcvss7180.mbn",
             "qcom/sc7180/Samsung/galaxy-book-go/wlanmdsp.mbn"
           ],
+          "samsung-galaxy-book-s-firmware": [
+            "qcom/samsung/w767/qcadsp8180.mbn",
+            "qcom/samsung/w767/qccdsp8180.mbn",
+            "qcom/samsung/w767/qcdxkmsuc8180.mbn",
+            "qcom/samsung/w767/qcmpss8180_XEF.mbn"
+          ],
+          "samsung-galaxy-book2-go-firmware": [
+            "qcom/sc7280/Samsung/galaxy-book2-go/ipa_fws.elf",
+            "qcom/sc7280/Samsung/galaxy-book2-go/qcadsp7280.mbn",
+            "qcom/sc7280/Samsung/galaxy-book2-go/qccdsp7280.mbn",
+            "qcom/sc7280/Samsung/galaxy-book2-go/qcdxkmsuc7280.mbn",
+            "qcom/sc7280/Samsung/galaxy-book2-go/qcmpss7280.mbn",
+            "qcom/sc7280/Samsung/galaxy-book2-go/qcvss7280.mbn",
+            "qcom/sc7280/Samsung/galaxy-book2-go/wpss.mbn"
+          ],
           "samsung-galaxy-book2-w737-firmware": [
             "qcom/sdm850/samsung/w737/ipa_fws.elf",
             "qcom/sdm850/samsung/w737/qcadsp850.mbn",
@@ -2115,16 +2130,16 @@
         }
       },
       "firmware": {
-        "omarchy": 16,
+        "omarchy": 19,
         "fromUpstream": 1,
-        "added": 15,
+        "added": 18,
         "pull": 1,
-        "available": 3,
+        "available": 0,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 16
+          "edge": 19
         },
         "models": {
           "fromUpstream": [
@@ -2135,6 +2150,7 @@
             "microsoft-surface-pro-9-5g",
             "microsoft-windows-dev-kit-2023",
             "acer-spin-7-sp714-61na",
+            "gateway-gwtn133-1",
             "huawei-matebook-e-2019",
             "lenovo-10w",
             "lenovo-flex-5g",
@@ -2143,26 +2159,24 @@
             "lenovo-yoga-c630",
             "microsoft-surface-pro-x",
             "samsung-galaxy-book2-w737",
+            "samsung-galaxy-book2-go",
             "samsung-galaxy-book-go",
             "samsung-galaxy-book-go-5g",
+            "samsung-galaxy-book-s",
             "xiaomi-book-s"
           ],
           "pull": [
             "dell-inspiron-14-3420-snapdragon"
           ],
-          "available": [
-            "gateway-gwtn133-1",
-            "samsung-galaxy-book2-go",
-            "samsung-galaxy-book-s"
-          ]
+          "available": []
         }
       },
       "all": {
-        "omarchy": 16,
+        "omarchy": 19,
         "fromUpstream": 1,
-        "added": 15,
+        "added": 18,
         "pull": 1,
-        "available": 3,
+        "available": 0,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -2173,6 +2187,7 @@
             "microsoft-surface-pro-9-5g",
             "microsoft-windows-dev-kit-2023",
             "acer-spin-7-sp714-61na",
+            "gateway-gwtn133-1",
             "huawei-matebook-e-2019",
             "lenovo-10w",
             "lenovo-flex-5g",
@@ -2181,18 +2196,16 @@
             "lenovo-yoga-c630",
             "microsoft-surface-pro-x",
             "samsung-galaxy-book2-w737",
+            "samsung-galaxy-book2-go",
             "samsung-galaxy-book-go",
             "samsung-galaxy-book-go-5g",
+            "samsung-galaxy-book-s",
             "xiaomi-book-s"
           ],
           "pull": [
             "dell-inspiron-14-3420-snapdragon"
           ],
-          "available": [
-            "gateway-gwtn133-1",
-            "samsung-galaxy-book2-go",
-            "samsung-galaxy-book-s"
-          ]
+          "available": []
         }
       }
     }
@@ -2683,7 +2696,10 @@
             "upstream": true,
             "patch": null
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "notCarried",
@@ -2705,6 +2721,8 @@
             "patch": null
           },
           "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
             "qcom/sc7180-trogdor/modem/mba.mbn",
             "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
           ],
@@ -3252,7 +3270,12 @@
             "upstream": true,
             "patch": null
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+            "qcom/sc7180-trogdor/modem/mba.mbn",
+            "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "notCarried",
@@ -3600,6 +3623,8 @@
             "patch": null
           },
           "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
             "qcom/sc7180-trogdor/modem/mba.mbn",
             "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
           ],
@@ -4991,7 +5016,9 @@
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
-          "asus-vivobook-s14-s5408qa-firmware"
+          "asus-vivobook-s14-s5408qa-firmware",
+          "asus-zenbook-14-ux3480qa-firmware",
+          "asus-zenbook-a14-firmware"
         ],
         "firmwarePull": null
       },
@@ -5044,7 +5071,18 @@
             "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/qcadsp8380.mbn",
             "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/adsp_dtbs.elf",
             "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/qccdsp8380.mbn",
-            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/cdsp_dtbs.elf"
+            "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/cdsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcvss8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf"
           ],
           "ids": [],
           "stubble": [],
@@ -5087,7 +5125,9 @@
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
-          "asus-vivobook-s14-flip-firmware"
+          "asus-vivobook-s14-flip-firmware",
+          "asus-zenbook-14-ux3480qa-firmware",
+          "asus-zenbook-a14-firmware"
         ],
         "firmwarePull": null
       },
@@ -5140,7 +5180,18 @@
             "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/qcadsp8380.mbn",
             "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/adsp_dtbs.elf",
             "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/qccdsp8380.mbn",
-            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/cdsp_dtbs.elf"
+            "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/cdsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcvss8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf"
           ],
           "ids": [],
           "stubble": [],
@@ -5324,7 +5375,9 @@
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
-          "asus-vivobook-s16-s5608qa-firmware"
+          "asus-vivobook-s16-s5608qa-firmware",
+          "asus-zenbook-14-ux3480qa-firmware",
+          "asus-zenbook-a14-firmware"
         ],
         "firmwarePull": null
       },
@@ -5377,7 +5430,18 @@
             "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/qcadsp8380.mbn",
             "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/adsp_dtbs.elf",
             "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/qccdsp8380.mbn",
-            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/cdsp_dtbs.elf"
+            "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/cdsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcvss8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf"
           ],
           "ids": [],
           "stubble": [],
@@ -5420,7 +5484,9 @@
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
-          "asus-vivobook-s16-flip-firmware"
+          "asus-vivobook-s16-flip-firmware",
+          "asus-zenbook-14-ux3480qa-firmware",
+          "asus-zenbook-a14-firmware"
         ],
         "firmwarePull": null
       },
@@ -5473,7 +5539,18 @@
             "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/qcadsp8380.mbn",
             "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/adsp_dtbs.elf",
             "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/qccdsp8380.mbn",
-            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/cdsp_dtbs.elf"
+            "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/cdsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcvss8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf"
           ],
           "ids": [],
           "stubble": [],
@@ -5523,7 +5600,8 @@
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
-          "asus-zenbook-14-ux3480qa-firmware"
+          "asus-zenbook-14-ux3480qa-firmware",
+          "asus-zenbook-a14-firmware"
         ],
         "firmwarePull": null
       },
@@ -5578,7 +5656,12 @@
             "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcadsp8380.mbn",
             "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf",
             "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qccdsp8380.mbn",
-            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf"
+            "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+            "qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf"
           ],
           "ids": [],
           "stubble": [
@@ -7250,6 +7333,8 @@
             "patch": null
           },
           "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
             "qcom/sc7180-trogdor/modem/mba.mbn",
             "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
           ],
@@ -7298,6 +7383,8 @@
             "patch": null
           },
           "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
             "qcom/sc7180-trogdor/modem/mba.mbn",
             "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
           ],
@@ -7346,6 +7433,8 @@
             "patch": null
           },
           "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
             "qcom/sc7180-trogdor/modem/mba.mbn",
             "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
           ],
@@ -9160,6 +9249,7 @@
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
+          "hp-omnibook-5-firmware",
           "hp-omnibook-x16-cp0-firmware"
         ],
         "firmwarePull": null
@@ -9212,7 +9302,12 @@
             "qcom/x1p42100/hp/omnibook-x16-cp0/qcadsp8380.mbn",
             "qcom/x1p42100/hp/omnibook-x16-cp0/adsp_dtbs.elf",
             "qcom/x1p42100/hp/omnibook-x16-cp0/qccdsp8380.mbn",
-            "qcom/x1p42100/hp/omnibook-x16-cp0/cdsp_dtbs.elf"
+            "qcom/x1p42100/hp/omnibook-x16-cp0/cdsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-5/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/hp/omnibook-5/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-5/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-5/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-5/cdsp_dtbs.elf"
           ],
           "ids": [],
           "stubble": [],
@@ -9257,6 +9352,7 @@
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
+          "hp-omnibook-5-firmware",
           "hp-omnibook-x16-cp0-firmware"
         ],
         "firmwarePull": null
@@ -9309,7 +9405,12 @@
             "qcom/x1p42100/hp/omnibook-x16-cp0/qcadsp8380.mbn",
             "qcom/x1p42100/hp/omnibook-x16-cp0/adsp_dtbs.elf",
             "qcom/x1p42100/hp/omnibook-x16-cp0/qccdsp8380.mbn",
-            "qcom/x1p42100/hp/omnibook-x16-cp0/cdsp_dtbs.elf"
+            "qcom/x1p42100/hp/omnibook-x16-cp0/cdsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-5/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/hp/omnibook-5/qcadsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-5/adsp_dtbs.elf",
+            "qcom/x1p42100/hp/omnibook-5/qccdsp8380.mbn",
+            "qcom/x1p42100/hp/omnibook-5/cdsp_dtbs.elf"
           ],
           "ids": [],
           "stubble": [],
@@ -9655,6 +9756,8 @@
             "patch": null
           },
           "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
             "qcom/sc7180-trogdor/modem/mba.mbn",
             "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
           ],
@@ -9679,6 +9782,8 @@
             "patch": null
           },
           "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
             "qcom/sc7180-trogdor/modem/mba.mbn",
             "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
           ],
@@ -9727,6 +9832,8 @@
             "patch": null
           },
           "firmwareNeeded": [
+            "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+            "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
             "qcom/sc7180-trogdor/modem/mba.mbn",
             "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
           ],
@@ -13230,7 +13337,12 @@
             "upstream": false,
             "patch": "linux-omarchy-aarch64/2764-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8-15-inch.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/glymur/microsoft/mahua/qcadsp8480.mbn",
+            "qcom/glymur/microsoft/mahua/adsp_dtbs.elf",
+            "qcom/glymur/microsoft/mahua/qccdsp8480.mbn",
+            "qcom/glymur/microsoft/mahua/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -15516,15 +15628,17 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "huawei-matebook-e-2019-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
         "deviceTree": "edge",
         "ids": "edge",
-        "firmware": "elsewhere"
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -15564,7 +15678,16 @@
             "upstream": false,
             "patch": "linux-omarchy-dtbs/0044-arm64-dts-qcom-Add-the-Gateway-GWTN133-1.patch"
           },
-          "firmwareNeeded": [],
+          "firmwareNeeded": [
+            "qcom/sdm850/HUAWEI/AL09/qcadsp850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qccdsp850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcdxkmsuc850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/ipa_fws.elf",
+            "qcom/sdm850/HUAWEI/AL09/qcdsp1v2850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcdsp2850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcslpi850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcvss850.mbn"
+          ],
           "ids": [],
           "stubble": [],
           "outcome": "should",
@@ -16652,15 +16775,17 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "samsung-galaxy-book2-go-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
         "deviceTree": "edge",
         "ids": "edge",
-        "firmware": "elsewhere"
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -16937,15 +17062,17 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "samsung-galaxy-book-s-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
         "deviceTree": "edge",
         "ids": "edge",
-        "firmware": "elsewhere"
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "out-of-tree",

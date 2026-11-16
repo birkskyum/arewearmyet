@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-16T14:33:14.815Z",
+  "collected": "2026-11-16T18:33:13.846Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -347,6 +347,8 @@
         "qcom,sc7180"
       ],
       "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
         "qcom/sc7180-trogdor/modem/mba.mbn",
         "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
       ]
@@ -390,6 +392,8 @@
         "qcom,sc7180"
       ],
       "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
         "qcom/sc7180-trogdor/modem/mba.mbn",
         "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
       ]
@@ -507,7 +511,12 @@
         "google,lazor-rev4-sku5",
         "qcom,sc7180"
       ],
-      "firmware": []
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
+        "qcom/sc7180-trogdor/modem/mba.mbn",
+        "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
+      ]
     },
     {
       "file": "sc7180-trogdor-lazor-limozeen-nots-r5.dts",
@@ -631,7 +640,10 @@
         "google,lazor-rev2-sku2",
         "qcom,sc7180"
       ],
-      "firmware": []
+      "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn"
+      ]
     },
     {
       "file": "sc7180-trogdor-lazor-r1-lte.dts",
@@ -644,6 +656,8 @@
         "qcom,sc7180"
       ],
       "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
         "qcom/sc7180-trogdor/modem/mba.mbn",
         "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
       ]
@@ -943,6 +957,8 @@
         "qcom,sc7180"
       ],
       "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
         "qcom/sc7180-trogdor/modem/mba.mbn",
         "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
       ]
@@ -971,6 +987,8 @@
         "qcom,sc7180"
       ],
       "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
         "qcom/sc7180-trogdor/modem/mba.mbn",
         "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
       ]
@@ -999,6 +1017,8 @@
         "qcom,sc7180"
       ],
       "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
         "qcom/sc7180-trogdor/modem/mba.mbn",
         "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
       ]
@@ -1027,6 +1047,8 @@
         "qcom,sc7180"
       ],
       "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
         "qcom/sc7180-trogdor/modem/mba.mbn",
         "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
       ]
@@ -1055,6 +1077,8 @@
         "qcom,sc7180"
       ],
       "firmware": [
+        "qcom/sc7180-trogdor/modem-nolte/mba.mbn",
+        "qcom/sc7180-trogdor/modem-nolte/qdsp6sw.mbn",
         "qcom/sc7180-trogdor/modem/mba.mbn",
         "qcom/sc7180-trogdor/modem/qdsp6sw.mbn"
       ]
@@ -7087,6 +7111,21 @@
             "qcom/sc7180/Samsung/galaxy-book-go/qcvss7180.mbn",
             "qcom/sc7180/Samsung/galaxy-book-go/wlanmdsp.mbn"
           ],
+          "samsung-galaxy-book-s-firmware": [
+            "qcom/samsung/w767/qcadsp8180.mbn",
+            "qcom/samsung/w767/qccdsp8180.mbn",
+            "qcom/samsung/w767/qcdxkmsuc8180.mbn",
+            "qcom/samsung/w767/qcmpss8180_XEF.mbn"
+          ],
+          "samsung-galaxy-book2-go-firmware": [
+            "qcom/sc7280/Samsung/galaxy-book2-go/ipa_fws.elf",
+            "qcom/sc7280/Samsung/galaxy-book2-go/qcadsp7280.mbn",
+            "qcom/sc7280/Samsung/galaxy-book2-go/qccdsp7280.mbn",
+            "qcom/sc7280/Samsung/galaxy-book2-go/qcdxkmsuc7280.mbn",
+            "qcom/sc7280/Samsung/galaxy-book2-go/qcmpss7280.mbn",
+            "qcom/sc7280/Samsung/galaxy-book2-go/qcvss7280.mbn",
+            "qcom/sc7280/Samsung/galaxy-book2-go/wpss.mbn"
+          ],
           "samsung-galaxy-book2-w737-firmware": [
             "qcom/sdm850/samsung/w737/ipa_fws.elf",
             "qcom/sdm850/samsung/w737/qcadsp850.mbn",
@@ -7641,7 +7680,12 @@
           "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcadsp8380.mbn",
           "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf",
           "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qccdsp8380.mbn",
-          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf"
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf"
         ]
       },
       {
@@ -7652,7 +7696,16 @@
           "qcom,mahua"
         ],
         "patch": "linux-omarchy-aarch64/2764-arm64-dts-qcom-Add-the-Microsoft-Surface-Laptop-8-15-inch.patch",
-        "firmware": []
+        "firmware": [
+          "qcom/glymur/microsoft/mahua/qcadsp8480.mbn",
+          "qcom/glymur/microsoft/mahua/adsp_dtbs.elf",
+          "qcom/glymur/microsoft/mahua/qccdsp8480.mbn",
+          "qcom/glymur/microsoft/mahua/cdsp_dtbs.elf",
+          "qcom/glymur/microsoft/surface-laptop8/soccp.mbn",
+          "qcom/glymur/microsoft/surface-laptop8/soccp_dtb.mbn",
+          "qcom/glymur/surface-laptop8/usb4-router-legacy.bin",
+          "qcom/glymur/surface-laptop8/usb4-router-v2.bin"
+        ]
       },
       {
         "file": "x1p42100-microsoft-surface-laptop-13.dts",
@@ -7851,7 +7904,18 @@
           "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/qcadsp8380.mbn",
           "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/adsp_dtbs.elf",
           "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/qccdsp8380.mbn",
-          "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/cdsp_dtbs.elf"
+          "qcom/x126100/ASUSTeK/vivobook-s14-flip-tp5408qa/cdsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcvss8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcdxkmsucpurwa.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcadsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qccdsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf"
         ]
       },
       {
@@ -7869,7 +7933,18 @@
           "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/qcadsp8380.mbn",
           "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/adsp_dtbs.elf",
           "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/qccdsp8380.mbn",
-          "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/cdsp_dtbs.elf"
+          "qcom/x126100/ASUSTeK/vivobook-s14-s5408qa/cdsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcvss8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcdxkmsucpurwa.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcadsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qccdsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf"
         ]
       },
       {
@@ -7887,7 +7962,18 @@
           "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/qcadsp8380.mbn",
           "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/adsp_dtbs.elf",
           "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/qccdsp8380.mbn",
-          "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/cdsp_dtbs.elf"
+          "qcom/x126100/ASUSTeK/vivobook-s16-flip-tp5608qa/cdsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcvss8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcdxkmsucpurwa.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcadsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qccdsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf"
         ]
       },
       {
@@ -7905,7 +7991,18 @@
           "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/qcadsp8380.mbn",
           "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/adsp_dtbs.elf",
           "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/qccdsp8380.mbn",
-          "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/cdsp_dtbs.elf"
+          "qcom/x126100/ASUSTeK/vivobook-s16-s5608qa/cdsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcvss8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcdxkmsucpurwa.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qcadsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/adsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/qccdsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-14-ux3480qa/cdsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf"
         ]
       },
       {
@@ -8118,7 +8215,12 @@
           "qcom/x1p42100/hp/omnibook-x16-cp0/qcadsp8380.mbn",
           "qcom/x1p42100/hp/omnibook-x16-cp0/adsp_dtbs.elf",
           "qcom/x1p42100/hp/omnibook-x16-cp0/qccdsp8380.mbn",
-          "qcom/x1p42100/hp/omnibook-x16-cp0/cdsp_dtbs.elf"
+          "qcom/x1p42100/hp/omnibook-x16-cp0/cdsp_dtbs.elf",
+          "qcom/x1p42100/hp/omnibook-5/qcdxkmsucpurwa.mbn",
+          "qcom/x1p42100/hp/omnibook-5/qcadsp8380.mbn",
+          "qcom/x1p42100/hp/omnibook-5/adsp_dtbs.elf",
+          "qcom/x1p42100/hp/omnibook-5/qccdsp8380.mbn",
+          "qcom/x1p42100/hp/omnibook-5/cdsp_dtbs.elf"
         ]
       },
       {
@@ -8134,7 +8236,12 @@
           "qcom/x1p42100/hp/omnibook-x16-cp0/qcadsp8380.mbn",
           "qcom/x1p42100/hp/omnibook-x16-cp0/adsp_dtbs.elf",
           "qcom/x1p42100/hp/omnibook-x16-cp0/qccdsp8380.mbn",
-          "qcom/x1p42100/hp/omnibook-x16-cp0/cdsp_dtbs.elf"
+          "qcom/x1p42100/hp/omnibook-x16-cp0/cdsp_dtbs.elf",
+          "qcom/x1p42100/hp/omnibook-5/qcdxkmsucpurwa.mbn",
+          "qcom/x1p42100/hp/omnibook-5/qcadsp8380.mbn",
+          "qcom/x1p42100/hp/omnibook-5/adsp_dtbs.elf",
+          "qcom/x1p42100/hp/omnibook-5/qccdsp8380.mbn",
+          "qcom/x1p42100/hp/omnibook-5/cdsp_dtbs.elf"
         ]
       },
       {
@@ -8298,7 +8405,16 @@
           "qcom,sdm845"
         ],
         "patch": "linux-omarchy-dtbs/0044-arm64-dts-qcom-Add-the-Gateway-GWTN133-1.patch",
-        "firmware": []
+        "firmware": [
+          "qcom/sdm850/HUAWEI/AL09/qcadsp850.mbn",
+          "qcom/sdm850/HUAWEI/AL09/qccdsp850.mbn",
+          "qcom/sdm850/HUAWEI/AL09/qcdxkmsuc850.mbn",
+          "qcom/sdm850/HUAWEI/AL09/ipa_fws.elf",
+          "qcom/sdm850/HUAWEI/AL09/qcdsp1v2850.mbn",
+          "qcom/sdm850/HUAWEI/AL09/qcdsp2850.mbn",
+          "qcom/sdm850/HUAWEI/AL09/qcslpi850.mbn",
+          "qcom/sdm850/HUAWEI/AL09/qcvss850.mbn"
+        ]
       },
       {
         "file": "sc8180xp-acer-spin-7-sp714-61na.dts",
