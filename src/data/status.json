@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-15T23:06:59.869Z",
+  "collected": "2026-11-16T00:59:39.205Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-65",
+    "kernel": "7.3-66",
     "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-65",
+        "kernel": "7.3-66",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -428,7 +428,12 @@
           "mahua-hp-omnibook-x16.dts",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
           "mahua-microsoft-surface-pro-12th-edition.dts",
+          "msm8998-asus-novago-tp370ql.dts",
+          "msm8998-hp-envy-x2.dts",
+          "msm8998-lenovo-miix-630.dts",
           "purwa-lenovo-ideacentre-mini-01q8x10.dts",
+          "sc7180-acer-aspire1.dts",
+          "sc7180-ecs-liva-qc710.dts",
           "sc8180x-lenovo-flex-5g.dts",
           "sc8180x-microsoft-cambria.dts",
           "sc8180x-microsoft-carina.dts",
@@ -438,6 +443,9 @@
           "sc8280xp-lenovo-thinkpad-x13s.dts",
           "sc8280xp-microsoft-arcata.dts",
           "sc8280xp-microsoft-blackrock.dts",
+          "sdm850-huawei-matebook-e-2019.dts",
+          "sdm850-lenovo-yoga-c630.dts",
+          "sdm850-samsung-w737.dts",
           "x126100-asus-v400-aio-vm441qa.dts",
           "x126100-asus-v400-aio-vm471qa.dts",
           "x126100-asus-vivobook-14.dts",
@@ -580,8 +588,12 @@
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
           "mahua-microsoft-surface-pro-12th-edition.json",
+          "msm8998-asus-novago-tp370ql.json",
+          "msm8998-hp-envy-x2.json",
           "sc8180x-microsoft-cambria.json",
           "sc8180x-microsoft-caspar.json",
+          "sdm850-huawei-matebook-e-2019.json",
+          "sdm850-samsung-w737.json",
           "x126100-asus-v400-aio-vm441qa.json",
           "x126100-asus-vivobook-14.json",
           "x126100-asus-vivobook-16.json",
@@ -1120,6 +1132,16 @@
             "qcom/glymur/hp/omnibook-x16/qcadsp8480.mbn",
             "qcom/glymur/hp/omnibook-x16/qccdsp8480.mbn"
           ],
+          "huawei-matebook-e-2019-firmware": [
+            "qcom/sdm850/HUAWEI/AL09/ipa_fws.elf",
+            "qcom/sdm850/HUAWEI/AL09/qcadsp850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qccdsp850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcdsp1v2850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcdsp2850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcdxkmsuc850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcslpi850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcvss850.mbn"
+          ],
           "huawei-matebook-e-go-firmware": [
             "qcom/sc8280xp/HUAWEI/gaokun3/qcadsp8280.mbn",
             "qcom/sc8280xp/HUAWEI/gaokun3/qccdsp8280.mbn",
@@ -1194,6 +1216,13 @@
             "qcom/x1p42100/LENOVO/83HL/qcdxkmsucpurwa.mbn",
             "qcom/x1p42100/LENOVO/83HL/qcvss8380_pa.mbn"
           ],
+          "lenovo-miix-630-firmware": [
+            "qcom/msm8998/LENOVO/81F1/qcadsp8998.mbn",
+            "qcom/msm8998/LENOVO/81F1/qcdsp1v28998.mbn",
+            "qcom/msm8998/LENOVO/81F1/qcdsp28998.mbn",
+            "qcom/msm8998/LENOVO/81F1/qcslpi8998.mbn",
+            "qcom/msm8998/LENOVO/81F1/qcvss8998.mbn"
+          ],
           "lenovo-thinkbook-16-g7-qoy-firmware": [
             "qcom/x1p42100/LENOVO/21NH/adsp_dtbs.elf",
             "qcom/x1p42100/LENOVO/21NH/adspr.jsn",
@@ -1226,6 +1255,16 @@
             "qcom/glymur/LENOVO/22A8/cdsp_dtbs.elf",
             "qcom/glymur/LENOVO/22A8/qcadsp8480.mbn",
             "qcom/glymur/LENOVO/22A8/qccdsp8480.mbn"
+          ],
+          "lenovo-yoga-c630-firmware": [
+            "qcom/sdm850/LENOVO/81JL/ipa_fws.elf",
+            "qcom/sdm850/LENOVO/81JL/qcadsp850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qccdsp850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qcdsp1v2850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qcdsp2850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qcdxkmsuc850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qcslpi850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qcvss850.mbn"
           ],
           "linux-firmware-qcom": [
             "qcom/glymur/ASUSTeK/UX3407NA/GLYMUR-ASUS-Zenbook-A14-UX3407NA-tplg.bin",
@@ -1467,6 +1506,14 @@
             "qcom/x1e80100/Thundercomm/DEVKIT/qcadsp8380.mbn",
             "qcom/x1e80100/Thundercomm/DEVKIT/qccdsp8380.mbn",
             "qcom/x1e80100/Thundercomm/DEVKIT/qcdxkmsuc8380.mbn"
+          ],
+          "samsung-galaxy-book2-w737-firmware": [
+            "qcom/sdm850/samsung/w737/ipa_fws.elf",
+            "qcom/sdm850/samsung/w737/qcadsp850.mbn",
+            "qcom/sdm850/samsung/w737/qccdsp850.mbn",
+            "qcom/sdm850/samsung/w737/qcdsp1v2850.mbn",
+            "qcom/sdm850/samsung/w737/qcdsp2850.mbn",
+            "qcom/sdm850/samsung/w737/qcvss850.mbn"
           ],
           "samsung-galaxy-book4-edge-15-firmware": [
             "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
@@ -1900,16 +1947,16 @@
     "older": 27,
     "byPieceOlder": {
       "deviceTree": {
-        "omarchy": 6,
-        "fromUpstream": 5,
+        "omarchy": 14,
+        "fromUpstream": 13,
         "added": 1,
         "pull": 0,
-        "available": 9,
+        "available": 1,
         "upstream": 13,
         "channels": {
           "stable": 4,
           "rc": 4,
-          "edge": 6
+          "edge": 14
         },
         "models": {
           "fromUpstream": [
@@ -1917,36 +1964,36 @@
             "lenovo-thinkpad-x13s-gen-1",
             "microsoft-surface-pro-9-5g",
             "microsoft-windows-dev-kit-2023",
-            "lenovo-flex-5g"
+            "acer-aspire-1-a114-61",
+            "asus-novago-tp370ql",
+            "ecs-liva-qc710",
+            "hp-envy-x2-snapdragon",
+            "huawei-matebook-e-2019",
+            "lenovo-flex-5g",
+            "lenovo-miix-630",
+            "lenovo-yoga-c630",
+            "samsung-galaxy-book2-w737"
           ],
           "added": [
             "microsoft-surface-pro-x"
           ],
           "pull": [],
           "available": [
-            "acer-aspire-1-a114-61",
-            "asus-novago-tp370ql",
-            "ecs-liva-qc710",
-            "hp-envy-x2-snapdragon",
-            "huawei-matebook-e-2019",
-            "lenovo-miix-630",
-            "lenovo-yoga-c630",
-            "samsung-galaxy-book2-w737",
             "samsung-galaxy-book2-go"
           ]
         }
       },
       "ids": {
-        "omarchy": 10,
+        "omarchy": 14,
         "fromUpstream": 9,
-        "added": 1,
+        "added": 5,
         "pull": 0,
         "available": 3,
         "upstream": 9,
         "channels": {
           "stable": 9,
           "rc": 9,
-          "edge": 10
+          "edge": 14
         },
         "models": {
           "fromUpstream": [
@@ -1961,7 +2008,11 @@
             "lenovo-yoga-c630"
           ],
           "added": [
-            "microsoft-surface-pro-x"
+            "asus-novago-tp370ql",
+            "hp-envy-x2-snapdragon",
+            "huawei-matebook-e-2019",
+            "microsoft-surface-pro-x",
+            "samsung-galaxy-book2-w737"
           ],
           "pull": [],
           "available": [
@@ -1972,16 +2023,16 @@
         }
       },
       "firmware": {
-        "omarchy": 6,
+        "omarchy": 10,
         "fromUpstream": 1,
-        "added": 5,
+        "added": 9,
         "pull": 0,
-        "available": 5,
+        "available": 1,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 6
+          "edge": 10
         },
         "models": {
           "fromUpstream": [
@@ -1991,25 +2042,25 @@
             "huawei-matebook-e-go",
             "microsoft-surface-pro-9-5g",
             "microsoft-windows-dev-kit-2023",
+            "huawei-matebook-e-2019",
             "lenovo-flex-5g",
-            "microsoft-surface-pro-x"
+            "lenovo-miix-630",
+            "lenovo-yoga-c630",
+            "microsoft-surface-pro-x",
+            "samsung-galaxy-book2-w737"
           ],
           "pull": [],
           "available": [
-            "huawei-matebook-e-2019",
-            "lenovo-miix-630",
-            "lenovo-yoga-c630",
-            "samsung-galaxy-book2-w737",
             "samsung-galaxy-book2-go"
           ]
         }
       },
       "all": {
-        "omarchy": 6,
+        "omarchy": 10,
         "fromUpstream": 1,
-        "added": 5,
+        "added": 9,
         "pull": 0,
-        "available": 3,
+        "available": 1,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -2019,13 +2070,15 @@
             "huawei-matebook-e-go",
             "microsoft-surface-pro-9-5g",
             "microsoft-windows-dev-kit-2023",
+            "huawei-matebook-e-2019",
             "lenovo-flex-5g",
-            "microsoft-surface-pro-x"
+            "lenovo-miix-630",
+            "lenovo-yoga-c630",
+            "microsoft-surface-pro-x",
+            "samsung-galaxy-book2-w737"
           ],
           "pull": [],
           "available": [
-            "lenovo-miix-630",
-            "lenovo-yoga-c630",
             "samsung-galaxy-book2-go"
           ]
         }
@@ -14746,13 +14799,13 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts",
         "https://github.com/aarch64-laptops/build/tree/master/misc/acer-aspire-1"
       ],
-      "notes": null,
-      "outcome": "notCarried",
-      "bootable": "carry",
+      "notes": "Acer points to Windows Update for its drivers, but Windows Update serves none for its hardware IDs. Its ACPI tables name the same reference board as the Lenovo 10w, whose firmware Lenovo publishes, so that firmware may run on it. Nobody has tried it yet.",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
@@ -14762,7 +14815,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "stable",
         "firmware": "none"
       },
@@ -14796,10 +14849,10 @@
       "variants": [
         {
           "compatible": "acer,aspire1",
-          "computed": "notCarried",
-          "treeChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
           "idsChannel": "stable",
-          "bootChannel": null,
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -14831,7 +14884,7 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc7180-acer-aspire1.json"
             }
           ],
-          "outcome": "notCarried",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -15016,15 +15069,15 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/msm8998-asus-novago-tp370ql.dts",
         "https://github.com/aarch64-laptops/build/tree/master/misc/asus-tp370ql"
       ],
-      "notes": null,
-      "outcome": "notCarried",
-      "bootable": "needs-ids",
+      "notes": "Its hardware IDs come from the manufacturer, product and board in an owner's boot log, and no Windows Update bundle has been found to confirm them. ASUS publishes no driver download for it, so its firmware is only in its own Windows.",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -15032,8 +15085,8 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
-        "ids": "none",
+        "deviceTree": "edge",
+        "ids": "edge",
         "firmware": "none"
       },
       "upstream": {
@@ -15061,10 +15114,10 @@
       "variants": [
         {
           "compatible": "asus,novago-tp370ql",
-          "computed": "notCarried",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -15077,7 +15130,7 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "notCarried",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -15184,13 +15237,13 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-ecs-liva-qc710.dts",
         "https://github.com/aarch64-laptops/build/tree/master/misc/ecs-liva-qc710"
       ],
-      "notes": null,
-      "outcome": "notCarried",
-      "bootable": "carry",
+      "notes": "Windows Update serves no driver bundle for its hardware IDs. Its ACPI tables name the same reference board as the Lenovo 10w, whose firmware Lenovo publishes, so that firmware may run on it. Nobody has tried it yet.",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
@@ -15200,7 +15253,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "stable",
         "firmware": "none"
       },
@@ -15234,10 +15287,10 @@
       "variants": [
         {
           "compatible": "ecs,liva-qc710",
-          "computed": "notCarried",
-          "treeChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
           "idsChannel": "stable",
-          "bootChannel": null,
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -15269,7 +15322,7 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc7180-ecs-liva-qc710.json"
             }
           ],
-          "outcome": "notCarried",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -15450,15 +15503,15 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dts",
         "https://github.com/aarch64-laptops/build/tree/master/misc/hp-envy-x2"
       ],
-      "notes": null,
-      "outcome": "notCarried",
-      "bootable": "needs-ids",
+      "notes": "Its tree in Linux doesn't start the audio, compute or sensor DSPs yet, so it loads no firmware. HP's Windows Update bundle for it, with those images, is kept for when it does.",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -15466,8 +15519,8 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
-        "ids": "none",
+        "deviceTree": "edge",
+        "ids": "edge",
         "firmware": "none"
       },
       "upstream": {
@@ -15495,10 +15548,10 @@
       "variants": [
         {
           "compatible": "hp,envy-x2",
-          "computed": "notCarried",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -15511,7 +15564,7 @@
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "notCarried",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -15539,24 +15592,26 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/huawei-matebooke-2019"
       ],
       "notes": null,
-      "outcome": "notCarried",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "huawei-matebook-e-2019-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
-        "ids": "none",
-        "firmware": "elsewhere"
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -15583,10 +15638,10 @@
       "variants": [
         {
           "compatible": "huawei,planck",
-          "computed": "notCarried",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -15608,7 +15663,7 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "notCarried",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -15918,24 +15973,26 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-miix-630"
       ],
       "notes": null,
-      "outcome": "notCarried",
-      "bootable": "carry",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "lenovo-miix-630-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "stable",
-        "firmware": "elsewhere"
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -15962,10 +16019,10 @@
       "variants": [
         {
           "compatible": "lenovo,miix-630",
-          "computed": "notCarried",
-          "treeChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
           "idsChannel": "stable",
-          "bootChannel": null,
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -15998,7 +16055,7 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/msm8998-lenovo-miix-630-81f1.json"
             }
           ],
-          "outcome": "notCarried",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -16026,24 +16083,26 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-yoga-c630"
       ],
       "notes": null,
-      "outcome": "notCarried",
-      "bootable": "carry",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": "stable",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "lenovo-yoga-c630-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
+        "deviceTree": "edge",
         "ids": "stable",
-        "firmware": "elsewhere"
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -16070,10 +16129,10 @@
       "variants": [
         {
           "compatible": "lenovo,yoga-c630",
-          "computed": "notCarried",
-          "treeChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
           "idsChannel": "stable",
-          "bootChannel": null,
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -16109,7 +16168,7 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sdm850-lenovo-yoga-c630.json"
             }
           ],
-          "outcome": "notCarried",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -16295,24 +16354,26 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/samsung-galaxybook2"
       ],
       "notes": null,
-      "outcome": "notCarried",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "samsung-galaxy-book2-w737-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
-        "ids": "none",
-        "firmware": "elsewhere"
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
         "deviceTree": "released",
@@ -16339,10 +16400,10 @@
       "variants": [
         {
           "compatible": "samsung,w737",
-          "computed": "notCarried",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
           "deviceTree": {
@@ -16362,7 +16423,7 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "notCarried",
+          "outcome": "should",
           "reports": []
         }
       ],

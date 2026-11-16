@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-15T23:06:59.869Z",
+  "collected": "2026-11-16T00:59:39.205Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -5891,7 +5891,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-65",
+        "kernel": "7.3-66",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -5923,7 +5923,12 @@
           "mahua-hp-omnibook-x16.dts",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.dts",
           "mahua-microsoft-surface-pro-12th-edition.dts",
+          "msm8998-asus-novago-tp370ql.dts",
+          "msm8998-hp-envy-x2.dts",
+          "msm8998-lenovo-miix-630.dts",
           "purwa-lenovo-ideacentre-mini-01q8x10.dts",
+          "sc7180-acer-aspire1.dts",
+          "sc7180-ecs-liva-qc710.dts",
           "sc8180x-lenovo-flex-5g.dts",
           "sc8180x-microsoft-cambria.dts",
           "sc8180x-microsoft-carina.dts",
@@ -5933,6 +5938,9 @@
           "sc8280xp-lenovo-thinkpad-x13s.dts",
           "sc8280xp-microsoft-arcata.dts",
           "sc8280xp-microsoft-blackrock.dts",
+          "sdm850-huawei-matebook-e-2019.dts",
+          "sdm850-lenovo-yoga-c630.dts",
+          "sdm850-samsung-w737.dts",
           "x126100-asus-v400-aio-vm441qa.dts",
           "x126100-asus-v400-aio-vm471qa.dts",
           "x126100-asus-vivobook-14.dts",
@@ -6075,8 +6083,12 @@
           "mahua-hp-omnibook-x16.json",
           "mahua-lenovo-thinkpad-t14s-gen7-lcd.json",
           "mahua-microsoft-surface-pro-12th-edition.json",
+          "msm8998-asus-novago-tp370ql.json",
+          "msm8998-hp-envy-x2.json",
           "sc8180x-microsoft-cambria.json",
           "sc8180x-microsoft-caspar.json",
+          "sdm850-huawei-matebook-e-2019.json",
+          "sdm850-samsung-w737.json",
           "x126100-asus-v400-aio-vm441qa.json",
           "x126100-asus-vivobook-14.json",
           "x126100-asus-vivobook-16.json",
@@ -6615,6 +6627,16 @@
             "qcom/glymur/hp/omnibook-x16/qcadsp8480.mbn",
             "qcom/glymur/hp/omnibook-x16/qccdsp8480.mbn"
           ],
+          "huawei-matebook-e-2019-firmware": [
+            "qcom/sdm850/HUAWEI/AL09/ipa_fws.elf",
+            "qcom/sdm850/HUAWEI/AL09/qcadsp850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qccdsp850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcdsp1v2850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcdsp2850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcdxkmsuc850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcslpi850.mbn",
+            "qcom/sdm850/HUAWEI/AL09/qcvss850.mbn"
+          ],
           "huawei-matebook-e-go-firmware": [
             "qcom/sc8280xp/HUAWEI/gaokun3/qcadsp8280.mbn",
             "qcom/sc8280xp/HUAWEI/gaokun3/qccdsp8280.mbn",
@@ -6689,6 +6711,13 @@
             "qcom/x1p42100/LENOVO/83HL/qcdxkmsucpurwa.mbn",
             "qcom/x1p42100/LENOVO/83HL/qcvss8380_pa.mbn"
           ],
+          "lenovo-miix-630-firmware": [
+            "qcom/msm8998/LENOVO/81F1/qcadsp8998.mbn",
+            "qcom/msm8998/LENOVO/81F1/qcdsp1v28998.mbn",
+            "qcom/msm8998/LENOVO/81F1/qcdsp28998.mbn",
+            "qcom/msm8998/LENOVO/81F1/qcslpi8998.mbn",
+            "qcom/msm8998/LENOVO/81F1/qcvss8998.mbn"
+          ],
           "lenovo-thinkbook-16-g7-qoy-firmware": [
             "qcom/x1p42100/LENOVO/21NH/adsp_dtbs.elf",
             "qcom/x1p42100/LENOVO/21NH/adspr.jsn",
@@ -6721,6 +6750,16 @@
             "qcom/glymur/LENOVO/22A8/cdsp_dtbs.elf",
             "qcom/glymur/LENOVO/22A8/qcadsp8480.mbn",
             "qcom/glymur/LENOVO/22A8/qccdsp8480.mbn"
+          ],
+          "lenovo-yoga-c630-firmware": [
+            "qcom/sdm850/LENOVO/81JL/ipa_fws.elf",
+            "qcom/sdm850/LENOVO/81JL/qcadsp850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qccdsp850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qcdsp1v2850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qcdsp2850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qcdxkmsuc850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qcslpi850.mbn",
+            "qcom/sdm850/LENOVO/81JL/qcvss850.mbn"
           ],
           "linux-firmware-qcom": [
             "qcom/glymur/ASUSTeK/UX3407NA/GLYMUR-ASUS-Zenbook-A14-UX3407NA-tplg.bin",
@@ -6962,6 +7001,14 @@
             "qcom/x1e80100/Thundercomm/DEVKIT/qcadsp8380.mbn",
             "qcom/x1e80100/Thundercomm/DEVKIT/qccdsp8380.mbn",
             "qcom/x1e80100/Thundercomm/DEVKIT/qcdxkmsuc8380.mbn"
+          ],
+          "samsung-galaxy-book2-w737-firmware": [
+            "qcom/sdm850/samsung/w737/ipa_fws.elf",
+            "qcom/sdm850/samsung/w737/qcadsp850.mbn",
+            "qcom/sdm850/samsung/w737/qccdsp850.mbn",
+            "qcom/sdm850/samsung/w737/qcdsp1v2850.mbn",
+            "qcom/sdm850/samsung/w737/qcdsp2850.mbn",
+            "qcom/sdm850/samsung/w737/qcvss850.mbn"
           ],
           "samsung-galaxy-book4-edge-15-firmware": [
             "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
@@ -8384,6 +8431,28 @@
         ]
       },
       {
+        "file": "msm8998-asus-novago-tp370ql.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "ASUS NovaGo TP370QL",
+        "compatible": "asus,novago-tp370ql",
+        "hwids": [
+          "524eb73d-710c-51c5-a550-5c6cf7e651aa",
+          "aa820a13-919a-5d09-bb80-cc4f8ed69e4f"
+        ]
+      },
+      {
+        "file": "msm8998-hp-envy-x2.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "HP ENVY x2 Detachable 12-e0xx (board 84E1)",
+        "compatible": "hp,envy-x2",
+        "hwids": [
+          "13f15895-720f-5e1a-8634-9df8af80dc3e",
+          "d86c40e3-965b-5caa-aa9c-f9d488ff2e71",
+          "e0eacfb1-de5f-5a4b-bfcd-41f85d593acb",
+          "fbdb7107-9deb-5955-95df-702736878e53"
+        ]
+      },
+      {
         "file": "sc8180x-microsoft-cambria.json",
         "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Microsoft Surface Pro X (Surface_Pro_X_1876)",
@@ -8405,6 +8474,35 @@
           "cdf510a8-d41c-54bf-b2c5-61ba10957019",
           "69c2fd0d-8593-575f-b6af-5f70f0299ea4",
           "aa2c30e9-117c-5aeb-a8aa-4b01761cf493"
+        ]
+      },
+      {
+        "file": "sdm850-huawei-matebook-e-2019.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "HUAWEI MateBook E (2019), PAK-AL09",
+        "compatible": "huawei,planck",
+        "hwids": [
+          "b6566119-02f8-59ec-b14c-711ddf5f5fcc",
+          "71389a98-6ffd-57a0-9c54-f908a5dac8a1",
+          "e3b915e6-1cfa-5a6a-a97f-3e69c7792a60",
+          "f8f9e5cb-16e4-5d28-a099-b28ec87a6b00",
+          "7ea8b73b-2cbb-562b-aecc-7f0f64c42630",
+          "df5020fa-24d6-55a4-852f-485906936352",
+          "47783037-4c5c-527c-9d47-af0efb5edbfa"
+        ]
+      },
+      {
+        "file": "sdm850-samsung-w737.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Samsung Galaxy Book2 (SM-W737)",
+        "compatible": "samsung,w737",
+        "hwids": [
+          "a7271695-80b5-56b3-8e50-56c6ce883b07",
+          "e5446ef8-5835-5185-a73b-b4ed25127d7e",
+          "7c317eeb-8b45-5d6a-b1e5-96abe56ce9b1",
+          "7f9904c9-7a04-5a16-95ed-474b69fbc9fc",
+          "60950148-55b1-594a-89a0-977e9dcfbd77",
+          "1965dd6d-c100-5714-9377-78945855d683"
         ]
       },
       {

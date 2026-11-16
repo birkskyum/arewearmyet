@@ -1962,6 +1962,7 @@ models:
     variants:
       - { compatible: "acer,aspire1" }
     acpi: ["acer-aspire-1"]
+    notes: "Acer points to Windows Update for its drivers, but Windows Update serves none for its hardware IDs. Its ACPI tables name the same reference board as the Lenovo 10w, whose firmware Lenovo publishes, so that firmware may run on it. Nobody has tried it yet."
     sources:
       - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
       - https://github.com/aarch64-laptops/build/tree/master/misc/acer-aspire-1
@@ -1998,6 +1999,7 @@ models:
     variants:
       - { compatible: "asus,novago-tp370ql" }
     acpi: ["asus-tp370ql"]
+    notes: "Its hardware IDs come from the manufacturer, product and board in an owner's boot log, and no Windows Update bundle has been found to confirm them. ASUS publishes no driver download for it, so its firmware is only in its own Windows."
     sources:
       - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/msm8998-asus-novago-tp370ql.dts
       - https://github.com/aarch64-laptops/build/tree/master/misc/asus-tp370ql
@@ -2023,6 +2025,7 @@ models:
     variants:
       - { compatible: "ecs,liva-qc710" }
     acpi: ["ecs-liva-qc710"]
+    notes: "Windows Update serves no driver bundle for its hardware IDs. Its ACPI tables name the same reference board as the Lenovo 10w, whose firmware Lenovo publishes, so that firmware may run on it. Nobody has tried it yet."
     sources:
       - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc7180-ecs-liva-qc710.dts
       - https://github.com/aarch64-laptops/build/tree/master/misc/ecs-liva-qc710
@@ -2057,6 +2060,7 @@ models:
     variants:
       - { compatible: "hp,envy-x2" }
     acpi: ["hp-envy-x2"]
+    notes: "Its tree in Linux doesn't start the audio, compute or sensor DSPs yet, so it loads no firmware. HP's Windows Update bundle for it, with those images, is kept for when it does."
     sources:
       - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/msm8998-hp-envy-x2.dts
       - https://github.com/aarch64-laptops/build/tree/master/misc/hp-envy-x2

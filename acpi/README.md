@@ -9,7 +9,7 @@ values and can differ from a running machine where the firmware fills fields in 
 dumps published here first. Each folder's SOURCE.md says where its tables came from. The SoC serial number (SOSN)
 is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. Disassemble a table with `iasl -d`.
 
-94 of 115 models have at least one dump.
+94 of 116 models have at least one dump.
 
 | Model | Dumps |
 | --- | --- |
@@ -131,6 +131,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 - Samsung Galaxy Book4 Edge 15
 - Samsung Galaxy Book5 Edge 5G
 - Samsung Galaxy Book6 Edge 16
+- HYRICAN Study Pad One
 
 ## Not matched to a model yet
 
