@@ -8188,7 +8188,7 @@
         "https://www.hp.com/au-en/shop/hp-omnibook-3-laptop-ai-16-ct0030qu-e5hs8pa.html",
         "https://www.energystar.gov/productfinder/product/certified-computers/details/4688594"
       ],
-      "notes": "HP's driver pack sp174797 is the 7c Gen 3's (SC7280 power driver, 8270 firmware).",
+      "notes": "HP's driver pack sp174797 is the 7c Gen 3's (SC7280 power driver, 8270 firmware), and its BIOS capsule holds the DSDT a device tree can be written from.",
       "outcome": "none",
       "bootable": "needs-deviceTree",
       "reports": [],
