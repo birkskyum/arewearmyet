@@ -4,11 +4,16 @@
 // Sources: device trees in Linux releases and linux-next, hardware IDs in systemd
 // releases and Ubuntu's stubble, firmware folders in linux-firmware, and the ACPI
 // dumps collected by the aarch64-laptops project, linux-surface and the ARM installer's reports.
+//
+// `pnpm collect omarchy acpi` refreshes only those parts (kernel, ids, firmware, acpi, omarchy) and keeps the
+// rest of data/sources.json. What a fixed ref holds is kept in .cache/collect, so a run fetches only what
+// moves; `--fresh` fetches everything again.
 
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 
 // From v5.10, for the Snapdragon 7c Chromebooks' trees, which Linux has had since then
 const KERNEL_RELEASES = ['v5.10', 'v5.11', 'v5.12', 'v5.13', 'v5.14', 'v5.15', 'v5.16', 'v5.17', 'v5.18', 'v5.19', 'v6.0', 'v6.1', 'v6.2', 'v6.3', 'v6.4', 'v6.5', 'v6.6', 'v6.7', 'v6.8', 'v6.9', 'v6.10', 'v6.11', 'v6.12', 'v6.13', 'v6.14', 'v6.15', 'v6.16', 'v6.17', 'v6.18', 'v6.19', 'v7.0', 'v7.1', 'v7.2', 'v7.3'];
@@ -42,6 +47,28 @@ function githubToken(): string | undefined {
 }
 
 const token = githubToken();
+
+const PARTS = ['kernel', 'ids', 'firmware', 'acpi', 'omarchy'] as const;
+const args = process.argv.slice(2);
+const fresh = args.includes('--fresh');
+const unknown = args.filter((arg) => arg !== '--fresh' && !(PARTS as readonly string[]).includes(arg));
+if (unknown.length) throw new Error(`unknown part ${unknown.join(', ')}; the parts are ${PARTS.join(', ')}`);
+const parts = new Set(args.filter((arg) => (PARTS as readonly string[]).includes(arg)).length ? args : PARTS);
+
+// A release tag, a linux-firmware release, a commit or a blob SHA never changes what it points to
+const CACHE_DIR = '.cache/collect';
+const FIXED_REF = /^([0-9a-f]{40}|v\d+(\.\d+)?|\d{8})$/;
+
+async function cached<T>(key: string, fetcher: () => Promise<T>): Promise<T> {
+  const file = join(CACHE_DIR, `${createHash('sha256').update(key).digest('hex').slice(0, 32)}.json`);
+  if (!fresh && existsSync(file)) return JSON.parse(readFileSync(file, 'utf8'));
+  const value = await fetcher();
+  if (value !== undefined) {
+    mkdirSync(CACHE_DIR, { recursive: true });
+    writeFileSync(file, JSON.stringify(value));
+  }
+  return value;
+}
 
 // GitHub's API and raw hosts answer the odd request with a 5xx, so a server
 // error or a dropped connection is tried again before the run gives up. GitHub
@@ -80,14 +107,33 @@ function github(path: string): Promise<any> {
 }
 
 async function raw(repo: string, ref: string, path: string): Promise<string> {
+  if (FIXED_REF.test(ref)) return cached(`raw ${repo} ${ref} ${path}`, () => rawFetch(repo, ref, path));
+  return rawFetch(repo, ref, path);
+}
+
+async function rawFetch(repo: string, ref: string, path: string): Promise<string> {
   const response = await fetchRetrying(`https://raw.githubusercontent.com/${repo}/${ref}/${path}`);
   if (!response.ok) throw new Error(`${response.status} ${repo}@${ref}:${path}`);
   return response.text();
 }
 
 async function listDir(repo: string, ref: string, path: string): Promise<string[] | undefined> {
-  const entries = await github(`repos/${repo}/contents/${path}?ref=${ref}`);
-  return entries?.map((entry: { name: string }) => entry.name);
+  return (await listEntries(repo, ref, path))?.map((entry) => entry.name);
+}
+
+// A folder's files with their blob SHAs, so a file at a moving ref like main is fetched only when it changed
+async function listEntries(repo: string, ref: string, path: string): Promise<{ name: string; sha: string }[] | undefined> {
+  const list = () => github(`repos/${repo}/contents/${path}?ref=${ref}`).then((entries) => entries?.map(({ name, sha }: { name: string; sha: string }) => ({ name, sha })));
+  return FIXED_REF.test(ref) ? cached(`ls ${repo} ${ref} ${path}`, list) : list();
+}
+
+function blob(repo: string, ref: string, path: string, sha: string): Promise<string> {
+  return cached(`blob ${sha}`, () => rawFetch(repo, ref, path));
+}
+
+// A pull request's changed files, which its head commit fixes
+async function pullFiles(repo: string, pull: { number: number; head: { sha: string } }): Promise<{ filename: string; status: string }[]> {
+  return cached(`pull files ${repo} ${pull.number} ${pull.head.sha}`, () => pages(`repos/${repo}/pulls/${pull.number}/files`));
 }
 
 // The root node's model and compatible strings of a device tree source: the first ones after "/ {", however
@@ -113,12 +159,17 @@ function dtFirmware(dir: string | string[], file: string, seen = new Set<string>
   return [...new Set([...names, ...included])].filter((name) => name.startsWith('qcom/') && name.split('/').length >= 4);
 }
 
-// linux-next has no GitHub mirror, so take its device tree folder from a sparse clone
+// linux-next has no GitHub mirror, so take its device tree folder from a sparse clone. kernel.org sometimes
+// stalls a fetch for half an hour, so a fetch that takes over two minutes keeps the copy from the last run
 function linuxNextCheckout(): string {
   const dir = join(tmpdir(), 'arewearmyet-linux-next');
   if (existsSync(join(dir, '.git'))) {
-    execFileSync('git', ['-C', dir, 'fetch', '-q', '--depth', '1', 'origin', 'master'], { stdio: 'inherit' });
-    execFileSync('git', ['-C', dir, 'reset', '-q', '--hard', 'FETCH_HEAD'], { stdio: 'inherit' });
+    try {
+      execFileSync('git', ['-C', dir, 'fetch', '-q', '--depth', '1', 'origin', 'master'], { stdio: 'inherit', timeout: 120_000 });
+      execFileSync('git', ['-C', dir, 'reset', '-q', '--hard', 'FETCH_HEAD'], { stdio: 'inherit' });
+    } catch {
+      console.warn(`linux-next didn't fetch, keeping ${execFileSync('git', ['-C', dir, 'log', '-1', '--format=%s'], { encoding: 'utf8' }).trim()}`);
+    }
   } else {
     execFileSync('git', ['clone', '-q', '--depth', '1', '--filter=blob:none', '--sparse', 'https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git', dir], { stdio: 'inherit' });
     execFileSync('git', ['-C', dir, 'sparse-checkout', 'set', DT_DIR], { stdio: 'inherit' });
@@ -126,7 +177,7 @@ function linuxNextCheckout(): string {
   return dir;
 }
 
-async function collectDeviceTrees() {
+async function collectDeviceTrees(next: string) {
   const firstRelease = new Map<string, string>();
   for (const release of KERNEL_RELEASES) {
     const names = await listDir('torvalds/linux', release, DT_DIR);
@@ -134,7 +185,6 @@ async function collectDeviceTrees() {
       if (DT_PATTERN.test(name) && !firstRelease.has(name)) firstRelease.set(name, release);
     }
   }
-  const next = linuxNextCheckout();
   const nextTag = execFileSync('git', ['-C', next, 'log', '-1', '--format=%s'], { encoding: 'utf8' }).match(/\d{8}/)?.[0];
   const nextNames = readdirSync(join(next, DT_DIR)).filter((name) => DT_PATTERN.test(name));
   const names = [...new Set([...firstRelease.keys(), ...nextNames])].sort();
@@ -156,23 +206,25 @@ async function collectHardwareIds() {
       if (!firstRelease.has(name)) firstRelease.set(name, release);
     }
   }
-  const mainNames = (await listDir('systemd/systemd', 'main', 'src/boot/hwids/aa64')) ?? [];
+  const mainEntries = (await listEntries('systemd/systemd', 'main', 'src/boot/hwids/aa64')) ?? [];
+  const mainNames = mainEntries.map((entry) => entry.name);
   const systemd = [];
   for (const file of [...new Set([...firstRelease.keys(), ...mainNames])].sort()) {
-    const ref = mainNames.includes(file) ? 'main' : firstRelease.get(file)!;
-    const entry = JSON.parse(await raw('systemd/systemd', ref, `src/boot/hwids/aa64/${file}`));
+    const path = `src/boot/hwids/aa64/${file}`;
+    const onMain = mainEntries.find((entry) => entry.name === file);
+    const entry = JSON.parse(onMain ? await blob('systemd/systemd', 'main', path, onMain.sha) : await raw('systemd/systemd', firstRelease.get(file)!, path));
     systemd.push({ file, firstRelease: firstRelease.get(file) ?? null, inMain: mainNames.includes(file), name: entry.name, compatible: entry.compatible, hwids: entry.hwids });
   }
 
   // systemd copies its list in batches from Ubuntu's stubble, so an entry merged there or open as a pull
   // request there is on its way
   const stubble = [];
-  for (const file of (await listDir('ubuntu/stubble', 'main', 'hwids/json')) ?? []) {
-    const entry = JSON.parse(await raw('ubuntu/stubble', 'main', `hwids/json/${file}`));
+  for (const { name: file, sha } of (await listEntries('ubuntu/stubble', 'main', 'hwids/json')) ?? []) {
+    const entry = JSON.parse(await blob('ubuntu/stubble', 'main', `hwids/json/${file}`, sha));
     stubble.push({ file, state: 'merged', url: `https://github.com/ubuntu/stubble/blob/main/hwids/json/${file}`, name: entry.name, compatible: entry.compatible, hwids: entry.hwids });
   }
   for (const pull of (await github('repos/ubuntu/stubble/pulls?state=open&per_page=100')) ?? []) {
-    for (const change of (await github(`repos/ubuntu/stubble/pulls/${pull.number}/files?per_page=100`)) ?? []) {
+    for (const change of await pullFiles('ubuntu/stubble', pull)) {
       if (!/^hwids\/json\/[^/]+\.json$/.test(change.filename) || change.status === 'removed') continue;
       const entry = JSON.parse(await raw(pull.head.repo?.full_name ?? 'ubuntu/stubble', pull.head.sha, change.filename));
       stubble.push({ file: change.filename.split('/').pop(), state: 'open', url: pull.html_url, name: entry.name, compatible: entry.compatible, hwids: entry.hwids });
@@ -184,7 +236,11 @@ async function collectHardwareIds() {
 const LINUX_FIRMWARE = 'https://gitlab.com/api/v4/projects/kernel-firmware%2Flinux-firmware';
 
 // Every Qualcomm laptop file at one linux-firmware ref, counting the symlinks WHENCE creates
-async function firmwareFiles(ref: string): Promise<string[]> {
+function firmwareFiles(ref: string): Promise<string[]> {
+  return cached(`linux-firmware ${ref} ${FIRMWARE_SOCS.join(' ')}`, () => firmwareFilesFetch(ref));
+}
+
+async function firmwareFilesFetch(ref: string): Promise<string[]> {
   const files: string[] = [];
   for (const soc of FIRMWARE_SOCS) {
     for (let page = 1; ; page++) {
@@ -206,7 +262,9 @@ async function collectFirmware() {
   // Distributions ship linux-firmware releases, which are dated tags
   const tags: { name: string }[] = await getJson(`${LINUX_FIRMWARE}/repository/tags?order_by=name&sort=desc&per_page=20`);
   const release = tags.map((tag) => tag.name).find((name) => /^\d{8}$/.test(name))!;
-  const [main, released] = await Promise.all([firmwareFiles('main'), firmwareFiles(release)]);
+  // main by its commit, so an unchanged main is read from the cache
+  const head: string = (await getJson(`${LINUX_FIRMWARE}/repository/commits/main`)).id;
+  const [main, released] = await Promise.all([firmwareFiles(head), firmwareFiles(release)]);
   // A model's folder is one that holds files, below qcom/<soc>/<vendor>/
   const folders = [...new Set(main.map((path) => path.slice(0, path.lastIndexOf('/'))))]
     .filter((dir) => dir.split('/').length >= 4)
@@ -307,16 +365,24 @@ function omarchyKernelRecipe() {
   }
   execFileSync('git', ['-C', dir, 'sparse-checkout', 'set', OMARCHY_KERNEL_RECIPE, OMARCHY_TREES_RECIPE], { stdio: 'inherit' });
   const added = [];
-  // The tree files the patches add, replayed in the order the recipes apply them, so a tree's firmware
-  // takes in a later patch's change to it and a .dtsi that another patch adds
+  // The tree files the patches add or change, replayed in the order the recipes apply them, so a tree's
+  // firmware takes in a later patch's change to it and a .dtsi that another patch adds. A Linux tree a
+  // patch changes starts from its linux-next copy
   const replay = mkdtempSync(join(tmpdir(), 'arewearmyet-replay-'));
+  const linuxTrees = join(tmpdir(), 'arewearmyet-linux-next', DT_DIR);
   for (const folder of [OMARCHY_KERNEL_RECIPE, OMARCHY_TREES_RECIPE].filter((folder) => existsSync(join(dir, folder)))) {
     for (const patch of readdirSync(join(dir, folder)).filter((name) => name.endsWith('.patch')).sort()) {
       const text = readFileSync(join(dir, folder, patch), 'utf8');
       added.push(...patchDeviceTrees(text).map((dt) => ({ ...dt, patch: `${folder.split('/').pop()}/${patch}` })));
       for (const section of text.split(/^diff --git /m).slice(1)) {
         const path = section.match(/^\+\+\+ b\/(arch\/arm64\/boot\/dts\/qcom\/\S+\.dtsi?)$/m)?.[1];
-        if (!path || (!/^--- \/dev\/null$/m.test(section) && !existsSync(join(replay, path)))) continue;
+        if (!path) continue;
+        const linuxCopy = join(linuxTrees, path.split('/').pop()!);
+        if (!/^--- \/dev\/null$/m.test(section) && !existsSync(join(replay, path))) {
+          if (!existsSync(linuxCopy)) continue;
+          mkdirSync(dirname(join(replay, path)), { recursive: true });
+          copyFileSync(linuxCopy, join(replay, path));
+        }
         try {
           execFileSync('patch', ['-p1', '-s', '-f', '-d', replay], { input: 'diff --git ' + section, stdio: ['pipe', 'ignore', 'pipe'] });
         } catch {
@@ -325,8 +391,14 @@ function omarchyKernelRecipe() {
       }
     }
   }
-  const linuxTrees = join(tmpdir(), 'arewearmyet-linux-next', DT_DIR);
-  for (const dt of added) dt.firmware = dtFirmware([join(replay, 'arch/arm64/boot/dts/qcom'), linuxTrees], dt.file);
+  const replayTrees = join(replay, 'arch/arm64/boot/dts/qcom');
+  for (const dt of added) dt.firmware = dtFirmware([replayTrees, linuxTrees], dt.file);
+  // Linux trees whose firmware the patches change, like the HP Envy x2's, which Linux leaves without any
+  const changedFirmware: Record<string, string[]> = {};
+  for (const file of readdirSync(linuxTrees).filter((name) => DT_PATTERN.test(name))) {
+    const ours = dtFirmware([replayTrees, linuxTrees], file);
+    if (ours.join('\n') !== dtFirmware(linuxTrees, file).join('\n')) changedFirmware[file] = ours;
+  }
   rmSync(replay, { recursive: true, force: true });
   const ids = [OMARCHY_KERNEL_RECIPE, OMARCHY_TREES_RECIPE].filter((folder) => existsSync(join(dir, folder))).flatMap((folder) =>
     readdirSync(join(dir, folder)).filter((name) => name.endsWith('.json')).map((file) => {
@@ -334,7 +406,7 @@ function omarchyKernelRecipe() {
       return { file, recipe: folder, name: entry.name, compatible: entry.compatible, hwids: entry.hwids };
     }),
   ).sort((a, b) => a.file.localeCompare(b.file));
-  return { added, ids };
+  return { added, changedFirmware, ids };
 }
 
 // Open pull requests on omarchy-pkgs that add what a model needs: a kernel or device tree package patch
@@ -351,12 +423,7 @@ async function collectOmarchyPulls() {
   for (const pull of pulls) {
     const repo = pull.head.repo?.full_name;
     if (!repo) continue;
-    const changes: { filename: string; status: string }[] = [];
-    for (let page = 1; ; page++) {
-      const batch = (await github(`repos/${OMARCHY_PKGS}/pulls/${pull.number}/files?per_page=100&page=${page}`)) ?? [];
-      changes.push(...batch);
-      if (batch.length < 100) break;
-    }
+    const changes = await pullFiles(OMARCHY_PKGS, pull);
     const deviceTrees = [];
     const ids = [];
     const firmware: string[] = [];
@@ -389,7 +456,7 @@ async function collectOmarchy() {
   // The edge nightly image, which testers install: it picks up every tree and ID the edge kernel has
   const latest = await getJson('https://nightly.omarchy.org/edge-aarch64/latest.json').catch(() => undefined);
   const image = latest?.url ? { version: latest.version, url: latest.url, kernel: latest.kernel ?? null } : null;
-  return { channels, kernelAddedDeviceTrees: recipe.added, carriedIds: recipe.ids, image, pulls: await collectOmarchyPulls() };
+  return { channels, kernelAddedDeviceTrees: recipe.added, kernelChangedFirmware: recipe.changedFirmware, carriedIds: recipe.ids, image, pulls: await collectOmarchyPulls() };
 }
 
 // ACPI dumps, each with where scripts/archive.ts fetches its tables (repo, ref, dir):
@@ -422,7 +489,7 @@ async function pages(path: string): Promise<any[]> {
 
 async function collectAcpiDumps(): Promise<AcpiDump[]> {
   const head = (repo: string) => github(`repos/${repo}/commits/HEAD`).then((commit) => commit.sha as string);
-  const blobs = (repo: string, ref: string) => github(`repos/${repo}/git/trees/${ref}?recursive=1`).then((tree) => tree.tree.filter((entry: { type: string }) => entry.type === 'blob').map((entry: { path: string }) => entry.path) as string[]);
+  const blobs = (repo: string, ref: string): Promise<string[]> => cached(`tree ${repo} ${ref}`, () => github(`repos/${repo}/git/trees/${ref}?recursive=1`).then((tree) => tree.tree.filter((entry: { type: string }) => entry.type === 'blob').map((entry: { path: string }) => entry.path)));
   const [laptopsRef, reportsRef, surfaceRef] = await Promise.all([head(LAPTOPS), head(REPORTS), head(SURFACE)]);
   const [laptops, reports, surface, laptopPulls, reportPulls] = await Promise.all([
     blobs(LAPTOPS, laptopsRef), blobs(REPORTS, reportsRef), blobs(SURFACE, surfaceRef), pages(`repos/${LAPTOPS}/pulls?state=all`), pages(`repos/${REPORTS}/pulls?state=open`),
@@ -433,7 +500,7 @@ async function collectAcpiDumps(): Promise<AcpiDump[]> {
   const proposed = new Map<string, AcpiDump>();
   // Newest first, so a folder proposed twice comes from the newer pull request
   for (const pull of laptopPulls.filter((pull) => !pull.merged_at).sort((a, b) => b.number - a.number)) {
-    const files = await pages(`repos/${LAPTOPS}/pulls/${pull.number}/files`);
+    const files = await pullFiles(LAPTOPS, pull);
     for (const folder of new Set(files.filter((file) => file.status !== 'removed').map((file) => miscDump(file.filename)).filter(Boolean) as string[])) {
       if (misc.has(folder) || proposed.has(folder)) continue;
       proposed.set(folder, { folder, url: pull.html_url, repo: LAPTOPS, ref: pull.head.sha, dir: `misc/${folder}`, pull: { number: pull.number, state: pull.state, by: pull.user.login } });
@@ -472,11 +539,31 @@ async function collectAcpiDumps(): Promise<AcpiDump[]> {
   ];
 }
 
-const [kernel, hardwareIds, firmware, acpiDumps, omarchy] = await Promise.all([collectDeviceTrees(), collectHardwareIds(), collectFirmware(), collectAcpiDumps(), collectOmarchy()]);
+// The Omarchy recipe's replay reads linux-next too, so it is fetched once before either part starts
+const next = parts.has('kernel') || parts.has('omarchy') ? linuxNextCheckout() : '';
+const previous = parts.size < PARTS.length && existsSync('data/sources.json') ? JSON.parse(readFileSync('data/sources.json', 'utf8')) : undefined;
+if (parts.size < PARTS.length && !previous) throw new Error('a partial collect needs data/sources.json from a full one');
+const skip = () => Promise.resolve(undefined);
+const [kernel, hardwareIds, firmware, acpiDumps, omarchy] = await Promise.all([
+  parts.has('kernel') ? collectDeviceTrees(next) : skip(),
+  parts.has('ids') ? collectHardwareIds() : skip(),
+  parts.has('firmware') ? collectFirmware() : skip(),
+  parts.has('acpi') ? collectAcpiDumps() : skip(),
+  parts.has('omarchy') ? collectOmarchy() : skip(),
+]);
 
+const sources = {
+  ...previous,
+  collected: new Date().toISOString(),
+  kernelReleases: KERNEL_RELEASES,
+  systemdReleases: SYSTEMD_RELEASES,
+  ...kernel,
+  ...hardwareIds,
+  ...(firmware && { firmwareRelease: firmware.release, firmware: firmware.folders, firmwareMain: firmware.firmwareMain, firmwareReleased: firmware.firmwareReleased }),
+  ...(acpiDumps && { acpiDumps }),
+  ...(omarchy && { omarchy }),
+};
 mkdirSync('data', { recursive: true });
-writeFileSync(
-  'data/sources.json',
-  JSON.stringify({ collected: new Date().toISOString(), kernelReleases: KERNEL_RELEASES, systemdReleases: SYSTEMD_RELEASES, ...kernel, ...hardwareIds, firmwareRelease: firmware.release, firmware: firmware.folders, firmwareMain: firmware.firmwareMain, firmwareReleased: firmware.firmwareReleased, acpiDumps, omarchy }, null, 2) + '\n',
-);
-console.log(`Omarchy ${omarchy.channels.map((c) => `${c.name} ${c.kernel}/${c.systemd} (${c.deviceTrees.length} trees, ${c.hwids.length}+${c.carriedIds.length} IDs, ${Object.values(c.firmware).flat().length} firmware files)`).join(', ')}, recipe device trees ${omarchy.kernelAddedDeviceTrees.length}, open PRs ${omarchy.pulls.map((pull) => `#${pull.number}`).join(' ')}; device trees ${kernel.deviceTrees.length}, systemd IDs ${hardwareIds.systemd.length}, stubble ${hardwareIds.stubble.length}, firmware folders ${firmware.folders.length} (release ${firmware.release}), ACPI dumps ${acpiDumps.length}`);
+writeFileSync('data/sources.json', JSON.stringify(sources, null, 2) + '\n');
+const o = sources.omarchy;
+console.log(`${[...parts].join(', ')} collected. Omarchy ${o.channels.map((c: any) => `${c.name} ${c.kernel}/${c.systemd} (${c.deviceTrees.length} trees, ${c.hwids.length}+${c.carriedIds.length} IDs, ${Object.values(c.firmware).flat().length} firmware files)`).join(', ')}, recipe device trees ${o.kernelAddedDeviceTrees.length}, open PRs ${o.pulls.map((pull: any) => `#${pull.number}`).join(' ')}; device trees ${sources.deviceTrees.length}, systemd IDs ${sources.systemd.length}, stubble ${sources.stubble.length}, firmware folders ${sources.firmware.length} (release ${sources.firmwareRelease}), ACPI dumps ${sources.acpiDumps.length}`);

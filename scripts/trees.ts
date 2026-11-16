@@ -4,7 +4,8 @@
 // for status.ts. A devicetree_files entry is a file URL, a path under data/device-trees/ for a tree sent in
 // to this repository, or a patch URL and #path to cut one new file out.
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { parse } from 'yaml';
@@ -15,9 +16,24 @@ type Entry = { state: 'posted' | 'out-of-tree'; source: string; files: string[];
 const models: Model[] = parse(readFileSync('data/models.yaml', 'utf8')).models;
 const DT_DIR = 'arch/arm64/boot/dts/qcom/';
 
+// A URL pinned to a commit, like a commit's .patch, never changes, so it is kept in .cache/trees and fetched once;
+// `--fresh` fetches it again
+const CACHE_DIR = '.cache/trees';
+const fresh = process.argv.includes('--fresh');
+
+async function get(url: string) {
+  if (!/[0-9a-f]{40}/.test(url)) return fetchText(url);
+  const file = join(CACHE_DIR, createHash('sha256').update(url).digest('hex').slice(0, 32));
+  if (!fresh && existsSync(file)) return readFileSync(file, 'utf8');
+  const text = await fetchText(url);
+  mkdirSync(CACHE_DIR, { recursive: true });
+  writeFileSync(file, text);
+  return text;
+}
+
 // GitHub's raw file host answers 429 after a burst of requests, so files on GitHub go through its API instead,
 // with the workflow's token when there is one, and a 429 or a server error waits and tries again
-async function get(url: string) {
+async function fetchText(url: string) {
   const github = url.match(/^https:\/\/raw\.githubusercontent\.com\/([^/]+)\/([^/]+)\/([^/]+)\/(.+)$/);
   const token = process.env.GITHUB_TOKEN;
   const request = github

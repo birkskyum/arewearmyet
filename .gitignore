@@ -30,3 +30,6 @@ scripts/og/*.ttf
 worker/worker-configuration.d.ts
 .wrangler/
 device-trees.new/
+
+# collect.ts keeps what fixed refs hold here
+.cache/

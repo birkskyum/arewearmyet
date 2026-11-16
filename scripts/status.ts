@@ -76,6 +76,7 @@ const kernelRank = (release: string | null) => (release ? sources.kernelReleases
 type DeviceTree = { file: string; firstRelease: string | null; inNext: boolean; model?: string; compatible: string[]; firmware?: string[]; patch?: string };
 const deviceTrees: DeviceTree[] = sources.deviceTrees;
 const omarchyAdded: DeviceTree[] = sources.omarchy.kernelAddedDeviceTrees.map((dt: DeviceTree) => ({ ...dt, firstRelease: null, inNext: false }));
+const omarchyChangedFirmware: Record<string, string[]> = sources.omarchy.kernelChangedFirmware ?? {};
 
 // Glymur's boot firmware starts the SoCCP and Linux only attaches to it, so no package ships the
 // soccp images a tree names. The Surface Laptop 8's USB4 router image exists only inside Qualcomm's
@@ -91,7 +92,7 @@ function findDeviceTree(compatible: string | undefined) {
   const dt = upstream ?? added!;
   // Omarchy's kernel may carry a tree under its own file name before Linux takes it
   const files = [...new Set([upstream?.file, added?.file].filter(Boolean) as string[])];
-  return { file: dt.file, files, compatible: dt.compatible, firstRelease: upstream?.firstRelease ?? null, inNext: upstream?.inNext ?? false, upstream: Boolean(upstream), firmware: (dt.firmware ?? []).filter(loadedByLinux), patch: upstream ? null : added?.patch ?? null };
+  return { file: dt.file, files, compatible: dt.compatible, firstRelease: upstream?.firstRelease ?? null, inNext: upstream?.inNext ?? false, upstream: Boolean(upstream), firmware: ((upstream && omarchyChangedFirmware[dt.file]) || dt.firmware || []).filter(loadedByLinux), patch: upstream ? null : added?.patch ?? null };
 }
 
 type Ids = { file: string; firstRelease: string | null; inMain: boolean; compatible: string; name: string };
