@@ -2010,7 +2010,13 @@ models:
     generation: 8cx-gen1
     chips: ["SC8180XP"]
     model_numbers: ["3420"]
+    variants:
+      - { chip: "SC8180XP", compatible: "dell,inspiron-3420-sc8180xp" }
+    devicetree_out_of_tree: "https://github.com/jmdurr/dell-inspiron-3420-arm"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/jmdurr/dell-inspiron-3420-arm/a75479805a22/kernel.patch#sc8180xp-dell-inspiron-3420.dts"
     acpi: ["dell-inspiron-14-3420"]
+    notes: "Matt Durr's tree runs it from its NVMe drive with the keyboard, touchpad, USB, Wi-Fi, GPU acceleration, battery, suspend and CPU frequency scaling; the lid switch, Bluetooth, audio, camera and special keys don't work yet. Its NVMe drive needs the kernel to keep the firmware's PCIe PHY setup. Dell's audio DSP image on Windows Update is signed with Qualcomm's test key, so only the GPU firmware is packaged."
     sources:
       - https://github.com/aarch64-laptops/build/tree/master/misc/dell-inspiron-14-3420
 
@@ -2036,7 +2042,13 @@ models:
     generation: "850"
     chips: ["SDM850"]
     model_numbers: ["GWTN133-1"]
+    variants:
+      - { compatible: "acer,gateway-gwtn133-1" }
+    devicetree_out_of_tree: "https://github.com/aarch64-laptops/build/issues/84#issuecomment-1746527461"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/birkskyum/omarchy-pkgs/a6bc5815/pkgbuilds/linux-omarchy-dtbs/0044-arm64-dts-qcom-Add-the-Gateway-GWTN133-1.patch#sdm850-gateway-gwtn133-1.dts"
     acpi: ["acer-gateway-gwtn133-1"]
+    notes: "Huawei built it on the MateBook E 2019's board, and its tables differ from the MateBook's only in the panel, keyboard and touchpad, so its tree includes the MateBook's and loads the MateBook's firmware, whose signatures name the same OEM and model. Not booted on the laptop yet."
     sources:
       - https://github.com/aarch64-laptops/build/tree/master/misc/acer-gateway-gwtn133-1
 
@@ -2231,7 +2243,13 @@ models:
     released: "2020"
     chips: ["SC8180X"]
     model_numbers: ["SM-W767"]
+    variants:
+      - { chip: "SC8180X", compatible: "samsung,w767" }
+    devicetree_out_of_tree: "https://gitlab.com/sc8180x-mainline/linux/-/commit/4bb4617388be2cea5d41a8ac0d21a3a43a3644cb"
+    devicetree_files:
+      - "https://gitlab.com/sc8180x-mainline/linux/-/commit/4bb4617388be2cea5d41a8ac0d21a3a43a3644cb.patch#sc8180x-samsung-w767.dts"
     acpi: ["samsung-galaxy-book-s"]
+    notes: "Anton Bambura's tree leaves the touchscreen, backlight and battery off."
     sources:
       - https://github.com/aarch64-laptops/build/tree/master/misc/samsung-galaxy-book-s
 

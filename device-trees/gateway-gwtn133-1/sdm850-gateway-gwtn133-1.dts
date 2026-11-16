@@ -1,0 +1,87 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Gateway GWTN133-1
+ *
+ * Huawei's MateBook E 2019 board as a clamshell. Its DSDT is the
+ * MateBook's with a Sharp LQ133M1JW15-E 1920x1080 panel behind the same
+ * SN65DSI86 bridge, the keyboard on i2c0 and the touchpad on i2c3, and
+ * neither the touchscreen nor the fingerprint reader.
+ */
+
+#include "sdm850-huawei-matebook-e-2019.dts"
+
+/ {
+	model = "Gateway GWTN133-1";
+	compatible = "acer,gateway-gwtn133-1", "qcom,sdm845";
+	chassis-type = "laptop";
+
+	gpio-keys {
+		pinctrl-0 = <&volume_up_gpio>;
+
+		/delete-node/ switch-mode;
+	};
+};
+
+&i2c0 {
+	clock-frequency = <400000>;
+
+	status = "okay";
+
+	keyboard@3a {
+		compatible = "hid-over-i2c";
+		reg = <0x3a>;
+		hid-descr-addr = <0x1>;
+
+		interrupts-extended = <&tlmm 52 IRQ_TYPE_LEVEL_LOW>;
+
+		pinctrl-0 = <&kb_int_default>;
+		pinctrl-names = "default";
+
+		wakeup-source;
+	};
+};
+
+&i2c3 {
+	clock-frequency = <400000>;
+
+	status = "okay";
+
+	touchpad@2c {
+		compatible = "hid-over-i2c";
+		reg = <0x2c>;
+		hid-descr-addr = <0x20>;
+
+		interrupts-extended = <&tlmm 3 IRQ_TYPE_LEVEL_LOW>;
+
+		pinctrl-0 = <&tpad_int_default>;
+		pinctrl-names = "default";
+
+		wakeup-source;
+	};
+};
+
+&i2c5 {
+	status = "disabled";
+};
+
+&panel {
+	compatible = "edp-panel";
+};
+
+&tlmm {
+	gpio-reserved-ranges = <2 1>, <81 4>;
+
+	kb_int_default: kb-int-default-state {
+		pins = "gpio52";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-pull-up;
+	};
+
+	tpad_int_default: tpad-int-default-state {
+		pins = "gpio3";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-pull-up;
+	};
+};

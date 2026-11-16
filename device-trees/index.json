@@ -510,6 +510,22 @@
       "x1e84100-samsung-galaxy-book4-edge-16.dts"
     ]
   },
+  "dell-inspiron-14-3420-snapdragon": {
+    "state": "out-of-tree",
+    "source": "https://github.com/jmdurr/dell-inspiron-3420-arm",
+    "files": [
+      "SOURCE.md",
+      "sc8180xp-dell-inspiron-3420.dts"
+    ]
+  },
+  "gateway-gwtn133-1": {
+    "state": "out-of-tree",
+    "source": "https://github.com/aarch64-laptops/build/issues/84#issuecomment-1746527461",
+    "files": [
+      "SOURCE.md",
+      "sdm850-gateway-gwtn133-1.dts"
+    ]
+  },
   "microsoft-surface-pro-x": {
     "state": "posted",
     "source": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261104070441.74127-3-val@packett.cool/",
@@ -527,6 +543,14 @@
     "files": [
       "series.mbox",
       "sc7280-samsung-galaxy-book2-go.dts"
+    ]
+  },
+  "samsung-galaxy-book-s": {
+    "state": "out-of-tree",
+    "source": "https://gitlab.com/sc8180x-mainline/linux/-/commit/4bb4617388be2cea5d41a8ac0d21a3a43a3644cb",
+    "files": [
+      "SOURCE.md",
+      "sc8180x-samsung-w767.dts"
     ]
   }
 }

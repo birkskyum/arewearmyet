@@ -3801,7 +3801,7 @@ folders:
           - { package: "microsoft-surface-pro-x-1876-wu-200.0.61.0-surfaceprox-subextscss", member: "qcslpi8180.mbn" }
           - { package: "microsoft-surface-pro-x-2010-wu-200.0.33.0-surfaceprox-subextscss", member: "qcslpi8180.mbn" }
   - path: "qcom/sdm850/HUAWEI/AL09"
-    models: ["huawei-matebook-e-2019"]
+    models: ["huawei-matebook-e-2019", "gateway-gwtn133-1"]
     files:
       - name: "ipa_fws.elf"
         size: 33088

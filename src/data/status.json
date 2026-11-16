@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-16T00:59:39.205Z",
+  "collected": "2026-11-16T01:27:59.767Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -1951,7 +1951,7 @@
         "fromUpstream": 13,
         "added": 1,
         "pull": 0,
-        "available": 1,
+        "available": 4,
         "upstream": 13,
         "channels": {
           "stable": 4,
@@ -1979,7 +1979,10 @@
           ],
           "pull": [],
           "available": [
-            "samsung-galaxy-book2-go"
+            "dell-inspiron-14-3420-snapdragon",
+            "gateway-gwtn133-1",
+            "samsung-galaxy-book2-go",
+            "samsung-galaxy-book-s"
           ]
         }
       },
@@ -2027,7 +2030,7 @@
         "fromUpstream": 1,
         "added": 9,
         "pull": 0,
-        "available": 1,
+        "available": 3,
         "upstream": 1,
         "channels": {
           "stable": 1,
@@ -2051,7 +2054,9 @@
           ],
           "pull": [],
           "available": [
-            "samsung-galaxy-book2-go"
+            "gateway-gwtn133-1",
+            "samsung-galaxy-book2-go",
+            "samsung-galaxy-book-s"
           ]
         }
       },
@@ -15156,9 +15161,9 @@
       "sources": [
         "https://github.com/aarch64-laptops/build/tree/master/misc/dell-inspiron-14-3420"
       ],
-      "notes": null,
+      "notes": "Matt Durr's tree runs it from its NVMe drive with the keyboard, touchpad, USB, Wi-Fi, GPU acceleration, battery, suspend and CPU frequency scaling; the lid switch, Bluetooth, audio, camera and special keys don't work yet. Its NVMe drive needs the kernel to keep the firmware's PCIe PHY setup. Dell's audio DSP image on Windows Update is signed with Qualcomm's test key, so only the GPU firmware is packaged.",
       "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -15172,21 +15177,24 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
+        "deviceTree": "elsewhere",
         "ids": "none",
         "firmware": "none"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/jmdurr/dell-inspiron-3420-arm",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/dell-inspiron-14-3420-snapdragon",
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
         "firmware": "windows",
-        "firmwareMissing": [],
+        "firmwareMissing": [
+          "qcadsp8180.mbn",
+          "qcdxkmsuc8180.mbn"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwarePosted": null,
@@ -15200,6 +15208,8 @@
       },
       "variants": [
         {
+          "chip": "SC8180XP",
+          "compatible": "dell,inspiron-3420-sc8180xp",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
@@ -15348,9 +15358,9 @@
       "sources": [
         "https://github.com/aarch64-laptops/build/tree/master/misc/acer-gateway-gwtn133-1"
       ],
-      "notes": null,
+      "notes": "Huawei built it on the MateBook E 2019's board, and its tables differ from the MateBook's only in the panel, keyboard and touchpad, so its tree includes the MateBook's and loads the MateBook's firmware, whose signatures name the same OEM and model. Not booted on the laptop yet.",
       "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -15358,29 +15368,29 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
+        "deviceTree": "elsewhere",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/aarch64-laptops/build/issues/84#issuecomment-1746527461",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/gateway-gwtn133-1",
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-sdm850-HUAWEI-AL09",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -15392,6 +15402,7 @@
       },
       "variants": [
         {
+          "compatible": "acer,gateway-gwtn133-1",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
@@ -16687,9 +16698,9 @@
       "sources": [
         "https://github.com/aarch64-laptops/build/tree/master/misc/samsung-galaxy-book-s"
       ],
-      "notes": null,
+      "notes": "Anton Bambura's tree leaves the touchscreen, backlight and battery off.",
       "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
@@ -16697,29 +16708,29 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
+        "deviceTree": "elsewhere",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://gitlab.com/sc8180x-mainline/linux/-/commit/4bb4617388be2cea5d41a8ac0d21a3a43a3644cb",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/samsung-galaxy-book-s",
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-samsung-w767",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -16731,6 +16742,8 @@
       },
       "variants": [
         {
+          "chip": "SC8180X",
+          "compatible": "samsung,w767",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
