@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-16T12:01:45.393Z",
+  "collected": "2026-11-16T14:33:14.815Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -4032,9 +4032,14 @@
       "file": "mahua-hp-omnibook-5-bf1xxx.json",
       "state": "open",
       "url": "https://github.com/ubuntu/stubble/pull/106",
-      "name": "HP OmniBook 5 16-bf1",
+      "name": "HP OmniBook 5 Laptop 16-bf1xxx",
       "compatible": "hp,omnibook-5-16-bf1xxx",
       "hwids": [
+        "3edd06a3-b301-5468-9216-2884a31ceab4",
+        "103ed2a3-9e48-57fd-b7b4-1c5d20ee06c3",
+        "2ca25d79-a03b-5c14-8cd2-22376e452eb2",
+        "c8c76b28-fbcb-5fe0-abcd-40ab7ef7bcd6",
+        "1807ef5a-8baf-50ca-b998-c3d7457b83db",
         "4ddf1f98-9166-536f-853d-452ee94ac07a",
         "aa26cf43-45d4-5a10-901b-0358db424bf1"
       ]
@@ -5227,6 +5232,18 @@
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
     },
     {
+      "folder": "hardware-reports/samsung-electronics-co-ltd/galaxy-book-go-5g",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/50",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "984a2fb0a241d7416d40594b54269b1122d8b83a",
+      "dir": "reports/samsung-electronics-co-ltd/galaxy-book-go-5g/dbf72fb1",
+      "pull": {
+        "number": 50,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
       "folder": "hardware-reports/microsoft-corporation/surface-pro-x",
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/48",
       "repo": "turbineBMW/omarchy-hardware-reports",
@@ -5891,7 +5908,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-68",
+        "kernel": "7.3-70",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -5928,14 +5945,22 @@
           "msm8998-lenovo-miix-630.dts",
           "purwa-lenovo-ideacentre-mini-01q8x10.dts",
           "sc7180-acer-aspire1.dts",
+          "sc7180-apcsilmic-dot-1.dts",
           "sc7180-ecs-liva-qc710.dts",
+          "sc7180-lenovo-10w.dts",
+          "sc7180-samsung-galaxy-book-go.dts",
+          "sc7180-tcl-book-14-go.dts",
           "sc7280-samsung-galaxy-book2-go.dts",
           "sc8180x-lenovo-flex-5g.dts",
           "sc8180x-microsoft-cambria.dts",
           "sc8180x-microsoft-carina.dts",
           "sc8180x-microsoft-caspar.dts",
           "sc8180x-samsung-w767.dts",
+          "sc8180xp-acer-spin-7-sp714-61na.dts",
           "sc8180xp-dell-inspiron-3420.dts",
+          "sc8180xp-lenovo-ideapad-5g-14q8x05.dts",
+          "sc8180xp-samsung-galaxy-book-go-5g.dts",
+          "sc8180xp-xiaomi-book-s.dts",
           "sc8280xp-crd.dts",
           "sc8280xp-huawei-gaokun3.dts",
           "sc8280xp-lenovo-thinkpad-x13s.dts",
@@ -6089,11 +6114,18 @@
           "mahua-microsoft-surface-pro-12th-edition.json",
           "msm8998-asus-novago-tp370ql.json",
           "msm8998-hp-envy-x2.json",
+          "sc7180-lenovo-10w.json",
+          "sc7180-samsung-galaxy-book-go.json",
+          "sc7180-tcl-book-14-go.json",
           "sc7280-samsung-galaxy-book2-go.json",
           "sc8180x-microsoft-cambria.json",
           "sc8180x-microsoft-caspar.json",
           "sc8180x-samsung-w767.json",
+          "sc8180xp-acer-spin-7-sp714-61na.json",
           "sc8180xp-dell-inspiron-3420.json",
+          "sc8180xp-lenovo-ideapad-5g-14q8x05.json",
+          "sc8180xp-samsung-galaxy-book-go-5g.json",
+          "sc8180xp-xiaomi-book-s.json",
           "sdm850-gateway-gwtn133-1.json",
           "sdm850-huawei-matebook-e-2019.json",
           "sdm850-samsung-w737.json",
@@ -6160,6 +6192,13 @@
             "qcom/x1p42100/ACER/A16-11M/qccdsp8380.mbn",
             "qcom/x1p42100/ACER/A16-11M/qcdxkmsucpurwa.mbn",
             "qcom/x1p42100/ACER/A16-11M/qcvss8380_pa.mbn"
+          ],
+          "acer-spin-7-firmware": [
+            "qcom/sc8180xp/Acer/SP714-61NA/qcadsp8180.mbn",
+            "qcom/sc8180xp/Acer/SP714-61NA/qccdsp8180.mbn",
+            "qcom/sc8180xp/Acer/SP714-61NA/qcdxkmsuc8180.mbn",
+            "qcom/sc8180xp/Acer/SP714-61NA/qcmpss8180_nm.mbn",
+            "qcom/sc8180xp/Acer/SP714-61NA/wlanmdsp.mbn"
           ],
           "acer-swift-14-ai-firmware": [
             "qcom/x1e80100/ACER/SF14-11/adsp_dtbs.elf",
@@ -6418,6 +6457,9 @@
             "qcom/glymur/ASUSTeK/UX3607OA/qcadsp8480.mbn",
             "qcom/glymur/ASUSTeK/UX3607OA/qccdsp8480.mbn"
           ],
+          "dell-inspiron-14-3420-firmware": [
+            "qcom/sc8180xp/dell/qcdxkmsuc8180.mbn"
+          ],
           "dell-inspiron-14-5441-firmware": [
             "qcom/x1e80100/dell/inspiron-14-plus-5441/adsp_dtbs.elf",
             "qcom/x1e80100/dell/inspiron-14-plus-5441/adspr.jsn",
@@ -6650,6 +6692,17 @@
             "qcom/sc8280xp/HUAWEI/gaokun3/qccdsp8280.mbn",
             "qcom/sc8280xp/HUAWEI/gaokun3/qcdxkmsuc8280.mbn"
           ],
+          "lenovo-10w-firmware": [
+            "qcom/sc7180/LENOVO/82ST/adspr.jsn",
+            "qcom/sc7180/LENOVO/82ST/adspua.jsn",
+            "qcom/sc7180/LENOVO/82ST/modemr.jsn",
+            "qcom/sc7180/LENOVO/82ST/modemuw.jsn",
+            "qcom/sc7180/LENOVO/82ST/qcadsp7180.mbn",
+            "qcom/sc7180/LENOVO/82ST/qcdxkmsuc7180.mbn",
+            "qcom/sc7180/LENOVO/82ST/qcmpss7180_nm.mbn",
+            "qcom/sc7180/LENOVO/82ST/qcvss7180.mbn",
+            "qcom/sc7180/LENOVO/82ST/wlanmdsp.mbn"
+          ],
           "lenovo-flex-5g-firmware": [
             "qcom/sc8180x/LENOVO/82AK/qcadsp8180.mbn",
             "qcom/sc8180x/LENOVO/82AK/qccdsp8180.mbn",
@@ -6679,6 +6732,13 @@
             "qcom/x1p42100/LENOVO/91B6/qccdsp8380.mbn",
             "qcom/x1p42100/LENOVO/91B6/qcdxkmsucpurwa.mbn",
             "qcom/x1p42100/LENOVO/91B6/qcvss8380_pa.mbn"
+          ],
+          "lenovo-ideapad-5g-firmware": [
+            "qcom/sc8180xp/LENOVO/82KF/qcadsp8180.mbn",
+            "qcom/sc8180xp/LENOVO/82KF/qccdsp8180.mbn",
+            "qcom/sc8180xp/LENOVO/82KF/qcdxkmsuc8180.mbn",
+            "qcom/sc8180xp/LENOVO/82KF/qcmpss8180_nm.mbn",
+            "qcom/sc8180xp/LENOVO/82KF/wlanmdsp.mbn"
           ],
           "lenovo-ideapad-5x-2-in-1-firmware": [
             "qcom/x1p42100/LENOVO/83GH/adsp_dtbs.elf",
@@ -7010,6 +7070,23 @@
             "qcom/x1e80100/Thundercomm/DEVKIT/qccdsp8380.mbn",
             "qcom/x1e80100/Thundercomm/DEVKIT/qcdxkmsuc8380.mbn"
           ],
+          "samsung-galaxy-book-go-5g-firmware": [
+            "qcom/sc8180xp/Samsung/galaxy-book-go-5g/qcadsp8180.mbn",
+            "qcom/sc8180xp/Samsung/galaxy-book-go-5g/qccdsp8180.mbn",
+            "qcom/sc8180xp/Samsung/galaxy-book-go-5g/qcdxkmsuc8180.mbn",
+            "qcom/sc8180xp/Samsung/galaxy-book-go-5g/qcmpss8180_nm.mbn"
+          ],
+          "samsung-galaxy-book-go-firmware": [
+            "qcom/sc7180/Samsung/galaxy-book-go/adspr.jsn",
+            "qcom/sc7180/Samsung/galaxy-book-go/adspua.jsn",
+            "qcom/sc7180/Samsung/galaxy-book-go/modemr.jsn",
+            "qcom/sc7180/Samsung/galaxy-book-go/modemuw.jsn",
+            "qcom/sc7180/Samsung/galaxy-book-go/qcadsp7180.mbn",
+            "qcom/sc7180/Samsung/galaxy-book-go/qcdxkmsuc7180.mbn",
+            "qcom/sc7180/Samsung/galaxy-book-go/qcmpss7180_nm.mbn",
+            "qcom/sc7180/Samsung/galaxy-book-go/qcvss7180.mbn",
+            "qcom/sc7180/Samsung/galaxy-book-go/wlanmdsp.mbn"
+          ],
           "samsung-galaxy-book2-w737-firmware": [
             "qcom/sdm850/samsung/w737/ipa_fws.elf",
             "qcom/sdm850/samsung/w737/qcadsp850.mbn",
@@ -7036,6 +7113,13 @@
             "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn",
             "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn",
             "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcdxkmsuc8380.mbn"
+          ],
+          "xiaomi-book-s-firmware": [
+            "qcom/sc8180xp/Xiaomi/book-s/qcadsp8180.mbn",
+            "qcom/sc8180xp/Xiaomi/book-s/qccdsp8180.mbn",
+            "qcom/sc8180xp/Xiaomi/book-s/qcdxkmsuc8180.mbn",
+            "qcom/sc8180xp/Xiaomi/book-s/qcmpss8180_nm.mbn",
+            "qcom/sc8180xp/Xiaomi/book-s/wlanmdsp.mbn"
           ]
         }
       }
@@ -8215,6 +8299,124 @@
         ],
         "patch": "linux-omarchy-dtbs/0044-arm64-dts-qcom-Add-the-Gateway-GWTN133-1.patch",
         "firmware": []
+      },
+      {
+        "file": "sc8180xp-acer-spin-7-sp714-61na.dts",
+        "model": "Acer Spin 7 SP714-61NA",
+        "compatible": [
+          "acer,spin-7-sp714-61na",
+          "qcom,sc8180x"
+        ],
+        "patch": "linux-omarchy-dtbs/0046-arm64-dts-qcom-Add-the-Acer-Spin-7-SP714-61NA.patch",
+        "firmware": [
+          "qcom/sc8180xp/Acer/SP714-61NA/qcdxkmsuc8180.mbn",
+          "qcom/sc8180xp/Acer/SP714-61NA/qcadsp8180.mbn",
+          "qcom/sc8180xp/Acer/SP714-61NA/qccdsp8180.mbn",
+          "qcom/sc8180xp/Acer/SP714-61NA/qcmpss8180_nm.mbn"
+        ]
+      },
+      {
+        "file": "sc8180xp-lenovo-ideapad-5g-14q8x05.dts",
+        "model": "Lenovo IdeaPad 5G 14Q8X05",
+        "compatible": [
+          "lenovo,ideapad-5g-14q8x05",
+          "qcom,sc8180x"
+        ],
+        "patch": "linux-omarchy-dtbs/0047-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-5G-14Q8X05.patch",
+        "firmware": [
+          "qcom/sc8180xp/LENOVO/82KF/qcdxkmsuc8180.mbn",
+          "qcom/sc8180xp/LENOVO/82KF/qcadsp8180.mbn",
+          "qcom/sc8180xp/LENOVO/82KF/qccdsp8180.mbn",
+          "qcom/sc8180xp/LENOVO/82KF/qcmpss8180_nm.mbn"
+        ]
+      },
+      {
+        "file": "sc8180xp-samsung-galaxy-book-go-5g.dts",
+        "model": "Samsung Galaxy Book Go 5G",
+        "compatible": [
+          "samsung,galaxy-book-go-5g",
+          "qcom,sc8180x"
+        ],
+        "patch": "linux-omarchy-dtbs/0048-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book-Go-5G.patch",
+        "firmware": [
+          "qcom/sc8180xp/Samsung/galaxy-book-go-5g/qcdxkmsuc8180.mbn",
+          "qcom/sc8180xp/Samsung/galaxy-book-go-5g/qcadsp8180.mbn",
+          "qcom/sc8180xp/Samsung/galaxy-book-go-5g/qccdsp8180.mbn",
+          "qcom/sc8180xp/Samsung/galaxy-book-go-5g/qcmpss8180_nm.mbn"
+        ]
+      },
+      {
+        "file": "sc8180xp-xiaomi-book-s.dts",
+        "model": "Xiaomi Book S 12.4",
+        "compatible": [
+          "xiaomi,book-s",
+          "qcom,sc8180x"
+        ],
+        "patch": "linux-omarchy-dtbs/0049-arm64-dts-qcom-Add-the-Xiaomi-Book-S-12.4.patch",
+        "firmware": [
+          "qcom/sc8180xp/Xiaomi/book-s/qcdxkmsuc8180.mbn",
+          "qcom/sc8180xp/Xiaomi/book-s/qcadsp8180.mbn",
+          "qcom/sc8180xp/Xiaomi/book-s/qccdsp8180.mbn",
+          "qcom/sc8180xp/Xiaomi/book-s/qcmpss8180_nm.mbn"
+        ]
+      },
+      {
+        "file": "sc7180-samsung-galaxy-book-go.dts",
+        "model": "Samsung Galaxy Book Go",
+        "compatible": [
+          "samsung,galaxy-book-go",
+          "qcom,sc7180"
+        ],
+        "patch": "linux-omarchy-dtbs/0050-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book-Go.patch",
+        "firmware": [
+          "qcom/sc7180/Samsung/galaxy-book-go/qcdxkmsuc7180.mbn",
+          "qcom/sc7180/Samsung/galaxy-book-go/qcadsp7180.mbn",
+          "qcom/sc7180/Samsung/galaxy-book-go/qcmpss7180_nm.mbn",
+          "qcom/sc7180/Samsung/galaxy-book-go/qcvss7180.mbn"
+        ]
+      },
+      {
+        "file": "sc7180-lenovo-10w.dts",
+        "model": "Lenovo 10w",
+        "compatible": [
+          "lenovo,10w",
+          "qcom,sc7180"
+        ],
+        "patch": "linux-omarchy-dtbs/0051-arm64-dts-qcom-Add-the-Lenovo-10w.patch",
+        "firmware": [
+          "qcom/sc7180/LENOVO/82ST/qcdxkmsuc7180.mbn",
+          "qcom/sc7180/LENOVO/82ST/qcadsp7180.mbn",
+          "qcom/sc7180/LENOVO/82ST/qcmpss7180_nm.mbn",
+          "qcom/sc7180/LENOVO/82ST/qcvss7180.mbn"
+        ]
+      },
+      {
+        "file": "sc7180-tcl-book-14-go.dts",
+        "model": "TCL Book 14 Go",
+        "compatible": [
+          "tclcomm,book-14-go",
+          "qcom,sc7180"
+        ],
+        "patch": "linux-omarchy-dtbs/0053-arm64-dts-qcom-Add-the-TCL-Book-14-Go.patch",
+        "firmware": [
+          "qcom/sc7180/tcl/book-14-go/qcadsp7180.mbn",
+          "qcom/sc7180/tcl/book-14-go/qcmpss7180_nm.mbn",
+          "qcom/sc7180/tcl/book-14-go/qcvss7180.mbn"
+        ]
+      },
+      {
+        "file": "sc7180-apcsilmic-dot-1.dts",
+        "model": "Apcsilmic Dot 1",
+        "compatible": [
+          "apcsilmic,dot-1",
+          "qcom,sc7180"
+        ],
+        "patch": "linux-omarchy-dtbs/0054-arm64-dts-qcom-Add-the-Apcsilmic-Dot-1.patch",
+        "firmware": [
+          "qcom/sc7180/apcsilmic/dot-1/qcadsp7180.mbn",
+          "qcom/sc7180/apcsilmic/dot-1/qcmpss7180_nm.mbn",
+          "qcom/sc7180/apcsilmic/dot-1/qcvss7180.mbn"
+        ]
       }
     ],
     "carriedIds": [
@@ -8430,9 +8632,14 @@
       {
         "file": "mahua-hp-omnibook-5-bf1xxx.json",
         "recipe": "pkgbuilds/linux-omarchy-dtbs",
-        "name": "HP OmniBook 5 16-bf1",
+        "name": "HP OmniBook 5 Laptop 16-bf1xxx",
         "compatible": "hp,omnibook-5-16-bf1xxx",
         "hwids": [
+          "3edd06a3-b301-5468-9216-2884a31ceab4",
+          "103ed2a3-9e48-57fd-b7b4-1c5d20ee06c3",
+          "2ca25d79-a03b-5c14-8cd2-22376e452eb2",
+          "c8c76b28-fbcb-5fe0-abcd-40ab7ef7bcd6",
+          "1807ef5a-8baf-50ca-b998-c3d7457b83db",
           "4ddf1f98-9166-536f-853d-452ee94ac07a",
           "aa26cf43-45d4-5a10-901b-0358db424bf1"
         ]
@@ -8517,6 +8724,53 @@
         ]
       },
       {
+        "file": "sc7180-lenovo-10w.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Lenovo 10w (82ST, 82SU)",
+        "compatible": "lenovo,10w",
+        "hwids": [
+          "387eab1e-ce51-5341-ba9a-2756870020f7",
+          "03d1025d-4c8b-5bbe-b5a5-b402c386b23d",
+          "3c9ae314-bb2e-56db-a843-37f8e94137ef",
+          "b390d00c-b3a8-5d51-81fe-29c4cff6383b",
+          "770cf75f-8f97-5751-86ba-0d8e13b2c580",
+          "80e1a950-e4a6-522d-947d-218b991817f5"
+        ]
+      },
+      {
+        "file": "sc7180-samsung-galaxy-book-go.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Samsung Galaxy Book Go (NP340XLA, NP345XLA)",
+        "compatible": "samsung,galaxy-book-go",
+        "hwids": [
+          "e25d5cee-d205-55f0-9299-4b4ac53c40fa",
+          "432ab9a0-64ab-5d2a-8249-b75e5cdec847",
+          "0de5b2f5-26e5-528d-8b27-6ff449dfef67",
+          "d5209a2d-8eba-5383-99b1-3c707aa38d42",
+          "70f9f23d-e926-593e-b828-df14bd90815b",
+          "82e2ebed-8ade-5aec-ad6f-d040ef549d29",
+          "1997af35-39cc-579f-be9a-85ccfe042324",
+          "fe99871c-b3fd-5978-a1ce-dc67575a7b35",
+          "c3625f39-2d65-5331-b55a-bed8b2eb7aa7",
+          "babbb106-3dda-55e6-a280-0f8e1c2d846e",
+          "8b389e7e-b3c5-5f2d-8f9f-7e6b238a9407"
+        ]
+      },
+      {
+        "file": "sc7180-tcl-book-14-go.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "TCL Book 14 Go (B220G)",
+        "compatible": "tclcomm,book-14-go",
+        "hwids": [
+          "f848821b-6fcf-551d-a485-1c5022972e6c",
+          "86c1389d-06bf-5cf4-b841-77bb9cd9057b",
+          "559f2d43-58e9-5684-9402-0a1158e11860",
+          "a73f6cf8-b466-50e4-8260-dc756c2cd349",
+          "2c76d019-5678-54b6-a05f-e067c5530aff",
+          "a54a6088-39f5-5405-b6c8-12050923fec6"
+        ]
+      },
+      {
         "file": "sc7280-samsung-galaxy-book2-go.json",
         "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Samsung Galaxy Book2 Go 5G",
@@ -8577,6 +8831,20 @@
         ]
       },
       {
+        "file": "sc8180xp-acer-spin-7-sp714-61na.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Acer Spin 7 SP714-61NA",
+        "compatible": "acer,spin-7-sp714-61na",
+        "hwids": [
+          "532df815-fdc1-5e0a-8d6a-93d3e3ce2662",
+          "d918093e-a393-5341-a188-2a73aca18629",
+          "31e6b7ad-420d-5dc4-91ad-8d5458ba4112",
+          "5e4e8bb3-17f9-5df5-87ce-39bcabe43958",
+          "95d8ecf9-e4aa-5ef8-be03-c531d372b3d0",
+          "cdd8a241-4b52-5f31-8d2c-a301baf289c0"
+        ]
+      },
+      {
         "file": "sc8180xp-dell-inspiron-3420.json",
         "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Dell Inspiron 14 3420 (SC8180XP, 0BF4)",
@@ -8584,6 +8852,56 @@
         "hwids": [
           "c37b0e8e-de1a-51f0-b08c-32d2a95a589a",
           "87df3ada-c7dd-53c3-954f-3f14a9924941"
+        ]
+      },
+      {
+        "file": "sc8180xp-lenovo-ideapad-5g-14q8x05.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Lenovo IdeaPad 5G 14Q8X05 (82KF)",
+        "compatible": "lenovo,ideapad-5g-14q8x05",
+        "hwids": [
+          "538b3f11-1844-5474-b3cc-acb5e591a499",
+          "86e64c01-c81b-5c06-b3ca-6690bfbe3f47",
+          "90116135-b525-5b86-84c0-088fbb77c3dd",
+          "7288bc48-b72e-5db5-bda9-76361c098fd1",
+          "7570d1e3-ae55-59aa-a7f0-90910f4fb8ba",
+          "42cc16de-8532-54ed-9ecd-b97f2a894322",
+          "898d8dc9-0294-5688-8da2-4ec0cc36c740",
+          "d4d0cad5-4ed6-5df2-8b11-5b716fcf3bf2"
+        ]
+      },
+      {
+        "file": "sc8180xp-samsung-galaxy-book-go-5g.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Samsung Galaxy Book Go 5G (NP545XLA)",
+        "compatible": "samsung,galaxy-book-go-5g",
+        "hwids": [
+          "ef713166-e61c-5461-9413-8743301ea2c5",
+          "53731317-4d93-5396-a049-ff5df609063f",
+          "26282e26-2a85-5837-bec3-b9211e55a364",
+          "658ec971-68a4-50dd-9c43-1ee87015ec2e",
+          "dad425f3-1445-5ca3-90a2-2a69c788a49d",
+          "bb04ea9d-135d-57f3-b28d-c6a248d68a84",
+          "cb5bb884-5c1a-502c-8dd2-3e987ce888c7",
+          "e0112168-c75f-5989-b97d-aabb0ee91a9d",
+          "16791a5a-eab5-5733-b4d6-8276d17bb1c5"
+        ]
+      },
+      {
+        "file": "sc8180xp-xiaomi-book-s.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Xiaomi Book S 12.4 (TM2133)",
+        "compatible": "xiaomi,book-s",
+        "hwids": [
+          "aac43bd4-a565-591e-ab39-7abb0182396e",
+          "7983303f-9349-5782-b4fc-cd782b2f9051",
+          "b4a15fbe-7aa1-5bf4-91bd-fd7b5046afcd",
+          "a126538e-6a7e-5569-88c6-d1ab2ddb4a4e",
+          "d61de8cc-15e8-5005-ab90-ed8c97de6a0e",
+          "ef2e8aed-a559-5e5f-90d7-cf65c746d3b2",
+          "01963a05-74ff-59dd-ab34-a3705c9762f6",
+          "5ea80a8f-9710-5f65-a817-69c928311f71",
+          "3bf08810-11ca-5c17-a821-487cf4da19ab"
         ]
       },
       {
@@ -9110,6 +9428,19 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.16.492/omarchy-edge-2026.11.16.492-aarch64.iso",
       "kernel": "7.3.0-66-omarchy"
     },
-    "pulls": []
+    "pulls": [
+      {
+        "number": 2896,
+        "title": "dell-inspiron-14-3420-firmware: add the audio DSP image from Windows Update",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2896",
+        "draft": false,
+        "deviceTrees": [],
+        "ids": [],
+        "firmware": [
+          "qcom/sc8180xp/dell/qcadsp8180.mbn",
+          "qcom/sc8180xp/dell/qcdxkmsuc8180.mbn"
+        ]
+      }
+    ]
   }
 }

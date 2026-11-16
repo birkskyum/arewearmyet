@@ -103,7 +103,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | Samsung Galaxy Book2 | [samsung-galaxybook2](aarch64-laptops/samsung-galaxybook2) |
 | Samsung Galaxy Book2 Go | [samsung-galaxybook2-go](aarch64-laptops/samsung-galaxybook2-go) |
 | Samsung Galaxy Book Go | [samsung-galaxy-book-go](aarch64-laptops/samsung-galaxy-book-go) |
-| Samsung Galaxy Book Go 5G | [samsung-galaxy-book-go-5g](aarch64-laptops/samsung-galaxy-book-go-5g) |
+| Samsung Galaxy Book Go 5G | [samsung-galaxy-book-go-5g](aarch64-laptops/samsung-galaxy-book-go-5g), [hardware-reports/samsung-electronics-co-ltd/galaxy-book-go-5g](../reports/samsung-electronics-co-ltd/galaxy-book-go-5g) |
 | Samsung Galaxy Book S | [samsung-galaxy-book-s](aarch64-laptops/samsung-galaxy-book-s) |
 | TCL Book 14 Go | [tcl-book-14-go](aarch64-laptops/tcl-book-14-go) |
 | Xiaomi Book S | [xiaomi-book-s](aarch64-laptops/xiaomi-book-s) |

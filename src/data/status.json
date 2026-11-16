@@ -1,10 +1,10 @@
 {
-  "collected": "2026-11-16T12:01:45.393Z",
+  "collected": "2026-11-16T14:33:14.815Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-68",
+    "kernel": "7.3-70",
     "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-68",
+        "kernel": "7.3-70",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -433,14 +433,22 @@
           "msm8998-lenovo-miix-630.dts",
           "purwa-lenovo-ideacentre-mini-01q8x10.dts",
           "sc7180-acer-aspire1.dts",
+          "sc7180-apcsilmic-dot-1.dts",
           "sc7180-ecs-liva-qc710.dts",
+          "sc7180-lenovo-10w.dts",
+          "sc7180-samsung-galaxy-book-go.dts",
+          "sc7180-tcl-book-14-go.dts",
           "sc7280-samsung-galaxy-book2-go.dts",
           "sc8180x-lenovo-flex-5g.dts",
           "sc8180x-microsoft-cambria.dts",
           "sc8180x-microsoft-carina.dts",
           "sc8180x-microsoft-caspar.dts",
           "sc8180x-samsung-w767.dts",
+          "sc8180xp-acer-spin-7-sp714-61na.dts",
           "sc8180xp-dell-inspiron-3420.dts",
+          "sc8180xp-lenovo-ideapad-5g-14q8x05.dts",
+          "sc8180xp-samsung-galaxy-book-go-5g.dts",
+          "sc8180xp-xiaomi-book-s.dts",
           "sc8280xp-crd.dts",
           "sc8280xp-huawei-gaokun3.dts",
           "sc8280xp-lenovo-thinkpad-x13s.dts",
@@ -594,11 +602,18 @@
           "mahua-microsoft-surface-pro-12th-edition.json",
           "msm8998-asus-novago-tp370ql.json",
           "msm8998-hp-envy-x2.json",
+          "sc7180-lenovo-10w.json",
+          "sc7180-samsung-galaxy-book-go.json",
+          "sc7180-tcl-book-14-go.json",
           "sc7280-samsung-galaxy-book2-go.json",
           "sc8180x-microsoft-cambria.json",
           "sc8180x-microsoft-caspar.json",
           "sc8180x-samsung-w767.json",
+          "sc8180xp-acer-spin-7-sp714-61na.json",
           "sc8180xp-dell-inspiron-3420.json",
+          "sc8180xp-lenovo-ideapad-5g-14q8x05.json",
+          "sc8180xp-samsung-galaxy-book-go-5g.json",
+          "sc8180xp-xiaomi-book-s.json",
           "sdm850-gateway-gwtn133-1.json",
           "sdm850-huawei-matebook-e-2019.json",
           "sdm850-samsung-w737.json",
@@ -665,6 +680,13 @@
             "qcom/x1p42100/ACER/A16-11M/qccdsp8380.mbn",
             "qcom/x1p42100/ACER/A16-11M/qcdxkmsucpurwa.mbn",
             "qcom/x1p42100/ACER/A16-11M/qcvss8380_pa.mbn"
+          ],
+          "acer-spin-7-firmware": [
+            "qcom/sc8180xp/Acer/SP714-61NA/qcadsp8180.mbn",
+            "qcom/sc8180xp/Acer/SP714-61NA/qccdsp8180.mbn",
+            "qcom/sc8180xp/Acer/SP714-61NA/qcdxkmsuc8180.mbn",
+            "qcom/sc8180xp/Acer/SP714-61NA/qcmpss8180_nm.mbn",
+            "qcom/sc8180xp/Acer/SP714-61NA/wlanmdsp.mbn"
           ],
           "acer-swift-14-ai-firmware": [
             "qcom/x1e80100/ACER/SF14-11/adsp_dtbs.elf",
@@ -923,6 +945,9 @@
             "qcom/glymur/ASUSTeK/UX3607OA/qcadsp8480.mbn",
             "qcom/glymur/ASUSTeK/UX3607OA/qccdsp8480.mbn"
           ],
+          "dell-inspiron-14-3420-firmware": [
+            "qcom/sc8180xp/dell/qcdxkmsuc8180.mbn"
+          ],
           "dell-inspiron-14-5441-firmware": [
             "qcom/x1e80100/dell/inspiron-14-plus-5441/adsp_dtbs.elf",
             "qcom/x1e80100/dell/inspiron-14-plus-5441/adspr.jsn",
@@ -1155,6 +1180,17 @@
             "qcom/sc8280xp/HUAWEI/gaokun3/qccdsp8280.mbn",
             "qcom/sc8280xp/HUAWEI/gaokun3/qcdxkmsuc8280.mbn"
           ],
+          "lenovo-10w-firmware": [
+            "qcom/sc7180/LENOVO/82ST/adspr.jsn",
+            "qcom/sc7180/LENOVO/82ST/adspua.jsn",
+            "qcom/sc7180/LENOVO/82ST/modemr.jsn",
+            "qcom/sc7180/LENOVO/82ST/modemuw.jsn",
+            "qcom/sc7180/LENOVO/82ST/qcadsp7180.mbn",
+            "qcom/sc7180/LENOVO/82ST/qcdxkmsuc7180.mbn",
+            "qcom/sc7180/LENOVO/82ST/qcmpss7180_nm.mbn",
+            "qcom/sc7180/LENOVO/82ST/qcvss7180.mbn",
+            "qcom/sc7180/LENOVO/82ST/wlanmdsp.mbn"
+          ],
           "lenovo-flex-5g-firmware": [
             "qcom/sc8180x/LENOVO/82AK/qcadsp8180.mbn",
             "qcom/sc8180x/LENOVO/82AK/qccdsp8180.mbn",
@@ -1184,6 +1220,13 @@
             "qcom/x1p42100/LENOVO/91B6/qccdsp8380.mbn",
             "qcom/x1p42100/LENOVO/91B6/qcdxkmsucpurwa.mbn",
             "qcom/x1p42100/LENOVO/91B6/qcvss8380_pa.mbn"
+          ],
+          "lenovo-ideapad-5g-firmware": [
+            "qcom/sc8180xp/LENOVO/82KF/qcadsp8180.mbn",
+            "qcom/sc8180xp/LENOVO/82KF/qccdsp8180.mbn",
+            "qcom/sc8180xp/LENOVO/82KF/qcdxkmsuc8180.mbn",
+            "qcom/sc8180xp/LENOVO/82KF/qcmpss8180_nm.mbn",
+            "qcom/sc8180xp/LENOVO/82KF/wlanmdsp.mbn"
           ],
           "lenovo-ideapad-5x-2-in-1-firmware": [
             "qcom/x1p42100/LENOVO/83GH/adsp_dtbs.elf",
@@ -1515,6 +1558,23 @@
             "qcom/x1e80100/Thundercomm/DEVKIT/qccdsp8380.mbn",
             "qcom/x1e80100/Thundercomm/DEVKIT/qcdxkmsuc8380.mbn"
           ],
+          "samsung-galaxy-book-go-5g-firmware": [
+            "qcom/sc8180xp/Samsung/galaxy-book-go-5g/qcadsp8180.mbn",
+            "qcom/sc8180xp/Samsung/galaxy-book-go-5g/qccdsp8180.mbn",
+            "qcom/sc8180xp/Samsung/galaxy-book-go-5g/qcdxkmsuc8180.mbn",
+            "qcom/sc8180xp/Samsung/galaxy-book-go-5g/qcmpss8180_nm.mbn"
+          ],
+          "samsung-galaxy-book-go-firmware": [
+            "qcom/sc7180/Samsung/galaxy-book-go/adspr.jsn",
+            "qcom/sc7180/Samsung/galaxy-book-go/adspua.jsn",
+            "qcom/sc7180/Samsung/galaxy-book-go/modemr.jsn",
+            "qcom/sc7180/Samsung/galaxy-book-go/modemuw.jsn",
+            "qcom/sc7180/Samsung/galaxy-book-go/qcadsp7180.mbn",
+            "qcom/sc7180/Samsung/galaxy-book-go/qcdxkmsuc7180.mbn",
+            "qcom/sc7180/Samsung/galaxy-book-go/qcmpss7180_nm.mbn",
+            "qcom/sc7180/Samsung/galaxy-book-go/qcvss7180.mbn",
+            "qcom/sc7180/Samsung/galaxy-book-go/wlanmdsp.mbn"
+          ],
           "samsung-galaxy-book2-w737-firmware": [
             "qcom/sdm850/samsung/w737/ipa_fws.elf",
             "qcom/sdm850/samsung/w737/qcadsp850.mbn",
@@ -1541,6 +1601,13 @@
             "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn",
             "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn",
             "qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcdxkmsuc8380.mbn"
+          ],
+          "xiaomi-book-s-firmware": [
+            "qcom/sc8180xp/Xiaomi/book-s/qcadsp8180.mbn",
+            "qcom/sc8180xp/Xiaomi/book-s/qccdsp8180.mbn",
+            "qcom/sc8180xp/Xiaomi/book-s/qcdxkmsuc8180.mbn",
+            "qcom/sc8180xp/Xiaomi/book-s/qcmpss8180_nm.mbn",
+            "qcom/sc8180xp/Xiaomi/book-s/wlanmdsp.mbn"
           ]
         }
       }
@@ -1955,16 +2022,16 @@
     "older": 27,
     "byPieceOlder": {
       "deviceTree": {
-        "omarchy": 18,
+        "omarchy": 26,
         "fromUpstream": 13,
-        "added": 5,
+        "added": 13,
         "pull": 0,
         "available": 0,
         "upstream": 13,
         "channels": {
           "stable": 4,
           "rc": 4,
-          "edge": 18
+          "edge": 26
         },
         "models": {
           "fromUpstream": [
@@ -1983,27 +2050,35 @@
             "samsung-galaxy-book2-w737"
           ],
           "added": [
+            "acer-spin-7-sp714-61na",
+            "apcsilmic-dot-1",
             "dell-inspiron-14-3420-snapdragon",
             "gateway-gwtn133-1",
+            "lenovo-10w",
+            "lenovo-ideapad-5g-14q8x05",
             "microsoft-surface-pro-x",
             "samsung-galaxy-book2-go",
-            "samsung-galaxy-book-s"
+            "samsung-galaxy-book-go",
+            "samsung-galaxy-book-go-5g",
+            "samsung-galaxy-book-s",
+            "tcl-book-14-go",
+            "xiaomi-book-s"
           ],
           "pull": [],
           "available": []
         }
       },
       "ids": {
-        "omarchy": 18,
+        "omarchy": 25,
         "fromUpstream": 9,
-        "added": 9,
+        "added": 16,
         "pull": 0,
-        "available": 2,
+        "available": 0,
         "upstream": 9,
         "channels": {
           "stable": 9,
           "rc": 9,
-          "edge": 18
+          "edge": 25
         },
         "models": {
           "fromUpstream": [
@@ -2018,34 +2093,38 @@
             "lenovo-yoga-c630"
           ],
           "added": [
+            "acer-spin-7-sp714-61na",
             "asus-novago-tp370ql",
             "dell-inspiron-14-3420-snapdragon",
             "gateway-gwtn133-1",
             "hp-envy-x2-snapdragon",
             "huawei-matebook-e-2019",
+            "lenovo-10w",
+            "lenovo-ideapad-5g-14q8x05",
             "microsoft-surface-pro-x",
             "samsung-galaxy-book2-w737",
             "samsung-galaxy-book2-go",
-            "samsung-galaxy-book-s"
+            "samsung-galaxy-book-go",
+            "samsung-galaxy-book-go-5g",
+            "samsung-galaxy-book-s",
+            "tcl-book-14-go",
+            "xiaomi-book-s"
           ],
           "pull": [],
-          "available": [
-            "samsung-galaxy-book-go",
-            "xiaomi-book-s"
-          ]
+          "available": []
         }
       },
       "firmware": {
-        "omarchy": 10,
+        "omarchy": 16,
         "fromUpstream": 1,
-        "added": 9,
-        "pull": 0,
+        "added": 15,
+        "pull": 1,
         "available": 3,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 10
+          "edge": 16
         },
         "models": {
           "fromUpstream": [
@@ -2055,14 +2134,22 @@
             "huawei-matebook-e-go",
             "microsoft-surface-pro-9-5g",
             "microsoft-windows-dev-kit-2023",
+            "acer-spin-7-sp714-61na",
             "huawei-matebook-e-2019",
+            "lenovo-10w",
             "lenovo-flex-5g",
+            "lenovo-ideapad-5g-14q8x05",
             "lenovo-miix-630",
             "lenovo-yoga-c630",
             "microsoft-surface-pro-x",
-            "samsung-galaxy-book2-w737"
+            "samsung-galaxy-book2-w737",
+            "samsung-galaxy-book-go",
+            "samsung-galaxy-book-go-5g",
+            "xiaomi-book-s"
           ],
-          "pull": [],
+          "pull": [
+            "dell-inspiron-14-3420-snapdragon"
+          ],
           "available": [
             "gateway-gwtn133-1",
             "samsung-galaxy-book2-go",
@@ -2071,10 +2158,10 @@
         }
       },
       "all": {
-        "omarchy": 10,
+        "omarchy": 16,
         "fromUpstream": 1,
-        "added": 9,
-        "pull": 0,
+        "added": 15,
+        "pull": 1,
         "available": 3,
         "upstream": 1,
         "models": {
@@ -2085,14 +2172,22 @@
             "huawei-matebook-e-go",
             "microsoft-surface-pro-9-5g",
             "microsoft-windows-dev-kit-2023",
+            "acer-spin-7-sp714-61na",
             "huawei-matebook-e-2019",
+            "lenovo-10w",
             "lenovo-flex-5g",
+            "lenovo-ideapad-5g-14q8x05",
             "lenovo-miix-630",
             "lenovo-yoga-c630",
             "microsoft-surface-pro-x",
-            "samsung-galaxy-book2-w737"
+            "samsung-galaxy-book2-w737",
+            "samsung-galaxy-book-go",
+            "samsung-galaxy-book-go-5g",
+            "xiaomi-book-s"
           ],
-          "pull": [],
+          "pull": [
+            "dell-inspiron-14-3420-snapdragon"
+          ],
           "available": [
             "gateway-gwtn133-1",
             "samsung-galaxy-book2-go",
@@ -14928,38 +15023,40 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/acer-spin-7-sp714-61na"
       ],
       "notes": null,
-      "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
-        "firmware": "windows",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "acer-spin-7-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
-        "ids": "none",
-        "firmware": "none"
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-dtbs/0046-arm64-dts-qcom-Add-the-Acer-Spin-7-SP714-61NA.patch",
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-sc8180xp-Acer-SP714-61NA",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -14971,17 +15068,30 @@
       },
       "variants": [
         {
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "chip": "SC8180XP",
+          "compatible": "acer,spin-7-sp714-61na",
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "sc8180xp-acer-spin-7-sp714-61na.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0046-arm64-dts-qcom-Add-the-Acer-Spin-7-SP714-61NA.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/sc8180xp/Acer/SP714-61NA/qcdxkmsuc8180.mbn",
+            "qcom/sc8180xp/Acer/SP714-61NA/qcadsp8180.mbn",
+            "qcom/sc8180xp/Acer/SP714-61NA/qccdsp8180.mbn",
+            "qcom/sc8180xp/Acer/SP714-61NA/qcmpss8180_nm.mbn"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -15006,12 +15116,12 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/apcsilmic-dot-1"
       ],
       "notes": null,
-      "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "outcome": "manual",
+      "bootable": "needs-ids",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
@@ -15021,21 +15131,25 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
+        "deviceTree": "edge",
         "ids": "none",
         "firmware": "none"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-dtbs/0054-arm64-dts-qcom-Add-the-Apcsilmic-Dot-1.patch",
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
         "firmware": "windows",
-        "firmwareMissing": [],
+        "firmwareMissing": [
+          "qcadsp7180.mbn",
+          "qcmpss7180_nm.mbn",
+          "qcvss7180.mbn"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwarePosted": null,
@@ -15049,17 +15163,29 @@
       },
       "variants": [
         {
-          "computed": "none",
-          "treeChannel": null,
+          "chip": "SC7180",
+          "compatible": "apcsilmic,dot-1",
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "sc7180-apcsilmic-dot-1.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0054-arm64-dts-qcom-Add-the-Apcsilmic-Dot-1.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180/apcsilmic/dot-1/qcadsp7180.mbn",
+            "qcom/sc7180/apcsilmic/dot-1/qcmpss7180_nm.mbn",
+            "qcom/sc7180/apcsilmic/dot-1/qcvss7180.mbn"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -15173,7 +15299,7 @@
       "sources": [
         "https://github.com/aarch64-laptops/build/tree/master/misc/dell-inspiron-14-3420"
       ],
-      "notes": "Matt Durr's tree runs it from its NVMe drive with the keyboard, touchpad, USB, Wi-Fi, GPU acceleration, battery, suspend and CPU frequency scaling; the lid switch, Bluetooth, audio, camera and special keys don't work yet. Its NVMe drive needs the kernel to keep the firmware's PCIe PHY setup. Dell's audio DSP image on Windows Update is signed with Qualcomm's test key, so only the GPU firmware is packaged.",
+      "notes": "Matt Durr's tree runs it from its NVMe drive with the keyboard, touchpad, USB, Wi-Fi, GPU acceleration, battery, suspend and CPU frequency scaling; the lid switch, Bluetooth, audio, camera and special keys don't work yet. Its NVMe drive needs the kernel to keep the firmware's PCIe PHY setup. Dell's audio DSP image on Windows Update is signed with Qualcomm's test key, like the Yoga C630's, and runs on the laptop.",
       "outcome": "should",
       "bootable": "edge",
       "reports": [],
@@ -15183,15 +15309,19 @@
         "deviceTreePull": null,
         "ids": "edge",
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "pr",
         "firmwareChannel": null,
         "firmwarePackages": [],
-        "firmwarePull": null
+        "firmwarePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2896",
+          "number": 2896,
+          "title": "dell-inspiron-14-3420-firmware: add the audio DSP image from Windows Update"
+        }
       },
       "pieces": {
         "deviceTree": "edge",
         "ids": "edge",
-        "firmware": "none"
+        "firmware": "pr"
       },
       "upstream": {
         "deviceTree": "out-of-tree",
@@ -15202,13 +15332,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcadsp8180.mbn",
-          "qcdxkmsuc8180.mbn"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-sc8180xp-dell",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -15726,38 +15853,40 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-l10w"
       ],
       "notes": null,
-      "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
-        "firmware": "windows",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "lenovo-10w-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
-        "ids": "none",
-        "firmware": "none"
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-dtbs/0051-arm64-dts-qcom-Add-the-Lenovo-10w.patch",
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-sc7180-LENOVO-82ST",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -15769,17 +15898,30 @@
       },
       "variants": [
         {
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "chip": "SC7180",
+          "compatible": "lenovo,10w",
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "sc7180-lenovo-10w.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0051-arm64-dts-qcom-Add-the-Lenovo-10w.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180/LENOVO/82ST/qcdxkmsuc7180.mbn",
+            "qcom/sc7180/LENOVO/82ST/qcadsp7180.mbn",
+            "qcom/sc7180/LENOVO/82ST/qcmpss7180_nm.mbn",
+            "qcom/sc7180/LENOVO/82ST/qcvss7180.mbn"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -15929,38 +16071,40 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-ideapad-5g-14q8x05"
       ],
       "notes": null,
-      "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
-        "firmware": "windows",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "lenovo-ideapad-5g-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
-        "ids": "none",
-        "firmware": "none"
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-dtbs/0047-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-5G-14Q8X05.patch",
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-sc8180xp-LENOVO-82KF",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -15973,17 +16117,30 @@
       },
       "variants": [
         {
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "chip": "SC8180XP",
+          "compatible": "lenovo,ideapad-5g-14q8x05",
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "sc8180xp-lenovo-ideapad-5g-14q8x05.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0047-arm64-dts-qcom-Add-the-Lenovo-IdeaPad-5G-14Q8X05.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/sc8180xp/LENOVO/82KF/qcdxkmsuc8180.mbn",
+            "qcom/sc8180xp/LENOVO/82KF/qcadsp8180.mbn",
+            "qcom/sc8180xp/LENOVO/82KF/qccdsp8180.mbn",
+            "qcom/sc8180xp/LENOVO/82KF/qcmpss8180_nm.mbn"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -16582,38 +16739,40 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/samsung-galaxy-book-go"
       ],
       "notes": null,
-      "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
-        "firmware": "windows",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "samsung-galaxy-book-go-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
-        "ids": "elsewhere",
-        "firmware": "none"
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-dtbs/0050-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book-Go.patch",
         "devicetreeArchive": null,
         "ids": "collected",
         "idsCollected": "https://github.com/ubuntu/stubble/issues/32",
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-sc7180-Samsung-galaxy-book-go",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -16625,17 +16784,30 @@
       },
       "variants": [
         {
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "chip": "SC7180",
+          "compatible": "samsung,galaxy-book-go",
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "sc7180-samsung-galaxy-book-go.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0050-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book-Go.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180/Samsung/galaxy-book-go/qcdxkmsuc7180.mbn",
+            "qcom/sc7180/Samsung/galaxy-book-go/qcadsp7180.mbn",
+            "qcom/sc7180/Samsung/galaxy-book-go/qcmpss7180_nm.mbn",
+            "qcom/sc7180/Samsung/galaxy-book-go/qcvss7180.mbn"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -16660,60 +16832,76 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/samsung-galaxy-book-go-5g"
       ],
       "notes": null,
-      "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
-      "machine": "linux",
+      "machine": "omarchy",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
-        "firmware": "windows",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "samsung-galaxy-book-go-5g-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
-        "ids": "none",
-        "firmware": "none"
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-dtbs/0048-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book-Go-5G.patch",
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-sc8180xp-Samsung-galaxy-book-go-5g",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxy-book-go-5g"
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxy-book-go-5g",
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/50"
         ]
       },
       "variants": [
         {
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "chip": "SC8180XP",
+          "compatible": "samsung,galaxy-book-go-5g",
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "sc8180xp-samsung-galaxy-book-go-5g.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0048-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book-Go-5G.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/sc8180xp/Samsung/galaxy-book-go-5g/qcdxkmsuc8180.mbn",
+            "qcom/sc8180xp/Samsung/galaxy-book-go-5g/qcadsp8180.mbn",
+            "qcom/sc8180xp/Samsung/galaxy-book-go-5g/qccdsp8180.mbn",
+            "qcom/sc8180xp/Samsung/galaxy-book-go-5g/qcmpss8180_nm.mbn"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -16831,14 +17019,14 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/tcl-book-14-go"
       ],
       "notes": null,
-      "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -16846,21 +17034,25 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
-        "ids": "none",
+        "deviceTree": "edge",
+        "ids": "edge",
         "firmware": "none"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-dtbs/0053-arm64-dts-qcom-Add-the-TCL-Book-14-Go.patch",
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
         "firmware": "windows",
-        "firmwareMissing": [],
+        "firmwareMissing": [
+          "qcadsp7180.mbn",
+          "qcmpss7180_nm.mbn",
+          "qcvss7180.mbn"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwarePosted": null,
@@ -16874,17 +17066,29 @@
       },
       "variants": [
         {
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "chip": "SC7180",
+          "compatible": "tclcomm,book-14-go",
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "sc7180-tcl-book-14-go.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0053-arm64-dts-qcom-Add-the-TCL-Book-14-Go.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/sc7180/tcl/book-14-go/qcadsp7180.mbn",
+            "qcom/sc7180/tcl/book-14-go/qcmpss7180_nm.mbn",
+            "qcom/sc7180/tcl/book-14-go/qcvss7180.mbn"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -16909,38 +17113,40 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/xiaomi-book-s"
       ],
       "notes": null,
-      "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
-        "firmware": "windows",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "xiaomi-book-s-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
-        "ids": "elsewhere",
-        "firmware": "none"
+        "deviceTree": "edge",
+        "ids": "edge",
+        "firmware": "edge"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-dtbs/0049-arm64-dts-qcom-Add-the-Xiaomi-Book-S-12.4.patch",
         "devicetreeArchive": null,
         "ids": "collected",
         "idsCollected": "https://github.com/ubuntu/stubble/issues/33",
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-sc8180xp-Xiaomi-book-s",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -16952,17 +17158,30 @@
       },
       "variants": [
         {
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "chip": "SC8180XP",
+          "compatible": "xiaomi,book-s",
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "sc8180xp-xiaomi-book-s.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0049-arm64-dts-qcom-Add-the-Xiaomi-Book-S-12.4.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/sc8180xp/Xiaomi/book-s/qcdxkmsuc8180.mbn",
+            "qcom/sc8180xp/Xiaomi/book-s/qcadsp8180.mbn",
+            "qcom/sc8180xp/Xiaomi/book-s/qccdsp8180.mbn",
+            "qcom/sc8180xp/Xiaomi/book-s/qcmpss8180_nm.mbn"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
