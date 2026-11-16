@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-16T22:04:00.613Z",
+  "collected": "2026-11-16T22:14:00.818Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -649,6 +649,7 @@
           "x1p42100-microsoft-surface-laptop-13.json",
           "x1p42100-microsoft-surface-pro-12in.json",
           "x1p42100-samsung-galaxy-book4-edge-15.json",
+          "x1p42100-samsung-galaxy-book5-edge-5g.json",
           "x1p64100-dell-inspiron-14-plus-5441.json",
           "x1p64100-microsoft-denali.json"
         ],
@@ -1642,10 +1643,10 @@
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
     "works": 2,
-    "should": 68,
+    "should": 69,
     "workaround": 6,
     "problems": 3,
-    "notYet": 8,
+    "notYet": 7,
     "deviceTree": 83,
     "ids": 59,
     "firmware": 73,
@@ -1766,16 +1767,16 @@
         }
       },
       "ids": {
-        "omarchy": 79,
+        "omarchy": 80,
         "fromUpstream": 28,
-        "added": 51,
-        "pull": 1,
+        "added": 52,
+        "pull": 0,
         "available": 0,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 79
+          "edge": 80
         },
         "models": {
           "fromUpstream": [
@@ -1859,11 +1860,10 @@
             "microsoft-surface-pro-12th-edition",
             "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
-            "samsung-galaxy-book4-edge-14"
-          ],
-          "pull": [
+            "samsung-galaxy-book4-edge-14",
             "samsung-galaxy-book5-edge-5g"
           ],
+          "pull": [],
           "available": []
         }
       },
@@ -1963,10 +1963,10 @@
         }
       },
       "all": {
-        "omarchy": 69,
+        "omarchy": 70,
         "fromUpstream": 1,
-        "added": 68,
-        "pull": 1,
+        "added": 69,
+        "pull": 0,
         "available": 0,
         "upstream": 1,
         "models": {
@@ -2041,11 +2041,10 @@
             "qualcomm-snapdragon-dev-kit-for-windows",
             "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
-            "samsung-galaxy-book4-edge-14"
-          ],
-          "pull": [
+            "samsung-galaxy-book4-edge-14",
             "samsung-galaxy-book5-edge-5g"
           ],
+          "pull": [],
           "available": []
         }
       }
@@ -14503,19 +14502,15 @@
         "https://liliputing.com/samsung-launches-galaxy-book5-edge-5g-windows-laptop-with-snapdragon-x-and-5g-wireless/"
       ],
       "notes": "Samsung built it on the Galaxy Book4 Edge 15's board (CA09144D, which Samsung's drivers call NX15) and added a 5G modem. Its Windows Update bundle installs its audio on that board ID, and its DSP board trees are byte for byte the Book4 Edge 15's, so it boots that tree with that firmware. Its hardware IDs come from the strings in its Geekbench results, with the SKU (GALAXY A5A5-PALD) confirmed by Windows Update, which serves Samsung's bundle for it. The tree doesn't describe the modem. Not booted on one yet.",
-      "outcome": "manual",
-      "bootable": "pr",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2936",
-          "number": 2936,
-          "title": "linux-omarchy-dtbs: boot the Galaxy Book5 Edge 5G on the Galaxy Book4 Edge 15's tree"
-        },
+        "ids": "edge",
+        "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -14525,7 +14520,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "pr",
+        "ids": "edge",
         "firmware": "edge"
       },
       "upstream": {
@@ -14553,16 +14548,12 @@
           "compatible": "samsung,galaxy-book4-edge-15",
           "borrowed": true,
           "ids": [],
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2936",
-            "number": 2936,
-            "title": "linux-omarchy-dtbs: boot the Galaxy Book5 Edge 5G on the Galaxy Book4 Edge 15's tree"
-          },
+          "idsPull": null,
           "deviceTree": {
             "file": "x1p42100-samsung-galaxy-book4-edge-15.dts",
             "firstRelease": null,
@@ -14579,7 +14570,7 @@
             "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/cdsp_dtbs.elf"
           ],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],
