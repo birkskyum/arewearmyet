@@ -78,7 +78,7 @@ models:
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/3"
     notes: "Its Wi-Fi card (1a3b:6580) isn't in linux-firmware's board data. An installed system gets it from Omarchy's ath12k board fallback, but the live image has no Wi-Fi yet."
     reports:
-      - { state: "workaround", note: "Installs from the edge channel's image and reaches the desktop, with sound and Wi-Fi working. The screen stays dark at the disk password prompt until the password is typed.", checked: "2026-11" }
+      - { state: "works", note: "Installs from the edge channel's image and reaches the desktop, with sound, Wi-Fi and video decoding working. The owner confirmed the fix for the dark disk password prompt on the laptop, on edge since omacom/omarchy#18743 (birkskyum/arewearmyet#5).", checked: "2026-11" }
     sources:
       - https://news.acer.com/acer-expands-aspire-ai-series-with-six-new-copilot-pcs-powered-by-next-gen-processors
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/acer-aspire-16-ai
@@ -391,7 +391,7 @@ models:
     firmware: ["qcom/x1e80100/ASUSTeK/vivobook-s15", "qcom/x1p42100/ASUSTeK/vivobook-s15"]
     acpi: ["asus-vivobook-s-15", "asus-vivobook-s15-q5507", "asus-vivobook-s15-s5507"]
     reports:
-      - { state: "problems", note: "Two owners report the screen going dark after the boot menu on the RC image.", checked: "2026-10" }
+      - { state: "workaround", note: "Reaches the desktop on 4.5.0-rc2 once the GPU, compute DSP and video firmware are in place. The installer didn't copy them from the Windows partition on the owner's laptop, so they were copied over on a USB stick and installed with qcom-firmware-extract. The owner confirmed the fix for the dark disk password prompt, which is the default since omacom/omarchy#17352 (omacom/omarchy#11823).", checked: "2026-10" }
     notes: "Both models' firmware comes from ASUS's downloads. A fix that shows the disk unlock prompt on the X Elite model has been on edge since 2026-11-10, and no owner has tried it yet."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s-15-s5507/techspec/
@@ -526,7 +526,7 @@ models:
     devicetree_files: ["https://raw.githubusercontent.com/omacom/omarchy-pkgs/2aa4b94c/pkgbuilds/linux-omarchy-aarch64/2751-arm64-dts-qcom-Add-the-ASUS-Zenbook-14-UX3480QA.patch#x1p42100-asus-zenbook-14-ux3480qa.dts"]
     ids_collected: "https://github.com/birkskyum/arewearmyet/issues/2"
     reports:
-      - { state: "problems", note: "The stock 4.5.0rc1 image shows a black screen and resets, since it has no device tree for this model. With the device tree and patches from omarchy-pkgs #1634 and an owner's board package, it installs and runs on linux-omarchy 7.3.", checked: "2026-10" }
+      - { state: "works", note: "An owner installed it from an ISO built from the edge channel, where Omarchy carries its device tree, hardware IDs and firmware, and runs it daily (birkskyum/arewearmyet#2).", checked: "2026-11" }
     sources:
       - https://www.asus.com/laptops/for-home/zenbook/asus-zenbook-14-ux3480-qualcomm/techspec/
       - https://www.windowscentral.com/hardware/laptops/asus-zenbook-14-snapdragon-x-2026-review
@@ -1241,7 +1241,7 @@ models:
     acpi: ["lenovo-ideacentre-01q8x10"]
     devicetree_posted: "https://lore.kernel.org/all/20260905-x1-ideacentre-mini-prettify-v1-0-9a87882973bb@oldschoolsolutions.biz/"
     reports:
-      - { state: "workaround", variant: "Snapdragon X", note: "Installs from the edge channel's image and reaches the desktop on linux-omarchy 7.3, with the Adreno X1-45 driving an external display. The screen stays dark at the disk password prompt until the password is typed. Its owner confirmed the fix for that, loading the display drivers before the disk is unlocked, which isn't on edge yet. A Lenovo 40B0 dock's displays, sound and video work on linux-omarchy 7.3-59 once the audio DSP is started by hand. Omarchy keeps it off on this install because the root disk is on USB.", checked: "2026-11" }
+      - { state: "works", variant: "Snapdragon X", note: "Installs from the edge channel's image and reaches the desktop on linux-omarchy 7.3, with the Adreno X1-45 driving an external display. The owner confirmed by hand the two fixes edge has since 16 November, the disk password prompt on the screen (omacom/omarchy#18629) and the audio DSP starting with the root disk on a USB-A port (omacom/omarchy#18776), which brings up a Lenovo 40B0 dock's displays, sound and USB-C power negotiation (birkskyum/arewearmyet#6).", checked: "2026-11" }
     notes: "Jens Glathe's posted series splits the tree and adds the X1-26-100 (Purwa) model, which he runs on Ubuntu 26.10 and can test. systemd has the Purwa model's hardware IDs. The Purwa model needs its own GPU and DSP firmware, under qcom/x1p42100/LENOVO/91B6."
     sources:
       - https://psref.lenovo.com/Product/IdeaCentre/IdeaCentre_Mini_01Q8X10
