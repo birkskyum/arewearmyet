@@ -3944,6 +3944,12 @@ folders:
   - path: "qcom/sc8180xp/dell"
     models: ["dell-inspiron-14-3420-snapdragon"]
     files:
+      - name: "qcadsp8180.mbn"
+        size: 11745780
+        sha256: "2b9836033f37cc860fdbd9a26a2d5360bb4914fa75fdb1f784a0781d43075c64"
+        note: "Signed under Qualcomm's General Use Test Key (QCT Root CA 1), like the Lenovo Yoga C630's retail images. The laptop runs it: Windows loads it, and Matt Durr's Linux port starts the ADSP with the copy from Windows' DriverStore."
+        from:
+          - { package: "dell-inspiron-14-3420-wu-200.0.14.0-qcsubsys-ext-adsp8180", member: "qcadsp8180.mbn" }
       - name: "qcdxkmsuc8180.mbn"
         size: 14240
         sha256: "0170fbea8a31fe7c691b95f9b9e8ad720fde5ea23e3c91c0f5fbe0ebaa0d8213"
@@ -4934,6 +4940,14 @@ packages:
     sha256: "3e698d6ab1f5817336e68ee16019277de3b8a0036f1c8fb9abb7f319ffc64282"
     fetched: "2026-11-16"
     note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {80f79868-f89c-5a63-9eb6-fd44cf17342f}_arm64, a CHID of the Galaxy Book S PAHX. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "dell-inspiron-14-3420-wu-200.0.14.0-qcsubsys-ext-adsp8180"
+    maker: "Dell"
+    title: "Qualcomm Audio DSP Subsystem extension 1.0.1840.0006 for the Dell Inspiron 14 3420 (Windows Update 200.0.14.0)"
+    url: "wu://c9d649d1-623a-4ba9-8f0d-34c2350ce7b8/1/fcd67a39e6739cb30e46e74e70855cc4ee41b724"
+    size: 7477227
+    sha256: "df4d3c133a5c0625841238c0441bc8dec283684014f80599f37daf679e8a107e"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Dell publishes on Windows Update for the product {c37b0e8e-de1a-51f0-b08c-32d2a95a589a}_arm64, a CHID of the Inspiron 14 3420 (SKU 0BF4). Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
   - id: "dell-inspiron-14-3420-wu-200.0.14.0-qcdx8180"
     maker: "Dell"
     title: "Qualcomm Adreno graphics driver 27.20.1870.0 for the Dell Inspiron 14 3420 (Windows Update 200.0.14.0)"

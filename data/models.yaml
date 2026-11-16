@@ -2016,7 +2016,7 @@ models:
     devicetree_files:
       - "https://raw.githubusercontent.com/jmdurr/dell-inspiron-3420-arm/a75479805a22/kernel.patch#sc8180xp-dell-inspiron-3420.dts"
     acpi: ["dell-inspiron-14-3420"]
-    notes: "Matt Durr's tree runs it from its NVMe drive with the keyboard, touchpad, USB, Wi-Fi, GPU acceleration, battery, suspend and CPU frequency scaling; the lid switch, Bluetooth, audio, camera and special keys don't work yet. Its NVMe drive needs the kernel to keep the firmware's PCIe PHY setup. Dell's audio DSP image on Windows Update is signed with Qualcomm's test key, so only the GPU firmware is packaged."
+    notes: "Matt Durr's tree runs it from its NVMe drive with the keyboard, touchpad, USB, Wi-Fi, GPU acceleration, battery, suspend and CPU frequency scaling; the lid switch, Bluetooth, audio, camera and special keys don't work yet. Its NVMe drive needs the kernel to keep the firmware's PCIe PHY setup. Dell's audio DSP image on Windows Update is signed with Qualcomm's test key, like the Yoga C630's, and runs on the laptop."
     sources:
       - https://github.com/aarch64-laptops/build/tree/master/misc/dell-inspiron-14-3420
 
