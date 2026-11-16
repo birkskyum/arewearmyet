@@ -1972,7 +1972,7 @@ models:
     generation: 8cx-gen1
     form: 2-in-1
     released: "2020"
-    chips: ["SC8180X"]
+    chips: ["SC8180XP"]
     model_numbers: ["SP714-61NA"]
     acpi: ["acer-spin-7-sp714-61na"]
     sources:
@@ -2006,7 +2006,7 @@ models:
     vendor: "Dell"
     name: "Inspiron 14 3420"
     generation: 8cx-gen1
-    chips: ["SC8180X"]
+    chips: ["SC8180XP"]
     model_numbers: ["3420"]
     acpi: ["dell-inspiron-14-3420"]
     sources:
@@ -2036,6 +2036,16 @@ models:
     acpi: ["acer-gateway-gwtn133-1"]
     sources:
       - https://github.com/aarch64-laptops/build/tree/master/misc/acer-gateway-gwtn133-1
+
+  - id: hyrican-study-pad-one
+    vendor: "HYRICAN"
+    name: "Study Pad One"
+    generation: "850"
+    form: 2-in-1
+    chips: ["SDM850"]
+    notes: "Sold also as the ENWO Pad. An owner reports it is a MateBook E (2019) without the fingerprint reader, and runs Jingzhou Zhu's tree for the MateBook E on it, without brightness, battery, sound, cameras and Bluetooth."
+    sources:
+      - https://github.com/aarch64-laptops/build/issues/84
 
   - id: hp-envy-x2-snapdragon
     vendor: "HP"
@@ -2097,7 +2107,7 @@ models:
     name: "IdeaPad 5G"
     generation: 8cx-gen1
     released: "2021"
-    chips: ["SC8180X"]
+    chips: ["SC8180XP"]
     model_numbers: ["14Q8X05"]
     acpi: ["lenovo-ideapad-5g", "lenovo-ideapad-5g-14q8x05"]
     sources:
@@ -2205,7 +2215,7 @@ models:
     name: "Galaxy Book Go 5G"
     generation: 8cx-gen1
     released: "2021"
-    chips: ["SC8180X"]
+    chips: ["SC8180XP"]
     acpi: ["samsung-galaxy-book-go-5g"]
     sources:
       - https://github.com/aarch64-laptops/build/tree/master/misc/samsung-galaxy-book-go-5g
@@ -2216,7 +2226,7 @@ models:
     generation: 8cx-gen1
     released: "2020"
     chips: ["SC8180X"]
-    model_numbers: ["NP767XCM"]
+    model_numbers: ["SM-W767"]
     acpi: ["samsung-galaxy-book-s"]
     sources:
       - https://github.com/aarch64-laptops/build/tree/master/misc/samsung-galaxy-book-s
@@ -2237,7 +2247,7 @@ models:
     generation: 8cx-gen1
     form: 2-in-1
     released: "2022"
-    chips: ["SC8180X"]
+    chips: ["SC8180XP"]
     acpi: ["xiaomi-book-s"]
     ids_collected: "https://github.com/ubuntu/stubble/issues/33"
     sources:

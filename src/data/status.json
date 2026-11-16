@@ -1897,7 +1897,7 @@
         }
       }
     },
-    "older": 26,
+    "older": 27,
     "byPieceOlder": {
       "deviceTree": {
         "omarchy": 6,
@@ -14847,7 +14847,7 @@
         "SP714-61NA"
       ],
       "chips": [
-        "SC8180X"
+        "SC8180XP"
       ],
       "status": null,
       "sources": [
@@ -15093,7 +15093,7 @@
         "3420"
       ],
       "chips": [
-        "SC8180X"
+        "SC8180XP"
       ],
       "status": null,
       "sources": [
@@ -15332,6 +15332,82 @@
         "acpiUrls": [
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/acer-gateway-gwtn133-1"
         ]
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "hyrican-study-pad-one",
+      "vendor": "HYRICAN",
+      "name": "Study Pad One",
+      "generation": "850",
+      "form": "2-in-1",
+      "released": null,
+      "modelNumbers": [],
+      "chips": [
+        "SDM850"
+      ],
+      "status": null,
+      "sources": [
+        "https://github.com/aarch64-laptops/build/issues/84"
+      ],
+      "notes": "Sold also as the ENWO Pad. An owner reports it is a MateBook E (2019) without the fingerprint reader, and runs Jingzhou Zhu's tree for the MateBook E on it, without brightness, battery, sound, cameras and Bluetooth.",
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "nobody",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "missing",
+        "acpiUrls": []
       },
       "variants": [
         {
@@ -15757,7 +15833,7 @@
         "14Q8X05"
       ],
       "chips": [
-        "SC8180X"
+        "SC8180XP"
       ],
       "status": null,
       "sources": [
@@ -16484,7 +16560,7 @@
       "released": "2021",
       "modelNumbers": [],
       "chips": [
-        "SC8180X"
+        "SC8180XP"
       ],
       "status": null,
       "sources": [
@@ -16561,7 +16637,7 @@
       "form": "laptop",
       "released": "2020",
       "modelNumbers": [
-        "NP767XCM"
+        "SM-W767"
       ],
       "chips": [
         "SC8180X"
@@ -16720,7 +16796,7 @@
       "released": "2022",
       "modelNumbers": [],
       "chips": [
-        "SC8180X"
+        "SC8180XP"
       ],
       "status": null,
       "sources": [
