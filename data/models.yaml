@@ -1202,10 +1202,24 @@ models:
     devicetree_files:
       - "https://raw.githubusercontent.com/playtron-os/humain-dtb/608eb397ba05ca892eec2c25ccdbae627308cbe7/glymur-crd.dts"
       - "https://raw.githubusercontent.com/playtron-os/humain-dtb/608eb397ba05ca892eec2c25ccdbae627308cbe7/glymur-crd.dtsi"
+    notes: "HUMAIN sells it to companies and government in Saudi Arabia through AlFalak, from September 2026 and without a public price. Playtron's tree for HUMAIN OS is Qualcomm's Glymur CRD tree kept under the CRD's name and compatible, so it can't sit next to the CRD tree in Omarchy as it is. Windows names it HUMAIN Horizon on a HUMAIN Horizon board (Geekbench), but Windows Update has no bundle for it, so no hardware ID can be confirmed without an owner."
     sources:
       - https://www.qualcomm.com/news/releases/2026/08/qualcomm-and-humain-unveil-horizon-ultra-ai-pc-at-leap-2026--bri
       - https://www.humain.com/en/horizon.html
       - https://www.digitaltrends.com/computing/humain-horizon-ultra-ai-pc-unveiled-with-snapdragon-x2-elite-and-on-device-ai/
+
+  - id: humain-horizon-pro
+    vendor: "HUMAIN"
+    name: "Horizon Pro"
+    generation: x1
+    released: "2025-12"
+    chips: ["X1-26-100"]
+    model_numbers: ["QXN25"]
+    notes: "HUMAIN offers it to companies by subscription and gave units to Saudi students, with no public price or shop. HUMAIN announced it with an X Elite, but the units on Geekbench from December 2025 run Windows on an X1-26-100 and name it HUMAIN Horizon Pro on a HUMAIN QXN25 board. No tree, ACPI dump or Windows Update bundle for it is public."
+    sources:
+      - https://www.tomsguide.com/computing/laptops/new-humain-horizon-pro-with-agentic-ai-os-announced-at-snapdragon-summit-2025-heres-what-we-know
+      - https://www.leaders-mena.com/designed-in-saudi-arabia-humain-unveils-horizon-pro-the-kingdoms-first-ai-native-laptop/
+      - https://browser.geekbench.com/v6/cpu/15654431
 
 
   # Lenovo
@@ -2564,7 +2578,7 @@ nvidia:
 # Source entries the board leaves out on purpose: Qualcomm's reference boards.
 # Also left out: Qualcomm's internal reference designs and industrial boards,
 # the cancelled TUXEDO Elite 14, models announced but never confirmed shipping
-# (Tecno Megabook S14, HUMAIN Horizon Pro, Geekom QS1, Zenbook A16 UX3607QA),
+# (Tecno Megabook S14, Geekom QS1, Zenbook A16 UX3607QA),
 
 ignore:
   ids: ["glymur-crd.json", "x1e80100-crd.json", "sc8280xp-radxa-dragon-q8b.json"]

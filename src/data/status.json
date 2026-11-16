@@ -1637,7 +1637,7 @@
     ]
   },
   "summary": {
-    "models": 86,
+    "models": 87,
     "nvidia": 22,
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
@@ -1645,19 +1645,19 @@
     "should": 68,
     "workaround": 6,
     "problems": 3,
-    "notYet": 7,
+    "notYet": 8,
     "deviceTree": 82,
     "ids": 59,
     "firmware": 71,
     "googlebooks": 2,
     "chromebooks": 10,
     "acpi": 46,
-    "acpiWanted": 4,
+    "acpiWanted": 5,
     "machine": {
       "team": 7,
       "omarchy": 18,
       "linux": 55,
-      "nobody": 6
+      "nobody": 7
     },
     "byPiece": {
       "deviceTree": {
@@ -9971,7 +9971,7 @@
         "https://www.humain.com/en/horizon.html",
         "https://www.digitaltrends.com/computing/humain-horizon-ultra-ai-pc-unveiled-with-snapdragon-x2-elite-and-on-device-ai/"
       ],
-      "notes": null,
+      "notes": "HUMAIN sells it to companies and government in Saudi Arabia through AlFalak, from September 2026 and without a public price. Playtron's tree for HUMAIN OS is Qualcomm's Glymur CRD tree kept under the CRD's name and compatible, so it can't sit next to the CRD tree in Omarchy as it is. Windows names it HUMAIN Horizon on a HUMAIN Horizon board (Geekbench), but Windows Update has no bundle for it, so no hardware ID can be confirmed without an owner.",
       "outcome": "none",
       "bootable": "needs-ids",
       "reports": [],
@@ -10011,6 +10011,86 @@
         "firmwareUpstreamMissing": [
           "vpu36_p4_s7.mbn"
         ],
+        "firmwareFolders": [],
+        "acpi": "missing",
+        "acpiUrls": []
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "humain-horizon-pro",
+      "vendor": "HUMAIN",
+      "name": "Horizon Pro",
+      "generation": "x1",
+      "form": "laptop",
+      "released": "2025-12",
+      "modelNumbers": [
+        "QXN25"
+      ],
+      "chips": [
+        "X1-26-100"
+      ],
+      "status": null,
+      "sources": [
+        "https://www.tomsguide.com/computing/laptops/new-humain-horizon-pro-with-agentic-ai-os-announced-at-snapdragon-summit-2025-heres-what-we-know",
+        "https://www.leaders-mena.com/designed-in-saudi-arabia-humain-unveils-horizon-pro-the-kingdoms-first-ai-native-laptop/",
+        "https://browser.geekbench.com/v6/cpu/15654431"
+      ],
+      "notes": "HUMAIN offers it to companies by subscription and gave units to Saudi students, with no public price or shop. HUMAIN announced it with an X Elite, but the units on Geekbench from December 2025 run Windows on an X1-26-100 and name it HUMAIN Horizon Pro on a HUMAIN QXN25 board. No tree, ACPI dump or Windows Update bundle for it is public.",
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "nobody",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
         "acpi": "missing",
         "acpiUrls": []
