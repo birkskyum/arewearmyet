@@ -1889,8 +1889,12 @@ models:
     released: "2025-11"
     chips: ["X1-26-100"]
     model_numbers: ["NP755XRA"]
+    variants:
+      - { compatible: "samsung,galaxy-book4-edge-15", borrowed: true, ids: ["x1p42100-samsung-galaxy-book5-edge-5g.json"] }
+    notes: "Samsung built it on the Galaxy Book4 Edge 15's board (CA09144D, which Samsung's drivers call NX15) and added a 5G modem. Its Windows Update bundle installs its audio on that board ID, and its DSP board trees are byte for byte the Book4 Edge 15's, so it boots that tree with that firmware. Its hardware IDs come from the strings in its Geekbench results, with the SKU (GALAXY A5A5-PALD) confirmed by Windows Update, which serves Samsung's bundle for it. The tree doesn't describe the modem. Not booted on one yet."
     sources:
       - https://www.samsung.com/uk/computers/galaxy-book/galaxy-book5-edge-5g-15-6-inch-x-26-16gb-512gb-np755xra-ka1uk/
+      - https://browser.geekbench.com/v6/cpu/17930415
       - https://liliputing.com/samsung-launches-galaxy-book5-edge-5g-windows-laptop-with-snapdragon-x-and-5g-wireless/
 
   - id: samsung-galaxy-book6-edge-16
@@ -1900,9 +1904,11 @@ models:
     released: "2026-05"
     chips: ["X2E-88-100"]
     model_numbers: ["NP960XRD", "NT960XRD"]
+    notes: "Its Geekbench results name it Galaxy Book6 Edge - PALF from the maker Samsung, where earlier Galaxy Books report SAMSUNG ELECTRONICS CO., LTD., with boards NP960XRD-KB2FR and NT960XRD-KC01B. Windows Update has no bundle for any CHID those strings give, and Samsung's download pages have no driver pack for it yet, so neither its hardware IDs nor its firmware can be confirmed without an owner."
     sources:
       - https://www.samsung.com/ca/computers/galaxy-book/galaxy-book6-edge-x2-elite-16gb-512gb-np960xrd-kb1ca/
       - https://news.samsung.com/us/galaxy-book6-edge-available-next-generation-ai-performance-premium-portability
+      - https://browser.geekbench.com/v6/cpu/18993073
 
 
   # Snapdragon 8cx Gen 3, the generation before

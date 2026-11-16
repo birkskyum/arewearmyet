@@ -1646,13 +1646,13 @@
     "workaround": 6,
     "problems": 3,
     "notYet": 8,
-    "deviceTree": 82,
+    "deviceTree": 83,
     "ids": 59,
-    "firmware": 71,
+    "firmware": 72,
     "googlebooks": 2,
     "chromebooks": 10,
     "acpi": 46,
-    "acpiWanted": 5,
+    "acpiWanted": 4,
     "machine": {
       "team": 7,
       "omarchy": 18,
@@ -1661,16 +1661,16 @@
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 81,
+        "omarchy": 82,
         "fromUpstream": 19,
-        "added": 62,
+        "added": 63,
         "pull": 0,
         "available": 1,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 81
+          "edge": 82
         },
         "models": {
           "fromUpstream": [
@@ -1756,7 +1756,8 @@
             "microsoft-surface-pro-12th-edition",
             "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
-            "samsung-galaxy-book4-edge-14"
+            "samsung-galaxy-book4-edge-14",
+            "samsung-galaxy-book5-edge-5g"
           ],
           "pull": [],
           "available": [
@@ -1865,16 +1866,16 @@
         }
       },
       "firmware": {
-        "omarchy": 71,
+        "omarchy": 72,
         "fromUpstream": 1,
-        "added": 70,
+        "added": 71,
         "pull": 0,
         "available": 0,
         "upstream": 1,
         "channels": {
           "stable": 1,
           "rc": 1,
-          "edge": 71
+          "edge": 72
         },
         "models": {
           "fromUpstream": [
@@ -1950,7 +1951,8 @@
             "qualcomm-snapdragon-dev-kit-for-windows",
             "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
-            "samsung-galaxy-book4-edge-14"
+            "samsung-galaxy-book4-edge-14",
+            "samsung-galaxy-book5-edge-5g"
           ],
           "pull": [],
           "available": []
@@ -14489,41 +14491,44 @@
       "status": null,
       "sources": [
         "https://www.samsung.com/uk/computers/galaxy-book/galaxy-book5-edge-5g-15-6-inch-x-26-16gb-512gb-np755xra-ka1uk/",
+        "https://browser.geekbench.com/v6/cpu/17930415",
         "https://liliputing.com/samsung-launches-galaxy-book5-edge-5g-windows-laptop-with-snapdragon-x-and-5g-wireless/"
       ],
-      "notes": null,
-      "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "notes": "Samsung built it on the Galaxy Book4 Edge 15's board (CA09144D, which Samsung's drivers call NX15) and added a 5G modem. Its Windows Update bundle installs its audio on that board ID, and its DSP board trees are byte for byte the Book4 Edge 15's, so it boots that tree with that firmware. Its hardware IDs come from the strings in its Geekbench results, with the SKU (GALAXY A5A5-PALD) confirmed by Windows Update, which serves Samsung's bundle for it. The tree doesn't describe the modem. Not booted on one yet.",
+      "outcome": "manual",
+      "bootable": "needs-ids",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "samsung-galaxy-book4-edge-15-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
+        "deviceTree": "edge",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "edge"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2792-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book4-Edge-15.patch",
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-x1p42100-SAMSUNG-galaxy-book4-edge",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -14533,17 +14538,32 @@
       },
       "variants": [
         {
-          "computed": "none",
-          "treeChannel": null,
+          "compatible": "samsung,galaxy-book4-edge-15",
+          "borrowed": true,
+          "ids": [],
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
-          "ids": [],
+          "deviceTree": {
+            "file": "x1p42100-samsung-galaxy-book4-edge-15.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-aarch64/2792-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book4-Edge-15.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcdxkmsucpurwa.mbn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcvss8380_pa.mbn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn",
+            "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/cdsp_dtbs.elf"
+          ],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
@@ -14569,9 +14589,10 @@
       "status": null,
       "sources": [
         "https://www.samsung.com/ca/computers/galaxy-book/galaxy-book6-edge-x2-elite-16gb-512gb-np960xrd-kb1ca/",
-        "https://news.samsung.com/us/galaxy-book6-edge-available-next-generation-ai-performance-premium-portability"
+        "https://news.samsung.com/us/galaxy-book6-edge-available-next-generation-ai-performance-premium-portability",
+        "https://browser.geekbench.com/v6/cpu/18993073"
       ],
-      "notes": null,
+      "notes": "Its Geekbench results name it Galaxy Book6 Edge - PALF from the maker Samsung, where earlier Galaxy Books report SAMSUNG ELECTRONICS CO., LTD., with boards NP960XRD-KB2FR and NT960XRD-KC01B. Windows Update has no bundle for any CHID those strings give, and Samsung's download pages have no driver pack for it yet, so neither its hardware IDs nor its firmware can be confirmed without an owner.",
       "outcome": "none",
       "bootable": "needs-deviceTree",
       "reports": [],
