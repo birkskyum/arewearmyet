@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-16T20:27:55.769Z",
+  "collected": "2026-11-16T22:04:00.613Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -1769,7 +1769,7 @@
         "omarchy": 79,
         "fromUpstream": 28,
         "added": 51,
-        "pull": 0,
+        "pull": 1,
         "available": 0,
         "upstream": 28,
         "channels": {
@@ -1861,7 +1861,9 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "samsung-galaxy-book5-edge-5g"
+          ],
           "available": []
         }
       },
@@ -1962,7 +1964,7 @@
         "omarchy": 69,
         "fromUpstream": 1,
         "added": 68,
-        "pull": 0,
+        "pull": 1,
         "available": 0,
         "upstream": 1,
         "models": {
@@ -2039,7 +2041,9 @@
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14"
           ],
-          "pull": [],
+          "pull": [
+            "samsung-galaxy-book5-edge-5g"
+          ],
           "available": []
         }
       }
@@ -14496,14 +14500,18 @@
       ],
       "notes": "Samsung built it on the Galaxy Book4 Edge 15's board (CA09144D, which Samsung's drivers call NX15) and added a 5G modem. Its Windows Update bundle installs its audio on that board ID, and its DSP board trees are byte for byte the Book4 Edge 15's, so it boots that tree with that firmware. Its hardware IDs come from the strings in its Geekbench results, with the SKU (GALAXY A5A5-PALD) confirmed by Windows Update, which serves Samsung's bundle for it. The tree doesn't describe the modem. Not booted on one yet.",
       "outcome": "manual",
-      "bootable": "needs-ids",
+      "bootable": "pr",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
-        "idsPull": null,
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2936",
+          "number": 2936,
+          "title": "linux-omarchy-dtbs: boot the Galaxy Book5 Edge 5G on the Galaxy Book4 Edge 15's tree"
+        },
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -14513,7 +14521,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "none",
+        "ids": "pr",
         "firmware": "edge"
       },
       "upstream": {
@@ -14546,7 +14554,11 @@
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
-          "idsPull": null,
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2936",
+            "number": 2936,
+            "title": "linux-omarchy-dtbs: boot the Galaxy Book5 Edge 5G on the Galaxy Book4 Edge 15's tree"
+          },
           "deviceTree": {
             "file": "x1p42100-samsung-galaxy-book4-edge-15.dts",
             "firstRelease": null,

@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-16T20:27:55.769Z",
+  "collected": "2026-11-16T22:04:00.613Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -9569,6 +9569,21 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.16.492/omarchy-edge-2026.11.16.492-aarch64.iso",
       "kernel": "7.3.0-66-omarchy"
     },
-    "pulls": []
+    "pulls": [
+      {
+        "number": 2936,
+        "title": "linux-omarchy-dtbs: boot the Galaxy Book5 Edge 5G on the Galaxy Book4 Edge 15's tree",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2936",
+        "draft": true,
+        "deviceTrees": [],
+        "ids": [
+          {
+            "file": "x1p42100-samsung-galaxy-book5-edge-5g.json",
+            "compatible": "samsung,galaxy-book4-edge-15"
+          }
+        ],
+        "firmware": []
+      }
+    ]
   }
 }
