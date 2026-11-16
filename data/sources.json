@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-16T22:14:00.818Z",
+  "collected": "2026-11-16T23:46:07.718Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -5502,6 +5502,10 @@
     {
       "folder": "firmware/hp-elitebook-6-g2q",
       "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/hp-elitebook-6-g2q"
+    },
+    {
+      "folder": "firmware/hp-omnibook-3-16-ct0",
+      "url": "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/hp-omnibook-3-16-ct0"
     },
     {
       "folder": "firmware/hp-omnibook-5-14-he1",

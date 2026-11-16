@@ -5716,7 +5716,6 @@ packages:
     maker: "HP"
     title: "Qualcomm Driver Pack r02010.1 for the HP OmniBook 3 16-ct0 (boards 8FD0 and 8FD1)"
     url: "https://ftp.hp.com/pub/softpaq/sp174501-175000/sp174797.exe"
-    page: "https://support.hp.com"
     size: 150004968
     sha256: "c0b43804f921d3e74494753fe8891b77bc09fe347f949d25365e50aabc543569"
     fetched: "2026-11-15"
