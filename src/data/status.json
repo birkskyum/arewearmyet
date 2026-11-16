@@ -1976,7 +1976,7 @@
         "fromUpstream": 1,
         "added": 5,
         "pull": 0,
-        "available": 2,
+        "available": 5,
         "upstream": 1,
         "channels": {
           "stable": 1,
@@ -1996,8 +1996,11 @@
           ],
           "pull": [],
           "available": [
+            "huawei-matebook-e-2019",
             "lenovo-miix-630",
-            "lenovo-yoga-c630"
+            "lenovo-yoga-c630",
+            "samsung-galaxy-book2-w737",
+            "samsung-galaxy-book2-go"
           ]
         }
       },
@@ -2006,7 +2009,7 @@
         "fromUpstream": 1,
         "added": 5,
         "pull": 0,
-        "available": 2,
+        "available": 3,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -2022,7 +2025,8 @@
           "pull": [],
           "available": [
             "lenovo-miix-630",
-            "lenovo-yoga-c630"
+            "lenovo-yoga-c630",
+            "samsung-galaxy-book2-go"
           ]
         }
       }
@@ -15544,7 +15548,7 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -15552,7 +15556,7 @@
       "pieces": {
         "deviceTree": "elsewhere",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "released",
@@ -15563,19 +15567,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcadsp850.mbn",
-          "qccdsp850.mbn",
-          "qcdxkmsuc850.mbn",
-          "ipa_fws.elf",
-          "qcdsp1v2850.mbn",
-          "qcdsp2850.mbn",
-          "qcslpi850.mbn",
-          "qcvss850.mbn"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-sdm850-HUAWEI-AL09",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -16309,7 +16304,7 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -16317,7 +16312,7 @@
       "pieces": {
         "deviceTree": "elsewhere",
         "ids": "none",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "released",
@@ -16328,17 +16323,10 @@
         "ids": "missing",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcadsp850.mbn",
-          "qccdsp850.mbn",
-          "ipa_fws.elf",
-          "qcdsp1v2850.mbn",
-          "qcdsp2850.mbn",
-          "qcvss850.mbn"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-sdm850-samsung-w737",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -16408,7 +16396,7 @@
         "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "windows",
+        "firmware": "download",
         "firmwareChannel": null,
         "firmwarePackages": [],
         "firmwarePull": null
@@ -16416,7 +16404,7 @@
       "pieces": {
         "deviceTree": "elsewhere",
         "ids": "elsewhere",
-        "firmware": "none"
+        "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "posted",
@@ -16427,18 +16415,10 @@
         "ids": "collected",
         "idsCollected": "https://github.com/ubuntu/stubble/issues/32",
         "idsStubble": null,
-        "firmware": "windows",
-        "firmwareMissing": [
-          "qcdxkmsuc7280.mbn",
-          "ipa_fws.elf",
-          "qcadsp7280.mbn",
-          "qccdsp7280.mbn",
-          "qcmpss7280.mbn",
-          "wpss.mbn",
-          "qcvss7280.mbn"
-        ],
+        "firmware": "download",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": null,
+        "firmwareDownload": "/firmware/#qcom-sc7280-Samsung-galaxy-book2-go",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],

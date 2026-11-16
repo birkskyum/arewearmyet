@@ -3800,6 +3800,120 @@ folders:
         from:
           - { package: "microsoft-surface-pro-x-1876-wu-200.0.61.0-surfaceprox-subextscss", member: "qcslpi8180.mbn" }
           - { package: "microsoft-surface-pro-x-2010-wu-200.0.33.0-surfaceprox-subextscss", member: "qcslpi8180.mbn" }
+  - path: "qcom/sdm850/HUAWEI/AL09"
+    models: ["huawei-matebook-e-2019"]
+    files:
+      - name: "ipa_fws.elf"
+        size: 33088
+        sha256: "ae61edebe69cea9a64d9b7080a481fc305f69da265197df180c3cc90aab9d68d"
+        from:
+          - { package: "huawei-matebook-e-2019-wu-200.0.4.0-qcipa850", member: "ipa_fws.elf" }
+      - name: "qcadsp850.mbn"
+        size: 10548484
+        sha256: "8c7655f9a8c3ae81852894de4cf0a2051bddb4efdc194359366eb5f1a82a2c1f"
+        from:
+          - { package: "huawei-matebook-e-2019-wu-200.0.4.0-qcsubsys850", member: "qcadsp850.mbn" }
+      - name: "qccdsp850.mbn"
+        size: 2717204
+        sha256: "989de066b3d7ea1b893c83a8eaf559e90af518f4f95d816ca6b8b92ad36ba18c"
+        from:
+          - { package: "huawei-matebook-e-2019-wu-200.0.4.0-qcsubsys850", member: "qccdsp850.mbn" }
+      - name: "qcdsp1v2850.mbn"
+        size: 242400
+        sha256: "08647b92d864831889cd9f55762c967ddc3d3533bc2e8b32cd04920b8a13bcfa"
+        from:
+          - { package: "huawei-matebook-e-2019-wu-200.0.4.0-qcsubsys850", member: "qcdsp1v2850.mbn" }
+      - name: "qcdsp2850.mbn"
+        size: 60018896
+        sha256: "08c3d83addcf0a4b05b14e95a17f0ed7c948c2a5633ff742136502ec99c9383b"
+        from:
+          - { package: "huawei-matebook-e-2019-wu-200.0.4.0-qcsubsys850", member: "qcdsp2850.mbn" }
+      - name: "qcdxkmsuc850.mbn"
+        size: 14240
+        sha256: "ca1276cf1a66d5207623eeb16c8a17e311cd9f39b24b9db6b43977a0902c3936"
+        from:
+          - { package: "huawei-matebook-e-2019-wu-200.0.4.0-qcdx850", member: "qcdxkmsuc850.mbn" }
+      - name: "qcslpi850.mbn"
+        size: 6725828
+        sha256: "2a9044178a59dbd71fd88c3f319b119efae72b091bda930d31de8c9c55aa6956"
+        from:
+          - { package: "huawei-matebook-e-2019-wu-200.0.4.0-qcsubsys850", member: "qcslpi850.mbn" }
+      - name: "qcvss850.mbn"
+        size: 891364
+        sha256: "67e9173754ac4fbfb00df28111706791256c166cd1fab9885bbefa727c506588"
+        from:
+          - { package: "huawei-matebook-e-2019-wu-200.0.4.0-qcdx850", member: "qcvss850.mbn" }
+  - path: "qcom/sdm850/samsung/w737"
+    models: ["samsung-galaxy-book2-w737"]
+    files:
+      - name: "ipa_fws.elf"
+        size: 33088
+        sha256: "c3ebf4d6191a09d661ad3ea7c0dde823f13765c93d9d22f5d6d56f1ef670a39a"
+        from:
+          - { package: "samsung-galaxy-book2-w737-wu-200.0.4.0-qcipa850", member: "ipa_fws.elf" }
+      - name: "qcadsp850.mbn"
+        size: 10819684
+        sha256: "852a27951da525bb5988551bdcb35558750f3ef3d251d217b3a8d336d58a8254"
+        from:
+          - { package: "samsung-galaxy-book2-w737-wu-200.0.4.0-qcsubsys850", member: "qcadsp850.mbn" }
+      - name: "qccdsp850.mbn"
+        size: 2717204
+        sha256: "11d49daaa8cc0fe5d699185ce38a656766d0e912cbc68faa8ebb605bb7d53dee"
+        from:
+          - { package: "samsung-galaxy-book2-w737-wu-200.0.4.0-qcsubsys850", member: "qccdsp850.mbn" }
+      - name: "qcdsp1v2850.mbn"
+        size: 238304
+        sha256: "8b12520a1456112a8766e0b81c4879516ac8e1164b70184304ba103d6101e130"
+        from:
+          - { package: "samsung-galaxy-book2-w737-wu-200.0.4.0-qcsubsys850", member: "qcdsp1v2850.mbn" }
+      - name: "qcdsp2850.mbn"
+        size: 62685392
+        sha256: "1f8a0f38cf92c393dbe5d69f7811eb5adb5e2884efc4703ec624f1cdd6b589f1"
+        from:
+          - { package: "samsung-galaxy-book2-w737-wu-200.0.4.0-qcsubsys850", member: "qcdsp2850.mbn" }
+      - name: "qcvss850.mbn"
+        size: 896916
+        sha256: "1e36a269697c9ce5115f1d78935b9433d2883ef05cd47181067f01fa9fe7964a"
+        from:
+          - { package: "samsung-galaxy-book2-w737-wu-200.0.4.0-qcdx850", member: "qcvss850.mbn" }
+  - path: "qcom/sc7280/Samsung/galaxy-book2-go"
+    models: ["samsung-galaxy-book2-go"]
+    files:
+      - name: "ipa_fws.elf"
+        size: 33608
+        sha256: "42707d11ab474fe7f9e24bb0ca3a1013a0971b96322ae2f80465c01cb302836e"
+        from:
+          - { package: "samsung-galaxy-book2-go-wu-200.0.12.0-qcipa7280", member: "ipa_fws.elf" }
+      - name: "qcadsp7280.mbn"
+        size: 15314264
+        sha256: "4de02d2963101ba4825c58fa29d4452b27300ed65b36bdced8c4a9e9098d370b"
+        from:
+          - { package: "samsung-galaxy-book2-go-wu-200.0.12.0-qcsubsys-ext-adsp7280", member: "qcadsp7280.mbn" }
+      - name: "qccdsp7280.mbn"
+        size: 3641344
+        sha256: "278111b1548eab9a78bb0c8c783dedcff5112d213f4e1516d1ae433be25bb8ee"
+        from:
+          - { package: "samsung-galaxy-book2-go-wu-200.0.12.0-qcsubsys-ext-cdsp7280", member: "qccdsp7280.mbn" }
+      - name: "qcdxkmsuc7280.mbn"
+        size: 14296
+        sha256: "585700de2252d03019fb933974bee04983c3ade49b4ee105ee199ed9f9ef5190"
+        from:
+          - { package: "samsung-galaxy-book2-go-wu-200.0.12.0-qcdx7280", member: "qcdxkmsuc7280.mbn" }
+      - name: "qcmpss7280.mbn"
+        size: 91795628
+        sha256: "3e182c1e3ffbf77091d8287d983c3246e8eb608850889724daa03f953f091d6d"
+        from:
+          - { package: "samsung-galaxy-book2-go-wu-200.0.12.0-qcsubsys-ext-mpss7280", member: "qcmpss7280.mbn" }
+      - name: "qcvss7280.mbn"
+        size: 2035508
+        sha256: "5c4cfabe7afd459a2577ad724e1c45b5dedcc767169f455a10fc8f7218af0f09"
+        from:
+          - { package: "samsung-galaxy-book2-go-wu-200.0.12.0-qcdx7280", member: "qcvss7280.mbn" }
+      - name: "wpss.mbn"
+        size: 7279408
+        sha256: "6ae6ca9c7571f8b9728e5a0bae4eb6d2fdf5639a0c27b2c4c63c09f562a614c2"
+        from:
+          - { package: "samsung-galaxy-book2-go-wu-200.0.12.0-qcwlan7280", member: "wpss.mbn" }
 packages:
   - id: "acer-a14-11m-adsp-2.0.9100.0001"
     maker: "Acer"
@@ -4625,3 +4739,99 @@ packages:
     sha256: "13fea856ad45ae666673831389d1cbc7727526e3e40a8a61c770d5691b501e76"
     fetched: "2026-11-15"
     note: "A signed driver cabinet in the bundle Microsoft publishes on Windows Update for the product {cdf510a8-d41c-54bf-b2c5-61ba10957019}_arm64, a CHID of the Surface Pro X 2010. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "huawei-matebook-e-2019-wu-200.0.4.0-qcipa850"
+    maker: "Huawei"
+    title: "Qualcomm IPA driver 1.0.10440.0000 for the MateBook E 2019 (Windows Update 200.0.4.0)"
+    url: "wu://3bbce7bf-87ca-4480-965b-b0205cec89a9/1/43ea42ded714b480ca1b578df885f8342dd128a9"
+    size: 143287
+    sha256: "e700987849b7212f0c6bbc0e0ea928f2fc118d1a213dba2841e0ca2bc62a61db"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Huawei publishes on Windows Update for the product {71389a98-6ffd-57a0-9c54-f908a5dac8a1}_arm64, a CHID of the MateBook E 2019. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "huawei-matebook-e-2019-wu-200.0.4.0-qcsubsys850"
+    maker: "Huawei"
+    title: "Qualcomm Subsystem driver 1.0.10450.0010 for the MateBook E 2019 (Windows Update 200.0.4.0)"
+    url: "wu://3bbce7bf-87ca-4480-965b-b0205cec89a9/1/3b032f6f147338e917c615703361e36f4d91c419"
+    size: 75932051
+    sha256: "6de57d307518df6505532b7ea845ea3b5d20f8049110230fff2921e280141676"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Huawei publishes on Windows Update for the product {71389a98-6ffd-57a0-9c54-f908a5dac8a1}_arm64, a CHID of the MateBook E 2019. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "huawei-matebook-e-2019-wu-200.0.4.0-qcdx850"
+    maker: "Huawei"
+    title: "Qualcomm Adreno graphics driver 25.18.10500.0000 for the MateBook E 2019 (Windows Update 200.0.4.0)"
+    url: "wu://3bbce7bf-87ca-4480-965b-b0205cec89a9/1/edc61f1e44bcc04e20fff33d6ebc37d196b3a42b"
+    size: 30167433
+    sha256: "9ba61abb3a42865debe4f802ad78513b24bb5803d7dbb1cad02dbc31585136d9"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Huawei publishes on Windows Update for the product {71389a98-6ffd-57a0-9c54-f908a5dac8a1}_arm64, a CHID of the MateBook E 2019. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book2-w737-wu-200.0.4.0-qcipa850"
+    maker: "Samsung"
+    title: "Qualcomm IPA driver 1.0.10600.1000 for the Galaxy Book2 W737 (Windows Update 200.0.4.0)"
+    url: "wu://1a2c5ce3-a607-4cb8-a591-f44bd0ee2d04/1/7b3d16931525815e8dffbb4ae3359a57dafd6ea6"
+    size: 144943
+    sha256: "544f0b2ff642846a2bf0754600be57ef8277c4ebd9dcf72b61cb3d1f463bfec8"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {a7271695-80b5-56b3-8e50-56c6ce883b07}_arm64, a CHID of the Galaxy Book2 W737. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book2-w737-wu-200.0.4.0-qcsubsys850"
+    maker: "Samsung"
+    title: "Qualcomm Subsystem driver 1.0.10750.0008 for the Galaxy Book2 W737 (Windows Update 200.0.4.0)"
+    url: "wu://1a2c5ce3-a607-4cb8-a591-f44bd0ee2d04/1/2e6995528154d0763c5467fd1d5d27781f0d6c69"
+    size: 93327298
+    sha256: "1d0660a2fbcbb9907aa69d3199a98816ca3fc82ab44154a0259d32d0b8c8f162"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {a7271695-80b5-56b3-8e50-56c6ce883b07}_arm64, a CHID of the Galaxy Book2 W737. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book2-w737-wu-200.0.4.0-qcdx850"
+    maker: "Samsung"
+    title: "Qualcomm Adreno graphics driver 26.18.10620.0000 for the Galaxy Book2 W737 (Windows Update 200.0.4.0)"
+    url: "wu://1a2c5ce3-a607-4cb8-a591-f44bd0ee2d04/1/da7594df9670906b3016ffcb5c70283bbe66c197"
+    size: 29846693
+    sha256: "949f9fa256d036d829a1429451514c4f6aa3fcb228078a36a0bc4c6d569be3f9"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {a7271695-80b5-56b3-8e50-56c6ce883b07}_arm64, a CHID of the Galaxy Book2 W737. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book2-go-wu-200.0.12.0-qcipa7280"
+    maker: "Samsung"
+    title: "Qualcomm IPA driver 1.0.4056.4400 for the Galaxy Book2 Go (Windows Update 200.0.12.0)"
+    url: "wu://35adcb86-2ccf-4480-b34d-527ecd301360/1/7670884534fa251bc27d1279bf3108d72ded4716"
+    size: 221486
+    sha256: "7da90b8c1b2dfbf51dba90a25d6b44363ab2afdc9e87f139912a32e72be0add7"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {21f454a4-8847-500e-bbe7-23918772e6c9}_arm64, a CHID of the Galaxy Book2 Go. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book2-go-wu-200.0.12.0-qcsubsys-ext-adsp7280"
+    maker: "Samsung"
+    title: "Qualcomm Audio DSP Subsystem extension 2.0.4000.0004 for the Galaxy Book2 Go (Windows Update 200.0.12.0)"
+    url: "wu://35adcb86-2ccf-4480-b34d-527ecd301360/1/f4272c8de0ad840085703e657cdd03cfb8de7d56"
+    size: 7922069
+    sha256: "2f27e9048da265c6a08b5c76b0885838d2d7fd108f7a14537d073140983fd8f4"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {21f454a4-8847-500e-bbe7-23918772e6c9}_arm64, a CHID of the Galaxy Book2 Go. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book2-go-wu-200.0.12.0-qcsubsys-ext-cdsp7280"
+    maker: "Samsung"
+    title: "Qualcomm Compute DSP Subsystem extension 2.0.4056.4400 for the Galaxy Book2 Go (Windows Update 200.0.12.0)"
+    url: "wu://35adcb86-2ccf-4480-b34d-527ecd301360/1/7a0da6d23160b03b69d6c344c874ea69a860a5b2"
+    size: 12049639
+    sha256: "2fbc1fa851c83a37e4bdd0a0ae2cb70baa1d1fbd62da1f882b7e568f82ed4cb2"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {21f454a4-8847-500e-bbe7-23918772e6c9}_arm64, a CHID of the Galaxy Book2 Go. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book2-go-wu-200.0.12.0-qcdx7280"
+    maker: "Samsung"
+    title: "Qualcomm Adreno graphics driver 30.0.4056.4400 for the Galaxy Book2 Go (Windows Update 200.0.12.0)"
+    url: "wu://35adcb86-2ccf-4480-b34d-527ecd301360/1/ca85263a87066de9a457a3daba27bf48eb7ee09c"
+    size: 87178073
+    sha256: "772aaf735947e6db60db98d2608aa91f94906f8fad8179c8f443d61fa095bc7f"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {21f454a4-8847-500e-bbe7-23918772e6c9}_arm64, a CHID of the Galaxy Book2 Go. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book2-go-wu-200.0.12.0-qcsubsys-ext-mpss7280"
+    maker: "Samsung"
+    title: "Qualcomm Modem Subsystem extension 1.0.0.0025 for the Galaxy Book2 Go (Windows Update 200.0.12.0)"
+    url: "wu://35adcb86-2ccf-4480-b34d-527ecd301360/1/c3bc702a2daf163e3eae2a91bacec2a5b659814f"
+    size: 58127908
+    sha256: "347c1f5c4e410bbd7b50ff56476017eda9470c768adb16a9f40e4e26c1194145"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {21f454a4-8847-500e-bbe7-23918772e6c9}_arm64, a CHID of the Galaxy Book2 Go. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book2-go-wu-200.0.12.0-qcwlan7280"
+    maker: "Samsung"
+    title: "Qualcomm WLAN driver 1.0.3710.9700 for the Galaxy Book2 Go (Windows Update 200.0.12.0)"
+    url: "wu://35adcb86-2ccf-4480-b34d-527ecd301360/1/33cfe55574a1a4717db4d924eff599c9ca0cd25a"
+    size: 4213246
+    sha256: "641870bdccb47a03a42c50755e517bf40515ecceb48f05c8d4f1bb69acd3d8f3"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {21f454a4-8847-500e-bbe7-23918772e6c9}_arm64, a CHID of the Galaxy Book2 Go. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."

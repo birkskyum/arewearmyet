@@ -104,6 +104,7 @@ RECIPES = {
     "hp-omnibook-x14-firmware": ("HP OmniBook X 14", ["qcom/x1e80100/hp/omnibook-x14", "qcom/x1p42100/hp/omnibook-x14"]),
     "hp-omnibook-x16-firmware": ("HP OmniBook X 16 (2026)", ["qcom/glymur/hp/omnibook-x16"]),
     "hp-omnibook-x16-cp0-firmware": ("HP OmniBook X 14 and 16 (2025)", ["qcom/x1p42100/hp/omnibook-x16-cp0"]),
+    "huawei-matebook-e-2019-firmware": ("Huawei MateBook E 2019", ["qcom/sdm850/HUAWEI/AL09"]),
     "huawei-matebook-e-go-firmware": ("Huawei MateBook E Go", ["qcom/sc8280xp/HUAWEI/gaokun3"]),
     "lenovo-flex-5g-firmware": ("Lenovo Flex 5G and Yoga 5G", ["qcom/sc8180x/LENOVO/82AK"]),
     "lenovo-ideacentre-mini-x-firmware": ("Lenovo IdeaCentre Mini x", ["qcom/x1e80100/LENOVO/91B6", "qcom/x1p42100/LENOVO/91B6"]),
@@ -128,6 +129,8 @@ RECIPES = {
     "microsoft-surface-pro-12in-2nd-edition-firmware": ("Microsoft Surface Pro 12-inch 2nd Edition", ["qcom/kalambo/Microsoft/Surface12"]),
     "microsoft-surface-pro-12th-edition-firmware": ("Microsoft Surface Pro 12th Edition", ["qcom/glymur/microsoft/surface-pro-12th-edition"]),
     "qualcomm-snapdragon-dev-kit-firmware": ("Qualcomm Snapdragon Dev Kit for Windows", ["qcom/x1e80100/Thundercomm/DEVKIT"]),
+    "samsung-galaxy-book2-go-firmware": ("Samsung Galaxy Book2 Go", ["qcom/sc7280/Samsung/galaxy-book2-go"]),
+    "samsung-galaxy-book2-w737-firmware": ("Samsung Galaxy Book2 W737", ["qcom/sdm850/samsung/w737"]),
     "samsung-galaxy-book4-edge-firmware": ("Samsung Galaxy Book4 Edge", ["qcom/x1e80100/SAMSUNG/galaxy-book4-edge"]),
     "samsung-galaxy-book4-edge-15-firmware": ("Samsung Galaxy Book4 Edge 15", ["qcom/x1p42100/SAMSUNG/galaxy-book4-edge"]),
 }
