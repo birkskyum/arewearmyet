@@ -84,7 +84,8 @@ const STATES = {
     missing: { label: 'Missing', tone: 'wanted', meaning: `linux-firmware doesn't have its files. It takes them only when the maker submits or signs them off.` },
   },
   acpi: {
-    collected: { label: 'Collected', tone: 'good', meaning: `Its ACPI tables are in the aarch64-laptops collection, an owner's hardware report or this board's copy of a dump not merged there yet.` },
+    report: { label: 'Report', tone: 'good', meaning: `An owner sent a hardware report from Omarchy's report tool: its ACPI tables, hardware IDs, panels and firmware list.` },
+    collected: { label: 'ACPI dump', tone: 'good', meaning: `Its ACPI tables are in the aarch64-laptops collection or this board's copy of a dump not merged there yet, which is enough to write a device tree from. An Omarchy hardware report still adds its hardware IDs, panels and firmware list.` },
     firmware: { label: 'From BIOS', tone: 'close', meaning: `Its ACPI tables were taken out of the maker's BIOS image, which is enough to start a device tree. An owner's dump still adds its hardware IDs, panels, firmware list and the values the firmware fills in at boot.` },
     helps: { label: 'Still useful', tone: 'muted', meaning: `It has a device tree, but a report still gives the hardware IDs for each of its model numbers, the maker's firmware list, its panels and the tables to check the tree against.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: 'The first thing to send for a model without a device tree.' },
@@ -270,7 +271,10 @@ export function machineCell(model: Model): Cell {
 }
 
 export function acpiCell(model: Model): Cell {
-  if (model.upstream.acpi === 'collected') return cell(STATES.acpi, 'collected', { href: model.upstream.acpiUrls[0] });
+  if (model.upstream.acpi === 'collected') {
+    const report = model.upstream.acpiUrls.find((url) => url.includes('/omarchy-hardware-reports/'));
+    return report ? cell(STATES.acpi, 'report', { href: report }) : cell(STATES.acpi, 'collected', { href: model.upstream.acpiUrls[0] });
+  }
   if (model.upstream.acpi === 'firmware') return cell(STATES.acpi, 'firmware', { href: model.upstream.acpiUrls[0] });
   // Until one is collected, the cell links to how to make a report
   const href = '/help#windows';
