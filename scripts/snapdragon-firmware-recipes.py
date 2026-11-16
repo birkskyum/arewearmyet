@@ -64,6 +64,7 @@ SCRIPT_URL = "https://github.com/birkskyum/arewearmyet/blob/main/scripts/snapdra
 # Left out: glymur/ASUSTeK/UX3607OA, which asus-zenbook-a16-firmware ships, and
 # x1e80100/LENOVO/21N1, whose ThinkPad T14s Gen 6 set linux-firmware already ships.
 RECIPES = {
+    "acer-spin-7-firmware": ("Acer Spin 7 SP714-61NA", ["qcom/sc8180xp/Acer/SP714-61NA"]),
     "acer-swift-14-go-pro-ai-firmware": ("Acer Swift 14 Go Pro AI", ["qcom/x1e80100/ACER/SFA14-11"]),
     "acer-aspire-14-ai-firmware": ("Acer Aspire 14 AI", ["qcom/x1p42100/ACER/A14-11M"]),
     "acer-aspire-16-ai-firmware": ("Acer Aspire 16 AI", ["qcom/x1p42100/ACER/A16-11M"]),
@@ -107,8 +108,10 @@ RECIPES = {
     "hp-omnibook-x16-cp0-firmware": ("HP OmniBook X 14 and 16 (2025)", ["qcom/x1p42100/hp/omnibook-x16-cp0"]),
     "huawei-matebook-e-2019-firmware": ("Huawei MateBook E 2019", ["qcom/sdm850/HUAWEI/AL09"]),
     "huawei-matebook-e-go-firmware": ("Huawei MateBook E Go", ["qcom/sc8280xp/HUAWEI/gaokun3"]),
+    "lenovo-10w-firmware": ("Lenovo 10w", ["qcom/sc7180/LENOVO/82ST"]),
     "lenovo-flex-5g-firmware": ("Lenovo Flex 5G and Yoga 5G", ["qcom/sc8180x/LENOVO/82AK"]),
     "lenovo-ideacentre-mini-x-firmware": ("Lenovo IdeaCentre Mini x", ["qcom/x1e80100/LENOVO/91B6", "qcom/x1p42100/LENOVO/91B6"]),
+    "lenovo-ideapad-5g-firmware": ("Lenovo IdeaPad 5G 14Q8X05", ["qcom/sc8180xp/LENOVO/82KF"]),
     "lenovo-ideapad-5x-2-in-1-firmware": ("Lenovo IdeaPad 5x 2-in-1 14Q8X9", ["qcom/x1p42100/LENOVO/83GH"]),
     "lenovo-ideapad-slim-3x-firmware": ("Lenovo IdeaPad Slim 3x 15Q8X10", ["qcom/x1p42100/LENOVO/83N3"]),
     "lenovo-ideapad-slim-5x-firmware": ("Lenovo IdeaPad Slim 5x 14Q8X9", ["qcom/x1p42100/LENOVO/83HL"]),
@@ -130,11 +133,14 @@ RECIPES = {
     "microsoft-surface-pro-12in-2nd-edition-firmware": ("Microsoft Surface Pro 12-inch 2nd Edition", ["qcom/kalambo/Microsoft/Surface12"]),
     "microsoft-surface-pro-12th-edition-firmware": ("Microsoft Surface Pro 12th Edition", ["qcom/glymur/microsoft/surface-pro-12th-edition"]),
     "qualcomm-snapdragon-dev-kit-firmware": ("Qualcomm Snapdragon Dev Kit for Windows", ["qcom/x1e80100/Thundercomm/DEVKIT"]),
+    "samsung-galaxy-book-go-5g-firmware": ("Samsung Galaxy Book Go 5G", ["qcom/sc8180xp/Samsung/galaxy-book-go-5g"]),
+    "samsung-galaxy-book-go-firmware": ("Samsung Galaxy Book Go", ["qcom/sc7180/Samsung/galaxy-book-go"]),
     "samsung-galaxy-book-s-firmware": ("Samsung Galaxy Book S", ["qcom/samsung/w767"]),
     "samsung-galaxy-book2-go-firmware": ("Samsung Galaxy Book2 Go", ["qcom/sc7280/Samsung/galaxy-book2-go"]),
     "samsung-galaxy-book2-w737-firmware": ("Samsung Galaxy Book2 W737", ["qcom/sdm850/samsung/w737"]),
     "samsung-galaxy-book4-edge-firmware": ("Samsung Galaxy Book4 Edge", ["qcom/x1e80100/SAMSUNG/galaxy-book4-edge"]),
     "samsung-galaxy-book4-edge-15-firmware": ("Samsung Galaxy Book4 Edge 15", ["qcom/x1p42100/SAMSUNG/galaxy-book4-edge"]),
+    "xiaomi-book-s-firmware": ("Xiaomi Book S 12.4", ["qcom/sc8180xp/Xiaomi/book-s"]),
 }
 # Both Surfaces load the same GPU zap shader from qcom/x1e80100/microsoft.
 CONFLICTS = {

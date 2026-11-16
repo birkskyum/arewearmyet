@@ -3955,6 +3955,241 @@ folders:
         sha256: "0170fbea8a31fe7c691b95f9b9e8ad720fde5ea23e3c91c0f5fbe0ebaa0d8213"
         from:
           - { package: "dell-inspiron-14-3420-wu-200.0.14.0-qcdx8180", member: "qcdxkmsuc8180.mbn" }
+  - path: "qcom/sc8180xp/Acer/SP714-61NA"
+    models: ["acer-spin-7-sp714-61na"]
+    files:
+      - name: "qcadsp8180.mbn"
+        size: 11659696
+        sha256: "8220e7e61e8b685c1ed2ce2e4a259bded36a2050de571671ef73d8889cfdd73f"
+        note: "Signed under Qualcomm's General Use Test Key (QCT Root CA 1), like the Dell Inspiron 14 3420's ADSP image. It is the image Acer ships for this laptop on Windows Update, so the laptop's secure boot accepts that root."
+        from:
+          - { package: "acer-spin-7-sp714-61na-wu-200.0.10.0-qcsubsys-ext-adsp8180", member: "qcadsp8180.mbn" }
+      - name: "qccdsp8180.mbn"
+        size: 3089940
+        sha256: "7c146e68f4b3a80ccbc03539e38440c69da4ce4c9e0a8feb74e6d21feb837a33"
+        note: "Byte for byte the Lenovo Flex 5G (82AK) image, signed under Qualcomm's QMC Attestation Root CA 3."
+        from:
+          - { package: "acer-spin-7-sp714-61na-wu-200.0.10.0-qcsubsys-ext-cdsp8180", member: "qccdsp8180.mbn" }
+      - name: "qcdxkmsuc8180.mbn"
+        size: 14240
+        sha256: "416f200c6bbf9bf3685b332848e733e56f4944954271be9195e9636573002493"
+        note: "Byte for byte the Lenovo Flex 5G (82AK) image, signed under Qualcomm's QMC Attestation Root CA 3."
+        from:
+          - { package: "acer-spin-7-sp714-61na-wu-200.0.10.0-qcdx8180", member: "qcdxkmsuc8180.mbn" }
+      - name: "qcmpss8180_nm.mbn"
+        size: 5217520
+        sha256: "fc819b43e639212d9f32a5c356db26aaef6ba0cf89aa7392575b735ac76b2c92"
+        note: "Byte for byte the Lenovo Flex 5G (82AK) image, signed under Qualcomm's QMC Attestation Root CA 3. The bundle also has qcmpss8180.mbn, the image for the integrated X24 LTE modem, which this 5G model does not use."
+        from:
+          - { package: "acer-spin-7-sp714-61na-wu-200.0.10.0-qcsubsys-ext-mpss8180", member: "qcmpss8180_nm.mbn" }
+      - name: "wlanmdsp.mbn"
+        size: 4316544
+        sha256: "f3f9a8929a4911d7eef42058081db348d22cb96a9d00b0adba70587a7bd7dc50"
+        note: "Not a firmware-name in the tree. The modem fetches it over TFTP from the remoteproc's folder for the WCN3998 Wi-Fi. Signed under Qualcomm's QMC Attestation Root CA 3."
+        from:
+          - { package: "acer-spin-7-sp714-61na-wu-200.0.10.0-qcwlan8180", member: "WLANMDSP.MBN" }
+  - path: "qcom/sc8180xp/LENOVO/82KF"
+    models: ["lenovo-ideapad-5g-14q8x05"]
+    files:
+      - name: "qcadsp8180.mbn"
+        size: 11647476
+        sha256: "af96686581d869fb0b038c5650745c95a1582dfa7895323acf31929b03fd9d00"
+        note: "Signed under Lenovo's own root (CN=Lenovo, O=Lenovo(Shanghai) Ltd), so it runs only where that is the OEM root, as on this laptop."
+        from:
+          - { package: "lenovo-ideapad-5g-14q8x05-wu-200.0.3.0-qcsubsys-ext-adsp8180", member: "qcadsp8180.mbn" }
+      - name: "qccdsp8180.mbn"
+        size: 3089940
+        sha256: "66816c7815cbb90fd2136de63fe76392a37fc96a18c9d0bf51e3261f5f7dcfda"
+        note: "Signed under Qualcomm's QMC Attestation Root CA 3."
+        from:
+          - { package: "lenovo-ideapad-5g-14q8x05-wu-200.0.3.0-qcsubsys-ext-cdsp8180", member: "qccdsp8180.mbn" }
+      - name: "qcdxkmsuc8180.mbn"
+        size: 14240
+        sha256: "7bc9035fc38bcdc49e0a2ffbb797e65cf331592e4fab3984ae2fdacf271a4bbb"
+        note: "Signed under Qualcomm's QMC Attestation Root CA 3. The same file as the Galaxy Book S zap shader."
+        from:
+          - { package: "lenovo-ideapad-5g-14q8x05-wu-200.0.3.0-qcdx8180", member: "qcdxkmsuc8180.mbn" }
+      - name: "qcmpss8180_nm.mbn"
+        size: 5197360
+        sha256: "02a5958ce3de36c57c148f1ea426aef41d62f740a89275ff42c865f44fe155f5"
+        note: "Signed under Lenovo's own root (CN=Lenovo, O=Lenovo(Shanghai) Ltd)."
+        from:
+          - { package: "lenovo-ideapad-5g-14q8x05-wu-200.0.3.0-qcsubsys-ext-mpss8180", member: "qcmpss8180_nm.mbn" }
+      - name: "wlanmdsp.mbn"
+        size: 4316952
+        sha256: "757ddc182369acd7dee153104c03011b973ced6da09461f84f41adc6e724d9b9"
+        note: "Not a firmware-name in the tree. The modem fetches it over TFTP from the remoteproc's folder for the WCN3998 Wi-Fi. Signed under Qualcomm's QMC Attestation Root CA 3."
+        from:
+          - { package: "lenovo-ideapad-5g-14q8x05-wu-200.0.3.0-qcwlan8180", member: "WLANMDSP.MBN" }
+  - path: "qcom/sc8180xp/Samsung/galaxy-book-go-5g"
+    models: ["samsung-galaxy-book-go-5g"]
+    files:
+      - name: "qcadsp8180.mbn"
+        size: 10750636
+        sha256: "e1c9613ea1fd584b9243c13a41d036d172e375c94d2eda8daf1ee789e660ecbb"
+        from:
+          - { package: "samsung-galaxy-book-go-5g-paka-wu-200.0.27.0-qcsubsys-ext-adsp8180", member: "qcadsp8180.mbn" }
+      - name: "qccdsp8180.mbn"
+        size: 3089940
+        sha256: "8f5dc6b7f26d7c5aeca5660d1c6df71d18da4f4420b1cebea6e2f576ff81291a"
+        from:
+          - { package: "samsung-galaxy-book-go-5g-paka-wu-200.0.27.0-qcsubsys-ext-cdsp8180", member: "qccdsp8180.mbn" }
+          - { package: "samsung-galaxy-book-go-5g-pakb-wu-200.0.13.0-qcsubsys-ext-cdsp8180", member: "qccdsp8180.mbn" }
+          - { package: "samsung-galaxy-book-go-5g-pakl-wu-200.0.11.0-qcsubsys-ext-cdsp8180", member: "qccdsp8180.mbn" }
+          - { package: "samsung-galaxy-book-go-5g-pakm-wu-200.0.8.0-qcsubsys-ext-cdsp8180", member: "qccdsp8180.mbn" }
+      - name: "qcdxkmsuc8180.mbn"
+        size: 14240
+        sha256: "faaeac2c537e70053bf05b7ff6a7fb3462331c970dc55a7d2aa9fb5c4e8cc939"
+        from:
+          - { package: "samsung-galaxy-book-go-5g-paka-wu-200.0.27.0-qcdx8180", member: "qcdxkmsuc8180.mbn" }
+          - { package: "samsung-galaxy-book-go-5g-pakb-wu-200.0.13.0-qcdx8180", member: "qcdxkmsuc8180.mbn" }
+          - { package: "samsung-galaxy-book-go-5g-pakl-wu-200.0.11.0-qcdx8180", member: "qcdxkmsuc8180.mbn" }
+          - { package: "samsung-galaxy-book-go-5g-pakm-wu-200.0.8.0-qcdx8180", member: "qcdxkmsuc8180.mbn" }
+      - name: "qcmpss8180_nm.mbn"
+        size: 5217520
+        sha256: "ec8668b360c215dd4a14d09e56f6b2f2e2fd7cf602a4a3d912cde746099c9bb8"
+        from:
+          - { package: "samsung-galaxy-book-go-5g-paka-wu-200.0.27.0-qcsubsys-ext-mpss8180", member: "qcmpss8180_nm.mbn" }
+          - { package: "samsung-galaxy-book-go-5g-pakb-wu-200.0.13.0-qcsubsys-ext-mpss8180", member: "qcmpss8180_nm.mbn" }
+          - { package: "samsung-galaxy-book-go-5g-pakl-wu-200.0.11.0-qcsubsys-ext-mpss8180", member: "qcmpss8180_nm.mbn" }
+          - { package: "samsung-galaxy-book-go-5g-pakm-wu-200.0.8.0-qcsubsys-ext-mpss8180", member: "qcmpss8180_nm.mbn" }
+  - path: "qcom/sc8180xp/Xiaomi/book-s"
+    models: ["xiaomi-book-s"]
+    files:
+      - name: "qcadsp8180.mbn"
+        size: 11647476
+        sha256: "16cc74a719f6da4ab1a160729e83f7072ade33c139a430c747bbd3a35ebc43a2"
+        from:
+          - { package: "xiaomi-book-s-tm2133-39542-wu-200.0.3.0-qcsubsys-ext-adsp8180", member: "qcadsp8180.mbn" }
+          - { package: "xiaomi-book-s-wu-200.0.1.0-qcsubsys-ext-adsp8180", member: "qcadsp8180.mbn" }
+      - name: "qccdsp8180.mbn"
+        size: 3094036
+        sha256: "565fdf3ede556725c96e95d630353a3c1d81baf1b907fcd9a6a687f06c4b007f"
+        from:
+          - { package: "xiaomi-book-s-tm2133-39542-wu-200.0.3.0-qcsubsys-ext-cdsp8180", member: "qccdsp8180.mbn" }
+          - { package: "xiaomi-book-s-wu-200.0.1.0-qcsubsys-ext-cdsp8180", member: "qccdsp8180.mbn" }
+      - name: "qcdxkmsuc8180.mbn"
+        size: 14240
+        sha256: "660c66fd69ced64004a173978cabfdbe569ec7aea1dc43657033fbf93778328f"
+        from:
+          - { package: "xiaomi-book-s-tm2133-39542-wu-200.0.3.0-qcdx8180", member: "qcdxkmsuc8180.mbn" }
+          - { package: "xiaomi-book-s-wu-200.0.1.0-qcdx8180", member: "qcdxkmsuc8180.mbn" }
+      - name: "qcmpss8180_nm.mbn"
+        size: 5199376
+        sha256: "cbbb0af0cd1249f4dc29dbef909935f0e8009e674ffaf48f3e4f8f17e7c41175"
+        from:
+          - { package: "xiaomi-book-s-tm2133-39542-wu-200.0.3.0-qcsubsys-ext-mpss8180", member: "qcmpss8180_nm.mbn" }
+          - { package: "xiaomi-book-s-wu-200.0.1.0-qcsubsys-ext-mpss8180", member: "qcmpss8180_nm.mbn" }
+      - name: "wlanmdsp.mbn"
+        size: 4316952
+        sha256: "2f27b0656b7de62859f0dddaa51f4d90d3a5d5357a1db433e1ba360f0a5df0bc"
+        from:
+          - { package: "xiaomi-book-s-tm2133-39542-wu-200.0.3.0-qcwlan8180", member: "WLANMDSP.MBN" }
+          - { package: "xiaomi-book-s-wu-200.0.1.0-qcwlan8180", member: "WLANMDSP.MBN" }
+  - path: "qcom/sc7180/Samsung/galaxy-book-go"
+    models: ["samsung-galaxy-book-go"]
+    files:
+      - name: "adspr.jsn"
+        size: 586
+        sha256: "2886c96e03e61c05dfed0de59451854a2aa0bc353c2a4a468ec339af70e3e8f0"
+        from:
+          - { package: "samsung-galaxy-book-go-pajw-wu-200.0.17.0-qcsubsys-ext-adsp7180", member: "adspr.jsn" }
+          - { package: "samsung-galaxy-book-go-pajs-wu-200.0.18.0-qcsubsys-ext-adsp7180", member: "adspr.jsn" }
+      - name: "adspua.jsn"
+        size: 581
+        sha256: "c75d16fc0805e5a0f51c6d0e0fcc315c09d5d2174d655fa038e9d9eb4217df2b"
+        from:
+          - { package: "samsung-galaxy-book-go-pajw-wu-200.0.17.0-qcsubsys-ext-adsp7180", member: "adspua.jsn" }
+          - { package: "samsung-galaxy-book-go-pajs-wu-200.0.18.0-qcsubsys-ext-adsp7180", member: "adspua.jsn" }
+      - name: "modemr.jsn"
+        size: 751
+        sha256: "68d946cbc26fecd262e042d03dca02fd42a3d10110327621ea7c17c73b53aed8"
+        from:
+          - { package: "samsung-galaxy-book-go-pajw-wu-200.0.17.0-qcsubsys-ext-mpss7180", member: "modemr.jsn" }
+          - { package: "samsung-galaxy-book-go-pajs-wu-200.0.18.0-qcsubsys-ext-mpss7180", member: "modemr.jsn" }
+      - name: "modemuw.jsn"
+        size: 745
+        sha256: "b7e32e64c7f323dddbe8c687861c1f9d312191d306fbfee49ce404f80ce46807"
+        from:
+          - { package: "samsung-galaxy-book-go-pajw-wu-200.0.17.0-qcsubsys-ext-mpss7180", member: "modemuw.jsn" }
+          - { package: "samsung-galaxy-book-go-pajs-wu-200.0.18.0-qcsubsys-ext-mpss7180", member: "modemuw.jsn" }
+      - name: "qcadsp7180.mbn"
+        size: 13746308
+        sha256: "5704b2b9be07fda4faeb8b3ba91dfff8124bc0fb7b96f85de4a14e787b9a8c9d"
+        from:
+          - { package: "samsung-galaxy-book-go-pajw-wu-200.0.17.0-qcsubsys-ext-adsp7180", member: "qcadsp7180.mbn" }
+      - name: "qcdxkmsuc7180.mbn"
+        size: 14256
+        sha256: "ab040159aee7ab7e2631acc3d2873be3bf72eafe066521a9fd5d906759deefe6"
+        from:
+          - { package: "samsung-galaxy-book-go-pajw-wu-200.0.17.0-qcdx7180", member: "qcdxkmsuc7180.mbn" }
+          - { package: "samsung-galaxy-book-go-pajs-wu-200.0.18.0-qcdx7180", member: "qcdxkmsuc7180.mbn" }
+      - name: "qcmpss7180_nm.mbn"
+        size: 5062656
+        sha256: "a4016412a5071a95934b0e9db343d51dd8b1cda1252f3b6baae09b34356f02f2"
+        from:
+          - { package: "samsung-galaxy-book-go-pajw-wu-200.0.17.0-qcsubsys-ext-mpss7180", member: "qcmpss7180_nm.mbn" }
+          - { package: "samsung-galaxy-book-go-pajs-wu-200.0.18.0-qcsubsys-ext-mpss7180", member: "qcmpss7180_nm.mbn" }
+      - name: "qcvss7180.mbn"
+        size: 919212
+        sha256: "280ed4a092017770634e1f9e75538043100e42bc922c209eff160daf8c91b3e0"
+        from:
+          - { package: "samsung-galaxy-book-go-pajw-wu-200.0.17.0-qcdx7180", member: "qcvss7180.mbn" }
+          - { package: "samsung-galaxy-book-go-pajs-wu-200.0.18.0-qcdx7180", member: "qcvss7180.mbn" }
+      - name: "wlanmdsp.mbn"
+        size: 3832348
+        sha256: "7688eea1c13715289f58c8d379b9f73b81d072415ac141b10b4732d5059f7f4b"
+        from:
+          - { package: "samsung-galaxy-book-go-pajw-wu-200.0.17.0-qcwlan7180", member: "WLANMDSP.MBN" }
+          - { package: "samsung-galaxy-book-go-pajs-wu-200.0.18.0-qcwlan7180", member: "WLANMDSP.MBN" }
+  - path: "qcom/sc7180/LENOVO/82ST"
+    models: ["lenovo-10w"]
+    files:
+      - name: "adspr.jsn"
+        size: 586
+        sha256: "2886c96e03e61c05dfed0de59451854a2aa0bc353c2a4a468ec339af70e3e8f0"
+        from:
+          - { package: "lenovo-jsqwh05", member: "code$GetExtractPath$/qcsubsys_ext_adsp7180/adspr.jsn" }
+      - name: "adspua.jsn"
+        size: 581
+        sha256: "c75d16fc0805e5a0f51c6d0e0fcc315c09d5d2174d655fa038e9d9eb4217df2b"
+        from:
+          - { package: "lenovo-jsqwh05", member: "code$GetExtractPath$/qcsubsys_ext_adsp7180/adspua.jsn" }
+      - name: "modemr.jsn"
+        size: 751
+        sha256: "68d946cbc26fecd262e042d03dca02fd42a3d10110327621ea7c17c73b53aed8"
+        from:
+          - { package: "lenovo-jsqwh05", member: "code$GetExtractPath$/qcsubsys_ext_mpss7180/modemr.jsn" }
+      - name: "modemuw.jsn"
+        size: 745
+        sha256: "b7e32e64c7f323dddbe8c687861c1f9d312191d306fbfee49ce404f80ce46807"
+        from:
+          - { package: "lenovo-jsqwh05", member: "code$GetExtractPath$/qcsubsys_ext_mpss7180/modemuw.jsn" }
+      - name: "qcadsp7180.mbn"
+        size: 13471868
+        sha256: "f18245756a32b80fa3eced9f67501694f52c1910f7027486505442fc5c5b498a"
+        from:
+          - { package: "lenovo-jsqwh05", member: "code$GetExtractPath$/qcsubsys_ext_adsp7180/qcadsp7180.mbn" }
+      - name: "qcdxkmsuc7180.mbn"
+        size: 14256
+        sha256: "459c2ff362bf8dcc6ce8cefd31da1d521dfcbab0f4c5908c472df314438fdc0e"
+        from:
+          - { package: "lenovo-jsvqh05", member: "code$GetExtractPath$/qcdx7180/qcdxkmsuc7180.mbn" }
+      - name: "qcmpss7180_nm.mbn"
+        size: 5062664
+        sha256: "a239f72b6c048a39684af204ffd19e90219817a803507758b9aa354c6fa692e7"
+        from:
+          - { package: "lenovo-jsqwh05", member: "code$GetExtractPath$/qcsubsys_ext_mpss7180/qcmpss7180_nm.mbn" }
+      - name: "qcvss7180.mbn"
+        size: 919212
+        sha256: "2d518f86cf1a3bc76921e7e25c8cbd279786edda577a93fbed13771ed4bad89f"
+        from:
+          - { package: "lenovo-jsvqh05", member: "code$GetExtractPath$/qcdx7180/qcvss7180.mbn" }
+      - name: "wlanmdsp.mbn"
+        size: 3832108
+        sha256: "01cc452dac91ee13126fa49b8359f08c19cba13ff2e390c7ab34cd96042632c8"
+        from:
+          - { package: "lenovo-jswqh04", member: "code$GetExtractPath$/qcwlan7180/WLANMDSP.MBN" }
 packages:
   - id: "acer-a14-11m-adsp-2.0.9100.0001"
     maker: "Acer"
@@ -4956,3 +5191,355 @@ packages:
     sha256: "83cccbc83fb8166f4448567e498b4e04d3fb57fd9f4a5a726422c4c586060198"
     fetched: "2026-11-16"
     note: "A signed driver cabinet in the bundle Dell publishes on Windows Update for the product {c37b0e8e-de1a-51f0-b08c-32d2a95a589a}_arm64, a CHID of the Inspiron 14 3420 (SKU 0BF4). Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "acer-spin-7-sp714-61na-wu-200.0.10.0-qcdx8180"
+    maker: "Acer"
+    title: "Qualcomm Adreno graphics driver 27.20.1460.0000 for the Acer Spin 7 SP714-61NA (Windows Update 200.0.10.0)"
+    url: "wu://76598104-93f0-4b68-b903-dc959c4b1073/1/0cc89ff2ec57ee1fe1f1a83897ad24e20769ca44"
+    size: 32906196
+    sha256: "3e269d0384979319518ea2d55f1c5f57726a90ec1a1e46caa9ea8fabccecb1c8"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Acer publishes on Windows Update for the product {d918093e-a393-5341-a188-2a73aca18629}_arm64, a CHID of the Spin 7 SP714-61NA. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "acer-spin-7-sp714-61na-wu-200.0.10.0-qcsubsys-ext-adsp8180"
+    maker: "Acer"
+    title: "Qualcomm Audio DSP Subsystem extension 1.0.1460.0000 for the Acer Spin 7 SP714-61NA (Windows Update 200.0.10.0)"
+    url: "wu://76598104-93f0-4b68-b903-dc959c4b1073/1/81b40fa29e21b2c6ed6135e2fb1291a82cd7c7e6"
+    size: 7594121
+    sha256: "b5002d6f76268ad56d83288dd401c1e32759749d999a93c0b4daf07213fce06f"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Acer publishes on Windows Update for the product {d918093e-a393-5341-a188-2a73aca18629}_arm64, a CHID of the Spin 7 SP714-61NA. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "acer-spin-7-sp714-61na-wu-200.0.10.0-qcsubsys-ext-cdsp8180"
+    maker: "Acer"
+    title: "Qualcomm Compute DSP Subsystem extension 1.0.1430.0000 for the Acer Spin 7 SP714-61NA (Windows Update 200.0.10.0)"
+    url: "wu://76598104-93f0-4b68-b903-dc959c4b1073/1/b6f1388e8151a54c49ac43e0a0e87d577fa27621"
+    size: 3357877
+    sha256: "38fae7299f1caeb0024af21c46ea62c529da5803243694d79c02aeb790fda54e"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Acer publishes on Windows Update for the product {d918093e-a393-5341-a188-2a73aca18629}_arm64, a CHID of the Spin 7 SP714-61NA. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "acer-spin-7-sp714-61na-wu-200.0.10.0-qcsubsys-ext-mpss8180"
+    maker: "Acer"
+    title: "Qualcomm Modem Subsystem extension 1.0.1430.0000 for the Acer Spin 7 SP714-61NA (Windows Update 200.0.10.0)"
+    url: "wu://76598104-93f0-4b68-b903-dc959c4b1073/1/94c43f41885ff179033aa255463945c7a4f2074a"
+    size: 36740373
+    sha256: "0076174aa398e4c4eef3ec70936c594fb3e41a9c4e0fd67fd5a438534c516643"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Acer publishes on Windows Update for the product {d918093e-a393-5341-a188-2a73aca18629}_arm64, a CHID of the Spin 7 SP714-61NA. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "acer-spin-7-sp714-61na-wu-200.0.10.0-qcwlan8180"
+    maker: "Acer"
+    title: "Qualcomm WLAN driver 1.0.1420.0000 for the Acer Spin 7 SP714-61NA (Windows Update 200.0.10.0)"
+    url: "wu://76598104-93f0-4b68-b903-dc959c4b1073/1/919376ee2da212dd43459262aae946897e08392c"
+    size: 2888600
+    sha256: "3b2e60d1d2560bd419664f4449216deb01be149fc92982d0898a8089ae79a0c2"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Acer publishes on Windows Update for the product {d918093e-a393-5341-a188-2a73aca18629}_arm64, a CHID of the Spin 7 SP714-61NA. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-ideapad-5g-14q8x05-wu-200.0.3.0-qcdx8180"
+    maker: "Lenovo"
+    title: "Qualcomm Adreno graphics driver 27.20.1640.0000 for the 82KF IdeaPad 5G 14Q8X05 (Windows Update 200.0.3.0)"
+    url: "wu://58e60859-8f55-4ef0-b8b9-5bf35d6b20be/1/ed1719eaaf12377682796d86dc47b61d46ec5b09"
+    size: 34032789
+    sha256: "1fa296f8247b2cf0768079d2d1a0bf3a3c4b715d040273303b9614cb636f07ef"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {86e64c01-c81b-5c06-b3ca-6690bfbe3f47}_arm64, a CHID of the 82KF IdeaPad 5G 14Q8X05. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-ideapad-5g-14q8x05-wu-200.0.3.0-qcsubsys-ext-adsp8180"
+    maker: "Lenovo"
+    title: "Qualcomm Audio DSP Subsystem extension 1.0.1600.0001 for the 82KF IdeaPad 5G 14Q8X05 (Windows Update 200.0.3.0)"
+    url: "wu://58e60859-8f55-4ef0-b8b9-5bf35d6b20be/1/785b6fe34d22f74f71c950e2f7382e303479ca86"
+    size: 15160822
+    sha256: "815d18b38d1d279b51cc4e1efd565a343ae5516359c0c31e6543ac44e4ba1445"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {86e64c01-c81b-5c06-b3ca-6690bfbe3f47}_arm64, a CHID of the 82KF IdeaPad 5G 14Q8X05. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-ideapad-5g-14q8x05-wu-200.0.3.0-qcsubsys-ext-cdsp8180"
+    maker: "Lenovo"
+    title: "Qualcomm Compute DSP Subsystem extension 1.0.1600.0000 for the 82KF IdeaPad 5G 14Q8X05 (Windows Update 200.0.3.0)"
+    url: "wu://58e60859-8f55-4ef0-b8b9-5bf35d6b20be/1/c3e05090fc46fdbea241c3c0a1c74ceba286a060"
+    size: 3357035
+    sha256: "b2d5c7861a52c22edfe26be20c446d38f7c3a623f987cf5b802cf582dadf8b28"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {86e64c01-c81b-5c06-b3ca-6690bfbe3f47}_arm64, a CHID of the 82KF IdeaPad 5G 14Q8X05. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-ideapad-5g-14q8x05-wu-200.0.3.0-qcsubsys-ext-mpss8180"
+    maker: "Lenovo"
+    title: "Qualcomm Modem Subsystem extension 1.0.1600.0002 for the 82KF IdeaPad 5G 14Q8X05 (Windows Update 200.0.3.0)"
+    url: "wu://58e60859-8f55-4ef0-b8b9-5bf35d6b20be/1/376227d8a3e1f92d6c1e8e17521924e79697dda2"
+    size: 36730437
+    sha256: "bdff9d3603e111d6d442edb3f3e0cc6519b17c8391da6f5e0fa334e16c0d19eb"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {86e64c01-c81b-5c06-b3ca-6690bfbe3f47}_arm64, a CHID of the 82KF IdeaPad 5G 14Q8X05. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-ideapad-5g-14q8x05-wu-200.0.3.0-qcwlan8180"
+    maker: "Lenovo"
+    title: "Qualcomm WLAN driver 1.0.1600.0000 for the 82KF IdeaPad 5G 14Q8X05 (Windows Update 200.0.3.0)"
+    url: "wu://58e60859-8f55-4ef0-b8b9-5bf35d6b20be/1/a6156fd58f815a8f470f8c5db0ac7c298db64dbd"
+    size: 2888358
+    sha256: "4641519a02db3db7c837f269e5cb195c76f8b5f194cc97c4583c6682d0823ad2"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Lenovo publishes on Windows Update for the product {86e64c01-c81b-5c06-b3ca-6690bfbe3f47}_arm64, a CHID of the 82KF IdeaPad 5G 14Q8X05. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-5g-paka-wu-200.0.27.0-qcdx8180"
+    maker: "Samsung"
+    title: "Qualcomm Adreno graphics driver 27.20.1610.0000 for the Galaxy Book Go 5G PAKA (Windows Update 200.0.27.0)"
+    url: "wu://c1683501-e39b-43ea-9ed7-760628657129/1/0b15d3f4f3b663ae0d4e77addbc418d72af8738e"
+    size: 34144825
+    sha256: "2a594be549a3f1dc525775fee7ac222f260f8fbe91b52da731c84784b9957941"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {ef713166-e61c-5461-9413-8743301ea2c5}_arm64, a CHID of the Galaxy Book Go 5G PAKA. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-5g-paka-wu-200.0.27.0-qcsubsys-ext-adsp8180"
+    maker: "Samsung"
+    title: "Qualcomm Audio DSP Subsystem extension 1.0.1530.0004 for the Galaxy Book Go 5G PAKA (Windows Update 200.0.27.0)"
+    url: "wu://c1683501-e39b-43ea-9ed7-760628657129/1/6ae4450dec4009519f7aec7832a2b9176c187212"
+    size: 7389643
+    sha256: "857039f77660ebd73b4a7164afa346dc917a135f1f3443b2d92dc80bf254eb8e"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {ef713166-e61c-5461-9413-8743301ea2c5}_arm64, a CHID of the Galaxy Book Go 5G PAKA. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-5g-paka-wu-200.0.27.0-qcsubsys-ext-cdsp8180"
+    maker: "Samsung"
+    title: "Qualcomm Compute DSP Subsystem extension 1.0.1610.0000 for the Galaxy Book Go 5G PAKA (Windows Update 200.0.27.0)"
+    url: "wu://c1683501-e39b-43ea-9ed7-760628657129/1/6c7c5c53ec9572114ee007f3783895ef7a326e0d"
+    size: 3359177
+    sha256: "fa047caf3d3e7351751befb0ebbc071f5ff4483d19fbf457529c4cb13b87eed2"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {ef713166-e61c-5461-9413-8743301ea2c5}_arm64, a CHID of the Galaxy Book Go 5G PAKA. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-5g-paka-wu-200.0.27.0-qcsubsys-ext-mpss8180"
+    maker: "Samsung"
+    title: "Qualcomm Modem Subsystem extension 1.0.1610.0000 for the Galaxy Book Go 5G PAKA (Windows Update 200.0.27.0)"
+    url: "wu://c1683501-e39b-43ea-9ed7-760628657129/1/1c2218b3e8ad9991124be524f1d7e40d8414159a"
+    size: 36737901
+    sha256: "e62bc5b5822302caad327515240fb3b0ca828dca0318bdf59c89ce13e93816ab"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {ef713166-e61c-5461-9413-8743301ea2c5}_arm64, a CHID of the Galaxy Book Go 5G PAKA. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-5g-pakb-wu-200.0.13.0-qcdx8180"
+    maker: "Samsung"
+    title: "Qualcomm Adreno graphics driver 27.20.1610.0000 for the Galaxy Book Go 5G PAKB (Windows Update 200.0.13.0)"
+    url: "wu://ff56fb17-8a99-4627-823f-532705a59444/1/0b15d3f4f3b663ae0d4e77addbc418d72af8738e"
+    size: 34144825
+    sha256: "2a594be549a3f1dc525775fee7ac222f260f8fbe91b52da731c84784b9957941"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {26282e26-2a85-5837-bec3-b9211e55a364}_arm64, a CHID of the Galaxy Book Go 5G PAKB. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-5g-pakb-wu-200.0.13.0-qcsubsys-ext-cdsp8180"
+    maker: "Samsung"
+    title: "Qualcomm Compute DSP Subsystem extension 1.0.1610.0000 for the Galaxy Book Go 5G PAKB (Windows Update 200.0.13.0)"
+    url: "wu://ff56fb17-8a99-4627-823f-532705a59444/1/6c7c5c53ec9572114ee007f3783895ef7a326e0d"
+    size: 3359177
+    sha256: "fa047caf3d3e7351751befb0ebbc071f5ff4483d19fbf457529c4cb13b87eed2"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {26282e26-2a85-5837-bec3-b9211e55a364}_arm64, a CHID of the Galaxy Book Go 5G PAKB. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-5g-pakb-wu-200.0.13.0-qcsubsys-ext-mpss8180"
+    maker: "Samsung"
+    title: "Qualcomm Modem Subsystem extension 1.0.1610.0000 for the Galaxy Book Go 5G PAKB (Windows Update 200.0.13.0)"
+    url: "wu://ff56fb17-8a99-4627-823f-532705a59444/1/1c2218b3e8ad9991124be524f1d7e40d8414159a"
+    size: 36737901
+    sha256: "e62bc5b5822302caad327515240fb3b0ca828dca0318bdf59c89ce13e93816ab"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {26282e26-2a85-5837-bec3-b9211e55a364}_arm64, a CHID of the Galaxy Book Go 5G PAKB. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-5g-pakl-wu-200.0.11.0-qcdx8180"
+    maker: "Samsung"
+    title: "Qualcomm Adreno graphics driver 27.20.1610.0000 for the Galaxy Book Go 5G PAKL (Windows Update 200.0.11.0)"
+    url: "wu://6f05b935-7d45-4a69-89c7-a084524e602d/1/0b15d3f4f3b663ae0d4e77addbc418d72af8738e"
+    size: 34144825
+    sha256: "2a594be549a3f1dc525775fee7ac222f260f8fbe91b52da731c84784b9957941"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {dad425f3-1445-5ca3-90a2-2a69c788a49d}_arm64, a CHID of the Galaxy Book Go 5G PAKL. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-5g-pakl-wu-200.0.11.0-qcsubsys-ext-cdsp8180"
+    maker: "Samsung"
+    title: "Qualcomm Compute DSP Subsystem extension 1.0.1610.0000 for the Galaxy Book Go 5G PAKL (Windows Update 200.0.11.0)"
+    url: "wu://6f05b935-7d45-4a69-89c7-a084524e602d/1/6c7c5c53ec9572114ee007f3783895ef7a326e0d"
+    size: 3359177
+    sha256: "fa047caf3d3e7351751befb0ebbc071f5ff4483d19fbf457529c4cb13b87eed2"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {dad425f3-1445-5ca3-90a2-2a69c788a49d}_arm64, a CHID of the Galaxy Book Go 5G PAKL. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-5g-pakl-wu-200.0.11.0-qcsubsys-ext-mpss8180"
+    maker: "Samsung"
+    title: "Qualcomm Modem Subsystem extension 1.0.1610.0000 for the Galaxy Book Go 5G PAKL (Windows Update 200.0.11.0)"
+    url: "wu://6f05b935-7d45-4a69-89c7-a084524e602d/1/1c2218b3e8ad9991124be524f1d7e40d8414159a"
+    size: 36737901
+    sha256: "e62bc5b5822302caad327515240fb3b0ca828dca0318bdf59c89ce13e93816ab"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {dad425f3-1445-5ca3-90a2-2a69c788a49d}_arm64, a CHID of the Galaxy Book Go 5G PAKL. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-5g-pakm-wu-200.0.8.0-qcdx8180"
+    maker: "Samsung"
+    title: "Qualcomm Adreno graphics driver 27.20.1610.0000 for the Galaxy Book Go 5G PAKM (Windows Update 200.0.8.0)"
+    url: "wu://03908113-9be9-4f81-a6e7-b7a4a595472b/1/0b15d3f4f3b663ae0d4e77addbc418d72af8738e"
+    size: 34144825
+    sha256: "2a594be549a3f1dc525775fee7ac222f260f8fbe91b52da731c84784b9957941"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {cb5bb884-5c1a-502c-8dd2-3e987ce888c7}_arm64, a CHID of the Galaxy Book Go 5G PAKM. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-5g-pakm-wu-200.0.8.0-qcsubsys-ext-cdsp8180"
+    maker: "Samsung"
+    title: "Qualcomm Compute DSP Subsystem extension 1.0.1610.0000 for the Galaxy Book Go 5G PAKM (Windows Update 200.0.8.0)"
+    url: "wu://03908113-9be9-4f81-a6e7-b7a4a595472b/1/6c7c5c53ec9572114ee007f3783895ef7a326e0d"
+    size: 3359177
+    sha256: "fa047caf3d3e7351751befb0ebbc071f5ff4483d19fbf457529c4cb13b87eed2"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {cb5bb884-5c1a-502c-8dd2-3e987ce888c7}_arm64, a CHID of the Galaxy Book Go 5G PAKM. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-5g-pakm-wu-200.0.8.0-qcsubsys-ext-mpss8180"
+    maker: "Samsung"
+    title: "Qualcomm Modem Subsystem extension 1.0.1610.0000 for the Galaxy Book Go 5G PAKM (Windows Update 200.0.8.0)"
+    url: "wu://03908113-9be9-4f81-a6e7-b7a4a595472b/1/1c2218b3e8ad9991124be524f1d7e40d8414159a"
+    size: 36737901
+    sha256: "e62bc5b5822302caad327515240fb3b0ca828dca0318bdf59c89ce13e93816ab"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {cb5bb884-5c1a-502c-8dd2-3e987ce888c7}_arm64, a CHID of the Galaxy Book Go 5G PAKM. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "xiaomi-book-s-tm2133-39542-wu-200.0.3.0-qcdx8180"
+    maker: "Xiaomi"
+    title: "Qualcomm Adreno graphics driver 27.20.1720.0000 for the Xiaomi Book S 12.4 TM2133-39542 (Windows Update 200.0.3.0)"
+    url: "wu://b7c0eed1-5795-4369-a9e2-bd3476a9a6f3/1/4a210ed861b59da3552cba689cd594473892b1d5"
+    size: 34195091
+    sha256: "55e519adbba0823619e90853503e91230b5df16b80abcb5fbc3082c9ba52ba36"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Xiaomi publishes on Windows Update for the product {7983303f-9349-5782-b4fc-cd782b2f9051}_arm64, a CHID of the Xiaomi Book S 12.4 TM2133-39542. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "xiaomi-book-s-tm2133-39542-wu-200.0.3.0-qcsubsys-ext-adsp8180"
+    maker: "Xiaomi"
+    title: "Qualcomm Audio DSP Subsystem extension 1.0.1680.0007 for the Xiaomi Book S 12.4 TM2133-39542 (Windows Update 200.0.3.0)"
+    url: "wu://b7c0eed1-5795-4369-a9e2-bd3476a9a6f3/1/c595814c7ed4870c280e0cb9037ba3fd14e1aa8f"
+    size: 7591637
+    sha256: "b191e39eb7127f918fd85bffaddaa98d9ce8c8ed7f3f8134d72438bf7884870e"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Xiaomi publishes on Windows Update for the product {7983303f-9349-5782-b4fc-cd782b2f9051}_arm64, a CHID of the Xiaomi Book S 12.4 TM2133-39542. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "xiaomi-book-s-tm2133-39542-wu-200.0.3.0-qcsubsys-ext-cdsp8180"
+    maker: "Xiaomi"
+    title: "Qualcomm Compute DSP Subsystem extension 1.0.1680.0000 for the Xiaomi Book S 12.4 TM2133-39542 (Windows Update 200.0.3.0)"
+    url: "wu://b7c0eed1-5795-4369-a9e2-bd3476a9a6f3/1/ca592613684a8221f0679747179930ea10a924fd"
+    size: 3262759
+    sha256: "845cc8429d503d8e96f6f90d1b6a0baa02748338b4c236fb2182572e64a6eb27"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Xiaomi publishes on Windows Update for the product {7983303f-9349-5782-b4fc-cd782b2f9051}_arm64, a CHID of the Xiaomi Book S 12.4 TM2133-39542. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "xiaomi-book-s-tm2133-39542-wu-200.0.3.0-qcsubsys-ext-mpss8180"
+    maker: "Xiaomi"
+    title: "Qualcomm Modem Subsystem extension 1.0.1680.0002 for the Xiaomi Book S 12.4 TM2133-39542 (Windows Update 200.0.3.0)"
+    url: "wu://b7c0eed1-5795-4369-a9e2-bd3476a9a6f3/1/011112f8b5a3281cd5738e91e808ed17aaf3468c"
+    size: 36734451
+    sha256: "056325c564110c1c0c86ac13a2b23a60b54f6196524efbcec2e718eb2b790313"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Xiaomi publishes on Windows Update for the product {7983303f-9349-5782-b4fc-cd782b2f9051}_arm64, a CHID of the Xiaomi Book S 12.4 TM2133-39542. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "xiaomi-book-s-tm2133-39542-wu-200.0.3.0-qcwlan8180"
+    maker: "Xiaomi"
+    title: "Qualcomm WCN3990 Wi-Fi driver 1.0.1600.0000 for the Xiaomi Book S 12.4 TM2133-39542 (Windows Update 200.0.3.0)"
+    url: "wu://b7c0eed1-5795-4369-a9e2-bd3476a9a6f3/1/7c6e2e599cd9e0774188aabd2a224e5a1f511eda"
+    size: 2891260
+    sha256: "38e379b0c47329c1c0e1a0eb35e0c0ac30e5e6040a0fe4b1c987d20001362f86"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Xiaomi publishes on Windows Update for the product {7983303f-9349-5782-b4fc-cd782b2f9051}_arm64, a CHID of the Xiaomi Book S 12.4 TM2133-39542. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "xiaomi-book-s-wu-200.0.1.0-qcdx8180"
+    maker: "Xiaomi"
+    title: "Qualcomm Adreno graphics driver 27.20.1720.0000 for the Xiaomi Book S 12.4 (Windows Update 200.0.1.0)"
+    url: "wu://687d916e-9bda-4dc2-bf1a-1d1addb0f221/1/4a210ed861b59da3552cba689cd594473892b1d5"
+    size: 34195091
+    sha256: "55e519adbba0823619e90853503e91230b5df16b80abcb5fbc3082c9ba52ba36"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Xiaomi publishes on Windows Update for the product {b4a15fbe-7aa1-5bf4-91bd-fd7b5046afcd}_arm64, a CHID of the Xiaomi Book S 12.4. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "xiaomi-book-s-wu-200.0.1.0-qcsubsys-ext-adsp8180"
+    maker: "Xiaomi"
+    title: "Qualcomm Audio DSP Subsystem extension 1.0.1680.0007 for the Xiaomi Book S 12.4 (Windows Update 200.0.1.0)"
+    url: "wu://687d916e-9bda-4dc2-bf1a-1d1addb0f221/1/c595814c7ed4870c280e0cb9037ba3fd14e1aa8f"
+    size: 7591637
+    sha256: "b191e39eb7127f918fd85bffaddaa98d9ce8c8ed7f3f8134d72438bf7884870e"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Xiaomi publishes on Windows Update for the product {b4a15fbe-7aa1-5bf4-91bd-fd7b5046afcd}_arm64, a CHID of the Xiaomi Book S 12.4. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "xiaomi-book-s-wu-200.0.1.0-qcsubsys-ext-cdsp8180"
+    maker: "Xiaomi"
+    title: "Qualcomm Compute DSP Subsystem extension 1.0.1680.0000 for the Xiaomi Book S 12.4 (Windows Update 200.0.1.0)"
+    url: "wu://687d916e-9bda-4dc2-bf1a-1d1addb0f221/1/ca592613684a8221f0679747179930ea10a924fd"
+    size: 3262759
+    sha256: "845cc8429d503d8e96f6f90d1b6a0baa02748338b4c236fb2182572e64a6eb27"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Xiaomi publishes on Windows Update for the product {b4a15fbe-7aa1-5bf4-91bd-fd7b5046afcd}_arm64, a CHID of the Xiaomi Book S 12.4. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "xiaomi-book-s-wu-200.0.1.0-qcsubsys-ext-mpss8180"
+    maker: "Xiaomi"
+    title: "Qualcomm Modem Subsystem extension 1.0.1680.0002 for the Xiaomi Book S 12.4 (Windows Update 200.0.1.0)"
+    url: "wu://687d916e-9bda-4dc2-bf1a-1d1addb0f221/1/011112f8b5a3281cd5738e91e808ed17aaf3468c"
+    size: 36734451
+    sha256: "056325c564110c1c0c86ac13a2b23a60b54f6196524efbcec2e718eb2b790313"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Xiaomi publishes on Windows Update for the product {b4a15fbe-7aa1-5bf4-91bd-fd7b5046afcd}_arm64, a CHID of the Xiaomi Book S 12.4. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "xiaomi-book-s-wu-200.0.1.0-qcwlan8180"
+    maker: "Xiaomi"
+    title: "Qualcomm WCN3990 Wi-Fi driver 1.0.1600.0000 for the Xiaomi Book S 12.4 (Windows Update 200.0.1.0)"
+    url: "wu://687d916e-9bda-4dc2-bf1a-1d1addb0f221/1/7c6e2e599cd9e0774188aabd2a224e5a1f511eda"
+    size: 2891260
+    sha256: "38e379b0c47329c1c0e1a0eb35e0c0ac30e5e6040a0fe4b1c987d20001362f86"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Xiaomi publishes on Windows Update for the product {b4a15fbe-7aa1-5bf4-91bd-fd7b5046afcd}_arm64, a CHID of the Xiaomi Book S 12.4. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-pajw-wu-200.0.17.0-qcdx7180"
+    maker: "Samsung"
+    title: "Qualcomm Adreno graphics driver 27.20.0910.0000 for the Galaxy Book Go PAJW (Windows Update 200.0.17.0)"
+    url: "wu://96754232-ab9d-43a4-ab41-e6ffdc1b74b0/1/fc0b35b7dd7eaf03782857844f7ce5e82038fa68"
+    size: 32160445
+    sha256: "9270114e230e18a4d82016770ccb85e84fbe21a15f3db7e4ce0fb3fc0afb4aba"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {e25d5cee-d205-55f0-9299-4b4ac53c40fa}_arm64, a CHID of the Galaxy Book Go PAJW. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-pajw-wu-200.0.17.0-qcsubsys-ext-adsp7180"
+    maker: "Samsung"
+    title: "Qualcomm Audio DSP Subsystem extension 1.0.0750.0004 for the Galaxy Book Go PAJW (Windows Update 200.0.17.0)"
+    url: "wu://96754232-ab9d-43a4-ab41-e6ffdc1b74b0/1/51ef3d273670c1df1df846d19ac283ddd745756f"
+    size: 9429608
+    sha256: "56b2f48c292cd769e3b40de1f0413ef75986e57ab6213c68d1751260253530d4"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {e25d5cee-d205-55f0-9299-4b4ac53c40fa}_arm64, a CHID of the Galaxy Book Go PAJW. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-pajw-wu-200.0.17.0-qcsubsys-ext-mpss7180"
+    maker: "Samsung"
+    title: "Qualcomm Modem Subsystem extension 1.0.0800.0008 for the Galaxy Book Go PAJW (Windows Update 200.0.17.0)"
+    url: "wu://96754232-ab9d-43a4-ab41-e6ffdc1b74b0/1/695c8f743c8e0676e4bb912e286436bb852e9ed9"
+    size: 41479570
+    sha256: "29c680eac1c3d35d679ee510417a17f1b032e56753b9fd5c46449c811b2534b7"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {e25d5cee-d205-55f0-9299-4b4ac53c40fa}_arm64, a CHID of the Galaxy Book Go PAJW. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-pajw-wu-200.0.17.0-qcwlan7180"
+    maker: "Samsung"
+    title: "Qualcomm WLAN driver 1.0.0970.0000 for the Galaxy Book Go PAJW (Windows Update 200.0.17.0)"
+    url: "wu://96754232-ab9d-43a4-ab41-e6ffdc1b74b0/1/1ad942b5aeff85656081cde8a5ad288cd4e84b15"
+    size: 2787357
+    sha256: "a53a79f652eee23952257f96a825921a0705970eb4f520ca18d042aaa42c5b2c"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {e25d5cee-d205-55f0-9299-4b4ac53c40fa}_arm64, a CHID of the Galaxy Book Go PAJW. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-pajs-wu-200.0.18.0-qcdx7180"
+    maker: "Samsung"
+    title: "Qualcomm Adreno graphics driver 27.20.0910.0000 for the Galaxy Book Go PAJS (Windows Update 200.0.18.0)"
+    url: "wu://25c4b8c0-921d-48ee-9507-3064890b5e64/1/fc0b35b7dd7eaf03782857844f7ce5e82038fa68"
+    size: 32160445
+    sha256: "9270114e230e18a4d82016770ccb85e84fbe21a15f3db7e4ce0fb3fc0afb4aba"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {82e2ebed-8ade-5aec-ad6f-d040ef549d29}_arm64, a CHID of the Galaxy Book Go PAJS. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-pajs-wu-200.0.18.0-qcsubsys-ext-adsp7180"
+    maker: "Samsung"
+    title: "Qualcomm Audio DSP Subsystem extension 1.0.0750.0003 for the Galaxy Book Go PAJS (Windows Update 200.0.18.0)"
+    url: "wu://25c4b8c0-921d-48ee-9507-3064890b5e64/1/5b9764c1fa37bfa91c5d1b366fac9a640f4a4a7d"
+    size: 9427080
+    sha256: "c5705bd2c55b1ff6cbfdc33d8312c5860a82f38c5bda9a45d63d16aa98eb535b"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {82e2ebed-8ade-5aec-ad6f-d040ef549d29}_arm64, a CHID of the Galaxy Book Go PAJS. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-pajs-wu-200.0.18.0-qcsubsys-ext-mpss7180"
+    maker: "Samsung"
+    title: "Qualcomm Modem Subsystem extension 1.0.0800.0008 for the Galaxy Book Go PAJS (Windows Update 200.0.18.0)"
+    url: "wu://25c4b8c0-921d-48ee-9507-3064890b5e64/1/695c8f743c8e0676e4bb912e286436bb852e9ed9"
+    size: 41479570
+    sha256: "29c680eac1c3d35d679ee510417a17f1b032e56753b9fd5c46449c811b2534b7"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {82e2ebed-8ade-5aec-ad6f-d040ef549d29}_arm64, a CHID of the Galaxy Book Go PAJS. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "samsung-galaxy-book-go-pajs-wu-200.0.18.0-qcwlan7180"
+    maker: "Samsung"
+    title: "Qualcomm WLAN driver 1.0.0970.0000 for the Galaxy Book Go PAJS (Windows Update 200.0.18.0)"
+    url: "wu://25c4b8c0-921d-48ee-9507-3064890b5e64/1/1ad942b5aeff85656081cde8a5ad288cd4e84b15"
+    size: 2787357
+    sha256: "a53a79f652eee23952257f96a825921a0705970eb4f520ca18d042aaa42c5b2c"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle Samsung publishes on Windows Update for the product {82e2ebed-8ade-5aec-ad6f-d040ef549d29}_arm64, a CHID of the Galaxy Book Go PAJS. Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "lenovo-jsqwh05"
+    maker: "Lenovo"
+    title: "Qualcomm Chipset Driver 1.0.0830.0 for Windows 11 (Lenovo 10w, 82ST and 82SU)"
+    url: "https://download.lenovo.com/pccbbs/mobiles/jsqwh05.exe"
+    page: "https://download.lenovo.com/catalog/82ST_Win11.xml"
+    size: 44711616
+    sha256: "01bcfd3b5b7d478f577a9690f98f82baf8ee10e6cceaa4a4eaa4dca77752ec42"
+    fetched: "2026-11-16"
+  - id: "lenovo-jsvqh05"
+    maker: "Lenovo"
+    title: "Qualcomm Display Driver 27.20.850.0 for Windows 11 (Lenovo 10w, 82ST and 82SU)"
+    url: "https://download.lenovo.com/pccbbs/mobiles/jsvqh05.exe"
+    page: "https://download.lenovo.com/catalog/82ST_Win11.xml"
+    size: 24247648
+    sha256: "8c1de7d469d84b56e1334be59b097abf0c65898fabbbee2b7528d9a22b094fbd"
+    fetched: "2026-11-16"
+  - id: "lenovo-jswqh04"
+    maker: "Lenovo"
+    title: "Qualcomm Wireless LAN Driver 1.0.840.0 for Windows 11 (Lenovo 10w, 82ST and 82SU)"
+    url: "https://download.lenovo.com/pccbbs/mobiles/jswqh04.exe"
+    page: "https://download.lenovo.com/catalog/82ST_Win11.xml"
+    size: 3489504
+    sha256: "2e0e133285ef6fb0350170255ccf8c0594ed83faccda38b5f8e04de201ab6ae1"
+    fetched: "2026-11-16"
