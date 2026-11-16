@@ -8,9 +8,11 @@ interface Props {
   pieces: (typeof status)['summary']['byPiece'];
   models: TableRow[];
   anchor: string;
+  // The URL prefix of the family's table, so a cell's search reaches that table and no other
+  urlPrefix?: string;
 }
 
-const { pieces, models, anchor } = Astro.props;
+const { pieces, models, anchor, urlPrefix = '' } = Astro.props;
 const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
 const byName = <T extends { vendor: string; name: string }>(a: T, b: T) => a.vendor.localeCompare(b.vendor) || a.name.localeCompare(b.name);
 
@@ -56,7 +58,7 @@ const cells = (row: (typeof pieceRows)[number]) => {
         <div class="@container min-w-0 flex-1">
           <div class="grid h-3 grid-flow-col grid-cols-[repeat(var(--half),minmax(0,1fr))] grid-rows-2 gap-0.5 @lg:grid-flow-row @lg:grid-cols-[repeat(var(--all),minmax(0,1fr))] @lg:grid-rows-1" style={`--all: ${models.length}; --half: ${Math.ceil(models.length / 2)}`}>
             {cells(row).map((cell) => (
-              <a href={`/?q=${encodeURIComponent(cell.name)}#${anchor}`} class={`rounded-[2px] ${cell.color} transition hover:scale-y-150 hover:brightness-150`} data-tip-title={cell.name} data-tip={cell.tip} aria-label={`${cell.name}: ${cell.tip}`}></a>
+              <a href={`/?${urlPrefix}q=${encodeURIComponent(cell.name)}#${anchor}`} class={`rounded-[2px] ${cell.color} transition hover:scale-y-150 hover:brightness-150`} data-tip-title={cell.name} data-tip={cell.tip} aria-label={`${cell.name}: ${cell.tip}`}></a>
             ))}
           </div>
         </div>

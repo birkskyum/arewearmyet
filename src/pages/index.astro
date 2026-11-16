@@ -132,9 +132,9 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
     </Family>
 
     <Family id="snapdragon-7c-8cx-835-850" title="Snapdragon 7c, 8cx, 835 and 850" total={older.length}>
-      <PieceBars pieces={summary.byPieceOlder} models={older} anchor="snapdragon-7c-8cx-835-850" />
-      <p class="max-w-3xl text-sm text-zinc-400">
-        The Windows on Arm machines from before Snapdragon X, with the Snapdragon 8cx, 850, 835 and 7c. They start through UEFI like the models above, so they need the same pieces and use the same views and labels. Linux already has device trees for several of them. Omarchy's kernel builds the 8cx ones, not yet those for the 850, 835 and 7c.
+      <PieceBars pieces={summary.byPieceOlder} models={older} anchor="snapdragon-7c-8cx-835-850" urlPrefix="8cx-" />
+      <p class="mt-8 max-w-3xl text-sm text-zinc-400">
+        The Windows on Arm machines from before Snapdragon X, with the Snapdragon 8cx, 850, 835 and 7c. They start through UEFI like the models above, so they need the same pieces and use the same views and labels. Omarchy carries device trees for most of them, from Linux, from owners' ports, or written from their ACPI tables.
       </p>
       <div class="mt-4">
         <StatusTable client:load rows={older} views={snapdragonViews} chips={[{ key: '8cx', label: '8cx Gen 3' }, { key: '8cx-gen1', label: '8cx Gen 1 and 2' }, { key: '850', label: '850' }, { key: '835', label: '835' }, { key: '7c', label: '7c' }]} urlPrefix="8cx-" exportName="arewearmyet-snapdragon-7c-8cx-835-850" exportTitle="Snapdragon 7c, 8cx, 835 and 850" />
