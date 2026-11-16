@@ -97,6 +97,7 @@ RECIPES = {
     "hp-elitebook-6-g2q-firmware": ("HP EliteBook 6 G2q", ["qcom/glymur/hp/elitebook-6-g2q"]),
     "hp-elitebook-ultra-g1q-firmware": ("HP EliteBook Ultra G1q", ["qcom/x1e80100/hp/elitebook-ultra-g1q"]),
     "hp-elitebook-x-g2q-firmware": ("HP EliteBook X G2q", ["qcom/glymur/hp/elitebook-x-g2q"]),
+    "hp-envy-x2-firmware": ("HP Envy x2", ["qcom/msm8998/hp/envy-x2"]),
     "hp-omnibook-3-14-firmware": ("HP OmniBook 3 14", ["qcom/x1p42100/hp/omnibook-3"]),
     "dell-inspiron-14-3420-firmware": ("Dell Inspiron 14 3420", ["qcom/sc8180xp/dell"]),
     "hp-omnibook-3-16-firmware": ("HP OmniBook 3 16", ["qcom/x1p42100/hp/omnibook-3-16-bz0"]),

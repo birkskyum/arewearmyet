@@ -4190,6 +4190,35 @@ folders:
         sha256: "01cc452dac91ee13126fa49b8359f08c19cba13ff2e390c7ab34cd96042632c8"
         from:
           - { package: "lenovo-jswqh04", member: "code$GetExtractPath$/qcwlan7180/WLANMDSP.MBN" }
+  - path: "qcom/msm8998/hp/envy-x2"
+    models: ["hp-envy-x2-snapdragon"]
+    files:
+      - name: "qcadsp8998.mbn"
+        size: 9801728
+        sha256: "dcd8e66d919a4a1a2b6794627ed3f0a0712af0795dd73ac90169b6fbabc439d1"
+        from:
+          - { package: "hp-envy-x2-wu-200.0.5.0-qcsubsys8998", member: "qcadsp8998.mbn" }
+      - name: "qcdsp1v28998.mbn"
+        size: 230056
+        sha256: "b729eab69e1a20ed100f35fbd7ab3ccaca3f8077d85221a8225622e765f125e2"
+        from:
+          - { package: "hp-envy-x2-wu-200.0.5.0-qcsubsys8998", member: "qcdsp1v28998.mbn" }
+      - name: "qcdsp28998.mbn"
+        size: 57155808
+        sha256: "b7a8fec6292f3fdaf6e40d20eb5158e460928396cd30ed785012146243c9050c"
+        from:
+          - { package: "hp-envy-x2-wu-200.0.5.0-qcsubsys8998", member: "qcdsp28998.mbn" }
+      - name: "qcslpi8998_CLS.mbn"
+        size: 4257132
+        sha256: "ef97fec85d8400aa77b0366adfa5a931c846df70b1a36586d53a3bd2a7ab6cee"
+        note: "The HP-signed sensor DSP image. The bundle's plain qcslpi8998.mbn is signed with Qualcomm's test root."
+        from:
+          - { package: "hp-envy-x2-wu-200.0.5.0-qcsubsys8998", member: "qcslpi8998_CLS.mbn" }
+      - name: "qcvss8998.mbn"
+        size: 961408
+        sha256: "b74c650eb87e127973e50b185f504e26777c6b13b3a1b237f3a0a38573cca96d"
+        from:
+          - { package: "hp-envy-x2-wu-200.0.5.0-qcdx8998", member: "qcvss8998.mbn" }
 packages:
   - id: "acer-a14-11m-adsp-2.0.9100.0001"
     maker: "Acer"
@@ -5543,3 +5572,19 @@ packages:
     size: 3489504
     sha256: "2e0e133285ef6fb0350170255ccf8c0594ed83faccda38b5f8e04de201ab6ae1"
     fetched: "2026-11-16"
+  - id: "hp-envy-x2-wu-200.0.5.0-qcsubsys8998"
+    maker: "HP"
+    title: "Qualcomm Subsystem driver 2.0.1083.0000 for the HP Envy x2 (Windows Update 200.0.5.0)"
+    url: "wu://55a6f81d-43c8-4594-9db5-11f82d7e04b5/1/d8f6303cd7cefbb74ff8a784c797b4f133aaf22a"
+    size: 77798825
+    sha256: "b3854900c491fd36177b9fa51826a0c609cfbc485868501742be4cbd9d64c671"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle HP publishes on Windows Update for the product {fbdb7107-9deb-5955-95df-702736878e53}_arm64, a CHID of the HP Envy x2 (Manufacturer, family and baseboard 84E1). Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
+  - id: "hp-envy-x2-wu-200.0.5.0-qcdx8998"
+    maker: "HP"
+    title: "Qualcomm Adreno graphics driver 22.18.1083.0000 for the HP Envy x2 (Windows Update 200.0.5.0)"
+    url: "wu://55a6f81d-43c8-4594-9db5-11f82d7e04b5/1/c227709ecf488899d8c95ad12aa1ca0341a570e4"
+    size: 27681450
+    sha256: "94a28ad6da0d185a194792248d2a6b5ea38e99b0deab194d17d0e0d7b9ec6eca"
+    fetched: "2026-11-16"
+    note: "A signed driver cabinet in the bundle HP publishes on Windows Update for the product {fbdb7107-9deb-5955-95df-702736878e53}_arm64, a CHID of the HP Envy x2 (Manufacturer, family and baseboard 84E1). Windows Update hands out short-lived links only, so the url names the update ID, revision and SHA-1 that wudrivers (https://github.com/birkskyum/wudrivers) fetches a fresh link with. The cab has a signature appended."
