@@ -1,17 +1,17 @@
 {
-  "collected": "2026-11-16T01:27:59.767Z",
+  "collected": "2026-11-16T12:01:45.393Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-66",
+    "kernel": "7.3-68",
     "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.14.490",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.14.490/omarchy-edge-2026.11.14.490-aarch64.iso",
-      "kernel": "7.3.0-60-omarchy"
+      "version": "2026.11.16.492",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.16.492/omarchy-edge-2026.11.16.492-aarch64.iso",
+      "kernel": "7.3.0-66-omarchy"
     },
     "channels": [
       {
@@ -396,7 +396,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-66",
+        "kernel": "7.3-68",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -434,15 +434,19 @@
           "purwa-lenovo-ideacentre-mini-01q8x10.dts",
           "sc7180-acer-aspire1.dts",
           "sc7180-ecs-liva-qc710.dts",
+          "sc7280-samsung-galaxy-book2-go.dts",
           "sc8180x-lenovo-flex-5g.dts",
           "sc8180x-microsoft-cambria.dts",
           "sc8180x-microsoft-carina.dts",
           "sc8180x-microsoft-caspar.dts",
+          "sc8180x-samsung-w767.dts",
+          "sc8180xp-dell-inspiron-3420.dts",
           "sc8280xp-crd.dts",
           "sc8280xp-huawei-gaokun3.dts",
           "sc8280xp-lenovo-thinkpad-x13s.dts",
           "sc8280xp-microsoft-arcata.dts",
           "sc8280xp-microsoft-blackrock.dts",
+          "sdm850-gateway-gwtn133-1.dts",
           "sdm850-huawei-matebook-e-2019.dts",
           "sdm850-lenovo-yoga-c630.dts",
           "sdm850-samsung-w737.dts",
@@ -590,8 +594,12 @@
           "mahua-microsoft-surface-pro-12th-edition.json",
           "msm8998-asus-novago-tp370ql.json",
           "msm8998-hp-envy-x2.json",
+          "sc7280-samsung-galaxy-book2-go.json",
           "sc8180x-microsoft-cambria.json",
           "sc8180x-microsoft-caspar.json",
+          "sc8180x-samsung-w767.json",
+          "sc8180xp-dell-inspiron-3420.json",
+          "sdm850-gateway-gwtn133-1.json",
           "sdm850-huawei-matebook-e-2019.json",
           "sdm850-samsung-w737.json",
           "x126100-asus-v400-aio-vm441qa.json",
@@ -1947,16 +1955,16 @@
     "older": 27,
     "byPieceOlder": {
       "deviceTree": {
-        "omarchy": 14,
+        "omarchy": 18,
         "fromUpstream": 13,
-        "added": 1,
+        "added": 5,
         "pull": 0,
-        "available": 4,
+        "available": 0,
         "upstream": 13,
         "channels": {
           "stable": 4,
           "rc": 4,
-          "edge": 14
+          "edge": 18
         },
         "models": {
           "fromUpstream": [
@@ -1975,28 +1983,27 @@
             "samsung-galaxy-book2-w737"
           ],
           "added": [
-            "microsoft-surface-pro-x"
-          ],
-          "pull": [],
-          "available": [
             "dell-inspiron-14-3420-snapdragon",
             "gateway-gwtn133-1",
+            "microsoft-surface-pro-x",
             "samsung-galaxy-book2-go",
             "samsung-galaxy-book-s"
-          ]
+          ],
+          "pull": [],
+          "available": []
         }
       },
       "ids": {
-        "omarchy": 14,
+        "omarchy": 18,
         "fromUpstream": 9,
-        "added": 5,
+        "added": 9,
         "pull": 0,
-        "available": 3,
+        "available": 2,
         "upstream": 9,
         "channels": {
           "stable": 9,
           "rc": 9,
-          "edge": 14
+          "edge": 18
         },
         "models": {
           "fromUpstream": [
@@ -2012,14 +2019,17 @@
           ],
           "added": [
             "asus-novago-tp370ql",
+            "dell-inspiron-14-3420-snapdragon",
+            "gateway-gwtn133-1",
             "hp-envy-x2-snapdragon",
             "huawei-matebook-e-2019",
             "microsoft-surface-pro-x",
-            "samsung-galaxy-book2-w737"
+            "samsung-galaxy-book2-w737",
+            "samsung-galaxy-book2-go",
+            "samsung-galaxy-book-s"
           ],
           "pull": [],
           "available": [
-            "samsung-galaxy-book2-go",
             "samsung-galaxy-book-go",
             "xiaomi-book-s"
           ]
@@ -2065,7 +2075,7 @@
         "fromUpstream": 1,
         "added": 9,
         "pull": 0,
-        "available": 1,
+        "available": 3,
         "upstream": 1,
         "models": {
           "fromUpstream": [
@@ -2084,7 +2094,9 @@
           ],
           "pull": [],
           "available": [
-            "samsung-galaxy-book2-go"
+            "gateway-gwtn133-1",
+            "samsung-galaxy-book2-go",
+            "samsung-galaxy-book-s"
           ]
         }
       }
@@ -15162,14 +15174,14 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/dell-inspiron-14-3420"
       ],
       "notes": "Matt Durr's tree runs it from its NVMe drive with the keyboard, touchpad, USB, Wi-Fi, GPU acceleration, battery, suspend and CPU frequency scaling; the lid switch, Bluetooth, audio, camera and special keys don't work yet. Its NVMe drive needs the kernel to keep the firmware's PCIe PHY setup. Dell's audio DSP image on Windows Update is signed with Qualcomm's test key, so only the GPU firmware is packaged.",
-      "outcome": "none",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -15177,8 +15189,8 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
-        "ids": "none",
+        "deviceTree": "edge",
+        "ids": "edge",
         "firmware": "none"
       },
       "upstream": {
@@ -15210,17 +15222,26 @@
         {
           "chip": "SC8180XP",
           "compatible": "dell,inspiron-3420-sc8180xp",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "sc8180xp-dell-inspiron-3420.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0042-arm64-dts-qcom-Add-the-Dell-Inspiron-14-3420-SC8180X.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/sc8180xp/dell/qcadsp8180.mbn",
+            "qcom/sc8180xp/dell/qcdxkmsuc8180.mbn"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -15359,14 +15380,14 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/acer-gateway-gwtn133-1"
       ],
       "notes": "Huawei built it on the MateBook E 2019's board, and its tables differ from the MateBook's only in the panel, keyboard and touchpad, so its tree includes the MateBook's and loads the MateBook's firmware, whose signatures name the same OEM and model. Not booted on the laptop yet.",
-      "outcome": "none",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "download",
         "firmwareChannel": null,
@@ -15374,8 +15395,8 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
-        "ids": "none",
+        "deviceTree": "edge",
+        "ids": "edge",
         "firmware": "elsewhere"
       },
       "upstream": {
@@ -15403,17 +15424,23 @@
       "variants": [
         {
           "compatible": "acer,gateway-gwtn133-1",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
+          "deviceTree": {
+            "file": "sdm850-gateway-gwtn133-1.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0044-arm64-dts-qcom-Add-the-Gateway-GWTN133-1.patch"
+          },
           "firmwareNeeded": [],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -16459,14 +16486,14 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/samsung-galaxybook2-go"
       ],
       "notes": null,
-      "outcome": "none",
-      "bootable": "carry",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "download",
         "firmwareChannel": null,
@@ -16474,15 +16501,15 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
-        "ids": "elsewhere",
+        "deviceTree": "edge",
+        "ids": "edge",
         "firmware": "elsewhere"
       },
       "upstream": {
         "deviceTree": "posted",
         "firstRelease": null,
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261112-book2go-v2-1-12691134e34e@fairphone.com/",
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2910-arm64-dts-qcom-Add-Samsung-Galaxy-Book2-Go.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/samsung-galaxy-book2-go",
         "ids": "collected",
         "idsCollected": "https://github.com/ubuntu/stubble/issues/32",
@@ -16504,17 +16531,31 @@
         {
           "chip": "SC7280",
           "compatible": "samsung,galaxy-book2-go",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "sc7280-samsung-galaxy-book2-go.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-aarch64/2910-arm64-dts-qcom-Add-Samsung-Galaxy-Book2-Go.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/sc7280/Samsung/galaxy-book2-go/qcdxkmsuc7280.mbn",
+            "qcom/sc7280/Samsung/galaxy-book2-go/ipa_fws.elf",
+            "qcom/sc7280/Samsung/galaxy-book2-go/qcadsp7280.mbn",
+            "qcom/sc7280/Samsung/galaxy-book2-go/qccdsp7280.mbn",
+            "qcom/sc7280/Samsung/galaxy-book2-go/qcmpss7280.mbn",
+            "qcom/sc7280/Samsung/galaxy-book2-go/wpss.mbn",
+            "qcom/sc7280/Samsung/galaxy-book2-go/qcvss7280.mbn"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -16699,14 +16740,14 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/samsung-galaxy-book-s"
       ],
       "notes": "Anton Bambura's tree leaves the touchscreen, backlight and battery off.",
-      "outcome": "none",
-      "bootable": "needs-ids",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "download",
         "firmwareChannel": null,
@@ -16714,8 +16755,8 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
-        "ids": "none",
+        "deviceTree": "edge",
+        "ids": "edge",
         "firmware": "elsewhere"
       },
       "upstream": {
@@ -16744,17 +16785,28 @@
         {
           "chip": "SC8180X",
           "compatible": "samsung,w767",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "sc8180x-samsung-w767.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0040-arm64-dts-qcom-Add-device-tree-for-Samsung-Galaxy-Bo.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/samsung/w767/qcdxkmsuc8180.mbn",
+            "qcom/samsung/w767/qcadsp8180.mbn",
+            "qcom/samsung/w767/qccdsp8180.mbn",
+            "qcom/samsung/w767/qcmpss8180_XEF.mbn"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],

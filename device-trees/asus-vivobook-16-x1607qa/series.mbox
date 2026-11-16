@@ -129,6 +129,7 @@ Document the compatible for the Asus Vivobook 16 X1607QA laptop,
 based on the Qualcomm X1P42100 (Purwa) SoC.
 
 Signed-off-by: Daniel Carter <yass27106@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 ---
  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
  1 file changed, 1 insertion(+)

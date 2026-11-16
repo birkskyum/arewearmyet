@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-16T01:27:59.767Z",
+  "collected": "2026-11-16T12:01:45.393Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -5891,7 +5891,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-66",
+        "kernel": "7.3-68",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -5929,15 +5929,19 @@
           "purwa-lenovo-ideacentre-mini-01q8x10.dts",
           "sc7180-acer-aspire1.dts",
           "sc7180-ecs-liva-qc710.dts",
+          "sc7280-samsung-galaxy-book2-go.dts",
           "sc8180x-lenovo-flex-5g.dts",
           "sc8180x-microsoft-cambria.dts",
           "sc8180x-microsoft-carina.dts",
           "sc8180x-microsoft-caspar.dts",
+          "sc8180x-samsung-w767.dts",
+          "sc8180xp-dell-inspiron-3420.dts",
           "sc8280xp-crd.dts",
           "sc8280xp-huawei-gaokun3.dts",
           "sc8280xp-lenovo-thinkpad-x13s.dts",
           "sc8280xp-microsoft-arcata.dts",
           "sc8280xp-microsoft-blackrock.dts",
+          "sdm850-gateway-gwtn133-1.dts",
           "sdm850-huawei-matebook-e-2019.dts",
           "sdm850-lenovo-yoga-c630.dts",
           "sdm850-samsung-w737.dts",
@@ -6085,8 +6089,12 @@
           "mahua-microsoft-surface-pro-12th-edition.json",
           "msm8998-asus-novago-tp370ql.json",
           "msm8998-hp-envy-x2.json",
+          "sc7280-samsung-galaxy-book2-go.json",
           "sc8180x-microsoft-cambria.json",
           "sc8180x-microsoft-caspar.json",
+          "sc8180x-samsung-w767.json",
+          "sc8180xp-dell-inspiron-3420.json",
+          "sdm850-gateway-gwtn133-1.json",
           "sdm850-huawei-matebook-e-2019.json",
           "sdm850-samsung-w737.json",
           "x126100-asus-v400-aio-vm441qa.json",
@@ -7679,6 +7687,24 @@
         ]
       },
       {
+        "file": "sc7280-samsung-galaxy-book2-go.dts",
+        "model": "Samsung Galaxy Book2 Go",
+        "compatible": [
+          "samsung,galaxy-book2-go",
+          "qcom,sc7280"
+        ],
+        "patch": "linux-omarchy-aarch64/2910-arm64-dts-qcom-Add-Samsung-Galaxy-Book2-Go.patch",
+        "firmware": [
+          "qcom/sc7280/Samsung/galaxy-book2-go/qcdxkmsuc7280.mbn",
+          "qcom/sc7280/Samsung/galaxy-book2-go/ipa_fws.elf",
+          "qcom/sc7280/Samsung/galaxy-book2-go/qcadsp7280.mbn",
+          "qcom/sc7280/Samsung/galaxy-book2-go/qccdsp7280.mbn",
+          "qcom/sc7280/Samsung/galaxy-book2-go/qcmpss7280.mbn",
+          "qcom/sc7280/Samsung/galaxy-book2-go/wpss.mbn",
+          "qcom/sc7280/Samsung/galaxy-book2-go/qcvss7280.mbn"
+        ]
+      },
+      {
         "file": "purwa-lenovo-ideacentre-mini-01q8x10.dts",
         "model": "Lenovo IdeaCentre Mini 01Q8X10 (Purwa)",
         "compatible": [
@@ -8151,6 +8177,44 @@
           "qcom/sc8180x/microsoft/caspar/qcmpss8180_nm.mbn",
           "qcom/sc8180x/microsoft/caspar/qcslpi8180.mbn"
         ]
+      },
+      {
+        "file": "sc8180x-samsung-w767.dts",
+        "model": "Samsung Galaxy Book S",
+        "compatible": [
+          "samsung,w767",
+          "qcom,sc8180x"
+        ],
+        "patch": "linux-omarchy-dtbs/0040-arm64-dts-qcom-Add-device-tree-for-Samsung-Galaxy-Bo.patch",
+        "firmware": [
+          "qcom/samsung/w767/qcdxkmsuc8180.mbn",
+          "qcom/samsung/w767/qcadsp8180.mbn",
+          "qcom/samsung/w767/qccdsp8180.mbn",
+          "qcom/samsung/w767/qcmpss8180_XEF.mbn"
+        ]
+      },
+      {
+        "file": "sc8180xp-dell-inspiron-3420.dts",
+        "model": "Dell Inspiron 3420 - SC8180xp",
+        "compatible": [
+          "dell,inspiron-3420-sc8180xp",
+          "qcom,sc8180x"
+        ],
+        "patch": "linux-omarchy-dtbs/0042-arm64-dts-qcom-Add-the-Dell-Inspiron-14-3420-SC8180X.patch",
+        "firmware": [
+          "qcom/sc8180xp/dell/qcadsp8180.mbn",
+          "qcom/sc8180xp/dell/qcdxkmsuc8180.mbn"
+        ]
+      },
+      {
+        "file": "sdm850-gateway-gwtn133-1.dts",
+        "model": "Gateway GWTN133-1",
+        "compatible": [
+          "acer,gateway-gwtn133-1",
+          "qcom,sdm845"
+        ],
+        "patch": "linux-omarchy-dtbs/0044-arm64-dts-qcom-Add-the-Gateway-GWTN133-1.patch",
+        "firmware": []
       }
     ],
     "carriedIds": [
@@ -8453,6 +8517,21 @@
         ]
       },
       {
+        "file": "sc7280-samsung-galaxy-book2-go.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Samsung Galaxy Book2 Go 5G",
+        "compatible": "samsung,galaxy-book2-go",
+        "hwids": [
+          "9e280cfa-19a4-5c93-9998-d89f78e1fd84",
+          "21f454a4-8847-500e-bbe7-23918772e6c9",
+          "f9ac8f71-a77b-597a-b30e-dfa452be4b4c",
+          "07e2335f-f642-5734-bb05-5d0afc59f933",
+          "47d84a92-b231-5bf8-aa5d-fa9bd466df87",
+          "9e96a8e5-b56b-516a-ab12-8a21639131e0",
+          "adbcb057-fe5a-55e5-83f6-a49a2e96383b"
+        ]
+      },
+      {
         "file": "sc8180x-microsoft-cambria.json",
         "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Microsoft Surface Pro X (Surface_Pro_X_1876)",
@@ -8474,6 +8553,47 @@
           "cdf510a8-d41c-54bf-b2c5-61ba10957019",
           "69c2fd0d-8593-575f-b6af-5f70f0299ea4",
           "aa2c30e9-117c-5aeb-a8aa-4b01761cf493"
+        ]
+      },
+      {
+        "file": "sc8180x-samsung-w767.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Samsung Galaxy Book S (SM-W767)",
+        "compatible": "samsung,w767",
+        "hwids": [
+          "7fd0dfdb-82cf-5e70-8429-6edc7df8a186",
+          "516701f1-2ef1-5773-aedf-857339abb928",
+          "ac00b17a-9cfd-5c40-9098-3fb942d967a3",
+          "e126b37f-dd98-5ee1-8495-61e267fa7899",
+          "308feeed-ac08-5dfe-8c50-53770ffc716e",
+          "a53e829f-3736-5ecf-8f3a-8ce78c46d623",
+          "95cdf468-e1fa-577b-a5f6-df17943a1dd8",
+          "ed034cab-ade3-5cb5-a9d6-2e06807eb708",
+          "80f79868-f89c-5a63-9eb6-fd44cf17342f",
+          "835ec9d0-fdf8-5b8e-879c-f7e1dcff1c5b",
+          "a3dbd4ab-cf9c-505f-ab63-dddd2e27bab9",
+          "30f479c8-1b50-5eb2-a896-9d124fbb036f",
+          "09e4fd63-cd64-536d-9934-a92a1f9a0086"
+        ]
+      },
+      {
+        "file": "sc8180xp-dell-inspiron-3420.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Dell Inspiron 14 3420 (SC8180XP, 0BF4)",
+        "compatible": "dell,inspiron-3420-sc8180xp",
+        "hwids": [
+          "c37b0e8e-de1a-51f0-b08c-32d2a95a589a",
+          "87df3ada-c7dd-53c3-954f-3f14a9924941"
+        ]
+      },
+      {
+        "file": "sdm850-gateway-gwtn133-1.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "Gateway GWTN133-1",
+        "compatible": "acer,gateway-gwtn133-1",
+        "hwids": [
+          "2189c502-e453-5685-aad6-1796fc682ec9",
+          "69f30c5a-5af2-5df3-b7dc-0696a25fc1dd"
         ]
       },
       {
@@ -8986,9 +9106,9 @@
       }
     ],
     "image": {
-      "version": "2026.11.14.490",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.14.490/omarchy-edge-2026.11.14.490-aarch64.iso",
-      "kernel": "7.3.0-60-omarchy"
+      "version": "2026.11.16.492",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.16.492/omarchy-edge-2026.11.16.492-aarch64.iso",
+      "kernel": "7.3.0-66-omarchy"
     },
     "pulls": []
   }
