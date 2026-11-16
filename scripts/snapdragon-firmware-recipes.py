@@ -94,6 +94,7 @@ RECIPES = {
     "dell-latitude-7455-firmware": ("Dell Latitude 7455", ["qcom/x1e80100/dell/latitude-7455"]),
     "dell-xps-13-9345-firmware": ("Dell XPS 13 9345", ["qcom/x1e80100/dell/xps13-9345"]),
     "honor-magicbook-art-14-firmware": ("Honor MagicBook Art 14", ["qcom/x1e80100/HONOR/MRO-XXX"]),
+    "hp-omnibook-3-16-ct0-firmware": ("HP OmniBook 3 16 (16-ct0)", ["qcom/sc7280/HP/omnibook-3-16-ct0"]),
     "hp-elitebook-6-g1q-firmware": ("HP EliteBook 6 G1q", ["qcom/x1p42100/hp/elitebook-6-g1q"]),
     "hp-elitebook-6-g2q-firmware": ("HP EliteBook 6 G2q", ["qcom/glymur/hp/elitebook-6-g2q"]),
     "hp-elitebook-ultra-g1q-firmware": ("HP EliteBook Ultra G1q", ["qcom/x1e80100/hp/elitebook-ultra-g1q"]),
