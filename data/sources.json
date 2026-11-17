@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-16T23:46:07.718Z",
+  "collected": "2026-11-17T00:14:06.728Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -9584,6 +9584,25 @@
       "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.16.492/omarchy-edge-2026.11.16.492-aarch64.iso",
       "kernel": "7.3.0-66-omarchy"
     },
-    "pulls": []
+    "pulls": [
+      {
+        "number": 2939,
+        "title": "linux-omarchy-dtbs, hp-omnibook-3-16-ct0-firmware: add the HP OmniBook 3 16 (16-ct0)",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/2939",
+        "draft": true,
+        "deviceTrees": [],
+        "ids": [],
+        "firmware": [
+          "qcom/sc7280/HP/omnibook-3-16-ct0/adspr.jsn",
+          "qcom/sc7280/HP/omnibook-3-16-ct0/adsps.jsn",
+          "qcom/sc7280/HP/omnibook-3-16-ct0/adspua.jsn",
+          "qcom/sc7280/HP/omnibook-3-16-ct0/cdspr.jsn",
+          "qcom/sc7280/HP/omnibook-3-16-ct0/qcadsp8270.mbn",
+          "qcom/sc7280/HP/omnibook-3-16-ct0/qccdsp8270.mbn",
+          "qcom/sc7280/HP/omnibook-3-16-ct0/qcdxkmsuc8270.mbn",
+          "qcom/sc7280/HP/omnibook-3-16-ct0/qcvss8270.mbn"
+        ]
+      }
+    ]
   }
 }

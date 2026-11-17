@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-16T23:46:07.718Z",
+  "collected": "2026-11-17T00:14:06.728Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -8232,6 +8232,7 @@
       },
       "variants": [
         {
+          "compatible": "hp,omnibook-3-16-ct0",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,
