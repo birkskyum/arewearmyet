@@ -19,7 +19,7 @@ import { dirname, join } from 'node:path';
 const KERNEL_RELEASES = ['v5.10', 'v5.11', 'v5.12', 'v5.13', 'v5.14', 'v5.15', 'v5.16', 'v5.17', 'v5.18', 'v5.19', 'v6.0', 'v6.1', 'v6.2', 'v6.3', 'v6.4', 'v6.5', 'v6.6', 'v6.7', 'v6.8', 'v6.9', 'v6.10', 'v6.11', 'v6.12', 'v6.13', 'v6.14', 'v6.15', 'v6.16', 'v6.17', 'v6.18', 'v6.19', 'v7.0', 'v7.1', 'v7.2', 'v7.3'];
 const SYSTEMD_RELEASES = ['v257', 'v258', 'v259', 'v260', 'v261', 'v262'];
 // Snapdragon X, X2 and 8cx Gen 3, the 7c Chromebooks, and the older Windows laptops' trees
-const DT_PATTERN = /^(x1|hamoa|purwa|glymur|mahua|kalambo|sc8280xp|sc7180-trogdor|sc7180-(acer|ecs|samsung|lenovo|tcl|apcsilmic)|sc8180x-(lenovo|microsoft|samsung)|sc8180xp-(dell|acer|lenovo|samsung|xiaomi)|sc7280-samsung|sdm850|msm8998-(asus|hp|lenovo)).*\.dts$/;
+const DT_PATTERN = /^(x1|hamoa|purwa|glymur|mahua|kalambo|sc8280xp|sc7180-trogdor|sc7180-(acer|ecs|samsung|lenovo|tcl|apcsilmic)|sc8180x-(lenovo|microsoft|samsung)|sc8180xp-(dell|acer|lenovo|samsung|xiaomi)|sc7280-(samsung|hp)|sdm850|msm8998-(asus|hp|lenovo)).*\.dts$/;
 const DT_DIR = 'arch/arm64/boot/dts/qcom';
 // samsung is the Galaxy Book S's folder (qcom/samsung/w767), which its tree has always named
 const FIRMWARE_SOCS = ['x1e80100', 'x1p42100', 'x126100', 'glymur', 'kalambo', 'sc8280xp', 'sc8180x', 'sc8180xp', 'sc7180', 'sc7180-trogdor', 'sc7280', 'sdm850', 'msm8998', 'samsung'];

@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-17T00:14:06.728Z",
+  "collected": "2026-11-17T00:14:48.174Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -8190,12 +8190,16 @@
       ],
       "notes": "HP's driver pack sp174797 is the 7c Gen 3's (SC7280 power driver, 8270 firmware), and its BIOS capsule holds the DSDT a device tree can be written from.",
       "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "bootable": "needs-ids",
       "reports": [],
       "machine": "nobody",
       "omarchy": {
         "deviceTree": null,
-        "deviceTreePull": null,
+        "deviceTreePull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/2939",
+          "number": 2939,
+          "title": "linux-omarchy-dtbs, hp-omnibook-3-16-ct0-firmware: add the HP OmniBook 3 16 (16-ct0)"
+        },
         "ids": null,
         "idsPull": null,
         "firmware": "download",
@@ -8204,7 +8208,7 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
+        "deviceTree": "pr",
         "ids": "none",
         "firmware": "elsewhere"
       },
@@ -8237,7 +8241,11 @@
           "treeChannel": null,
           "idsChannel": null,
           "bootChannel": null,
-          "treePull": null,
+          "treePull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/2939",
+            "number": 2939,
+            "title": "linux-omarchy-dtbs, hp-omnibook-3-16-ct0-firmware: add the HP OmniBook 3 16 (16-ct0)"
+          },
           "idsPull": null,
           "deviceTree": null,
           "firmwareNeeded": [],
