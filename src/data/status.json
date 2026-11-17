@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-17T00:14:48.174Z",
+  "collected": "2026-11-17T07:14:55.608Z",
   "linuxNext": "20261113",
   "firmwareRelease": "20261019",
   "omarchy": {
@@ -438,6 +438,7 @@
           "sc7180-lenovo-10w.dts",
           "sc7180-samsung-galaxy-book-go.dts",
           "sc7180-tcl-book-14-go.dts",
+          "sc7280-hp-omnibook-3-16-ct0.dts",
           "sc7280-samsung-galaxy-book2-go.dts",
           "sc8180x-lenovo-flex-5g.dts",
           "sc8180x-microsoft-cambria.dts",
@@ -1085,6 +1086,16 @@
             "qcom/x1p42100/hp/omnibook-3/qcadsp8380.mbn",
             "qcom/x1p42100/hp/omnibook-3/qccdsp8380.mbn",
             "qcom/x1p42100/hp/omnibook-3/qcdxkmsucpurwa.mbn"
+          ],
+          "hp-omnibook-3-16-ct0-firmware": [
+            "qcom/sc7280/HP/omnibook-3-16-ct0/adspr.jsn",
+            "qcom/sc7280/HP/omnibook-3-16-ct0/adsps.jsn",
+            "qcom/sc7280/HP/omnibook-3-16-ct0/adspua.jsn",
+            "qcom/sc7280/HP/omnibook-3-16-ct0/cdspr.jsn",
+            "qcom/sc7280/HP/omnibook-3-16-ct0/qcadsp8270.mbn",
+            "qcom/sc7280/HP/omnibook-3-16-ct0/qccdsp8270.mbn",
+            "qcom/sc7280/HP/omnibook-3-16-ct0/qcdxkmsuc8270.mbn",
+            "qcom/sc7280/HP/omnibook-3-16-ct0/qcvss8270.mbn"
           ],
           "hp-omnibook-3-16-firmware": [
             "qcom/x1p42100/hp/omnibook-3-16-bz0/adsp_dtbs.elf",
@@ -8189,34 +8200,32 @@
         "https://www.energystar.gov/productfinder/product/certified-computers/details/4688594"
       ],
       "notes": "HP's driver pack sp174797 is the 7c Gen 3's (SC7280 power driver, 8270 firmware), and its BIOS capsule holds the DSDT a device tree can be written from.",
-      "outcome": "none",
+      "outcome": "manual",
       "bootable": "needs-ids",
       "reports": [],
-      "machine": "nobody",
+      "machine": "linux",
       "omarchy": {
-        "deviceTree": null,
-        "deviceTreePull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/2939",
-          "number": 2939,
-          "title": "linux-omarchy-dtbs, hp-omnibook-3-16-ct0-firmware: add the HP OmniBook 3 16 (16-ct0)"
-        },
+        "deviceTree": "edge",
+        "deviceTreePull": null,
         "ids": null,
         "idsPull": null,
-        "firmware": "download",
-        "firmwareChannel": null,
-        "firmwarePackages": [],
+        "firmware": "shipped",
+        "firmwareChannel": "edge",
+        "firmwarePackages": [
+          "hp-omnibook-3-16-ct0-firmware"
+        ],
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "pr",
+        "deviceTree": "edge",
         "ids": "none",
-        "firmware": "elsewhere"
+        "firmware": "edge"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-dtbs/0056-arm64-dts-qcom-Add-the-HP-OmniBook-3-16-ct0.patch",
         "devicetreeArchive": null,
         "ids": "missing",
         "idsCollected": null,
@@ -8237,21 +8246,28 @@
       "variants": [
         {
           "compatible": "hp,omnibook-3-16-ct0",
-          "computed": "none",
-          "treeChannel": null,
+          "computed": "manual",
+          "treeChannel": "edge",
           "idsChannel": null,
           "bootChannel": null,
-          "treePull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/2939",
-            "number": 2939,
-            "title": "linux-omarchy-dtbs, hp-omnibook-3-16-ct0-firmware: add the HP OmniBook 3 16 (16-ct0)"
-          },
+          "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "sc7280-hp-omnibook-3-16-ct0.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0056-arm64-dts-qcom-Add-the-HP-OmniBook-3-16-ct0.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/sc7280/HP/omnibook-3-16-ct0/qcdxkmsuc8270.mbn",
+            "qcom/sc7280/HP/omnibook-3-16-ct0/qcadsp8270.mbn",
+            "qcom/sc7280/HP/omnibook-3-16-ct0/qccdsp8270.mbn",
+            "qcom/sc7280/HP/omnibook-3-16-ct0/qcvss8270.mbn"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "manual",
           "reports": []
         }
       ],
