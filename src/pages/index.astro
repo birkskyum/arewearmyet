@@ -71,6 +71,9 @@ const chromebookViews = [
 const HELP = 'mt-2 max-w-3xl text-sm text-zinc-400';
 
 const collected = new Date(status.collected).toISOString().slice(0, 10);
+// Sources the last refresh couldn't reach, whose data is older than the rest
+const stale: { part: string; since: string }[] = status.stale ?? [];
+const STALE_NAME: Record<string, string> = { kernel: 'Linux and linux-next', ids: "systemd's hardware IDs", firmware: 'linux-firmware', acpi: 'The ACPI dumps', omarchy: "Omarchy's packages" };
 const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
 const REPO = 'https://github.com/birkskyum/arewearmyet';
 const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100';
@@ -232,6 +235,11 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
           <a class={LINK} href="https://github.com/turbineBMW/omarchy-hardware-reports">owners' hardware reports</a>{' '}
           and <a class={LINK} href="https://github.com/omacom/omarchy-pkgs">Omarchy's packages</a>.
         </p>
+        {stale.length > 0 && (
+          <p class="mt-2 text-amber-300/90">
+            {stale.map((entry) => `${STALE_NAME[entry.part] ?? entry.part} couldn't be reached and is from ${entry.since.slice(0, 10)}`).join('; ')}.
+          </p>
+        )}
         <p class="mt-2">Made by the <a class={`${LINK} whitespace-nowrap`} href="https://omarchy.org"><OmarchyIcon class="mr-1 inline h-3.5 w-3.5 align-[-2px] text-[#9ece6a]" aria-hidden="true" />Omarchy</a> team. The code and data are <a class={LINK} href={REPO}>on GitHub</a>.</p>
         <div class="mt-4 flex flex-wrap gap-3">
           <a href={`${REPO}/issues/new?template=model.yml`} class="rounded-md px-3 py-1.5 text-zinc-200 ring-1 ring-zinc-700 hover:bg-zinc-800">Add your model</a>

@@ -161,20 +161,38 @@ function dtFirmware(dir: string | string[], file: string, seen = new Set<string>
 
 // linux-next has no GitHub mirror, so take its device tree folder from a sparse clone. kernel.org sometimes
 // stalls a fetch for half an hour, so a fetch that takes over two minutes keeps the copy from the last run
+// kernel.org is sometimes unreachable for hours, so Google's mirror of the same tree is tried after it
+const LINUX_NEXT = [
+  'https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git',
+  'https://kernel.googlesource.com/pub/scm/linux/kernel/git/next/linux-next',
+];
+
 function linuxNextCheckout(): string {
   const dir = join(tmpdir(), 'arewearmyet-linux-next');
   if (existsSync(join(dir, '.git'))) {
-    try {
-      execFileSync('git', ['-C', dir, 'fetch', '-q', '--depth', '1', 'origin', 'master'], { stdio: 'inherit', timeout: 120_000 });
-      execFileSync('git', ['-C', dir, 'reset', '-q', '--hard', 'FETCH_HEAD'], { stdio: 'inherit' });
-    } catch {
-      console.warn(`linux-next didn't fetch, keeping ${execFileSync('git', ['-C', dir, 'log', '-1', '--format=%s'], { encoding: 'utf8' }).trim()}`);
+    for (const url of LINUX_NEXT) {
+      try {
+        execFileSync('git', ['-C', dir, 'fetch', '-q', '--depth', '1', url, 'master'], { stdio: 'inherit', timeout: 120_000 });
+        execFileSync('git', ['-C', dir, 'reset', '-q', '--hard', 'FETCH_HEAD'], { stdio: 'inherit' });
+        return dir;
+      } catch {
+        console.warn(`linux-next didn't fetch from ${new URL(url).hostname}`);
+      }
     }
-  } else {
-    execFileSync('git', ['clone', '-q', '--depth', '1', '--filter=blob:none', '--sparse', 'https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git', dir], { stdio: 'inherit' });
-    execFileSync('git', ['-C', dir, 'sparse-checkout', 'set', DT_DIR], { stdio: 'inherit' });
+    console.warn(`keeping ${execFileSync('git', ['-C', dir, 'log', '-1', '--format=%s'], { encoding: 'utf8' }).trim()}`);
+    return dir;
   }
-  return dir;
+  for (const url of LINUX_NEXT) {
+    try {
+      execFileSync('git', ['clone', '-q', '--depth', '1', '--filter=blob:none', '--sparse', url, dir], { stdio: 'inherit', timeout: 300_000 });
+      execFileSync('git', ['-C', dir, 'sparse-checkout', 'set', DT_DIR], { stdio: 'inherit' });
+      return dir;
+    } catch {
+      console.warn(`linux-next didn't clone from ${new URL(url).hostname}`);
+      rmSync(dir, { recursive: true, force: true });
+    }
+  }
+  throw new Error('linux-next is unreachable on kernel.org and its mirror');
 }
 
 async function collectDeviceTrees(next: string) {
@@ -539,22 +557,51 @@ async function collectAcpiDumps(): Promise<AcpiDump[]> {
   ];
 }
 
-// The Omarchy recipe's replay reads linux-next too, so it is fetched once before either part starts
-const next = parts.has('kernel') || parts.has('omarchy') ? linuxNextCheckout() : '';
-const previous = parts.size < PARTS.length && existsSync('data/sources.json') ? JSON.parse(readFileSync('data/sources.json', 'utf8')) : undefined;
+// One source being down mustn't stop the rest: a part that fails keeps what the last run found, and is
+// listed under stale with when it last worked, which the site shows. Only a run where every part fails stops.
+const previous = existsSync('data/sources.json') ? JSON.parse(readFileSync('data/sources.json', 'utf8')) : undefined;
 if (parts.size < PARTS.length && !previous) throw new Error('a partial collect needs data/sources.json from a full one');
-const skip = () => Promise.resolve(undefined);
+const failed: Partial<Record<(typeof PARTS)[number], string>> = {};
+async function attempt<T>(part: (typeof PARTS)[number], collect: () => Promise<T>): Promise<T | undefined> {
+  if (!parts.has(part) || failed[part]) return undefined;
+  try {
+    return await collect();
+  } catch (error) {
+    failed[part] = error instanceof Error ? error.message.split('\n')[0].slice(0, 300) : String(error);
+    return undefined;
+  }
+}
+
+// The Omarchy recipe's replay reads linux-next too, so it is fetched once before either part starts
+let next = '';
+if (parts.has('kernel') || parts.has('omarchy')) {
+  try {
+    next = linuxNextCheckout();
+  } catch (error) {
+    for (const part of ['kernel', 'omarchy'] as const) if (parts.has(part)) failed[part] = (error as Error).message;
+  }
+}
 const [kernel, hardwareIds, firmware, acpiDumps, omarchy] = await Promise.all([
-  parts.has('kernel') ? collectDeviceTrees(next) : skip(),
-  parts.has('ids') ? collectHardwareIds() : skip(),
-  parts.has('firmware') ? collectFirmware() : skip(),
-  parts.has('acpi') ? collectAcpiDumps() : skip(),
-  parts.has('omarchy') ? collectOmarchy() : skip(),
+  attempt('kernel', () => collectDeviceTrees(next)),
+  attempt('ids', collectHardwareIds),
+  attempt('firmware', collectFirmware),
+  attempt('acpi', collectAcpiDumps),
+  attempt('omarchy', collectOmarchy),
 ]);
+
+const failures = Object.entries(failed) as [(typeof PARTS)[number], string][];
+for (const [part, message] of failures) console.log(`::warning::${part} wasn't collected, keeping the last run's: ${message}`);
+if (failures.length && !previous) throw new Error(`the first collect needs every part: ${failures.map(([part]) => part).join(', ')} failed`);
+if (failures.length === parts.size) throw new Error(`nothing could be collected: ${failures.map(([part, message]) => `${part} (${message})`).join('; ')}`);
+// A part stays stale from the last run it worked in until it works again
+const stale: Record<string, { since: string; error: string }> = { ...previous?.stale };
+for (const part of parts) delete stale[part];
+for (const [part, message] of failures) stale[part] = { since: previous.stale?.[part]?.since ?? previous.collected, error: message };
 
 const sources = {
   ...previous,
   collected: new Date().toISOString(),
+  stale: Object.keys(stale).length ? stale : undefined,
   kernelReleases: KERNEL_RELEASES,
   systemdReleases: SYSTEMD_RELEASES,
   ...kernel,
@@ -566,4 +613,4 @@ const sources = {
 mkdirSync('data', { recursive: true });
 writeFileSync('data/sources.json', JSON.stringify(sources, null, 2) + '\n');
 const o = sources.omarchy;
-console.log(`${[...parts].join(', ')} collected. Omarchy ${o.channels.map((c: any) => `${c.name} ${c.kernel}/${c.systemd} (${c.deviceTrees.length} trees, ${c.hwids.length}+${c.carriedIds.length} IDs, ${Object.values(c.firmware).flat().length} firmware files)`).join(', ')}, recipe device trees ${o.kernelAddedDeviceTrees.length}, open PRs ${o.pulls.map((pull: any) => `#${pull.number}`).join(' ')}; device trees ${sources.deviceTrees.length}, systemd IDs ${sources.systemd.length}, stubble ${sources.stubble.length}, firmware folders ${sources.firmware.length} (release ${sources.firmwareRelease}), ACPI dumps ${sources.acpiDumps.length}`);
+console.log(`${[...parts].filter((part) => !failed[part]).join(', ')} collected. Omarchy ${o.channels.map((c: any) => `${c.name} ${c.kernel}/${c.systemd} (${c.deviceTrees.length} trees, ${c.hwids.length}+${c.carriedIds.length} IDs, ${Object.values(c.firmware).flat().length} firmware files)`).join(', ')}, recipe device trees ${o.kernelAddedDeviceTrees.length}, open PRs ${o.pulls.map((pull: any) => `#${pull.number}`).join(' ')}; device trees ${sources.deviceTrees.length}, systemd IDs ${sources.systemd.length}, stubble ${sources.stubble.length}, firmware folders ${sources.firmware.length} (release ${sources.firmwareRelease}), ACPI dumps ${sources.acpiDumps.length}`);

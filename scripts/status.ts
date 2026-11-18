@@ -546,7 +546,7 @@ const unmatched = {
 mkdirSync('src/data', { recursive: true });
 writeFileSync(
   'src/data/status.json',
-  JSON.stringify({ collected: sources.collected, linuxNext: sources.linuxNext, firmwareRelease: sources.firmwareRelease, omarchy: { channel: OMARCHY_CHANNEL, kernel: channel.kernel, systemd: channel.systemd, kernelBase, systemdRelease, image: sources.omarchy.image ?? null, channels: sources.omarchy.channels }, summary, models: rows, nvidia: nvidia.map((model) => ({ ...model, kernel: nvidiaKernel })), unmatched }, null, 2) + '\n',
+  JSON.stringify({ collected: sources.collected, stale: Object.entries<{ since: string }>(sources.stale ?? {}).map(([part, entry]) => ({ part, since: entry.since })), linuxNext: sources.linuxNext, firmwareRelease: sources.firmwareRelease, omarchy: { channel: OMARCHY_CHANNEL, kernel: channel.kernel, systemd: channel.systemd, kernelBase, systemdRelease, image: sources.omarchy.image ?? null, channels: sources.omarchy.channels }, summary, models: rows, nvidia: nvidia.map((model) => ({ ...model, kernel: nvidiaKernel })), unmatched }, null, 2) + '\n',
 );
 console.log(summary);
 
