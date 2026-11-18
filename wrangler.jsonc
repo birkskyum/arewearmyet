@@ -1,6 +1,7 @@
 {
-  // The built pages from dist/, plus worker/index.ts for /api/firmware/*,
-  // which writes owners' firmware to a private bucket (no public URL)
+  // The built pages from dist/, plus worker/index.ts for /api/*: /api/firmware/*
+  // writes owners' firmware to a private bucket (no public URL), and the rest takes
+  // owners' reports on what works into D1 (worker/reports.ts)
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "arewearmyet",
   "main": "worker/index.ts",
@@ -13,7 +14,12 @@
   },
   "routes": [{ "pattern": "arewearmyet.com", "custom_domain": true }],
   "r2_buckets": [{ "binding": "FIRMWARE", "bucket_name": "arewearmyet-firmware" }],
-  "ratelimits": [{ "name": "UPLOAD_LIMIT", "namespace_id": "1001", "simple": { "limit": 300, "period": 60 } }],
-  // "off" closes the drop without a code change
-  "vars": { "FIRMWARE_UPLOADS": "on" }
+  "d1_databases": [{ "binding": "DB", "database_name": "arewearmyet", "database_id": "94816cb7-cac5-4adc-8a0c-51a6c8e1e32f", "migrations_dir": "migrations" }],
+  "ratelimits": [
+    { "name": "UPLOAD_LIMIT", "namespace_id": "1001", "simple": { "limit": 300, "period": 60 } },
+    { "name": "REPORT_LIMIT", "namespace_id": "1002", "simple": { "limit": 30, "period": 60 } }
+  ],
+  // "off" closes the firmware drop or the reports without a code change.
+  // ADMIN_TOKEN, for hiding reports from /review, is a secret (wrangler secret put ADMIN_TOKEN)
+  "vars": { "FIRMWARE_UPLOADS": "on", "REPORTS": "on" }
 }

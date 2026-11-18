@@ -33,3 +33,6 @@ device-trees.new/
 
 # collect.ts keeps what fixed refs hold here
 .cache/
+
+# Local secrets for wrangler dev
+.dev.vars

@@ -13,7 +13,14 @@
  * parts: an R2 multipart upload under incoming/, which is then copied to its
  * place under files/ with the same SHA-256 check, so R2 does the hashing
  * rather than the Worker.
+ *
+ * The rest of /api/ is owners' reports on what works, in worker/reports.ts.
  */
+
+import { reports } from './reports';
+
+// Agents and pages on other sites may call the reports API from a browser
+const CORS = { 'access-control-allow-origin': '*', 'access-control-allow-methods': 'GET, POST', 'access-control-allow-headers': 'content-type, x-machine-token, authorization', 'access-control-max-age': '86400' };
 
 const MAX_FILE = 95 * 1024 * 1024;
 const MAX_LARGE = 1024 * 1024 * 1024;
@@ -31,7 +38,11 @@ const CODE_ALPHABET = 'ABCDEFGHJKMNPQRSTVWXYZ23456789';
 export default {
   async fetch(request, env): Promise<Response> {
     const url = new URL(request.url);
-    if (!url.pathname.startsWith('/api/firmware/')) return env.ASSETS.fetch(request);
+    if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
+    if (!url.pathname.startsWith('/api/firmware/')) {
+      if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
+      return (await reports(request, env, url)) ?? json({ error: 'Not found.' }, 404);
+    }
     if (env.FIRMWARE_UPLOADS !== 'on') return json({ error: 'Uploads are closed.' }, 503);
 
     const ip = request.headers.get('cf-connecting-ip') ?? 'local';

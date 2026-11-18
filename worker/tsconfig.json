@@ -3,11 +3,18 @@
     "target": "es2024",
     "module": "es2022",
     "moduleResolution": "bundler",
-    "lib": ["es2024"],
+    "lib": [
+      "es2024"
+    ],
     "types": [],
     "strict": true,
     "noEmit": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
-  "include": ["index.ts", "worker-configuration.d.ts"]
+  "include": [
+    "index.ts",
+    "reports.ts",
+    "worker-configuration.d.ts"
+  ]
 }
