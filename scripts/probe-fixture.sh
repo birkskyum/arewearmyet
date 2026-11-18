@@ -50,6 +50,7 @@ copy /sys/class/hwmon/hwmon*/name /sys/class/hwmon/hwmon*/fan*_input /sys/class/
 mkdir -p "$out/cmd"
 uname -r >"$out/cmd/uname-r"
 uname -m >"$out/cmd/uname-m"
+command -v systemd-analyze >/dev/null 2>&1 && systemd-analyze chid >"$out/cmd/chids" 2>/dev/null
 { journalctl -k -b --no-pager -q -o cat 2>/dev/null || dmesg 2>/dev/null; } | grep -iE 'zap|no GPU device was found' | head -n 20 >"$out/cmd/klog"
 command -v bluetoothctl >/dev/null 2>&1 && timeout 5 bluetoothctl show 2>/dev/null | grep -E '^\s*Powered:' >"$out/cmd/bluetoothctl-show"
 for p in linux-omarchy linux-firmware linux-firmware-qcom mesa systemd omarchy hyprland pipewire alsa-ucm-conf bluez libcamera; do

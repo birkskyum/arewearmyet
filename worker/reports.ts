@@ -13,7 +13,7 @@
  *   GET  /api/checks                  what each check means and how to check it
  *   GET  /api/models                  every model with its page and API URL
  *   GET  /api/models/<id>             one model: pieces, findings, owners' results, fixes, what to test next
- *   GET  /api/match?compatible=&product=&sku=&family=&vendor=   which model a machine is
+ *   GET  /api/match?chid=&compatible=&product=&sku=&family=&vendor=   which model a machine is
  *   GET  /api/owners                  every model's owners' results, and the machines that matched no model
  *   POST /api/runs                    a probe run or an agent's report; answers {run, model, url}
  *   GET  /api/runs/<id>               one run as stored, for the owner to check
@@ -24,7 +24,7 @@
 
 import index from './models.json' with { type: 'json' };
 
-type Index = { checks: string[]; models: { id: string; vendor: string; name: string; generation: string; boot: string; compatibles: string[]; modelNumbers: string[] }[] };
+type Index = { checks: string[]; chids: Record<string, number[]>; models: { id: string; vendor: string; name: string; generation: string; boot: string; compatibles: string[]; modelNumbers: string[] }[] };
 const INDEX = index as Index;
 const CHECKS = new Set(INDEX.checks);
 const MODELS = new Map(INDEX.models.map((m) => [m.id, m]));
@@ -35,6 +35,11 @@ const MODES = ['quick', 'guided', 'agent'] as const;
 const HARDWARE_KEYS = ['maker', 'product', 'family', 'sku', 'board', 'bios'] as const;
 const PACKAGE_KEYS = ['linux-omarchy', 'linux', 'linux-firmware', 'linux-firmware-qcom', 'mesa', 'systemd', 'omarchy', 'hyprland', 'pipewire', 'alsa-ucm-conf', 'bluez', 'libcamera'] as const;
 const TOKEN = /^[A-Za-z0-9_-]{32,128}$/;
+// A hardware ID with its type, as systemd-analyze chid numbers them: "3:8073dbed-501f-5f5e-a619-4cdd9c00e865"
+const CHID = /^(ext)?\d{1,2}:[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/;
+// The types made from the product name, the SKU or the mainboard, which tell models apart. The others
+// (maker and family, maker and enclosure, maker alone) are shared by a maker's whole range.
+const SPECIFIC_CHIDS = new Set(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '13', 'ext0', 'ext2']);
 const RUN_ID = /^RUN-[A-Z0-9]{10}$/;
 const MODEL_ID = /^[a-z0-9][a-z0-9-]{1,80}$/;
 const CODE_ALPHABET = 'ABCDEFGHJKMNPQRSTVWXYZ23456789';
@@ -163,10 +168,10 @@ async function ownerResults(env: Env, id: string) {
 async function allOwners(env: Env): Promise<Response> {
   const [{ results }, unmatched] = await Promise.all([
     env.DB.prepare(`${RESULT_ROWS} AND runs.model IS NOT NULL ${NEWEST_FIRST} LIMIT 50000`).all<ResultRow>(),
-    env.DB.prepare(`SELECT runs.hardware, runs.compatible, COUNT(DISTINCT runs.machine) AS machines, COUNT(*) AS runs, MAX(runs.created) AS latest
+    env.DB.prepare(`SELECT runs.hardware, runs.compatible, MAX(runs.chids) AS chids, COUNT(DISTINCT runs.machine) AS machines, COUNT(*) AS runs, MAX(runs.created) AS latest
                       FROM runs JOIN machines m ON m.id = runs.machine
                      WHERE runs.model IS NULL AND runs.hidden = 0 AND m.hidden = 0
-                     GROUP BY runs.hardware, runs.compatible ORDER BY latest DESC LIMIT 200`).all<{ hardware: string | null; compatible: string | null; machines: number; runs: number; latest: string }>(),
+                     GROUP BY runs.hardware, runs.compatible ORDER BY latest DESC LIMIT 200`).all<{ hardware: string | null; compatible: string | null; chids: string | null; machines: number; runs: number; latest: string }>(),
   ]);
   const byModel = new Map<string, ResultRow[]>();
   for (const row of results) {
@@ -176,7 +181,7 @@ async function allOwners(env: Env): Promise<Response> {
   }
   return json({
     models: Object.fromEntries([...byModel].map(([id, rows]) => [id, summarize(rows)])),
-    unmatched: unmatched.results.map((row) => ({ ...row, hardware: JSON.parse(row.hardware ?? '{}') })),
+    unmatched: unmatched.results.map((row) => ({ ...row, hardware: JSON.parse(row.hardware ?? '{}'), chids: JSON.parse(row.chids ?? '[]') })),
   }, 200, 'public, max-age=300');
 }
 
@@ -186,15 +191,21 @@ async function modelFixes(env: Env, id: string) {
 }
 
 /**
- * Which model a machine is. A booted device tree's compatible string names it exactly;
- * otherwise a model number from the firmware's product, SKU or family strings does,
- * like 83ED for the Yoga Slim 7x or 14-fe0 for HP's OmniBook X 14-fe0xxx.
+ * Which model a machine is. Its hardware IDs name it the way a boot image picks its device tree,
+ * also when it booted with another model's tree. Without them, a booted device tree's compatible
+ * string does, and then a model number from the firmware's product, SKU or family strings, like
+ * 83ED for the Yoga Slim 7x or 14-fe0 for HP's OmniBook X 14-fe0xxx.
  */
 function match(params: URLSearchParams) {
+  const found = (model: Index['models'][number], by: string) => ({ model: model.id, by, vendor: model.vendor, name: model.name, generation: model.generation, page: `${SITE}/models/${model.id}` });
+
+  const byIds = matchChids(params.getAll('chid').flatMap((value) => value.split(',')));
+  if (byIds) return found(byIds, 'hardware IDs');
+
   const compatible = (params.get('compatible') ?? '').split(/[\s\0]+/).filter(Boolean);
   for (const c of compatible) {
-    const found = INDEX.models.find((m) => m.compatibles.includes(c));
-    if (found) return { model: found.id, by: 'compatible', vendor: found.vendor, name: found.name, generation: found.generation, page: `https://arewearmyet.com/models/${found.id}` };
+    const model = INDEX.models.find((m) => m.compatibles.includes(c));
+    if (model) return found(model, 'compatible');
   }
   const text = ['product', 'sku', 'family'].map((k) => (params.get(k) ?? '').toUpperCase()).join(' ');
   const vendor = (params.get('vendor') ?? '').toLowerCase();
@@ -206,16 +217,35 @@ function match(params: URLSearchParams) {
       if (prefix.length >= 4 && text.includes(prefix) && (!best || prefix.length > best.length)) best = { id: m.id, length: prefix.length };
     }
   }
-  if (best) {
-    const found = MODELS.get(best.id)!;
-    return { model: found.id, by: 'model number', vendor: found.vendor, name: found.name, generation: found.generation, page: `https://arewearmyet.com/models/${found.id}` };
-  }
+  if (best) return found(MODELS.get(best.id)!, 'model number');
   return { model: null, by: null, hint: 'Not on the board yet. Add it with a hardware report: https://arewearmyet.com/help' };
+}
+
+/**
+ * The model a machine's hardware IDs belong to, given most specific first as systemd-analyze chid
+ * lists them. The first one the board knows decides when only one model has it; when models share
+ * it, the model that has the most of the machine's IDs does, the more specific counting more.
+ */
+function matchChids(chids: string[]): Index['models'][number] | null {
+  const tally = new Map<number, number>();
+  let rank = 0;
+  for (const item of chids) {
+    const [type, chid] = item.trim().toLowerCase().split(':');
+    if (!SPECIFIC_CHIDS.has(type) || !chid) continue;
+    rank++;
+    const owners = INDEX.chids[chid];
+    if (!owners) continue;
+    if (owners.length === 1 && tally.size === 0) return INDEX.models[owners[0]];
+    for (const index of owners) tally.set(index, (tally.get(index) ?? 0) + Math.max(1, 20 - rank));
+  }
+  const ranked = [...tally].sort((a, b) => b[1] - a[1]);
+  if (!ranked.length || (ranked.length > 1 && ranked[0][1] === ranked[1][1])) return null;
+  return INDEX.models[ranked[0][0]];
 }
 
 type RunBody = {
   mode?: unknown; model?: unknown; compatible?: unknown; kernel?: unknown; os?: unknown; agent?: unknown;
-  hardware?: unknown; packages?: unknown; results?: unknown;
+  hardware?: unknown; packages?: unknown; results?: unknown; chids?: unknown;
 };
 
 /** Stores a run and its results; the machine is created on its first run. */
@@ -229,11 +259,13 @@ async function postRun(request: Request, env: Env, url: URL): Promise<Response> 
   if (!mode) return json({ error: `mode must be one of ${MODES.join(', ')}.` }, 400);
   const hardware = pick(body.hardware, HARDWARE_KEYS, 120);
   const compatible = typeof body.compatible === 'string' ? clean(body.compatible, 120) : null;
+  const chids = Array.isArray(body.chids) ? body.chids.filter((c): c is string => typeof c === 'string' && CHID.test(c.toLowerCase())).slice(0, 40).map((c) => c.toLowerCase()) : [];
 
   // The model named in the body wins when it exists; otherwise the machine's own strings decide
   let modelId = typeof body.model === 'string' && MODELS.has(body.model) ? body.model : null;
   if (!modelId) {
     const params = new URLSearchParams();
+    for (const chid of chids) params.append('chid', chid);
     if (compatible) params.set('compatible', compatible);
     for (const k of ['product', 'sku', 'family'] as const) if (hardware[k]) params.set(k, hardware[k]);
     if (hardware.maker) params.set('vendor', hardware.maker);
@@ -249,13 +281,14 @@ async function postRun(request: Request, env: Env, url: URL): Promise<Response> 
   const run = code('RUN-');
   const statements = [
     env.DB.prepare('INSERT INTO machines (id, model, first_seen, last_seen) VALUES (?1, ?2, ?3, ?3) ON CONFLICT(id) DO UPDATE SET last_seen = ?3, model = COALESCE(?2, model)').bind(machine, modelId, now),
-    env.DB.prepare('INSERT INTO runs (id, machine, model, compatible, created, mode, kernel, os, packages, hardware, agent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)').bind(
+    env.DB.prepare('INSERT INTO runs (id, machine, model, compatible, created, mode, kernel, os, packages, hardware, agent, chids) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)').bind(
       run, machine, modelId, compatible, now, mode,
       typeof body.kernel === 'string' ? clean(body.kernel, 80) : null,
       typeof body.os === 'string' ? clean(body.os, 80) : null,
       JSON.stringify(pick(body.packages, PACKAGE_KEYS, 60)),
       JSON.stringify(hardware),
       typeof body.agent === 'string' ? clean(body.agent, 60) : null,
+      chids.length ? JSON.stringify(chids) : null,
     ),
     ...results.map((r) => env.DB.prepare('INSERT INTO results (run, check_id, state, how, note, evidence) VALUES (?, ?, ?, ?, ?, ?)').bind(run, r.check, r.state, r.how, r.note, r.evidence)),
   ];
@@ -286,10 +319,10 @@ async function postResults(request: Request, env: Env, url: URL, run: string): P
 }
 
 async function getRun(env: Env, id: string): Promise<Response> {
-  const run = await env.DB.prepare('SELECT id, model, compatible, created, mode, kernel, os, packages, hardware, agent, hidden FROM runs WHERE id = ?').bind(id).first<Record<string, string | number | null>>();
+  const run = await env.DB.prepare('SELECT id, model, compatible, created, mode, kernel, os, packages, hardware, agent, chids, hidden FROM runs WHERE id = ?').bind(id).first<Record<string, string | number | null>>();
   if (!run || run.hidden) return json({ error: 'No such run.' }, 404);
   const { results } = await env.DB.prepare('SELECT check_id AS "check", state, how, note, evidence FROM results WHERE run = ? ORDER BY check_id').bind(id).all();
-  return json({ ...run, hidden: undefined, packages: JSON.parse(String(run.packages ?? '{}')), hardware: JSON.parse(String(run.hardware ?? '{}')), results });
+  return json({ ...run, hidden: undefined, packages: JSON.parse(String(run.packages ?? '{}')), hardware: JSON.parse(String(run.hardware ?? '{}')), chids: JSON.parse(String(run.chids ?? '[]')), results });
 }
 
 async function postFix(request: Request, env: Env): Promise<Response> {

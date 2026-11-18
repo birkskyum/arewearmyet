@@ -1,0 +1,25 @@
+TYPE    INPUT     CHID
+   0 MFPS--BvRr-- 5315f3e1-1fa9-5592-bf05-75e8124d1f8a
+   1 MFP---BvRr-- 26ebc60f-fa11-5acf-9185-50220b9edac6
+   2 M-P---BvRr-- a12f39eb-cb0a-5d64-a08f-d651d30787dd
+   3 MFPSmp------ 8073dbed-501f-5f5e-a619-4cdd9c00e865
+   4 MFPS-------- d27cf20e-e185-578e-bd46-f4cc3a718bb2
+   5 MFP--------- 8477f828-512b-56cf-af55-c711a6831551
+   6 M--Smp------ f7f92b85-ff01-5e93-a453-c7f91029aa55
+   7 M--S-------- 0700776d-0de7-5ea7-b9bf-77e0454d35e1
+   8 M-P-mp------ ee39b629-4187-5ff7-84c0-e354555562cd
+   9 M-P--------- fdb12a4f-1e8b-524e-97b5-feef23a8a8da
+  10 MF--mp------ 63429d43-c970-570d-aaa7-54300924e0c5
+  11 MF---------- 8f143f12-40dc-5801-8e61-08a88cd68c1e
+  12 M---------e- e093d715-70f7-51f4-b6c8-b4a7e31def85
+  13 M---mp------ 71d86d4d-02f8-5566-a7a1-529cef184b7e
+  14 M----------- 6de5d951-d755-576b-bd09-c5cf66b27234
+ext0 MFP--------E 376fee79-02c8-5948-9c75-a32a8363dfc2
+ext1 MF---------E 6df78e3e-7dfa-5121-a87e-f52761200dd9
+ext2 M--S-------E 89a6ea33-85de-52aa-ad21-64eba70c0823
+
+LEGEND: M → manufacturer (LENOVO) ┄ F → family (Yoga Slim 7 14Q8X9) ┄ P → product-name (83ED)
+        S → product-sku (LENOVO_MT_83ED_BU_idea_FM_Yoga Slim 7 14Q8X9) ┄ m → baseboard-manufacturer (LENOVO)
+        p → baseboard-product (LNVNB161216) ┄ B → bios-vendor (LENOVO) ┄ v → bios-version (NHCN62WW)
+        R → bios-major (01) ┄ r → bios-minor (3e) ┄ e → enclosure-type (a) ┄ E → edid-panel (SDC4189)
+        

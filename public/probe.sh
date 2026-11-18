@@ -21,7 +21,8 @@
 # deleted at the end. The results are shown, then sent unless you say no (in a
 # terminal) or pass --no-send (without one, as agents run it). What's sent: the maker,
 # model, SKU, board and BIOS version; the kernel, OS and a few package versions;
-# the results. No serial numbers, MAC addresses, user names, host names or files.
+# the results; its hardware IDs, which are made from those same strings. No serial
+# numbers, MAC addresses, user names, host names or files.
 # A random token in ~/.local/state/arewearmyet/token lets this machine's later
 # runs replace its earlier ones on the site.
 
@@ -44,7 +45,7 @@ while [ $# -gt 0 ]; do
     --model) MODEL="${2:-}"; shift ;;
     --agent) AGENT="${2:-}"; shift ;;
     --api) API="${2:-}"; shift ;;
-    -h|--help) sed -n '2,27p' "$0" 2>/dev/null || echo "See https://arewearmyet.com/agents"; exit 0 ;;
+    -h|--help) sed -n '2,28p' "$0" 2>/dev/null || echo "See https://arewearmyet.com/agents"; exit 0 ;;
     *) echo "Unknown option $1" >&2; exit 2 ;;
   esac
   shift
@@ -119,6 +120,12 @@ for p in linux-omarchy linux-firmware linux-firmware-qcom mesa systemd omarchy h
   v="$(pkgver "$p")"
   [ -n "$v" ] && PKGS+="${PKGS:+,}$(json_str "$p"):$(json_str "$v")"
 done
+
+# The machine's hardware IDs, most specific first, which name its model exactly (systemd 258 and later)
+CHIDS=""
+if command -v systemd-analyze >/dev/null 2>&1; then
+  while read -r t c; do CHIDS+="${CHIDS:+,}\"$t:$c\""; done < <(timeout 10 systemd-analyze chid 2>/dev/null | awk '$3 ~ /^[0-9a-f]+-[0-9a-f]+-/ { print $1, $3 }')
+fi
 
 say "Are we ARM yet? probe"
 say "  ${MAKER:-?} ${PRODUCT:-?} ${FAMILY:+($FAMILY)}${COMPATIBLE:+, device tree $COMPATIBLE}"
@@ -449,7 +456,7 @@ BODY="{\"mode\":\"$MODE\""
 [ -n "$MODEL" ] && BODY+=",\"model\":$(json_str "$MODEL")"
 [ -n "$AGENT" ] && BODY+=",\"agent\":$(json_str "$AGENT")"
 BODY+=",\"compatible\":$(json_str "$COMPATIBLE"),\"kernel\":$(json_str "$KERNEL"),\"os\":$(json_str "$OS")"
-BODY+=",\"hardware\":{$HW},\"packages\":{$PKGS},\"results\":["
+BODY+=",\"hardware\":{$HW},\"chids\":[$CHIDS],\"packages\":{$PKGS},\"results\":["
 first=1
 for r in "${RESULTS[@]+"${RESULTS[@]}"}"; do [ $first = 1 ] && first=0 || BODY+=","; BODY+="$r"; done
 BODY+="]}"

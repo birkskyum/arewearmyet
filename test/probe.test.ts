@@ -18,7 +18,7 @@ const bashMajor = Number(execFileSync('bash', ['-c', 'echo ${BASH_VERSINFO[0]}']
 const skip = bashMajor < 4 ? `bash ${bashMajor} is too old for the probe` : false;
 
 type Result = { check: string; state: string; how: string; evidence?: string };
-type Run = { mode: string; compatible: string; kernel: string; hardware: Record<string, string>; packages: Record<string, string>; results: Result[] };
+type Run = { mode: string; chids: string[]; compatible: string; kernel: string; hardware: Record<string, string>; packages: Record<string, string>; results: Result[] };
 
 /** A private copy of a fixture, changed by `change`, and what the probe says about it. */
 function probe(fixture: string, change: (root: string) => void = () => {}): { run: Run; state: (check: string) => string | undefined; evidence: (check: string) => string } {
@@ -54,6 +54,10 @@ test('names the machine and its software, without anything personal', { skip }, 
   assert.equal(run.packages['linux-omarchy'], '7.3-59');
   assert.equal(run.packages.omarchy, '4.0.0.r7344.ga001044-1');
   assert.doesNotMatch(JSON.stringify(run), /([0-9a-f]{2}:){5}[0-9a-f]{2}/i);
+  // Its hardware IDs, most specific first, with the type systemd gives each
+  assert.equal(run.chids.length, 18);
+  assert.equal(run.chids[0], '0:5315f3e1-1fa9-5592-bf05-75e8124d1f8a');
+  assert.equal(run.chids[17], 'ext2:89a6ea33-85de-52aa-ad21-64eba70c0823');
 });
 
 test('measures a Yoga Slim 7x booted with its GPU off', { skip }, () => {

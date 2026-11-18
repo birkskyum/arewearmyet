@@ -189,3 +189,29 @@ test("gives every model's owners' results at once, with the machines that matche
   assert.equal(models['hp-omnibook-x-14-fe'].checks.suspend.regressed.machines, 1);
   assert.deepEqual(unmatched.map((u: any) => [u.hardware.maker, u.hardware.product, u.compatible, u.machines]), [['Acme', 'Unheard Of 14', 'acme,unheard', 1]]);
 });
+
+test('names a machine by its hardware IDs, also when it booted with another model\'s tree', async () => {
+  const index = JSON.parse(readFileSync('worker/models.json', 'utf8')) as { chids: Record<string, number[]>; models: { id: string }[] };
+  const only = (id: string) => Object.entries(index.chids).find(([, owners]) => owners.length === 1 && index.models[owners[0]].id === id)![0];
+
+  // The Yoga's own, as systemd-analyze chid gives them on one
+  const yoga = (await call('GET', '/api/match?chid=0:5315f3e1-1fa9-5592-bf05-75e8124d1f8a&chid=4:d27cf20e-e185-578e-bd46-f4cc3a718bb2')).body;
+  assert.equal(yoga.model, YOGA);
+  assert.equal(yoga.by, 'hardware IDs');
+
+  // The ProBook 4 G1q boots the EliteBook 6 G1q's tree, so only its hardware IDs tell them apart
+  const probook = only('hp-probook-4-g1q');
+  assert.equal((await call('GET', `/api/match?chid=3:${probook}&compatible=hp,elitebook-6-g1q`)).body.model, 'hp-probook-4-g1q');
+  assert.equal((await call('GET', '/api/match?compatible=hp,elitebook-6-g1q')).body.model, 'hp-elitebook-6-g1q');
+
+  // An ID made from the maker alone says nothing about the model
+  const lenovo = '6de5d951-d755-576b-bd09-c5cf66b27234';
+  assert.ok(index.chids[lenovo].length > 1);
+  assert.equal((await call('GET', `/api/match?chid=14:${lenovo}`)).body.model, null);
+  assert.equal((await call('GET', `/api/match?chid=14:${only(YOGA)}`)).body.model, null);
+
+  // A run is matched and stored the same way
+  const sent = await call('POST', '/api/runs', { mode: 'quick', compatible: 'hp,elitebook-6-g1q', chids: [`3:${probook}`, 'not-an-id'], results: [{ check: 'wifi', state: 'works', how: 'measured' }] }, machine('machine-e-'.padEnd(40, 'e')));
+  assert.equal(sent.body.model, 'hp-probook-4-g1q');
+  assert.deepEqual((await call('GET', `/api/runs/${sent.body.run}`)).body.chids, [`3:${probook}`]);
+});

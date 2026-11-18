@@ -26,12 +26,19 @@ Read the machine's identity (no root needed):
 ```sh
 cat /sys/class/dmi/id/{sys_vendor,product_name,product_family,product_sku}
 tr '\0' '\n' < /proc/device-tree/compatible | head -n 1    # the device tree's name, when Linux booted with one
+systemd-analyze chid                                       # its hardware IDs, with systemd 258 or later
 ```
 
 Then ask the site which model it is:
 
 ```sh
 curl -s "https://arewearmyet.com/api/match?compatible=lenovo,yoga-slim7x&product=83ED&family=Yoga%20Slim%207%2014Q8X9&vendor=LENOVO"
+```
+
+The hardware IDs are the surest match, since they are what a boot image picks the device tree by. Pass them as `chid=<type>:<id>`, in the order `systemd-analyze chid` lists them:
+
+```sh
+curl -s "https://arewearmyet.com/api/match?chid=3:8073dbed-501f-5f5e-a619-4cdd9c00e865&chid=4:d27cf20e-e185-578e-bd46-f4cc3a718bb2"
 ```
 
 It answers `{"model": "<id>", ...}`, or `{"model": null}` when the board doesn't know the machine yet. In that case the owner should send a hardware report first: <https://arewearmyet.com/help>.
@@ -118,7 +125,7 @@ curl -s -X POST https://arewearmyet.com/api/runs/<RUN-ID>/results -H 'content-ty
 Fields:
 - `mode`: `quick`, `guided` or `agent`.
 - `results[]`: `check` (an id from `/api/checks`), `state` (`works`, `partial`, `broken`, `untested`, `absent` for hardware the model doesn't have), `how` (`measured`, `owner`, `agent`), optional `note` (what was seen, a sentence or two) and `evidence` (the line of output that shows it).
-- `model`, `compatible`, `hardware` (`maker`, `product`, `family`, `sku`, `board`, `bios`), `kernel`, `os`, `packages`: optional, but the version is what makes a result useful. A result without a kernel version can't say whether a later kernel fixed it.
+- `model`, `compatible`, `chids` (a list of `"<type>:<id>"`), `hardware` (`maker`, `product`, `family`, `sku`, `board`, `bios`), `kernel`, `os`, `packages`: optional, but the version is what makes a result useful. A result without a kernel version can't say whether a later kernel fixed it.
 
 `GET /api/runs/<RUN-ID>` shows what was stored. Reports show on the model's page right away, marked as owners' reports. Wrong ones get hidden.
 
@@ -155,10 +162,11 @@ When something is written up for good, a pull request on [arewearmyet's findings
 | `GET /api/checks` | Every check: what works means, what the probe measures, what the owner does |
 | `GET /api/models` | Every computer model (laptop, tablet or desktop) with its id, page and API link |
 | `GET /api/models/<id>` | One computer model: booting, findings, owners' results, fixes, wanted checks |
-| `GET /api/match?compatible=&product=&sku=&family=&vendor=` | Which computer model a machine is |
+| `GET /api/match?chid=&compatible=&product=&sku=&family=&vendor=` | Which computer model a machine is |
 | `POST /api/runs` | Send results; header `x-machine-token` |
 | `POST /api/runs/<id>/results` | Add results to your run |
 | `GET /api/runs/<id>` | One run as stored |
 | `POST /api/fixes` | Link a fix to a model |
+| `GET /api/owners` | Every model's owners' results at once, and the machines that matched no model |
 
 Errors come back as `{"error": "..."}` with a plain explanation. There's a limit of 30 reports a minute per address.

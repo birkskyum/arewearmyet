@@ -570,10 +570,32 @@ for (const [id, entry] of Object.entries<{ checks?: Record<string, { state: stri
     if (!STATES_ALLOWED.includes(f.state)) throw new Error(`data/findings.yaml: ${id}, ${check}: unknown state ${f.state}`);
   }
 }
+// Which models each hardware ID (CHID) belongs to, from every ID file the board knows: systemd's, Ubuntu's
+// stubble and the ones Omarchy carries. A machine's own hardware IDs then name its model exactly, the way a
+// boot image picks its device tree. A file a model names itself (variants[].ids) belongs to that model only,
+// so a model that borrows another's tree isn't taken for it.
+type IdFile = { file: string; compatible: string; hwids?: string[] };
+const idFiles: IdFile[] = [...systemdIds, ...(sources.stubble ?? []), ...(sources.omarchy.carriedIds ?? [])];
+const namedFiles = new Set(models.flatMap((model) => (model.variants ?? []).flatMap((variant) => variant.ids ?? [])));
+const chids: Record<string, number[]> = {};
+rows.forEach((row, index) => {
+  const model = models.find((m) => m.id === row.id)!;
+  for (const variant of model.variants ?? []) {
+    const own = new Set(variant.ids ?? []);
+    for (const entry of idFiles) {
+      if (!(own.has(entry.file) || (!variant.borrowed && !namedFiles.has(entry.file) && entry.compatible === variant.compatible))) continue;
+      for (const chid of entry.hwids ?? []) {
+        const list = (chids[chid.toLowerCase()] ??= []);
+        if (!list.includes(index)) list.push(index);
+      }
+    }
+  }
+});
 writeFileSync(
   'worker/models.json',
   JSON.stringify({
     checks: checkList.checks.map((c: { id: string }) => c.id),
+    chids,
     models: rows.map((row) => ({
       id: row.id,
       vendor: row.vendor,

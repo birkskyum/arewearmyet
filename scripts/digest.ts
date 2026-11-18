@@ -16,7 +16,7 @@ type Change = { machines: number; from: string | null; to: string | null; since:
 type OwnerCheck = { machines: number; states: Record<string, number>; how: Record<string, number>; latest: { state: string; note: string | null; kernel: string | null }[]; regressed?: Change; fixed?: Change };
 export type Owners = {
   models: Record<string, { machines: number; checks: Record<string, OwnerCheck> }>;
-  unmatched: { hardware: Record<string, string>; compatible: string | null; machines: number; runs: number; latest: string }[];
+  unmatched: { hardware: Record<string, string>; compatible: string | null; chids?: string[]; machines: number; runs: number; latest: string }[];
 };
 type Finding = { state: string; note?: string };
 export type Findings = { families?: Record<string, { checks?: Record<string, Finding> }>; models?: Record<string, { checks?: Record<string, Finding> }> };
@@ -76,7 +76,7 @@ export function digest(owners: Owners, findings: Findings, known: Known): Digest
 
   for (const machine of owners.unmatched) {
     const label = [machine.hardware.maker, machine.hardware.product, machine.hardware.family].filter(Boolean).join(' ') || 'An unnamed machine';
-    out.unmatched.push(`- ${label}${machine.hardware.sku ? `, SKU ${machine.hardware.sku}` : ''}${machine.compatible ? `, device tree \`${machine.compatible}\`` : ''}: ${machine.runs} run${machine.runs === 1 ? '' : 's'} from ${machine.machines} machine${machine.machines === 1 ? '' : 's'}`);
+    out.unmatched.push(`- ${label}${machine.hardware.sku ? `, SKU ${machine.hardware.sku}` : ''}${machine.compatible ? `, device tree \`${machine.compatible}\`` : ''}${machine.chids?.length ? `, ${machine.chids.length} hardware IDs sent` : ''}: ${machine.runs} run${machine.runs === 1 ? '' : 's'} from ${machine.machines} machine${machine.machines === 1 ? '' : 's'}`);
   }
   return out;
 }
