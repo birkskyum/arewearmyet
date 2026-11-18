@@ -13,6 +13,10 @@
     "run_worker_first": ["/api/*"]
   },
   "routes": [{ "pattern": "arewearmyet.com", "custom_domain": true }],
+  // 04:23 UTC every night: worker/backup.ts copies the reports database to the bucket
+  "triggers": { "crons": ["23 4 * * *"] },
+  // Keeps the Worker's logs, so failed requests and the backup can be looked up
+  "observability": { "enabled": true },
   "r2_buckets": [{ "binding": "FIRMWARE", "bucket_name": "arewearmyet-firmware" }],
   "d1_databases": [{ "binding": "DB", "database_name": "arewearmyet", "database_id": "94816cb7-cac5-4adc-8a0c-51a6c8e1e32f", "migrations_dir": "migrations" }],
   "ratelimits": [

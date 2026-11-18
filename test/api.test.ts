@@ -215,3 +215,23 @@ test('names a machine by its hardware IDs, also when it booted with another mode
   assert.equal(sent.body.model, 'hp-probook-4-g1q');
   assert.deepEqual((await call('GET', `/api/runs/${sent.body.run}`)).body.chids, [`3:${probook}`]);
 });
+
+test('copies the database to the bucket, and drops the copy from a month before unless it is a first of the month', async () => {
+  const { backup } = await import('../worker/backup.ts');
+  const bucket = (env as { FIRMWARE: R2Bucket }).FIRMWARE;
+  await bucket.put('backups/reports/2026-10-18.json', '{}');
+  await bucket.put('backups/reports/2026-10-01.json', '{}');
+
+  const done = await backup(env as never, new Date('2026-11-18T04:23:00Z'));
+  assert.equal(done.key, 'backups/reports/2026-11-18.json');
+  assert.ok(done.rows.runs >= 5 && done.rows.results >= 5 && done.rows.machines >= 3 && done.rows.fixes === 1);
+  const stored = JSON.parse(await (await bucket.get(done.key))!.text());
+  assert.equal(stored.tables.runs.length, done.rows.runs);
+  assert.equal(await bucket.head('backups/reports/2026-10-18.json'), null);
+  assert.notEqual(await bucket.head('backups/reports/2026-10-01.json'), null);
+
+  // The first of a month isn't dropped when its turn comes
+  await backup(env as never, new Date('2026-11-01T04:23:00Z'));
+  await backup(env as never, new Date('2026-12-02T04:23:00Z'));
+  assert.notEqual(await bucket.head('backups/reports/2026-11-01.json'), null);
+});

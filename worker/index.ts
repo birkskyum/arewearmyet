@@ -14,9 +14,11 @@
  * place under files/ with the same SHA-256 check, so R2 does the hashing
  * rather than the Worker.
  *
- * The rest of /api/ is owners' reports on what works, in worker/reports.ts.
+ * The rest of /api/ is owners' reports on what works, in worker/reports.ts, which
+ * worker/backup.ts copies to the same bucket every night.
  */
 
+import { backup } from './backup';
 import { reports } from './reports';
 
 // Agents and pages on other sites may call the reports API from a browser
@@ -55,6 +57,10 @@ export default {
     if (route.startsWith('uploads/')) return upload(route.slice('uploads/'.length).split('/'), request, env);
     if (route === 'reports' && request.method === 'POST') return putReport(request, env);
     return json({ error: 'Not found.' }, 404);
+  },
+  // Nightly, from the cron trigger in wrangler.jsonc
+  async scheduled(_controller, env, ctx): Promise<void> {
+    ctx.waitUntil(backup(env).then((done) => console.log(`backed up to ${done.key}`, done.rows)));
   },
 } satisfies ExportedHandler<Env>;
 
