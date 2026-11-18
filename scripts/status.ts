@@ -2,7 +2,7 @@
 // (data/sources.json) and writes src/data/status.json for the site.
 // Run with `pnpm status`.
 
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { parse } from 'yaml';
 
 // The channel testers install, from the edge nightly image
@@ -588,6 +588,25 @@ rows.forEach((row, index) => {
         const list = (chids[chid.toLowerCase()] ??= []);
         if (!list.includes(index)) list.push(index);
       }
+    }
+  }
+});
+// The Omarchy Arm Installer's hardware reports hold each machine's own IDs, copied to reports/ by
+// scripts/archive.ts. A model that names a report folder (acpi: hardware-reports/...) gets those too,
+// which covers models nobody has sent to systemd or stubble yet.
+const reportIds = (folder: string): string[] => {
+  const dir = `reports/${folder}`;
+  if (!existsSync(dir)) return [];
+  return (readdirSync(dir, { recursive: true }) as string[])
+    .filter((file) => file.endsWith('hwids.json'))
+    .flatMap((file) => (JSON.parse(readFileSync(`${dir}/${file}`, 'utf8')).hwids as string[] | undefined) ?? []);
+};
+rows.forEach((row, index) => {
+  const model = models.find((m) => m.id === row.id)!;
+  for (const folder of (model.acpi ?? []).filter((entry) => entry.startsWith('hardware-reports/'))) {
+    for (const chid of reportIds(folder.slice('hardware-reports/'.length))) {
+      const list = (chids[chid.toLowerCase()] ??= []);
+      if (!list.includes(index)) list.push(index);
     }
   }
 });
