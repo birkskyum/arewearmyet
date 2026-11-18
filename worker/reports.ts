@@ -21,7 +21,7 @@
  *   GET  /api/review, POST /api/review/hide   recent reports and hiding them, with ADMIN_TOKEN
  */
 
-import index from './models.json';
+import index from './models.json' with { type: 'json' };
 
 type Index = { checks: string[]; models: { id: string; vendor: string; name: string; generation: string; boot: string; compatibles: string[]; modelNumbers: string[] }[] };
 const INDEX = index as Index;
@@ -98,7 +98,7 @@ async function ownerResults(env: Env, id: string) {
     `SELECT r.check_id, r.state, r.how, r.note, r.evidence, runs.kernel, runs.created, runs.machine, runs.id AS run
        FROM results r JOIN runs ON runs.id = r.run JOIN machines m ON m.id = runs.machine
       WHERE runs.model = ? AND runs.hidden = 0 AND m.hidden = 0 AND r.state != 'untested'
-      ORDER BY runs.created DESC LIMIT 5000`,
+      ORDER BY runs.created DESC, runs.rowid DESC LIMIT 5000`,
   ).bind(id).all<ResultRow>();
   const seen = new Set<string>();
   const checks: Record<string, { machines: number; states: Record<string, number>; how: Record<string, number>; latest: { state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; created: string; run: string }[] }> = {};

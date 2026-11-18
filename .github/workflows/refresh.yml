@@ -58,6 +58,11 @@ jobs:
             git push
           fi
 
+      # A change that breaks the reports API or the probe doesn't get deployed
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: shellcheck -S warning public/probe.sh scripts/probe-fixture.sh test/probe/bin/*
+
       - run: pnpm build
 
       # Skipped until the repository has a Cloudflare token

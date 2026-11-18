@@ -1,0 +1,21 @@
+name: Test
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm status
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: shellcheck -S warning public/probe.sh scripts/probe-fixture.sh test/probe/bin/*
+      - run: pnpm build
