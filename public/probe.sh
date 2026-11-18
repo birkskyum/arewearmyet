@@ -357,13 +357,20 @@ guided() {
   # Speakers and microphones: a tone on each side while the microphones listen, then the owner's
   # own voice recorded and played back, so they hear for themselves whether the microphones work
   rms() { od -An -v -t d2 -w2 "$1" 2>/dev/null | awk '{s+=$1*$1; n++} END {if (n) printf "%d", sqrt(s/n); else print 0}'; }
-  # How much of a recording is the 880 Hz test tone, in percent of its energy, and how loud the recording
-  # is. Room noise and the click of the microphones starting don't count as hearing the tone this way.
-  # The first half second, before the tone starts, is left out.
+  # For how many quarter seconds of a recording the 880 Hz test tone is most of the sound, the highest
+  # share it reaches in percent, and how loud it is then. Short windows, because the speakers' and the
+  # microphones' clocks differ a little, which smears the tone out of a long measurement; and the tone
+  # has to be most of the sound, so room noise and the click of the microphones starting don't count.
   tone() {
     od -An -v -t d2 -w2 "$1" 2>/dev/null | awk 'BEGIN { c = 2 * cos(2 * 3.14159265358979 * 880 / 48000) }
-      NR > 24000 { e += $1 * $1; s = $1 + c * s1 - s2; s2 = s1; s1 = s; n++ }
-      END { if (!n || !e) { print "0 0"; exit }; printf "%d %d", 100 * (s1 * s1 + s2 * s2 - c * s1 * s2) / (n / 2 * e), sqrt(e / n) }'
+      { e += $1 * $1; s = $1 + c * s1 - s2; s2 = s1; s1 = s; n++
+        if (n == 12000) {
+          share = e ? 100 * (s1 * s1 + s2 * s2 - c * s1 * s2) / (n / 2 * e) : 0
+          if (share >= 50) { heard++; level += sqrt(e / n) }
+          if (share > best) best = share
+          e = 0; s1 = 0; s2 = 0; n = 0
+        } }
+      END { printf "%d %d %d", heard, best, (heard ? level / heard : 0) }'
   }
   if command -v speaker-test >/dev/null 2>&1 && command -v arecord >/dev/null 2>&1 && command -v aplay >/dev/null 2>&1; then
     say "Sound: set the volume to about half. Two tones of three seconds play, left then right, while the microphones listen."
@@ -376,9 +383,9 @@ guided() {
         timeout -s KILL 3 speaker-test -c 2 -s "$side" -t sine -f 880 -l 1 >/dev/null 2>&1
         wait "$rec"
       done
-      read -r lpct llevel <<<"$(tone "$TMP/tone1.raw")"
-      read -r rpct rlevel <<<"$(tone "$TMP/tone2.raw")"
-      loop="the microphones heard the left tone as $lpct% of the sound (level $llevel), the right as $rpct% (level $rlevel)"
+      read -r lheard lbest llevel <<<"$(tone "$TMP/tone1.raw")"
+      read -r rheard rbest rlevel <<<"$(tone "$TMP/tone2.raw")"
+      loop="the microphones heard the left tone for $lheard quarter seconds (up to $lbest% of the sound, level $llevel), the right for $rheard (up to $rbest%, level $rlevel)"
       say "  $loop"
       verdict speakers "Did you hear a tone from the left speaker, then from the right, cleanly?" "$loop"
 
@@ -395,8 +402,8 @@ guided() {
       }
       # Skipped the voice test: the tones the microphones picked up still say something
       if [ -z "${STATE_OF[microphones]:-}" ]; then
-        if { [ "$lpct" -ge 25 ] && [ "$llevel" -ge 20 ]; } || { [ "$rpct" -ge 25 ] && [ "$rlevel" -ge 20 ]; }; then add microphones works measured "$loop"
-        elif [ "$llevel" -eq 0 ] && [ "$rlevel" -eq 0 ]; then add microphones broken measured "the microphones recorded only silence"; fi
+        if [ "$lheard" -ge 3 ] || [ "$rheard" -ge 3 ]; then add microphones works measured "$loop"
+        elif [ "$(rms "$TMP/tone1.raw")" -eq 0 ] && [ "$(rms "$TMP/tone2.raw")" -eq 0 ]; then add microphones broken measured "the microphones recorded only silence"; fi
       fi
     }
   else
@@ -408,7 +415,9 @@ guided() {
   # Camera: one frame, checked for being more than black
   if [ -n "$cams" ] && command -v cam >/dev/null 2>&1; then
     say "Camera: taking one frame (the light may flash)."
-    timeout -k 3 20 cam -c 1 -C 8 -F "$TMP/frame-#.ppm" >/dev/null 2>&1
+    # cam takes its optional values attached, and a PPM file holds only 24-bit pixels
+    timeout -k 3 20 cam -c 1 --capture=8 --stream pixelformat=BGR888 --file="$TMP/frame-#.ppm" >/dev/null 2>&1 ||
+      timeout -k 3 20 cam -c 1 --capture=8 --stream pixelformat=RGB888 --file="$TMP/frame-#.ppm" >/dev/null 2>&1
     frame="$(ls "$TMP"/frame-*.ppm 2>/dev/null | tail -n 1)"
     if [ -n "$frame" ]; then
       mean="$(tail -c 200000 "$frame" | od -An -v -t u1 | awk '{for (i = 1; i <= NF; i++) {s += $i; q += $i * $i; n++}} END {m = s / n; printf "%d %d", m, sqrt(q / n - m * m)}')"
