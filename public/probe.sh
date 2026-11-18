@@ -352,33 +352,52 @@ guided() {
     done
   }
 
-  # Speakers and microphones: a tone on each side while the microphones listen
+  # Speakers and microphones: a tone on each side while the microphones listen, then the owner's
+  # own voice recorded and played back, so they hear for themselves whether the microphones work
   rms() { od -An -v -t d2 -w2 "$1" 2>/dev/null | awk '{s+=$1*$1; n++} END {if (n) printf "%d", sqrt(s/n); else print 0}'; }
-  if command -v speaker-test >/dev/null 2>&1 && command -v arecord >/dev/null 2>&1; then
-    say "Sound: set the volume to about half and keep the room quiet. Two short tones play, left then right, while the microphones record."
+  # How much of a recording is the 880 Hz test tone, in percent of its energy, and how loud the recording
+  # is. Room noise and the click of the microphones starting don't count as hearing the tone this way.
+  # The first half second, before the tone starts, is left out.
+  tone() {
+    od -An -v -t d2 -w2 "$1" 2>/dev/null | awk 'BEGIN { c = 2 * cos(2 * 3.14159265358979 * 880 / 48000) }
+      NR > 24000 { e += $1 * $1; s = $1 + c * s1 - s2; s2 = s1; s1 = s; n++ }
+      END { if (!n || !e) { print "0 0"; exit }; printf "%d %d", 100 * (s1 * s1 + s2 * s2 - c * s1 * s2) / (n / 2 * e), sqrt(e / n) }'
+  }
+  if command -v speaker-test >/dev/null 2>&1 && command -v arecord >/dev/null 2>&1 && command -v aplay >/dev/null 2>&1; then
+    say "Sound: set the volume to about half. Two tones of three seconds play, left then right, while the microphones listen."
     ask "Press Enter to start (s to skip)." && [ "$REPLY" != s ] && {
-      arecord -q -d 2 -f S16_LE -r 48000 -c 1 -t raw "$TMP/quiet.raw" 2>/dev/null
-      quiet="$(rms "$TMP/quiet.raw")"
       for side in 1 2; do
         arecord -q -d 3 -f S16_LE -r 48000 -c 1 -t raw "$TMP/tone$side.raw" 2>/dev/null &
         rec=$!
-        sleep 0.3
-        timeout 3 speaker-test -q -c 2 -s "$side" -t sine -f 880 -l 1 >/dev/null 2>&1
+        sleep 0.2
+        # speaker-test doesn't stop on a polite signal, so it is killed after three seconds
+        timeout -s KILL 3 speaker-test -c 2 -s "$side" -t sine -f 880 -l 1 >/dev/null 2>&1
         wait "$rec"
       done
-      left="$(rms "$TMP/tone1.raw")"; right="$(rms "$TMP/tone2.raw")"
-      loop="microphone level quiet $quiet, left tone $left, right tone $right"
-      heard_l=0; heard_r=0
-      [ "$left" -gt $(( quiet * 3 + 50 )) ] && heard_l=1
-      [ "$right" -gt $(( quiet * 3 + 50 )) ] && heard_r=1
-      if [ $heard_l = 1 ] || [ $heard_r = 1 ]; then add microphones works measured "$loop"
-      elif [ "$quiet" -eq 0 ] && [ "$left" -eq 0 ]; then add microphones broken measured "the microphones recorded only silence"; fi
+      read -r lpct llevel <<<"$(tone "$TMP/tone1.raw")"
+      read -r rpct rlevel <<<"$(tone "$TMP/tone2.raw")"
+      loop="the microphones heard the left tone as $lpct% of the sound (level $llevel), the right as $rpct% (level $rlevel)"
+      say "  $loop"
       verdict speakers "Did you hear a tone from the left speaker, then from the right, cleanly?" "$loop"
-      [ "${STATE_OF[microphones]:-}" = works ] || verdict microphones "Do the built-in microphones record you (try a voice memo or a call)?" "$loop"
+
+      say "Microphones: after you press Enter, say a few words. The probe records 4 seconds and plays them back to you."
+      ask "Press Enter, then speak (s to skip)." && [ "$REPLY" != s ] && {
+        arecord -q -d 4 -f S16_LE -r 48000 -c 1 "$TMP/voice.wav" 2>/dev/null
+        tail -c +45 "$TMP/voice.wav" >"$TMP/voice.raw" 2>/dev/null
+        voice="$(rms "$TMP/voice.raw")"
+        say "  Playing it back (level $voice)."
+        aplay -q "$TMP/voice.wav" 2>/dev/null
+        verdict microphones "Did you hear your own voice played back clearly?" "voice level $voice; $loop"
+      }
+      # Skipped the voice test: the tones the microphones picked up still say something
+      if [ -z "${STATE_OF[microphones]:-}" ]; then
+        if { [ "$lpct" -ge 25 ] && [ "$llevel" -ge 20 ]; } || { [ "$rpct" -ge 25 ] && [ "$rlevel" -ge 20 ]; }; then add microphones works measured "$loop"
+        elif [ "$llevel" -eq 0 ] && [ "$rlevel" -eq 0 ]; then add microphones broken measured "the microphones recorded only silence"; fi
+      fi
     }
   else
     verdict speakers "Do both speakers play music cleanly?"
-    verdict microphones "Do the built-in microphones record you?"
+    verdict microphones "In a voice recorder or a call, do the built-in microphones pick you up?"
   fi
   verdict headphones "Do wired headphones play when plugged in (a if it has no jack)?"
 
