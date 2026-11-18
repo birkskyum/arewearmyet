@@ -549,6 +549,42 @@ writeFileSync(
   JSON.stringify({ collected: sources.collected, linuxNext: sources.linuxNext, firmwareRelease: sources.firmwareRelease, omarchy: { channel: OMARCHY_CHANNEL, kernel: channel.kernel, systemd: channel.systemd, kernelBase, systemdRelease, image: sources.omarchy.image ?? null, channels: sources.omarchy.channels }, summary, models: rows, nvidia: nvidia.map((model) => ({ ...model, kernel: nvidiaKernel })), unmatched }, null, 2) + '\n',
 );
 console.log(summary);
+
+// What the Worker needs to check owners' reports: the check ids, and enough of every model to match a
+// machine to it by its device tree's compatible string or its model number
+const checkList = parse(readFileSync('data/checks.yaml', 'utf8'));
+const findings = parse(readFileSync('data/findings.yaml', 'utf8'));
+const checkIds = new Set<string>(checkList.checks.map((c: { id: string }) => c.id));
+const modelIds = new Set(rows.map((row) => row.id));
+const STATES_ALLOWED = ['works', 'partial', 'broken', 'untested', 'absent'];
+for (const [family, entry] of Object.entries<{ checks?: Record<string, { state: string }> }>(findings.families ?? {})) {
+  for (const [check, f] of Object.entries(entry.checks ?? {})) {
+    if (!checkIds.has(check)) throw new Error(`data/findings.yaml: family ${family} names unknown check ${check}`);
+    if (!STATES_ALLOWED.includes(f.state)) throw new Error(`data/findings.yaml: family ${family}, ${check}: unknown state ${f.state}`);
+  }
+}
+for (const [id, entry] of Object.entries<{ checks?: Record<string, { state: string }> }>(findings.models ?? {})) {
+  if (!modelIds.has(id)) throw new Error(`data/findings.yaml: unknown model ${id}`);
+  for (const [check, f] of Object.entries(entry.checks ?? {})) {
+    if (!checkIds.has(check)) throw new Error(`data/findings.yaml: ${id} names unknown check ${check}`);
+    if (!STATES_ALLOWED.includes(f.state)) throw new Error(`data/findings.yaml: ${id}, ${check}: unknown state ${f.state}`);
+  }
+}
+writeFileSync(
+  'worker/models.json',
+  JSON.stringify({
+    checks: checkList.checks.map((c: { id: string }) => c.id),
+    models: rows.map((row) => ({
+      id: row.id,
+      vendor: row.vendor,
+      name: row.name,
+      generation: row.generation,
+      boot: row.boot,
+      compatibles: row.variants.map((v: { compatible?: string }) => v.compatible).filter(Boolean),
+      modelNumbers: row.modelNumbers,
+    })),
+  }) + '\n',
+);
 // A file both linux-firmware-qcom and one of Omarchy's firmware packages ship on edge. The package's copy is
 // xz-compressed, so the kernel loads linux-firmware's, but the recipe should drop it: regenerate it with
 // scripts/snapdragon-firmware-recipes.py, which also stops when linux-firmware has only half a DSP's set.

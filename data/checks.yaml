@@ -1,0 +1,237 @@
+# What "supported" means past booting: one list of checks for every Snapdragon PC.
+#
+#   id        stable key, used by the probe script, the API and data/findings.yaml
+#   group     the heading it sits under on a model page
+#   title     what's checked, as a short label
+#   works     what has to be true for it to count as working
+#   probe     what probe.sh measures for it, when it can measure anything; a probe
+#             alone never marks a check as working where a person has to see or hear it
+#   person    what the owner does to check it, for the parts no command can see
+#   optional  true when not every model has the hardware (touchscreen, modem, ...)
+#
+# States a check can have on a model: works, partial, broken, untested, absent
+# (the model doesn't have that hardware).
+
+groups:
+  - id: start
+    title: Starting and installing
+  - id: display
+    title: Screen and input
+  - id: network
+    title: Wireless
+  - id: sound
+    title: Sound
+  - id: power
+    title: Battery, sleep and power
+  - id: ports
+    title: Ports and external screens
+  - id: media
+    title: Camera, video and AI
+  - id: sensors
+    title: Sensors and other hardware
+
+checks:
+  - id: installer
+    group: start
+    title: USB stick and installer
+    works: The install image starts from a USB stick by itself and reaches the installer, with keyboard and touchpad working.
+    person: Boot the current install image from a USB stick with Secure Boot off, and say whether the installer appeared and whether the keyboard and touchpad worked in it.
+
+  - id: disk-unlock
+    group: start
+    title: Disk password prompt
+    works: The disk password prompt shows on the built-in screen at startup and the built-in keyboard types into it.
+    probe: Whether the root file system is on an encrypted disk.
+    person: Restart and say whether the password prompt was visible and whether the built-in keyboard worked in it.
+
+  - id: display
+    group: display
+    title: Built-in screen
+    works: The built-in screen shows the desktop at its native resolution.
+    probe: The built-in panel's connector, its state and its preferred mode.
+    person: Say whether the desktop fills the screen sharply, and whether anything flickers.
+
+  - id: gpu
+    group: display
+    title: Graphics acceleration
+    works: The desktop runs on the GPU, not on software rendering.
+    probe: Whether a render node from the msm driver exists and the GPU's firmware loaded.
+
+  - id: backlight
+    group: display
+    title: Screen brightness
+    works: The brightness keys change the screen's brightness over its whole range.
+    probe: Whether a backlight device exists, and its range.
+    person: Press the brightness keys and say whether the screen gets darker and brighter.
+
+  - id: keyboard
+    group: display
+    title: Built-in keyboard
+    works: Every key types, including the function row.
+    probe: Whether a built-in keyboard device exists.
+    person: Type on it and try the function row (volume, brightness, mute).
+
+  - id: touchpad
+    group: display
+    title: Touchpad
+    works: Pointer, tap or click, two-finger scrolling and gestures work.
+    probe: Whether a built-in touchpad device exists.
+    person: Move, click, scroll with two fingers and try a three-finger swipe.
+
+  - id: touchscreen
+    group: display
+    title: Touchscreen and pen
+    works: Touch input lands where the finger is, and a pen draws if the model has one.
+    probe: Whether a touchscreen device exists.
+    person: Tap and drag on the screen, and try the pen if it came with one.
+    optional: true
+
+  - id: wifi
+    group: network
+    title: Wi-Fi
+    works: Wi-Fi connects and stays connected at full speed, also after sleep.
+    probe: The Wi-Fi interface, its driver and whether it's connected.
+    person: Say whether it stays connected through a day of use and after waking from sleep.
+
+  - id: wifi-address
+    group: network
+    title: Fixed Wi-Fi address
+    works: The Wi-Fi card keeps the same address on every boot, so networks and routers recognise the laptop.
+    probe: Whether the kernel calls the interface's address permanent or randomly made.
+
+  - id: bluetooth
+    group: network
+    title: Bluetooth
+    works: Bluetooth turns on, finds devices and keeps headphones and mice connected.
+    probe: Whether a Bluetooth controller exists and is powered.
+    person: Pair a pair of headphones or a mouse and use it for a few minutes.
+
+  - id: speakers
+    group: sound
+    title: Speakers
+    works: Every built-in speaker plays, at a normal volume, without crackling.
+    probe: Whether a sound card with a playback device exists, besides HDMI and USB ones.
+    person: Play music and say whether both sides (and the tweeters, if it has them) play cleanly.
+
+  - id: microphones
+    group: sound
+    title: Built-in microphones
+    works: The built-in microphones record clearly.
+    probe: Whether a capture device exists on the built-in sound card.
+    person: Record a few seconds and play it back.
+
+  - id: headphones
+    group: sound
+    title: Headphone jack
+    works: Headphones play when plugged in, and the speakers go quiet.
+    person: Plug in wired headphones and play something.
+    optional: true
+
+  - id: adsp
+    group: sound
+    title: Audio and battery processor
+    works: The audio DSP starts, which sound, the battery readings and USB-C power need.
+    probe: The state of the adsp remote processor and the firmware it loaded.
+
+  - id: battery
+    group: power
+    title: Battery readings
+    works: The battery's charge, state and time left show correctly.
+    probe: Whether a battery reports its charge and state.
+
+  - id: charging
+    group: power
+    title: USB-C charging
+    works: The laptop charges at full power from its own charger, not only at 5 V.
+    probe: The voltage and online state the USB-C power supply reports.
+    person: Plug in the laptop's own charger and say whether the charge rises at the usual speed.
+
+  - id: suspend
+    group: power
+    title: Sleep and wake
+    works: Closing the lid sleeps, opening it wakes to the lock screen, every time.
+    probe: The sleep mode the kernel uses and how many sleeps succeeded or failed since boot.
+    person: Close the lid for a few minutes, five times in a row, and say whether it woke each time.
+
+  - id: suspend-drain
+    group: power
+    title: Battery use while asleep
+    works: A night asleep costs only a few percent of the battery.
+    person: Note the charge before closing the lid for the night and after opening it.
+
+  - id: hibernate
+    group: power
+    title: Hibernation
+    works: The laptop hibernates and resumes where it was.
+    probe: Whether the kernel offers hibernation and has swap to hold it.
+    person: Hibernate from the menu and start it again.
+
+  - id: lid
+    group: sensors
+    title: Lid switch
+    works: Closing and opening the lid is noticed, and nothing wakes it by itself.
+    probe: Whether an input device reports the lid switch.
+
+  - id: usb
+    group: ports
+    title: USB ports
+    works: Every USB-A and USB-C port takes devices at full speed, in both plug orientations.
+    probe: Which USB controllers exist and the fastest speed each offers.
+    person: Plug a USB stick into each port, both ways round on USB-C.
+
+  - id: external-display
+    group: ports
+    title: External screen
+    works: A screen on USB-C (or HDMI, if it has one) shows a picture and can be plugged in and out.
+    probe: The external display connectors and whether any is connected.
+    person: Plug in a screen through USB-C, unplug it and plug it in again.
+
+  - id: usb4
+    group: ports
+    title: USB4 and Thunderbolt
+    works: USB4 docks and drives run at USB4 speed.
+    probe: Whether the kernel created a USB4 domain.
+    person: Plug in a USB4 or Thunderbolt dock or drive and say what speed it runs at.
+    optional: true
+
+  - id: camera
+    group: media
+    title: Webcam
+    works: The webcam gives a picture in the browser and in video calls.
+    probe: Whether a camera device from the camera subsystem or USB exists.
+    person: Open a video call test page in Chromium and say whether the picture looks right.
+
+  - id: video-decode
+    group: media
+    title: Hardware video decoding
+    works: Videos decode on the video engine, not on the processor.
+    probe: Whether the iris or venus video decoder exists.
+    person: Play a 1080p or 4K video in mpv or Chromium and say whether the processor stays mostly idle.
+
+  - id: cdsp
+    group: media
+    title: Compute DSP (NPU)
+    works: The compute DSP starts with its firmware.
+    probe: The state of the cdsp remote processor and the firmware it loaded.
+
+  - id: fans
+    group: sensors
+    title: Fans and temperatures
+    works: The fans respond to load and the fan speed and temperatures can be read.
+    probe: Which temperature and fan sensors exist.
+    person: Put some load on it and say whether the fans spin up and quiet down.
+
+  - id: fingerprint
+    group: sensors
+    title: Fingerprint reader
+    works: The fingerprint reader enrolls a finger and unlocks with it.
+    probe: Whether a known fingerprint reader is on USB.
+    person: Enroll a finger with fprintd and try it.
+    optional: true
+
+  - id: modem
+    group: sensors
+    title: Mobile broadband
+    works: The 4G or 5G modem registers on a network.
+    probe: Whether a modem processor or modem device exists.
+    optional: true

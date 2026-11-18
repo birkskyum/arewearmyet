@@ -1,0 +1,203 @@
+# What's known about each check past booting, kept by hand and reviewed like the
+# model list. Owners' own runs of probe.sh come in through the API and show next to
+# these on the model pages; this file holds what someone has looked at and written up.
+#
+# families: what holds across a chip family, shown on every model of it unless the
+#   model's own finding says otherwise. Keys are generations from models.yaml.
+# models: per model id
+#   details   longer notes for the model page: what's specific to it, quirks, history
+#   links     [{ title, url }] discussions, owner repos, write-ups
+#   checks    { <check id>: { state, note, version, checked, source } }
+#             state     works, partial, broken, untested or absent
+#             note      what was seen, in a sentence or two
+#             version   the linux-omarchy (or other kernel) version it was seen on
+#             checked   the month, as YYYY-MM
+#             source    a link to the report, discussion or pull request
+
+families:
+  x1:
+    source: https://github.com/omacom/omarchy/discussions/11823
+    checks:
+      installer:
+        state: works
+        note: One nightly ARM image covers every supported machine and picks its packages during the install.
+        checked: 2026-10
+      suspend:
+        state: partial
+        note: Closing the lid enters the deepest sleep on Omarchy's kernel. On the Yoga, sleep started with the lid open ends by itself because the lid sensor gives a false signal during sleep (reported to Qualcomm).
+        source: https://lore.kernel.org/r/179249856801.47858.11195411660636360454@pm.me
+        checked: 2026-10
+      hibernate:
+        state: broken
+        note: Waking from hibernation restarts the laptop. Fixes for the PCIe controller, the audio and battery processors, the pin settings and Bluetooth are with the Linux developers.
+        source: https://github.com/omacom/omarchy/discussions/11823
+        checked: 2026-10
+      video-decode:
+        state: works
+        note: Omarchy's kernel carries the iris driver with Qualcomm's firmware crash fix (accepted for Linux 7.4), and Omarchy turns on hardware decoding for Snapdragon laptops (omarchy#15697).
+        source: https://github.com/omacom/omarchy/pull/15697
+        checked: 2026-10
+      usb4:
+        state: broken
+        note: USB-C ports run at regular USB speed. Qualcomm's groundwork lands in Linux 7.4, but its main USB4 driver isn't published, so USB4 only runs with an experimental kernel.
+        source: https://github.com/birkskyum/yoga-slim7x-usb4
+        checked: 2026-10
+  x2:
+    checks:
+      gpu:
+        state: partial
+        note: The 18-core Glymur chips have GPU support. Mahua and Kalambo trees ship with the GPU off until Mahua GPU support (in linux-next) and Mesa 26.3 land, so those machines need LIBGL_ALWAYS_SOFTWARE=1 in /etc/environment to reach the desktop.
+        checked: 2026-11
+      usb4:
+        state: partial
+        note: The Surface Laptop 8 13.8" runs USB4 on both USB-C ports on linux-omarchy 7.3-67 and later, with PCIe tunnelling since omarchy-pkgs#2880.
+        source: https://github.com/omacom/omarchy-pkgs/pull/2880
+        checked: 2026-11
+
+models:
+  lenovo-yoga-slim-7x-14q8x9:
+    details: |
+      The team's main test machine, the 83ED with a first-generation X Elite, tested with BIOS NHCN62WW. Lenovo's compute DSP firmware is in linux-firmware since 21 October 2026 (merge request 1314) and comes with its next release; until then the installer copies it from Windows. The fan and temperature readings need a driver that is still under review. Kernels 7.2.9 to 7.2.11 stop the keyboard and touchpad; Linux 7.3 has Qualcomm's fix.
+    links:
+      - title: Omarchy on the Lenovo Yoga Slim 7x (discussion 10426)
+        url: https://github.com/omacom/omarchy/discussions/10426
+      - title: USB4 on the Yoga Slim 7x (experimental kernel)
+        url: https://github.com/birkskyum/yoga-slim7x-usb4
+    checks:
+      installer: { state: works, note: "The nightly image starts and reaches the installer with keyboard and touchpad working.", version: "7.2.8", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/10426" }
+      disk-unlock: { state: works, version: "7.2.8", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/10426" }
+      display: { state: works, version: "7.3", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/10426" }
+      gpu: { state: works, version: "7.3", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/10426" }
+      keyboard: { state: works, note: "Works on 7.2.8 and on 7.3. Kernels 7.2.9 to 7.2.11 stop it.", version: "7.3", checked: 2026-10, source: "https://lore.kernel.org/r/179173732257.29426.7905170638383807320@pm.me" }
+      touchpad: { state: works, version: "7.3", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/10426" }
+      wifi: { state: works, note: "Some warnings after waking from sleep. Since linux-omarchy 7.2.8-23 Wi-Fi no longer stalls when the router changes its channel width.", version: "7.2.8-23", checked: 2026-10, source: "https://github.com/omacom/omarchy-pkgs/pull/1388" }
+      bluetooth: { state: works, version: "7.2.8", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/10426" }
+      speakers: { state: works, note: "Need a kernel setting for the speaker reset.", version: "7.2.8", checked: 2026-10, source: "https://github.com/archlinuxarm/PKGBUILDs/pull/2217" }
+      microphones: { state: works, note: "Record since linux-omarchy 7.2.8-20.", version: "7.2.8-20", checked: 2026-10, source: "https://github.com/omacom/omarchy-pkgs/pull/1276" }
+      adsp: { state: works, note: "Starts from the firmware Linux ships.", version: "7.2.8", checked: 2026-10 }
+      battery: { state: works, version: "7.2.8", checked: 2026-10 }
+      cdsp: { state: partial, note: "Lenovo's firmware is in linux-firmware since 21 October and reaches the laptop with its next release; until then it comes from Windows.", checked: 2026-10, source: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1314" }
+      fans: { state: partial, note: "The laptop's firmware runs the fans and they respond to load. Fan speed and temperature readings need a driver under review.", checked: 2026-10 }
+      suspend: { state: partial, note: "Closing the lid enters the deepest sleep since linux-omarchy 7.2.8-19. Sleep started with the lid open ends by itself after about 15 seconds on the charger or 5 minutes on battery.", version: "7.2.8-19", checked: 2026-10, source: "https://github.com/omacom/omarchy-pkgs/pull/1315" }
+      hibernate: { state: broken, note: "Waking from hibernation restarts the laptop.", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/11823" }
+      camera: { state: partial, note: "Works since linux-omarchy 7.2.8-20, with a pale picture until libcamera has tuning for its sensor.", version: "7.2.8-21", checked: 2026-10, source: "https://github.com/omacom/omarchy-pkgs/pull/1277" }
+      video-decode: { state: works, note: "H.264, HEVC, VP9 and AV1 in mpv and Chromium. 1080p takes about a fifth of the processor in mpv.", checked: 2026-10 }
+      usb4: { state: partial, note: "Only with an experimental kernel, on one port.", checked: 2026-10, source: "https://github.com/birkskyum/yoga-slim7x-usb4" }
+
+  microsoft-surface-laptop-7-15:
+    links:
+      - title: Hardware support, open issues and testing (discussion 18966)
+        url: https://github.com/omacom/omarchy/discussions/18966
+    checks:
+      disk-unlock: { state: broken, note: "On a stock install the unlock prompt is black and the built-in keyboard is dead there. The Surface Pro 11's unlock fix makes it work.", checked: 2026-11, source: "https://github.com/omacom/omarchy/discussions/18966" }
+      wifi: { state: partial, note: "Only works after the first update.", checked: 2026-11, source: "https://github.com/omacom/omarchy/discussions/18966" }
+      wifi-address: { state: broken, note: "No fixed address on a stock install; the Surface Pro 11's address fix makes it work.", checked: 2026-11, source: "https://github.com/omacom/omarchy/discussions/18966" }
+      bluetooth: { state: broken, note: "Doesn't work on a stock install (no fixed address); works with the Surface Pro 11's address fix.", checked: 2026-11, source: "https://github.com/omacom/omarchy/discussions/18966" }
+      touchpad: { state: partial, note: "A one-finger mouse on a stock install. Gestures work under iptsd, but the physical click still fails there.", checked: 2026-11, source: "https://github.com/omacom/omarchy/discussions/18966" }
+      touchscreen: { state: broken, note: "Missing on a stock install; works with iptsd.", checked: 2026-11, source: "https://github.com/omacom/omarchy/discussions/18966" }
+      camera: { state: broken, note: "Missing on a stock install; works with three device tree additions.", checked: 2026-11, source: "https://github.com/omacom/omarchy/discussions/18966" }
+      video-decode: { state: broken, note: "Missing on a stock install; works with the video codec firmware added.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/13" }
+      suspend: { state: broken, note: "Wakes by itself; the lid switch line and the USB-A wake line fire together.", checked: 2026-11, source: "https://github.com/omacom/omarchy/issues/18970" }
+
+  samsung-galaxy-book4-edge-14:
+    details: |
+      The NP944XMA boots the edge image without its owner's board package, with display, GPU, Wi-Fi and both DSPs working. With the owner's board package everything below works too. The European NP940XMA has its own hardware IDs, on edge since linux-omarchy 7.3-42. Its owner runs it daily on another kernel, with deep sleep in s2idle at about 0.9 W, after qcom_aoss.prevent_aoss_sleep=1 stopped an hour-long sleep from ending in a power cycle.
+    links:
+      - title: Owner's issue (NP944XMA)
+        url: https://github.com/birkskyum/arewearmyet/issues/1
+      - title: Owner's issue (NP940XMA)
+        url: https://github.com/birkskyum/arewearmyet/issues/10
+    checks:
+      display: { state: works, note: "Edge 2026.11.16.492 without the owner's board package.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1" }
+      gpu: { state: works, checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1" }
+      wifi: { state: works, checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1" }
+      wifi-address: { state: broken, note: "Changes every boot without the owner's board package.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1" }
+      adsp: { state: works, checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1" }
+      cdsp: { state: works, checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1" }
+      keyboard: { state: broken, note: "Dead in Hyprland because 0CF2:9050 is tagged as a tablet pad.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1" }
+      disk-unlock: { state: broken, note: "The password prompt isn't shown.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1" }
+      usb: { state: partial, note: "USB-C has no hotplug and SuperSpeed in one orientation only.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1" }
+      speakers: { state: broken, note: "Works with the owner's board package.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1" }
+      battery: { state: broken, note: "Works with the owner's board package.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1" }
+      bluetooth: { state: broken, note: "Works with the owner's board package.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1" }
+      camera: { state: broken, checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1" }
+      fans: { state: broken, note: "No fan control without the owner's board package.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1" }
+
+  lenovo-ideacentre-mini-x-01q8x10:
+    links:
+      - title: Owner's issue
+        url: https://github.com/birkskyum/arewearmyet/issues/6
+    checks:
+      gpu: { state: works, note: "The Adreno X1-45 drives an external display on linux-omarchy 7.3 (Snapdragon X model).", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/6" }
+      external-display: { state: works, note: "A Lenovo 40B0 dock's displays work.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/6" }
+      disk-unlock: { state: works, note: "Shown on screen since omacom/omarchy#18629 on edge.", checked: 2026-11, source: "https://github.com/omacom/omarchy/pull/18629" }
+      adsp: { state: works, note: "Starts with the root disk on a USB-A port since omacom/omarchy#18776, which brings up the dock's sound and USB-C power negotiation.", checked: 2026-11, source: "https://github.com/omacom/omarchy/pull/18776" }
+
+  acer-aspire-16-ai-a16-11m:
+    links:
+      - title: Owner's testing thread
+        url: https://github.com/birkskyum/arewearmyet/issues/5
+    checks:
+      speakers: { state: works, checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/5" }
+      wifi: { state: partial, note: "An installed system gets its board data from Omarchy's ath12k fallback; the live image has no Wi-Fi yet.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/5" }
+      video-decode: { state: works, checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/5" }
+      disk-unlock: { state: works, note: "Owner confirmed the fix from omacom/omarchy#18743.", checked: 2026-11, source: "https://github.com/omacom/omarchy/pull/18743" }
+
+  anduril-bluechip:
+    details: |
+      A pre-release X2 Elite machine built on Qualcomm's Glymur reference design. It accepts linux-firmware's Qualcomm-signed Glymur DSP files, so it needs no firmware from Windows.
+    links:
+      - title: Hardware report
+        url: https://github.com/turbineBMW/omarchy-hardware-reports/issues/17
+    checks:
+      battery: { state: works, checked: 2026-11 }
+      bluetooth: { state: works, checked: 2026-11 }
+      gpu: { state: works, checked: 2026-11 }
+      adsp: { state: works, checked: 2026-11 }
+      cdsp: { state: works, checked: 2026-11 }
+      speakers: { state: broken, checked: 2026-11 }
+      microphones: { state: broken, checked: 2026-11 }
+      disk-unlock: { state: broken, note: "The screen stayed dark until the password was typed. The fix is on edge and not yet checked on this machine.", checked: 2026-11 }
+
+  hp-omnibook-x-14-kr:
+    details: |
+      The 14-kr1 with the 6-core X2 Plus (Kalambo) chip. Its tree ships with the GPU off, so the desktop needs LIBGL_ALWAYS_SOFTWARE=1 in /etc/environment. The kernel picks deep sleep by default, which loses the Wi-Fi card on resume and restarts the laptop after a few cycles; s2idle is being tested.
+    links:
+      - title: Owner's hardware report and test thread
+        url: https://github.com/turbineBMW/omarchy-hardware-reports/issues/45
+    checks:
+      gpu: { state: partial, note: "The GPU is off in its tree for now; the desktop runs on software rendering with LIBGL_ALWAYS_SOFTWARE=1.", version: "7.3-72", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45" }
+      keyboard: { state: works, version: "7.3-72", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45" }
+      touchpad: { state: works, version: "7.3-72", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45" }
+      wifi: { state: partial, note: "Works, but doesn't come back after deep sleep.", version: "7.3-72", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45" }
+      battery: { state: works, version: "7.3-72", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45" }
+      bluetooth: { state: broken, note: "Its QCC2072 card has no Bluetooth support in Linux yet.", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45" }
+      suspend: { state: broken, note: "Short sleeps work. Deep sleep cycled three times and the laptop restarted into Windows on the third; s2idle is being tested.", version: "7.3-72", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45" }
+
+  microsoft-surface-pro-11:
+    links:
+      - title: Omarchy on the Surface Pro 11 (discussion 14391)
+        url: https://github.com/omacom/omarchy/discussions/14391
+    checks:
+      suspend: { state: works, checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/14391" }
+      camera: { state: works, note: "Both cameras.", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/14391" }
+      touchscreen: { state: works, note: "Touch and pen.", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/14391" }
+
+  dell-inspiron-14-plus-7441:
+    links:
+      - title: Owner's results and fixes (discussion 12441)
+        url: https://github.com/omacom/omarchy/discussions/12441
+
+  samsung-galaxy-book4-edge-15:
+    links:
+      - title: Owner's work on Anatase's kernel (discussion 15860)
+        url: https://github.com/omacom/omarchy/discussions/15860
+    checks:
+      charging: { state: partial, note: "USB-C charging stays at 5 V and a trickle without the owner's userspace tool (book4-pd-charge).", checked: 2026-11 }
+
+  microsoft-surface-laptop-8-13:
+    links:
+      - title: USB4 and 6K display patches by its owner
+        url: https://github.com/jdvmi00/glymur-usb4
+    checks:
+      usb4: { state: works, note: "Both USB-C ports, with USB 3, DisplayPort (4K at 60 Hz through a dock) and PCIe tunnelled.", version: "7.3-67", checked: 2026-11, source: "https://github.com/omacom/omarchy-pkgs/pull/2880" }
