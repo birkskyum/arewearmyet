@@ -10,6 +10,8 @@ import { getPlatformProxy } from 'wrangler';
 import { reports } from '../worker/reports.ts';
 
 const YOGA = 'lenovo-yoga-slim-7x-14q8x9';
+// The models the stand-in for the site's static files knows
+const KNOWN = [YOGA, 'hp-omnibook-x-14-fe'];
 const TOKEN_A = 'machine-a-'.padEnd(40, 'a');
 const TOKEN_B = 'machine-b-'.padEnd(40, 'b');
 const ADMIN = 'test-admin-token';
@@ -33,7 +35,7 @@ before(async () => {
     ADMIN_TOKEN: ADMIN,
     REPORT_LIMIT: { limit: async () => ({ success: allow }) },
     // The site's static model file, which the API adds owners' results to
-    ASSETS: { fetch: async (url: URL) => (url.pathname === `/data/models/${YOGA}.json` ? Response.json({ id: YOGA, name: 'Yoga Slim 7x' }) : new Response('', { status: 404 })) },
+    ASSETS: { fetch: async (url: URL) => (KNOWN.some((id) => url.pathname === `/data/models/${id}.json`) ? Response.json({ id: url.pathname.split('/').pop()!.replace('.json', '') }) : new Response('', { status: 404 })) },
   };
 });
 after(async () => {
@@ -156,4 +158,34 @@ test('holds back when the limit is reached or reports are closed', async () => {
   // Reading still works while reports are closed
   assert.equal((await call('GET', `/api/models/${YOGA}`)).status, 200);
   env.REPORTS = 'on';
+});
+
+test('notices a check that turned from working to broken on a newer kernel, and one that got fixed', async () => {
+  const token = 'machine-c-'.padEnd(40, 'c');
+  const send = async (kernel: string, results: unknown[]) => {
+    await tick();
+    await call('POST', '/api/runs', { ...run(results), model: 'hp-omnibook-x-14-fe', kernel }, machine(token));
+  };
+  await send('7.3.0-59-omarchy', [{ check: 'suspend', state: 'works', how: 'owner' }, { check: 'camera', state: 'broken', how: 'owner' }]);
+  await send('7.3.0-67-omarchy', [{ check: 'suspend', state: 'works', how: 'owner' }, { check: 'camera', state: 'broken', how: 'owner' }]);
+  await send('7.3.0-72-omarchy', [{ check: 'suspend', state: 'broken', how: 'owner' }, { check: 'camera', state: 'works', how: 'owner' }]);
+  await send('7.3.0-75-omarchy', [{ check: 'suspend', state: 'broken', how: 'owner' }, { check: 'wifi', state: 'works', how: 'measured' }]);
+
+  const { owners } = (await call('GET', '/api/models/hp-omnibook-x-14-fe')).body;
+  assert.deepEqual(owners.checks.suspend.states, { broken: 1 });
+  assert.equal(owners.checks.suspend.regressed.machines, 1);
+  assert.equal(owners.checks.suspend.regressed.from, '7.3.0-67-omarchy');
+  assert.equal(owners.checks.suspend.regressed.to, '7.3.0-72-omarchy');
+  assert.equal(owners.checks.suspend.fixed, undefined);
+  assert.equal(owners.checks.camera.fixed.from, '7.3.0-67-omarchy');
+  assert.equal(owners.checks.camera.fixed.to, '7.3.0-72-omarchy');
+  assert.equal(owners.checks.wifi.regressed, undefined);
+});
+
+test("gives every model's owners' results at once, with the machines that matched no model", async () => {
+  await call('POST', '/api/runs', { mode: 'quick', hardware: { maker: 'Acme', product: 'Unheard Of 14' }, compatible: 'acme,unheard', results: [{ check: 'wifi', state: 'works', how: 'measured' }] }, machine('machine-d-'.padEnd(40, 'd')));
+  const { models, unmatched } = (await call('GET', '/api/owners')).body;
+  assert.ok(models[YOGA].machines >= 2);
+  assert.equal(models['hp-omnibook-x-14-fe'].checks.suspend.regressed.machines, 1);
+  assert.deepEqual(unmatched.map((u: any) => [u.hardware.maker, u.hardware.product, u.compatible, u.machines]), [['Acme', 'Unheard Of 14', 'acme,unheard', 1]]);
 });

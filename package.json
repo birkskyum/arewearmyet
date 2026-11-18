@@ -16,7 +16,8 @@
     "trees": "node scripts/trees.ts",
     "archive": "node scripts/archive.ts",
     "test": "node --test test/*.test.ts",
-    "typecheck": "wrangler types worker/worker-configuration.d.ts && tsc -p worker/tsconfig.json"
+    "typecheck": "wrangler types worker/worker-configuration.d.ts && tsc -p worker/tsconfig.json",
+    "digest": "node scripts/digest.ts"
   },
   "dependencies": {
     "@astrojs/solid-js": "^7.1.1",

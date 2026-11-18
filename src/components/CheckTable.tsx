@@ -6,7 +6,8 @@ import { PILL, TONE } from '../lib/tones';
 type State = 'works' | 'partial' | 'broken' | 'untested' | 'absent';
 type Finding = { state: State; note?: string; version?: string; checked?: string; source?: string };
 type Row = { id: string; group: string; title: string; works: string; probe?: string; person?: string; optional?: boolean; finding: Finding | null; from: 'model' | 'family' | null; familySource: string | null };
-type Owner = { machines: number; states: Record<string, number>; how: Record<string, number>; latest: { state: State; how: string; note: string | null; evidence: string | null; kernel: string | null; created: string; run: string }[] };
+type Change = { machines: number; from: string | null; to: string | null; since: string };
+type Owner = { machines: number; states: Record<string, number>; how: Record<string, number>; regressed?: Change; fixed?: Change; latest: { state: State; how: string; note: string | null; evidence: string | null; kernel: string | null; created: string; run: string }[] };
 type Live = { owners: { machines: number; checks: Record<string, Owner> }; fixes: { id: string; check: string | null; url: string; note: string | null; created: string }[] };
 
 const LABEL: Record<State, string> = { works: 'Works', partial: 'Partly', broken: 'Broken', untested: 'Untested', absent: 'Not on this model' };
@@ -14,6 +15,16 @@ const TONES: Record<State, keyof typeof TONE> = { works: 'good', partial: 'close
 const HOW: Record<string, string> = { measured: 'measured by the probe', owner: 'confirmed by the owner', agent: "an agent's reading" };
 const ORDER: State[] = ['works', 'partial', 'broken', 'absent', 'untested'];
 const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
+
+// "Worked on 7.3.0-67, broken since 7.3.0-72 (2026-11-17), on 2 machines"
+function changeText(change: Change, kind: 'regressed' | 'fixed'): string {
+  const on = change.machines === 1 ? 'on one machine' : `on ${change.machines} machines`;
+  const from = change.from ?? 'an earlier kernel';
+  const to = change.to ?? 'a newer kernel';
+  return kind === 'regressed'
+    ? `Worked on ${from}, not working since ${to} (${change.since.slice(0, 10)}), ${on}.`
+    : `Didn't work on ${from}, works since ${to} (${change.since.slice(0, 10)}), ${on}.`;
+}
 
 async function load(id: string): Promise<Live | null> {
   try {
@@ -82,6 +93,9 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                             </span>
                           )}
                         </Show>
+                        <Show when={owner(row.id)?.regressed}>
+                          {(change) => <span class={`${PILL} ${TONE.wanted}`} data-tip={changeText(change(), 'regressed')}>Regressed</span>}
+                        </Show>
                       </span>
                     </summary>
                     <div class="space-y-3 border-t border-zinc-800 bg-zinc-950/40 px-4 py-3 text-sm text-zinc-400">
@@ -96,6 +110,8 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                           </p>
                         )}
                       </Show>
+                      <Show when={owner(row.id)?.regressed}>{(change) => <p class="text-rose-300">{changeText(change(), 'regressed')}</p>}</Show>
+                      <Show when={owner(row.id)?.fixed}>{(change) => <p class="text-emerald-300">{changeText(change(), 'fixed')}</p>}</Show>
                       <Show when={owner(row.id)}>
                         {(o) => (
                           <ul class="space-y-1.5">

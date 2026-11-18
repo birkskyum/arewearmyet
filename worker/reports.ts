@@ -14,6 +14,7 @@
  *   GET  /api/models                  every model with its page and API URL
  *   GET  /api/models/<id>             one model: pieces, findings, owners' results, fixes, what to test next
  *   GET  /api/match?compatible=&product=&sku=&family=&vendor=   which model a machine is
+ *   GET  /api/owners                  every model's owners' results, and the machines that matched no model
  *   POST /api/runs                    a probe run or an agent's report; answers {run, model, url}
  *   GET  /api/runs/<id>               one run as stored, for the owner to check
  *   POST /api/runs/<id>/results       more results for a run, from the same machine
@@ -51,6 +52,7 @@ export async function reports(request: Request, env: Env, url: URL): Promise<Res
     if (path === 'models') return asset(env, url, '/data/models.json');
     if (parts[0] === 'models' && parts.length === 2 && MODEL_ID.test(parts[1])) return model(env, url, parts[1]);
     if (path === 'match') return json(match(url.searchParams));
+    if (path === 'owners') return allOwners(env);
     if (parts[0] === 'runs' && parts.length === 2 && RUN_ID.test(parts[1])) return getRun(env, parts[1]);
     if (path === 'review') return review(request, env, url);
     if (parts[0] !== 'firmware') return json({ error: 'Not found. The API is described at https://arewearmyet.com/agents.md' }, 404);
@@ -87,34 +89,95 @@ async function model(env: Env, url: URL, id: string): Promise<Response> {
   return json({ ...base, owners, fixes }, 200, 'public, max-age=60');
 }
 
-type ResultRow = { check_id: string; state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; created: string; machine: string; run: string };
+type ResultRow = { model?: string; check_id: string; state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; created: string; machine: string; run: string };
+type Change = { machines: number; from: string | null; to: string | null; since: string };
+type OwnerCheck = {
+  machines: number;
+  states: Record<string, number>;
+  how: Record<string, number>;
+  latest: { state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; created: string; run: string }[];
+  // Machines whose newest result turned from working to not, or the other way, with the kernels on both sides
+  regressed?: Change;
+  fixed?: Change;
+};
+
+const RESULT_ROWS = `SELECT runs.model, r.check_id, r.state, r.how, r.note, r.evidence, runs.kernel, runs.created, runs.machine, runs.id AS run
+       FROM results r JOIN runs ON runs.id = r.run JOIN machines m ON m.id = runs.machine
+      WHERE runs.hidden = 0 AND m.hidden = 0 AND r.state != 'untested'`;
+const NEWEST_FIRST = 'ORDER BY runs.created DESC, runs.rowid DESC';
 
 /**
  * Each machine's newest result per check, counted per check. A newer run replaces
  * the same machine's older one, so one owner running the probe ten times counts once.
+ * The older results still say when something changed: a machine that reported a check
+ * working and now reports it broken is a regression, with the kernels on both sides.
  */
-async function ownerResults(env: Env, id: string) {
-  const { results } = await env.DB.prepare(
-    `SELECT r.check_id, r.state, r.how, r.note, r.evidence, runs.kernel, runs.created, runs.machine, runs.id AS run
-       FROM results r JOIN runs ON runs.id = r.run JOIN machines m ON m.id = runs.machine
-      WHERE runs.model = ? AND runs.hidden = 0 AND m.hidden = 0 AND r.state != 'untested'
-      ORDER BY runs.created DESC, runs.rowid DESC LIMIT 5000`,
-  ).bind(id).all<ResultRow>();
-  const seen = new Set<string>();
-  const checks: Record<string, { machines: number; states: Record<string, number>; how: Record<string, number>; latest: { state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; created: string; run: string }[] }> = {};
+function summarize(rows: ResultRow[]) {
+  const newest = new Map<string, ResultRow>();
+  const changed = new Set<string>();
+  // The oldest result so far that still has the machine's newest state
+  const turned = new Map<string, ResultRow>();
+  const checks: Record<string, OwnerCheck> = {};
   const machines = new Set<string>();
-  for (const row of results) {
+  const good = (state: string) => state === 'works';
+  const bad = (state: string) => state === 'broken' || state === 'partial';
+  for (const row of rows) {
     const key = `${row.machine} ${row.check_id}`;
-    if (seen.has(key)) continue;
-    seen.add(key);
-    machines.add(row.machine);
-    const entry = (checks[row.check_id] ??= { machines: 0, states: {}, how: {}, latest: [] });
-    entry.machines++;
-    entry.states[row.state] = (entry.states[row.state] ?? 0) + 1;
-    entry.how[row.how] = (entry.how[row.how] ?? 0) + 1;
-    if (entry.latest.length < 5) entry.latest.push({ state: row.state, how: row.how, note: row.note, evidence: row.evidence, kernel: row.kernel, created: row.created, run: row.run });
+    const latest = newest.get(key);
+    if (!latest) {
+      newest.set(key, row);
+      machines.add(row.machine);
+      const entry = (checks[row.check_id] ??= { machines: 0, states: {}, how: {}, latest: [] });
+      entry.machines++;
+      entry.states[row.state] = (entry.states[row.state] ?? 0) + 1;
+      entry.how[row.how] = (entry.how[row.how] ?? 0) + 1;
+      if (entry.latest.length < 5) entry.latest.push({ state: row.state, how: row.how, note: row.note, evidence: row.evidence, kernel: row.kernel, created: row.created, run: row.run });
+      continue;
+    }
+    // Going back from the newest result, the first one with another state is where it turned:
+    // the change counts once per machine and check, from that result's kernel to the first kernel after it
+    if (changed.has(key)) continue;
+    if (row.state === latest.state) {
+      turned.set(key, row);
+      continue;
+    }
+    changed.add(key);
+    const kind = bad(latest.state) && good(row.state) ? 'regressed' : good(latest.state) && bad(row.state) ? 'fixed' : null;
+    if (!kind) continue;
+    const first = turned.get(key) ?? latest;
+    const change = (checks[row.check_id][kind] ??= { machines: 0, from: row.kernel, to: first.kernel, since: first.created });
+    change.machines++;
   }
   return { machines: machines.size, checks };
+}
+
+async function ownerResults(env: Env, id: string) {
+  const { results } = await env.DB.prepare(`${RESULT_ROWS} AND runs.model = ? ${NEWEST_FIRST} LIMIT 5000`).bind(id).all<ResultRow>();
+  return summarize(results);
+}
+
+/**
+ * Every model's owners' results at once, and the machines that matched no model, for the
+ * nightly digest (scripts/digest.ts). All of it is what the model pages already show.
+ */
+async function allOwners(env: Env): Promise<Response> {
+  const [{ results }, unmatched] = await Promise.all([
+    env.DB.prepare(`${RESULT_ROWS} AND runs.model IS NOT NULL ${NEWEST_FIRST} LIMIT 50000`).all<ResultRow>(),
+    env.DB.prepare(`SELECT runs.hardware, runs.compatible, COUNT(DISTINCT runs.machine) AS machines, COUNT(*) AS runs, MAX(runs.created) AS latest
+                      FROM runs JOIN machines m ON m.id = runs.machine
+                     WHERE runs.model IS NULL AND runs.hidden = 0 AND m.hidden = 0
+                     GROUP BY runs.hardware, runs.compatible ORDER BY latest DESC LIMIT 200`).all<{ hardware: string | null; compatible: string | null; machines: number; runs: number; latest: string }>(),
+  ]);
+  const byModel = new Map<string, ResultRow[]>();
+  for (const row of results) {
+    const rows = byModel.get(row.model!);
+    if (rows) rows.push(row);
+    else byModel.set(row.model!, [row]);
+  }
+  return json({
+    models: Object.fromEntries([...byModel].map(([id, rows]) => [id, summarize(rows)])),
+    unmatched: unmatched.results.map((row) => ({ ...row, hardware: JSON.parse(row.hardware ?? '{}') })),
+  }, 200, 'public, max-age=300');
 }
 
 async function modelFixes(env: Env, id: string) {

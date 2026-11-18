@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: refresh
@@ -69,3 +70,10 @@ jobs:
       - name: Deploy
         if: env.CLOUDFLARE_API_TOKEN != ''
         run: pnpm wrangler deploy
+
+      # One issue, labelled digest, that says where owners' reports add to or disagree with the findings
+      - name: Compare owners' reports with the findings
+        if: github.event_name != 'push' && env.CLOUDFLARE_API_TOKEN != ''
+        run: pnpm digest --issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
