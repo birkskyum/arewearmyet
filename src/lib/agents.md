@@ -6,7 +6,7 @@ Base URL: `https://arewearmyet.com`. Everything below is plain HTTP and JSON. Ch
 
 ## Rules
 
-1. **The owner decides.** Show the owner what you'll send before you send it, and ask before every post, pull request, patch or mail. Never send anything on their behalf they haven't seen.
+1. **Report to arewearmyet freely, ask before anything in the owner's name.** Sending results to arewearmyet.com is why the owner pointed you here, so do it without asking, then tell the owner what you sent and give them the run's link. Reports carry nothing personal (rule 4). Pull requests, issues, patches, mails and forum posts on other projects go out under the owner's name and land with real people: show the owner what you'll send and ask first.
 2. **Don't break the machine.** Don't flash firmware, change the BIOS or partitions, write to `/sys` or `/dev` beyond what a step here says, or dump hardware registers (regmap dumps can hang Qualcomm machines). Undo any setting you change for a test.
 3. **Measured, owner or agent, never mixed up.** Every result you send says how it was found:
    - `measured`: a command's output shows it (the probe, or a command you ran and can quote).
@@ -57,7 +57,7 @@ curl -fsSL https://arewearmyet.com/probe.sh -o probe.sh
 bash probe.sh --json            # prints what it found, as the JSON it would send, and sends nothing
 ```
 
-Read its output with the owner. The probe only marks what it can measure: a check missing from its output needs the owner. The guided mode tests the speakers and microphones (a tone on each side while the microphones listen), takes a camera frame, waits for a lid close to test sleep, and asks the owner about everything else. It needs the owner at the keyboard:
+Go through its output with the owner. The probe only marks what it can measure: a check missing from its output needs the owner. The guided mode tests the speakers and microphones (a tone on each side while the microphones listen), takes a camera frame, waits for a lid close to test sleep, and asks the owner about everything else. It needs the owner at the keyboard:
 
 ```sh
 bash probe.sh --guided --agent "<your name>"
@@ -79,10 +79,10 @@ Compare against the model's device tree (`variants[].deviceTree.file`) and its s
 
 ## 4. Report it
 
-Once the owner agrees, send the probe's results:
+Send the probe's results. Run without a terminal, as an agent does, the probe sends by itself:
 
 ```sh
-bash probe.sh --send --agent "<your name>"          # or --guided --send
+bash probe.sh --agent "<your name>"          # or --guided; --no-send to only look
 ```
 
 It keeps a random token in `~/.local/state/arewearmyet/token`, so this machine's later runs replace its earlier ones, and prints the run's id and page.

@@ -8,7 +8,8 @@
 # Options:
 #   --guided      after the quick check, test speakers, microphones, camera and sleep, and ask about the rest
 #   --json        print what would be sent and stop (for agents and the curious)
-#   --send        send without asking (only once the owner has agreed)
+#   --send        send without asking
+#   --no-send     only show the results
 #   --model ID    the model id from arewearmyet.com, when the machine isn't recognised by itself
 #   --agent NAME  the agent sending this, shown next to the run
 #   --api URL     another server, for testing
@@ -17,7 +18,8 @@
 # commands; it needs no root and changes nothing. The guided test plays two short
 # tones, records a few seconds from the microphones, takes one camera frame and
 # waits for you to close and open the lid; recordings stay on the machine and are
-# deleted at the end. Nothing is sent without your OK. What's sent: the maker,
+# deleted at the end. The results are shown, then sent unless you say no (in a
+# terminal) or pass --no-send (without one, as agents run it). What's sent: the maker,
 # model, SKU, board and BIOS version; the kernel, OS and a few package versions;
 # the results. No serial numbers, MAC addresses, user names, host names or files.
 # A random token in ~/.local/state/arewearmyet/token lets this machine's later
@@ -42,7 +44,7 @@ while [ $# -gt 0 ]; do
     --model) MODEL="${2:-}"; shift ;;
     --agent) AGENT="${2:-}"; shift ;;
     --api) API="${2:-}"; shift ;;
-    -h|--help) sed -n '2,24p' "$0" 2>/dev/null || echo "See https://arewearmyet.com/agents"; exit 0 ;;
+    -h|--help) sed -n '2,27p' "$0" 2>/dev/null || echo "See https://arewearmyet.com/agents"; exit 0 ;;
     *) echo "Unknown option $1" >&2; exit 2 ;;
   esac
   shift
@@ -453,11 +455,11 @@ say ""
 [ ${#RESULTS[@]} -eq 0 ] && { say "Nothing could be measured. Is this a Snapdragon PC running Linux?"; exit 1; }
 
 if [ "$SEND" = ask ]; then
-  if ask "Send this to $API for the ${MAKER:-} ${PRODUCT:-} page? [y/N]"; then
-    case "$REPLY" in y|Y|yes) SEND=yes ;; *) SEND=no ;; esac
+  # Without a terminal there's nobody to ask: an agent runs it this way, and --no-send stops it
+  if ask "Send this to $API for the ${MAKER:-} ${PRODUCT:-} page? [Y/n]"; then
+    case "$REPLY" in n|N|no|No) SEND=no ;; *) SEND=yes ;; esac
   else
-    say "No terminal to ask in. Run with --send to send it, or --json to see the exact JSON."
-    SEND=no
+    SEND=yes
   fi
 fi
 [ "$SEND" = yes ] || { say "Not sent."; exit 0; }
