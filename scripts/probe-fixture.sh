@@ -55,4 +55,6 @@ command -v bluetoothctl >/dev/null 2>&1 && timeout 5 bluetoothctl show 2>/dev/nu
 for p in linux-omarchy linux-firmware linux-firmware-qcom mesa systemd omarchy hyprland pipewire alsa-ucm-conf bluez libcamera; do
   command -v pacman >/dev/null 2>&1 && pacman -Q "$p" 2>/dev/null
 done >"$out/cmd/packages"
+# Git doesn't keep empty folders, and some of these only matter by being there
+find "$out" -type d -empty -exec touch {}/.keep \;
 echo "Fixture written to $out"
