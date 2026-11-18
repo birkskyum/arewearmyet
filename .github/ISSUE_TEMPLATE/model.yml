@@ -38,7 +38,7 @@ body:
     attributes:
       label: Hardware IDs
       description: |
-        Not needed with a hardware report. On Linux, the output of `sudo fwupdtool hwids`. On Windows, the output of this in PowerShell, which shows the strings the IDs are made from:
+        Not needed with a hardware report. On Linux, the output of `systemd-analyze chid` (systemd 258 or later, no root needed) or `sudo fwupdtool hwids`. On Windows, the output of this in PowerShell, which shows the strings the IDs are made from:
         `Get-CimInstance Win32_ComputerSystem | fl Manufacturer,Model,SystemFamily,SystemSKUNumber; Get-CimInstance Win32_BaseBoard | fl Manufacturer,Product; Get-CimInstance Win32_BIOS | fl Manufacturer,SMBIOSBIOSVersion,SystemBiosMajorVersion,SystemBiosMinorVersion; Get-CimInstance Win32_SystemEnclosure | fl ChassisTypes`
       render: text
 
@@ -62,6 +62,13 @@ body:
       label: Distro
       description: What you ran on it, if anything
       placeholder: Omarchy RC, Ubuntu 26.10, Fedora 44
+
+  - type: input
+    id: probe
+    attributes:
+      label: Probe run (Linux)
+      description: If Linux boots on it, run `curl -fsSL https://arewearmyet.com/probe.sh | bash` instead of listing what works by hand, and give the run it prints. It checks the screen, GPU, Wi-Fi, sound, battery, sleep and more, and shows on the model's page.
+      placeholder: RUN-K7Q2M9XH4P
 
   - type: dropdown
     id: boots

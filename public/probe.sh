@@ -498,5 +498,23 @@ page="$(printf '%s' "$response" | sed -nE 's/.*"page":"([^"]*)".*/\1/p')"
 printf '%s\n' "$run" >"$STATE_DIR/last-run"
 say "Sent as $run. Thank you!"
 [ -n "$page" ] && say "It shows on $page"
-[ -z "$page" ] && say "The machine wasn't recognised, so it shows on no page yet. Run again with --model <id> from $API/api/models."
+if [ -z "$page" ]; then
+  # The board doesn't know the machine: the form to add it, with what identifies it filled in
+  urlencode() {
+    local s="$1" out="" c i
+    for (( i = 0; i < ${#s}; i++ )); do
+      c="${s:i:1}"
+      case "$c" in [a-zA-Z0-9.~_-]) out+="$c" ;; $'\n') out+="%0A" ;; *) out+="$(printf '%%%02X' "'$c")" ;; esac
+    done
+    printf '%s' "$out"
+  }
+  ids="$(printf '%s' "$CHIDS" | tr -d '"' | tr ',' '\n' | tr ':' ' ')"
+  form="https://github.com/birkskyum/arewearmyet/issues/new?template=model.yml"
+  form+="&model=$(urlencode "${MAKER:-} ${FAMILY:-$PRODUCT}")&model-number=$(urlencode "${PRODUCT:-}")&probe=$run"
+  [ -n "$ids" ] && form+="&hwids=$(urlencode "$ids")"
+  say "The board doesn't know this machine yet, so the run shows on no page."
+  say "Add it with this form, which has its name and hardware IDs filled in:"
+  say "  $form"
+  say "If it is on the board under another name, run again with --model <id> from $API/api/models."
+fi
 say "To see exactly what was stored: $API/api/runs/$run"

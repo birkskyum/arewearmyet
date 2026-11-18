@@ -40,7 +40,7 @@ const CASES = [
       Every Snapdragon laptop needs a device tree that describes its hardware to Linux, its hardware IDs so a boot image picks that tree by itself, and its firmware. Writing a device tree takes a developer, but it's written from what's on your laptop, and it's finished by someone testing it on the real hardware.
     </p>
     <p class="mt-3">
-      If your laptop is marked <span class={`${PILL} ${TONE.wanted}`}>Wanted</span> on the board, shows a channel like <span class={`${PILL} ${TONE.good}`}>Edge</span> under Bootable that nobody has confirmed yet, or isn't on it at all, pick the case that fits. Each takes a few minutes, and all of them end in the same form.
+      If your laptop is marked <span class={`${PILL} ${TONE.wanted}`}>Wanted</span> on the board, shows a channel like <span class={`${PILL} ${TONE.good}`}>Edge</span> under Bootable that nobody has confirmed yet, or isn't on it at all, pick the case that fits. Each takes a few minutes.
     </p>
 
     <nav class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -100,7 +100,8 @@ sed -i '/serial-number/d' tree.dts</code></pre>
       <ol class={STEPS}>
         <li>Make an Omarchy USB stick. With Windows still on the laptop, the <a class={LINK} href={INSTALLER}>Omarchy Arm Installer</a> makes one and copies the laptop's firmware onto it from Windows' own drivers.</li>
         <li>Turn off Secure Boot, boot from the stick, and install, or just see how far it gets.</li>
-        <li>Open <a class={LINK} href={FORM}>Add your model</a> and choose how far it got. Say what didn't work, like sound, the battery status or an external screen. If you run another distro on it, tell us how that does too.</li>
+        <li>If it reached the desktop, <a class={LINK} href="#check">run the probe</a>: it measures what works and puts it on the model's page, so there's nothing to write up.</li>
+        <li>If it didn't get that far, open <a class={LINK} href={FORM}>Add your model</a> and choose how far it got. If you run another distro on it, tell us how that does too.</li>
       </ol>
     </section>
 

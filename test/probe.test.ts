@@ -164,3 +164,43 @@ test('finds the camera by its sensor, and misses it when only the camera subsyst
   assert.equal(state('camera'), 'broken');
   assert.match(evidence('camera'), /no sensor/);
 });
+
+test('sends with a token it keeps, and offers the add-model form when the board doesn\'t know the machine', { skip }, async () => {
+  const { spawnSync } = await import('node:child_process');
+  const { readFileSync } = await import('node:fs');
+  const root = mkdtempSync(join(tmpdir(), 'probe-test-'));
+  try {
+    cpSync(join(FIXTURES, YOGA), root, { recursive: true, verbatimSymlinks: true });
+    const env = { PATH: `${STUBS}:${process.env.PATH}`, PROBE_ROOT: root, HOME: root, TMPDIR: tmpdir() };
+    // No terminal, as when an agent runs it: it sends without asking
+    const sent = spawnSync('bash', [PROBE, '--agent', 'test agent'], { encoding: 'utf8', env, stdio: ['ignore', 'pipe', 'pipe'] });
+    assert.equal(sent.status, 0, sent.stderr);
+
+    const token = readFileSync(join(root, '.local/state/arewearmyet/token'), 'utf8');
+    assert.match(token, /^[A-Za-z0-9_-]{40,}$/);
+    const args = readFileSync(join(root, 'curl-args'), 'utf8');
+    assert.ok(args.includes(`x-machine-token: ${token}`));
+    assert.ok(args.includes('https://arewearmyet.com/api/runs'));
+    const body = JSON.parse(readFileSync(join(root, 'curl-body'), 'utf8'));
+    assert.equal(body.agent, 'test agent');
+    assert.equal(body.results.length, 10);
+
+    assert.match(sent.stderr, /Sent as RUN-TESTTESTAA/);
+    const form = sent.stderr.match(/https:\/\/github\.com\/birkskyum\/arewearmyet\/issues\/new\S+/)![0];
+    const params = new URL(form).searchParams;
+    assert.equal(params.get('template'), 'model.yml');
+    assert.equal(params.get('model'), 'LENOVO Yoga Slim 7 14Q8X9');
+    assert.equal(params.get('model-number'), '83ED');
+    assert.equal(params.get('probe'), 'RUN-TESTTESTAA');
+    assert.match(params.get('hwids')!, /^0 5315f3e1-1fa9-5592-bf05-75e8124d1f8a\n1 26ebc60f/);
+
+    // The next run uses the same token, and --no-send sends nothing
+    rmSync(join(root, 'curl-args'));
+    spawnSync('bash', [PROBE, '--no-send'], { encoding: 'utf8', env, stdio: ['ignore', 'pipe', 'pipe'] });
+    assert.throws(() => readFileSync(join(root, 'curl-args')));
+    spawnSync('bash', [PROBE], { encoding: 'utf8', env, stdio: ['ignore', 'pipe', 'pipe'] });
+    assert.ok(readFileSync(join(root, 'curl-args'), 'utf8').includes(`x-machine-token: ${token}`));
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
