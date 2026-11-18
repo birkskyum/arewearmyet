@@ -124,7 +124,7 @@ done
 # The machine's hardware IDs, most specific first, which name its model exactly (systemd 258 and later)
 CHIDS=""
 if command -v systemd-analyze >/dev/null 2>&1; then
-  while read -r t c; do CHIDS+="${CHIDS:+,}\"$t:$c\""; done < <(timeout 10 systemd-analyze chid 2>/dev/null | awk '$3 ~ /^[0-9a-f]+-[0-9a-f]+-/ { print $1, $3 }')
+  while read -r t c; do CHIDS+="${CHIDS:+,}\"$t:$c\""; done < <(timeout -k 2 10 systemd-analyze chid 2>/dev/null | awk '$3 ~ /^[0-9a-f]+-[0-9a-f]+-/ { print $1, $3 }')
 fi
 
 say "Are we ARM yet? probe"
@@ -211,7 +211,7 @@ bt=""
 for h in $R/sys/class/bluetooth/hci*; do [ -e "$h" ] && bt="${h##*/}"; done
 if [ -z "$bt" ]; then add bluetooth broken measured "no Bluetooth controller"
 elif command -v bluetoothctl >/dev/null 2>&1; then
-  pw="$(timeout 5 bluetoothctl show 2>/dev/null | sed -n 's/^[[:space:]]*Powered: //p' | head -n 1)"
+  pw="$(timeout -k 2 5 bluetoothctl show 2>/dev/null | sed -n 's/^[[:space:]]*Powered: //p' | head -n 1)"
   [ "$pw" = yes ] && add bluetooth works measured "$bt powered"
   [ "$pw" = no ] && add bluetooth partial measured "$bt present, not powered (turned off, or it failed to start)"
 fi
@@ -310,7 +310,7 @@ for v in $R/sys/class/video4linux/v4l-subdev*; do
   printf '%s' "$n" | grep -qE '^[a-z0-9]+ [0-9]+-[0-9a-f]{4}$' && cams="${n%% *} sensor"
 done
 if command -v cam >/dev/null 2>&1; then
-  listed="$(timeout 10 cam -l 2>/dev/null | grep -E '^[0-9]+:' | head -n 1)"
+  listed="$(timeout -k 2 10 cam -l 2>/dev/null | grep -E '^[0-9]+:' | head -n 1)"
   [ -n "$listed" ] && cams="${listed#*: }"
 fi
 if [ -z "$cams" ] && [ -n "$camss" ]; then add camera broken measured "the camera subsystem is up, but no sensor was found"
@@ -367,7 +367,7 @@ guided() {
     say "Sound: set the volume to about half. Two tones of three seconds play, left then right, while the microphones listen."
     ask "Press Enter to start (s to skip)." && [ "$REPLY" != s ] && {
       for side in 1 2; do
-        arecord -q -d 3 -f S16_LE -r 48000 -c 1 -t raw "$TMP/tone$side.raw" 2>/dev/null &
+        timeout -s KILL 6 arecord -q -d 3 -f S16_LE -r 48000 -c 1 -t raw "$TMP/tone$side.raw" 2>/dev/null &
         rec=$!
         sleep 0.2
         # speaker-test doesn't stop on a polite signal, so it is killed after three seconds
@@ -382,12 +382,14 @@ guided() {
 
       say "Microphones: after you press Enter, say a few words. The probe records 4 seconds and plays them back to you."
       ask "Press Enter, then speak (s to skip)." && [ "$REPLY" != s ] && {
-        arecord -q -d 4 -f S16_LE -r 48000 -c 1 "$TMP/voice.wav" 2>/dev/null
+        timeout -s KILL 8 arecord -q -d 4 -f S16_LE -r 48000 -c 1 "$TMP/voice.wav" 2>/dev/null
         tail -c +45 "$TMP/voice.wav" >"$TMP/voice.raw" 2>/dev/null
         voice="$(rms "$TMP/voice.raw")"
         say "  Playing it back (level $voice)."
-        aplay -q "$TMP/voice.wav" 2>/dev/null
-        verdict microphones "Did you hear your own voice played back clearly?" "voice level $voice; $loop"
+        # Players can hang after the last sample on some machines, so playback is cut off after seven seconds
+        if command -v pw-play >/dev/null 2>&1; then timeout -s KILL 7 pw-play "$TMP/voice.wav" >/dev/null 2>&1
+        else timeout -s KILL 7 aplay -q "$TMP/voice.wav" >/dev/null 2>&1; fi
+        verdict microphones "Did you hear your own voice played back clearly (p if it was very quiet)?" "voice level $voice; $loop"
       }
       # Skipped the voice test: the tones the microphones picked up still say something
       if [ -z "${STATE_OF[microphones]:-}" ]; then
@@ -404,7 +406,7 @@ guided() {
   # Camera: one frame, checked for being more than black
   if [ -n "$cams" ] && command -v cam >/dev/null 2>&1; then
     say "Camera: taking one frame (the light may flash)."
-    timeout 20 cam -c 1 -C 8 -F "$TMP/frame-#.ppm" >/dev/null 2>&1
+    timeout -k 3 20 cam -c 1 -C 8 -F "$TMP/frame-#.ppm" >/dev/null 2>&1
     frame="$(ls "$TMP"/frame-*.ppm 2>/dev/null | tail -n 1)"
     if [ -n "$frame" ]; then
       mean="$(tail -c 200000 "$frame" | od -An -v -t u1 | awk '{for (i = 1; i <= NF; i++) {s += $i; q += $i * $i; n++}} END {m = s / n; printf "%d %d", m, sqrt(q / n - m * m)}')"
