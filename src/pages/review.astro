@@ -1,0 +1,15 @@
+---
+// Where the maintainers look over owners' runs and hide wrong or abusive ones
+import Layout from '../layouts/Layout.astro';
+import Review from '../components/Review';
+---
+
+<Layout title="Review reports · Are we ARM yet?" description="Owners' runs and linked fixes, for the maintainers to look over.">
+  <meta name="robots" content="noindex" slot="head" />
+  <main class="mx-auto max-w-5xl px-4 py-10 text-zinc-400 sm:px-6">
+    <a href="/" class="text-sm text-zinc-400 hover:text-zinc-200">Are we ARM yet?</a>
+    <h1 class="mt-4 text-2xl font-bold text-zinc-50">Review reports</h1>
+    <p class="mt-2 text-sm">The newest 100 runs and fixes. Hiding a run takes it off the model page; hiding a machine takes all its runs off.</p>
+    <div class="mt-6"><Review client:only="solid-js" /></div>
+  </main>
+</Layout>
