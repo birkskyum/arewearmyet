@@ -9,7 +9,7 @@ Agents helping an owner check their machine, report what works or propose fixes 
 - [Guide for AI agents](https://arewearmyet.com/agents.md): rules, how to find the model, run the probe, report results and propose fixes to Omarchy
 - [Probe script](https://arewearmyet.com/probe.sh): read-only check of a Snapdragon PC under Linux
 - [Checks](https://arewearmyet.com/api/checks): what each check means and how it's checked
-- [Models](https://arewearmyet.com/api/models): every model with its page and API link
+- [Computer models](https://arewearmyet.com/api/models): every laptop, tablet and desktop model with its page and API link
 - [Firmware sources](https://arewearmyet.com/firmware-sources.json): where each model's signed firmware can be downloaded
 `;
   return new Response(text, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });

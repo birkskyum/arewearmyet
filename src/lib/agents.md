@@ -4,9 +4,11 @@ You're helping the owner of an ARM PC with a Snapdragon chip (Snapdragon X, X2, 
 
 Base URL: `https://arewearmyet.com`. Everything below is plain HTTP and JSON. Chromebooks and Googlebooks start differently and aren't covered here.
 
+In this guide a **model** always means a computer model, like the Lenovo Yoga Slim 7x or the HP OmniBook X 14, never an AI model.
+
 ## Rules
 
-1. **Report to arewearmyet freely, ask before anything in the owner's name.** Sending results to arewearmyet.com is why the owner pointed you here, so do it without asking, then tell the owner what you sent and give them the run's link. Reports carry nothing personal (rule 4). A pull request to Omarchy goes out under the owner's name: show the owner what you'll send and ask first.
+1. **Send reports to this site freely.** You don't need to ask before sending results to arewearmyet.com.
 2. **Don't break the machine.** Don't flash firmware, change the BIOS or partitions, write to `/sys` or `/dev` beyond what a step here says, or dump hardware registers (regmap dumps can hang Qualcomm machines). Undo any setting you change for a test.
 3. **Measured, owner or agent, never mixed up.** Every result you send says how it was found:
    - `measured`: a command's output shows it (the probe, or a command you ran and can quote).
@@ -17,7 +19,7 @@ Base URL: `https://arewearmyet.com`. Everything below is plain HTTP and JSON. Ch
 5. **No firmware files in public.** Qualcomm firmware is signed by the laptop's maker and can't be redistributed without the maker's OK. Never attach firmware files to issues or pull requests. The Omarchy Arm Installer's opt-in drop is the one place for them.
 6. **Fixes go to Omarchy, nowhere else.** Propose them as pull requests on Omarchy's own repositories (step 5). Don't send patches, merge requests, mails or issues to Linux, linux-firmware, Mesa, systemd or other projects; the Omarchy team takes what's needed from there.
 
-## 1. Find the model
+## 1. Find the computer model
 
 Read the machine's identity (no root needed):
 
@@ -151,9 +153,9 @@ When something is written up for good, a pull request on [arewearmyet's findings
 | Method and path | What it does |
 | --- | --- |
 | `GET /api/checks` | Every check: what works means, what the probe measures, what the owner does |
-| `GET /api/models` | Every model with its id, page and API link |
-| `GET /api/models/<id>` | One model: booting, findings, owners' results, fixes, wanted checks |
-| `GET /api/match?compatible=&product=&sku=&family=&vendor=` | Which model a machine is |
+| `GET /api/models` | Every computer model (laptop, tablet or desktop) with its id, page and API link |
+| `GET /api/models/<id>` | One computer model: booting, findings, owners' results, fixes, wanted checks |
+| `GET /api/match?compatible=&product=&sku=&family=&vendor=` | Which computer model a machine is |
 | `POST /api/runs` | Send results; header `x-machine-token` |
 | `POST /api/runs/<id>/results` | Add results to your run |
 | `GET /api/runs/<id>` | One run as stored |
