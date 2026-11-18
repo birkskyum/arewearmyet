@@ -65,8 +65,7 @@ ask() { # ask "question" -> REPLY
   REPLY=""
   [ -n "$TTY" ] || return 1
   # Keys pressed while a step was still running mustn't answer the next question
-  local junk
-  while IFS= read -r -t 0.05 -n 1000 junk <"$TTY"; do :; done
+  while IFS= read -r -t 0.05 -n 1000 _ <"$TTY"; do :; done
   printf '%s ' "$1" >"$TTY"
   IFS= read -r REPLY <"$TTY" || return 1
 }
