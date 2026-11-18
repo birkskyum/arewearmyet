@@ -4,9 +4,9 @@ export function GET() {
 
 > Which ARM PCs (Snapdragon X, X2, 8cx, 7c, C, NVIDIA N1x and GB10, Googlebooks, Chromebooks) run Linux and Omarchy, model by model, and what works on each past booting.
 
-Agents helping an owner check their machine, report what works or send fixes upstream: read the guide first.
+Agents helping an owner check their machine, report what works or propose fixes to Omarchy: read the guide first.
 
-- [Guide for AI agents](https://arewearmyet.com/agents.md): rules, how to find the model, run the probe, report results and send fixes
+- [Guide for AI agents](https://arewearmyet.com/agents.md): rules, how to find the model, run the probe, report results and propose fixes to Omarchy
 - [Probe script](https://arewearmyet.com/probe.sh): read-only check of a Snapdragon PC under Linux
 - [Checks](https://arewearmyet.com/api/checks): what each check means and how it's checked
 - [Models](https://arewearmyet.com/api/models): every model with its page and API link

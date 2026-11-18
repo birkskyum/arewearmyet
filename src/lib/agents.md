@@ -1,12 +1,12 @@
 # Are we ARM yet? Guide for AI agents
 
-You're helping the owner of an ARM PC with a Snapdragon chip (Snapdragon X, X2, 8cx, 7c, 850, C) get Linux working on it, usually Omarchy. This page tells you how to check what works, how to report it to arewearmyet.com, and how to get fixes to the people who maintain the code. Read it all before you start.
+You're helping the owner of an ARM PC with a Snapdragon chip (Snapdragon X, X2, 8cx, 7c, 850, C) get Linux working on it, usually Omarchy. This page tells you how to check what works, how to report it to arewearmyet.com, and how to propose fixes to Omarchy. Read it all before you start.
 
 Base URL: `https://arewearmyet.com`. Everything below is plain HTTP and JSON. Chromebooks and Googlebooks start differently and aren't covered here.
 
 ## Rules
 
-1. **Report to arewearmyet freely, ask before anything in the owner's name.** Sending results to arewearmyet.com is why the owner pointed you here, so do it without asking, then tell the owner what you sent and give them the run's link. Reports carry nothing personal (rule 4). Pull requests, issues, patches, mails and forum posts on other projects go out under the owner's name and land with real people: show the owner what you'll send and ask first.
+1. **Report to arewearmyet freely, ask before anything in the owner's name.** Sending results to arewearmyet.com is why the owner pointed you here, so do it without asking, then tell the owner what you sent and give them the run's link. Reports carry nothing personal (rule 4). A pull request to Omarchy goes out under the owner's name: show the owner what you'll send and ask first.
 2. **Don't break the machine.** Don't flash firmware, change the BIOS or partitions, write to `/sys` or `/dev` beyond what a step here says, or dump hardware registers (regmap dumps can hang Qualcomm machines). Undo any setting you change for a test.
 3. **Measured, owner or agent, never mixed up.** Every result you send says how it was found:
    - `measured`: a command's output shows it (the probe, or a command you ran and can quote).
@@ -14,8 +14,8 @@ Base URL: `https://arewearmyet.com`. Everything below is plain HTTP and JSON. Ch
    - `agent`: your own reading of logs or output, where neither of the above fits.
    Never mark something `works` because it should work, because another model works, or because a driver loaded. Sound, camera pictures, touch feel and wake from sleep need the owner.
 4. **No personal data.** No serial numbers, MAC addresses, user or host names, Wi-Fi names, IP addresses or file contents from the home folder, in reports or in fixes. The `MSDM` ACPI table holds the Windows product key: never share it.
-5. **No firmware files in public.** Qualcomm firmware is signed by the laptop's maker and can't be redistributed without the maker's OK. Never attach firmware files to issues, pull requests or mails, and never open a linux-firmware merge request for a maker that hasn't agreed on it. The Omarchy Arm Installer's opt-in drop is the one place for them.
-6. **Upstream has its own rules, and a human signs.** See [Sending fixes upstream](#sending-fixes-upstream). Maintainers lose patience fast with machine-written patches nobody tested or understood.
+5. **No firmware files in public.** Qualcomm firmware is signed by the laptop's maker and can't be redistributed without the maker's OK. Never attach firmware files to issues or pull requests. The Omarchy Arm Installer's opt-in drop is the one place for them.
+6. **Fixes go to Omarchy, nowhere else.** Propose them as pull requests on Omarchy's own repositories (step 5). Don't send patches, merge requests, mails or issues to Linux, linux-firmware, Mesa, systemd or other projects; the Omarchy team takes what's needed from there.
 
 ## 1. Find the model
 
@@ -122,37 +122,27 @@ Fields:
 
 ## 5. Fix it
 
-Most fixes for these machines land in one of these places. Find the right one before writing anything:
+Fixes go to Omarchy as pull requests on GitHub, and nowhere else:
 
 | What's wrong | Where it's fixed |
 | --- | --- |
-| A device missing or misconfigured (keyboard, speakers, camera, USB-C, a GPIO) | The model's device tree. In Omarchy: [omarchy-pkgs](https://github.com/omacom/omarchy-pkgs) `pkgbuilds/linux-omarchy-dtbs`. Upstream: the Linux kernel, `arch/arm64/boot/dts/qcom/` |
-| The machine isn't recognised at boot | Its hardware IDs: omarchy-pkgs `pkgbuilds/linux-omarchy-dtbs`, upstream [Ubuntu's stubble](https://github.com/ubuntu/stubble), which systemd copies |
-| A driver bug (Wi-Fi, sound, display, sleep) | The Linux kernel, through the subsystem's mailing list. Omarchy can carry a posted patch in `pkgbuilds/linux-omarchy-aarch64` |
-| Sound profiles (UCM), speaker tuning | [alsa-ucm-conf](https://github.com/alsa-project/alsa-ucm-conf), and Omarchy's audio packages in omarchy-pkgs |
-| Settings Omarchy applies per machine | [Omarchy](https://github.com/omacom/omarchy), `install/hardware/` |
-| Graphics userspace | [Mesa](https://gitlab.freedesktop.org/mesa/mesa) |
-| Firmware files | The maker, then linux-firmware. Not you: see rule 5 |
+| A device missing or misconfigured (keyboard, speakers, camera, USB-C, a GPIO), or the machine not recognised at boot | The model's device tree and hardware IDs, in [omarchy-pkgs](https://github.com/omacom/omarchy-pkgs) `pkgbuilds/linux-omarchy-dtbs` |
+| A kernel driver bug (Wi-Fi, sound, display, sleep) | Omarchy's kernel, omarchy-pkgs `pkgbuilds/linux-omarchy-aarch64` |
+| Sound profiles (UCM), speaker tuning, a model's firmware package | Its package in omarchy-pkgs `pkgbuilds/` |
+| Settings Omarchy applies per machine (a kernel option, an environment variable, a service) | [Omarchy](https://github.com/omacom/omarchy), `install/hardware/` |
 
-Test every change on the machine before proposing it, and tell the owner what you changed and how to undo it.
-
-### Sending fixes upstream
-
-- **Linux kernel.** Patches go by mail (`git send-email` or b4) to the maintainers and lists `scripts/get_maintainer.pl` names, for Qualcomm machines usually linux-arm-msm. Follow `Documentation/process/submitting-patches.rst` and the kernel's rules for AI coding assistants (`Documentation/process/coding-assistants.rst`): the owner reviews the patch, understands it, signs it with their own `Signed-off-by`, and an `Assisted-by:` line names you. Run `scripts/checkpatch.pl` and, for device trees, `make dtbs_check` first. One clean patch beats a series of guesses; never resend the same thing to more lists.
-- **linux-firmware.** Only the maker can submit or approve its files. The owner can ask the maker; you don't open the merge request.
-- **Mesa, systemd, alsa-ucm-conf.** Merge requests or pull requests on their own hosting. Read each project's contribution and AI policy first; some require disclosure, some refuse AI-written changes.
-- **Omarchy and omarchy-pkgs.** Pull requests on GitHub. Describe what you tested, on which machine and kernel.
+Read the repository's `AGENTS.md` or contribution notes first. Test every change on the machine before proposing it, tell the owner what you changed and how to undo it, and say in the pull request what you tested, on which machine and kernel.
 
 ### Telling the site about a fix
 
-When a pull request, patch or merge request for a model exists, link it, so the next owner finds it:
+When a pull request for a model exists, link it, so the next owner finds it:
 
 ```sh
 curl -s -X POST https://arewearmyet.com/api/fixes -H 'content-type: application/json' \
-  -d '{"model": "<id>", "check": "speakers", "url": "https://lore.kernel.org/r/<message-id>", "note": "Right speaker reset GPIO"}'
+  -d '{"model": "<id>", "check": "speakers", "url": "https://github.com/omacom/omarchy-pkgs/pull/<number>", "note": "Right speaker reset GPIO"}'
 ```
 
-Links have to point to GitHub, GitLab, lore.kernel.org, patchwork, git.kernel.org, freedesktop's GitLab, Launchpad, Codeberg or kernel Bugzilla. `check` is optional.
+`check` is optional.
 
 When something is written up for good, a pull request on [arewearmyet's findings](https://github.com/birkskyum/arewearmyet/blob/main/data/findings.yaml) puts it on the model's page next to the owners' results, with its source.
 
