@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Test stand-in for `udevadm info -q property -p <device>`: the fixture's properties for that device
+for last; do :; done
+cat "$PROBE_ROOT/udev/$(basename "$last")" 2>/dev/null

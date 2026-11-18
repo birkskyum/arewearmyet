@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Test stand-in: answers from the fixture in PROBE_ROOT
+case "${1:-}" in -r) cat "$PROBE_ROOT/cmd/uname-r" ;; -m) cat "$PROBE_ROOT/cmd/uname-m" ;; *) echo Linux ;; esac

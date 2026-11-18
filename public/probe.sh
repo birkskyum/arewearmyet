@@ -50,6 +50,9 @@ while [ $# -gt 0 ]; do
   shift
 done
 
+# For the tests: a folder holding a copy of another machine's /sys, /proc and /etc
+R="${PROBE_ROOT:-}"
+
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/arewearmyet.XXXXXX")"
 trap 'rm -rf "$TMP"' EXIT
 
@@ -93,14 +96,14 @@ add() { # add check state how evidence [note]
 }
 
 # --- The machine ---------------------------------------------------------------
-DMI=/sys/class/dmi/id
+DMI=$R/sys/class/dmi/id
 MAKER="$(read1 $DMI/sys_vendor)"; PRODUCT="$(read1 $DMI/product_name)"; FAMILY="$(read1 $DMI/product_family)"
 SKU="$(read1 $DMI/product_sku)"; BOARD="$(read1 $DMI/board_name)"; BIOS="$(read1 $DMI/bios_version)"
 CHASSIS="$(read1 $DMI/chassis_type)"
 COMPATIBLE=""
-[ -r /proc/device-tree/compatible ] && COMPATIBLE="$(tr '\0' '\n' </proc/device-tree/compatible | head -n 1)"
+[ -r $R/proc/device-tree/compatible ] && COMPATIBLE="$(tr '\0' '\n' <$R/proc/device-tree/compatible | head -n 1)"
 KERNEL="$(uname -r)"
-OS="$( . /etc/os-release 2>/dev/null; printf '%s' "${PRETTY_NAME:-${NAME:-Linux}}")"
+OS="$( . "$R/etc/os-release" 2>/dev/null; printf '%s' "${PRETTY_NAME:-${NAME:-Linux}}")"
 case "$(uname -m)" in aarch64|arm64) ;; *) say "This is a $(uname -m) machine; the probe is for ARM PCs. Stopping."; exit 1 ;; esac
 LAPTOP=1
 case "$CHASSIS" in 3|4|5|6|7|13|15|16|35|36) LAPTOP=0 ;; esac  # desktops, mini PCs, all-in-ones
@@ -128,7 +131,7 @@ KLOG="$TMP/klog"
 journalctl -k -b --no-pager -q -o cat >"$KLOG" 2>/dev/null || dmesg >"$KLOG" 2>/dev/null || : >"$KLOG"
 
 # Built-in screen
-for c in /sys/class/drm/card*-eDP-* /sys/class/drm/card*-DSI-*; do
+for c in $R/sys/class/drm/card*-eDP-* $R/sys/class/drm/card*-DSI-*; do
   [ -e "$c/status" ] || continue
   st="$(read1 "$c/status")"; mode="$(read1 "$c/modes")"; name="${c##*/}"
   if [ "$st" = connected ]; then add display works measured "${name#card?-} connected, ${mode:-no mode listed}"
@@ -138,11 +141,11 @@ done
 
 # GPU: the adreno driver bound to a GPU, or the msm display driver on its own
 gpu_dev=""
-for d in /sys/bus/platform/drivers/adreno/*; do case "${d##*/}" in *gpu*) gpu_dev="${d##*/}" ;; esac; done
+for d in $R/sys/bus/platform/drivers/adreno/*; do case "${d##*/}" in *gpu*) gpu_dev="${d##*/}" ;; esac; done
 render_drv=""
-for r in /sys/class/drm/renderD*; do [ -e "$r/device/driver" ] && render_drv="$(basename "$(readlink -f "$r/device/driver")")"; done
+for r in $R/sys/class/drm/renderD*; do [ -e "$r/device/driver" ] && render_drv="$(basename "$(readlink -f "$r/device/driver")")"; done
 soft=""
-grep -qs '^LIBGL_ALWAYS_SOFTWARE=1' /etc/environment && soft=1
+grep -qs '^LIBGL_ALWAYS_SOFTWARE=1' "$R/etc/environment" && soft=1
 if [ -n "$gpu_dev" ]; then
   zap="$(grep -i 'zap' "$KLOG" | grep -iE 'fail|error' | head -n 1)"
   if [ -n "$zap" ]; then add gpu broken measured "GPU $gpu_dev bound, but: $zap"
@@ -154,12 +157,12 @@ fi
 
 # Backlight: without a device the brightness keys can't do anything
 bl=""
-for b in /sys/class/backlight/*; do [ -e "$b/max_brightness" ] && bl="${b##*/} max $(read1 "$b/max_brightness")"; done
+for b in $R/sys/class/backlight/*; do [ -e "$b/max_brightness" ] && bl="${b##*/} max $(read1 "$b/max_brightness")"; done
 [ -z "$bl" ] && [ "$LAPTOP" = 1 ] && add backlight broken measured "no backlight device"
 
 # Input devices, by udev's view of them
 KB=""; TP=""; TS=""; LID=""
-for ev in /sys/class/input/event*; do
+for ev in $R/sys/class/input/event*; do
   [ -e "$ev/device/name" ] || continue
   name="$(read1 "$ev/device/name")"
   props="$(udevadm info -q property -p "$ev" 2>/dev/null)"
@@ -181,14 +184,14 @@ fi
 
 # Wi-Fi
 wif=""
-for n in /sys/class/net/*; do [ -d "$n/wireless" ] || [ -d "$n/phy80211" ] && wif="${n##*/}"; done
+for n in $R/sys/class/net/*; do [ -d "$n/wireless" ] || [ -d "$n/phy80211" ] && wif="${n##*/}"; done
 if [ -z "$wif" ]; then
   add wifi broken measured "no Wi-Fi interface"
 else
-  drv="$(basename "$(readlink -f "/sys/class/net/$wif/device/driver" 2>/dev/null)" 2>/dev/null)"
-  oper="$(read1 "/sys/class/net/$wif/operstate")"
+  drv="$(basename "$(readlink -f "$R/sys/class/net/$wif/device/driver" 2>/dev/null)" 2>/dev/null)"
+  oper="$(read1 "$R/sys/class/net/$wif/operstate")"
   [ "$oper" = up ] && add wifi works measured "$wif ($drv) connected"
-  at="$(read1 "/sys/class/net/$wif/addr_assign_type")"
+  at="$(read1 "$R/sys/class/net/$wif/addr_assign_type")"
   case "$at" in
     0) add wifi-address works measured "$wif ($drv): permanent address" ;;
     1) add wifi-address broken measured "$wif ($drv): random address made by the kernel, so it changes every boot" ;;
@@ -198,7 +201,7 @@ fi
 
 # Bluetooth
 bt=""
-for h in /sys/class/bluetooth/hci*; do [ -e "$h" ] && bt="${h##*/}"; done
+for h in $R/sys/class/bluetooth/hci*; do [ -e "$h" ] && bt="${h##*/}"; done
 if [ -z "$bt" ]; then add bluetooth broken measured "no Bluetooth controller"
 elif command -v bluetoothctl >/dev/null 2>&1; then
   pw="$(timeout 5 bluetoothctl show 2>/dev/null | sed -n 's/^[[:space:]]*Powered: //p' | head -n 1)"
@@ -207,7 +210,7 @@ elif command -v bluetoothctl >/dev/null 2>&1; then
 fi
 
 # Remote processors: the audio DSP (sound, battery, USB-C power) and the compute DSP
-for rp in /sys/class/remoteproc/remoteproc*; do
+for rp in $R/sys/class/remoteproc/remoteproc*; do
   [ -e "$rp/name" ] || continue
   name="$(read1 "$rp/name")"; st="$(read1 "$rp/state")"; fw="$(read1 "$rp/firmware")"
   check=""
@@ -224,7 +227,7 @@ done
 card=""
 while read -r line; do
   case "$line" in *USB-Audio*|*HDMI*|*hdmi*) ;; *\]:*) card="$line" ;; esac
-done < <(grep ']:' /proc/asound/cards 2>/dev/null)
+done < <(grep ']:' $R/proc/asound/cards 2>/dev/null)
 if [ -z "$card" ]; then
   add speakers broken measured "no built-in sound card"
   add microphones broken measured "no built-in sound card"
@@ -232,7 +235,7 @@ fi
 
 # Battery and charging
 bat=""; charge=""
-for ps in /sys/class/power_supply/*; do
+for ps in $R/sys/class/power_supply/*; do
   t="$(read1 "$ps/type")"
   case "$t" in
     Battery)
@@ -264,50 +267,60 @@ elif [ "$LAPTOP" = 1 ]; then add battery broken measured "no battery reports its
 [ -n "$charge" ] && add charging "${charge%%|*}" measured "${charge#*|}"
 
 # Sleep since boot: a machine that slept and is running now woke up from it
-ms="$(read1 /sys/power/mem_sleep)"; ok="$(read1 /sys/power/suspend_stats/success)"; bad="$(read1 /sys/power/suspend_stats/fail)"
+ms="$(read1 $R/sys/power/mem_sleep)"; ok="$(read1 $R/sys/power/suspend_stats/success)"; bad="$(read1 $R/sys/power/suspend_stats/fail)"
 if [ -n "$ok" ] && [ "$ok" -gt 0 ] 2>/dev/null; then
   if [ "${bad:-0}" -gt 0 ]; then add suspend partial measured "$ok sleeps and $bad failures since boot, modes $ms"
   else add suspend works measured "$ok sleeps since boot, none failed, modes $ms"; fi
 elif [ -n "$bad" ] && [ "$bad" -gt 0 ] 2>/dev/null; then add suspend broken measured "$bad failed sleeps since boot, modes $ms"; fi
-grep -qw disk /sys/power/state 2>/dev/null || add hibernate broken measured "the kernel offers no hibernation"
+grep -qw disk $R/sys/power/state 2>/dev/null || add hibernate broken measured "the kernel offers no hibernation"
 
 # USB, external screens and USB4
 ss=0
-for u in /sys/bus/usb/devices/usb*; do s="$(read1 "$u/speed")"; [ "${s:-0}" -ge 5000 ] 2>/dev/null && ss=$((ss + 1)); done
-[ -d /sys/bus/usb/devices ] && [ "$ss" -eq 0 ] && [ -n "$(ls /sys/bus/usb/devices 2>/dev/null)" ] && add usb partial measured "no USB controller offers SuperSpeed (5 Gb/s or more)"
+for u in $R/sys/bus/usb/devices/usb*; do s="$(read1 "$u/speed")"; [ "${s:-0}" -ge 5000 ] 2>/dev/null && ss=$((ss + 1)); done
+[ -d $R/sys/bus/usb/devices ] && [ "$ss" -eq 0 ] && [ -n "$(ls $R/sys/bus/usb/devices 2>/dev/null)" ] && add usb partial measured "no USB controller offers SuperSpeed (5 Gb/s or more)"
 ext=""
-for c in /sys/class/drm/card*-DP-* /sys/class/drm/card*-HDMI-*; do
+for c in $R/sys/class/drm/card*-DP-* $R/sys/class/drm/card*-HDMI-*; do
   [ "$(read1 "$c/status")" = connected ] && ext="${c##*/} $(read1 "$c/modes")"
 done
 [ -n "$ext" ] && add external-display works measured "${ext#card?-} connected"
-for d in /sys/bus/thunderbolt/devices/*; do
+for d in $R/sys/bus/thunderbolt/devices/*; do
   case "${d##*/}" in [0-9]-[0-9]*) add usb4 works measured "USB4 device $(read1 "$d/device_name") at $(read1 "$d/rx_speed") Gb/s x $(read1 "$d/rx_lanes")" ;; esac
 done
 
-# Camera and video decoder
-cams=""; dec=""
-for v in /sys/class/video4linux/video*; do
+# Camera and video decoder. A built-in camera is a sensor on I2C behind Qualcomm's camera
+# subsystem, named like "ov02c10 10-0036"; a USB one shows as a video device of its own
+cams=""; dec=""; camss=""
+for v in $R/sys/class/video4linux/video*; do
   n="$(read1 "$v/name")"
-  case "$n" in *iris*|*venus*|*[Dd]ecoder*) dec="$n" ;; *camss*|*CAMSS*|*[Cc]amera*|*[Ww]ebcam*|*UVC*) cams="$n" ;; esac
+  case "$n" in
+    *iris*|*venus*|*[Dd]ecoder*) dec="$n" ;;
+    msm_vfe*|msm_csi*|*camss*) camss=1 ;;
+    *[Cc]amera*|*[Ww]ebcam*|*UVC*) cams="$n" ;;
+  esac
+done
+for v in $R/sys/class/video4linux/v4l-subdev*; do
+  n="$(read1 "$v/name")"
+  printf '%s' "$n" | grep -qE '^[a-z0-9]+ [0-9]+-[0-9a-f]{4}$' && cams="${n%% *} sensor"
 done
 if command -v cam >/dev/null 2>&1; then
   listed="$(timeout 10 cam -l 2>/dev/null | grep -E '^[0-9]+:' | head -n 1)"
   [ -n "$listed" ] && cams="${listed#*: }"
 fi
-[ -z "$cams" ] && [ "$LAPTOP" = 1 ] && add camera broken measured "no camera device"
+if [ -z "$cams" ] && [ -n "$camss" ]; then add camera broken measured "the camera subsystem is up, but no sensor was found"
+elif [ -z "$cams" ] && [ "$LAPTOP" = 1 ]; then add camera broken measured "no camera device"; fi
 [ -z "$dec" ] && add video-decode broken measured "no iris or venus video decoder"
 
 # Fans and temperatures
 fan=""; temps=0
-for h in /sys/class/hwmon/hwmon*; do
+for h in $R/sys/class/hwmon/hwmon*; do
   for f in "$h"/fan*_input; do [ -r "$f" ] && fan="$(read1 "$h/name") $(read1 "$f") rpm"; done
 done
-for z in /sys/class/thermal/thermal_zone*/temp; do [ -r "$z" ] && temps=$((temps + 1)); done
+for z in $R/sys/class/thermal/thermal_zone*/temp; do [ -r "$z" ] && temps=$((temps + 1)); done
 [ -n "$fan" ] && add fans works measured "$fan; $temps temperature sensors"
 
 # A fingerprint reader on USB, by maker
 fp=""
-for u in /sys/bus/usb/devices/*; do
+for u in $R/sys/bus/usb/devices/*; do
   case "$(read1 "$u/idVendor" 2>/dev/null)" in 27c6|06cb|04f3|1c7a|10a5|2808|298d) fp="$(read1 "$u/idVendor"):$(read1 "$u/idProduct")" ;; esac
 done
 
@@ -382,26 +395,26 @@ guided() {
   fi
 
   # Sleep: wait for the owner to close and open the lid, then see what came back
-  if [ -r /sys/power/suspend_stats/success ]; then
+  if [ -r $R/sys/power/suspend_stats/success ]; then
     say "Sleep: close the lid, wait 20 seconds, open it and log back in. The probe waits up to 3 minutes."
     ask "Press Enter, then close the lid (s to skip)." && [ "$REPLY" != s ] && {
-      before="$(read1 /sys/power/suspend_stats/success)"; fails="$(read1 /sys/power/suspend_stats/fail)"
+      before="$(read1 $R/sys/power/suspend_stats/success)"; fails="$(read1 $R/sys/power/suspend_stats/fail)"
       waited=0
-      while [ "$(read1 /sys/power/suspend_stats/success)" = "$before" ] && [ "$(read1 /sys/power/suspend_stats/fail)" = "$fails" ] && [ $waited -lt 180 ]; do sleep 2; waited=$((waited + 2)); done
-      if [ "$(read1 /sys/power/suspend_stats/fail)" != "$fails" ]; then
-        add suspend broken measured "the sleep failed (suspend_stats fail went from $fails to $(read1 /sys/power/suspend_stats/fail))"
-      elif [ "$(read1 /sys/power/suspend_stats/success)" = "$before" ]; then
+      while [ "$(read1 $R/sys/power/suspend_stats/success)" = "$before" ] && [ "$(read1 $R/sys/power/suspend_stats/fail)" = "$fails" ] && [ $waited -lt 180 ]; do sleep 2; waited=$((waited + 2)); done
+      if [ "$(read1 $R/sys/power/suspend_stats/fail)" != "$fails" ]; then
+        add suspend broken measured "the sleep failed (suspend_stats fail went from $fails to $(read1 $R/sys/power/suspend_stats/fail))"
+      elif [ "$(read1 $R/sys/power/suspend_stats/success)" = "$before" ]; then
         verdict suspend "The laptop didn't sleep within 3 minutes. Did closing the lid do anything?"
       else
         sleep 15
         back=""
-        [ -n "$wif" ] && [ "$(read1 "/sys/class/net/$wif/operstate")" != up ] && back+="Wi-Fi not reconnected after 15 s; "
-        for rp in /sys/class/remoteproc/remoteproc*; do
+        [ -n "$wif" ] && [ "$(read1 "$R/sys/class/net/$wif/operstate")" != up ] && back+="Wi-Fi not reconnected after 15 s; "
+        for rp in $R/sys/class/remoteproc/remoteproc*; do
           case "$(read1 "$rp/name")" in *adsp*) [ "$(read1 "$rp/state")" = running ] || back+="adsp $(read1 "$rp/state") after waking; " ;; esac
         done
         if [ -n "$back" ]; then add suspend partial measured "woke, but: ${back%; }"
         else add suspend works measured "slept and woke; Wi-Fi and the audio DSP came back"; fi
-        verdict suspend "Did it wake to the lock screen without trouble?" "$(read1 /sys/power/mem_sleep)"
+        verdict suspend "Did it wake to the lock screen without trouble?" "$(read1 $R/sys/power/mem_sleep)"
       fi
     }
   fi

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Test stand-in: runs the command without the time limit
+shift
+exec "$@"

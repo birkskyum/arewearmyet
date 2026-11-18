@@ -1,0 +1,11 @@
+linux-omarchy 7.3-59
+linux-firmware 20260916-1
+linux-firmware-qcom 20261019-1.1
+mesa 1:26.2.5-1
+systemd 262.1-1
+omarchy-dev 4.0.0.r7344.ga001044-1
+hyprland 0.56.2-7
+pipewire 1:1.6.10-1
+alsa-ucm-conf 1.2.16.1-1
+bluez 5.87-2
+libcamera 0.7.2-4

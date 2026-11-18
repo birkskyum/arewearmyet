@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Test stand-in: the fixture's kernel log lines
+cat "$PROBE_ROOT/cmd/klog" 2>/dev/null
