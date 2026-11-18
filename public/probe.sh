@@ -64,6 +64,9 @@ if [ -r /dev/tty ] && [ -w /dev/tty ] && { : </dev/tty; } 2>/dev/null; then TTY=
 ask() { # ask "question" -> REPLY
   REPLY=""
   [ -n "$TTY" ] || return 1
+  # Keys pressed while a step was still running mustn't answer the next question
+  local junk
+  while IFS= read -r -t 0.05 -n 1000 junk <"$TTY"; do :; done
   printf '%s ' "$1" >"$TTY"
   IFS= read -r REPLY <"$TTY" || return 1
 }
@@ -401,7 +404,7 @@ guided() {
     verdict speakers "Do both speakers play music cleanly?"
     verdict microphones "In a voice recorder or a call, do the built-in microphones pick you up?"
   fi
-  verdict headphones "Do wired headphones play when plugged in (a if it has no jack)?"
+  verdict headphones "If you have wired headphones at hand, plug them in: do they play (a if it has no jack)?"
 
   # Camera: one frame, checked for being more than black
   if [ -n "$cams" ] && command -v cam >/dev/null 2>&1; then
@@ -447,22 +450,23 @@ guided() {
     }
   fi
 
-  # Everything only a person can tell
+  # What only a person can tell. A check the probe already measured as working isn't asked about,
+  # and every question can be answered from the chair, or skipped when it hasn't been tried.
   say ""
-  [ -n "$KB" ] && verdict keyboard "Does every key work, including volume, brightness and mute on the function row?" "$KB"
-  [ -n "$TP" ] && verdict touchpad "Do pointer, click, two-finger scroll and three-finger swipes work on the touchpad?" "$TP"
-  [ -n "$TS" ] && verdict touchscreen "Does touch land where your finger is (and the pen draw, if it has one)?" "$TS"
-  [ -n "$bl" ] && verdict backlight "Do the brightness keys dim and brighten the screen?" "$bl"
-  verdict display "Does the desktop fill the built-in screen sharply, without flicker?"
-  verdict disk-unlock "At startup, was the disk password prompt visible and did the built-in keyboard type into it (a if the disk isn't encrypted)?"
-  verdict usb "Does a USB stick work in every port, both ways round on USB-C?"
-  verdict external-display "Does a screen on USB-C (or HDMI) show a picture when plugged in?"
-  verdict charging "Does it charge at the usual speed from its own charger?"
-  verdict fans "Do the fans spin up under load and quiet down after (a if it has none)?"
-  [ -n "$fp" ] && verdict fingerprint "Does the fingerprint reader enroll a finger and unlock with it?" "USB $fp"
-  verdict wifi "Does Wi-Fi stay connected through the day and after sleep?"
-  verdict bluetooth "Do Bluetooth headphones or a mouse pair and stay connected?"
-  verdict installer "Did the install image start from the USB stick and reach the installer with keyboard and touchpad working (s if you didn't install it yourself)?"
+  say "A few questions. Answer s for anything you haven't tried."
+  unmeasured() { [ "${STATE_OF[$1]:-}" != works ]; }
+  [ -n "$KB" ] && verdict keyboard "Do the letter, number and arrow keys all type on the built-in keyboard?" "$KB"
+  [ -n "$TP" ] && verdict touchpad "On the touchpad, do moving the pointer, clicking and scrolling with two fingers work?" "$TP"
+  [ -n "$TS" ] && verdict touchscreen "Tap the screen with a finger: does the tap land where you touch (a if it has no touchscreen)?" "$TS"
+  [ -n "$bl" ] && verdict backlight "Press the brightness keys now: does the screen get darker and brighter?" "$bl"
+  unmeasured display && verdict display "Does the desktop fill the built-in screen and look sharp?"
+  verdict disk-unlock "When you started the laptop today, did you see the disk password prompt and type into it with the built-in keyboard (a if the disk isn't encrypted)?"
+  verdict usb "Have USB sticks or other devices worked in every USB port you've tried?"
+  unmeasured external-display && verdict external-display "If you've plugged in an external screen: did it show a picture?"
+  unmeasured charging && verdict charging "With its own charger plugged in, does the battery percentage go up?"
+  [ -n "$fp" ] && verdict fingerprint "If you've set up the fingerprint reader: does it unlock with your finger?" "USB $fp"
+  unmeasured bluetooth && verdict bluetooth "If you've used Bluetooth headphones or a mouse: do they pair and stay connected?"
+  verdict installer "If you installed Omarchy on it yourself: did the installer start from the USB stick with keyboard and touchpad working?"
 }
 [ "$GUIDED" = 1 ] && guided
 
@@ -518,7 +522,13 @@ run="$(printf '%s' "$response" | sed -nE 's/.*"run":"([^"]*)".*/\1/p')"
 page="$(printf '%s' "$response" | sed -nE 's/.*"page":"([^"]*)".*/\1/p')"
 printf '%s\n' "$run" >"$STATE_DIR/last-run"
 say "Sent as $run. Thank you!"
-[ -n "$page" ] && say "It shows on $page"
+if [ -n "$page" ]; then
+  say "It shows on $page"
+  # Not every terminal opens a link on a click, so the probe offers to
+  if [ -n "$TTY" ] && command -v xdg-open >/dev/null 2>&1 && ask "Open that page in your browser? [Y/n]"; then
+    case "$REPLY" in n|N|no|No) ;; *) xdg-open "$page" >/dev/null 2>&1 & ;; esac
+  fi
+fi
 if [ -z "$page" ]; then
   # The board doesn't know the machine: the form to add it, with what identifies it filled in
   urlencode() {
