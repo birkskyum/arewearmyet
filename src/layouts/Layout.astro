@@ -39,6 +39,7 @@ const imageAlt = 'Are we ARM yet? Omarchy on ARM PCs, model by model.';
     <meta name="twitter:image" content={image} />
     <meta name="twitter:image:alt" content={imageAlt} />
     <meta name="generator" content={Astro.generator} />
+    <slot name="head" />
   </head>
   <body class="min-h-screen bg-zinc-950 text-zinc-200 antialiased">
     <slot />

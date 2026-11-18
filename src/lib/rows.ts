@@ -76,8 +76,9 @@ export function googlebookRows(boot: 'android' | 'depthcharge' = 'android'): Tab
 export function snapdragonRows(): TableRow[] {
   return status.models
     .filter((model: Model) => model.boot === 'uefi')
-    .map((model: Model) =>
-      modelRow(model, {
+    .map((model: Model) => ({
+      // Snapdragon PCs that start through UEFI have a page of their own, with every check past booting
+      ...modelRow(model, {
         // The Omarchy view
         bootable: plain(bootableCell(model)),
         acpi: plain(acpiCell(model)),
@@ -90,7 +91,8 @@ export function snapdragonRows(): TableRow[] {
         ids: plain(idsCell(model)),
         firmware: plain(upstreamFirmwareCell(model)),
       }),
-    );
+      href: `/models/${model.id}`,
+    }));
 }
 
 const NVIDIA_OUTCOME: Record<string, TableRow['outcome']> = { works: 'works', expected: 'should', problems: 'problems', untested: 'notyet' };

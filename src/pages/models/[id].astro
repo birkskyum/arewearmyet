@@ -1,0 +1,169 @@
+---
+// One model: whether it boots and from which pieces, then every check past booting, with what's
+// written up in data/findings.yaml and owners' live results
+import Layout from '../../layouts/Layout.astro';
+import CheckTable from '../../components/CheckTable';
+import ChipIcon from '../../assets/chip-icon.svg';
+import GitHubIcon from '../../assets/github-icon.svg';
+import { GENERATION, TONE, acpiCell, bootableCell, deviceTreeCell, idsCell, machineCell, omarchyFirmwareCell, omarchyIdsCell, omarchyTreeCell, upstreamFirmwareCell, type Model } from '../../lib/labels';
+import { PILL } from '../../lib/tones';
+import { GROUPS, coverage, modelChecks, modelExtra, pageModels } from '../../lib/checks';
+
+export function getStaticPaths() {
+  return pageModels().map((model) => ({ params: { id: model.id }, props: { model } }));
+}
+
+const model = Astro.props.model as Model;
+const rows = modelChecks(model);
+const extra = modelExtra(model);
+const cover = coverage(model);
+const REPO = 'https://github.com/birkskyum/arewearmyet';
+const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
+const CARD = 'rounded-xl bg-zinc-900 p-5 ring-1 ring-zinc-800';
+const CODE = 'mt-2 overflow-x-auto rounded-md bg-zinc-950 p-3 text-xs text-zinc-300';
+const title = `${model.vendor} ${model.name}`;
+const subtitle = [GENERATION[model.generation], model.released ? String(model.released).slice(0, 7) : null, model.chips.join(', '), model.modelNumbers.join(', ')].filter(Boolean).join(' · ');
+const pieces = [
+  { name: 'Bootable', cell: bootableCell(model) },
+  { name: 'ACPI dump', cell: acpiCell(model) },
+  { name: 'Device tree', cell: omarchyTreeCell(model) },
+  { name: 'Hardware IDs', cell: omarchyIdsCell(model) },
+  { name: 'Firmware', cell: omarchyFirmwareCell(model) },
+  { name: 'Who has one', cell: machineCell(model) },
+];
+const upstream = [
+  { name: 'Linux', cell: deviceTreeCell(model) },
+  { name: 'systemd', cell: idsCell(model) },
+  { name: 'linux-firmware', cell: upstreamFirmwareCell(model) },
+];
+const links = [...(model.discussion ? [{ title: 'Discussion', url: model.discussion }] : []), ...extra.links];
+const sources = model.sources;
+const firmware = [...new Set(model.variants.flatMap((v) => v.firmwareNeeded ?? []))];
+const trees = model.variants.filter((v) => v.deviceTree?.file);
+const REPORT_TONE = { works: 'good', workaround: 'close', problems: 'wanted' } as const;
+---
+
+<Layout title={`${title} · Are we ARM yet?`} description={`What works on the ${title} under Linux and Omarchy: booting, device tree, firmware, and every check from sound to sleep.`}>
+  <main class="mx-auto max-w-5xl px-4 py-10 text-zinc-400 sm:px-6">
+    <div class="flex items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 text-zinc-300 hover:text-zinc-100">
+        <ChipIcon class="h-8 w-8 text-[#9ece6a]" aria-hidden="true" />
+        <span class="font-semibold">Are we ARM yet?</span>
+      </a>
+      <a href={`${REPO}/edit/main/data/findings.yaml`} class="flex shrink-0 items-center gap-2 rounded-md p-2 text-sm text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100 sm:px-3 sm:py-1.5">
+        <GitHubIcon class="h-5 w-5" aria-hidden="true" />
+        <span class="hidden sm:inline">Edit the findings</span>
+      </a>
+    </div>
+
+    <h1 class="mt-8 text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">{title}</h1>
+    <p class="mt-2 text-sm text-zinc-500">{subtitle}</p>
+    {model.notes && <p class="mt-4 max-w-3xl">{model.notes}</p>}
+
+    <section class="mt-8 grid gap-4 md:grid-cols-2">
+      <div class={CARD}>
+        <h2 class="text-sm font-semibold text-zinc-100">Booting with Omarchy</h2>
+        <dl class="mt-3 grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-2 text-sm">
+          {pieces.map((p) => (
+            <>
+              <dt class="text-zinc-400">{p.name}</dt>
+              <dd>{p.cell.href ? <a href={p.cell.href} class={`${PILL} ${TONE[p.cell.tone]} hover:brightness-125`} data-tip={p.cell.title}>{p.cell.label}</a> : <span class={`${PILL} ${TONE[p.cell.tone]}`} data-tip={p.cell.title}>{p.cell.label}</span>}</dd>
+            </>
+          ))}
+        </dl>
+      </div>
+      <div class={CARD}>
+        <h2 class="text-sm font-semibold text-zinc-100">Upstream, for every distro</h2>
+        <dl class="mt-3 grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-2 text-sm">
+          {upstream.map((p) => (
+            <>
+              <dt class="text-zinc-400">{p.name}</dt>
+              <dd>{p.cell.href ? <a href={p.cell.href} class={`${PILL} ${TONE[p.cell.tone]} hover:brightness-125`} data-tip={p.cell.title}>{p.cell.label}</a> : <span class={`${PILL} ${TONE[p.cell.tone]}`} data-tip={p.cell.title}>{p.cell.label}</span>}</dd>
+            </>
+          ))}
+        </dl>
+        <p class="mt-4 text-xs text-zinc-500">{cover.known} of {cover.total} checks are written up for this model, {cover.works} of them working.</p>
+      </div>
+    </section>
+
+    {model.reports.length > 0 && (
+      <section class="mt-8">
+        <h2 class="text-lg font-semibold text-zinc-100">Owners' reports</h2>
+        <ul class="mt-3 space-y-3">
+          {model.reports.map((report) => (
+            <li class={CARD}>
+              <div class="flex flex-wrap items-center gap-2 text-xs text-zinc-500">
+                <span class={`${PILL} ${TONE[REPORT_TONE[report.state as keyof typeof REPORT_TONE] ?? 'muted']}`}>{report.state === 'works' ? 'Works' : report.state === 'workaround' ? 'Workaround' : 'Problems'}</span>
+                {report.variant && <span>{report.variant}</span>}
+                {report.checked && <span>{report.checked}</span>}
+              </div>
+              <p class="mt-2 text-sm">{report.note}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section class="mt-10">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">What works</h2>
+        <p class="text-xs text-zinc-500">Click a check to see what it means, how it's checked and every result.</p>
+      </div>
+      <div class="mt-4">
+        <CheckTable client:load model={model.id} groups={GROUPS} rows={rows} />
+      </div>
+    </section>
+
+    <section class="mt-10 rounded-xl bg-[#9ece6a]/10 p-5 ring-1 ring-[#9ece6a]/40">
+      <h2 class="text-base font-semibold text-[#9ece6a]">Own one? Check it in a minute</h2>
+      <p class="mt-2 text-sm text-zinc-300">On the laptop, under Omarchy or any other distro, run the probe. It only reads, needs no root, shows you everything before asking to send it, and sends no serial numbers or addresses.</p>
+      <pre class={CODE}><code>curl -fsSL https://arewearmyet.com/probe.sh | bash</code></pre>
+      <p class="mt-3 text-sm text-zinc-300">Add <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs">-s -- --guided</code> after <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs">bash</code> to also test the speakers, microphones, camera and sleep with you. Working with an AI agent on it? Point it at <a class={LINK} href="/agents">arewearmyet.com/agents</a>, which tells it how to check this laptop, report results and send fixes upstream.</p>
+    </section>
+
+    <section class="mt-10 grid gap-6 md:grid-cols-2">
+      {extra.details && (
+        <div class="md:col-span-2">
+          <h2 class="text-lg font-semibold text-zinc-100">Notes</h2>
+          {extra.details.split(/\n\n+/).map((paragraph) => <p class="mt-2 max-w-3xl">{paragraph}</p>)}
+        </div>
+      )}
+      {trees.length > 0 && (
+        <div>
+          <h2 class="text-base font-semibold text-zinc-100">Device trees</h2>
+          <ul class="mt-2 space-y-1 text-sm">
+            {trees.map((v) => (
+              <li><code class="text-zinc-300">{v.deviceTree.file}</code>{v.chip && <span class="text-zinc-500"> · {v.chip}</span>}<span class="text-zinc-500"> · {v.compatible}</span></li>
+            ))}
+          </ul>
+          {model.upstream.devicetreePosted && <p class="mt-2 text-sm"><a class={LINK} href={model.upstream.devicetreePosted}>Posted to the kernel list</a></p>}
+          {model.upstream.devicetreeOutOfTree && <p class="mt-1 text-sm"><a class={LINK} href={model.upstream.devicetreeOutOfTree}>Out-of-tree source</a></p>}
+        </div>
+      )}
+      {firmware.length > 0 && (
+        <div>
+          <h2 class="text-base font-semibold text-zinc-100">Firmware its tree loads</h2>
+          <ul class="mt-2 space-y-0.5 text-xs">
+            {firmware.map((file) => <li><code class="text-zinc-300">{file}</code></li>)}
+          </ul>
+          {model.upstream.firmwareDownload && <p class="mt-2 text-sm"><a class={LINK} href={model.upstream.firmwareDownload}>Where to get it</a></p>}
+        </div>
+      )}
+      {(links.length > 0 || sources.length > 0 || model.upstream.acpiUrls.length > 0) && (
+        <div class="md:col-span-2">
+          <h2 class="text-base font-semibold text-zinc-100">Links</h2>
+          <ul class="mt-2 space-y-1 text-sm">
+            {links.map((link) => <li><a class={LINK} href={link.url}>{link.title}</a></li>)}
+            {model.upstream.idsCollected && <li><a class={LINK} href={model.upstream.idsCollected}>Hardware IDs as sent in</a></li>}
+            {model.upstream.acpiUrls.map((url) => <li><a class={LINK} href={url}>ACPI dump</a></li>)}
+            {sources.map((url) => <li><a class={LINK} href={url}>{new URL(url).hostname.replace(/^www\./, '')}</a></li>)}
+          </ul>
+        </div>
+      )}
+    </section>
+
+    <p class="mt-10 text-xs text-zinc-500">
+      Machine-readable: <a class={LINK} href={`/api/models/${model.id}`}>/api/models/{model.id}</a>. Something wrong or missing? <a class={LINK} href={`${REPO}/edit/main/data/findings.yaml`}>Edit the findings</a> or <a class={LINK} href={`${REPO}/issues/new?template=model.yml`}>open an issue</a>.
+    </p>
+  </main>
+</Layout>
