@@ -1003,3 +1003,67 @@ func TestCtrlNPassesAnyStepOver(t *testing.T) {
 		t.Errorf("skipped steps aren't marked:\n%s", m.View().Content)
 	}
 }
+
+func TestSleepWaitsForWifiAndRecordsHowLongItTook(t *testing.T) {
+	woke := func(root string) (*sleep, *report.Run, *time.Time) {
+		set := func(path, text string) {
+			os.MkdirAll(filepath.Dir(filepath.Join(root, path)), 0o755)
+			os.WriteFile(filepath.Join(root, path), []byte(text), 0o644)
+		}
+		set("sys/class/net/wlan0/operstate", "up\n")
+		set("sys/class/remoteproc/remoteproc0/name", "adsp\n")
+		set("sys/class/remoteproc/remoteproc0/state", "running\n")
+		set("sys/power/mem_sleep", "s2idle [deep]\n")
+		set("sys/power/suspend_stats/success", "1\n")
+		set("sys/power/suspend_stats/fail", "0\n")
+		run := &report.Run{}
+		s := newSleep(run, probe.Facts{Wifi: "wlan0"})
+		s.sys = machine.Fixture(root)
+		now := time.Unix(5000, 0)
+		s.clock = func() time.Time { return now }
+		s.update(press(tea.KeyEnter))
+		// Asleep: Wi-Fi drops. Awake: the kernel counts one more sleep, and Wi-Fi is still down
+		set("sys/class/net/wlan0/operstate", "down\n")
+		s.update(sleepMsg{ok: 2, failed: 0})
+		if s.phase != "settling" {
+			t.Fatalf("after waking it is %q", s.phase)
+		}
+		return s, run, &now
+	}
+
+	// Wi-Fi comes back after 23 seconds: slow, and not a failure
+	root := t.TempDir()
+	s, run, now := woke(root)
+	for second := 1; second <= 22; second++ {
+		*now = now.Add(time.Second)
+		s.update(settleMsg{})
+	}
+	if s.phase != "settling" || !strings.Contains(s.view(90, 30), "Waiting for Wi-Fi to come back, 22 s so far") {
+		t.Fatalf("after 22 s: %q\n%s", s.phase, s.view(90, 30))
+	}
+	os.WriteFile(filepath.Join(root, "sys/class/net/wlan0/operstate"), []byte("up\n"), 0o644)
+	*now = now.Add(time.Second)
+	s.update(settleMsg{})
+	if s.phase != "ask" || len(s.problems) != 0 {
+		t.Fatalf("once Wi-Fi is back: %q, problems %v", s.phase, s.problems)
+	}
+	s.update(press('1'))
+	result, _ := run.Get("suspend")
+	if result.State != report.Works || !strings.Contains(result.Evidence, "Wi-Fi was back 23 s after waking, the audio processor is running") {
+		t.Errorf("result %+v", result)
+	}
+
+	// Still down after a minute: that is a problem, whatever the owner answers
+	s, run, now = woke(t.TempDir())
+	for second := 1; second <= 60; second++ {
+		*now = now.Add(time.Second)
+		s.update(settleMsg{})
+	}
+	if s.phase != "ask" {
+		t.Fatalf("after a minute it is %q", s.phase)
+	}
+	s.update(press('1'))
+	if result, _ := run.Get("suspend"); result.State != report.Partial || !strings.Contains(result.Evidence, "Wi-Fi hadn't reconnected 60 s after waking") {
+		t.Errorf("never back: %+v", result)
+	}
+}

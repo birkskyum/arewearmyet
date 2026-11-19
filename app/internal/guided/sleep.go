@@ -15,8 +15,12 @@ import (
 // sleepMsg is the kernel's count of sleeps that worked and that failed.
 type sleepMsg struct{ ok, failed int64 }
 
-// awakeMsg comes a while after waking, with what didn't come back.
-type awakeMsg struct{ problems []string }
+// settleMsg is one look, after waking, at what has come back so far.
+type settleMsg struct{}
+
+// How long Wi-Fi and the audio processor get to come back after waking. Wi-Fi often needs
+// ten or twenty seconds to find its network again, which is slow but not broken.
+const settleLimit = 60 * time.Second
 
 // sleep waits for the owner to close and open the lid, then looks at what came back.
 type sleep struct {
@@ -28,13 +32,18 @@ type sleep struct {
 	ok       int64
 	failed   int64
 	problems []string
-	ask      choice
-	note     line
-	over     bool
+	// woke is when the wake was noticed, and back what came back and how long after it.
+	woke time.Time
+	back []string
+	// clock is the time, which tests set.
+	clock func() time.Time
+	ask   choice
+	note  line
+	over  bool
 }
 
 func newSleep(run *report.Run, facts probe.Facts) *sleep {
-	return &sleep{run: run, sys: machine.Real(), wifi: facts.Wifi, phase: "intro",
+	return &sleep{run: run, sys: machine.Real(), wifi: facts.Wifi, phase: "intro", clock: time.Now,
 		ask:  choice{question: "Did it wake up to the lock screen without trouble?", options: []string{"Yes", "It woke, but something was wrong", "It never went to sleep"}},
 		note: line{prompt: "What was wrong after waking? (Enter to leave it empty)"}}
 }
@@ -72,10 +81,31 @@ func (s *sleep) poll() tea.Cmd {
 
 func (s *sleep) evidence() string {
 	text := "slept and woke in " + s.sys.Read("/sys/power/mem_sleep")
-	if len(s.problems) > 0 {
-		return text + ", but " + strings.Join(s.problems, " and ")
+	if len(s.back) > 0 {
+		text += "; " + strings.Join(s.back, ", ")
 	}
-	return text + "; Wi-Fi and the audio processor came back"
+	if len(s.problems) > 0 {
+		text += ", but " + strings.Join(s.problems, " and ")
+	}
+	return text
+}
+
+// wifiUp and audioUp say whether each is back.
+func (s *sleep) wifiUp() bool {
+	return s.sys.Read("/sys/class/net/"+s.wifi+"/operstate") == "up"
+}
+
+func (s *sleep) audioState() string {
+	for _, processor := range s.sys.Glob("/sys/class/remoteproc/remoteproc*") {
+		if strings.Contains(s.sys.Read(processor+"/name"), "adsp") {
+			return s.sys.Read(processor + "/state")
+		}
+	}
+	return ""
+}
+
+func (s *sleep) settle() tea.Cmd {
+	return tea.Tick(time.Second, func(time.Time) tea.Msg { return settleMsg{} })
 }
 
 func (s *sleep) update(msg tea.Msg) tea.Cmd {
@@ -89,25 +119,38 @@ func (s *sleep) update(msg tea.Msg) tea.Cmd {
 			s.run.Set("suspend", report.Broken, report.Measured, fmt.Sprintf("closing the lid started a sleep that failed (the kernel's count of failed sleeps went from %d to %d)", s.failed, msg.failed), "")
 			s.over = true
 		case msg.ok > s.ok:
-			// Give Wi-Fi and the audio processor a moment to come back before looking
-			s.phase = "settling"
-			return tea.Tick(12*time.Second, func(time.Time) tea.Msg {
-				var problems []string
-				if s.wifiWas && s.sys.Read("/sys/class/net/"+s.wifi+"/operstate") != "up" {
-					problems = append(problems, "Wi-Fi hadn't reconnected 12 seconds after waking")
-				}
-				for _, processor := range s.sys.Glob("/sys/class/remoteproc/remoteproc*") {
-					if name := s.sys.Read(processor + "/name"); strings.Contains(name, "adsp") && s.sys.Read(processor+"/state") != "running" {
-						problems = append(problems, "the audio processor was "+s.sys.Read(processor+"/state")+" after waking")
-					}
-				}
-				return awakeMsg{problems}
-			})
+			// Awake. Now watch what comes back and time it, for up to a minute: how long Wi-Fi
+			// takes is worth knowing, and one look too early would call a slow reconnect a failure
+			s.phase, s.woke, s.back, s.problems = "settling", s.clock(), nil, nil
+			return s.settle()
 		default:
 			return s.poll()
 		}
-	case awakeMsg:
-		s.problems, s.phase = msg.problems, "ask"
+	case settleMsg:
+		if s.phase != "settling" {
+			return nil
+		}
+		took := s.clock().Sub(s.woke)
+		wifi := !s.wifiWas || s.wifiUp()
+		audio := s.audioState()
+		if (!wifi || (audio != "" && audio != "running")) && took < settleLimit {
+			return s.settle()
+		}
+		if s.wifiWas {
+			if wifi {
+				s.back = append(s.back, fmt.Sprintf("Wi-Fi was back %.0f s after waking", took.Seconds()))
+			} else {
+				s.problems = append(s.problems, fmt.Sprintf("Wi-Fi hadn't reconnected %.0f s after waking", took.Seconds()))
+			}
+		}
+		switch audio {
+		case "running":
+			s.back = append(s.back, "the audio processor is running")
+		case "":
+		default:
+			s.problems = append(s.problems, "the audio processor was "+audio+" after waking")
+		}
+		s.phase = "ask"
 	case tea.KeyPressMsg:
 		switch s.phase {
 		case "intro", "waiting":
@@ -156,7 +199,11 @@ func (s *sleep) view(width, height int) string {
 	case "waiting":
 		return accent.Render("● Close the lid now, wait twenty seconds, then open it and unlock")
 	case "settling":
-		return good.Render("✓ It slept and woke.") + " Giving Wi-Fi and sound a moment to come back…"
+		waiting := "sound"
+		if s.wifiWas && !s.wifiUp() {
+			waiting = "Wi-Fi"
+		}
+		return good.Render("✓ It slept and woke.") + fmt.Sprintf(" Waiting for %s to come back, %.0f s so far (up to a minute)…", waiting, s.clock().Sub(s.woke).Seconds())
 	case "note":
 		return s.note.view(width)
 	}
