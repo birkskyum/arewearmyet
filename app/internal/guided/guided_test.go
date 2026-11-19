@@ -116,12 +116,10 @@ func TestQuestionsAskOnlyWhatIsThereAndUnmeasured(t *testing.T) {
 	for _, question := range q.list {
 		checks = append(checks, question.check)
 	}
-	if got := strings.Join(checks, " "); got != "touchpad headphones usb external-display installer" {
+	if got := strings.Join(checks, " "); got != "usb external-display installer" {
 		t.Errorf("asked: %s", got)
 	}
 
-	q.update(press('1')) // touchpad: yes
-	q.update(press('5')) // headphones: no jack
 	q.update(press('2')) // usb: partly, then a note
 	for _, c := range "left port dead" {
 		q.update(press(c))
@@ -133,7 +131,7 @@ func TestQuestionsAskOnlyWhatIsThereAndUnmeasured(t *testing.T) {
 	if !q.done() {
 		t.Fatal("not done")
 	}
-	want := map[string]string{"touchpad": report.Works, "headphones": report.Absent, "usb": report.Partial, "external-display": "", "installer": report.Broken}
+	want := map[string]string{"usb": report.Partial, "external-display": "", "installer": report.Broken}
 	for check, state := range want {
 		if run.State(check) != state {
 			t.Errorf("%s: %q, want %q", check, run.State(check), state)
@@ -241,5 +239,96 @@ func TestSleepSavesTheTestBeforeTheLidCloses(t *testing.T) {
 	s.update(sleepMsg{ok: s.ok + 1, failed: s.failed})
 	if _, found := report.LoadPending(); found {
 		t.Error("it was still saved after waking")
+	}
+}
+
+func TestTouchpadIsMeasuredFromThePointerInTheTerminal(t *testing.T) {
+	run := &report.Run{}
+	pad := newTouchpad(run, "hid-over-i2c 0488:1054 Touchpad")
+	if !pad.wantsMouse() {
+		t.Fatal("it doesn't ask for the pointer")
+	}
+	for x := 0; x < 8; x++ {
+		pad.update(tea.MouseMotionMsg{X: x, Y: 3})
+	}
+	pad.update(tea.MouseClickMsg{Button: tea.MouseLeft})
+	pad.update(tea.MouseWheelMsg{Button: tea.MouseWheelDown})
+	pad.update(press(tea.KeyEnter))
+	if pad.done() {
+		t.Fatal("done with only one scroll direction")
+	}
+	// Tried, and scrolling the other way never registered
+	pad.update(press('n'))
+	result, _ := run.Get("touchpad")
+	if !pad.done() || result.State != report.Partial || result.Note != "No response to: scrolling the other way" {
+		t.Errorf("result %+v", result)
+	}
+
+	run = &report.Run{}
+	pad = newTouchpad(run, "pad")
+	for x := 0; x < 8; x++ {
+		pad.update(tea.MouseMotionMsg{X: x, Y: 3})
+	}
+	pad.update(tea.MouseClickMsg{Button: tea.MouseLeft})
+	pad.update(tea.MouseWheelMsg{Button: tea.MouseWheelDown})
+	pad.update(tea.MouseWheelMsg{Button: tea.MouseWheelUp})
+	pad.update(press(tea.KeyEnter))
+	if result, _ := run.Get("touchpad"); !pad.done() || result.State != report.Works || result.How != report.Measured {
+		t.Errorf("all seen: %+v", result)
+	}
+
+	// Nothing seen could be the terminal's doing, so the owner is asked about the desktop
+	run = &report.Run{}
+	pad = newTouchpad(run, "pad")
+	pad.update(press('n'))
+	if pad.done() || pad.nothing == nil || pad.wantsMouse() {
+		t.Fatal("it didn't ask about the desktop")
+	}
+	pad.update(press('1'))
+	if result, _ := run.Get("touchpad"); result.State != report.Works || result.How != report.Owner {
+		t.Errorf("nothing seen, works on the desktop: %+v", result)
+	}
+}
+
+func TestTouchscreenCountsTapsInDifferentPlaces(t *testing.T) {
+	run := &report.Run{}
+	screen := newTouchscreen(run, "hid-over-i2c 27C6:0123")
+	screen.update(tea.MouseClickMsg{Button: tea.MouseLeft, X: 4, Y: 4})
+	screen.update(tea.MouseClickMsg{Button: tea.MouseLeft, X: 4, Y: 4}) // the same place twice counts once
+	screen.update(tea.MouseClickMsg{Button: tea.MouseLeft, X: 30, Y: 9})
+	screen.update(press(tea.KeyEnter))
+	if screen.done() {
+		t.Fatal("done after two places")
+	}
+	screen.update(tea.MouseClickMsg{Button: tea.MouseLeft, X: 60, Y: 2})
+	screen.update(press(tea.KeyEnter))
+	if result, _ := run.Get("touchscreen"); !screen.done() || result.State != report.Works || result.How != report.Measured {
+		t.Errorf("result %+v", result)
+	}
+
+	run = &report.Run{}
+	screen = newTouchscreen(run, "x")
+	screen.update(press('a'))
+	if run.State("touchscreen") != report.Absent {
+		t.Error("no touchscreen wasn't recorded")
+	}
+}
+
+func TestHeadphonesAskOnlyAfterPlaying(t *testing.T) {
+	run := &report.Run{}
+	jack := newHeadphones(run, t.TempDir())
+	jack.update(press('1'))
+	if jack.done() || jack.phase != "intro" {
+		t.Fatal("an answer was taken before anything played")
+	}
+	jack.update(playedMsg{})
+	jack.update(press('3'))
+	if result, _ := run.Get("headphones"); !jack.done() || result.State != report.Broken || result.Note != "With headphones plugged in, the sound stays on the speakers." {
+		t.Errorf("result %+v", result)
+	}
+	skipped := newHeadphones(&report.Run{}, t.TempDir())
+	skipped.update(press('s'))
+	if !skipped.done() || len(skipped.run.Results) != 0 {
+		t.Error("skipping left a result")
 	}
 }

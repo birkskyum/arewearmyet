@@ -49,6 +49,9 @@ type step interface {
 // keyboard step does.
 type allKeys interface{ wantsAllKeys() bool }
 
+// pointer is implemented by a step that needs the pointer's movement, clicks and scrolling.
+type pointer interface{ wantsMouse() bool }
+
 type model struct {
 	run     *report.Run
 	steps   []step
@@ -90,10 +93,16 @@ func Run(run *report.Run, facts probe.Facts, options Options) error {
 	if facts.Keyboard != "" {
 		m.steps = append(m.steps, newKeyboard(run), newEffects(run, facts))
 	}
+	if facts.Touchpad != "" {
+		m.steps = append(m.steps, newTouchpad(run, facts.Touchpad))
+	}
+	if facts.Touchscreen != "" {
+		m.steps = append(m.steps, newTouchscreen(run, facts.Touchscreen))
+	}
 	if facts.SoundCard != "" && tools.Have("pw-play", "pw-record") {
 		speakers, microphones := newSpeakers(run, dir), newMicrophones(run, dir)
 		microphones.speakers = speakers
-		m.steps = append(m.steps, speakers, microphones)
+		m.steps = append(m.steps, speakers, microphones, newHeadphones(run, dir))
 	}
 	if facts.Camera != "" && tools.Have("cam") {
 		m.steps = append(m.steps, newCamera(run, dir))
@@ -182,6 +191,9 @@ func (m *model) View() tea.View {
 		// Every key as its own event, with the key it is on a US keyboard, so the picture
 		// of the keyboard lights up by position whatever the layout
 		view.KeyboardEnhancements = tea.KeyboardEnhancements{ReportAlternateKeys: true, ReportAllKeysAsEscapeCodes: true, ReportAssociatedText: true}
+	}
+	if step, ok := current.(pointer); ok && step.wantsMouse() {
+		view.MouseMode = tea.MouseModeAllMotion
 	}
 	return view
 }

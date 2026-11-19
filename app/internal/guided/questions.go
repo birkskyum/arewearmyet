@@ -13,8 +13,6 @@ import (
 type question struct {
 	check string
 	text  string
-	// absent, when set, is the answer for a machine without that hardware.
-	absent string
 }
 
 // questions asks the few things nothing measured. Each can be answered from the chair, or
@@ -32,21 +30,18 @@ type questions struct {
 func newQuestions(run *report.Run, facts probe.Facts) *questions {
 	unmeasured := func(check string) bool { return run.State(check) != report.Works }
 	q := &questions{run: run}
-	add := func(when bool, check, text, absent string) {
+	add := func(when bool, check, text string) {
 		if when {
-			q.list = append(q.list, question{check, text, absent})
+			q.list = append(q.list, question{check, text})
 		}
 	}
-	add(facts.Touchpad != "", "touchpad", "On the touchpad: do moving the pointer, clicking and scrolling with two fingers all work?", "")
-	add(facts.Touchscreen != "", "touchscreen", "Tap the screen with a finger. Does the tap land where you touch?", "It has no touchscreen")
-	add(facts.Encrypted, "disk-unlock", "When you started the laptop, did you see the disk password prompt and type into it with the built-in keyboard?", "")
-	add(facts.SoundCard != "", "headphones", "Wired headphones, if you have some at hand: plug them in. Do they play?", "It has no headphone jack")
-	add(true, "usb", "Have USB sticks and other devices worked in every USB port you've tried?", "")
-	add(unmeasured("external-display"), "external-display", "An external screen, if you've tried one: did it show a picture?", "")
-	add(facts.Laptop && unmeasured("charging"), "charging", "With its own charger plugged in, does the battery percentage go up?", "")
-	add(facts.Fingerprint != "", "fingerprint", "The fingerprint reader, if you've set it up: does it unlock with your finger?", "")
-	add(facts.Bluetooth != "" && unmeasured("bluetooth"), "bluetooth", "Bluetooth headphones or a mouse, if you've tried some: do they pair and stay connected?", "")
-	add(true, "installer", "If you installed Omarchy on this computer yourself: did the installer start from the USB stick with keyboard and touchpad working?", "")
+	add(facts.Encrypted, "disk-unlock", "When you started the laptop, did you see the disk password prompt and type into it with the built-in keyboard?")
+	add(true, "usb", "Have USB sticks and other devices worked in every USB port you've tried?")
+	add(unmeasured("external-display"), "external-display", "An external screen, if you've tried one: did it show a picture?")
+	add(facts.Laptop && unmeasured("charging"), "charging", "With its own charger plugged in, does the battery percentage go up?")
+	add(facts.Fingerprint != "", "fingerprint", "The fingerprint reader, if you've set it up: does it unlock with your finger?")
+	add(facts.Bluetooth != "" && unmeasured("bluetooth"), "bluetooth", "Bluetooth headphones or a mouse, if you've tried some: do they pair and stay connected?")
+	add(true, "installer", "If you installed Omarchy on this computer yourself: did the installer start from the USB stick with keyboard and touchpad working?")
 	q.show()
 	return q
 }
@@ -57,11 +52,7 @@ func (q *questions) show() {
 		return
 	}
 	current := q.list[q.at]
-	options := []string{"Yes", "Partly", "No", "Haven't tried"}
-	if current.absent != "" {
-		options = append(options, current.absent)
-	}
-	q.ask = choice{question: current.text, options: options}
+	q.ask = choice{question: current.text, options: []string{"Yes", "Partly", "No", "Haven't tried"}}
 	q.note = nil
 }
 
@@ -105,9 +96,6 @@ func (q *questions) update(msg tea.Msg) tea.Cmd {
 		q.state = report.Broken
 		q.note = &line{prompt: "What happens? (Enter to leave it empty)"}
 	case 3:
-		q.next()
-	case 4:
-		q.run.Set(current.check, report.Absent, report.Owner, "", "")
 		q.next()
 	}
 	return nil
