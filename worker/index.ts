@@ -40,7 +40,8 @@ const CODE_ALPHABET = 'ABCDEFGHJKMNPQRSTVWXYZ23456789';
 export default {
   async fetch(request, env): Promise<Response> {
     const url = new URL(request.url);
-    if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
+    // /api itself answers with the list of routes; every other path outside /api/ is a page
+    if (url.pathname !== '/api' && !url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
     if (!url.pathname.startsWith('/api/firmware/')) {
       if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
       return (await reports(request, env, url)) ?? json({ error: 'Not found.' }, 404);

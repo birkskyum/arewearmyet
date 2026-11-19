@@ -1,0 +1,35 @@
+---
+// Where every piece of documentation is, for owners, agents and anyone building on the data
+import Layout from '../../layouts/Layout.astro';
+import ChipIcon from '../../assets/chip-icon.svg';
+const DOCS = [
+  { href: '/install', title: 'Installing Omarchy on an ARM PC', text: 'Making the stick, installing, and the fixes for known snags at the first start.' },
+  { href: '/help', title: 'How to help', text: 'What to do with the laptop you have, whether it still runs Windows, runs another Linux, or runs Omarchy already.' },
+  { href: '/docs/hw-test', title: 'hw-test reference', text: 'Every command of the hardware test: the guided test, single steps, notes, handing a part to an agent, and what is sent.' },
+  { href: '/agents', title: 'Guide for AI agents', text: 'How an agent measures a computer, reports, tries a fix from a boot entry of its own and opens a pull request on Omarchy.' },
+  { href: '/docs/api', title: 'API reference', text: 'Every route of the API, with what it takes and what it answers. Everything the pages show can be read from it.' },
+];
+---
+
+<Layout title="Docs · Are we ARM yet?" description="Documentation for arewearmyet.com: installing Omarchy on an ARM PC, the hw-test hardware test, the guide for AI agents and the API.">
+  <main class="mx-auto max-w-4xl px-4 py-10 text-zinc-400 sm:px-6">
+    <a href="/" class="flex items-center gap-3 text-zinc-300 hover:text-zinc-100">
+      <ChipIcon class="h-8 w-8 text-[#9ece6a]" aria-hidden="true" />
+      <span class="font-semibold">Are we ARM yet?</span>
+    </a>
+    <h1 class="mt-8 text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">Docs</h1>
+    <ul class="mt-8 space-y-4">
+      {DOCS.map((doc) => (
+        <li>
+          <a href={doc.href} class="block rounded-xl p-5 ring-1 ring-zinc-800 hover:bg-zinc-900 hover:ring-zinc-700">
+            <span class="font-semibold text-zinc-100">{doc.title}</span>
+            <span class="mt-1 block text-sm">{doc.text}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-10 text-xs text-zinc-500">
+      Plain text for agents: <a class="underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100" href="/llms.txt">/llms.txt</a>
+    </p>
+  </main>
+</Layout>

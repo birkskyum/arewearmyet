@@ -1,0 +1,60 @@
+---
+// A page of running text written in Markdown: the agent guide and the reference pages under /docs.
+// The same text is served as plain Markdown at the address given as `plain`.
+import Layout from './Layout.astro';
+import ChipIcon from '../assets/chip-icon.svg';
+
+interface Props {
+  title: string;
+  description: string;
+  plain: string;
+  headings?: { depth: number; slug: string; text: string }[];
+}
+const { title, description, plain, headings = [] } = Astro.props;
+const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
+const sections = headings.filter((h) => h.depth === 2);
+---
+
+<Layout title={title} description={description}>
+  <main class="mx-auto max-w-4xl px-4 py-10 text-zinc-400 sm:px-6">
+    <a href="/" class="flex items-center gap-3 text-zinc-300 hover:text-zinc-100">
+      <ChipIcon class="h-8 w-8 text-[#9ece6a]" aria-hidden="true" />
+      <span class="font-semibold">Are we ARM yet?</span>
+    </a>
+    <slot name="top" />
+    {sections.length > 0 && (
+      <nav class="mt-8 flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label="On this page">
+        {sections.map((h) => <a class={LINK} href={`#${h.slug}`}>{h.text}</a>)}
+      </nav>
+    )}
+    <article class="guide mt-8">
+      <slot />
+    </article>
+    <p class="mt-10 text-xs text-zinc-500">
+      Plain text for agents: <a class={LINK} href={plain}>{plain}</a> · <a class={LINK} href="/llms.txt">/llms.txt</a> · <a class={LINK} href="/docs">All docs</a>
+    </p>
+  </main>
+</Layout>
+
+<style is:global>
+  .guide { line-height: 1.7; }
+  .guide h1 { color: rgb(250 250 250); font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; }
+  .guide h2 { color: rgb(244 244 245); font-size: 1.25rem; font-weight: 600; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid rgb(39 39 42); scroll-margin-top: 1.5rem; }
+  .guide h3 { color: rgb(228 228 231); font-size: 1.05rem; font-weight: 600; margin-top: 1.75rem; scroll-margin-top: 1.5rem; }
+  .guide p, .guide ul, .guide ol, .guide table, .guide pre { margin-top: 0.9rem; }
+  .guide ul { list-style: disc; padding-left: 1.4rem; }
+  .guide ol { list-style: decimal; padding-left: 1.4rem; }
+  .guide li { margin-top: 0.35rem; }
+  .guide li::marker { color: rgb(113 113 122); }
+  .guide strong { color: rgb(228 228 231); }
+  .guide a { text-decoration: underline; text-decoration-color: rgb(82 82 91); text-underline-offset: 2px; }
+  .guide a:hover { color: rgb(244 244 245); text-decoration-color: rgb(212 212 216); }
+  .guide code { background: rgb(39 39 42); border-radius: 0.25rem; padding: 0.1rem 0.3rem; font-size: 0.85em; color: rgb(228 228 231); }
+  /* A long address in running text or a heading breaks rather than widening the page on a phone */
+  .guide :not(pre) > code { overflow-wrap: anywhere; }
+  .guide pre { background: rgb(9 9 11) !important; border-radius: 0.5rem; padding: 0.9rem; overflow-x: auto; font-size: 0.8rem; line-height: 1.55; border: 1px solid rgb(39 39 42); }
+  .guide pre code { background: none; padding: 0; font-size: inherit; }
+  .guide table { width: 100%; border-collapse: collapse; font-size: 0.875rem; display: block; overflow-x: auto; }
+  .guide th { text-align: left; color: rgb(228 228 231); font-weight: 600; border-bottom: 1px solid rgb(63 63 70); padding: 0.5rem 0.75rem 0.5rem 0; }
+  .guide td { border-bottom: 1px solid rgb(39 39 42); padding: 0.5rem 0.75rem 0.5rem 0; vertical-align: top; }
+</style>

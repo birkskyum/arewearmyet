@@ -1,0 +1,9 @@
+---
+// The API reference for people; agents get the same text at /docs/api.md
+import Doc from '../../layouts/Doc.astro';
+import { Content, getHeadings } from '../../lib/api.md';
+---
+
+<Doc title="API reference · Are we ARM yet?" description="Every route of the arewearmyet.com API: reading models, checks, owners' results, fixes and notes, and sending runs, fixes and notes from a computer." plain="/docs/api.md" headings={getHeadings()}>
+  <Content />
+</Doc>

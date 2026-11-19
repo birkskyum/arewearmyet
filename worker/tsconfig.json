@@ -9,12 +9,14 @@
     "types": [],
     "strict": true,
     "noEmit": true,
+    "allowImportingTsExtensions": true,
     "skipLibCheck": true,
     "resolveJsonModule": true
   },
   "include": [
     "index.ts",
     "reports.ts",
+    "routes.ts",
     "backup.ts",
     "worker-configuration.d.ts"
   ]

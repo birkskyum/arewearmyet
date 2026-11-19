@@ -9,27 +9,11 @@
  * measured by the probe, confirmed by the owner, or the agent's own reading. The pages
  * show the three apart, so an agent's guess never reads as a measurement.
  *
- * Routes, all JSON:
- *   GET  /api/checks                  what each check means and how to check it
- *   GET  /api/models                  every model with its page and API URL
- *   GET  /api/models/<id>             one model: pieces, findings, owners' results, fixes, what to test next
- *   GET  /api/match?chid=&compatible=&product=&sku=&family=&vendor=   which model a machine is
- *   GET  /api/owners                  every model's owners' results, and the machines that matched no model
- *   POST /api/runs                    a probe run or an agent's report; answers {run, model, url}
- *   GET  /api/runs/<id>               one run as stored, for the owner to check
- *   POST /api/runs/<id>/results       more results for a run, from the same machine
- *   POST /api/fixes                   a link to a fix (pull request, patch) for a model, with what it changed as measured
- *   GET  /api/fixes?url=              what a pull request changed, over every machine that measured it
- *   GET  /api/notes?model=&check=&kind=&status=&q=   notes: problems, workarounds, pointers to work elsewhere; no model means every model
- *   GET  /api/notes/<id>              one note with its answers and the names of its logs
- *   GET  /api/notes/<id>/logs/<name>  one of its logs, as plain text
- *   POST /api/notes                   write a note, with logs if it helps
- *   POST /api/notes/<id>/replies      answer a note
- *   POST /api/notes/<id>/status       its writer marks a problem solved or open again
- *   GET  /api/review, POST /api/review/hide   recent reports and hiding them, with ADMIN_TOKEN
+ * The routes are listed in worker/routes.ts and described for people at /docs/api.
  */
 
 import index from './models.json' with { type: 'json' };
+import { DOCS, ROUTES } from './routes.ts';
 
 type Index = { checks: string[]; kernels?: Record<string, string>; chids: Record<string, number[]>; models: { id: string; vendor: string; name: string; generation: string; boot: string; compatibles: string[]; modelNumbers: string[] }[] };
 const INDEX = index as Index;
@@ -67,6 +51,7 @@ export async function reports(request: Request, env: Env, url: URL): Promise<Res
   const parts = path.split('/');
 
   if (request.method === 'GET') {
+    if (path === '') return json({ name: 'Are we ARM yet?', docs: DOCS, guide: `${SITE}/agents.md`, routes: ROUTES.map(([method, route, does]) => ({ method, path: route, does })) }, 200, 'public, max-age=300');
     if (path === 'checks') return asset(env, url, '/data/checks.json');
     if (path === 'models') return asset(env, url, '/data/models.json');
     if (parts[0] === 'models' && parts.length === 2 && MODEL_ID.test(parts[1])) return model(env, url, parts[1]);
@@ -78,11 +63,11 @@ export async function reports(request: Request, env: Env, url: URL): Promise<Res
     if (path === 'fixes') return fixesFor(env, url);
     if (parts[0] === 'notes' && parts.length === 2 && NOTE_ID.test(parts[1])) return getNote(env, parts[1]);
     if (parts[0] === 'notes' && parts.length === 4 && NOTE_ID.test(parts[1]) && parts[2] === 'logs' && LOG_NAME.test(parts[3])) return getLog(env, parts[1], parts[3]);
-    if (parts[0] !== 'firmware') return json({ error: 'Not found. The API is described at https://arewearmyet.com/agents.md' }, 404);
+    if (parts[0] !== 'firmware') return json({ error: `Not found. The API is described at ${DOCS}` }, 404);
     return null;
   }
 
-  if (request.method !== 'POST') return parts[0] === 'firmware' ? null : json({ error: 'Not found.' }, 404);
+  if (request.method !== 'POST') return parts[0] === 'firmware' ? null : json({ error: `Not found. The API is described at ${DOCS}` }, 404);
   if (parts[0] === 'firmware') return null;
   if (path === 'review/hide') return hide(request, env);
   if (env.REPORTS !== 'on') return json({ error: 'Reports are closed for now.' }, 503);
@@ -96,7 +81,7 @@ export async function reports(request: Request, env: Env, url: URL): Promise<Res
   if (path === 'notes') return postNote(request, env, null);
   if (parts[0] === 'notes' && parts.length === 3 && NOTE_ID.test(parts[1]) && parts[2] === 'replies') return postNote(request, env, parts[1]);
   if (parts[0] === 'notes' && parts.length === 3 && NOTE_ID.test(parts[1]) && parts[2] === 'status') return postStatus(request, env, parts[1]);
-  return json({ error: 'Not found.' }, 404);
+  return json({ error: `Not found. The API is described at ${DOCS}` }, 404);
 }
 
 // A static file the site builds, served under /api/ so agents need only one base URL

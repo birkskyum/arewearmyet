@@ -1025,13 +1025,17 @@ func wrapWords(words []string) string {
 	return strings.Join(append(lines, line), "\n                     ")
 }
 
-func usage() {
-	fmt.Fprint(os.Stderr, `hw-test checks what works on a Snapdragon PC and reports it to arewearmyet.com.
+func usage() { fmt.Fprint(os.Stderr, usageText()) }
+
+// usageText is what hw-test help prints. The reference at arewearmyet.com/docs/hw-test is held
+// to it by a test.
+func usageText() string {
+	return `hw-test checks what works on a Snapdragon PC and reports it to arewearmyet.com.
 
   hw-test            the guided test: the quick check, then keyboard, sound, camera and sleep with you
   hw-test quick      the quick check alone: read-only, a few seconds, no questions
   hw-test STEP...    one part alone, reporting only that part:
-                     `+wrapWords(guided.StepWords())+`
+                     ` + wrapWords(guided.StepWords()) + `
   hw-test manual     every test done with you: keyboard, touchpad, touchscreen,
                      headphones, camera, USB ports, external screen, sleep and a few questions
   hw-test auto       every test that needs nobody: sound, graphics, WebGL and
@@ -1090,5 +1094,7 @@ Options:
 
 Nothing personal is sent: no serial numbers, addresses, names or files. The microphone recording
 and the camera picture of the guided test never leave this computer.
-`)
+
+Every command with its options: https://arewearmyet.com/docs/hw-test
+`
 }

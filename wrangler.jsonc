@@ -10,7 +10,7 @@
     "directory": "./dist",
     "binding": "ASSETS",
     "not_found_handling": "404-page",
-    "run_worker_first": ["/api/*"]
+    "run_worker_first": ["/api", "/api/*"]
   },
   "routes": [{ "pattern": "arewearmyet.com", "custom_domain": true }],
   // 04:23 UTC every night: worker/backup.ts copies the reports database to the bucket

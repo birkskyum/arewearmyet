@@ -72,7 +72,7 @@ omarchy-mise-install github:birkskyum/arewearmyet hw-test
 hw-test quick --json
 ```
 
-It says at its start when a newer release is out, and `hw-test update` gets it.
+It says at its start when a newer release is out, and `hw-test update` gets it. Every command and option is in the [hw-test reference](https://arewearmyet.com/docs/hw-test.md).
 
 | Command | What it does |
 | --- | --- |
@@ -263,6 +263,8 @@ A fault that comes and goes belongs in both places: the note with its logs, and 
 Without `hw-test`, a note is `POST /api/notes` with `model`, `kind`, `title`, `body`, and optional `check`, `links`, `logs` (`[{"name": "kernel.log", "text": "..."}]`), `kernel`. Take the host name out of logs yourself then (`journalctl -k -b --no-hostname -o short-monotonic`). Answers go to `POST /api/notes/<NOTE-ID>/replies`, and a problem's writer closes it with `POST /api/notes/<NOTE-ID>/status` and `{"status": "solved"}`.
 
 ## API summary
+
+The [API reference](https://arewearmyet.com/docs/api.md) has every field, limit and answer. `GET /api` lists the routes as JSON.
 
 | Method and path | What it does |
 | --- | --- |
