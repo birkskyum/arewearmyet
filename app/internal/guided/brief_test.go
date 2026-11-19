@@ -413,6 +413,25 @@ func TestTheScreensOfferTheAgentOnlyWhenSomethingFails(t *testing.T) {
 	}
 	// On a part that works there is nothing to hand over, and no hint to
 	at("wireless")
+	// With a conversation going, the screen says what the agent is on, and g goes to it
+	if strings.Contains(start.view(110, 60), "Your agent is on") {
+		t.Error("an agent is said to be at work where none is")
+	}
+	start.thread = report.Thread{Kind: "codex", ID: "01a1f404", When: when, Checks: []string{"speakers"}}
+	if view := start.view(110, 60); !strings.Contains(view, "Your agent is on speakers, since 02:00 on 19 Nov. Press g to go to it.") {
+		t.Errorf("what the agent is on:\n%s", view)
+	}
+	gone := ""
+	start.show = func(thread report.Thread) error { gone = thread.ID; return nil }
+	start.handed = ""
+	if start.update(press('g')) != nil || gone != "01a1f404" || start.started || !strings.Contains(start.view(110, 60), "Your agent's conversation is open.") {
+		t.Errorf("g: gone to %q, started %v", gone, start.started)
+	}
+	start.thread, start.handed = report.Thread{Kind: "t3", ID: "mcp:7", When: when}, ""
+	if view := start.view(110, 60); !strings.Contains(view, "Your agent is on the hardware work in T3 Code") {
+		t.Errorf("a T3 Code thread:\n%s", view)
+	}
+	start.thread, start.handed = report.Thread{}, ""
 	if strings.Contains(start.keys(), "agent") || start.update(press('a')) != nil {
 		t.Errorf("an agent is offered for a part that works: %q", start.keys())
 	}

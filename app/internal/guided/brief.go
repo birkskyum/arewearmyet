@@ -73,17 +73,26 @@ func Command() string {
 	return running
 }
 
-// InThread hands work to T3 Code where the owner runs it: into the thread hw-test started for
-// this folder before, or into a new one. T3 Code runs whichever agent the owner has, and
-// keeps the thread, which a plain agent in a terminal doesn't.
+// InThread hands work to the conversation the owner's agent already has for this folder, so
+// nothing the agent learnt is lost and the owner has one place to look. That is the thread
+// hw-test started in T3 Code, or the conversation of an agent in a terminal, which says
+// which it is whenever it calls hw-test. Without one, and where T3 Code is installed, a new
+// thread is started there: T3 Code runs whichever agent the owner has, and keeps the thread.
 func InThread(dir, title, message string) (string, error) {
 	if os.Getenv("HW_TEST_AGENT") != "" {
 		return "", tools.ErrNoSession
 	}
-	if kept, ok := report.ThreadFor(dir); ok && kept.Kind == "t3" {
-		if err := tools.Continue(tools.Session{Kind: kept.Kind, ID: kept.ID}, dir, message); err == nil {
+	if kept, ok := report.ThreadFor(dir); ok {
+		err := tools.Continue(tools.Session{Kind: kept.Kind, ID: kept.ID}, dir, message)
+		switch {
+		case err == nil && kept.Kind == "t3":
 			tools.T3Show(dir)
 			return "Your agent has it in T3 Code, in the same thread as before.", nil
+		case err == nil:
+			return "Your agent has it, in the same conversation as before.", nil
+		case errors.Is(err, tools.ErrAgentOpen):
+			tools.FocusAgentWindow()
+			return "Your agent's window is open, and it can't be written to from here. Tell it: read BRIEF.md again, it is about " + strings.TrimPrefix(title, "Hardware: ") + " now.", nil
 		}
 	}
 	id, err := tools.T3Start(dir, title, message)
@@ -524,6 +533,7 @@ func HandOver(b Briefing, dir string, launch func(dir, prompt string) error) Han
 	// The owner's handing a part over is what lets the agent test that part itself
 	if b.ByOwner {
 		_ = report.Hand(work, b.When)
+		_ = report.NoteWork(dir, work, time.Now())
 	}
 	var titles []string
 	for _, check := range work {

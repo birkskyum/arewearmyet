@@ -108,6 +108,15 @@ func main() {
 	flags.Usage = usage
 	flags.Parse(args)
 
+	// An agent that calls hw-test from the hardware folder says which conversation it is in,
+	// so the next part and the word after a restart can go into the same one
+	if held := tools.CurrentSessions(); len(held) > 0 {
+		work := guided.Workspace()
+		if here, err := os.Getwd(); err == nil && (here == work || strings.HasPrefix(here, work+string(os.PathSeparator))) {
+			_ = report.NoteSession(work, held[0].Kind, held[0].ID, time.Now())
+		}
+	}
+
 	switch command {
 	case "version", "--version":
 		fmt.Println("hw-test", version)

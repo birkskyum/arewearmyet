@@ -132,16 +132,42 @@ type Thread struct {
 	Kind string    `json:"kind"`
 	ID   string    `json:"id"`
 	When time.Time `json:"when"`
+	// Checks are the parts the owner last handed to it, for saying what the agent is on.
+	Checks []string `json:"checks,omitempty"`
 }
 
-// ThreadFor is the conversation started for the work in a folder, when there is one.
-func ThreadFor(dir string) (Thread, bool) {
-	threads := map[string]Thread{}
+func threads() map[string]Thread {
+	kept := map[string]Thread{}
 	if data, err := os.ReadFile(threadFile()); err == nil {
-		_ = json.Unmarshal(data, &threads)
+		_ = json.Unmarshal(data, &kept)
 	}
-	thread, ok := threads[dir]
-	return thread, ok && thread.ID != ""
+	return kept
+}
+
+// ThreadFor is the conversation going for the work in a folder, when there is one that was
+// used not too long ago.
+func ThreadFor(dir string) (Thread, bool) {
+	thread, ok := threads()[dir]
+	return thread, ok && thread.ID != "" && time.Since(thread.When) < HandedFor
+}
+
+// NoteSession notes which conversation the agent working in a folder is in, as its own
+// program names it, each time that agent calls hw-test from there. That is how hw-test
+// knows a conversation it didn't start. A thread hw-test started in T3 Code stays the one
+// kept: the agent inside it names only its own, inner conversation.
+func NoteSession(dir, kind, id string, when time.Time) error {
+	kept := threads()[dir]
+	if kept.Kind == "t3" && kind != "t3" && kept.ID != "" && when.Sub(kept.When) < HandedFor {
+		return nil
+	}
+	return KeepThread(dir, Thread{Kind: kind, ID: id, When: when, Checks: kept.Checks})
+}
+
+// NoteWork notes which parts the owner handed to the agent working in a folder.
+func NoteWork(dir string, checks []string, when time.Time) error {
+	kept := threads()[dir]
+	kept.Checks, kept.When = checks, when
+	return KeepThread(dir, kept)
 }
 
 // KeepThread notes the conversation started for the work in a folder, so the next part, a

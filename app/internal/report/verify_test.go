@@ -171,9 +171,38 @@ func TestTheConversationStartedForAFolderIsKept(t *testing.T) {
 	if _, ok := ThreadFor("/home/owner/Work/hw-bringup"); ok {
 		t.Fatal("a thread before any was started")
 	}
-	KeepThread("/home/owner/Work/hw-bringup", Thread{Kind: "t3", ID: "mcp:351f"})
-	KeepThread("/home/owner/other", Thread{Kind: "t3", ID: "mcp:9"})
+	now := time.Now()
+	KeepThread("/home/owner/Work/hw-bringup", Thread{Kind: "t3", ID: "mcp:351f", When: now})
+	KeepThread("/home/owner/other", Thread{Kind: "t3", ID: "mcp:9", When: now})
 	if kept, ok := ThreadFor("/home/owner/Work/hw-bringup"); !ok || kept.ID != "mcp:351f" || kept.Kind != "t3" {
 		t.Errorf("kept %+v, %v", kept, ok)
+	}
+	// One that wasn't used for weeks is no longer gone on in
+	KeepThread("/home/owner/old", Thread{Kind: "codex", ID: "01a1", When: now.Add(-30 * 24 * time.Hour)})
+	if _, ok := ThreadFor("/home/owner/old"); ok {
+		t.Error("a conversation from weeks ago is still the one to go on in")
+	}
+
+	// An agent in a terminal says which conversation it is in each time it calls hw-test, and
+	// the parts the owner handed it are kept beside that
+	dir := "/home/owner/hw-bringup"
+	NoteWork(dir, []string{"speakers"}, now)
+	if _, ok := ThreadFor(dir); ok {
+		t.Error("a conversation before the agent named one")
+	}
+	NoteSession(dir, "codex", "01a1f404", now)
+	if kept, ok := ThreadFor(dir); !ok || kept.Kind != "codex" || kept.ID != "01a1f404" || len(kept.Checks) != 1 || kept.Checks[0] != "speakers" {
+		t.Errorf("the agent's own conversation: %+v, %v", kept, ok)
+	}
+	// A new conversation of the same agent takes its place
+	NoteSession(dir, "codex", "01a1f999", now)
+	if kept, _ := ThreadFor(dir); kept.ID != "01a1f999" || len(kept.Checks) != 1 {
+		t.Errorf("a newer conversation: %+v", kept)
+	}
+	// The thread hw-test started in T3 Code stays the one kept, though the agent inside it
+	// names its own, inner conversation
+	NoteSession("/home/owner/Work/hw-bringup", "codex", "01a1inner", now)
+	if kept, _ := ThreadFor("/home/owner/Work/hw-bringup"); kept.Kind != "t3" || kept.ID != "mcp:351f" {
+		t.Errorf("the T3 Code thread was replaced: %+v", kept)
 	}
 }

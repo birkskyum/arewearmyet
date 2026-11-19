@@ -334,6 +334,9 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 	// What the round found is kept on the machine as its latest, whether or not it is sent
 	defer func() { _ = report.Remember(run, time.Now()) }()
 	start := &welcome{run: run, only: len(options.Only) > 0, kept: report.Local()}
+	if options.launch == nil {
+		start.thread, _ = report.ThreadFor(Workspace())
+	}
 	for _, entry := range menu {
 		offered := choose(steps, []string{entry.word})
 		if len(offered) > 0 && (entry.step == "" || offered[0].name() == entry.step) {
@@ -738,6 +741,27 @@ type welcome struct {
 	// offer is the choice put up for a part that fails or is worth a look: test it again, or
 	// have an agent look into it. Nil when the menu is up.
 	offer *choice
+	// thread is the conversation the owner's agent has going for the hardware work, when there
+	// is one, and show is what takes the owner to it, which tests replace.
+	thread report.Thread
+	show   func(report.Thread) error
+}
+
+// agentLine says what the owner's agent is on and how to get to it, or nothing.
+func (w *welcome) agentLine() string {
+	if w.thread.ID == "" {
+		return ""
+	}
+	var titles []string
+	for _, check := range w.thread.Checks {
+		titles = append(titles, strings.ToLower(first(checkTitle[check], check)))
+	}
+	on := "the hardware work"
+	if len(titles) > 0 {
+		on = strings.Join(titles, ", ")
+	}
+	where := map[string]string{"t3": " in T3 Code", "herdr": " in herdr"}[w.thread.Kind]
+	return fmt.Sprintf("Your agent is on %s%s, since %s. Press g to go to it.", on, where, w.thread.When.Format("15:04 on 2 Jan"))
 }
 
 // releaseMsg carries the newest release, when it is newer than the running one.
@@ -893,6 +917,21 @@ func (w *welcome) update(msg tea.Msg) tea.Cmd {
 		tools.Open(w.model.Page)
 		return nil
 	}
+	// To the conversation the agent already has: its window, or the same conversation opened again
+	if press.String() == "g" && w.thread.ID != "" && w.offer == nil {
+		show := w.show
+		if show == nil {
+			show = func(thread report.Thread) error {
+				return tools.Show(tools.Session{Kind: thread.Kind, ID: thread.ID}, Workspace())
+			}
+		}
+		if err := show(w.thread); err != nil {
+			w.handed = "Your agent's conversation couldn't be opened (" + err.Error() + ")."
+		} else {
+			w.handed = "Your agent's conversation is open."
+		}
+		return nil
+	}
 	failing := w.failing()
 	hand := func() tea.Cmd {
 		w.handed = "Writing the brief and opening your agent…"
@@ -964,6 +1003,9 @@ func (w *welcome) view(width, height int) string {
 		intro += "\n" + close_.Render(wrap(fmt.Sprintf("hw-test %s is out, and this is %s. Leave with Quit and run hw-test update to get it.", w.newer, w.options.Version), width))
 	}
 	standing := wrap(w.standing(width), width)
+	if line := w.agentLine(); line != "" {
+		standing += "\n" + accent.Render(wrap(line, width))
+	}
 	// The command that goes straight to the part the cursor is on
 	tip := wrap("Add a part's name to the command to go straight to it, like hw-test camera.", width)
 	if at := w.ask.cursor - 1; at >= 0 && at < len(w.parts) {

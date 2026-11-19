@@ -526,6 +526,61 @@ func T3Start(dir, title, message string) (string, error) {
 	return started.Thread, nil
 }
 
+// AgentWindowOpen says whether a window of the owner's agent is open on the desktop.
+func AgentWindowOpen() bool {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	out, err := exec.CommandContext(ctx, "hyprctl", "clients", "-j").Output()
+	if err != nil {
+		return false
+	}
+	var windows []struct {
+		Class string `json:"class"`
+	}
+	_ = json.Unmarshal(out, &windows)
+	for _, window := range windows {
+		if strings.HasPrefix(window.Class, "org.omarchy.agent") || window.Class == "org.omarchy.codex" || window.Class == "org.omarchy.claude" {
+			return true
+		}
+	}
+	return false
+}
+
+// FocusAgentWindow brings the agent's window to the front, where Omarchy has a way to.
+func FocusAgentWindow() {
+	if Have("omarchy-hyprland-focus-app") {
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+		_ = exec.CommandContext(ctx, "omarchy-hyprland-focus-app", "org.omarchy.agent").Run()
+	}
+}
+
+// ErrAgentOpen says the conversation is open in a window that can't be written to from outside.
+var ErrAgentOpen = errors.New("the agent's window is open and can't be written to from here")
+
+// Show takes the owner to a conversation of their agent without saying anything in it: the
+// window it is open in, or a new window on the same conversation.
+func Show(session Session, dir string) error {
+	switch {
+	case session.ID == "":
+		return ErrNoSession
+	case session.Kind == "t3" && Have("t3"):
+		if !t3Up(dir) {
+			return fmt.Errorf("T3 Code isn't running and couldn't be started")
+		}
+		T3Show(dir)
+		return nil
+	case (session.Kind == "codex" || session.Kind == "claude") && AgentWindowOpen():
+		FocusAgentWindow()
+		return nil
+	case session.Kind == "codex" && Have("codex"):
+		return TerminalIn(dir, "codex", "--approve-for-me", "resume", session.ID)
+	case session.Kind == "claude" && Have("claude"):
+		return TerminalIn(dir, "claude", "--permission-mode", "auto", "--resume", session.ID)
+	}
+	return ErrNoSession
+}
+
 // ErrNoSession says there is no earlier session to go on in.
 var ErrNoSession = errors.New("there is no earlier agent session to go on in")
 
@@ -555,8 +610,20 @@ func Continue(session Session, dir, message string) error {
 	case session.Kind == "herdr" && Have("herdr"):
 		return told("herdr", "herdr", "agent", "prompt", session.ID, message)
 	case session.Kind == "codex" && Have("codex"):
+		// An open Codex takes a message into the conversation it is showing. A closed one
+		// opens again on it
+		if AgentWindowOpen() {
+			if err := told("Codex", "codex", "queue", "--thread", session.ID, "--message", message); err != nil {
+				return err
+			}
+			FocusAgentWindow()
+			return nil
+		}
 		return TerminalIn(dir, "codex", "--approve-for-me", "resume", session.ID, message)
 	case session.Kind == "claude" && Have("claude"):
+		if AgentWindowOpen() {
+			return ErrAgentOpen
+		}
 		return TerminalIn(dir, "claude", "--permission-mode", "auto", "--resume", session.ID, "--", message)
 	}
 	return ErrNoSession

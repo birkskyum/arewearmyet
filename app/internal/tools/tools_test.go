@@ -290,3 +290,61 @@ func TestT3CodeIsStartedWhenItIsInstalledButNotRunning(t *testing.T) {
 		t.Errorf("T3 Code that never comes up: %v", err)
 	}
 }
+
+func TestAnOpenCodexTakesTheMessageAndAClosedOneOpensAgain(t *testing.T) {
+	dir, bin := t.TempDir(), t.TempDir()
+	for _, program := range []string{"codex", "claude", "window", "omarchy-hyprland-focus-app"} {
+		os.WriteFile(filepath.Join(bin, program), []byte("#!/bin/sh\nprintf '%s|' \"$(basename $0)\" \"$@\" >> "+dir+"/called\necho >> "+dir+"/called\n"), 0o755)
+	}
+	windows := func(classes ...string) {
+		var list []string
+		for _, class := range classes {
+			list = append(list, `{"class":"`+class+`"}`)
+		}
+		os.WriteFile(filepath.Join(bin, "hyprctl"), []byte("#!/bin/sh\necho '["+strings.Join(list, ",")+"]'\n"), 0o755)
+	}
+	t.Setenv("PATH", bin+":"+os.Getenv("PATH"))
+	t.Setenv("HW_TEST_TERMINAL", filepath.Join(bin, "window"))
+	called := func() string {
+		time.Sleep(300 * time.Millisecond)
+		data, _ := os.ReadFile(filepath.Join(dir, "called"))
+		os.Remove(filepath.Join(dir, "called"))
+		return string(data)
+	}
+	work := t.TempDir()
+	codex, claude := Session{Kind: "codex", ID: "01a1f404"}, Session{Kind: "claude", ID: "c0ffee"}
+
+	// The agent's window is open: Codex takes the message into the conversation it shows, and the window comes forward
+	windows("com.mitchellh.ghostty", "org.omarchy.agent")
+	if !AgentWindowOpen() {
+		t.Fatal("the agent's window wasn't seen")
+	}
+	if err := Continue(codex, work, "go on"); err != nil {
+		t.Error(err)
+	}
+	if got := called(); !strings.Contains(got, "codex|queue|--thread|01a1f404|--message|go on|") || !strings.Contains(got, "omarchy-hyprland-focus-app|org.omarchy.agent|") || strings.Contains(got, "resume") {
+		t.Errorf("an open Codex: %q", got)
+	}
+	// Claude Code can't be written to while it is open, and no second window is opened on it
+	if err := Continue(claude, work, "go on"); !errors.Is(err, ErrAgentOpen) || called() != "" {
+		t.Errorf("an open Claude Code: %v", err)
+	}
+	// Going to it only brings its window forward
+	if err := Show(codex, work); err != nil || !strings.HasPrefix(called(), "omarchy-hyprland-focus-app|org.omarchy.agent|") {
+		t.Errorf("going to an open agent: %v", err)
+	}
+
+	// No agent window: the same conversation opens again, with the message or without
+	windows("com.mitchellh.ghostty")
+	if AgentWindowOpen() {
+		t.Fatal("an agent window was seen where there is none")
+	}
+	Continue(codex, work, "go on")
+	if got := called(); !strings.HasPrefix(got, "window|codex|--approve-for-me|resume|01a1f404|go on|") {
+		t.Errorf("a closed Codex: %q", got)
+	}
+	Show(claude, work)
+	if got := called(); !strings.HasPrefix(got, "window|claude|--permission-mode|auto|--resume|c0ffee|") || strings.Contains(got, "go on") {
+		t.Errorf("going to a closed Claude Code: %q", got)
+	}
+}
