@@ -121,7 +121,7 @@ func (s *summary) view(width, height int) string {
 func (s *summary) farewell() string {
 	switch {
 	case s.err != nil:
-		return "Sending failed: " + s.err.Error() + "\nRun awy again to retry."
+		return "Sending failed: " + s.err.Error() + "\nRun away again to retry."
 	case s.skipped || s.sent.Run == "":
 		return "Not sent."
 	}

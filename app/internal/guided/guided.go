@@ -61,7 +61,7 @@ type model struct {
 
 // Run shows the guided test and sends its results.
 func Run(run *report.Run, facts probe.Facts, options Options) error {
-	dir, err := os.MkdirTemp("", "awy-")
+	dir, err := os.MkdirTemp("", "away-")
 	if err != nil {
 		return err
 	}
