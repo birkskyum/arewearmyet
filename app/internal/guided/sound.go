@@ -44,18 +44,21 @@ func playTone(dir string, side int) tea.Cmd {
 type speakers struct {
 	run   *report.Run
 	dir   string
-	phase string // intro, left, right, ask
+	phase string // intro, left, right, ask, note
 	heard [2]audio.Heard
 	err   error
 	ask   choice
-	over  bool
+	// note takes the owner's own words when none of the answers fits.
+	note line
+	over bool
 }
 
 func newSpeakers(run *report.Run, dir string) *speakers {
 	return &speakers{run: run, dir: dir, phase: "intro", ask: choice{
 		question: "What did you hear?",
-		options:  []string{"A tone on the left, then on the right, both clean", "Only on the left", "Only on the right", "Both, but distorted or crackling", "Nothing", "Play them again"},
-	}}
+		options: []string{"A tone on the left, then on the right, both clean and equally loud", "Both, but the left is louder than the right", "Both, but the right is louder than the left",
+			"Only on the left", "Only on the right", "Both, but distorted or crackling", "Nothing", "Something else", "Play them again"},
+	}, note: line{prompt: "What did you hear? (Enter when done)"}}
 }
 
 func (s *speakers) name() string   { return "Speakers" }
@@ -68,8 +71,28 @@ func (s *speakers) keys() string {
 		return "Enter to play the tones · s to skip"
 	case "ask":
 		return choiceKeys
+	case "note":
+		return "Type, then Enter"
 	}
 	return "Listening…"
+}
+
+// balance says how the two tones compared at the microphones, when both were heard: "the
+// left tone was 2.3 times as loud as the right". The microphones sit closer to one speaker on
+// some machines, so this backs up what the owner hears and doesn't replace it.
+func (s *speakers) balance() string {
+	left, right := s.heard[audio.Left], s.heard[audio.Right]
+	if !left.Clearly() || !right.Clearly() || left.Level == 0 || right.Level == 0 {
+		return ""
+	}
+	louder, quieter, ratio := "left", "right", float64(left.Level)/float64(right.Level)
+	if ratio < 1 {
+		louder, quieter, ratio = "right", "left", 1/ratio
+	}
+	if ratio < 1.5 {
+		return "at the microphones the two tones were about equally loud"
+	}
+	return fmt.Sprintf("at the microphones the %s tone was %.1f times as loud as the %s", louder, ratio, quieter)
 }
 
 // evidence is what the microphones made of the two tones.
@@ -80,7 +103,11 @@ func (s *speakers) evidence() string {
 		}
 		return fmt.Sprintf("for %.1f s (level %d)", float64(h.Windows)/4, h.Level)
 	}
-	return "the microphones heard the left tone " + part(s.heard[audio.Left]) + ", the right " + part(s.heard[audio.Right])
+	text := "the microphones heard the left tone " + part(s.heard[audio.Left]) + ", the right " + part(s.heard[audio.Right])
+	if balance := s.balance(); balance != "" {
+		text += "; " + balance
+	}
+	return text
 }
 
 func (s *speakers) update(msg tea.Msg) tea.Cmd {
@@ -111,16 +138,27 @@ func (s *speakers) update(msg tea.Msg) tea.Cmd {
 			case 0:
 				set(report.Works, "")
 			case 1:
-				set(report.Partial, "Only the left speaker plays.")
+				set(report.Partial, "Both speakers play, but the left is louder than the right.")
 			case 2:
-				set(report.Partial, "Only the right speaker plays.")
+				set(report.Partial, "Both speakers play, but the right is louder than the left.")
 			case 3:
-				set(report.Partial, "Both speakers play, but distorted or crackling.")
+				set(report.Partial, "Only the left speaker plays.")
 			case 4:
-				set(report.Broken, "No sound from the speakers.")
+				set(report.Partial, "Only the right speaker plays.")
 			case 5:
+				set(report.Partial, "Both speakers play, but distorted or crackling.")
+			case 6:
+				set(report.Broken, "No sound from the speakers.")
+			case 7:
+				s.phase = "note"
+			case 8:
 				s.phase = "left"
 				return playTone(s.dir, audio.Left)
+			}
+		case "note":
+			if s.note.update(msg) {
+				s.run.Set("speakers", report.Partial, report.Owner, s.evidence(), s.note.value())
+				s.over = true
 			}
 		}
 	}
@@ -139,6 +177,9 @@ func (s *speakers) view(width, height int) string {
 		return accent.Render("◀ ◀ ◀  Playing on the LEFT speaker")
 	case "right":
 		return accent.Render("Playing on the RIGHT speaker  ▶ ▶ ▶")
+	}
+	if s.phase == "note" {
+		return s.note.view(width)
 	}
 	text := s.ask.view(width) + "\n\n" + soft.Render(wrap("Measured: "+s.evidence()+".", width))
 	if s.err != nil {
@@ -168,7 +209,9 @@ type microphones struct {
 	voice     int
 	peak      int
 	ask       choice
-	over      bool
+	// note takes the owner's own words when none of the answers fits.
+	note line
+	over bool
 }
 
 const recordFor = 4 * time.Second
@@ -176,8 +219,8 @@ const recordFor = 4 * time.Second
 func newMicrophones(run *report.Run, dir string) *microphones {
 	return &microphones{run: run, dir: dir, phase: "intro", ask: choice{
 		question: "Did the microphone pick you up?",
-		options:  []string{"Yes, clearly", "Yes, but quiet or muffled", "No, only silence or noise", "Record again"},
-	}}
+		options:  []string{"Yes, clearly", "Yes, but quiet or muffled", "No, only silence or noise", "Something else", "Record again"},
+	}, note: line{prompt: "What was it like? (Enter when done)"}}
 }
 
 func (m *microphones) name() string   { return "Microphone" }
@@ -192,6 +235,8 @@ func (m *microphones) keys() string {
 		return "Recording…"
 	case "playing":
 		return "Playing it back…"
+	case "note":
+		return "Type, then Enter"
 	}
 	return choiceKeys
 }
@@ -267,7 +312,15 @@ func (m *microphones) update(msg tea.Msg) tea.Cmd {
 			case 2:
 				set(report.Broken, "The recording is silence or noise.")
 			case 3:
+				m.phase = "note"
+			case 4:
 				return m.record()
+			}
+		case "note":
+			if m.note.update(msg) {
+				evidence := fmt.Sprintf("recording level %d, loudest %d", m.voice, m.peak)
+				m.run.Set("microphones", report.Partial, report.Owner, evidence, m.note.value())
+				m.over = true
 			}
 		}
 	}
@@ -293,6 +346,9 @@ func (m *microphones) view(width, height int) string {
 		return accent.Render(fmt.Sprintf("● Recording, speak now  (%.0f s left)", math.Max(0, left.Seconds()))) + "\n\n" + meter(m.level, min(width, 60)) + "\n\n" + soft.Render("Only on this computer. Not sent.")
 	case "playing":
 		return accent.Render("▶ Playing your recording back")
+	}
+	if m.phase == "note" {
+		return m.note.view(width)
 	}
 	return m.ask.view(width) + "\n\n" + soft.Render(fmt.Sprintf("Measured: recording level %d, loudest %d. Only these two numbers are sent, not the recording.", m.voice, m.peak))
 }

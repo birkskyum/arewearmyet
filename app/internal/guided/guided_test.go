@@ -10,6 +10,7 @@ import (
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
 
+	"github.com/birkskyum/arewearmyet/app/internal/audio"
 	"github.com/birkskyum/arewearmyet/app/internal/machine"
 	"github.com/birkskyum/arewearmyet/app/internal/probe"
 	"github.com/birkskyum/arewearmyet/app/internal/report"
@@ -680,5 +681,48 @@ func TestNoLineIsCutOffInANarrowWindow(t *testing.T) {
 				}
 			}
 		}
+	}
+}
+
+func TestSpeakersCanBeReportedAsUnevenAndInTheOwnersWords(t *testing.T) {
+	heard := func(s *speakers) {
+		s.update(toneMsg{side: audio.Left, heard: audio.Heard{Windows: 9, Best: 93, Level: 240}})
+		s.phase = "ask" // the right tone, without playing it
+		s.heard[audio.Right] = audio.Heard{Windows: 8, Best: 90, Level: 104}
+	}
+	run := &report.Run{}
+	s := newSpeakers(run, t.TempDir())
+	heard(s)
+	if !strings.Contains(s.view(90, 30), "the left tone was 2.3 times as loud as the right") {
+		t.Errorf("the measured balance isn't shown:\n%s", s.view(90, 30))
+	}
+	s.update(press('2'))
+	result, _ := run.Get("speakers")
+	if !s.done() || result.State != report.Partial || result.Note != "Both speakers play, but the left is louder than the right." || !strings.Contains(result.Evidence, "2.3 times as loud") {
+		t.Errorf("result %+v", result)
+	}
+
+	// None of the answers fits
+	run = &report.Run{}
+	s = newSpeakers(run, t.TempDir())
+	heard(s)
+	s.update(press('8'))
+	for _, c := range "a hum under the tone" {
+		s.update(press(c))
+	}
+	s.update(press(tea.KeyEnter))
+	if result, _ := run.Get("speakers"); !s.done() || result.State != report.Partial || result.Note != "a hum under the tone" {
+		t.Errorf("in the owner's words: %+v", result)
+	}
+
+	// Tones about equally loud say so, and one side unheard says nothing about balance
+	s = newSpeakers(&report.Run{}, t.TempDir())
+	s.heard = [2]audio.Heard{{Windows: 9, Level: 200}, {Windows: 9, Level: 180}}
+	if s.balance() != "at the microphones the two tones were about equally loud" {
+		t.Errorf("balance: %q", s.balance())
+	}
+	s.heard[audio.Right] = audio.Heard{}
+	if s.balance() != "" {
+		t.Errorf("balance with one side unheard: %q", s.balance())
 	}
 }
