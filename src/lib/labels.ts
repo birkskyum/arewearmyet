@@ -195,6 +195,12 @@ const releaseRank = (tag: string) => {
 };
 const reportNotes = (reports: { note: string; variant?: string }[]) => reports.map((r) => (r.variant ? `${r.variant}: ${r.note}` : r.note)).join(' ');
 
+/** Whether Omarchy's edge install image starts the model by itself: it carries the model's device tree and the hardware IDs that pick it. */
+export function edgeStarts(model: Model): boolean {
+  const carried = (channel: string | null | undefined) => channel === 'stable' || channel === 'rc' || channel === 'edge';
+  return carried(model.omarchy?.deviceTree) && carried(model.omarchy?.ids);
+}
+
 export function bootableCell(model: Model): Cell {
   const key = model.bootable as keyof typeof STATES.bootable;
   const meaning = STATES.bootable[key].meaning;

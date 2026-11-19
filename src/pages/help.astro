@@ -98,8 +98,8 @@ sed -i '/serial-number/d' tree.dts</code></pre>
         A model with a channel like <span class={`${PILL} ${TONE.good}`}>Edge</span> under Bootable has its device tree and hardware IDs in that Omarchy channel, so its install image picks the tree by itself. Nobody has confirmed it on the real hardware yet.
       </p>
       <ol class={STEPS}>
-        <li>Make an Omarchy USB stick. With Windows still on the laptop, the <a class={LINK} href={INSTALLER}>Omarchy Arm Installer</a> makes one and copies the laptop's firmware onto it from Windows' own drivers.</li>
-        <li>Turn off Secure Boot, boot from the stick, and install, or just see how far it gets.</li>
+        <li>Make an Omarchy USB stick. With Windows still on the laptop, the <a class={LINK} href={INSTALLER}>Omarchy Arm Installer</a> makes one and copies the laptop's firmware onto it from Windows' own drivers. <a class={LINK} href="/install">Installing Omarchy on an ARM PC</a> has every step.</li>
+        <li>Turn off Secure Boot, boot from the stick, and install, or just see how far it gets. If the disk password screen stays black after installing, <a class={LINK} href="/install#black-password">type the password blind</a>.</li>
         <li>If it reached the desktop, <a class={LINK} href="#check">run the hardware test</a>: it measures what works and puts it on the model's page, so there's nothing to write up.</li>
         <li>If it didn't get that far, open <a class={LINK} href={FORM}>Add your model</a> and choose how far it got. If you run another distro on it, tell us how that does too.</li>
       </ol>

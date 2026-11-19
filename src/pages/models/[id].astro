@@ -5,7 +5,7 @@ import Layout from '../../layouts/Layout.astro';
 import CheckTable from '../../components/CheckTable';
 import ChipIcon from '../../assets/chip-icon.svg';
 import GitHubIcon from '../../assets/github-icon.svg';
-import { GENERATION, TONE, acpiCell, bootableCell, deviceTreeCell, idsCell, machineCell, omarchyFirmwareCell, omarchyIdsCell, omarchyTreeCell, upstreamFirmwareCell, type Model } from '../../lib/labels';
+import { GENERATION, TONE, acpiCell, bootableCell, edgeStarts, deviceTreeCell, idsCell, machineCell, omarchyFirmwareCell, omarchyIdsCell, omarchyTreeCell, upstreamFirmwareCell, type Model } from '../../lib/labels';
 import { PILL } from '../../lib/tones';
 import { GROUPS, coverage, modelChecks, modelExtra, pageModels } from '../../lib/checks';
 
@@ -121,6 +121,7 @@ const REPORT_TONE = { works: 'good', workaround: 'close', problems: 'wanted' } a
 
     <section class="mt-10 rounded-xl bg-[#9ece6a]/10 p-5 ring-1 ring-[#9ece6a]/40">
       <h2 class="text-base font-semibold text-[#9ece6a]">Own one? Test it</h2>
+      <p class="mt-2 text-sm text-zinc-300">{edgeStarts(model) ? "Not on Omarchy yet? Omarchy's edge image starts this model by itself." : "Omarchy's install image can't start this model by itself yet."} <a class={LINK} href={edgeStarts(model) ? '/install' : '/help'}>{edgeStarts(model) ? 'How to install it' : 'How to help it get there'}</a>, and <a class={LINK} href="/install#black-password">what to do when the disk password screen is black</a>.</p>
       <p class="mt-2 text-sm text-zinc-300">On Omarchy, install the hardware test once and run it. It measures what it can by itself (graphics, Wi-Fi and Bluetooth, sound, video decoding, temperatures), tests the rest with you, shows the results and puts them on this page unless you say no. No serial numbers, addresses or names are sent, and a picture or recording it makes never leaves the computer.</p>
       <pre class={CODE}><code>omarchy-mise-install github:birkskyum/arewearmyet hw-test
 hw-test</code></pre>

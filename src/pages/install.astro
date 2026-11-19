@@ -1,0 +1,219 @@
+---
+// How an owner installs Omarchy on an ARM PC, and what to do when the start doesn't go as it
+// should. Which image a model needs comes from the board's own data, so it stays right.
+import Layout from '../layouts/Layout.astro';
+import ChipIcon from '../assets/chip-icon.svg';
+import GitHubIcon from '../assets/github-icon.svg';
+import { TONE, edgeStarts } from '../lib/labels';
+import { PILL } from '../lib/tones';
+import { pageModels } from '../lib/checks';
+
+const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
+const REPO = 'https://github.com/birkskyum/arewearmyet';
+const FORM = `${REPO}/issues/new?template=model.yml`;
+const INSTALLER = 'https://github.com/turbineBMW/omarchy-arm-installer/releases/latest';
+const OMARCHY = 'https://github.com/omacom/omarchy';
+const CARD = 'rounded-xl bg-zinc-900 p-6 ring-1 ring-zinc-800 scroll-mt-6';
+const STEPS = 'mt-4 list-decimal space-y-3 pl-5 marker:text-zinc-500';
+const BULLETS = 'mt-3 list-disc space-y-2 pl-5 marker:text-zinc-600';
+const CODE = 'mt-2 overflow-x-auto rounded-md bg-zinc-950 p-3 text-xs text-zinc-300';
+const INLINE = 'rounded bg-zinc-800 px-1 py-0.5 text-[0.85em] text-zinc-200';
+const H3 = 'mt-6 text-base font-semibold text-zinc-100';
+
+const models = pageModels();
+const starts = models.filter(edgeStarts).length;
+
+const STEPS_NAV = [
+  { id: 'before', title: 'Before you start', text: 'Your model, your files, the firmware' },
+  { id: 'stick', title: 'Make the stick', text: 'From Windows, or from any computer' },
+  { id: 'install', title: 'Install', text: 'Start from the stick and choose a disk' },
+  { id: 'trouble', title: 'When it goes wrong', text: 'A black password screen, and more' },
+];
+
+// The models Omarchy has a fix for, read from install/hardware on its quattro branch
+const UNLOCK_FIXED = [
+  'ASUS Vivobook S 15 (S5507QA) and S 16 (S3607QA)',
+  'ASUS Zenbook 14 (UX3480QA), Zenbook A14 (UX3407QA, UX3407RA) and Zenbook A16 (UX3607OA)',
+  'Acer Aspire 16 AI (A16-11M)',
+  'HP OmniBook X 14 (14-fe0)',
+  'Lenovo IdeaCentre Mini (01Q8X10) and IdeaPad Slim 5x',
+  'Microsoft Surface Pro 11, Surface Laptop 7 15-inch and Surface Laptop 8',
+  'Every Snapdragon X2 machine (Glymur, Mahua and Kalambo chips)',
+];
+---
+
+<Layout title="Install Omarchy on an ARM PC · Are we ARM yet?" description="How to install Omarchy on a Snapdragon laptop or another ARM PC: which image your model needs, making the USB stick, and what to do when the disk password screen stays black.">
+  <main class="mx-auto max-w-4xl px-4 py-10 text-zinc-400 sm:px-6">
+    <div class="flex items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 text-zinc-300 hover:text-zinc-100">
+        <ChipIcon class="h-8 w-8 text-[#9ece6a]" aria-hidden="true" />
+        <span class="font-semibold">Are we ARM yet?</span>
+      </a>
+      <a href={REPO} class="flex shrink-0 items-center gap-2 rounded-md p-2 text-sm text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100 sm:px-3 sm:py-1.5" aria-label="Are we ARM yet? on GitHub">
+        <GitHubIcon class="h-5 w-5" aria-hidden="true" />
+        <span class="hidden sm:inline">GitHub</span>
+      </a>
+    </div>
+
+    <h1 class="mt-8 text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">Install Omarchy on an ARM PC</h1>
+    <p class="mt-4 text-lg">
+      Omarchy builds one install image for every ARM PC it supports. This page takes a Snapdragon laptop from Windows to the Omarchy desktop, and says what to do when the start doesn't go as it should.
+    </p>
+    <p class="mt-3">
+      <span class="text-zinc-200">Snapdragon laptops are supported from Omarchy 4.6.</span> Until 4.6 is released, that means the <span class={`${PILL} ${TONE.good}`}>Edge</span> image, which is built every night. The 4.5 release image is too old for them.
+    </p>
+    <p class="mt-3">
+      NVIDIA's ARM desktops and laptops install from the same image. Apple Silicon Macs have <a class={LINK} href="https://github.com/omacom/omarchy-mac-installer">an installer of their own</a>. Chromebooks and Googlebooks start differently and don't install from this image.
+    </p>
+
+    <nav class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      {STEPS_NAV.map((step) => (
+        <a href={`#${step.id}`} class="rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800 hover:bg-zinc-800">
+          <span class="block font-medium text-zinc-100">{step.title}</span>
+          <span class="mt-1 block text-sm">{step.text}</span>
+        </a>
+      ))}
+    </nav>
+
+    <section id="before" class={`mt-10 ${CARD}`}>
+      <h2 class="text-xl font-semibold text-zinc-100">Before you start</h2>
+      <ol class={STEPS}>
+        <li>
+          <span class="text-zinc-200">Find your model on <a class={LINK} href="/">the board</a>.</span> Its Bootable column says whether the image starts it, and its own page says what works once it runs, part by part.
+          <ul class={BULLETS}>
+            <li>A channel there, like <span class={`${PILL} ${TONE.good}`}>Edge</span>, means the edge image picks the model's device tree by itself. Today that holds for {starts} of the {models.length} Snapdragon models here.</li>
+            <li>Anything else means the image can't start it by itself yet. <a class={LINK} href="/help">How to help</a> says what gets it there.</li>
+          </ul>
+        </li>
+        <li>
+          <span class="text-zinc-200">Save what you want to keep.</span> Omarchy's installer erases the disk you choose, unless you pick free space next to Windows. Make Windows recovery media while Windows is still there, if you may want it back.
+        </li>
+        <li>
+          <span class="text-zinc-200">Keep Windows for the first install.</span> Graphics, sound and the battery gauge need firmware files that the laptop's maker signs. Omarchy has a package with them for some models (the model's page shows it under Firmware). For the others they come from the laptop's own Windows, so don't wipe it before Omarchy has them.
+        </li>
+        <li>
+          <span class="text-zinc-200">Have a USB stick of 16 GB or more.</span> The image is over 8 GB. Everything on the stick is erased.
+        </li>
+      </ol>
+    </section>
+
+    <section id="stick" class={`mt-6 ${CARD}`}>
+      <h2 class="text-xl font-semibold text-zinc-100">Make the stick</h2>
+
+      <h3 class={H3}>From the laptop's own Windows</h3>
+      <p class="mt-2">
+        The easiest way. The <a class={LINK} href={INSTALLER}>Omarchy Arm Installer</a> recognises the laptop, downloads the image, copies the firmware Linux needs out of Windows' own drivers onto the stick, and writes it. BitLocker can stay on.
+      </p>
+      <ol class={STEPS}>
+        <li>Download <code class={INLINE}>OmarchyArmInstaller.exe</code> from <a class={LINK} href={INSTALLER}>its latest release</a>, right-click it and choose Run as administrator.</li>
+        <li>Follow its steps. It names the laptop, lists the firmware it will copy, downloads the image and asks for the stick.</li>
+        <li>To keep Windows next to Omarchy on the same disk, shrink <code class={INLINE}>C:</code> in Disk Management when it asks. Omarchy needs at least 20 GB of free space there.</li>
+        <li>Its last screen says how to turn off Secure Boot on your laptop and start from the stick.</li>
+      </ol>
+
+      <h3 class={H3}>From any computer</h3>
+      <ol class={STEPS}>
+        <li>
+          Download the edge image and check that it arrived whole:
+          <pre class={CODE}><code>latest=$(curl -fsSL https://nightly.omarchy.org/edge-aarch64/latest.json)
+url=$(jq -r .url &lt;&lt;&lt;"$latest")
+curl -fLO "$url"
+echo "$(jq -r .sha256 &lt;&lt;&lt;"$latest")  $&#123;url##*/&#125;" | sha256sum -c</code></pre>
+          <a class={LINK} href="https://nightly.omarchy.org/edge-aarch64/latest.json">latest.json</a> names the newest image and its checksum, for downloading it by hand.
+        </li>
+        <li>Write it to the stick with <a class={LINK} href="https://etcher.balena.io/">balenaEtcher</a> on Windows or a Mac, or <a class={LINK} href="https://github.com/ifd3f/caligula">caligula</a> on Linux.</li>
+        <li>
+          <span class="text-zinc-200">If the laptop has Windows, turn BitLocker off in Windows</span> and let the drive finish decrypting. A stick made this way carries no firmware, so Omarchy's installer copies it from the Windows partition, which it can't read while it is encrypted.
+        </li>
+      </ol>
+    </section>
+
+    <section id="install" class={`mt-6 ${CARD}`}>
+      <h2 class="text-xl font-semibold text-zinc-100">Install</h2>
+      <ol class={STEPS}>
+        <li><span class="text-zinc-200">Turn off Secure Boot</span> in the laptop's firmware settings. With it on, the laptop refuses the stick.</li>
+        <li><span class="text-zinc-200">Start from the stick</span>, through the firmware's boot menu. The screen can stay black for a few minutes before the Omarchy logo shows.</li>
+        <li>
+          <span class="text-zinc-200">For a first look, stop here.</span> Check the screen, the keyboard, the touchpad and Wi-Fi in the installer without installing anything.
+        </li>
+        <li>
+          <span class="text-zinc-200">Answer the installer's questions and choose where Omarchy goes.</span> The whole disk, another drive, or free space next to Windows. Omarchy's manual covers <a class={LINK} href="https://omarchy.org/manual/getting-started/">the install step by step</a> and <a class={LINK} href="https://omarchy.org/manual/dual-boot-install/">installing next to Windows</a>.
+        </li>
+        <li>
+          <span class="text-zinc-200">Decide on disk encryption.</span> With it, you type a disk password at every start, before the desktop. On a model whose password screen isn't fixed yet <a class={LINK} href="#black-password">that screen is black</a> and you type blind. The manual says how to install without encryption, which has no such screen but leaves the disk readable to anyone who takes it.
+        </li>
+        <li>
+          <span class="text-zinc-200">After the first start, update and restart.</span>
+          <pre class={CODE}><code>omarchy update</code></pre>
+          Fixes for a model reach an installed computer this way. A computer installed from the edge image stays on the edge channel and gets them as they land.
+        </li>
+        <li>
+          <span class="text-zinc-200">See what works, and put it on your model's page.</span>
+          <pre class={CODE}><code>omarchy-mise-install github:birkskyum/arewearmyet hw-test
+hw-test</code></pre>
+          It tests the hardware with you in about a quarter of an hour. <a class={LINK} href="/help#check">More about the test</a>.
+        </li>
+      </ol>
+    </section>
+
+    <section id="trouble" class={`mt-6 ${CARD}`}>
+      <h2 class="text-xl font-semibold text-zinc-100">When it goes wrong</h2>
+
+      <h3 id="back-to-windows" class={`${H3} scroll-mt-6`}>The laptop goes back to Windows, or the screen flashes and stays black</h3>
+      <ul class={BULLETS}>
+        <li>Check that Secure Boot is off.</li>
+        <li>Wait a few minutes. A black screen before the logo is normal on some models.</li>
+        <li>Make sure the stick holds a recent edge image, not the 4.5 release. An image without the model's device tree starts the kernel, which stops before it can draw anything, and the laptop resets into Windows.</li>
+        <li>Still nothing? Tell us through <a class={LINK} href={FORM}>Add your model</a>, with the image's version and what the screen showed last.</li>
+      </ul>
+
+      <h3 id="black-password" class={`${H3} scroll-mt-6`}>The disk password screen is black</h3>
+      <p class="mt-2">
+        After the boot menu the screen goes dark where the password prompt should be. The laptop hasn't hung. The prompt is there and waiting, but the screen isn't lit yet.
+      </p>
+      <p class="mt-4 font-medium text-zinc-200">To get in now</p>
+      <ol class={STEPS}>
+        <li>Wait a moment after the boot menu.</li>
+        <li>Type your disk password and press Enter. You won't see anything while you type.</li>
+        <li>Give it a minute. The screen lights up once the disk is open, and the desktop shows.</li>
+        <li>Still dark? Hold the power button until the laptop is off and try again, slowly. If it keeps failing, the built-in keyboard may not work at that point either. Try a USB keyboard plugged straight into the laptop, not through a dock.</li>
+      </ol>
+      <p class="mt-4 font-medium text-zinc-200">To fix it for good</p>
+      <ol class={STEPS}>
+        <li>
+          <span class="text-zinc-200">Update and restart.</span> Omarchy fixes this model by model, and the update applies the fix to a computer that is already installed.
+          <pre class={CODE}><code>omarchy update</code></pre>
+          On 19 November 2026 Omarchy's edge channel has the fix for:
+          <ul class={BULLETS}>
+            {UNLOCK_FIXED.map((name) => <li>{name}</li>)}
+          </ul>
+          <p class="mt-2">The Lenovo Yoga Slim 7x shows its prompt without one.</p>
+        </li>
+        <li>
+          <span class="text-zinc-200">Still black, or your model isn't listed?</span> Then nobody has made the fix for it yet, and you can. Your AI agent can do it with you:
+          <pre class={CODE}><code>hw-test fix disk-unlock</code></pre>
+          It gets what is known about the fault, how to change the laptop safely, and how to send the fix to Omarchy so every owner of the model gets it.
+        </li>
+        <li>
+          <span class="text-zinc-200">Or tell us.</span> Open an issue on <a class={LINK} href={`${OMARCHY}/issues`}>omacom/omarchy</a> that names the model, with the output of these two, run from the desktop:
+          <pre class={CODE}><code>cat /sys/class/dmi/id/product_name
+journalctl -k -b --no-hostname | grep -iE 'drm|panel|backlight' | grep -v 'command line'</code></pre>
+        </li>
+      </ol>
+      <p class="mt-4 font-medium text-zinc-200">Why it happens</p>
+      <p class="mt-2">
+        The password prompt is drawn from a small boot image, before the disk is open and most drivers are loaded. On these laptops the display driver waits for the drivers of the USB-C ports (which can carry a screen) and of the backlight before it draws. When those aren't in the boot image, the driver waits until the disk is open, which is after the prompt. Omarchy's fix for a model names those drivers in a file under <code class={INLINE}>/etc/mkinitcpio.conf.d</code>, so they are in the boot image. The <a class={LINK} href={`${OMARCHY}/blob/quattro/install/hardware/hp/fix-hp-omnibook-x14-boot.sh`}>HP OmniBook X 14's fix</a> is a short example, and the <a class={LINK} href={`${OMARCHY}/tree/quattro/install/hardware`}>folder beside it</a> has every model's.
+      </p>
+
+      <h3 id="other" class={`${H3} scroll-mt-6`}>Something else doesn't work</h3>
+      <p class="mt-2">
+        Look at your model's page first. It lists what is known per part, and other owners' notes with their workarounds. Then run <code class={INLINE}>hw-test</code>, which measures the part, and <code class={INLINE}>hw-test fix</code>, which hands what fails to your AI agent.
+      </p>
+    </section>
+
+    <div class="mt-10 flex flex-wrap gap-3 text-sm">
+      <a href="/" class="rounded-md bg-zinc-100 px-3 py-1.5 font-medium text-zinc-900 hover:bg-white">Find your model</a>
+      <a href="/help" class="rounded-md px-3 py-1.5 text-zinc-200 ring-1 ring-zinc-700 hover:bg-zinc-800">Help a model get there</a>
+    </div>
+  </main>
+</Layout>
