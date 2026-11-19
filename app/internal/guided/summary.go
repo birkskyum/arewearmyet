@@ -26,6 +26,8 @@ type summary struct {
 	err     error
 	skipped bool
 	over    bool
+	// again is set when the owner chose to go back to the start after this round.
+	again bool
 	// failed holds the steps that hit a fault of the test's own, by name.
 	failed map[string]string
 	// dir holds the test's recordings and pictures, which are deleted before anything is sent.
@@ -53,9 +55,24 @@ func (s *summary) start() tea.Cmd {
 	}
 	s.ask = choice{question: "Send the lines above to arewearmyet.com?", options: []string{"Send", "Don't send"}}
 	if !s.options.Send {
-		s.ask = choice{question: "These are the results. Nothing is sent, as asked.", options: []string{"Done"}}
+		s.end("These are the results. Nothing is sent, as asked.")
 	}
 	return nil
+}
+
+// end puts up the last choice of a round: back to the start, which is where the cursor
+// rests, the page when something was sent, or leaving.
+func (s *summary) end(question string) {
+	s.phase = "end"
+	options := []string{"Back to the start"}
+	if s.sent.Run != "" {
+		open := "Open this computer's page in the browser"
+		if s.sent.Page == "" {
+			open = "Open the form in the browser"
+		}
+		options = append(options, open)
+	}
+	s.ask = choice{question: question, options: append(options, "Quit")}
 }
 
 func (s *summary) send() tea.Cmd {
@@ -85,14 +102,11 @@ func (s *summary) update(msg tea.Msg) tea.Cmd {
 			s.ask = choice{question: "Sending failed: " + s.err.Error(), options: []string{"Try again", "Give up"}}
 			return nil
 		}
-		s.phase = "sent"
 		question := "Sent as " + s.sent.Run + ". Thank you! It's on the model's page now."
-		open := "Open the page in the browser"
 		if s.sent.Page == "" {
 			question = "Sent as " + s.sent.Run + ". The board doesn't know this computer yet, so the run shows on no page. A form with its name and hardware IDs filled in adds it."
-			open = "Open the form in the browser"
 		}
-		s.ask = choice{question: question, options: []string{open, "Done"}}
+		s.end(question)
 	case tea.KeyPressMsg:
 		picked := s.ask.update(msg)
 		if picked < 0 {
@@ -100,20 +114,26 @@ func (s *summary) update(msg tea.Msg) tea.Cmd {
 		}
 		switch s.phase {
 		case "review":
-			if picked == 0 && s.options.Send {
+			if picked == 0 {
 				return s.send()
 			}
-			s.skipped, s.over = true, true
+			s.skipped = true
+			s.end("Not sent. The results are kept on this computer.")
 		case "failed":
 			if picked == 0 {
 				return s.send()
 			}
-			s.over = true
-		case "sent":
-			if picked == 0 {
+			s.end("Not sent. The results are kept on this computer.")
+		case "end":
+			switch s.ask.options[picked] {
+			case "Back to the start":
+				s.again, s.over = true, true
+			case "Quit":
+				s.over = true
+			default:
+				// The page opens in the browser, and the choice stays up for what comes after
 				tools.Open(s.page())
 			}
-			s.over = true
 		}
 	}
 	return nil
@@ -124,13 +144,14 @@ func (s *summary) view(width, height int) string {
 		return accent.Render("● Sending to arewearmyet.com")
 	}
 	text := ""
-	if s.phase == "review" {
+	// The results stay in view until they have been sent
+	if s.sent.Run == "" {
 		text = resultsTable(s.run.Results, width) + "\n\n"
 		// Said plainly, so a step that was passed over isn't taken for one that found nothing
 		for name, fault := range s.failed {
 			text += close_.Render(wrap("The "+name+" step ran into a problem of the test's own and was passed over ("+fault+"). Nothing is reported for it.", width)) + "\n\n"
 		}
-		if s.options.Send {
+		if s.options.Send && s.phase == "review" {
 			// What goes and what doesn't, said where the decision is made
 			text += wrap("Those lines are everything that is sent, with this computer's model and its software versions.", width) + "\n" +
 				good.Render("🔒 ") + wrap("No picture and no recording is sent. They were only for you to check, and are already deleted.", width-3) + "\n\n"

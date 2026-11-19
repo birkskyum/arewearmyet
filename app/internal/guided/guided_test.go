@@ -363,8 +363,8 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 
 	// Quit is the last entry, and leaves without starting anything
 	m, start = open()
-	if !strings.Contains(m.View().Content, "Quit") || !strings.Contains(m.View().Content, "come back to this menu") {
-		t.Errorf("the menu lacks Quit or the way back:\n%s", m.View().Content)
+	if !strings.Contains(m.View().Content, "Quit") {
+		t.Errorf("the menu lacks Quit:\n%s", m.View().Content)
 	}
 	quit := start.update(press(rune('0' + len(start.parts) + 2)))
 	if !start.quit || start.part != "" || quit == nil {
@@ -1137,5 +1137,49 @@ func TestStatusListsEveryCheckWithWhatFailsFirst(t *testing.T) {
 	}
 	if checks != 30 {
 		t.Errorf("it lists %d checks", checks)
+	}
+}
+
+func TestARoundEndsOnGoingBackToTheStartByDefault(t *testing.T) {
+	run := &report.Run{}
+	run.Set("camera", report.Works, report.Owner, "a frame", "")
+
+	// Sent: back to the start is where the cursor rests, then the page, then leaving
+	s := &summary{run: run, options: Options{Send: true}}
+	s.start()
+	s.update(sentMsg{sent: report.Sent{Run: "RUN-AAAAAAAAAA", Page: "https://arewearmyet.com/models/x"}})
+	if got := strings.Join(s.ask.options, " | "); got != "Back to the start | Open this computer's page in the browser | Quit" || s.ask.cursor != 0 {
+		t.Fatalf("the last choice: %s, cursor %d", got, s.ask.cursor)
+	}
+	s.update(press(tea.KeyEnter))
+	if !s.done() || !s.again {
+		t.Errorf("Enter: done %v, again %v", s.done(), s.again)
+	}
+
+	// Quit leaves, and doesn't come back
+	s = &summary{run: run, options: Options{Send: true}}
+	s.start()
+	s.update(sentMsg{sent: report.Sent{Run: "RUN-AAAAAAAAAA", Page: "https://arewearmyet.com/models/x"}})
+	s.update(press('3'))
+	if !s.done() || s.again {
+		t.Errorf("Quit: done %v, again %v", s.done(), s.again)
+	}
+
+	// Not sending leads to the same choice, without a page to open, and the results stay in view
+	s = &summary{run: run, options: Options{Send: true}}
+	s.start()
+	s.update(press('2'))
+	if got := strings.Join(s.ask.options, " | "); got != "Back to the start | Quit" || s.done() || !strings.Contains(s.view(90, 30), "Webcam") {
+		t.Errorf("after declining: %s, done %v", got, s.done())
+	}
+	if s.farewell() != "Not sent." {
+		t.Errorf("farewell %q", s.farewell())
+	}
+
+	// Asked not to send at all: the results, then the same choice
+	s = &summary{run: run, options: Options{Send: false}}
+	s.start()
+	if drawn := s.view(90, 30); !strings.Contains(drawn, "Webcam") || !strings.Contains(drawn, "Nothing is sent, as asked") || !strings.Contains(drawn, "Back to the start") {
+		t.Errorf("with sending off:\n%s", drawn)
 	}
 }

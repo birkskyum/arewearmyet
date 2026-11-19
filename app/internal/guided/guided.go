@@ -193,8 +193,7 @@ func choose(steps []step, words []string) []step {
 }
 
 // Run shows the guided test and sends its results. Started without a step named, it opens on
-// a menu, and comes back to that menu after a single part, until the whole test has run or
-// the owner quits.
+// a menu. Every round ends on a choice of going back to that menu or leaving.
 func Run(run *report.Run, facts probe.Facts, options Options) error {
 	dir, err := os.MkdirTemp("", "hw-test-")
 	if err != nil {
@@ -219,6 +218,8 @@ func Run(run *report.Run, facts probe.Facts, options Options) error {
 		if !outcome.again {
 			break
 		}
+		// The start is the menu, also after steps that were named on the command line
+		options.Only = nil
 	}
 	if len(said) > 0 {
 		fmt.Println(strings.Join(said, "\n"))
@@ -230,7 +231,7 @@ func Run(run *report.Run, facts probe.Facts, options Options) error {
 type outcome struct {
 	// said is what to leave in the terminal about it.
 	said string
-	// again is set when a single part was done from the menu, which comes up again.
+	// again is set when the owner chose to go back to the start.
 	again bool
 }
 
@@ -304,9 +305,8 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 	case start.quit:
 		return outcome{}, nil
 	}
-	// A part chosen from the menu leads back to the menu; the whole test, or steps named on
-	// the command line, end here
-	return outcome{said: last.farewell(), again: start.part != ""}, nil
+	// Back to the start when the owner chose that on the last screen
+	return outcome{said: last.farewell(), again: last.again}, nil
 }
 
 // resume picks a stopped test up at the step it stopped in, with its answers restored. boot
@@ -754,7 +754,7 @@ func (w *welcome) view(width, height int) string {
 		page = "\n\n" + wrap("The board doesn't have this computer yet. Sending a test adds what it finds, with a form to put the model on the board.", width)
 	}
 	return wrap(intro, width) + page + "\n\n" + w.ask.view(width) + "\n\n" +
-		wrap("After a single part you come back to this menu. To go straight to one part next time, add its name to the command, like hw-test camera or hw-test sound.", width) + "\n\n" +
+		wrap("To go straight to one part next time, add its name to the command, like hw-test camera or hw-test sound.", width) + "\n\n" +
 		wrap("Only results are sent, with the model and software versions. No serial numbers, addresses or names.", width) + "\n" +
 		good.Render("🔒 ") + wrap("A picture or recording the test makes never leaves this computer and is deleted when the test ends.", width-3)
 }
