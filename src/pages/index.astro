@@ -140,6 +140,9 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
         </div>
         <div class="flex flex-wrap items-center gap-2">
           <a href="#apple" class="mr-1 font-semibold text-zinc-200 hover:text-zinc-50">Apple Silicon</a>
+          <span class="text-zinc-600" aria-hidden="true">·</span>
+          <a href="#android" class="font-semibold text-zinc-200 hover:text-zinc-50">Android phones and tablets</a>
+          <span class="text-zinc-500">are covered elsewhere</span>
         </div>
       </nav>
       <p class="mt-5 max-w-3xl text-sm text-zinc-400">
@@ -240,7 +243,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
     </Family>
 
     <Group id="chromebooks-and-googlebooks" title="Chromebooks and Googlebooks" total={googlebooks.length + chromebooks.length}>
-      They start through Google's own boot software instead of UEFI, so getting past the bootloader comes first. Phones and Android tablets aren't listed here: <a class={LINK} href="https://omamobile.org/devices/">Omarchy Mobile</a> covers those.
+      They start through Google's own boot software instead of UEFI, so getting past the bootloader comes first.
     </Group>
 
     <Family id="googlebooks" title="Googlebooks with Snapdragon" total={googlebooks.length}>
@@ -280,9 +283,13 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
       </div>
     </Family>
 
-    <p class="mt-8 scroll-mt-6 text-sm text-zinc-400" id="apple">
-      Apple Silicon Macs run Linux through Asahi Linux, which Omarchy builds on. <a class={LINK} href="https://asahilinux.org/docs/platform/feature-support/overview/">Asahi's feature support pages</a> track which models and features work.
-    </p>
+    <Group id="apple" title="Apple Silicon">
+      Macs with Apple's own chips are the Omarchy Mac team's. They install with <a class={LINK} href="https://github.com/omacom/omarchy-mac-installer">an installer of their own</a> and run Linux through Asahi Linux, whose <a class={LINK} href="https://asahilinux.org/docs/platform/feature-support/overview/">feature support pages</a> track which models and features work.
+    </Group>
+
+    <Group id="android" title="Android phones and tablets">
+      Phones and tablets that came with Android belong to <a class={LINK} href="https://omamobile.org/devices/">Omarchy Mobile</a>, which lists the devices it runs on.
+    </Group>
 
     <section class="mt-12 grid gap-8 text-sm text-zinc-400 sm:grid-cols-2">
       <div>
