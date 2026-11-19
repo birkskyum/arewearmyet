@@ -6,6 +6,7 @@ package tools
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -402,6 +403,80 @@ func CurrentSession() Session {
 		return held[0]
 	}
 	return Session{}
+}
+
+// T3 Code runs whichever agent the owner has, by its own name for it. These are its names for
+// the agents Omarchy can set as the default.
+var t3Drivers = map[string]string{"codex": "codex", "claude": "claudeAgent", "agy": "antigravity", "opencode": "opencode", "cursor-agent": "cursor", "grok": "grok"}
+
+// t3Model picks the agent and model a new T3 Code thread runs: the owner's default agent in
+// Omarchy, on the model T3 Code lists for it first. HW_TEST_T3_MODEL, as provider/model, says
+// otherwise. Empty means T3 Code's own default for the project.
+func t3Model() (provider, model string) {
+	if given := strings.SplitN(os.Getenv("HW_TEST_T3_MODEL"), "/", 2); len(given) == 2 {
+		return given[0], given[1]
+	}
+	chosen, _ := exec.Command("omarchy-default-agent").Output()
+	provider = t3Drivers[strings.TrimSpace(string(chosen))]
+	if provider == "" {
+		return "", ""
+	}
+	home := os.Getenv("T3CODE_HOME")
+	if home == "" {
+		user, _ := os.UserHomeDir()
+		home = filepath.Join(user, ".t3")
+	}
+	var listed struct {
+		Manifest struct {
+			CurrentModels map[string][]string `json:"currentModels"`
+			Providers     map[string]struct {
+				Defaults map[string]string `json:"defaults"`
+			} `json:"providers"`
+		} `json:"manifest"`
+	}
+	if data, err := os.ReadFile(filepath.Join(home, "userdata", "model-manifest.json")); err == nil {
+		_ = json.Unmarshal(data, &listed)
+	}
+	if model = listed.Manifest.Providers[provider].Defaults["chat"]; model == "" && len(listed.Manifest.CurrentModels[provider]) > 0 {
+		model = listed.Manifest.CurrentModels[provider][0]
+	}
+	if model == "" {
+		return "", ""
+	}
+	return provider, model
+}
+
+// T3Start starts a thread in T3 Code for the work in a folder and returns its id. T3 Code
+// keeps the thread, so the same conversation can be written to again later, whatever agent
+// runs in it. It fails where T3 Code isn't installed or its app isn't running.
+func T3Start(dir, title, message string) (string, error) {
+	if !Have("t3") {
+		return "", ErrNoSession
+	}
+	run := func(args ...string) ([]byte, error) {
+		ctx, cancel := context.WithTimeout(context.Background(), 40*time.Second)
+		defer cancel()
+		command := exec.CommandContext(ctx, "t3", args...)
+		command.Dir = dir
+		return command.CombinedOutput()
+	}
+	// The folder has to be a project of T3 Code's. Adding one that is there already changes nothing
+	_, _ = run("project", "add", dir)
+	args := []string{"thread", "start", "--json", "--title", title}
+	if provider, model := t3Model(); provider != "" {
+		args = append(args, "--provider", provider, "--model", model)
+	}
+	out, err := run(append(args, dir, message)...)
+	var started struct {
+		Thread string `json:"threadId"`
+	}
+	if at := strings.LastIndex(string(out), "{"); err == nil && at >= 0 {
+		_ = json.Unmarshal(out[at:], &started)
+	}
+	if err != nil || started.Thread == "" {
+		return "", fmt.Errorf("T3 Code didn't start a thread (%v): %s", err, lastLine(string(out)))
+	}
+	return started.Thread, nil
 }
 
 // ErrNoSession says there is no earlier session to go on in.

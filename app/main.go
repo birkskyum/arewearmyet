@@ -244,6 +244,7 @@ func main() {
 		briefing.Binary = guided.Command()
 		if command == "fix" {
 			briefing.GetGuide = guided.FetchGuide
+			briefing.InThread = guided.InThread
 			// Handing over at a terminal is the owner's own doing
 			briefing.ByOwner = guided.Interactive()
 		}
@@ -620,6 +621,10 @@ func comeBack(prompt string, cancel, show, atLogin bool) int {
 		}
 	}
 	var sessions []resume.Held
+	// The thread hw-test started for this folder comes first: its agent isn't told which thread it is in
+	if kept, ok := report.ThreadFor(dir); ok {
+		sessions = append(sessions, resume.Held{Kind: kept.Kind, ID: kept.ID})
+	}
 	for _, session := range tools.CurrentSessions() {
 		sessions = append(sessions, resume.Held{Kind: session.Kind, ID: session.ID})
 	}

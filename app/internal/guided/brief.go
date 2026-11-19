@@ -51,6 +51,9 @@ type Briefing struct {
 	// ByOwner is set when the owner themselves asked for the handing over, at a terminal. It
 	// is what lets the agent run the handed parts' tests itself.
 	ByOwner bool
+	// InThread hands the work to a conversation that keeps, where the owner has a program for
+	// that, and says how it went. Nil, or an error from it, opens the agent the usual way.
+	InThread func(dir, title, message string) (string, error)
 	// GetGuide fetches the guide's text, to put a copy beside the brief. Nil leaves it out.
 	GetGuide func() ([]byte, error)
 	// guideCopy is set once that copy is written.
@@ -68,6 +71,26 @@ func Command() string {
 	}
 	running, _ := os.Executable()
 	return running
+}
+
+// InThread hands work to T3 Code where the owner runs it: into the thread hw-test started for
+// this folder before, or into a new one. T3 Code runs whichever agent the owner has, and
+// keeps the thread, which a plain agent in a terminal doesn't.
+func InThread(dir, title, message string) (string, error) {
+	if os.Getenv("HW_TEST_AGENT") != "" {
+		return "", tools.ErrNoSession
+	}
+	if kept, ok := report.ThreadFor(dir); ok && kept.Kind == "t3" {
+		if err := tools.Continue(tools.Session{Kind: kept.Kind, ID: kept.ID}, dir, message); err == nil {
+			return "Your agent has it in T3 Code, in the same thread as before.", nil
+		}
+	}
+	id, err := tools.T3Start(dir, title, message)
+	if err != nil {
+		return "", err
+	}
+	_ = report.KeepThread(dir, report.Thread{Kind: "t3", ID: id, When: time.Now()})
+	return "Your agent has it in T3 Code, in a new thread called \"" + title + "\".", nil
 }
 
 // FetchGuide reads the guide from the site.
@@ -505,6 +528,13 @@ func HandOver(b Briefing, dir string, launch func(dir, prompt string) error) Han
 		titles = append(titles, strings.ToLower(first(checkTitle[check], check)))
 	}
 	prompt := fmt.Sprintf("Read BRIEF.md in this folder and help me get this working on my computer: %s. It says what was measured, how to measure again with hw-test and where to look. The guide it points to, %s, has the rules and says where a fix goes, so read that first.", strings.Join(titles, ", "), where)
+	// A conversation that keeps comes first: the next part and every new result then go into
+	// the same one, whichever agent runs in it
+	if b.InThread != nil {
+		if said, err := b.InThread(dir, "Hardware: "+strings.Join(titles, ", "), prompt); err == nil {
+			return Handed{File: file, Opened: true, Said: said + " The brief is in " + file + "."}
+		}
+	}
 	err := launch(dir, prompt)
 	switch {
 	case err == nil:
@@ -539,6 +569,9 @@ func handOver(run *report.Run, options Options, model report.Model, only []strin
 			launch, guide = tools.Agent, FetchGuide
 		}
 		briefing := Briefing{Version: options.Version, Run: run, Kept: report.Local(), Model: model, Checks: checks, Only: only, When: time.Now(), GetGuide: guide, ByOwner: true}
+		if options.launch == nil {
+			briefing.InThread = InThread
+		}
 		briefing.Binary = Command()
 		briefing.Fill(options.API)
 		return handedMsg{HandOver(briefing, Workspace(), launch)}

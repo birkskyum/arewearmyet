@@ -218,3 +218,44 @@ func TestTheSameConversationIsGoneOnInWhateverAgentHoldsIt(t *testing.T) {
 		t.Errorf("T3 Code not answering: %v", err)
 	}
 }
+
+func TestAThreadIsStartedInT3CodeForTheOwnersOwnAgent(t *testing.T) {
+	dir, bin, home := t.TempDir(), t.TempDir(), t.TempDir()
+	os.MkdirAll(filepath.Join(home, "userdata"), 0o755)
+	os.WriteFile(filepath.Join(home, "userdata", "model-manifest.json"), []byte(`{"manifest":{"currentModels":{"codex":["gpt-6-astra","gpt-6-luna"],"claudeAgent":["claude-fable-5-2"]},"providers":{"codex":{},"claudeAgent":{"defaults":{"chat":"claude-opus-5-5"}}}}}`), 0o644)
+	t.Setenv("T3CODE_HOME", home)
+	t.Setenv("HW_TEST_T3_MODEL", "")
+	agent := func(name string) {
+		os.WriteFile(filepath.Join(bin, "omarchy-default-agent"), []byte("#!/bin/sh\necho "+name+"\n"), 0o755)
+	}
+	os.WriteFile(filepath.Join(bin, "t3"), []byte("#!/bin/sh\nprintf '%s|' \"$@\" >> "+dir+"/called\necho >> "+dir+"/called\n[ \"$1\" = project ] && { echo 'Added project'; exit 0; }\necho 'some notice'\necho '{\"threadId\":\"mcp:351f\",\"status\":\"running\"}'\n"), 0o755)
+	t.Setenv("PATH", bin+":"+os.Getenv("PATH"))
+	work := t.TempDir()
+	for name, want := range map[string]string{
+		// The owner's default agent in Omarchy, by T3 Code's name for it, on the model it lists for it
+		"codex":  "--provider|codex|--model|gpt-6-astra|",
+		"claude": "--provider|claudeAgent|--model|claude-opus-5-5|",
+		// An agent T3 Code doesn't run is left to T3 Code's own default
+		"pi": "thread|start|--json|--title|Hardware: speakers|" + work + "|read the brief|",
+	} {
+		agent(name)
+		os.Remove(filepath.Join(dir, "called"))
+		id, err := T3Start(work, "Hardware: speakers", "read the brief")
+		calls, _ := os.ReadFile(filepath.Join(dir, "called"))
+		if err != nil || id != "mcp:351f" || !strings.Contains(string(calls), "project|add|"+work+"|") || !strings.Contains(string(calls), want) || !strings.Contains(string(calls), "|"+work+"|read the brief|") {
+			t.Errorf("default agent %s: id %q, %v, called\n%s", name, id, err, calls)
+		}
+	}
+	// HW_TEST_T3_MODEL says otherwise
+	t.Setenv("HW_TEST_T3_MODEL", "antigravity/gemini-4-carbon")
+	os.Remove(filepath.Join(dir, "called"))
+	T3Start(work, "Hardware: speakers", "read the brief")
+	if calls, _ := os.ReadFile(filepath.Join(dir, "called")); !strings.Contains(string(calls), "--provider|antigravity|--model|gemini-4-carbon|") {
+		t.Errorf("a chosen model: %s", calls)
+	}
+	// T3 Code that isn't running starts nothing, and says why
+	os.WriteFile(filepath.Join(bin, "t3"), []byte("#!/bin/sh\necho 'T3 Code is not running' >&2\nexit 1\n"), 0o755)
+	if id, err := T3Start(work, "Hardware: speakers", "read the brief"); err == nil || id != "" || !strings.Contains(err.Error(), "not running") {
+		t.Errorf("T3 Code not running: %q, %v", id, err)
+	}
+}

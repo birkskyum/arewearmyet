@@ -165,3 +165,15 @@ func TestTheOwnersHandingAPartOverStandsForTwoWeeks(t *testing.T) {
 		t.Error("the owner's yes never runs out")
 	}
 }
+
+func TestTheConversationStartedForAFolderIsKept(t *testing.T) {
+	t.Setenv("XDG_STATE_HOME", t.TempDir())
+	if _, ok := ThreadFor("/home/owner/Work/hw-bringup"); ok {
+		t.Fatal("a thread before any was started")
+	}
+	KeepThread("/home/owner/Work/hw-bringup", Thread{Kind: "t3", ID: "mcp:351f"})
+	KeepThread("/home/owner/other", Thread{Kind: "t3", ID: "mcp:9"})
+	if kept, ok := ThreadFor("/home/owner/Work/hw-bringup"); !ok || kept.ID != "mcp:351f" || kept.Kind != "t3" {
+		t.Errorf("kept %+v, %v", kept, ok)
+	}
+}

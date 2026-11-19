@@ -241,6 +241,25 @@ func TestWhatFailsIsHandedToTheOwnersAgentWithTheBrief(t *testing.T) {
 		t.Errorf("without a copy: %s", prompt)
 	}
 
+	// Where the owner has a program that keeps conversations, the work goes into one of those,
+	// and no terminal agent is opened. When it can't take it, the usual agent opens
+	one.Only = []string{"speakers"}
+	var threaded []string
+	one.InThread = func(dir, title, message string) (string, error) {
+		threaded = append(threaded, title+" | "+message[:28])
+		return "Your agent has it in T3 Code, in a new thread called \"" + title + "\".", nil
+	}
+	prompt = ""
+	handed = HandOver(one, dir, launch)
+	if !handed.Opened || prompt != "" || len(threaded) != 1 || threaded[0] != "Hardware: speakers | Read BRIEF.md in this folder" || !strings.Contains(handed.Said, "in T3 Code, in a new thread") || !strings.Contains(handed.Said, "BRIEF.md") {
+		t.Errorf("into a thread: %+v, threaded %v, terminal %q", handed, threaded, prompt)
+	}
+	one.InThread = func(string, string, string) (string, error) { return "", fmt.Errorf("T3 Code isn't running") }
+	if handed = HandOver(one, dir, launch); !handed.Opened || !strings.Contains(prompt, "Read BRIEF.md") || !strings.Contains(handed.Said, "window of its own") {
+		t.Errorf("when the thread can't take it: %+v, terminal %q", handed, prompt)
+	}
+	one.InThread = nil
+
 	// With no agent chosen, or not on Omarchy, the brief is still written and the owner told what to do
 	none := HandOver(yoga(), dir, func(string, string) error { return tools.ErrNoAgent })
 	if none.Opened || !strings.Contains(none.Said, "omarchy default agent") || !strings.Contains(none.Said, "BRIEF.md") {

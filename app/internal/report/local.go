@@ -123,3 +123,38 @@ func Handed(check string, now time.Time) bool {
 	when, ok := handed[check]
 	return ok && now.Sub(when) < HandedFor && !when.After(now.Add(time.Hour))
 }
+
+// threadFile holds, per folder, the agent conversation hw-test started for the work there.
+func threadFile() string { return filepath.Join(stateDir(), "threads.json") }
+
+// Thread is a conversation hw-test started: the program that holds it and its name for it.
+type Thread struct {
+	Kind string    `json:"kind"`
+	ID   string    `json:"id"`
+	When time.Time `json:"when"`
+}
+
+// ThreadFor is the conversation started for the work in a folder, when there is one.
+func ThreadFor(dir string) (Thread, bool) {
+	threads := map[string]Thread{}
+	if data, err := os.ReadFile(threadFile()); err == nil {
+		_ = json.Unmarshal(data, &threads)
+	}
+	thread, ok := threads[dir]
+	return thread, ok && thread.ID != ""
+}
+
+// KeepThread notes the conversation started for the work in a folder, so the next part, a
+// new result and the word after a restart all go into the same one.
+func KeepThread(dir string, thread Thread) error {
+	threads := map[string]Thread{}
+	if data, err := os.ReadFile(threadFile()); err == nil {
+		_ = json.Unmarshal(data, &threads)
+	}
+	threads[dir] = thread
+	data, _ := json.MarshalIndent(threads, "", " ")
+	if err := os.MkdirAll(stateDir(), 0o700); err != nil {
+		return err
+	}
+	return os.WriteFile(threadFile(), data, 0o600)
+}
