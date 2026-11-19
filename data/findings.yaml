@@ -77,7 +77,7 @@ models:
       adsp: { state: works, note: "Starts from the firmware Linux ships.", version: "7.2.8", checked: 2026-10 }
       battery: { state: works, version: "7.2.8", checked: 2026-10 }
       cdsp: { state: partial, note: "Lenovo's firmware is in linux-firmware since 21 October and reaches the laptop with its next release; until then it comes from Windows.", checked: 2026-10, source: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1314" }
-      fans: { state: partial, note: "The laptop's firmware runs the fans and they respond to load. Fan speed and temperature readings need a driver under review.", checked: 2026-10 }
+      fans: { state: partial, note: "The laptop's firmware runs the fans and they respond to load. The temperatures can be read (59 sensors on 7.3-59). The fan speed can't yet: its driver is under review.", version: "7.3-59", checked: 2026-11 }
       suspend: { state: partial, note: "Closing the lid enters the deepest sleep since linux-omarchy 7.2.8-19. Sleep started with the lid open ends by itself after about 15 seconds on the charger or 5 minutes on battery.", version: "7.2.8-19", checked: 2026-10, source: "https://github.com/omacom/omarchy-pkgs/pull/1315" }
       hibernate: { state: broken, note: "Waking from hibernation restarts the laptop.", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/11823" }
       camera: { state: partial, note: "Works since linux-omarchy 7.2.8-20, with a pale picture until libcamera has tuning for its sensor.", version: "7.2.8-21", checked: 2026-10, source: "https://github.com/omacom/omarchy-pkgs/pull/1277" }
