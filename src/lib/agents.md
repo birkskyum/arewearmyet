@@ -131,6 +131,14 @@ An NVIDIA N1x or GB10 machine (family `arm-nvidia`) describes its own hardware t
 4. **Take a snapshot:** `hw-test verify before <part>`, as in `hw-test verify before speakers`. It keeps where every check stands, with the kernel and package versions, to measure your change against. The name gives the part a snapshot of its own, so your work is not measured against the snapshot another agent took for another part. Use the same name with `verify after`. Take it once per change. A snapshot that is still in use is not replaced, so after a restart you go on from `PROGRESS.md` and don't take another. `--new` replaces it when you start on another change.
 5. **Does the owner hear or see it differently than the test says?** Then record that first, since the snapshot holds what is recorded: `hw-test report --check speakers --state partial --note "The right side is clearly quieter."`
 
+### What can harm the computer
+
+A device tree switches power, so a wrong one can do more than fail. Three rules.
+
+- **Supplies.** Give a rail the voltage the computer's own tables or its maker's tree give it, never a higher one. When you can't tell, leave the rail as the firmware set it.
+- **Speakers.** A laptop's amplifiers can give its small speakers more power than they survive, and a protection algorithm holds that back. Don't bring up a speaker amplifier that no tree of this model or of a sibling describes, and don't raise a volume limit or take out a protection setting to make a test pass. Say what is missing and stop.
+- **The way back.** Try a change only through `hw-test tree boot`, whose entry starts once and leaves the usual one alone. Don't write the usual boot image, the boot menu's settings or the firmware's boot order by hand.
+
 ### Where a fix goes
 
 | What is wrong | Where it is fixed |
