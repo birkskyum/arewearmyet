@@ -13,18 +13,16 @@ import (
 	"strings"
 )
 
-// Mark is put on the test image's kernel command line, so that after a restart it can be told
-// for certain whether the test image is what started.
-const Mark = "hwtest.tree=1"
+// Mark is a property hw-test tree build adds to the root of every tree it compiles. It means
+// nothing to the kernel. After a restart it tells for certain whether the tree that was built
+// here is the one the computer is running, whatever the boot menu did with the command line.
+const Mark = "hw-test-tree"
 
-// Running says whether the machine started from the test image.
-func Running(cmdline string) bool {
-	for _, word := range strings.Fields(cmdline) {
-		if word == Mark {
-			return true
-		}
-	}
-	return false
+// Running says whether the computer is running a tree that hw-test tree build made. root is
+// where the running tree is read, /proc/device-tree on a real machine.
+func Running(root string) bool {
+	_, err := os.Stat(filepath.Join(root, Mark))
+	return err == nil
 }
 
 // Entry is the name of the test entry in the boot menu. It starts like Omarchy's own kernel
@@ -170,6 +168,16 @@ func (s System) Build(dir, machine string) (Built, error) {
 		return Built{}, err
 	}
 	defer os.Remove(out + ".pre.dts")
+	// The mark goes into the compiled tree only, never into the sources or the diff
+	pre, err := os.OpenFile(out+".pre.dts", os.O_APPEND|os.O_WRONLY, 0o644)
+	if err != nil {
+		return Built{}, err
+	}
+	_, err = pre.WriteString("\n/ { " + Mark + "; };\n")
+	pre.Close()
+	if err != nil {
+		return Built{}, err
+	}
 	if _, err := run(root, s.dtc(), "-q", "-@", "-O", "dtb", "-b", "0", "-i", filepath.Dir(source), "-i", prefixes, "-o", out+".dtb", out+".pre.dts"); err != nil {
 		return Built{}, err
 	}
@@ -228,7 +236,7 @@ mkinitcpio -k "$kernel" -g "$work/initramfs.img" >"$work/mkinitcpio.log" 2>&1 ||
 # machine's tree, and the stock one would be picked over the changed one.
 echo "Packing the kernel, the initramfs and the changed tree..."
 ukify build --config /dev/null --linux "/usr/lib/modules/$kernel/vmlinuz" --initrd "$work/initramfs.img" \
-  --cmdline ` + quote(strings.TrimSpace(cmdline)+" "+Mark) + ` --devicetree "$dtb" --uname "$kernel" --output "$work/` + Entry + `.efi"
+  --cmdline ` + quote(strings.TrimSpace(cmdline)) + ` --devicetree "$dtb" --uname "$kernel" --output "$work/` + Entry + `.efi"
 
 echo "Adding the entry to the boot menu..."
 limine-entry-tool --add-uki ` + quote(Entry) + ` "$work/` + Entry + `.efi" --comment "hw-test: a changed device tree to try"

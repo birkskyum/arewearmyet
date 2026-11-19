@@ -403,22 +403,14 @@ func deviceTree(words []string) int {
 		if err != nil {
 			return fail(err)
 		}
-		// The mark of an earlier test image doesn't go in twice
-		var cmdline []string
-		for _, word := range strings.Fields(string(started)) {
-			if word != tree.Mark {
-				cmdline = append(cmdline, word)
-			}
-		}
-		return asRoot("tree-boot.sh", system.Script(dtb, strings.Join(cmdline, " ")), "puts the changed device tree into a boot image and a boot menu entry of its own, "+tree.Entry+". The usual entry is not touched")
+		return asRoot("tree-boot.sh", system.Script(dtb, string(started)), "puts the changed device tree into a boot image and a boot menu entry of its own, "+tree.Entry+". The usual entry is not touched")
 	case "remove":
 		return asRoot("tree-remove.sh", tree.RemoveScript(), "takes the test entry "+tree.Entry+" and its boot image away")
 	case "status":
-		started, _ := os.ReadFile("/proc/cmdline")
-		if tree.Running(string(started)) {
-			fmt.Println("This computer was started from the test boot image, with the changed device tree.")
+		if tree.Running("/proc/device-tree") {
+			fmt.Println("This computer is running a device tree built by hw-test tree build: the test entry is what started.")
 		} else {
-			fmt.Println("This computer was started from its usual boot image, with Omarchy's own device tree.")
+			fmt.Println("This computer is running Omarchy's own device tree: the usual entry is what started.")
 		}
 		return 0
 	}
@@ -568,8 +560,7 @@ func verify(run *report.Run, words []string, api, pr, what string, send bool) in
 		if matched, err := report.Match(api, run); err == nil && matched.ID != "" {
 			model = matched
 		}
-		started, _ := os.ReadFile("/proc/cmdline")
-		fmt.Println(guided.VerifyBlock(run, model, snapshot, changes, tree.Running(string(started))))
+		fmt.Println(guided.VerifyBlock(run, model, snapshot, changes, tree.Running("/proc/device-tree")))
 		if pr == "" {
 			fmt.Fprintln(os.Stderr, "That is the block for the pull request's description. To record it on the model's page too, give the pull request: hw-test verify after --pr <its address>")
 			return 0

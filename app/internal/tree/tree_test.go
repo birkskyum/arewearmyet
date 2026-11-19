@@ -86,6 +86,13 @@ func TestAChangedTreeIsBuiltAsThePackageDoesWithItsDiff(t *testing.T) {
 		t.Fatal(err)
 	}
 	tree, _ := os.ReadFile(built.DTB)
+	// Every tree built here carries the mark, and neither the sources nor the diff do
+	if !strings.Contains(string(tree), "/ { hw-test-tree; };") {
+		t.Errorf("the built tree lacks its mark:\n%s", tree)
+	}
+	if out, err := run(root, "git", "grep", "-c", "hw-test-tree"); err == nil {
+		t.Errorf("the mark got into the sources: %s", out)
+	}
 	if !strings.Contains(string(tree), "reset = <1>") || len(built.Changed) != 0 {
 		t.Fatalf("the stock build: changed %v\n%s", built.Changed, tree)
 	}
@@ -142,7 +149,7 @@ func TestTheOwnersScriptMakesAnEntryOfItsOwnAndLeavesTheStockOneAlone(t *testing
 		"df --output=avail -m /boot", "exit 1",
 		`mkinitcpio -k "$kernel" -g "$work/initramfs.img"`,
 		// The system's settings are left out, or the stock tree would be picked over the changed one
-		"ukify build --config /dev/null", `--devicetree "$dtb"`, "--cmdline 'root=/dev/mapper/root rw quiet hwtest.tree=1'",
+		"ukify build --config /dev/null", `--devicetree "$dtb"`, "--cmdline 'root=/dev/mapper/root rw quiet'",
 		// With Direct Boot there is no menu to pick the entry from, so it stops and says so
 		"omarchy-boot-direct", "Direct Boot is on",
 		// Through the boot menu's own tool, under a name that sorts after the stock kernel
@@ -165,9 +172,14 @@ func TestTheOwnersScriptMakesAnEntryOfItsOwnAndLeavesTheStockOneAlone(t *testing
 	if out, err := exec.Command("bash", "-n", file).CombinedOutput(); err != nil {
 		t.Errorf("bash doesn't accept it: %v\n%s", err, out)
 	}
-	// The mark on the command line is how a boot of the test image is told from the usual one
-	if !Running("root=/dev/mapper/root rw quiet hwtest.tree=1") || Running("root=/dev/mapper/root rw quiet") || Running("nothwtest.tree=1x") {
-		t.Error("the mark isn't read right")
+	// The mark in the running tree is how a boot of the test tree is told from the usual one
+	running := t.TempDir()
+	if Running(running) {
+		t.Error("the usual tree was taken for a test tree")
+	}
+	os.WriteFile(filepath.Join(running, Mark), nil, 0o444)
+	if !Running(running) {
+		t.Error("the test tree's mark wasn't seen")
 	}
 	remove := RemoveScript()
 	if !strings.Contains(remove, "limine-entry-tool --remove-uki 'linux-omarchy-hwtest'") || strings.Contains(remove, "limine.conf") {
