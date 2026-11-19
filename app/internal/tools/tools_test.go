@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 )
@@ -138,5 +139,72 @@ func TestTheAgentsLauncherIsWaitedForWhereTheCallerEndsAtOnce(t *testing.T) {
 	os.WriteFile(launcher, []byte("#!/bin/sh\nexit 3\n"), 0o755)
 	if err := AgentHandedOver(dir, "read the brief"); err == nil {
 		t.Error("a launcher that failed wasn't reported")
+	}
+}
+
+func TestTheSameConversationIsGoneOnInWhateverAgentHoldsIt(t *testing.T) {
+	for _, name := range []string{"T3CODE_THREAD_ID", "CODEX_THREAD_ID", "CLAUDE_CODE_SESSION_ID"} {
+		t.Setenv(name, "")
+	}
+	if got := CurrentSession(); got != (Session{}) {
+		t.Fatalf("a session where there is none: %+v", got)
+	}
+	// Each agent says which conversation it is in its own way. T3 Code runs the others inside
+	// its threads, so its thread is the one to go on in
+	t.Setenv("CLAUDE_CODE_SESSION_ID", "c0ffee")
+	if got := CurrentSession(); got != (Session{Kind: "claude", ID: "c0ffee"}) {
+		t.Errorf("in Claude Code: %+v", got)
+	}
+	t.Setenv("CODEX_THREAD_ID", "01a1f404")
+	if got := CurrentSession(); got != (Session{Kind: "codex", ID: "01a1f404"}) {
+		t.Errorf("in Codex: %+v", got)
+	}
+	t.Setenv("T3CODE_THREAD_ID", "thread-7")
+	if got := CurrentSession(); got != (Session{Kind: "t3", ID: "thread-7"}) {
+		t.Errorf("in T3 Code: %+v", got)
+	}
+
+	// Stand-ins for the three programs and for the terminal window, which write down how they were called
+	dir, bin := t.TempDir(), t.TempDir()
+	for _, program := range []string{"t3", "codex", "claude", "window"} {
+		os.WriteFile(filepath.Join(bin, program), []byte("#!/bin/sh\nprintf '%s|' \"$(basename $0)\" \"$@\" > "+dir+"/called\npwd >> "+dir+"/called\n"), 0o755)
+	}
+	t.Setenv("PATH", bin+":"+os.Getenv("PATH"))
+	t.Setenv("HW_TEST_TERMINAL", filepath.Join(bin, "window"))
+	called := func() string {
+		for waited := 0; waited < 40; waited++ {
+			if data, err := os.ReadFile(filepath.Join(dir, "called")); err == nil && len(data) > 0 {
+				os.Remove(filepath.Join(dir, "called"))
+				return string(data)
+			}
+			time.Sleep(50 * time.Millisecond)
+		}
+		return ""
+	}
+	work := t.TempDir()
+	for session, want := range map[Session]string{
+		// A T3 Code thread takes the message where it is
+		{Kind: "t3", ID: "thread-7"}: "t3|thread|send|thread-7|go on|",
+		// Codex and Claude Code open again in a window, on the same conversation
+		{Kind: "codex", ID: "01a1f404"}: "window|codex|--approve-for-me|resume|01a1f404|go on|",
+		{Kind: "claude", ID: "c0ffee"}:  "window|claude|--permission-mode|auto|--resume|c0ffee|--|go on|",
+	} {
+		if err := Continue(session, work, "go on"); err != nil {
+			t.Errorf("%+v: %v", session, err)
+		}
+		if got := called(); !strings.HasPrefix(got, want) || !strings.Contains(got, filepath.Base(work)) {
+			t.Errorf("%+v was gone on in with %q, want %q in %s", session, got, want, work)
+		}
+	}
+	// An agent that names no conversation, or one this computer no longer has, has none to go on in
+	for _, session := range []Session{{}, {Kind: "codex"}, {Kind: "gemini", ID: "x"}} {
+		if err := Continue(session, work, "go on"); !errors.Is(err, ErrNoSession) {
+			t.Errorf("%+v: %v", session, err)
+		}
+	}
+	// T3 Code that doesn't answer is an error, so the caller can open a new conversation
+	os.WriteFile(filepath.Join(bin, "t3"), []byte("#!/bin/sh\necho 'no server is running' >&2\nexit 1\n"), 0o755)
+	if err := Continue(Session{Kind: "t3", ID: "thread-7"}, work, "go on"); err == nil || errors.Is(err, ErrNoSession) || !strings.Contains(err.Error(), "no server is running") {
+		t.Errorf("T3 Code not answering: %v", err)
 	}
 }

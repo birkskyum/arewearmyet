@@ -344,7 +344,10 @@ var ErrNoTerminal = errors.New("no terminal window can be opened from here")
 
 // Terminal opens a terminal window on the owner's desktop running the given program, the way
 // Omarchy opens its own screens, and returns once it is on its way.
-func Terminal(program string, args ...string) error {
+func Terminal(program string, args ...string) error { return TerminalIn("", program, args...) }
+
+// TerminalIn is Terminal with the folder the program starts in.
+func TerminalIn(dir, program string, args ...string) error {
 	var line []string
 	switch custom := strings.Fields(os.Getenv("HW_TEST_TERMINAL")); {
 	case len(custom) > 0:
@@ -357,12 +360,60 @@ func Terminal(program string, args ...string) error {
 		return ErrNoTerminal
 	}
 	command := exec.Command(line[0], append(append(line[1:], program), args...)...)
+	command.Dir = dir
 	command.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
 	if err := command.Start(); err != nil {
 		return err
 	}
 	go command.Wait()
 	return nil
+}
+
+// Session is a conversation of the owner's agent, as its own program names it. People use
+// different agents, by whichever subscription they have, and each keeps its conversations
+// its own way. Going on in the same one keeps everything the agent has learnt so far.
+type Session struct {
+	// Kind is the program that holds it: t3 (T3 Code, whatever model runs in it), codex or claude.
+	Kind string `json:"kind,omitempty"`
+	ID   string `json:"id,omitempty"`
+}
+
+// CurrentSession is the agent session this program was started from, when its agent says
+// which it is. T3 Code comes first: it runs the others inside threads of its own.
+func CurrentSession() Session {
+	for _, known := range [][2]string{{"T3CODE_THREAD_ID", "t3"}, {"CODEX_THREAD_ID", "codex"}, {"CLAUDE_CODE_SESSION_ID", "claude"}} {
+		if id := strings.TrimSpace(os.Getenv(known[0])); id != "" {
+			return Session{Kind: known[1], ID: id}
+		}
+	}
+	return Session{}
+}
+
+// ErrNoSession says there is no earlier session to go on in.
+var ErrNoSession = errors.New("there is no earlier agent session to go on in")
+
+// Continue gives a message to an earlier session of the owner's agent, in the way of the
+// program that holds it. A T3 Code thread takes it where it is, also while it is busy. Codex
+// and Claude Code open again in a terminal window, on the same conversation.
+func Continue(session Session, dir, message string) error {
+	switch {
+	case session.ID == "":
+		return ErrNoSession
+	case session.Kind == "t3" && Have("t3"):
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
+		command := exec.CommandContext(ctx, "t3", "thread", "send", session.ID, message)
+		command.Dir = dir
+		if out, err := command.CombinedOutput(); err != nil {
+			return fmt.Errorf("T3 Code didn't take the message (%v): %s", err, lastLine(string(out)))
+		}
+		return nil
+	case session.Kind == "codex" && Have("codex"):
+		return TerminalIn(dir, "codex", "--approve-for-me", "resume", session.ID, message)
+	case session.Kind == "claude" && Have("claude"):
+		return TerminalIn(dir, "claude", "--permission-mode", "auto", "--resume", session.ID, "--", message)
+	}
+	return ErrNoSession
 }
 
 // ErrNoAgent says Omarchy has no agent chosen to launch.
@@ -394,6 +445,9 @@ func agent(dir, prompt string, wait time.Duration) error {
 		}
 		select {
 		case err := <-done:
+			// A launcher often hands the rest to a child and is gone at once. The child needs
+			// a moment to get its window registered before the caller ends too
+			time.Sleep(3 * time.Second)
 			return err
 		case <-time.After(wait):
 			return nil

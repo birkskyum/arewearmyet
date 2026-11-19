@@ -241,7 +241,7 @@ func main() {
 			checks = []string{candidates[picked]}
 		}
 		briefing := guided.Briefing{Version: version, Run: run, Kept: kept, Model: matched, Checks: known, Only: checks, When: time.Now()}
-		briefing.Binary, _ = os.Executable()
+		briefing.Binary = guided.Command()
 		if command == "fix" {
 			briefing.GetGuide = guided.FetchGuide
 			// Handing over at a terminal is the owner's own doing
@@ -582,7 +582,16 @@ func comeBack(prompt string, cancel, show, atLogin bool) int {
 			// The launcher is waited for: this service ends here, and would take a launcher that is
 			// still at it down with it. The owner is told how it went either way
 			said := []string{"Your agent is back", "It goes on with the hardware work from before the restart. hw-test resume left this."}
-			if err := tools.AgentHandedOver(word.Dir, resume.Said(word)); err != nil {
+			// In the conversation the word was left from, where its agent said which that is:
+			// everything it had learnt is still there. Otherwise, or if that can't be opened, a
+			// new one, which reads the notes
+			err := tools.Continue(tools.Session{Kind: word.Agent, ID: word.Session}, word.Dir, resume.Said(word))
+			if err == nil {
+				time.Sleep(3 * time.Second)
+			} else {
+				err = tools.AgentHandedOver(word.Dir, resume.Said(word))
+			}
+			if err != nil {
 				fmt.Fprintln(os.Stderr, "hw-test: the agent couldn't be opened:", err)
 				said = []string{"Your agent didn't open", "The hardware work from before the restart is in " + word.Dir + ". Open your agent there and tell it to read PROGRESS.md."}
 			}
@@ -605,11 +614,16 @@ func comeBack(prompt string, cancel, show, atLogin bool) int {
 			program = installed
 		}
 	}
-	if err := places.Leave(resume.Word{Dir: dir, Prompt: prompt, Boot: report.BootID(), Set: time.Now()}, program); err != nil {
+	session := tools.CurrentSession()
+	if err := places.Leave(resume.Word{Dir: dir, Prompt: prompt, Boot: report.BootID(), Set: time.Now(), Agent: session.Kind, Session: session.ID}, program); err != nil {
 		fmt.Fprintln(os.Stderr, "hw-test: it couldn't be left for after the restart:", err)
 		return 1
 	}
-	fmt.Fprintf(os.Stderr, "Left for after the restart. At the owner's next login, the agent opens again in %s, once, and is told to read BRIEF.md and PROGRESS.md there.\nWrite PROGRESS.md before you restart. hw-test resume --cancel takes this back.\n", dir)
+	how := "the agent opens again in " + dir
+	if session.ID != "" {
+		how = "this same conversation goes on, in " + dir
+	}
+	fmt.Fprintf(os.Stderr, "Left for after the restart. At the owner's next login, %s, once, and is told to read BRIEF.md and PROGRESS.md there.\nWrite PROGRESS.md before you restart. hw-test resume --cancel takes this back.\n", how)
 	return 0
 }
 

@@ -57,6 +57,19 @@ type Briefing struct {
 	guideCopy bool
 }
 
+// Command is where an agent finds hw-test when its name alone isn't found: the command the
+// owner types, which follows updates, and only without that the file that is running now.
+// A path with a version in it would keep an agent on that version after an update.
+func Command() string {
+	if home, err := os.UserHomeDir(); err == nil {
+		if installed := filepath.Join(home, ".local", "bin", "hw-test"); tools.Have(installed) {
+			return installed
+		}
+	}
+	running, _ := os.Executable()
+	return running
+}
+
 // FetchGuide reads the guide from the site.
 func FetchGuide() ([]byte, error) {
 	client := http.Client{Timeout: 5 * time.Second}
@@ -247,7 +260,7 @@ func Brief(b Briefing) string {
 	}
 	say("- Kernel: %s, on %s", b.Run.Kernel, b.Run.OS)
 	if b.Binary != "" {
-		say("- hw-test %s is at `%s`. If plain `hw-test` doesn't start where you run, as in a sandbox, call it by that path.", b.Version, b.Binary)
+		say("- hw-test %s is at `%s`. If plain `hw-test` doesn't start where you run, as in a sandbox, call it by that path. It follows updates, so don't call a copy by its version.", b.Version, b.Binary)
 	}
 	var packages []string
 	for name, version := range b.Run.Packages {
@@ -526,7 +539,7 @@ func handOver(run *report.Run, options Options, model report.Model, only []strin
 			launch, guide = tools.Agent, FetchGuide
 		}
 		briefing := Briefing{Version: options.Version, Run: run, Kept: report.Local(), Model: model, Checks: checks, Only: only, When: time.Now(), GetGuide: guide, ByOwner: true}
-		briefing.Binary, _ = os.Executable()
+		briefing.Binary = Command()
 		briefing.Fill(options.API)
 		return handedMsg{HandOver(briefing, Workspace(), launch)}
 	}

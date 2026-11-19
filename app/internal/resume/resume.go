@@ -25,6 +25,10 @@ type Word struct {
 	Prompt string    `json:"prompt"`
 	Boot   string    `json:"boot"`
 	Set    time.Time `json:"set"`
+	// Agent and Session name the conversation the word was left from, where the agent said
+	// which it is: the same one is gone on in after the restart.
+	Agent   string `json:"agent,omitempty"`
+	Session string `json:"session,omitempty"`
 }
 
 // Places are the files the word and its service live in. Tests point them at a folder of their own.
