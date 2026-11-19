@@ -233,7 +233,7 @@ func Brief(b Briefing) string {
 	say("")
 	say("## Measuring with hw-test")
 	say("")
-	say("`hw-test` is the tool that made this brief. Run it as `hw-test`, or where that isn't on the path as `mise x github:birkskyum/arewearmyet -- hw-test`.")
+	say("`hw-test` is the tool that made this brief. Run it as `hw-test`. Where that isn't on the path, `omarchy-mise-install github:birkskyum/arewearmyet hw-test` puts it there, and `mise x github:birkskyum/arewearmyet -- hw-test` runs it without installing.")
 	say("")
 	say("- `hw-test status`: the latest result of every check on this computer. Nothing is run.")
 	say("- `hw-test quick --json`: the quick check, read-only, a few seconds, printed as JSON. Nothing is sent.")

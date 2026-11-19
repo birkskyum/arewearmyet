@@ -62,11 +62,14 @@ This gives:
 
 ### On Omarchy: hw-test
 
-`hw-test` is the hardware test for these machines. It measures what it can by itself and tests the rest with the owner. Run it as `hw-test` where it is installed, or through mise:
+`hw-test` is the hardware test for these machines. It measures what it can by itself and tests the rest with the owner. Install it once, the way Omarchy installs its other tools, and it stays current by itself:
 
 ```sh
-mise x github:birkskyum/arewearmyet -- hw-test quick --json
+omarchy-mise-install github:birkskyum/arewearmyet hw-test
+hw-test quick --json
 ```
+
+Without installing, `mise x github:birkskyum/arewearmyet -- hw-test quick --json` runs it once.
 
 | Command | What it does |
 | --- | --- |

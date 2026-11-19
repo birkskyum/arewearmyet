@@ -100,7 +100,7 @@ sed -i '/serial-number/d' tree.dts</code></pre>
       <ol class={STEPS}>
         <li>Make an Omarchy USB stick. With Windows still on the laptop, the <a class={LINK} href={INSTALLER}>Omarchy Arm Installer</a> makes one and copies the laptop's firmware onto it from Windows' own drivers.</li>
         <li>Turn off Secure Boot, boot from the stick, and install, or just see how far it gets.</li>
-        <li>If it reached the desktop, <a class={LINK} href="#check">run the probe</a>: it measures what works and puts it on the model's page, so there's nothing to write up.</li>
+        <li>If it reached the desktop, <a class={LINK} href="#check">run the hardware test</a>: it measures what works and puts it on the model's page, so there's nothing to write up.</li>
         <li>If it didn't get that far, open <a class={LINK} href={FORM}>Add your model</a> and choose how far it got. If you run another distro on it, tell us how that does too.</li>
       </ol>
     </section>
@@ -108,16 +108,23 @@ sed -i '/serial-number/d' tree.dts</code></pre>
     <section id="check" class={`mt-6 ${CARD}`}>
       <h2 class="text-xl font-semibold text-zinc-100">It boots: check what works</h2>
       <p class="mt-2">
-        Once Linux runs on it, Omarchy or any other distro, the probe checks everything it can measure in a few seconds: the screen and GPU, Wi-Fi and Bluetooth, the audio and compute DSPs, battery and charging, sleep, USB and the camera. It only reads, needs no root, shows you the results and sends them to the model's page unless you say no. No serial numbers, addresses or names are sent.
+        On Omarchy, install the hardware test once and run it. It opens on a menu of what it can test on your computer, with where each part stands.
+      </p>
+      <pre class={CODE}><code>omarchy-mise-install github:birkskyum/arewearmyet hw-test
+hw-test</code></pre>
+      <ul class="mt-3 list-disc space-y-1.5 pl-5">
+        <li><span class="text-zinc-200">What runs by itself</span>, in about four minutes: speakers and microphones (it plays test tones and listens to them), graphics, Wi-Fi and Bluetooth, video decoding, and temperatures under load.</li>
+        <li><span class="text-zinc-200">What is done with you</span>, in about ten: keyboard, touchpad, touchscreen, headphones, camera, USB ports, an external screen, the lid and sleep.</li>
+        <li>It shows the results and sends them to the model's page unless you say no. No serial numbers, addresses or names are sent. A recording or a camera picture is only for you to check: it never leaves the computer, and is deleted when the test ends.</li>
+        <li>One part alone: <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs text-zinc-200">hw-test camera</code>. Where the computer stands, without running anything: <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs text-zinc-200">hw-test status</code>.</li>
+      </ul>
+      <p class="mt-3">
+        Something doesn't work? <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs text-zinc-200">hw-test fix</code> hands it to your AI agent with a brief: what was measured, where to look, how to measure again and where a fix goes in Omarchy. Any agent can also start from <a class={LINK} href="/agents">arewearmyet.com/agents.md</a>.
+      </p>
+      <p class="mt-3">
+        On another distro, the probe does the quick check. It only reads, needs no root, takes a few seconds, and shows you the results before it sends them:
       </p>
       <pre class={CODE}><code>curl -fsSL https://arewearmyet.com/probe.sh | bash</code></pre>
-      <p class="mt-3">
-        The guided test goes further with you: two short tones while the microphones listen, one camera frame, a lid close for sleep, and questions about the keyboard, touchpad and ports. The voice recording and the camera picture are only for you to check: they never leave the laptop, and are deleted when the test ends.
-      </p>
-      <pre class={CODE}><code>curl -fsSL https://arewearmyet.com/probe.sh | bash -s -- --guided</code></pre>
-      <p class="mt-3">
-        Results show on the model's page right away. Working with an AI agent? Tell it to read <a class={LINK} href="/agents">arewearmyet.com/agents.md</a>: it explains how to check the laptop, report what works and propose fixes to Omarchy.
-      </p>
     </section>
 
     <section class="mt-10">

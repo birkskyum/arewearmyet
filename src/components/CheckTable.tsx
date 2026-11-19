@@ -139,7 +139,7 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                     </summary>
                     <div class="space-y-3 border-t border-zinc-800 bg-zinc-950/40 px-4 py-3 text-sm text-zinc-400">
                       <p><span class="text-zinc-300">Works means:</span> {row.works}</p>
-                      <Show when={row.probe}><p><span class="text-zinc-300">The probe measures:</span> {row.probe}</p></Show>
+                      <Show when={row.probe}><p><span class="text-zinc-300">The test measures:</span> {row.probe}</p></Show>
                       <Show when={row.person}><p><span class="text-zinc-300">The person testing checks:</span> {row.person}</p></Show>
                       <Show when={row.debug}><p><span class="text-zinc-300">When it fails, look at:</span> {row.debug}</p></Show>
                       <Show when={row.finding}>
