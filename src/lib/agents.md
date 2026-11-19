@@ -124,7 +124,7 @@ An NVIDIA N1x or GB10 machine (family `arm-nvidia`) describes its own hardware t
 1. **Is the computer up to date?** Compare its `linux-omarchy` version with `kernels` from step 1. When it is behind its channel, ask the owner to run `omarchy update`. Leave word with `hw-test resume "Updated. Measure the failing parts again."` first, then they restart, and you measure again: the fault may be fixed already. A patch also has to fit Omarchy's current sources, not old ones.
 2. **Is it known?** Read the check's `finding` and the model's notes (step 6). Search every model's notes too: a fault in the chip shows on all of them.
 3. **Can it be fixed from here?** Some things can't: a kernel feature that doesn't exist yet (hibernation, a fan speed driver), or something Omarchy has no place for (a libcamera tuning file). Then tell the owner, leave a note saying what you found, and go on to the next part. "Everything green" isn't always within reach, and saying so is part of the job.
-4. **Take a snapshot:** `hw-test verify before`. It keeps where every check stands, with the kernel and package versions, to measure your change against. Take it once per change. A snapshot that is still in use is not replaced, so after a restart you go on from `PROGRESS.md` and don't take another. `--new` replaces it when you start on another change.
+4. **Take a snapshot:** `hw-test verify before <part>`, as in `hw-test verify before speakers`. It keeps where every check stands, with the kernel and package versions, to measure your change against. The name gives the part a snapshot of its own, so your work is not measured against the snapshot another agent took for another part. Use the same name with `verify after`. Take it once per change. A snapshot that is still in use is not replaced, so after a restart you go on from `PROGRESS.md` and don't take another. `--new` replaces it when you start on another change.
 5. **Does the owner hear or see it differently than the test says?** Then record that first, since the snapshot holds what is recorded: `hw-test report --check speakers --state partial --note "The right side is clearly quieter."`
 
 ### Where a fix goes
@@ -193,7 +193,7 @@ Then tell the owner to restart when it suits them, or restart yourself with `sys
 ### Showing what the change did, and the pull request
 
 1. Measure again: the test of each part you touched, and a neighbouring part or two, to show nothing else broke. Tests that take the owner are run by them.
-2. `hw-test verify after` prints a block with each check before and after. It can be run as often as you like. A check that works on both sides is only named. When your change moved a number and not the state (the right speaker 11 dB louder, both sides "works"), give that check a row with `--check speakers`.
+2. `hw-test verify after <part>` prints a block with each check before and after. It can be run as often as you like. A check that works on both sides is only named. When your change moved a number and not the state (the right speaker 11 dB louder, both sides "works"), give that check a row with `--check speakers`.
 3. Open the pull request **as a draft**. On omarchy-pkgs a pull request that is ready merges and publishes by itself once its checks pass, so a draft is how you keep it until the measurement is in. One fix per pull request. Its description starts with the family alone on a line, then the block:
 
    ```
@@ -211,7 +211,7 @@ Then tell the owner to restart when it suits them, or restart yourself with `sys
    Tested again and still working: built-in microphones, headphone jack.
    ```
 
-4. `hw-test verify after --pr <the pull request's address> --title "<the change in a line>"` records the same on the model's page, tied to the pull request. That links the fix, so there is nothing more to send.
+4. `hw-test verify after <part> --pr <the pull request's address> --title "<the change in a line>"` records the same on the model's page, tied to the pull request. That links the fix, so there is nothing more to send.
 5. Mark the pull request ready (`gh pr ready`), and tell the owner it is out under their account. On omarchy-pkgs, a first pull request from someone builds nothing until a maintainer approves the build, and its check reads "Awaiting build approval" until then. That is the normal wait, often a day or more, and nothing for you to fix.
 
 - A check counts only when its own test ran again after the snapshot.

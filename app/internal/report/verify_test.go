@@ -32,24 +32,24 @@ func TestAChangeIsMeasuredAgainstTheSnapshotByWhatWasTestedAgain(t *testing.T) {
 		result("wifi", Works, Measured, "wlan0 connected"), result("adsp", Broken, Measured, "adsp is offline"), result("gpu", Works, Measured, "adreno bound")}}
 	quick.MarkQuick()
 	_ = Remember(quick, start.Add(-time.Hour))
-	snapshot, err := TakeSnapshot(quick, start)
+	snapshot, err := TakeSnapshot(quick, start, "", false)
 	if err != nil || len(snapshot.Results) != 6 || snapshot.Versions.Packages["linux-omarchy-dtbs"] != "7.3-9" {
 		t.Fatalf("snapshot %+v, %v", snapshot, err)
 	}
 	// Once its change is recorded the snapshot says so, and is still there to measure against
-	if loaded, _ := LoadSnapshot(); loaded.Used {
+	if loaded, _ := LoadSnapshot(""); loaded.Used {
 		t.Fatal("a fresh snapshot counts as used")
 	}
-	if err := MarkSnapshotUsed(); err != nil {
+	if err := MarkSnapshotUsed(""); err != nil {
 		t.Fatal(err)
 	}
-	if loaded, ok := LoadSnapshot(); !ok || !loaded.Used || len(loaded.Results) != 6 {
+	if loaded, ok := LoadSnapshot(""); !ok || !loaded.Used || len(loaded.Results) != 6 {
 		t.Fatalf("the used snapshot: %+v", loaded)
 	}
-	if snapshot, err = TakeSnapshot(quick, start); err != nil || snapshot.Used {
+	if snapshot, err = TakeSnapshot(quick, start, "", false); err != nil || snapshot.Used {
 		t.Fatalf("a new snapshot: used %v, %v", snapshot.Used, err)
 	}
-	if loaded, ok := LoadSnapshot(); !ok || !loaded.When.Equal(start) || loaded.Results["speakers"].State != Partial {
+	if loaded, ok := LoadSnapshot(""); !ok || !loaded.When.Equal(start) || loaded.Results["speakers"].State != Partial {
 		t.Fatalf("the snapshot wasn't kept: %+v", loaded)
 	}
 	// Nothing tested since: nothing to say about the change
@@ -204,5 +204,62 @@ func TestTheConversationStartedForAFolderIsKept(t *testing.T) {
 	NoteSession("/home/owner/Work/hw-bringup", "codex", "01a1inner", now)
 	if kept, _ := ThreadFor("/home/owner/Work/hw-bringup"); kept.Kind != "t3" || kept.ID != "mcp:351f" {
 		t.Errorf("the T3 Code thread was replaced: %+v", kept)
+	}
+}
+
+// Each part has a snapshot of its own. On the Yoga an agent working on WebGPU was measured
+// against the snapshot taken hours earlier for the speakers, and its block described the wrong
+// change.
+func TestEachPartHasASnapshotOfItsOwn(t *testing.T) {
+	t.Setenv("XDG_STATE_HOME", t.TempDir())
+	morning := time.Date(2026, 11, 19, 14, 0, 0, 0, time.UTC)
+	run := &Run{Kernel: "7.3.0-72-omarchy"}
+	run.Set("speakers", Partial, Measured, "left -47 dB, right not heard", "")
+	if err := Remember(run, morning.Add(-time.Hour)); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := TakeSnapshot(run, morning, "speakers", false); err != nil {
+		t.Fatal(err)
+	}
+	// Two hours on, on the test image made for the speakers, the work on WebGPU starts
+	later := morning.Add(2 * time.Hour)
+	if _, err := TakeSnapshot(run, later, "webgpu", true); err != nil {
+		t.Fatal(err)
+	}
+	speakers, _ := LoadSnapshot("speakers")
+	webgpu, ok := LoadSnapshot("webgpu")
+	if !ok || !webgpu.When.Equal(later) || !webgpu.TestImage || webgpu.Part != "webgpu" || !speakers.When.Equal(morning) || speakers.TestImage {
+		t.Errorf("speakers %+v, webgpu %+v", speakers.When, webgpu)
+	}
+	if _, plain := LoadSnapshot(""); plain {
+		t.Error("a snapshot without a part appeared")
+	}
+	if got := StandingParts(); len(got) != 2 || got[0] != "speakers" || got[1] != "webgpu" {
+		t.Errorf("standing: %v", got)
+	}
+	// What was tested for the speakers before the WebGPU work began is no part of its change
+	tested := &Run{Kernel: "7.3.0-72-omarchy"}
+	tested.Set("speakers", Works, Measured, "left -47 dB, right -54 dB", "")
+	_ = Remember(tested, later.Add(-time.Minute))
+	graphics := &Run{Kernel: "7.3.0-72-omarchy"}
+	graphics.Set("webgpu", Works, Measured, "Chrome offers WebGPU on qualcomm adreno-7xx", "")
+	_ = Remember(graphics, later.Add(time.Minute))
+	if changes := Changes(webgpu, Latest()); len(changes) != 1 || changes[0].Check != "webgpu" {
+		t.Errorf("against the WebGPU snapshot: %+v", changes)
+	}
+	if changes := Changes(speakers, Latest()); len(changes) != 2 {
+		t.Errorf("against the speakers snapshot: %+v", changes)
+	}
+	// One recorded, the other still stands
+	if err := MarkSnapshotUsed("webgpu"); err != nil {
+		t.Fatal(err)
+	}
+	if got := StandingParts(); len(got) != 1 || got[0] != "speakers" {
+		t.Errorf("standing after one was recorded: %v", got)
+	}
+	for word, want := range map[string]bool{"speakers": true, "suspend-drain": true, "../etc": false, "": false, "Speakers": false, "a b": false} {
+		if PartNamed(word) != want {
+			t.Errorf("%q as a part's name: %v", word, !want)
+		}
 	}
 }

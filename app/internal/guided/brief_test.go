@@ -69,9 +69,9 @@ func TestTheBriefSaysWhatFailsWhatIsKnownAndHowToGoAboutIt(t *testing.T) {
 		// No notes yet isn't the same as nothing known
 		"Nobody has left a note on this model yet. That means nobody wrote one, not that nothing is known", "api/notes?q=<words>",
 		// One way to go about it, in order, with the commands
-		"## How to go about it", "1. **Check it is worth chasing.**", "`hw-test verify before`", "`hw-test tree start`, edit, `hw-test tree build`, then the owner runs `hw-test tree boot`",
+		"## How to go about it", "1. **Check it is worth chasing.**", "`hw-test verify before <part>`", "`hw-test tree start`, edit, `hw-test tree build`, then the owner runs `hw-test tree boot`",
 		"Never install a rebuilt `linux-omarchy-dtbs`, write under `/boot/dtbs` or edit `/boot/limine.conf` by hand", "`hw-test resume", "Open it as a draft.",
-		"starts with a line that says only `arm-dragon-msft`, then the block", "`hw-test verify after --pr <its address>", "mark it ready",
+		"starts with a line that says only `arm-dragon-msft`, then the block", "`hw-test verify after <part> --pr <its address>", "mark it ready",
 		"`hw-test note --kind problem --check <check>", "`hw-test report --check <check> --state partial", "`hw-test tree remove`",
 		"The owner's data is the line", "hand the owner the exact command to run",
 	} {
@@ -142,6 +142,22 @@ func TestTheBriefSaysWhatFailsWhatIsKnownAndHowToGoAboutIt(t *testing.T) {
 	b.Kept = map[string]report.Kept{}
 	if brief = Brief(b); !strings.Contains(brief, "Nothing fails in this computer's latest results") {
 		t.Errorf("nothing failing:\n%s", brief)
+	}
+}
+
+// With one part to work on, the snapshot commands carry its name, so the part gets a snapshot
+// of its own and isn't measured against another part's.
+func TestTheBriefNamesThePartInItsSnapshotCommands(t *testing.T) {
+	b := yoga()
+	b.Only = []string{"webgpu"}
+	brief := Brief(b)
+	for _, text := range []string{"`hw-test verify before webgpu`", "`hw-test verify after webgpu`", "`hw-test verify after webgpu --pr <its address>"} {
+		if !strings.Contains(brief, text) {
+			t.Errorf("the brief lacks %q", text)
+		}
+	}
+	if strings.Contains(brief, "<part>") {
+		t.Error("the brief for one part still leaves the part's name open")
 	}
 }
 

@@ -53,6 +53,12 @@ func TestTheBlockForAPullRequestShowsEachCheckBeforeAndAfter(t *testing.T) {
 		t.Errorf("unchanged versions aren't said:\n%s", block)
 	}
 	// Started from the test image, it says so: that is the change no package version shows
+	// The test image was running before the change too: the device tree is not what differs
+	onImage := snapshot
+	onImage.TestImage = true
+	if block = VerifyBlock(run, report.Model{}, onImage, changes, true); !strings.Contains(block, "Both sides ran the same test boot image") || strings.Contains(block, "After, the computer was started from a test boot image") {
+		t.Errorf("both sides on the test image:\n%s", block)
+	}
 	if block = VerifyBlock(run, report.Model{}, snapshot, changes, true); !strings.Contains(block, "started from a test boot image with the changed device tree, made by `hw-test tree boot`") {
 		t.Errorf("the test image isn't said:\n%s", block)
 	}

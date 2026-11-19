@@ -62,6 +62,11 @@ func VerifyBlock(run *report.Run, model report.Model, snapshot report.Snapshot, 
 	after := report.Versions{Kernel: run.Kernel, Packages: run.Packages}
 	moved := versionsChanged(snapshot.Versions, after)
 	switch {
+	// The test image was there before the change too, so the device tree is not what differs
+	case testImage && snapshot.TestImage && len(moved) == 0:
+		say("Kernel %s and the same package versions on both sides, so the change was tried outside the packages (a setting or a file of its own). Both sides ran the same test boot image, made by `hw-test tree boot` for another change.", first(run.Kernel, "unknown"))
+	case testImage && snapshot.TestImage:
+		say("What differs between the two: %s. Both sides ran the same test boot image, made by `hw-test tree boot` for another change.", strings.Join(moved, ", "))
 	case testImage && len(moved) == 0:
 		say("Kernel %s and the same package versions on both sides. After, the computer was started from a test boot image with the changed device tree, made by `hw-test tree boot`.", first(run.Kernel, "unknown"))
 	case testImage:

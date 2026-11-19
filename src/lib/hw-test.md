@@ -161,9 +161,9 @@ These commands let an agent run the test without the owner passing results back 
 
 | Command | What it does |
 | --- | --- |
-| `hw-test verify before` | Takes a snapshot of where the computer stands, before a change. One still in use isn't replaced unless `--new` says so |
-| `hw-test verify after` | After testing again, prints what the change did, check by check, as a block for a pull request |
-| `hw-test verify after --pr URL --title TEXT` | Records the same on the model's page, tied to the pull request. `--check ID,ID` gives those checks a row even when they work on both sides |
+| `hw-test verify before [PART]` | Takes a snapshot of where the computer stands, before a change. Name the part the change is about, as in `hw-test verify before speakers`, and it gets a snapshot of its own, so one part's change is never measured against another's. One still in use isn't replaced unless `--new` says so |
+| `hw-test verify after [PART]` | After testing again, prints what the change did, check by check, as a block for a pull request. With a part's name it measures against that part's snapshot |
+| `hw-test verify after [PART] --pr URL --title TEXT` | Records the same on the model's page, tied to the pull request. `--check ID,ID` gives those checks a row even when they work on both sides |
 
 ### Trying a device tree change
 
@@ -195,7 +195,7 @@ The usual boot entry stays the default and is never touched.
 | `token` | The computer's random token |
 | `results.json` | The latest result of every check, which `hw-test status` shows |
 | `last-run` | The id of the last run sent |
-| `before.json` | The snapshot of `hw-test verify before` |
+| `before.json`, `before-PART.json` | The snapshots of `hw-test verify before`, one per named part |
 | `handed.json`, `threads.json` | Which parts went to an agent, and the conversation each is in |
 | `resume.json` | What is left for after a restart |
 | `pending.json` | Results that couldn't be sent yet. Kept for a week |

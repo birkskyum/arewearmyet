@@ -703,19 +703,29 @@ func update() int {
 // verify takes the snapshot a change is measured against, or measures the change against it.
 func verify(run *report.Run, words []string, api, pr, what, rows string, again, send bool) int {
 	now := time.Now()
-	step := ""
-	if len(words) == 1 {
+	// verify before speakers: a snapshot for that part alone. Without a part it is the one
+	// snapshot for whatever is being changed
+	step, part := "", ""
+	if len(words) == 1 || len(words) == 2 {
 		step = words[0]
 	}
+	if len(words) == 2 {
+		if part = words[1]; !report.PartNamed(part) {
+			fmt.Fprintf(os.Stderr, "hw-test: %q can't name a part. Use a word like speakers, camera or webgpu.\n", part)
+			return 2
+		}
+	}
+	named := func(command string) string { return strings.TrimSpace(command + " " + part) }
+	testImage := tree.Running("/proc/device-tree")
 	switch step {
 	case "before":
 		// A snapshot that is still being measured against is not written over: after a
 		// restart, a second one would hold the change already and show it as no change
-		if standing, ok := report.LoadSnapshot(); ok && !standing.Used && !again && len(standing.Results) > 0 {
-			fmt.Fprintf(os.Stderr, "hw-test: a snapshot from %s is there already, and no change has been recorded against it yet.\nIf you are in the middle of that change (after a restart, say), leave it: hw-test verify after measures against it.\nTo start on another change: hw-test verify before --new\n", standing.When.Format("2 Jan 15:04"))
+		if standing, ok := report.LoadSnapshot(part); ok && !standing.Used && !again && len(standing.Results) > 0 {
+			fmt.Fprintf(os.Stderr, "hw-test: a snapshot from %s is there already, and no change has been recorded against it yet.\nIf you are in the middle of that change (after a restart, say), leave it: %s measures against it.\nTo start on another change to the same part: %s --new\nTo work on another part, give its name, so each part has a snapshot of its own: hw-test verify before <part>\n", standing.When.Format("2 Jan 15:04"), named("hw-test verify after"), named("hw-test verify before"))
 			return 2
 		}
-		snapshot, err := report.TakeSnapshot(run, now)
+		snapshot, err := report.TakeSnapshot(run, now, part, testImage)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, "hw-test: the snapshot couldn't be kept:", err)
 			return 1
@@ -729,12 +739,20 @@ func verify(run *report.Run, words []string, api, pr, what, rows string, again, 
 		if len(snapshot.Results) == 0 {
 			fmt.Fprintln(os.Stderr, "Nothing has been tested on this computer yet, so there is nothing to measure a change against. Run the tests first, then take the snapshot again.")
 		}
-		fmt.Fprintln(os.Stderr, "\nNow make the change. Then test the parts it touches again, like hw-test speakers or hw-test graphics,\nand measure the change against this snapshot:\n\n  hw-test verify after --pr <the pull request's address>")
+		fmt.Fprintln(os.Stderr, "\nNow make the change. Then test the parts it touches again, like hw-test speakers or hw-test graphics,\nand measure the change against this snapshot:\n\n  "+named("hw-test verify after")+" --pr <the pull request's address>")
 		return 0
 	case "after":
-		snapshot, ok := report.LoadSnapshot()
+		snapshot, ok := report.LoadSnapshot(part)
 		if !ok {
-			fmt.Fprintln(os.Stderr, "hw-test: there is no snapshot to measure against. Take one before the change: hw-test verify before")
+			standing := report.StandingParts()
+			switch {
+			case part == "" && len(standing) > 0:
+				fmt.Fprintf(os.Stderr, "hw-test: there is a snapshot for %s, taken with the part's name. Name the part: hw-test verify after %s\n", strings.Join(standing, ", "), standing[0])
+			case len(standing) > 0:
+				fmt.Fprintf(os.Stderr, "hw-test: there is no snapshot for %s. There is one for: %s. Take one before the change: hw-test verify before %s\n", part, strings.Join(standing, ", "), part)
+			default:
+				fmt.Fprintf(os.Stderr, "hw-test: there is no snapshot to measure against. Take one before the change: %s\n", named("hw-test verify before"))
+			}
 			return 2
 		}
 		changes := report.Changes(snapshot, report.Latest())
@@ -752,7 +770,7 @@ func verify(run *report.Run, words []string, api, pr, what, rows string, again, 
 				shown = append(shown, row)
 			}
 		}
-		fmt.Println(guided.VerifyBlock(run, model, snapshot, changes, tree.Running("/proc/device-tree"), shown...))
+		fmt.Println(guided.VerifyBlock(run, model, snapshot, changes, testImage, shown...))
 		if pr == "" {
 			fmt.Fprintln(os.Stderr, "That is the block for the pull request's description. To record it on the model's page too, give the pull request: hw-test verify after --pr <its address>")
 			return 0
@@ -773,7 +791,7 @@ func verify(run *report.Run, words []string, api, pr, what, rows string, again, 
 		}
 		fmt.Fprintf(os.Stderr, "Recorded as %s on %s\nWhat this pull request changed, over every machine that measured it: %s\n", sent.Fix, first(sent.Page, model.Page), sent.URL)
 		// From here the snapshot has served, and the next change takes its own
-		_ = report.MarkSnapshotUsed()
+		_ = report.MarkSnapshotUsed(part)
 		return 0
 	}
 	fmt.Fprintln(os.Stderr, "hw-test: verify takes before or after. Take a snapshot with hw-test verify before, make the change, test again, then hw-test verify after --pr <address>.")
@@ -1066,9 +1084,11 @@ func usageText() string {
                      one. --json prints what would go and sends nothing
                      --reply NOTE-ID answers a note, --solved NOTE-ID closes your own problem
                      --no-send shows what would be sent, logs included, and sends nothing
-  hw-test verify before    take a snapshot of where this computer stands, before a change.
-                     One that is still in use isn't replaced unless --new says so
-  hw-test verify after --pr URL   after testing again: what the change did, check by check, as a
+  hw-test verify before [PART]   take a snapshot of where this computer stands, before a change.
+                     Name the part the change is about, as in hw-test verify before speakers,
+                     and it gets a snapshot of its own, apart from another part's. One that
+                     is still in use isn't replaced unless --new says so
+  hw-test verify after [PART] --pr URL   after testing again: what the change did, check by check, as a
                      block for the pull request, and recorded with the pull request on the
                      model's page. --title says in a line what the change is. --check ID,ID
                      gives those checks a row even when they work on both sides

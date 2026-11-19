@@ -8,7 +8,9 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"sort"
+	"strings"
 	"time"
 )
 
@@ -26,6 +28,12 @@ type Snapshot struct {
 	Results  map[string]Kept `json:"results"`
 	// Used is set once a change measured against it was recorded with its pull request.
 	Used bool `json:"used,omitempty"`
+	// Part is the part the change is about, when the snapshot was taken for one. Each part has
+	// a snapshot of its own, so that the work on one isn't measured against another's.
+	Part string `json:"part,omitempty"`
+	// TestImage is set when the computer was running a test boot image at the time, with a
+	// device tree changed for some part's sake.
+	TestImage bool `json:"testImage,omitempty"`
 }
 
 // Change is one check before and after a fix.
@@ -53,38 +61,64 @@ type FixSent struct {
 	Error string `json:"error"`
 }
 
-func snapshotFile() string { return filepath.Join(stateDir(), "before.json") }
+var partName = regexp.MustCompile(`^[a-z0-9][a-z0-9-]{0,39}$`)
 
-// TakeSnapshot keeps where the machine stands now, to measure a change against.
-func TakeSnapshot(run *Run, when time.Time) (Snapshot, error) {
-	snapshot := Snapshot{When: when, Versions: Versions{Kernel: run.Kernel, Packages: run.Packages}, Results: Local()}
+// PartNamed says whether a word can name a part's snapshot.
+func PartNamed(part string) bool { return partName.MatchString(part) }
+
+// snapshotFile is where a part's snapshot is kept. The one taken without naming a part is
+// before.json, as it always was.
+func snapshotFile(part string) string {
+	if part == "" {
+		return filepath.Join(stateDir(), "before.json")
+	}
+	return filepath.Join(stateDir(), "before-"+part+".json")
+}
+
+// TakeSnapshot keeps where the machine stands now, to measure a change to a part against.
+func TakeSnapshot(run *Run, when time.Time, part string, testImage bool) (Snapshot, error) {
+	snapshot := Snapshot{When: when, Versions: Versions{Kernel: run.Kernel, Packages: run.Packages}, Results: Local(), Part: part, TestImage: testImage}
 	if err := os.MkdirAll(stateDir(), 0o700); err != nil {
 		return snapshot, err
 	}
 	data, _ := json.MarshalIndent(snapshot, "", " ")
-	return snapshot, os.WriteFile(snapshotFile(), data, 0o600)
+	return snapshot, os.WriteFile(snapshotFile(part), data, 0o600)
 }
 
 // MarkSnapshotUsed notes that the snapshot's change is recorded, so that the next
-// hw-test verify before takes a new one without being asked twice.
-func MarkSnapshotUsed() error {
-	snapshot, ok := LoadSnapshot()
+// hw-test verify before for the part takes a new one without being asked twice.
+func MarkSnapshotUsed(part string) error {
+	snapshot, ok := LoadSnapshot(part)
 	if !ok {
 		return nil
 	}
 	snapshot.Used = true
 	data, _ := json.MarshalIndent(snapshot, "", " ")
-	return os.WriteFile(snapshotFile(), data, 0o600)
+	return os.WriteFile(snapshotFile(part), data, 0o600)
 }
 
-// LoadSnapshot reads the snapshot taken before a change, if there is one.
-func LoadSnapshot() (Snapshot, bool) {
+// LoadSnapshot reads the snapshot taken before a change to a part, if there is one.
+func LoadSnapshot(part string) (Snapshot, bool) {
 	var snapshot Snapshot
-	data, err := os.ReadFile(snapshotFile())
+	data, err := os.ReadFile(snapshotFile(part))
 	if err != nil || json.Unmarshal(data, &snapshot) != nil || snapshot.When.IsZero() {
 		return Snapshot{}, false
 	}
 	return snapshot, true
+}
+
+// StandingParts names the parts whose snapshot is still being measured against, in order.
+func StandingParts() []string {
+	var parts []string
+	files, _ := filepath.Glob(filepath.Join(stateDir(), "before-*.json"))
+	for _, file := range files {
+		part := strings.TrimSuffix(strings.TrimPrefix(filepath.Base(file), "before-"), ".json")
+		if snapshot, ok := LoadSnapshot(part); ok && PartNamed(part) && !snapshot.Used && snapshot.Part == part {
+			parts = append(parts, part)
+		}
+	}
+	sort.Strings(parts)
+	return parts
 }
 
 // Rank orders states from fine to failing. A state that says nothing of working, like
