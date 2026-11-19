@@ -7,9 +7,11 @@ interface Props {
   title: string;
   groups: { column: string; question: string; states: { label: string; tone: keyof typeof TONE; meaning: string }[] }[];
   extra?: { label: string; tone: keyof typeof TONE; meaning: string }[];
+  // The colour key in the bar, when it differs from the booting views'
+  keys?: { dot: string; text: string }[];
 }
 
-const { title, groups, extra } = Astro.props;
+const { title, groups, extra, keys } = Astro.props;
 const PILL = 'inline-flex shrink-0 items-center whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset';
 const CARD = 'rounded-lg bg-zinc-950/60 p-4 ring-1 ring-zinc-800';
 const KEY = [
@@ -24,7 +26,7 @@ const KEY = [
   <summary class="flex cursor-pointer list-none flex-wrap items-center gap-x-6 gap-y-2 px-5 py-3.5 [&::-webkit-details-marker]:hidden">
     <span class="text-sm font-semibold text-zinc-100">{title}</span>
     <span class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-zinc-400">
-      {KEY.map((key) => (
+      {(keys ?? KEY).map((key) => (
         <span class="inline-flex items-center gap-1.5"><span class={`h-2 w-2 rounded-full ${key.dot}`}></span>{key.text}</span>
       ))}
     </span>

@@ -25,7 +25,9 @@ import ExportButton from './ExportButton';
 type Option = { key: string; label: string; tone?: Tone };
 type Column = { id: string; header: string; question: string; options?: Option[] };
 // A set of status columns the table can switch to, like what Omarchy ships or what's upstream
-type View = { id: string; label: string; question: string; columns: Column[] };
+// `sort` names the column a view opens sorted by, when nothing else is sorting
+// and `compact` leaves the booting notes and variants out of the model column
+type View = { id: string; label: string; question: string; columns: Column[]; sort?: string; compact?: boolean };
 type Props = {
   rows: TableRow[];
   // One set of status columns, or several views to switch between, the first one shown by default
@@ -63,11 +65,45 @@ const byRank = (a: Row, b: Row, id: string) => (a.original.cells[id]?.rank ?? In
 // A status cell as the table shows it
 const cellText = (cell: CellData | undefined) => (!cell ? null : 'text' in cell ? cell.text || null : cell.label);
 
+const DOT = {
+  good: ['bg-emerald-400', 'ring-1 ring-inset ring-emerald-400/80'],
+  close: ['bg-amber-400', 'ring-1 ring-inset ring-amber-400/80'],
+  wanted: ['bg-rose-400', 'ring-1 ring-inset ring-rose-400/80'],
+} as const;
+
 const VARIANT_TONE = { good: 'text-emerald-400', close: 'text-amber-400', wanted: 'text-rose-400', muted: 'text-zinc-500' };
 const ICON_BUTTON = 'inline-flex items-center gap-0.5 rounded px-1 py-0.5 text-zinc-500 hover:bg-zinc-800 hover:text-zinc-100';
 
+// The parts past booting as a row of dots: filled when seen on Omarchy, outlined when known from
+// elsewhere, faint when nobody knows, a dash when the model lacks the part
+function Dots(props: { cell: Extract<CellData, { dots: unknown }>; column: string; open?: () => void }) {
+  const dots = (
+    <span class="inline-flex items-center gap-1">
+      <For each={props.cell.dots}>
+        {(dot) =>
+          dot.tone === 'absent' ? (
+            <span class="h-px w-2.5 bg-zinc-600" />
+          ) : (
+            <span class={`h-2.5 w-2.5 rounded-full ${dot.tone === 'none' ? 'bg-zinc-800' : DOT[dot.tone][dot.solid ? 0 : 1]}`} />
+          )
+        }
+      </For>
+    </span>
+  );
+  return props.open ? (
+    <button type="button" class="rounded py-1 hover:brightness-125" data-tip={props.cell.title} data-tip-title={props.column} aria-label={props.cell.label} onClick={props.open} data-open-hardware>
+      {dots}
+    </button>
+  ) : (
+    <span data-tip={props.cell.title} data-tip-title={props.column} aria-label={props.cell.label}>
+      {dots}
+    </span>
+  );
+}
+
 function Pill(props: { cell: CellData; column: string }) {
   const cell = props.cell;
+  if ('dots' in cell) return <Dots cell={cell} column={props.column} />;
   if ('text' in cell) return <span class="text-xs text-zinc-400">{cell.text}</span>;
   const classes = `${PILL} ${TONE[cell.tone]}`;
   return cell.href ? (
@@ -174,6 +210,12 @@ export default function StatusTable(props: Props) {
     setFilters((current) => current.filter((filter) => kept.has(filter.id)));
     setSorting((current) => current.filter((sort) => kept.has(sort.id) || sort.id === 'model'));
     setViewId(id);
+    openSorted();
+  };
+  // A view that names a column to open sorted by gets that order while nothing else sorts
+  const openSorted = () => {
+    const first = view().sort;
+    if (first && sorting().length === 0) setSorting([{ id: first, desc: false }]);
   };
   // A page section marked data-views shows the legend of the view in use
   let root!: HTMLDivElement;
@@ -219,6 +261,7 @@ export default function StatusTable(props: Props) {
     ]);
     const sort = params.get(prefix + 'sort');
     if (sort) setSorting([{ id: sort.replace(/^-/, ''), desc: sort.startsWith('-') }]);
+    openSorted();
     createEffect(() => {
       const next = new URLSearchParams(location.search);
       for (const key of [...ids, 'q', 'sort', 'view']) next.delete(prefix + key);
@@ -333,7 +376,7 @@ export default function StatusTable(props: Props) {
                     menu.style.left = `${Math.max(8, Math.min(rect.left, innerWidth - 272))}px`;
                   };
                   return (
-                    <th class={`${header.id === 'brand' ? 'px-4 py-3 font-medium max-xl:px-3 max-xl:py-2' : 'px-3 py-3 font-medium max-xl:py-2'} ${header.filterColumn && selected(header.filterColumn).length ? 'bg-sky-400/10 text-sky-200' : ''}`} data-tip={header.question} data-tip-title={header.header} aria-sort={direction() === 'asc' ? 'ascending' : direction() === 'desc' ? 'descending' : 'none'}>
+                    <th class={`${header.id === 'brand' ? 'px-4 py-3 font-medium max-xl:px-3 max-xl:py-2' : 'px-3 py-3 font-medium max-xl:py-2 xl:max-2xl:px-2'} ${header.filterColumn && selected(header.filterColumn).length ? 'bg-sky-400/10 text-sky-200' : ''}`} data-tip={header.question} data-tip-title={header.header} aria-sort={direction() === 'asc' ? 'ascending' : direction() === 'desc' ? 'descending' : 'none'}>
                       <span class="inline-flex items-center gap-1">
                         <button type="button" class="inline-flex items-center gap-1 uppercase tracking-wide hover:text-zinc-100" onClick={table.getColumn(header.id)!.getToggleSortingHandler()} data-sort={header.id}>
                           {header.header}
@@ -426,7 +469,7 @@ export default function StatusTable(props: Props) {
                         </Show>
                       </div>
                       <div class="mt-0.5 text-xs text-zinc-500">{model.subtitle}</div>
-                      <Show when={model.variants.length > 0}>
+                      <Show when={model.variants.length > 0 && !view().compact}>
                         <ul class="mt-1.5 space-y-0.5 text-xs text-zinc-400">
                           <For each={model.variants}>
                             {(variant) => (
@@ -437,7 +480,7 @@ export default function StatusTable(props: Props) {
                           </For>
                         </ul>
                       </Show>
-                      <Show when={model.notes || model.discussion}>
+                      <Show when={(model.notes || model.discussion) && !view().compact}>
                         <p class="mt-1.5 text-xs text-zinc-500 xl:max-w-xs">
                           {model.notes}
                           <Show when={model.discussion}>
@@ -451,9 +494,13 @@ export default function StatusTable(props: Props) {
                     </td>
                     <For each={statusColumns()}>
                       {(column) => (
-                        <td class="px-3 py-3 max-xl:p-0">
+                        <td class="px-3 py-3 max-xl:p-0 xl:max-2xl:px-2">
                           <span class="mb-1 block text-xs text-zinc-500 xl:hidden">{column.header}</span>
-                          <Pill cell={model.cells[column.id]} column={column.header} />
+                          {'dots' in model.cells[column.id] && views.some((v) => v.id === 'hardware') ? (
+                            <Dots cell={model.cells[column.id] as Extract<CellData, { dots: unknown }>} column={column.header} open={() => switchView('hardware')} />
+                          ) : (
+                            <Pill cell={model.cells[column.id]} column={column.header} />
+                          )}
                         </td>
                       )}
                     </For>

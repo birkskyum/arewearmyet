@@ -11,6 +11,8 @@ import status from '../data/status.json';
 import { ANNOUNCED, CHROMEBOOK_OMARCHY_LEGEND, FILTERS, GOOGLEBOOK_OMARCHY_LEGEND, GOOGLEBOOK_UPSTREAM_LEGEND, NVIDIA_OMARCHY_LEGEND, NVIDIA_UPSTREAM_LEGEND, OMARCHY_LEGEND, TONE, UPSTREAM_LEGEND } from '../lib/labels';
 import { PILL } from '../lib/tones';
 import { googlebookRows, nvidiaRows, snapdragonRows } from '../lib/rows';
+import { PARTS, PART_OPTIONS } from '../lib/parts';
+import PartBars from '../components/PartBars.astro';
 
 const { summary } = status;
 // The edge nightly image testers install, linked as the collector last found it
@@ -30,9 +32,31 @@ const nvidia = nvidiaRows().sort((a, b) => a.generation.localeCompare(b.generati
 // Whether it boots first, then the pieces in the order a model gets them
 const omarchyIds = ['bootable', 'acpi', 'tree', 'hwids', 'fw', 'machine'] as const;
 const upstreamIds = ['device-tree', 'ids', 'firmware'] as const;
+// The hardware view's legend: the marks once, then what each column covers
+const HARDWARE_LEGEND = [
+  { column: 'Seen on Omarchy', question: 'A filled label is a result from Omarchy itself, measured by hw-test or reported by an owner. Only these count as the model\'s status.', states: [
+    { label: 'Works', tone: 'good' as const, meaning: 'Every check of the part that has a result works.' },
+    { label: 'Partly', tone: 'close' as const, meaning: 'Some of it works, or it works with a fault.' },
+    { label: 'Broken', tone: 'wanted' as const, meaning: 'None of what was checked works.' },
+    { label: 'Works 2/6', tone: 'good' as const, meaning: 'The count says how many of the part\'s checks have a result. The rest are still open.' },
+  ] },
+  { column: 'Known from elsewhere', question: 'An outlined label is from another distro, from the device tree\'s author or from what holds for the whole chip family. It shows the part can work, not that it does on Omarchy.', states: [
+    { label: 'Works', tone: 'good-seen' as const, meaning: 'Reported working somewhere else.' },
+    { label: 'Partly', tone: 'close-seen' as const, meaning: 'Reported partly working somewhere else.' },
+    { label: 'Broken', tone: 'wanted-seen' as const, meaning: 'Reported broken somewhere else.' },
+  ] },
+  { column: 'No label', question: 'An empty cell means nobody has reported on the part yet. Running hw-test on the model fills it in. A dash means the model does not have the part.', states: [] },
+  ...PARTS.map((part) => ({ column: part.title, question: part.question, states: [] })),
+];
+const HARDWARE_QUESTION = 'What works once it runs, part by part. A filled label is a result from Omarchy, by hw-test or an owner. An outlined one is from another distro, the device tree\'s author or the chip family, which shows the part can work.';
+const HARDWARE_DOTS = { id: 'parts', header: 'Hardware', question: `The parts past booting, in the order of the Hardware view: ${PARTS.map((part) => part.title.toLowerCase()).join(', ')}. Filled is seen on Omarchy, outlined is known from elsewhere, faint is not known yet. Click for the Hardware view.` };
 const snapdragonViews = [
-  { id: 'omarchy', label: 'Omarchy', question: `What Omarchy's packages ship today, by the most stable channel that has it.`, columns: OMARCHY_LEGEND.map((group, i) => ({ id: omarchyIds[i], header: group.column, question: group.question, options: FILTERS[omarchyIds[i]] })) },
+  { id: 'omarchy', label: 'Omarchy', question: `What Omarchy's packages ship today, by the most stable channel that has it.`, columns: [...OMARCHY_LEGEND.map((group, i) => ({ id: omarchyIds[i], header: group.column, question: group.question, options: FILTERS[omarchyIds[i]] })), HARDWARE_DOTS] },
   { id: 'upstream', label: 'Upstream', question: 'What Linux, systemd and linux-firmware have, which every distro gets.', columns: UPSTREAM_LEGEND.map((group, i) => ({ id: upstreamIds[i], header: group.column, question: group.question, options: FILTERS[upstreamIds[i]] })) },
+  { id: 'hardware', label: 'Hardware', question: HARDWARE_QUESTION, sort: 'seen', compact: true, columns: [
+    { id: 'seen', header: 'Seen on Omarchy', question: 'How many of the parts have a result from Omarchy, by hw-test or an owner. The table opens sorted by it.' },
+    ...PARTS.map((part) => ({ id: `part-${part.id}`, header: part.title, question: part.question, options: PART_OPTIONS })),
+  ] },
 ];
 const nvidiaNotes = { id: 'notes', header: 'Notes', question: 'What else to know' };
 const nvidiaViews = [
@@ -116,12 +140,20 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
     </header>
 
     <Family id="snapdragon" title="Snapdragon X and X2" total={current.length}>
-      <PieceBars pieces={summary.byPiece} models={current} anchor="snapdragon" />
-      <div class="group/views mt-8" data-views data-view="omarchy">
-        <div class="group-data-[view=upstream]/views:hidden">
+      <div class="group/views" data-views data-view="omarchy">
+        <div class="group-data-[view=hardware]/views:hidden">
+          <PieceBars pieces={summary.byPiece} models={current} anchor="snapdragon" />
+        </div>
+        <div class="hidden group-data-[view=hardware]/views:block">
+          <PartBars models={current} anchor="snapdragon" />
+        </div>
+        <div class="mt-8 group-data-[view=hardware]/views:hidden group-data-[view=upstream]/views:hidden">
           <Legend title="What the labels mean" groups={OMARCHY_LEGEND} extra={legendExtra} />
         </div>
-        <div class="hidden group-data-[view=upstream]/views:block">
+        <div class="mt-8 hidden group-data-[view=hardware]/views:block">
+          <Legend title="What the labels mean" groups={HARDWARE_LEGEND} keys={[{ dot: 'bg-emerald-400', text: 'works' }, { dot: 'bg-amber-400', text: 'partly' }, { dot: 'bg-rose-400', text: 'broken' }, { dot: 'ring-1 ring-inset ring-zinc-400', text: 'outlined: known from elsewhere' }]} />
+        </div>
+        <div class="mt-8 hidden group-data-[view=upstream]/views:block">
           <Legend title="What the labels mean" groups={UPSTREAM_LEGEND} extra={legendExtra} />
         </div>
         <div class="mt-4">

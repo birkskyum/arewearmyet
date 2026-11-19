@@ -1,0 +1,62 @@
+---
+// How far a family's models are past booting, part by part: one cell per model, coloured by what
+// is known about the part on it, each linking to the model in the family's hardware view
+import status from '../data/status.json';
+import { PARTS, modelParts } from '../lib/parts';
+import type { Model } from '../lib/labels';
+import type { TableRow } from '../lib/rows';
+
+interface Props {
+  models: TableRow[];
+  anchor: string;
+  // The URL prefix of the family's table, so a cell's search reaches that table and no other
+  urlPrefix?: string;
+}
+
+const { models, anchor, urlPrefix = '' } = Astro.props;
+const ids = new Set(models.map((model) => model.id));
+const family = (status.models as Model[]).filter((model) => ids.has(model.id)).map((model) => ({ name: `${model.vendor} ${model.name}`, parts: modelParts(model) }));
+
+const KINDS = [
+  { key: 'omarchy-works', color: 'bg-emerald-400', label: 'Works on Omarchy' },
+  { key: 'omarchy-partial', color: 'bg-amber-400', label: 'Partly' },
+  { key: 'omarchy-broken', color: 'bg-rose-400', label: 'Broken' },
+  { key: 'elsewhere', color: 'bg-zinc-500', label: 'Known from elsewhere' },
+  { key: 'unknown', color: 'bg-zinc-800', label: 'Not known yet' },
+];
+const kindOf = (key: string) => KINDS.find((kind) => kind.key === key) ?? KINDS.find((kind) => key.startsWith(kind.key))!;
+const rows = PARTS.map((part, i) => {
+  // A model without the part has no cell, so each bar counts the models that have it
+  const cells = family
+    .filter((model) => model.parts[i].state !== 'absent')
+    .map((model) => ({ name: model.name, kind: kindOf(model.parts[i].key), tip: model.parts[i].title }))
+    .sort((a, b) => KINDS.indexOf(a.kind) - KINDS.indexOf(b.kind) || a.name.localeCompare(b.name));
+  const seen = cells.filter((cell) => cell.kind.key.startsWith('omarchy')).length;
+  const works = cells.filter((cell) => cell.kind.key === 'omarchy-works').length;
+  return { part, cells, seen, works };
+});
+---
+
+<div class="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
+  <h3 class="text-sm font-semibold text-zinc-200">Past booting, part by part</h3>
+  <ul class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-400">
+    {KINDS.map((kind) => <li class="flex items-center gap-1.5"><span class={`size-2.5 rounded-[2px] ${kind.color}`}></span>{kind.label}</li>)}
+  </ul>
+</div>
+<dl class="mt-4 grid gap-x-8 gap-y-5 sm:grid-cols-2">
+  {rows.map((row) => (
+    <div>
+      <dt class="text-sm font-medium text-zinc-200">{row.part.title}</dt>
+      <dd class="mt-2 flex items-center gap-3 text-xs">
+        <div class="@container min-w-0 flex-1">
+          <div class="grid h-3 grid-flow-col grid-cols-[repeat(var(--half),minmax(0,1fr))] grid-rows-2 gap-0.5 @lg:grid-flow-row @lg:grid-cols-[repeat(var(--all),minmax(0,1fr))] @lg:grid-rows-1" style={`--all: ${row.cells.length}; --half: ${Math.ceil(row.cells.length / 2)}`}>
+            {row.cells.map((cell) => (
+              <a href={`/?${urlPrefix}view=hardware&${urlPrefix}q=${encodeURIComponent(cell.name)}#${anchor}`} class={`rounded-[2px] ${cell.kind.color} transition hover:scale-y-150 hover:brightness-150`} data-tip-title={`${cell.name}: ${row.part.title.toLowerCase()}`} data-tip={cell.tip} aria-label={`${cell.name}: ${cell.kind.label}`}></a>
+            ))}
+          </div>
+        </div>
+        <span class="w-28 shrink-0 whitespace-nowrap tabular-nums text-zinc-300" data-tip-title={`${row.part.title}: seen on Omarchy on ${row.seen} of ${row.cells.length}`} data-tip={`It works on ${row.works} of them. ${row.part.question}`}>{row.works}<span class="text-zinc-500"> works, {row.seen} seen</span></span>
+      </dd>
+    </div>
+  ))}
+</dl>

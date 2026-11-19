@@ -1,9 +1,14 @@
 // Turns models into plain rows for the table island: every label, hover text and sort rank is
 // worked out here at build time, so the browser only receives what it shows
 import status from '../data/status.json';
+import { partCells, type Dot } from './parts';
 import { ANNOUNCED, GENERATION, acpiCell, bootableCell, bootloaderCell, deviceTreeCell, googlebookOmarchyCell, idsCell, linuxImageCell, machineCell, nvidiaKernelCell, nvidiaLinuxCell, nvidiaOmarchyCell, omarchyFirmwareCell, omarchyIdsCell, omarchyTreeCell, upstreamFirmwareCell, type Cell, type Model, type NvidiaModel } from './labels';
 
-export type CellData = Pick<Cell, 'key' | 'label' | 'tone' | 'title' | 'href' | 'rank'> | { key: string; text: string; rank: number };
+export type CellData =
+  | Pick<Cell, 'key' | 'label' | 'tone' | 'title' | 'href' | 'rank'>
+  | { key: string; text: string; rank: number }
+  // The parts past booting as a row of dots, one per part of the hardware view
+  | { key: string; label: string; dots: Dot[]; title: string; rank: number };
 export type TableRow = {
   id: string;
   vendor: string;
@@ -90,6 +95,8 @@ export function snapdragonRows(): TableRow[] {
         'device-tree': plain(deviceTreeCell(model)),
         ids: plain(idsCell(model)),
         firmware: plain(upstreamFirmwareCell(model)),
+        // The hardware view, and its row of dots in the Omarchy view
+        ...partCells(model),
       }),
       href: `/models/${model.id}`,
     }));

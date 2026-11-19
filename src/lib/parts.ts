@@ -1,0 +1,159 @@
+// The hardware view: the checks past booting rolled up into the parts an owner thinks in, per
+// model. A part's colour is its state and its fill is the evidence. Solid means seen on Omarchy,
+// by hw-test or an owner. Outlined means seen on another distro, said by the device tree's author
+// or known for the chip family, which shows a part can work and not that it does here.
+import owners from '../../data/owners.json';
+import { CHECKS, countsAsStatus, modelChecks, type CheckState } from './checks';
+import type { Model } from './labels';
+import type { Tone } from './tones';
+
+export type Part = { id: string; title: string; question: string; checks: string[] };
+
+// Hibernation, the two Qualcomm processors, the fingerprint reader and the modem stay on the model's
+// page: no kernel offers hibernation on these chips yet, and the others are parts few models have
+export const PARTS: Part[] = [
+  { id: 'start', title: 'Starting', question: 'The installer from a USB stick, and the disk password prompt at startup.', checks: ['installer', 'disk-unlock'] },
+  { id: 'screen', title: 'Screen and graphics', question: 'The built-in screen and its brightness, graphics acceleration, WebGL and WebGPU in the browser, and hardware video decoding.', checks: ['display', 'backlight', 'gpu', 'webgl', 'webgpu', 'video-decode'] },
+  { id: 'input', title: 'Keyboard and touch', question: 'The built-in keyboard, the touchpad, and the touchscreen and pen where the model has them.', checks: ['keyboard', 'touchpad', 'touchscreen'] },
+  { id: 'wireless', title: 'Wi-Fi and Bluetooth', question: 'Wi-Fi, its fixed address, and Bluetooth.', checks: ['wifi', 'wifi-address', 'bluetooth'] },
+  { id: 'sound', title: 'Sound', question: 'Speakers, built-in microphones and the headphone jack.', checks: ['speakers', 'microphones', 'headphones'] },
+  { id: 'camera', title: 'Camera', question: 'The webcam, in the browser and in video calls.', checks: ['camera'] },
+  { id: 'power', title: 'Battery and sleep', question: 'Battery readings, charging, sleep and wake, battery use while asleep, the lid switch, and fans and temperatures. Hibernation is on the model\'s page.', checks: ['battery', 'charging', 'suspend', 'suspend-drain', 'lid', 'fans'] },
+  { id: 'ports', title: 'Ports', question: 'USB ports, an external screen, and USB4.', checks: ['usb', 'external-display', 'usb4'] },
+];
+
+type Level = 'omarchy' | 'elsewhere';
+type Seen = { check: string; title: string; state: Exclude<CheckState, 'untested'>; level: Level; how: string };
+type OwnerCheck = { machines: number; states: Record<string, number> };
+const OWNERS = (owners as { models: Record<string, { checks: Record<string, OwnerCheck> }> }).models;
+const TITLE = new Map(CHECKS.map((check) => [check.id, check.title]));
+
+const overall = (states: string[]): 'works' | 'partial' | 'broken' => (states.every((s) => s === 'works') ? 'works' : states.every((s) => s === 'broken') ? 'broken' : 'partial');
+
+/** What is known about each check of a model, from the strongest evidence there is for it. */
+function seen(model: Model): Map<string, Seen> {
+  const out = new Map<string, Seen>();
+  const measured = OWNERS[model.id]?.checks ?? {};
+  const boots = ['stable', 'rc', 'edge'].includes(model.bootable);
+  for (const row of modelChecks(model)) {
+    const title = TITLE.get(row.id) ?? row.id;
+    const owner = measured[row.id];
+    const states = owner ? Object.keys(owner.states).filter((s) => s !== 'untested') : [];
+    if (states.length) {
+      const state = states.every((s) => s === 'absent') ? 'absent' : overall(states.filter((s) => s !== 'absent'));
+      out.set(row.id, { check: row.id, title, state, level: 'omarchy', how: owner.machines === 1 ? `an owner's test` : `${owner.machines} owners' tests` });
+      continue;
+    }
+    const finding = row.finding;
+    if (!finding || finding.state === 'untested') continue;
+    if (row.from === 'family') {
+      // What holds for the chip family says nothing about a model that doesn't start yet
+      if (!boots) continue;
+      out.set(row.id, { check: row.id, title, state: finding.state, level: 'elsewhere', how: 'known for the chip family' });
+    } else if (countsAsStatus(finding)) {
+      out.set(row.id, { check: row.id, title, state: finding.state, level: 'omarchy', how: finding.basis === 'maker-spec' ? `the maker's description` : 'reported on Omarchy' });
+    } else {
+      out.set(row.id, { check: row.id, title, state: finding.state, level: 'elsewhere', how: finding.basis === 'tree-author' ? `said by the device tree's author` : 'seen on another distro' });
+    }
+  }
+  return out;
+}
+
+export type PartState = { part: Part; key: string; state: 'works' | 'partial' | 'broken' | 'absent' | 'unknown'; level: Level | null; covered: number; of: number; title: string };
+
+const WORD = { works: 'works', partial: 'partly works', broken: 'is broken', absent: 'is not on this model' } as const;
+
+export function modelParts(model: Model): PartState[] {
+  const known = seen(model);
+  return PARTS.map((part) => {
+    const rows = part.checks.map((check) => known.get(check)).filter((row): row is Seen => Boolean(row));
+    const there = rows.filter((row) => row.state !== 'absent');
+    const of = part.checks.length - (rows.length - there.length);
+    const lines = (list: Seen[]) => list.map((row) => `${row.title} ${WORD[row.state]} (${row.how})`).join('. ');
+    if (there.length === 0) {
+      if (rows.length === part.checks.length) return { part, key: 'absent', state: 'absent', level: null, covered: 0, of: 0, title: 'This model does not have the part.' };
+      return { part, key: 'unknown', state: 'unknown', level: null, covered: 0, of, title: 'Nobody has reported on it yet.' };
+    }
+    const onOmarchy = there.filter((row) => row.level === 'omarchy');
+    const level: Level = onOmarchy.length ? 'omarchy' : 'elsewhere';
+    const counted = onOmarchy.length ? onOmarchy : there;
+    const state = overall(counted.map((row) => row.state));
+    const others = there.filter((row) => !counted.includes(row));
+    const title = [
+      `${counted.length} of ${of} ${of === 1 ? 'check' : 'checks'} ${level === 'omarchy' ? 'seen on Omarchy' : 'known from elsewhere, none seen on Omarchy yet'}. ${lines(counted)}.`,
+      others.length ? `From elsewhere: ${lines(others)}.` : '',
+    ].filter(Boolean).join(' ');
+    return { part, key: `${level}-${state}`, state, level, covered: counted.length, of, title };
+  });
+}
+
+const LABEL = { works: 'Works', partial: 'Partly', broken: 'Broken' } as const;
+const SOLID: Record<string, Tone> = { works: 'good', partial: 'close', broken: 'wanted' };
+const OUTLINED: Record<string, Tone> = { works: 'good-seen', partial: 'close-seen', broken: 'wanted-seen' };
+// Best first: what is seen on Omarchy before what is known from elsewhere, then what nobody knows
+const RANK = ['omarchy-works', 'omarchy-partial', 'omarchy-broken', 'elsewhere-works', 'elsewhere-partial', 'elsewhere-broken', 'absent', 'unknown'];
+
+export const PART_OPTIONS: { key: string; label: string; tone?: Tone }[] = [
+  { key: 'omarchy-works', label: 'Works', tone: 'good' },
+  { key: 'omarchy-partial', label: 'Partly', tone: 'close' },
+  { key: 'omarchy-broken', label: 'Broken', tone: 'wanted' },
+  { key: 'elsewhere-works', label: 'Works elsewhere', tone: 'good-seen' },
+  { key: 'elsewhere-partial', label: 'Partly elsewhere', tone: 'close-seen' },
+  { key: 'elsewhere-broken', label: 'Broken elsewhere', tone: 'wanted-seen' },
+  { key: 'absent', label: 'Not on this model' },
+  { key: 'unknown', label: 'Not known yet' },
+];
+
+export type Dot = { tone: 'good' | 'close' | 'wanted' | 'none' | 'absent'; solid: boolean };
+type PillCell = { key: string; label: string; tone: Tone; title: string; href?: string; rank: number };
+type TextCell = { key: string; text: string; rank: number };
+type DotsCell = { key: string; label: string; dots: Dot[]; title: string; rank: number };
+
+/** The cells of the hardware view for one model, and the row of dots the booting view shows. */
+export function partCells(model: Model): Record<string, PillCell | TextCell | DotsCell> {
+  const parts = modelParts(model);
+  const cells: Record<string, PillCell | TextCell | DotsCell> = {};
+  for (const p of parts) {
+    const rank = RANK.indexOf(p.key);
+    if (p.state === 'unknown') cells[`part-${p.part.id}`] = { key: p.key, text: '', rank };
+    else if (p.state === 'absent') cells[`part-${p.part.id}`] = { key: p.key, text: '–', rank };
+    else {
+      const label = LABEL[p.state] + (p.covered < p.of ? ` ${p.covered}/${p.of}` : '');
+      cells[`part-${p.part.id}`] = { key: p.key, label, tone: (p.level === 'omarchy' ? SOLID : OUTLINED)[p.state], title: p.title, href: `/models/${model.id}`, rank };
+    }
+  }
+  const real = parts.filter((p) => p.state !== 'absent');
+  const onOmarchy = real.filter((p) => p.level === 'omarchy');
+  const working = onOmarchy.filter((p) => p.state === 'works').length;
+  const elsewhere = real.filter((p) => p.level === 'elsewhere').length;
+  // Models with the most seen on Omarchy first, then those known from elsewhere
+  const rank = 1000 - onOmarchy.length * 100 - working * 10 - elsewhere;
+  const summary = onOmarchy.length ? `${onOmarchy.length} of ${real.length} parts seen on Omarchy, ${working} working` : elsewhere ? `${elsewhere} of ${real.length} parts known from elsewhere, none seen on Omarchy yet` : 'Nothing reported yet';
+  cells.seen = { key: onOmarchy.length ? 'some' : elsewhere ? 'elsewhere' : 'none', text: onOmarchy.length ? `${onOmarchy.length} of ${real.length}` : '', rank };
+  cells.parts = {
+    key: onOmarchy.length ? 'some' : elsewhere ? 'elsewhere' : 'none',
+    label: summary,
+    dots: parts.map((p) => ({ tone: p.state === 'works' ? 'good' : p.state === 'partial' ? 'close' : p.state === 'broken' ? 'wanted' : p.state === 'absent' ? 'absent' : 'none', solid: p.level === 'omarchy' })),
+    title: `${summary}. In order: ${parts.map((p) => `${p.part.title} ${p.state === 'unknown' ? 'not known' : p.state === 'absent' ? 'not on this model' : (p.level === 'omarchy' ? '' : 'elsewhere ') + LABEL[p.state].toLowerCase()}`).join(', ')}.`,
+    rank,
+  };
+  return cells;
+}
+
+/** For the bars above the table: per part, how many models have it seen on Omarchy, known from elsewhere, or not at all. */
+export function partTotals(models: Model[]) {
+  const all = models.map(modelParts);
+  return PARTS.map((part, i) => {
+    const states = all.map((parts) => parts[i]).filter((p) => p.state !== 'absent');
+    const on = states.filter((p) => p.level === 'omarchy');
+    return {
+      part,
+      models: states.length,
+      works: on.filter((p) => p.state === 'works').length,
+      partial: on.filter((p) => p.state === 'partial').length,
+      broken: on.filter((p) => p.state === 'broken').length,
+      elsewhere: states.filter((p) => p.level === 'elsewhere').length,
+      unknown: states.filter((p) => p.state === 'unknown').length,
+    };
+  });
+}
