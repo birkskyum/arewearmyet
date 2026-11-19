@@ -76,7 +76,6 @@ models:
       - "https://gist.githubusercontent.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1/raw/x1p42100-acer-aspire-16-ai.dts"
       - "https://gist.githubusercontent.com/birkskyum/f4cfc5f07ff54c6a20b43f2c514bcfc1/raw/x1p42100-acer-aspire-ai.dtsi"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/3"
-    notes: "Its Wi-Fi card (1a3b:6580) isn't in linux-firmware's board data. An installed system gets it from Omarchy's ath12k board fallback, but the live image has no Wi-Fi yet."
     reports:
       - { state: "works", note: "Installs from the edge channel's image and reaches the desktop, with sound, Wi-Fi and video decoding working. The owner confirmed the fix for the dark disk password prompt on the laptop, on edge since omacom/omarchy#18743 (birkskyum/arewearmyet#5).", checked: "2026-11" }
     sources:
@@ -294,7 +293,6 @@ models:
       - "https://raw.githubusercontent.com/agrucza/asus-proart-pz13-linux/71c27d312a0e7650870bb9a3e1c2306a975c0e1a/dts/x1p42100-asus-proart-pz13.dts"
       - "https://raw.githubusercontent.com/agrucza/asus-proart-pz13-linux/71c27d312a0e7650870bb9a3e1c2306a975c0e1a/dts/x1-asus-proart-pz13.dtsi"
     ids_collected: "https://bugs.launchpad.net/ubuntu-concept/+bug/2115514"
-    notes: "Sound needs the asus-proart-pz13-audio package for now. No cameras yet."
     sources:
       - https://www.asus.com/laptops/for-creators/proart/proart-pz13-ht5306/techspec/
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-proart-pz13
@@ -392,7 +390,7 @@ models:
     acpi: ["asus-vivobook-s-15", "asus-vivobook-s15-q5507", "asus-vivobook-s15-s5507"]
     reports:
       - { state: "workaround", note: "Reaches the desktop on 4.5.0-rc2 once the GPU, compute DSP and video firmware are in place. The installer didn't copy them from the Windows partition on the owner's laptop, so they were copied over on a USB stick and installed with qcom-firmware-extract. The owner confirmed the fix for the dark disk password prompt, which is the default since omacom/omarchy#17352 (omacom/omarchy#11823).", checked: "2026-10" }
-    notes: "Both models' firmware comes from ASUS's downloads. A fix that shows the disk unlock prompt on the X Elite model has been on edge since 2026-11-10, and no owner has tried it yet."
+    notes: "Both models' firmware comes from ASUS's downloads."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s-15-s5507/techspec/
       - https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/x1p42100-asus-vivobook-s15.dts
@@ -469,7 +467,6 @@ models:
       - "https://gist.githubusercontent.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3/raw/x1p42100-asus-vivobook-s16-lcd.dts"
       - "https://gist.githubusercontent.com/birkskyum/12a97d928f7d8721ed3a0622c9edeab3/raw/x1p42100-asus-vivobook-s16.dtsi"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/2"
-    notes: "Its Wi-Fi card is an ath11k one (105b:e130) that linux-firmware's board data doesn't list. Omarchy's board fallback gives it linux-firmware's generic NFA765 record from ath12k-board-fallback 1-5 on, the record its owner already runs at full speed. ASUS's own calibration for each model isn't in linux-firmware."
     sources:
       - https://www.asus.com/laptops/for-home/vivobook/asus-vivobook-s16-s3607q/techspec/
       - https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/
@@ -589,7 +586,7 @@ models:
       - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/95b879723cf45701dbffc8a030126b85bffae9da/pkgbuilds/linux-omarchy-aarch64/2831-arm64-dts-qcom-Add-the-ASUS-ProArt-PZ14-HT7407NA.patch#glymur-asus-proart-pz14-ht7407na.dts"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/35"
     firmware_download: "https://www.asus.com/laptops/for-creators/proart/proart-pz14-ht7407/helpdesk_download/"
-    notes: "Its device tree and hardware IDs are written from an owner's hardware report, on the Zenbook A14 X2's tree, and nobody has booted them yet. No sound profile, volume buttons or cameras yet."
+    notes: "Its device tree and hardware IDs are written from an owner's hardware report, on the Zenbook A14 X2's tree, and nobody has booted them yet."
     sources:
       - https://www.asus.com/laptops/for-creators/proart/proart-pz14-ht7407/techspec/
       - https://www.notebookcheck.net/Powerful-creator-tablet-with-Snapdragon-X2-Elite-Asus-ProArt-PZ14-Review.1359622.0.html
@@ -1841,7 +1838,6 @@ models:
     variants:
       - { chip: "X1P-42-100", compatible: "samsung,galaxy-book4-edge-15" }
     ids_collected: "https://github.com/anatase-org/kernel-anatase/blob/anatase-7.0/x1p42100-samsung-galaxy-book4-edge-15.json"
-    notes: "USB-C charging stays at 5 V and a trickle without the owner's userspace tool (book4-pd-charge)."
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2303"
     devicetree_files: ["https://raw.githubusercontent.com/omacom/omarchy-pkgs/f5e47d76/pkgbuilds/linux-omarchy-aarch64/2792-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book4-Edge-15.patch#x1p42100-samsung-galaxy-book4-edge-15.dts"]
     sources:
@@ -1880,7 +1876,7 @@ models:
     firmware_download: "https://www.samsung.com/global/galaxybooks-downloadcenter/"
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
     ids_collected: "https://github.com/birkskyum/arewearmyet/issues/1"
-    notes: "The European NP940XMA has another baseboard name and BIOS line than the NP944XMA, so it has its own hardware IDs, on edge since linux-omarchy 7.3-42. Its owner runs it daily on another kernel, with deep sleep in s2idle at about 0.9 W. The NP944XMA boots the edge image without the owner's board package; what it still lacks there is in its report."
+    notes: "The European NP940XMA has another baseboard name and BIOS line than the NP944XMA, so it has its own hardware IDs, on edge since linux-omarchy 7.3-42. The NP944XMA boots the edge image without the owner's board package; what it still lacks there is in its report."
     reports:
       - { state: "problems", variant: "NP944XMA", note: "Edge 2026.11.16.492 boots, installs and reaches the desktop without the owner's board package, with display, GPU, Wi-Fi and both DSPs working. The built-in keyboard is dead in Hyprland (0CF2:9050 is tagged as a tablet pad), the disk password prompt isn't shown, USB-C has no hotplug and SuperSpeed in one orientation only, the Wi-Fi MAC address changes every boot, and there is no sound, battery, Bluetooth, camera or fan control. With the owner's board package all of these work.", checked: "2026-11" }
     sources:
@@ -2046,7 +2042,7 @@ models:
     devicetree_files:
       - "https://raw.githubusercontent.com/jmdurr/dell-inspiron-3420-arm/a75479805a22/kernel.patch#sc8180xp-dell-inspiron-3420.dts"
     acpi: ["dell-inspiron-14-3420"]
-    notes: "Matt Durr's tree runs it from its NVMe drive with the keyboard, touchpad, USB, Wi-Fi, GPU acceleration, battery, suspend and CPU frequency scaling; the lid switch, Bluetooth, audio, camera and special keys don't work yet. Its NVMe drive needs the kernel to keep the firmware's PCIe PHY setup. Dell's audio DSP image on Windows Update is signed with Qualcomm's test key, like the Yoga C630's, and runs on the laptop."
+    notes: "Matt Durr's tree runs it from its NVMe drive, with CPU frequency scaling. Its NVMe drive needs the kernel to keep the firmware's PCIe PHY setup. Dell's audio DSP image on Windows Update is signed with Qualcomm's test key, like the Yoga C630's, and runs on the laptop."
     sources:
       - https://github.com/aarch64-laptops/build/tree/master/misc/dell-inspiron-14-3420
 
@@ -2088,7 +2084,7 @@ models:
     generation: "850"
     form: 2-in-1
     chips: ["SDM850"]
-    notes: "Sold also as the ENWO Pad. An owner reports it is a MateBook E (2019) without the fingerprint reader, and runs Jingzhou Zhu's tree for the MateBook E on it, without brightness, battery, sound, cameras and Bluetooth."
+    notes: "Sold also as the ENWO Pad. An owner reports it is a MateBook E (2019) without the fingerprint reader, and runs Jingzhou Zhu's tree for the MateBook E on it."
     sources:
       - https://github.com/aarch64-laptops/build/issues/84
 
@@ -2212,7 +2208,7 @@ models:
       - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/12ed0f96/pkgbuilds/linux-omarchy-dtbs/0038-arm64-dts-qcom-sc8180x-Add-Microsoft-Surface-Pro-X.patch#sc8180x-microsoft-carina.dts"
       - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/12ed0f96/pkgbuilds/linux-omarchy-dtbs/0038-arm64-dts-qcom-sc8180x-Add-Microsoft-Surface-Pro-X.patch#sc8180x-microsoft-caspar.dts"
       - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/12ed0f96/pkgbuilds/linux-omarchy-dtbs/0038-arm64-dts-qcom-sc8180x-Add-Microsoft-Surface-Pro-X.patch#sc8180x-microsoft-surface-pro-x.dtsi"
-    notes: "Its device trees are Val Packett's posted series from Maximilian Luz's linux-surface work, with the two fixes Haipeng Lin's test found, and its firmware comes from the bundles Microsoft publishes on Windows Update. The SQ2 with cellular shares the SQ1's SKU, so it boots the SQ1's tree at the SQ1's top clock. Its keyboard, battery and sensor DSP need linux-omarchy 7.3-65 (omacom/omarchy-pkgs#2860). Nobody has booted Omarchy on it yet."
+    notes: "Its device trees are Val Packett's posted series from Maximilian Luz's linux-surface work, with the two fixes Haipeng Lin's test found, and its firmware comes from the bundles Microsoft publishes on Windows Update. The SQ2 with cellular shares the SQ1's SKU, so it boots the SQ1's tree at the SQ1's top clock. Its sensor DSP needs linux-omarchy 7.3-65 (omacom/omarchy-pkgs#2860). Nobody has booted Omarchy on it yet."
     acpi: ["microsoft-surface-prox", "linux-surface/surface_pro_x_sq1", "linux-surface/surface_pro_x_sq2"]
     sources:
       - https://github.com/aarch64-laptops/build/tree/master/misc/microsoft-surface-prox

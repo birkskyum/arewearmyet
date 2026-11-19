@@ -166,7 +166,7 @@ models:
         url: https://github.com/birkskyum/arewearmyet/issues/5
     checks:
       speakers: { state: works, checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/5", note: Sound works on an installed system. Its owner reports audio working without saying more about the speakers., basis: omarchy, where: "Omarchy edge image 2026.11.11.487, installed system, 2026-11-12", quote: Audio and Wifi drivers work this time which is great. }
-      wifi: { state: partial, note: "Works on an installed system, which gets board data for the Wi-Fi card. The live image has no Wi-Fi, so the install needs USB Ethernet.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/5", basis: omarchy, where: "Omarchy edge image 2026.11.11.487, installed system, 2026-11-12", quote: Audio and Wifi drivers work this time which is great. }
+      wifi: { state: partial, note: "Works on an installed system, which gets board data for the Wi-Fi card from Omarchy's ath12k board fallback. The card (1a3b:6580) isn't in linux-firmware's board data. The live image has no Wi-Fi yet, so the install needs USB Ethernet.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/5", basis: omarchy, where: "Omarchy edge image 2026.11.11.487, installed system, 2026-11-12", quote: Audio and Wifi drivers work this time which is great. }
       video-decode: { state: works, checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/5", note: mpv plays H.264 and HEVC on the video engine since linux-omarchy-dtbs 7.3-26. Steam Remote Play uses the decoder too but shows a green picture., basis: omarchy, where: "Omarchy edge, linux-omarchy-dtbs 7.3-26 and acer-aspire-16-ai-firmware 20261102-3, 2026-11-15", quote: "Video decode is working at the kernel level (/dev/video0, mpv --hwdec=v4l2m2m-copy plays H.264 and HEVC fine)." }
       disk-unlock: { state: works, note: "Owner confirmed the fix from omacom/omarchy#18743.", checked: 2026-11, source: "https://github.com/omacom/omarchy/pull/18743", basis: omarchy, where: "Omarchy install with the pull request's script applied, 2026-11-14", quote: "On the owner's Aspire 16 AI in birkskyum/arewearmyet#5, the script from this branch and a boot image rebuild bring the password prompt up on the built-in screen (issuecomment-6869339534)." }
 
@@ -875,7 +875,7 @@ models:
         quote: On his kernel (jglathe's 7.2.5 Ubuntu tree) the display, GPU, Wi-Fi, Bluetooth, both USB-C ports with DisplayPort, touchscreen and pen, keyboard cover, battery, suspend, speakers and microphones work.
       speakers:
         state: partial
-        note: The speakers play, but on six occasions in eight days they went silent until a restart, twice after a system suspend. The owner is testing two driver changes for it.
+        note: The speakers play, but on six occasions in eight days they went silent until a restart, twice after a system suspend. The owner is testing two driver changes for it. Sound needs the asus-proart-pz13-audio package for now.
         version: Omarchy 4, linux-omarchy 7.3-63
         checked: 2026-11
         source: https://github.com/omacom/omarchy-pkgs/issues/2964
@@ -927,6 +927,11 @@ models:
         basis: other-distro
         where: the tree author's own kernel, a 7.2.5 Ubuntu tree
         quote: On his kernel (jglathe's 7.2.5 Ubuntu tree) the display, GPU, Wi-Fi, Bluetooth, both USB-C ports with DisplayPort, touchscreen and pen, keyboard cover, battery, suspend, speakers and microphones work.
+      camera:
+        state: broken
+        note: The cameras don't work yet. The device tree's own notes list them as not done.
+        checked: 2026-11
+
   asus-proart-pz14-ht7407:
     links:
       - title: Hardware report and the owner's test notes
@@ -970,7 +975,7 @@ models:
         quote: "Broken: brightness and touchpad toggle."
       keyboard:
         state: partial
-        note: The keyboard cover types, and its volume, keyboard light and screenshot keys work. The brightness and touchpad keys freeze the keyboard for 20 to 50 seconds, or until it is detached and attached again.
+        note: The keyboard cover types, and its volume, keyboard light and screenshot keys work. The brightness and touchpad keys freeze the keyboard for 20 to 50 seconds, or until it is detached and attached again. The tablet's own volume buttons are not in its device tree yet.
         version: Omarchy edge, linux-omarchy 7.3-55
         checked: 2026-11
         source: https://github.com/turbineBMW/omarchy-hardware-reports/issues/35
@@ -1292,7 +1297,7 @@ models:
         quote: I could finish the install but when booting it loaded Limine but then it went to a dark screen
       disk-unlock:
         state: partial
-        note: After an install the screen went dark at the disk password prompt, and the password had to be typed blind. An owner got the prompt back by loading the display drivers early, and that setup has since been made the default for this model.
+        note: After an install the screen went dark at the disk password prompt, and the password had to be typed blind. An owner got the prompt back by loading the display drivers early, and that setup has since been made the default for this model. For the X Elite model the fix has been on edge since 2026-11-10, and no owner has tried it from there yet.
         version: Omarchy 4.5.0-rc2
         checked: 2026-10
         source: https://github.com/omacom/omarchy/discussions/11823#discussioncomment-19288373
@@ -1540,7 +1545,7 @@ models:
         quote: Screen, keyboard, touchpad, Bluetooth, USB ports, HDMI, disks all Ok.
       wifi:
         state: partial
-        note: Linux has no calibration data for this laptop's Wi-Fi card, so Wi-Fi does not start by itself. With the generic data for the same card, set up by a script, the owner connects.
+        note: Linux has no calibration data for this laptop's Wi-Fi card, so Wi-Fi does not start by itself. With the generic data for the same card, set up by a script, the owner connects. The card is an ath11k one (105b:e130), and Omarchy's board fallback gives it linux-firmware's generic NFA765 record by itself from ath12k-board-fallback 1-5 on. ASUS's own calibration for the model isn't in linux-firmware.
         checked: 2026-11
         source: https://github.com/turbineBMW/omarchy-hardware-reports/issues/2
         basis: omarchy
@@ -6837,7 +6842,7 @@ models:
         quote: "| Display 2880x1920, backlight | ✓ |"
       keyboard:
         state: works
-        note: On Ubuntu 26.04 with a 7.4 development kernel and extra patches, on an SQ1 with LTE, the Type Cover keyboard works through the Surface embedded controller.
+        note: On Ubuntu 26.04 with a 7.4 development kernel and extra patches, on an SQ1 with LTE, the Type Cover keyboard works through the Surface embedded controller. On Omarchy it needs linux-omarchy 7.3-65 or later (omacom/omarchy-pkgs#2860).
         version: Ubuntu 26.04, kernel 7.4-rc2 (linux-next) with extra patches
         checked: 2026-11
         source: https://github.com/linux-surface/surface-pro-x/issues/55#issuecomment-6865154454
@@ -6909,7 +6914,7 @@ models:
         quote: "| Remoteprocs: ADSP, CDSP, SLPI, modem (MPSS) | ✓ | All four boot |"
       battery:
         state: works
-        note: On Ubuntu 26.04 with a 7.4 development kernel and extra patches, on an SQ1 with LTE, battery and charger status show through the Surface embedded controller.
+        note: On Ubuntu 26.04 with a 7.4 development kernel and extra patches, on an SQ1 with LTE, battery and charger status show through the Surface embedded controller. On Omarchy they need linux-omarchy 7.3-65 or later (omacom/omarchy-pkgs#2860).
         version: Ubuntu 26.04, kernel 7.4-rc2 (linux-next) with extra patches
         checked: 2026-11
         source: https://github.com/linux-surface/surface-pro-x/issues/55#issuecomment-6865154454
