@@ -63,10 +63,27 @@ jobs:
       - name: Commit changed data
         if: github.event_name != 'push'
         run: |
-          git add data/sources.json data/owners.json src/data/status.json worker/models.json device-trees hwids reports acpi
-          if git diff --cached -U0 | grep -E '^[+-] ' | grep -vqE '"collected"'; then
+          collected='data/sources.json data/owners.json device-trees hwids reports acpi'
+          commit() {
+            git add $collected src/data/status.json worker/models.json
             git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Refresh the data'
-            git push
+          }
+          git add $collected src/data/status.json worker/models.json
+          if git diff --cached -U0 | grep -E '^[+-] ' | grep -vqE '"collected"'; then
+            commit
+            pushed=
+            for attempt in 1 2 3; do
+              if git push; then pushed=yes; break; fi
+              # Someone pushed while this ran. Take their work, keep what was collected here
+              # and work the rest out again from the two together
+              ours=$(git rev-parse HEAD)
+              git fetch origin main
+              git reset --hard origin/main
+              git checkout "$ours" -- $collected
+              pnpm status
+              commit || { pushed=yes; break; }
+            done
+            [ -n "$pushed" ]
           fi
 
       # A change that breaks the reports API or the probe doesn't get deployed
