@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -92,6 +93,8 @@ func main() {
 	case "help", "--help", "-h":
 		usage()
 		return
+	case "update":
+		os.Exit(update())
 	case "status":
 		// The latest result of every check on this machine, without running anything
 		fmt.Println(guided.Status(report.Local()))
@@ -114,6 +117,13 @@ func main() {
 	if unattended && !guided.Automatic(only) {
 		fmt.Fprintln(os.Stderr, "hw-test: that step is done with you at the keyboard, so it needs a terminal. Without one, these run: "+strings.Join(guided.AutomaticWords(), ", "))
 		os.Exit(2)
+	}
+
+	// A newer release is said once at the start. The menu says it itself.
+	if !(command == "guided" && len(only) == 0 && guided.Interactive()) {
+		if newer := report.Newer(version, time.Now()); newer != "" {
+			fmt.Fprintf(os.Stderr, "hw-test %s is out, and this is %s. Update with: hw-test update\n\n", newer, version)
+		}
 	}
 
 	run, facts, err := probe.Quick(machine.Real())
@@ -240,6 +250,35 @@ func printResults(run *report.Run) {
 		fmt.Fprintf(os.Stderr, "  %-17s %-8s %s\n", result.Check, result.State, result.Evidence)
 	}
 	fmt.Fprintln(os.Stderr)
+}
+
+// tool is how mise names the app.
+const tool = "github:birkskyum/arewearmyet"
+
+// update gets the newest release through mise, which is how the app is installed.
+func update() int {
+	if !tools.Have("mise") {
+		fmt.Fprintln(os.Stderr, "hw-test is installed through mise, which isn't on this system. The releases are at https://github.com/birkskyum/arewearmyet/releases")
+		return 1
+	}
+	// Without mise's waiting time for new releases and its own list of versions, which both lag
+	env := append(os.Environ(), "MISE_MINIMUM_RELEASE_AGE=0", "MISE_USE_VERSIONS_HOST=0")
+	install := exec.Command("mise", "install", tool+"@latest")
+	install.Env, install.Stdout, install.Stderr = env, os.Stderr, os.Stderr
+	if err := install.Run(); err != nil {
+		fmt.Fprintln(os.Stderr, "hw-test: the update didn't go through:", err)
+		return 1
+	}
+	report.ForgetRelease()
+	now := exec.Command("mise", "x", tool, "--", "hw-test", "version")
+	now.Env = env
+	out, err := now.Output()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "Installed. Start hw-test again to use it.")
+		return 0
+	}
+	fmt.Fprintf(os.Stderr, "Now on %s (this run was %s).\n", strings.TrimSpace(string(out)), version)
+	return 0
 }
 
 // verify takes the snapshot a change is measured against, or measures the change against it.
@@ -479,6 +518,7 @@ func usage() {
                      block for the pull request, and recorded with the pull request on the
                      model's page. --title says in a line what the change is
   hw-test status     where this computer stands: the latest result of every check, nothing is run
+  hw-test update     get the newest release. hw-test says at its start when there is one
   hw-test facts      what the test found on this computer to work with (nothing is sent)
   hw-test version
 

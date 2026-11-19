@@ -707,7 +707,12 @@ type welcome struct {
 	// options are the test's, for handing a failing part to an agent, and handed how that went.
 	options Options
 	handed  string
+	// newer is the newest release when this isn't it.
+	newer string
 }
+
+// releaseMsg carries the newest release, when it is newer than the running one.
+type releaseMsg struct{ newer string }
 
 // modelMsg is the site's answer to which model this computer is.
 type modelMsg struct {
@@ -813,14 +818,21 @@ func (w *welcome) failing() []string {
 }
 
 func (w *welcome) start() tea.Cmd {
-	if w.only || w.api == "" {
+	if w.only {
 		return nil
 	}
-	api, run := w.api, w.run
-	return func() tea.Msg {
-		model, err := report.Match(api, run)
-		return modelMsg{model, err}
+	var asks []tea.Cmd
+	if api, run := w.api, w.run; api != "" {
+		asks = append(asks, func() tea.Msg {
+			model, err := report.Match(api, run)
+			return modelMsg{model, err}
+		})
 	}
+	// Whether a newer release is out, asked beside the rest so the menu is up at once
+	if version := w.options.Version; version != "" {
+		asks = append(asks, func() tea.Msg { return releaseMsg{report.Newer(version, time.Now())} })
+	}
+	return tea.Batch(asks...)
 }
 
 func (w *welcome) update(msg tea.Msg) tea.Cmd {
@@ -833,6 +845,10 @@ func (w *welcome) update(msg tea.Msg) tea.Cmd {
 	}
 	if answer, ok := msg.(handedMsg); ok {
 		w.handed = answer.handed.Said
+		return nil
+	}
+	if answer, ok := msg.(releaseMsg); ok {
+		w.newer = answer.newer
 		return nil
 	}
 	press, ok := msg.(tea.KeyPressMsg)
@@ -876,6 +892,9 @@ func (w *welcome) view(width, height int) string {
 		intro += "\n" + accent.Hyperlink(w.model.Page).Render(w.model.Page)
 	case w.looked && w.model.ID == "" && w.api != "":
 		intro += "\n" + wrap("The board doesn't have this computer yet. Sending a test adds what it finds, with a form to put the model on the board.", width)
+	}
+	if w.newer != "" {
+		intro += "\n" + close_.Render(wrap(fmt.Sprintf("hw-test %s is out, and this is %s. Leave with Quit and run hw-test update to get it.", w.newer, w.options.Version), width))
 	}
 	standing := wrap(w.standing(width), width)
 	// The command that goes straight to the part the cursor is on

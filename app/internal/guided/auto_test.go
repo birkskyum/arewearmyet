@@ -260,6 +260,28 @@ func TestTheStartScreenFitsAShortWindow(t *testing.T) {
 	}
 }
 
+func TestTheMenuSaysWhenANewerReleaseIsOut(t *testing.T) {
+	run := &report.Run{Hardware: map[string]string{"maker": "LENOVO", "product": "83ED"}}
+	start := &welcome{run: run, parts: menu, kept: map[string]report.Kept{}, options: Options{Version: "0.12.0"}}
+	if strings.Contains(start.view(100, 60), "is out") {
+		t.Error("a newer release is announced before anyone said so")
+	}
+	start.update(releaseMsg{"0.12.1"})
+	if drawn := start.view(100, 60); !strings.Contains(drawn, "hw-test 0.12.1 is out, and this is 0.12.0") || !strings.Contains(drawn, "hw-test update") {
+		t.Errorf("the newer release isn't said:\n%s", drawn)
+	}
+	// On the newest release there is nothing to say
+	start.update(releaseMsg{""})
+	if strings.Contains(start.view(100, 60), "is out") {
+		t.Error("the notice stayed after it no longer held")
+	}
+	// A step named on the command line shows no menu, so nothing is asked from it
+	named := &welcome{run: run, only: true, options: Options{Version: "0.12.0"}}
+	if named.start() != nil {
+		t.Error("a named step asks about releases from the menu it never shows")
+	}
+}
+
 func TestAMiniPCIsNotAskedToUnplugItsOnlyScreen(t *testing.T) {
 	root := t.TempDir()
 	set := func(path, text string) {
