@@ -1,10 +1,10 @@
 ---
 // How an owner installs Omarchy on an ARM PC, and what to do when the start doesn't go as it
 // should. Which image a model needs comes from the board's own data, so it stays right.
-import Layout from '../layouts/Layout.astro';
-import { TONE, edgeStarts } from '../lib/labels';
-import { PILL } from '../lib/tones';
-import { pageModels } from '../lib/checks';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { TONE, edgeStarts } from '../../lib/labels';
+import { PILL } from '../../lib/tones';
+import { pageModels } from '../../lib/checks';
 
 const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
 const REPO = 'https://github.com/birkskyum/arewearmyet';
@@ -38,10 +38,20 @@ const UNLOCK_FIXED = [
   'Microsoft Surface Pro 11, Surface Laptop 7 15-inch and Surface Laptop 8',
   'Every Snapdragon X2 machine (Glymur, Mahua and Kalambo chips)',
 ];
+// The page's sections, for the list beside it
+const SECTIONS = [
+  { id: 'before', text: 'Before you start', depth: 2 },
+  { id: 'stick', text: 'Make the stick', depth: 2 },
+  { id: 'install', text: 'Install', depth: 2 },
+  { id: 'trouble', text: 'If something goes wrong', depth: 2 },
+  { id: 'back-to-windows', text: 'The laptop goes back to Windows, or the screen flashes and stays black', depth: 3 },
+  { id: 'black-password', text: 'The disk password screen is black', depth: 3 },
+  { id: 'other', text: "Something else doesn't work", depth: 3 },
+];
+const MARK = 'ml-2 text-zinc-600 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100';
 ---
 
-<Layout title="Install Omarchy on an ARM PC · Are we ARM yet?" description="How to install Omarchy on a Snapdragon laptop or another ARM PC: which image your model needs, making the USB stick, installing, and the fixes for the known snags.">
-  <main class="mx-auto max-w-4xl px-4 py-10 text-zinc-400 sm:px-6">
+<DocsLayout title="Install Omarchy on an ARM PC · Are we ARM yet?" description="How to install Omarchy on a Snapdragon laptop or another ARM PC: which image your model needs, making the USB stick, installing, and the fixes for the known snags." sections={SECTIONS}>
     <h1 class="text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">Install Omarchy on an ARM PC</h1>
     <p class="mt-4 text-lg">
       Omarchy builds one install image for every ARM PC it supports. This page takes a Snapdragon laptop from Windows to the Omarchy desktop.
@@ -63,13 +73,13 @@ const UNLOCK_FIXED = [
     </nav>
 
     <section id="before" class={`mt-10 ${CARD}`}>
-      <h2 class="text-xl font-semibold text-zinc-100">Before you start</h2>
+      <h2 class="group text-xl font-semibold text-zinc-100"><a href="#before">Before you start<span class={MARK} aria-hidden="true">#</span></a></h2>
       <ol class={STEPS}>
         <li>
           <span class="text-zinc-200">Find your model on <a class={LINK} href="/">the board</a>.</span> Its Bootable column says whether the image starts it, and its own page says what works once it runs, part by part.
           <ul class={BULLETS}>
             <li><span class={`${PILL} ${TONE.good}`}>Boots</span> or <span class={`${PILL} ${TONE['good-seen']}`}>Should boot</span> there means the edge image picks the model's device tree by itself. Today that holds for {starts} of the {models.length} Snapdragon models here.</li>
-            <li>Anything else means the image can't start it by itself yet. <a class={LINK} href="/help">How to help</a> says what gets it there.</li>
+            <li>Anything else means the image can't start it by itself yet. <a class={LINK} href="/docs/help">How to help</a> says what gets it there.</li>
           </ul>
         </li>
         <li>
@@ -85,7 +95,7 @@ const UNLOCK_FIXED = [
     </section>
 
     <section id="stick" class={`mt-6 ${CARD}`}>
-      <h2 class="text-xl font-semibold text-zinc-100">Make the stick</h2>
+      <h2 class="group text-xl font-semibold text-zinc-100"><a href="#stick">Make the stick<span class={MARK} aria-hidden="true">#</span></a></h2>
 
       <h3 class={H3}>From the laptop's own Windows</h3>
       <p class="mt-2">
@@ -116,7 +126,7 @@ echo "$(jq -r .sha256 &lt;&lt;&lt;"$latest")  $&#123;url##*/&#125;" | sha256sum 
     </section>
 
     <section id="install" class={`mt-6 ${CARD}`}>
-      <h2 class="text-xl font-semibold text-zinc-100">Install</h2>
+      <h2 class="group text-xl font-semibold text-zinc-100"><a href="#install">Install<span class={MARK} aria-hidden="true">#</span></a></h2>
       <ol class={STEPS}>
         <li><span class="text-zinc-200">Turn off Secure Boot</span> in the laptop's firmware settings. With it on, the laptop refuses the stick.</li>
         <li><span class="text-zinc-200">Start from the stick</span>, through the firmware's boot menu. The screen can stay black for a few minutes before the Omarchy logo shows.</li>
@@ -138,15 +148,15 @@ echo "$(jq -r .sha256 &lt;&lt;&lt;"$latest")  $&#123;url##*/&#125;" | sha256sum 
           <span class="text-zinc-200">See what works, and put it on your model's page.</span>
           <pre class={CODE}><code>omarchy-mise-install github:birkskyum/arewearmyet hw-test
 hw-test</code></pre>
-          It tests the hardware with you in about a quarter of an hour. <a class={LINK} href="/help#check">More about the test</a>.
+          It tests the hardware with you in about a quarter of an hour. <a class={LINK} href="/docs/help#check">More about the test</a>.
         </li>
       </ol>
     </section>
 
     <section id="trouble" class={`mt-6 ${CARD}`}>
-      <h2 class="text-xl font-semibold text-zinc-100">If something goes wrong</h2>
+      <h2 class="group text-xl font-semibold text-zinc-100"><a href="#trouble">If something goes wrong<span class={MARK} aria-hidden="true">#</span></a></h2>
 
-      <h3 id="back-to-windows" class={`${H3} scroll-mt-6`}>The laptop goes back to Windows, or the screen flashes and stays black</h3>
+      <h3 id="back-to-windows" class={`${H3} group scroll-mt-6`}><a href="#back-to-windows">The laptop goes back to Windows, or the screen flashes and stays black<span class={MARK} aria-hidden="true">#</span></a></h3>
       <ul class={BULLETS}>
         <li>Check that Secure Boot is off.</li>
         <li>Wait a few minutes. A black screen before the logo is normal on some models.</li>
@@ -154,7 +164,7 @@ hw-test</code></pre>
         <li>Still nothing? Tell us through <a class={LINK} href={FORM}>Add your model</a>, with the image's version and what the screen showed last.</li>
       </ul>
 
-      <h3 id="black-password" class={`${H3} scroll-mt-6`}>The disk password screen is black</h3>
+      <h3 id="black-password" class={`${H3} group scroll-mt-6`}><a href="#black-password">The disk password screen is black<span class={MARK} aria-hidden="true">#</span></a></h3>
       <p class="mt-2">
         The password prompt should show as on any other computer. On a model Omarchy doesn't have the fix for yet, the screen stays dark there instead. The laptop hasn't hung. The prompt is there and waiting, but the screen isn't lit yet.
       </p>
@@ -192,7 +202,7 @@ journalctl -k -b --no-hostname | grep -iE 'drm|panel|backlight' | grep -v 'comma
         The password prompt is drawn from a small boot image, before the disk is open and most drivers are loaded. On these laptops the display driver waits for the drivers of the USB-C ports (which can carry a screen) and of the backlight before it draws. When those aren't in the boot image, the driver waits until the disk is open, which is after the prompt. Omarchy's fix for a model names those drivers in a file under <code class={INLINE}>/etc/mkinitcpio.conf.d</code>, so they are in the boot image. The <a class={LINK} href={`${OMARCHY}/blob/quattro/install/hardware/hp/fix-hp-omnibook-x14-boot.sh`}>HP OmniBook X 14's fix</a> is a short example, and the <a class={LINK} href={`${OMARCHY}/tree/quattro/install/hardware`}>folder beside it</a> has every model's.
       </p>
 
-      <h3 id="other" class={`${H3} scroll-mt-6`}>Something else doesn't work</h3>
+      <h3 id="other" class={`${H3} group scroll-mt-6`}><a href="#other">Something else doesn't work<span class={MARK} aria-hidden="true">#</span></a></h3>
       <p class="mt-2">
         Look at your model's page first. It lists what is known per part, and other owners' notes with their workarounds. Then run <code class={INLINE}>hw-test</code>, which measures the part, and <code class={INLINE}>hw-test fix</code>, which hands what fails to your AI agent.
       </p>
@@ -200,7 +210,6 @@ journalctl -k -b --no-hostname | grep -iE 'drm|panel|backlight' | grep -v 'comma
 
     <div class="mt-10 flex flex-wrap gap-3 text-sm">
       <a href="/" class="rounded-md bg-zinc-100 px-3 py-1.5 font-medium text-zinc-900 hover:bg-white">Find your model</a>
-      <a href="/help" class="rounded-md px-3 py-1.5 text-zinc-200 ring-1 ring-zinc-700 hover:bg-zinc-800">Help a model get there</a>
+      <a href="/docs/help" class="rounded-md px-3 py-1.5 text-zinc-200 ring-1 ring-zinc-700 hover:bg-zinc-800">Help a model get there</a>
     </div>
-  </main>
-</Layout>
+</DocsLayout>

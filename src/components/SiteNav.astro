@@ -13,9 +13,8 @@ const { home = false } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const PAGES = [
   { href: '/', label: 'Models', on: path === '/' || path.startsWith('/models') },
-  { href: '/install', label: 'Install', on: path === '/install' },
-  { href: '/help', label: 'Help', on: path === '/help' },
-  { href: '/docs', label: 'Docs', on: path.startsWith('/docs') || path === '/agents' },
+  { href: '/firmware', label: 'Firmware', on: path === '/firmware' },
+  { href: '/docs', label: 'Docs', on: path.startsWith('/docs') },
 ];
 ---
 
@@ -116,7 +115,7 @@ const PAGES = [
       if (!shown.length) {
         const none = document.createElement('li');
         none.className = 'px-3 py-2 text-sm text-zinc-400';
-        none.innerHTML = 'No model matches. <a class="underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100" href="/help">Add yours</a>.';
+        none.innerHTML = 'No model matches. <a class="underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100" href="/docs/help">Add yours</a>.';
         list.append(none);
       } else if (found.length > shown.length) {
         const more = document.createElement('li');

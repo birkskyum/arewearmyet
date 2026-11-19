@@ -300,7 +300,7 @@ export function acpiCell(model: Model): Cell {
   }
   if (model.upstream.acpi === 'firmware') return cell(STATES.acpi, 'firmware', { href: model.upstream.acpiUrls[0] });
   // Until one is collected, the cell links to how to make a report
-  const href = '/help#windows';
+  const href = '/docs/help#windows';
   if (model.upstream.deviceTree === 'missing') return cell(STATES.acpi, 'wanted', { href });
   // Grey once every piece exists, amber while the hardware IDs a report gives are still missing
   if (model.pieces.ids !== 'none') return cell(STATES.acpi, 'helps', { href });

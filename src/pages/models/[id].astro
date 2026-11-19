@@ -141,14 +141,14 @@ const REPORT_TONE = { works: 'good', workaround: 'close', problems: 'wanted' } a
     <section class="mt-10 rounded-xl bg-[#9ece6a]/10 p-5 ring-1 ring-[#9ece6a]/40">
       <h2 class="text-base font-semibold text-[#9ece6a]">Own one? Test it</h2>
       {google ? (
-        <p class="mt-2 text-sm text-zinc-300">Omarchy's install image doesn't start on Chromebooks and Googlebooks, so there is no installer for this one yet. {model.discussion ? <><a class={LINK} href={model.discussion}>The owner guide</a> says how to help it get there.</> : <><a class={LINK} href="/help">How to help it get there</a>.</>} Once Omarchy runs on it by other means, the test below works as on any other machine.</p>
+        <p class="mt-2 text-sm text-zinc-300">Omarchy's install image doesn't start on Chromebooks and Googlebooks, so there is no installer for this one yet. {model.discussion ? <><a class={LINK} href={model.discussion}>The owner guide</a> says how to help it get there.</> : <><a class={LINK} href="/docs/help">How to help it get there</a>.</>} Once Omarchy runs on it by other means, the test below works as on any other machine.</p>
       ) : (
-        <p class="mt-2 text-sm text-zinc-300">{edgeStarts(model) ? "Omarchy's edge image starts this model by itself." : "Omarchy's install image can't start this model by itself yet."} <a class={LINK} href={edgeStarts(model) ? '/install' : '/help'}>{edgeStarts(model) ? 'How to install it' : 'How to help it get there'}</a>.</p>
+        <p class="mt-2 text-sm text-zinc-300">{edgeStarts(model) ? "Omarchy's edge image starts this model by itself." : "Omarchy's install image can't start this model by itself yet."} <a class={LINK} href={edgeStarts(model) ? '/docs/install' : '/docs/help'}>{edgeStarts(model) ? 'How to install it' : 'How to help it get there'}</a>.</p>
       )}
       <p class="mt-2 text-sm text-zinc-300">On Omarchy, install the hardware test once and run it. It measures what it can by itself (graphics, Wi-Fi and Bluetooth, sound, video decoding, temperatures), tests the rest with you, shows the results and puts them on this page unless you say no. No serial numbers, addresses or names are sent, and a picture or recording it makes never leaves the computer.</p>
       <pre class={CODE}><code>omarchy-mise-install github:birkskyum/arewearmyet hw-test
 hw-test</code></pre>
-      <p class="mt-3 text-sm text-zinc-300">Something doesn't work? <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs">hw-test fix</code> hands it to your AI agent, with what was measured, where to look and where a fix goes. Any agent can also start from <a class={LINK} href="/agents">arewearmyet.com/agents</a>.</p>
+      <p class="mt-3 text-sm text-zinc-300">Something doesn't work? <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs">hw-test fix</code> hands it to your AI agent, with what was measured, where to look and where a fix goes. Any agent can also start from <a class={LINK} href="/docs/agents">arewearmyet.com/agents</a>.</p>
       <p class="mt-3 text-sm text-zinc-400">On another distro, the probe does the quick check, read-only and in a few seconds: <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs">curl -fsSL https://arewearmyet.com/probe.sh | bash</code></p>
     </section>
 

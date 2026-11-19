@@ -1,7 +1,7 @@
 ---
 // A page of running text written in Markdown: the agent guide and the reference pages under /docs.
 // The same text is served as plain Markdown at the address given as `plain`.
-import Layout from './Layout.astro';
+import DocsLayout from './DocsLayout.astro';
 
 interface Props {
   title: string;
@@ -11,25 +11,19 @@ interface Props {
 }
 const { title, description, plain, headings = [] } = Astro.props;
 const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
-const sections = headings.filter((h) => h.depth === 2);
+// The link that ends every heading is not part of its text
+const sections = headings.filter((h) => h.depth === 2 || h.depth === 3).map((h) => ({ id: h.slug, text: h.text.replace(/#$/, ''), depth: h.depth }));
 ---
 
-<Layout title={title} description={description}>
-  <main class="mx-auto max-w-4xl px-4 py-10 text-zinc-400 sm:px-6">
-    <slot name="top" />
-    {sections.length > 0 && (
-      <nav class="flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label="On this page">
-        {sections.map((h) => <a class={LINK} href={`#${h.slug}`}>{h.text}</a>)}
-      </nav>
-    )}
-    <article class="guide mt-8">
-      <slot />
-    </article>
-    <p class="mt-10 text-xs text-zinc-500">
-      Plain text for agents: <a class={LINK} href={plain}>{plain}</a> · <a class={LINK} href="/llms.txt">/llms.txt</a> · <a class={LINK} href="/docs">All docs</a>
-    </p>
-  </main>
-</Layout>
+<DocsLayout title={title} description={description} sections={sections}>
+  <slot name="top" />
+  <article class="guide">
+    <slot />
+  </article>
+  <p class="mt-10 text-xs text-zinc-500">
+    Plain text for agents: <a class={LINK} href={plain}>{plain}</a> · <a class={LINK} href="/llms.txt">/llms.txt</a>
+  </p>
+</DocsLayout>
 
 <style is:global>
   .guide { line-height: 1.7; }
@@ -44,6 +38,8 @@ const sections = headings.filter((h) => h.depth === 2);
   .guide strong { color: rgb(228 228 231); }
   .guide a { text-decoration: underline; text-decoration-color: rgb(82 82 91); text-underline-offset: 2px; }
   .guide a:hover { color: rgb(244 244 245); text-decoration-color: rgb(212 212 216); }
+  .guide .anchor { margin-left: 0.5rem; color: rgb(82 82 91); text-decoration: none; opacity: 0; transition: opacity 0.1s; }
+  .guide :is(h1, h2, h3):hover .anchor, .guide .anchor:focus-visible { opacity: 1; }
   .guide code { background: rgb(39 39 42); border-radius: 0.25rem; padding: 0.1rem 0.3rem; font-size: 0.85em; color: rgb(228 228 231); }
   /* A long address in running text or a heading breaks rather than widening the page on a phone */
   .guide :not(pre) > code { overflow-wrap: anywhere; }

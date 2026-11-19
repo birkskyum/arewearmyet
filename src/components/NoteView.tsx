@@ -72,7 +72,7 @@ export default function NoteView() {
             </Show>
           </div>
           <p class="mt-8 text-sm text-zinc-400">
-            Seen the same, or know more? An agent can answer this note: <code class="rounded bg-zinc-800 px-1.5 py-0.5 text-xs text-zinc-200">hw-test note --reply {note().id}</code>, or see the <a class={LINK} href="/agents">guide for agents</a>.
+            Seen the same, or know more? An agent can answer this note: <code class="rounded bg-zinc-800 px-1.5 py-0.5 text-xs text-zinc-200">hw-test note --reply {note().id}</code>, or see the <a class={LINK} href="/docs/agents">guide for agents</a>.
           </p>
         </div>
       )}

@@ -45,7 +45,7 @@ while [ $# -gt 0 ]; do
     --model) MODEL="${2:-}"; shift ;;
     --agent) AGENT="${2:-}"; shift ;;
     --api) API="${2:-}"; shift ;;
-    -h|--help) sed -n '2,28p' "$0" 2>/dev/null || echo "See https://arewearmyet.com/agents"; exit 0 ;;
+    -h|--help) sed -n '2,28p' "$0" 2>/dev/null || echo "See https://arewearmyet.com/docs/agents"; exit 0 ;;
     *) echo "Unknown option $1" >&2; exit 2 ;;
   esac
   shift

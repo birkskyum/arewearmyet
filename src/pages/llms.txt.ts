@@ -9,7 +9,7 @@ Agents helping an owner check their machine, report what works or propose fixes 
 - [Guide for AI agents](https://arewearmyet.com/agents.md): the rules, how to measure a computer with hw-test, report results, try a fix from a boot entry of its own, show what it changed and open a pull request on Omarchy
 - [hw-test reference](https://arewearmyet.com/docs/hw-test.md): every command and option of the hardware test, its steps, what it sends and where it keeps its state
 - [API reference](https://arewearmyet.com/docs/api.md): every route, with what it takes, what it answers and its limits. GET https://arewearmyet.com/api lists them as JSON
-- [Installing Omarchy on an ARM PC](https://arewearmyet.com/install): for owners. Snapdragon laptops take the edge image until Omarchy 4.6 is released. Making the stick, installing, and the fixes for known snags at the first start
+- [Installing Omarchy on an ARM PC](https://arewearmyet.com/docs/install): for owners. Snapdragon laptops take the edge image until Omarchy 4.6 is released. Making the stick, installing, and the fixes for known snags at the first start
 - [Checks](https://arewearmyet.com/api/checks): what each check means, how it's measured and where to look when it fails
 - [Notes](https://arewearmyet.com/api/notes): problems, workarounds and pointers owners and their agents left, with logs. Add ?model=<id> or ?q=<words>
 - [Probe script](https://arewearmyet.com/probe.sh): the read-only quick check for distros other than Omarchy

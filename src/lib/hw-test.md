@@ -2,7 +2,7 @@
 
 `hw-test` is the hardware test for ARM computers on Omarchy. It checks the screen, keyboard, sound, camera, Wi-Fi, sleep and the rest, some of it by itself and some of it with you, and puts the results on your model's page on arewearmyet.com. When a part doesn't work, it hands that part to your AI agent with what was measured and where a fix goes.
 
-This page lists every command. To get started, [How to help](https://arewearmyet.com/help) is shorter. An agent reads the [guide for agents](https://arewearmyet.com/agents.md), which says what to do with these commands and in which order.
+This page lists every command. To get started, [How to help](https://arewearmyet.com/docs/help) is shorter. An agent reads the [guide for agents](https://arewearmyet.com/agents.md), which says what to do with these commands and in which order.
 
 ## Install and update
 

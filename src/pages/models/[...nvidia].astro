@@ -89,7 +89,7 @@ const boots = model.omarchy === 'works' || model.omarchy === 'expected';
 
     <section class="mt-10 rounded-xl bg-[#9ece6a]/10 p-5 ring-1 ring-[#9ece6a]/40">
       <h2 class="text-base font-semibold text-[#9ece6a]">Own one? Test it</h2>
-      <p class="mt-2 text-sm text-zinc-300">{boots ? "Omarchy's ARM image starts NVIDIA's machines." : 'Nobody has started Omarchy on this model yet.'} <a class={LINK} href="/install">How to install</a>.</p>
+      <p class="mt-2 text-sm text-zinc-300">{boots ? "Omarchy's ARM image starts NVIDIA's machines." : 'Nobody has started Omarchy on this model yet.'} <a class={LINK} href="/docs/install">How to install</a>.</p>
       <p class="mt-2 text-sm text-zinc-300">On Omarchy, install the hardware test once and run it. It measures what it can by itself (graphics, Wi-Fi and Bluetooth, sound, video decoding, temperatures), tests the rest with you, shows the results and puts them on this page. Nothing personal is sent.</p>
       <pre class={CODE}><code>omarchy-mise-install github:birkskyum/arewearmyet hw-test
 hw-test</code></pre>

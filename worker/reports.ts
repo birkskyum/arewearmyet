@@ -298,7 +298,7 @@ function match(params: URLSearchParams) {
     }
   }
   if (best) return found(MODELS.get(best.id)!, 'model number');
-  return { model: null, by: null, hint: 'Not on the board yet. Add it with a hardware report: https://arewearmyet.com/help' };
+  return { model: null, by: null, hint: 'Not on the board yet. Add it with a hardware report: https://arewearmyet.com/docs/help' };
 }
 
 /**
