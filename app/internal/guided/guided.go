@@ -190,7 +190,9 @@ func choose(steps []step, words []string) []step {
 	return chosen
 }
 
-// Run shows the guided test and sends its results.
+// Run shows the guided test and sends its results. Started without a step named, it opens on
+// a menu, and comes back to that menu after a single part, until the whole test has run or
+// the owner quits.
 func Run(run *report.Run, facts probe.Facts, options Options) error {
 	dir, err := os.MkdirTemp("", "hw-test-")
 	if err != nil {
@@ -199,6 +201,38 @@ func Run(run *report.Run, facts probe.Facts, options Options) error {
 	defer os.RemoveAll(dir)
 
 	run.Mode = "guided"
+	// What the quick check measured, put back before each round: a part alone reports only itself
+	measured := append([]report.Result(nil), run.Results...)
+	var said []string
+	for round := 0; ; round++ {
+		run.Results = append([]report.Result(nil), measured...)
+		outcome, err := once(run, facts, options, dir, round == 0)
+		if err != nil {
+			return err
+		}
+		if outcome.said != "" {
+			said = append(said, outcome.said)
+		}
+		if !outcome.again {
+			break
+		}
+	}
+	if len(said) > 0 {
+		fmt.Println(strings.Join(said, "\n"))
+	}
+	return nil
+}
+
+// outcome is how one round of the test ended.
+type outcome struct {
+	// said is what to leave in the terminal about it.
+	said string
+	// again is set when a single part was done from the menu, which comes up again.
+	again bool
+}
+
+// once runs the menu and whatever is chosen from it, or the steps named on the command line.
+func once(run *report.Run, facts probe.Facts, options Options, dir string, initial bool) (outcome, error) {
 	// A run of chosen steps reports those steps only
 	if len(options.Only) > 0 {
 		run.Results = nil
@@ -206,7 +240,7 @@ func Run(run *report.Run, facts probe.Facts, options Options) error {
 	steps := build(run, facts, dir)
 	if len(options.Only) > 0 {
 		if steps = choose(steps, options.Only); len(steps) == 0 {
-			return fmt.Errorf("this computer has nothing to test for %s", strings.Join(options.Only, ", "))
+			return outcome{}, fmt.Errorf("this computer has nothing to test for %s", strings.Join(options.Only, ", "))
 		}
 	}
 
@@ -231,11 +265,15 @@ func Run(run *report.Run, facts probe.Facts, options Options) error {
 	start.ask = start.question()
 	start.api = options.API
 
-	// A test found on disk stopped before its end: the computer went down, or the test did
+	// A test found on disk stopped before its end: the computer went down, or the test did.
+	// It stays on disk until the owner has gone on from it, so opening the test and leaving
+	// again loses nothing.
 	var opening step = start
-	if pending, found := report.LoadPending(); found {
+	resuming := false
+	// Only the first round looks: later ones follow a part that just finished
+	if pending, found := report.LoadPending(); found && initial {
 		opening, steps = resume(run, pending, report.BootID(), opening, steps)
-		report.ClearPending()
+		_, resuming = opening.(*resumed)
 	}
 
 	m.steps = append(append([]step{opening}, steps...), last)
@@ -248,15 +286,22 @@ func Run(run *report.Run, facts probe.Facts, options Options) error {
 	}
 	if err != nil {
 		// The saved test stays, so the next run picks it up
-		return err
+		return outcome{}, err
 	}
-	report.ClearPending()
-	if final.(*model).aborted {
-		fmt.Println("Stopped. Nothing was sent.")
-		return nil
+	ended := final.(*model)
+	// A test left on its first screen wasn't begun: what was saved before it stays as it was
+	if !(resuming && ended.at == 0) {
+		report.ClearPending()
 	}
-	fmt.Println(last.farewell())
-	return nil
+	switch {
+	case ended.aborted:
+		return outcome{said: "Stopped. Nothing more was sent."}, nil
+	case start.quit:
+		return outcome{}, nil
+	}
+	// A part chosen from the menu leads back to the menu; the whole test, or steps named on
+	// the command line, end here
+	return outcome{said: last.farewell(), again: start.part != ""}, nil
 }
 
 // resume picks a stopped test up at the step it stopped in, with its answers restored. boot
@@ -519,6 +564,10 @@ type welcome struct {
 	model   report.Model
 	looked  bool
 	started bool
+	// part is the word of the part chosen from the menu, or "" for the whole test.
+	part string
+	// quit is set when the owner chose to leave from the menu.
+	quit bool
 }
 
 // modelMsg is the site's answer to which model this computer is.
@@ -532,7 +581,7 @@ func (w *welcome) question() choice {
 	for _, part := range w.parts {
 		options = append(options, part.label)
 	}
-	return choice{question: "What would you like to test?", options: options}
+	return choice{question: "What would you like to test?", options: append(options, "Quit")}
 }
 
 func (w *welcome) name() string    { return "Start" }
@@ -577,11 +626,15 @@ func (w *welcome) update(msg tea.Msg) tea.Cmd {
 		w.ask = w.question()
 	}
 	picked := w.ask.update(press)
-	if picked < 0 {
+	switch {
+	case picked < 0:
 		return nil
-	}
-	if picked > 0 && w.pick != nil {
-		w.pick(w.parts[picked-1].word)
+	case picked > len(w.parts):
+		w.quit = true
+		return tea.Quit
+	case picked > 0 && w.pick != nil:
+		w.part = w.parts[picked-1].word
+		w.pick(w.part)
 	}
 	w.started = true
 	return nil
@@ -608,7 +661,7 @@ func (w *welcome) view(width, height int) string {
 		page = "\n\n" + wrap("The board doesn't have this computer yet. Sending a test adds what it finds, with a form to put the model on the board.", width)
 	}
 	return wrap(intro, width) + page + "\n\n" + w.ask.view(width) + "\n\n" +
-		wrap("To go straight to one part next time, add its name to the command, like hw-test camera or hw-test sound.", width) + "\n\n" +
+		wrap("After a single part you come back to this menu. To go straight to one part next time, add its name to the command, like hw-test camera or hw-test sound.", width) + "\n\n" +
 		wrap("Only results are sent, with the model and software versions. No serial numbers, addresses or names.", width) + "\n" +
 		good.Render("🔒 ") + wrap("A picture or recording the test makes never leaves this computer and is deleted when the test ends.", width-3)
 }

@@ -339,6 +339,20 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 	if len(m.steps) != 3 || m.steps[m.at].name() != "Camera" || len(run.Results) != 0 {
 		t.Errorf("one part: %d steps, at %q, results %+v", len(m.steps), m.steps[m.at].name(), run.Results)
 	}
+	// The part is remembered, so the menu comes up again after it
+	if start.part != "camera" || start.quit {
+		t.Errorf("part %q, quit %v", start.part, start.quit)
+	}
+
+	// Quit is the last entry, and leaves without starting anything
+	m, start = open()
+	if !strings.Contains(m.View().Content, "Quit") || !strings.Contains(m.View().Content, "come back to this menu") {
+		t.Errorf("the menu lacks Quit or the way back:\n%s", m.View().Content)
+	}
+	quit := start.update(press(rune('0' + len(start.parts) + 2)))
+	if !start.quit || start.part != "" || quit == nil {
+		t.Errorf("quit %v, part %q", start.quit, start.part)
+	}
 }
 
 func TestTheSendScreenSaysWhatGoesAndThatNoPictureDoes(t *testing.T) {
