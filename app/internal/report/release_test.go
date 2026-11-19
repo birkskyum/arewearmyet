@@ -28,8 +28,13 @@ func TestANewerReleaseIsNoticedAndAskedAboutAtMostTwiceADay(t *testing.T) {
 	asked, tag, status := 0, "v0.12.1", http.StatusOK
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		asked++
+		if status == http.StatusOK {
+			w.Header().Set("Location", "https://github.com/birkskyum/arewearmyet/releases/tag/"+tag)
+			status := http.StatusFound
+			w.WriteHeader(status)
+			return
+		}
 		w.WriteHeader(status)
-		_, _ = w.Write([]byte(`{"tag_name": "` + tag + `"}`))
 	}))
 	defer server.Close()
 	before := Releases
@@ -92,7 +97,7 @@ func TestAMachineWithoutANetworkIsNotHeldUp(t *testing.T) {
 	asked := 0
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		asked++
-		_, _ = w.Write([]byte(`{"tag_name": "v0.12.1"}`))
+		http.Redirect(w, r, "/birkskyum/arewearmyet/releases/tag/v0.12.1", http.StatusFound)
 	}))
 	defer server.Close()
 	Releases = server.URL
@@ -138,18 +143,32 @@ func TestNothingAboutTheReleaseCheckCanStopTheStart(t *testing.T) {
 	}
 	stop()
 
-	// Answers that are JSON and still not a version
-	for _, body := range []string{`{}`, `{"tag_name": 12}`, `{"tag_name": "nightly"}`, `{"tag_name": "v1.2"}`, `[]`, `null`, ``} {
+	// Answers that lead somewhere, and not to a release with a version
+	for _, where := range []string{"", "/login", "/birkskyum/arewearmyet/releases", "/birkskyum/arewearmyet/releases/tag/nightly", "/birkskyum/arewearmyet/releases/tag/v1.2", "/releases/tag/"} {
 		t.Setenv("XDG_STATE_HOME", t.TempDir())
-		stop = answer(func(w http.ResponseWriter, r *http.Request) { _, _ = w.Write([]byte(body)) })
+		stop = answer(func(w http.ResponseWriter, r *http.Request) {
+			if where != "" {
+				w.Header().Set("Location", where)
+			}
+			w.WriteHeader(http.StatusFound)
+		})
 		if got := Newer("0.12.0", now); got != "" {
-			t.Errorf("%q gave %q", body, got)
+			t.Errorf("being led to %q gave %q", where, got)
 		}
 		stop()
 	}
+	// Being refused, as GitHub does to an address that asked too often
+	t.Setenv("XDG_STATE_HOME", t.TempDir())
+	stop = answer(func(w http.ResponseWriter, r *http.Request) { w.WriteHeader(http.StatusTooManyRequests) })
+	if got := Newer("0.12.0", now); got != "" {
+		t.Errorf("a refusal gave %q", got)
+	}
+	stop()
 
 	// What was kept from before is damaged, or isn't what it should be
-	stop = answer(func(w http.ResponseWriter, r *http.Request) { _, _ = w.Write([]byte(`{"tag_name": "v0.12.1"}`)) })
+	stop = answer(func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/birkskyum/arewearmyet/releases/tag/v0.12.1", http.StatusFound)
+	})
 	defer stop()
 	for _, kept := range []string{"{not json", `{"latest": 5, "checked": "yesterday"}`, `{"latest": "banana", "checked": "2026-11-19T06:00:00Z"}`, "\x00\x00\x00"} {
 		dir := t.TempDir()

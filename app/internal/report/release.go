@@ -11,8 +11,11 @@ import (
 	"time"
 )
 
-// Releases is where the newest release of the app is asked for. Tests point it elsewhere.
-var Releases = "https://api.github.com/repos/birkskyum/arewearmyet/releases/latest"
+// Releases is where the newest release of the app is asked for: the address on GitHub that
+// leads on to the newest release's own page. It is an ordinary web address, not GitHub's API,
+// which allows a network address only sixty questions an hour and then refuses. Tests point
+// it elsewhere.
+var Releases = "https://github.com/birkskyum/arewearmyet/releases/latest"
 
 // How long an answer about the newest release is trusted before asking again, and how long a
 // try that got no answer is left alone when nothing is known yet. Without the second, a
@@ -114,27 +117,31 @@ func NewestRelease() (version string) {
 // ForgetRelease drops what was kept about the newest release, after an update.
 func ForgetRelease() { os.Remove(releaseFile()) }
 
+// newest asks where the newest release is and reads its version out of the answer: the
+// address leads on to .../releases/tag/v0.12.3, and it isn't followed.
 func newest() string {
-	client := http.Client{Timeout: 2 * time.Second}
+	client := http.Client{Timeout: 2 * time.Second, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
 	request, err := http.NewRequest(http.MethodGet, Releases, nil)
 	if err != nil {
 		return ""
 	}
-	request.Header.Set("accept", "application/vnd.github+json")
 	request.Header.Set("user-agent", "hw-test")
 	response, err := client.Do(request)
 	if err != nil {
 		return ""
 	}
 	defer response.Body.Close()
-	var answer struct {
-		Tag string `json:"tag_name"`
-	}
-	if response.StatusCode != http.StatusOK || json.NewDecoder(io.LimitReader(response.Body, 1<<20)).Decode(&answer) != nil {
+	_, _ = io.Copy(io.Discard, io.LimitReader(response.Body, 64<<10))
+	if response.StatusCode < 300 || response.StatusCode > 399 {
 		return ""
 	}
-	if _, ok := parts(answer.Tag); !ok {
+	_, tag, found := strings.Cut(response.Header.Get("Location"), "/releases/tag/")
+	if !found {
 		return ""
 	}
-	return answer.Tag
+	tag = strings.Trim(tag, "/")
+	if _, ok := parts(tag); !ok {
+		return ""
+	}
+	return tag
 }

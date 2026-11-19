@@ -280,16 +280,24 @@ func update() int {
 		report.ForgetRelease()
 		return 0
 	}
-	// Without mise's waiting time for new releases and its own list of versions, which both lag
-	env := append(os.Environ(), "MISE_MINIMUM_RELEASE_AGE=0", "MISE_USE_VERSIONS_HOST=0")
-	install := exec.Command("mise", "install", tool+"@"+wanted)
-	install.Env, install.Stdout, install.Stderr = env, os.Stderr, os.Stderr
-	if err := install.Run(); err != nil {
-		fmt.Fprintln(os.Stderr, "hw-test: the update didn't go through:", err)
-		return 1
+	// Without mise's waiting time for new releases
+	env := append(os.Environ(), "MISE_MINIMUM_RELEASE_AGE=0")
+	install := func(extra ...string) error {
+		command := exec.Command("mise", "install", tool+"@"+wanted)
+		command.Env, command.Stdout, command.Stderr = append(env, extra...), os.Stderr, os.Stderr
+		return command.Run()
+	}
+	// mise's usual way first, which works from any network. Its list of versions can be a
+	// few minutes behind a release, so a failure is tried once more by asking GitHub itself,
+	// which a network address may only do sixty times an hour.
+	if err := install(); err != nil {
+		if err = install("MISE_USE_VERSIONS_HOST=0"); err != nil {
+			fmt.Fprintln(os.Stderr, "hw-test: the update didn't go through:", err)
+			return 1
+		}
 	}
 	report.ForgetRelease()
-	now := exec.Command("mise", "x", tool, "--", "hw-test", "version")
+	now := exec.Command("mise", "x", tool+"@"+wanted, "--", "hw-test", "version")
 	now.Env = env
 	out, err := now.Output()
 	if err != nil {
