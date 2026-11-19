@@ -91,6 +91,17 @@ func Newer(current string, now time.Time) (newer string) {
 	return ""
 }
 
+// NewestRelease asks which release is the newest, now, and returns its version without the
+// "v", or "" when it can't be told.
+func NewestRelease() (version string) {
+	defer func() {
+		if recover() != nil {
+			version = ""
+		}
+	}()
+	return strings.TrimPrefix(newest(), "v")
+}
+
 // ForgetRelease drops what was kept about the newest release, after an update.
 func ForgetRelease() { os.Remove(releaseFile()) }
 

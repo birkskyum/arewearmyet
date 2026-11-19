@@ -97,6 +97,7 @@ func main() {
 		os.Exit(update())
 	case "status":
 		// The latest result of every check on this machine, without running anything
+		announce()
 		fmt.Println(guided.Status(report.Local()))
 		return
 	case "quick", "check", "guided", "facts", "brief", "fix", "note", "verify":
@@ -121,9 +122,7 @@ func main() {
 
 	// A newer release is said once at the start. The menu says it itself.
 	if !(command == "guided" && len(only) == 0 && guided.Interactive()) {
-		if newer := report.Newer(version, time.Now()); newer != "" {
-			fmt.Fprintf(os.Stderr, "hw-test %s is out, and this is %s. Update with: hw-test update\n\n", newer, version)
-		}
+		announce()
 	}
 
 	run, facts, err := probe.Quick(machine.Real())
@@ -252,6 +251,14 @@ func printResults(run *report.Run) {
 	fmt.Fprintln(os.Stderr)
 }
 
+// announce says when a newer release is out. It never holds a start up for long and never
+// stops one.
+func announce() {
+	if newer := report.Newer(version, time.Now()); newer != "" {
+		fmt.Fprintf(os.Stderr, "hw-test %s is out, and this is %s. Update with: hw-test update\n\n", newer, version)
+	}
+}
+
 // tool is how mise names the app.
 const tool = "github:birkskyum/arewearmyet"
 
@@ -261,9 +268,21 @@ func update() int {
 		fmt.Fprintln(os.Stderr, "hw-test is installed through mise, which isn't on this system. The releases are at https://github.com/birkskyum/arewearmyet/releases")
 		return 1
 	}
+	// The version is asked for by its number: mise remembers what "latest" was for a while,
+	// and would answer with the release this already is
+	wanted := report.NewestRelease()
+	switch {
+	case wanted == "":
+		fmt.Fprintln(os.Stderr, "hw-test: the newest release couldn't be looked up. Is the network up? omarchy update also brings hw-test up to date.")
+		return 1
+	case !report.After(wanted, version) && version != "dev":
+		fmt.Fprintf(os.Stderr, "This is the newest release, %s.\n", version)
+		report.ForgetRelease()
+		return 0
+	}
 	// Without mise's waiting time for new releases and its own list of versions, which both lag
 	env := append(os.Environ(), "MISE_MINIMUM_RELEASE_AGE=0", "MISE_USE_VERSIONS_HOST=0")
-	install := exec.Command("mise", "install", tool+"@latest")
+	install := exec.Command("mise", "install", tool+"@"+wanted)
 	install.Env, install.Stdout, install.Stderr = env, os.Stderr, os.Stderr
 	if err := install.Run(); err != nil {
 		fmt.Fprintln(os.Stderr, "hw-test: the update didn't go through:", err)
