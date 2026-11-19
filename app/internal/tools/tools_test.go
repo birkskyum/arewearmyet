@@ -143,7 +143,7 @@ func TestTheAgentsLauncherIsWaitedForWhereTheCallerEndsAtOnce(t *testing.T) {
 }
 
 func TestTheSameConversationIsGoneOnInWhateverAgentHoldsIt(t *testing.T) {
-	for _, name := range []string{"T3CODE_THREAD_ID", "CODEX_THREAD_ID", "CLAUDE_CODE_SESSION_ID"} {
+	for _, name := range []string{"T3CODE_THREAD_ID", "HERDR_PANE_ID", "CODEX_THREAD_ID", "CLAUDE_CODE_SESSION_ID"} {
 		t.Setenv(name, "")
 	}
 	if got := CurrentSession(); got != (Session{}) {
@@ -159,14 +159,22 @@ func TestTheSameConversationIsGoneOnInWhateverAgentHoldsIt(t *testing.T) {
 	if got := CurrentSession(); got != (Session{Kind: "codex", ID: "01a1f404"}) {
 		t.Errorf("in Codex: %+v", got)
 	}
+	t.Setenv("HERDR_PANE_ID", "pane-3")
+	if got := CurrentSession(); got != (Session{Kind: "herdr", ID: "pane-3"}) {
+		t.Errorf("in herdr: %+v", got)
+	}
 	t.Setenv("T3CODE_THREAD_ID", "thread-7")
 	if got := CurrentSession(); got != (Session{Kind: "t3", ID: "thread-7"}) {
 		t.Errorf("in T3 Code: %+v", got)
 	}
+	// All of them are kept, outermost first, so that the next can be tried when one is gone
+	if got := fmt.Sprint(CurrentSessions()); got != "[{t3 thread-7} {herdr pane-3} {codex 01a1f404} {claude c0ffee}]" {
+		t.Errorf("every holder: %s", got)
+	}
 
 	// Stand-ins for the three programs and for the terminal window, which write down how they were called
 	dir, bin := t.TempDir(), t.TempDir()
-	for _, program := range []string{"t3", "codex", "claude", "window"} {
+	for _, program := range []string{"t3", "herdr", "codex", "claude", "window"} {
 		os.WriteFile(filepath.Join(bin, program), []byte("#!/bin/sh\nprintf '%s|' \"$(basename $0)\" \"$@\" > "+dir+"/called\npwd >> "+dir+"/called\n"), 0o755)
 	}
 	t.Setenv("PATH", bin+":"+os.Getenv("PATH"))
@@ -185,6 +193,8 @@ func TestTheSameConversationIsGoneOnInWhateverAgentHoldsIt(t *testing.T) {
 	for session, want := range map[Session]string{
 		// A T3 Code thread takes the message where it is
 		{Kind: "t3", ID: "thread-7"}: "t3|thread|send|thread-7|go on|",
+		// So does a herdr pane, whatever agent runs in it
+		{Kind: "herdr", ID: "pane-3"}: "herdr|agent|prompt|pane-3|go on|",
 		// Codex and Claude Code open again in a window, on the same conversation
 		{Kind: "codex", ID: "01a1f404"}: "window|codex|--approve-for-me|resume|01a1f404|go on|",
 		{Kind: "claude", ID: "c0ffee"}:  "window|claude|--permission-mode|auto|--resume|c0ffee|--|go on|",

@@ -373,18 +373,33 @@ func TerminalIn(dir, program string, args ...string) error {
 // different agents, by whichever subscription they have, and each keeps its conversations
 // its own way. Going on in the same one keeps everything the agent has learnt so far.
 type Session struct {
-	// Kind is the program that holds it: t3 (T3 Code, whatever model runs in it), codex or claude.
+	// Kind is the program that holds it: t3 (a T3 Code thread) or herdr (a herdr pane), which
+	// both run whatever agent the owner has inside them, or codex or claude for those two
+	// started plainly in a terminal.
 	Kind string `json:"kind,omitempty"`
 	ID   string `json:"id,omitempty"`
 }
 
-// CurrentSession is the agent session this program was started from, when its agent says
-// which it is. T3 Code comes first: it runs the others inside threads of its own.
-func CurrentSession() Session {
-	for _, known := range [][2]string{{"T3CODE_THREAD_ID", "t3"}, {"CODEX_THREAD_ID", "codex"}, {"CLAUDE_CODE_SESSION_ID", "claude"}} {
+// holders are the programs that say which conversation this is, and how. The ones that hold
+// other agents inside them come first: their thread or pane is what the owner looks at.
+var holders = [][2]string{{"T3CODE_THREAD_ID", "t3"}, {"HERDR_PANE_ID", "herdr"}, {"CODEX_THREAD_ID", "codex"}, {"CLAUDE_CODE_SESSION_ID", "claude"}}
+
+// CurrentSessions are the conversations this program was started from, outermost first:
+// a Codex running in a T3 Code thread is both, and the thread is tried first.
+func CurrentSessions() []Session {
+	var held []Session
+	for _, known := range holders {
 		if id := strings.TrimSpace(os.Getenv(known[0])); id != "" {
-			return Session{Kind: known[1], ID: id}
+			held = append(held, Session{Kind: known[1], ID: id})
 		}
+	}
+	return held
+}
+
+// CurrentSession is the outermost of them, or none.
+func CurrentSession() Session {
+	if held := CurrentSessions(); len(held) > 0 {
+		return held[0]
 	}
 	return Session{}
 }
@@ -393,21 +408,27 @@ func CurrentSession() Session {
 var ErrNoSession = errors.New("there is no earlier agent session to go on in")
 
 // Continue gives a message to an earlier session of the owner's agent, in the way of the
-// program that holds it. A T3 Code thread takes it where it is, also while it is busy. Codex
-// and Claude Code open again in a terminal window, on the same conversation.
+// program that holds it. A T3 Code thread and a herdr pane take it where they are. Codex and
+// Claude Code open again in a terminal window, on the same conversation.
 func Continue(session Session, dir, message string) error {
+	// told runs a program that passes the message on, and says why when it wouldn't
+	told := func(name string, args ...string) error {
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
+		command := exec.CommandContext(ctx, args[0], args[1:]...)
+		command.Dir = dir
+		if out, err := command.CombinedOutput(); err != nil {
+			return fmt.Errorf("%s didn't take the message (%v): %s", name, err, lastLine(string(out)))
+		}
+		return nil
+	}
 	switch {
 	case session.ID == "":
 		return ErrNoSession
 	case session.Kind == "t3" && Have("t3"):
-		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-		defer cancel()
-		command := exec.CommandContext(ctx, "t3", "thread", "send", session.ID, message)
-		command.Dir = dir
-		if out, err := command.CombinedOutput(); err != nil {
-			return fmt.Errorf("T3 Code didn't take the message (%v): %s", err, lastLine(string(out)))
-		}
-		return nil
+		return told("T3 Code", "t3", "thread", "send", session.ID, message)
+	case session.Kind == "herdr" && Have("herdr"):
+		return told("herdr", "herdr", "agent", "prompt", session.ID, message)
 	case session.Kind == "codex" && Have("codex"):
 		return TerminalIn(dir, "codex", "--approve-for-me", "resume", session.ID, message)
 	case session.Kind == "claude" && Have("claude"):

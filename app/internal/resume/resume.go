@@ -25,10 +25,15 @@ type Word struct {
 	Prompt string    `json:"prompt"`
 	Boot   string    `json:"boot"`
 	Set    time.Time `json:"set"`
-	// Agent and Session name the conversation the word was left from, where the agent said
-	// which it is: the same one is gone on in after the restart.
-	Agent   string `json:"agent,omitempty"`
-	Session string `json:"session,omitempty"`
+	// Sessions name the conversation the word was left from, where the agent said which it
+	// is, outermost first: the same one is gone on in after the restart.
+	Sessions []Held `json:"sessions,omitempty"`
+}
+
+// Held is a conversation by the program that holds it and that program's name for it.
+type Held struct {
+	Kind string `json:"kind"`
+	ID   string `json:"id"`
 }
 
 // Places are the files the word and its service live in. Tests point them at a folder of their own.

@@ -585,7 +585,12 @@ func comeBack(prompt string, cancel, show, atLogin bool) int {
 			// In the conversation the word was left from, where its agent said which that is:
 			// everything it had learnt is still there. Otherwise, or if that can't be opened, a
 			// new one, which reads the notes
-			err := tools.Continue(tools.Session{Kind: word.Agent, ID: word.Session}, word.Dir, resume.Said(word))
+			err := tools.ErrNoSession
+			for _, held := range word.Sessions {
+				if err = tools.Continue(tools.Session{Kind: held.Kind, ID: held.ID}, word.Dir, resume.Said(word)); err == nil {
+					break
+				}
+			}
 			if err == nil {
 				time.Sleep(3 * time.Second)
 			} else {
@@ -614,13 +619,16 @@ func comeBack(prompt string, cancel, show, atLogin bool) int {
 			program = installed
 		}
 	}
-	session := tools.CurrentSession()
-	if err := places.Leave(resume.Word{Dir: dir, Prompt: prompt, Boot: report.BootID(), Set: time.Now(), Agent: session.Kind, Session: session.ID}, program); err != nil {
+	var sessions []resume.Held
+	for _, session := range tools.CurrentSessions() {
+		sessions = append(sessions, resume.Held{Kind: session.Kind, ID: session.ID})
+	}
+	if err := places.Leave(resume.Word{Dir: dir, Prompt: prompt, Boot: report.BootID(), Set: time.Now(), Sessions: sessions}, program); err != nil {
 		fmt.Fprintln(os.Stderr, "hw-test: it couldn't be left for after the restart:", err)
 		return 1
 	}
 	how := "the agent opens again in " + dir
-	if session.ID != "" {
+	if len(sessions) > 0 {
 		how = "this same conversation goes on, in " + dir
 	}
 	fmt.Fprintf(os.Stderr, "Left for after the restart. At the owner's next login, %s, once, and is told to read BRIEF.md and PROGRESS.md there.\nWrite PROGRESS.md before you restart. hw-test resume --cancel takes this back.\n", how)
