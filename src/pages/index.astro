@@ -15,6 +15,7 @@ import { PARTS, PART_OPTIONS } from '../lib/parts';
 import PartBars from '../components/PartBars.astro';
 import Group from '../components/Group.astro';
 import ViewState from '../components/ViewState.astro';
+import ModeSwitch from '../components/ModeSwitch.astro';
 
 const { summary } = status;
 // The edge nightly image testers install, linked as the collector last found it
@@ -110,6 +111,11 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
 ---
 
 <Layout title="Are we ARM yet? Omarchy on ARM PCs, model by model" description="Which ARM PCs boot Omarchy today, what Omarchy ships for each, and what Linux, systemd and linux-firmware have.">
+  <script is:inline slot="head">
+    // The page opens in the mode its address names, before anything is painted. An older link
+    // that named one table's view (nvidia-view=hardware) counts too
+    if ([...new URLSearchParams(location.search)].some(([key, value]) => (key === 'view' || key.endsWith('-view')) && value === 'hardware')) document.documentElement.dataset.mode = 'hardware';
+  </script>
   <main class="mx-auto max-w-[96rem] px-4 py-10 sm:px-6 lg:px-8">
     <header>
       <div class="flex items-start justify-between gap-4">
@@ -146,8 +152,11 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
           <span class="text-zinc-500">are covered elsewhere</span>
         </div>
       </nav>
-      <p class="mt-5 max-w-3xl text-sm text-zinc-400">
+      <p class="mt-5 max-w-3xl text-sm text-zinc-400 hw:hidden">
         Every ARM laptop needs a device tree, hardware IDs and firmware. Omarchy ships them in its own packages, often before Linux, systemd and linux-firmware have them. The Omarchy view shows what its channels ship today, and the Upstream view what every distro gets. Bootable names the most stable channel whose install image picks the model's device tree by itself. Edge is the {image ? <a class={LINK} href={image.url}>nightly image</a> : 'nightly image'}, with <span class="whitespace-nowrap">linux-omarchy {status.omarchy.kernel}</span> and systemd {status.omarchy.systemd}. Booting is the first goal. Each model's page, behind its name, goes on to everything past booting, from sound and the camera to sleep and USB4, with what owners and their agents measured.
+      </p>
+      <p class="mt-5 hidden max-w-3xl text-sm text-zinc-400 hw:block">
+        Booting is the first goal. This is what comes after it: whether the screen, keyboard, Wi-Fi, sound, camera, sleep and ports work on each model. A filled label is a result from Omarchy itself, measured by <a class={LINK} href="/docs/hw-test">hw-test</a> or reported by an owner. An outlined label comes from another distro, the device tree's author or the chip family, and shows that a part can work. An empty cell means nobody has reported yet, and running hw-test on that model fills it in. Each model's page, behind its name, has every check with its source.
       </p>
       <div class="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 rounded-xl bg-[#9ece6a]/10 px-5 py-4 ring-1 ring-[#9ece6a]/40">
         <p class="text-zinc-300"><strong class="font-semibold text-[#9ece6a]">Own an ARM laptop that isn't green yet?</strong> Help get it there, whatever distro you run. It only takes a few minutes.</p>
@@ -158,6 +167,8 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
         </div>
       </div>
     </header>
+
+    <ModeSwitch />
 
     <Group id="snapdragon-pcs" title="Snapdragon PCs" total={current.length + older.length + entry.length}>
       Laptops, tablets and desktops sold with Windows or Linux. They start through UEFI and need a device tree, hardware IDs and firmware. <a class={LINK} href="#chromebooks-and-googlebooks">Chromebooks and Googlebooks</a> are further down.
@@ -258,7 +269,8 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
       <p class={HELP}>
         To help, read the device tree Googlebook OS starts with, following the <a class={LINK} href="https://github.com/omacom/omarchy/discussions/16627">owner guide</a>. It changes nothing on the laptop.
       </p>
-      <div class="group/views mt-4" data-views data-view="omarchy">
+      <p class="mt-4 hidden max-w-3xl text-sm text-zinc-400 hw:block">No hardware results for these yet. They come once Omarchy starts on them, which is still the open step. The switch at the top goes back to Booting.</p>
+      <div class="group/views mt-4 hw:hidden" data-views data-view="omarchy">
         <ViewState prefix="googlebook-" views={googlebookViews.map((v) => v.id)} />
         <div class="group-data-[view=upstream]/views:hidden">
           <Legend title="What the labels mean" groups={GOOGLEBOOK_OMARCHY_LEGEND} />
@@ -276,7 +288,8 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
       <p class="max-w-3xl text-sm text-zinc-400">
         Arm Chromebooks start through ChromeOS's bootloader instead of UEFI, so like the Googlebooks they need no ACPI tables or hardware IDs, and Omarchy's ARM image doesn't start on them. Their device trees have been in Linux for years, so what they need is a Linux image built for that bootloader, which developer mode lets them start.
       </p>
-      <div class="group/views mt-4" data-views data-view="omarchy">
+      <p class="mt-4 hidden max-w-3xl text-sm text-zinc-400 hw:block">No hardware results for these yet. They come once Omarchy starts on them, which is still the open step. The switch at the top goes back to Booting.</p>
+      <div class="group/views mt-4 hw:hidden" data-views data-view="omarchy">
         <ViewState prefix="chromebook-" views={chromebookViews.map((v) => v.id)} />
         <div class="group-data-[view=upstream]/views:hidden">
           <Legend title="What the labels mean" groups={CHROMEBOOK_OMARCHY_LEGEND} />

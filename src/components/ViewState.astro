@@ -21,8 +21,12 @@ const { prefix = '', views } = Astro.props;
     const wrapper = document.currentScript.parentElement;
     const params = new URLSearchParams(location.search);
     if (params.size === 0) return;
+    const views = known.split(' ');
     const view = params.get(prefix + 'view');
-    if (view && known.split(' ').includes(view)) wrapper.dataset.view = view;
+    // The page-wide switch comes first (index.astro sets it on <html> before this runs), then the
+    // table's own view within Booting
+    if (document.documentElement.dataset.mode === 'hardware' && views.includes('hardware')) wrapper.dataset.view = 'hardware';
+    else if (view && view !== 'hardware' && views.includes(view)) wrapper.dataset.view = view;
     wrapper.dataset.pending = '';
     // Should the table's script never load, the table still shows
     setTimeout(() => wrapper.removeAttribute('data-pending'), 4000);

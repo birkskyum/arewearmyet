@@ -21,6 +21,7 @@ import {
 import { PILL, TONE, type Tone } from '../lib/tones';
 import type { CellData, TableRow } from '../lib/rows';
 import ExportButton from './ExportButton';
+import { MODE_EVENT, readMode, setMode, type Mode } from '../lib/mode';
 
 type Option = { key: string; label: string; tone?: Tone };
 type Column = { id: string; header: string; question: string; options?: Option[] };
@@ -119,8 +120,13 @@ function Pill(props: { cell: CellData; column: string }) {
 
 export default function StatusTable(props: Props) {
   const views: View[] = props.views ?? [{ id: 'default', label: '', question: '', columns: props.columns ?? [] }];
-  const [viewId, setViewId] = createSignal(views[0].id);
-  const view = () => views.find((v) => v.id === viewId()) ?? views[0];
+  // The page-wide switch picks between Booting and Hardware for every table at once. Within Booting
+  // a table has views of its own (what Omarchy ships, what is upstream), switched from its toolbar
+  const booting = views.filter((v) => v.id !== 'hardware');
+  const hardware = views.find((v) => v.id === 'hardware');
+  const [viewId, setViewId] = createSignal(booting[0].id);
+  const [mode, followMode] = createSignal<Mode>('booting');
+  const view = () => (mode() === 'hardware' && hardware) || booting.find((v) => v.id === viewId()) || booting[0];
   const statusColumns = () => view().columns;
   // Every view's columns exist in the table, so a view switch keeps sorting and counting in one place
   const allColumns = [...new Map(views.flatMap((v) => v.columns).map((column) => [column.id, column])).values()];
@@ -205,11 +211,22 @@ export default function StatusTable(props: Props) {
       });
 
   // Switching views drops the filters and sorting on columns the new view doesn't have
-  const switchView = (id: string) => {
-    const kept = new Set(['brand', 'chip', 'q', ...(views.find((v) => v.id === id)?.columns ?? []).map((column) => column.id)]);
+  const settle = (next: View) => {
+    const kept = new Set(['brand', 'chip', 'q', ...next.columns.map((column) => column.id)]);
     setFilters((current) => current.filter((filter) => kept.has(filter.id)));
     setSorting((current) => current.filter((sort) => kept.has(sort.id) || sort.id === 'model'));
+  };
+  const switchView = (id: string) => {
+    settle(booting.find((v) => v.id === id) ?? booting[0]);
     setViewId(id);
+    openSorted();
+  };
+  // The page-wide switch was flipped, here or by another table's row of dots
+  const heardMode = () => {
+    const next = readMode();
+    if (next === mode()) return;
+    settle((next === 'hardware' && hardware) || booting.find((v) => v.id === viewId()) || booting[0]);
+    followMode(next);
     openSorted();
   };
   // A view that names a column to open sorted by gets that order while nothing else sorts
@@ -219,7 +236,12 @@ export default function StatusTable(props: Props) {
   };
   // A page section marked data-views shows the legend of the view in use
   let root!: HTMLDivElement;
-  onMount(() => createEffect(() => root.closest('[data-views]')?.setAttribute('data-view', viewId())));
+  onMount(() => createEffect(() => root.closest('[data-views]')?.setAttribute('data-view', view().id)));
+  onMount(() => {
+    heardMode();
+    addEventListener(MODE_EVENT, heardMode);
+    onCleanup(() => removeEventListener(MODE_EVENT, heardMode));
+  });
 
   // The wrapper keeps the table out of sight while the address still has to be applied (ViewState.astro).
   // This runs after the address was read below, since effects registered on mount run in order
@@ -258,7 +280,7 @@ export default function StatusTable(props: Props) {
     const ids = [...fixedHeaders, ...allColumns.map(headerFor)].map((header) => header.filterColumn).filter(Boolean) as string[];
     const params = new URLSearchParams(location.search);
     const fromAddress = params.get(prefix + 'view');
-    if (fromAddress && views.some((v) => v.id === fromAddress)) setViewId(fromAddress);
+    if (fromAddress && booting.some((v) => v.id === fromAddress)) setViewId(fromAddress);
     setFilters([
       ...ids.filter((id) => params.get(prefix + id)).map((id) => ({ id, value: params.get(prefix + id)!.split(',') })),
       ...(params.get(prefix + 'q') ? [{ id: 'q', value: normalized(params.get(prefix + 'q')!) }] : []),
@@ -269,10 +291,13 @@ export default function StatusTable(props: Props) {
     createEffect(() => {
       const next = new URLSearchParams(location.search);
       for (const key of [...ids, 'q', 'sort', 'view']) next.delete(prefix + key);
-      if (viewId() !== views[0].id) next.set(prefix + 'view', viewId());
+      // The page's mode is written once, by the table without a prefix, as view=hardware
+      if (prefix === '' && mode() === 'hardware') next.set('view', 'hardware');
+      else if (viewId() !== booting[0].id) next.set(prefix + 'view', viewId());
       for (const filter of filters()) next.set(prefix + filter.id, Array.isArray(filter.value) ? filter.value.join(',') : String(filter.value));
+      // The order a view opens in by itself stays out of the address
       const [first] = sorting();
-      if (first) next.set(prefix + 'sort', `${first.desc ? '-' : ''}${first.id}`);
+      if (first && !(first.id === view().sort && !first.desc)) next.set(prefix + 'sort', `${first.desc ? '-' : ''}${first.id}`);
       const search = next.toString().replace(/%2C/g, ',');
       history.replaceState(null, '', `${location.pathname}${search ? `?${search}` : ''}${location.hash}`);
     });
@@ -283,9 +308,9 @@ export default function StatusTable(props: Props) {
     <div ref={root} data-table>
       {/* relative, so below the lg width the model number pop-up opens from the toolbar's left edge and stays on the screen */}
       <div class="relative flex flex-wrap items-center gap-3">
-        <Show when={views.length > 1}>
+        <Show when={booting.length > 1 && view() !== hardware}>
           <div class="inline-flex rounded-lg bg-zinc-900 p-0.5 ring-1 ring-zinc-700" role="tablist" aria-label="View">
-            <For each={views}>
+            <For each={booting}>
               {(v) => (
                 <button
                   type="button"
@@ -501,8 +526,8 @@ export default function StatusTable(props: Props) {
                       {(column) => (
                         <td class="px-3 py-3 max-xl:p-0 xl:max-2xl:px-2">
                           <span class="mb-1 block text-xs text-zinc-500 xl:hidden">{column.header}</span>
-                          {'dots' in model.cells[column.id] && views.some((v) => v.id === 'hardware') ? (
-                            <Dots cell={model.cells[column.id] as Extract<CellData, { dots: unknown }>} column={column.header} open={() => switchView('hardware')} />
+                          {'dots' in model.cells[column.id] && hardware ? (
+                            <Dots cell={model.cells[column.id] as Extract<CellData, { dots: unknown }>} column={column.header} open={() => setMode('hardware')} />
                           ) : (
                             <Pill cell={model.cells[column.id]} column={column.header} />
                           )}

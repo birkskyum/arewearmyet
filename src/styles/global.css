@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* hw: styles what the page shows in Hardware mode, set on <html> by the switch (src/lib/mode.ts) */
+@custom-variant hw (&:where([data-mode="hardware"] *));
+
 /* A table whose address names a view, a filter or an order stays out of sight until it has applied
    them, so a reload doesn't show the first view for a moment (see ViewState.astro) */
 [data-views][data-pending] [data-table] {
