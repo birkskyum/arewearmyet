@@ -172,10 +172,10 @@ Read the repository's `AGENTS.md` first: it says how packages are numbered, buil
 
 A pull request is opened from the owner's GitHub account, so ask them first (rule 6). Open it as a draft. One fix per pull request.
 
-The description starts with a line that says only `snapdragon-pc`, which is how the Omarchy team finds the pull requests for these machines. Under it, say which model and kernel it was tested on and what was measured before and after:
+The description starts with a line that says only `snapdragon`, which is how the Omarchy team finds the pull requests for these machines. Under it, say which model and kernel it was tested on and what was measured before and after:
 
 ```
-snapdragon-pc
+snapdragon
 
 Lenovo Yoga Slim 7x (83ED), linux-omarchy 7.3-72.
 The right speaker was silent: hw-test speakers heard only the left one. With this change both are heard.
