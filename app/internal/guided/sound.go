@@ -180,7 +180,7 @@ func newMicrophones(run *report.Run, dir string) *microphones {
 	}}
 }
 
-func (m *microphones) name() string   { return "Microphones" }
+func (m *microphones) name() string   { return "Microphone" }
 func (m *microphones) start() tea.Cmd { return nil }
 func (m *microphones) done() bool     { return m.over }
 

@@ -6,7 +6,9 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"syscall"
 	"testing"
+	"time"
 
 	"github.com/birkskyum/arewearmyet/app/internal/machine"
 	"github.com/birkskyum/arewearmyet/app/internal/report"
@@ -215,4 +217,53 @@ func TestARadioTheOwnerSwitchedOffIsNotAFault(t *testing.T) {
 		write(t, root, "sys/class/rfkill/rfkill0/soft", "1\n")
 	})
 	expect(t, run, map[string]string{"bluetooth": ""})
+}
+
+func TestRefusesASystemItCannotRead(t *testing.T) {
+	root := t.TempDir()
+	write(t, root, "cmd/uname-m", "aarch64\n")
+	if _, _, err := Quick(machine.Fixture(root)); err == nil {
+		t.Error("a system without /sys was measured, and would have shown every device as missing")
+	}
+}
+
+// A driver whose hardware is broken can leave a read of its file hanging for good. A pipe
+// nobody writes to does the same.
+func TestAFileThatNeverAnswersDoesNotHoldUpTheCheck(t *testing.T) {
+	started := time.Now()
+	run, _ := fixture(t, func(root string) {
+		supply := filepath.Join(root, "sys/class/power_supply/qcom-battmgr-bat")
+		for _, file := range []string{"energy_now", "status"} {
+			os.Remove(filepath.Join(supply, file))
+			if err := syscall.Mkfifo(filepath.Join(supply, file), 0o644); err != nil {
+				t.Skip("no named pipes here:", err)
+			}
+		}
+	})
+	if took := time.Since(started); took > 15*time.Second {
+		t.Errorf("the check took %s", took)
+	}
+	// The battery couldn't be read, and everything else still was
+	expect(t, run, map[string]string{"battery": report.Broken, "wifi": report.Works, "adsp": report.Works, "charging": report.Works})
+}
+
+// Odd values where numbers and names are expected, as half-working drivers give.
+func TestOddValuesInSysDoNotStopTheCheck(t *testing.T) {
+	run, _ := fixture(t, func(root string) {
+		write(t, root, "sys/power/suspend_stats/success", "many\n")
+		write(t, root, "sys/class/power_supply/qcom-battmgr-bat/energy_full", "0\n")
+		write(t, root, "sys/class/net/wlan0/addr_assign_type", "\x00\xff\n")
+		write(t, root, "sys/class/dmi/id/chassis_type", "")
+		write(t, root, "cmd/chids", "garbage\n\n   0 MFPS not-an-id\n")
+		write(t, root, "cmd/packages", "linux-omarchy\nmesa 1 2 3\n")
+		inputs, _ := filepath.Glob(filepath.Join(root, "sys/class/input/event*/device/capabilities/sw"))
+		for _, file := range inputs {
+			os.WriteFile(file, []byte("zz qq\n"), 0o644)
+		}
+		write(t, root, "sys/class/remoteproc/remoteproc0/state", "")
+	})
+	if len(run.Chids) != 0 || len(run.Packages) > 9 {
+		t.Errorf("chids %v, packages %v", run.Chids, run.Packages)
+	}
+	expect(t, run, map[string]string{"display": report.Works, "wifi": report.Works, "suspend": ""})
 }

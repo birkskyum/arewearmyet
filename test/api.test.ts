@@ -235,3 +235,27 @@ test('copies the database to the bucket, and drops the copy from a month before 
   await backup(env as never, new Date('2026-12-02T04:23:00Z'));
   assert.notEqual(await bucket.head('backups/reports/2026-11-01.json'), null);
 });
+
+test("a later measurement that finds a thing working doesn't take back the owner's failure", async () => {
+  const token = 'machine-f-'.padEnd(40, 'f');
+  const model = 'hp-omnibook-x-14-fe';
+  const send = async (kernel: string, results: unknown[]) => {
+    await tick();
+    await call('POST', '/api/runs', { ...run(results), model, kernel }, machine(token));
+  };
+  const hibernate = async () => (await call('GET', `/api/models/${model}`)).body.owners.checks.hibernate;
+
+  // The owner saw it fail; a quick check the next day only measures that it ran once
+  await send('7.3.0-72-omarchy', [{ check: 'hibernate', state: 'partial', how: 'owner', note: 'The second one ended in a restart.' }]);
+  await send('7.3.0-72-omarchy', [{ check: 'hibernate', state: 'works', how: 'measured', evidence: '1 since boot' }]);
+  assert.deepEqual((await hibernate()).states, { partial: 1 });
+  assert.equal((await hibernate()).latest[0].note, 'The second one ended in a restart.');
+
+  // A measured failure does replace it, and so does the owner testing again
+  await send('7.3.0-75-omarchy', [{ check: 'hibernate', state: 'broken', how: 'measured', evidence: 'failed' }]);
+  assert.deepEqual((await hibernate()).states, { broken: 1 });
+  await send('7.3.0-80-omarchy', [{ check: 'hibernate', state: 'works', how: 'owner' }]);
+  const fixed = await hibernate();
+  assert.deepEqual(fixed.states, { works: 1 });
+  assert.equal(fixed.fixed.to, '7.3.0-80-omarchy');
+});

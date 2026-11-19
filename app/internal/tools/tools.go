@@ -31,7 +31,9 @@ func Have(names ...string) bool {
 func Play(file string, limit time.Duration) error {
 	ctx, cancel := context.WithTimeout(context.Background(), limit)
 	defer cancel()
-	err := exec.CommandContext(ctx, "pw-play", file).Run()
+	command := exec.CommandContext(ctx, "pw-play", file)
+	command.WaitDelay = time.Second
+	err := command.Run()
 	if ctx.Err() != nil {
 		return nil // it played, and hung on the way out
 	}
@@ -63,7 +65,11 @@ func (r *Recording) Stop() []byte {
 	case <-r.done:
 	case <-time.After(time.Second):
 		_ = r.command.Process.Kill()
-		<-r.done
+		// A recorder that can't even be killed is left behind rather than waited for
+		select {
+		case <-r.done:
+		case <-time.After(2 * time.Second):
+		}
 	}
 	data, _ := os.ReadFile(r.File)
 	return data
@@ -113,7 +119,9 @@ func lastLine(text string) string {
 func Volume() (level float64, muted, ok bool) {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
-	out, err := exec.CommandContext(ctx, "wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@").Output()
+	command := exec.CommandContext(ctx, "wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@")
+	command.WaitDelay = time.Second
+	out, err := command.Output()
 	if err != nil {
 		return 0, false, false
 	}

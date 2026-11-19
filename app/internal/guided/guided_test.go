@@ -1,11 +1,14 @@
 package guided
 
 import (
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 
 	tea "charm.land/bubbletea/v2"
 
+	"github.com/birkskyum/arewearmyet/app/internal/machine"
 	"github.com/birkskyum/arewearmyet/app/internal/probe"
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 )
@@ -111,17 +114,21 @@ func TestQuestionsAskOnlyWhatIsThereAndUnmeasured(t *testing.T) {
 	run := &report.Run{}
 	run.Set("charging", report.Works, report.Measured, "PD", "")
 	run.Set("bluetooth", report.Works, report.Measured, "hci0 powered", "")
-	q := newQuestions(run, probe.Facts{Laptop: true, Touchpad: "pad", SoundCard: "card", Bluetooth: "hci0"})
+	// The touchpad and the USB ports have steps of their own here; sound has none, as on a
+	// machine without PipeWire's tools, so it is asked about
+	covered := map[string]bool{"touchpad": true, "usb": true}
+	q := newQuestions(run, probe.Facts{Laptop: true, Touchpad: "pad", SoundCard: "card", Bluetooth: "hci0"}, covered)
 	var checks []string
 	for _, question := range q.list {
 		checks = append(checks, question.check)
 	}
-	if got := strings.Join(checks, " "); got != "usb external-display installer" {
+	if got := strings.Join(checks, " "); got != "speakers microphones external-display installer" {
 		t.Errorf("asked: %s", got)
 	}
 
-	q.update(press('2')) // usb: partly, then a note
-	for _, c := range "left port dead" {
+	q.update(press('1')) // speakers: yes
+	q.update(press('2')) // microphone: partly, then a note
+	for _, c := range "very quiet" {
 		q.update(press(c))
 	}
 	q.update(press(tea.KeyEnter))
@@ -131,14 +138,14 @@ func TestQuestionsAskOnlyWhatIsThereAndUnmeasured(t *testing.T) {
 	if !q.done() {
 		t.Fatal("not done")
 	}
-	want := map[string]string{"usb": report.Partial, "external-display": "", "installer": report.Broken}
+	want := map[string]string{"speakers": report.Works, "microphones": report.Partial, "external-display": "", "installer": report.Broken}
 	for check, state := range want {
 		if run.State(check) != state {
 			t.Errorf("%s: %q, want %q", check, run.State(check), state)
 		}
 	}
-	if usb, _ := run.Get("usb"); usb.Note != "left port dead" || usb.How != report.Owner {
-		t.Errorf("usb: %+v", usb)
+	if microphones, _ := run.Get("microphones"); microphones.Note != "very quiet" || microphones.How != report.Owner {
+		t.Errorf("microphones: %+v", microphones)
 	}
 }
 
@@ -173,7 +180,7 @@ func TestTheTestSkipsStepsWithNothingToDoAndDrawsAtAnySize(t *testing.T) {
 	run.Set("display", report.Works, report.Measured, "eDP-1 connected, 2944x1840", "")
 	last := &summary{run: run, options: Options{Send: false}}
 	// No volume control and no backlight: the effects step has nothing to ask
-	m := &model{run: run, summary: last, steps: []step{&welcome{run: run}, &effects{run: run}, newQuestions(run, probe.Facts{}), last}}
+	m := &model{run: run, summary: last, failed: map[string]string{}, steps: []step{&welcome{run: run}, &effects{run: run}, newQuestions(run, probe.Facts{}, nil), last}}
 	m.Update(press(tea.KeyEnter))
 	if m.at != 2 {
 		t.Fatalf("at step %d, want the questions", m.at)
@@ -225,20 +232,239 @@ func TestCameraCountsDownBeforeItTakesAPicture(t *testing.T) {
 	}
 }
 
-func TestSleepSavesTheTestBeforeTheLidCloses(t *testing.T) {
-	t.Setenv("XDG_STATE_HOME", t.TempDir())
-	run := &report.Run{}
-	run.Set("speakers", report.Works, report.Owner, "", "")
-	s := newSleep(run, probe.Facts{})
-	s.update(press(tea.KeyEnter))
-	pending, found := report.LoadPending()
-	if !found || pending.Step != "Sleep" || len(pending.Results) != 1 {
-		t.Fatalf("saved: %v %+v", found, pending)
+// faulty is a step whose own code fails, as any step might on a machine nobody has seen.
+type faulty struct{ in string }
+
+func (f faulty) name() string   { return "Faulty" }
+func (f faulty) start() tea.Cmd { return nil }
+func (f faulty) keys() string   { return "" }
+func (f faulty) done() bool     { return false }
+func (f faulty) update(tea.Msg) tea.Cmd {
+	if f.in == "update" {
+		var none map[string]int
+		none["x"] = 1
 	}
-	// Waking clears it, so only a restart leaves it behind
-	s.update(sleepMsg{ok: s.ok + 1, failed: s.failed})
-	if _, found := report.LoadPending(); found {
-		t.Error("it was still saved after waking")
+	return nil
+}
+func (f faulty) view(width, height int) string {
+	if f.in == "view" {
+		return []string{}[3]
+	}
+	return "fine"
+}
+
+func TestAStepThatFailsIsPassedOverAndTheTestGoesOn(t *testing.T) {
+	for _, in := range []string{"update", "view"} {
+		run := &report.Run{}
+		last := &summary{run: run, options: Options{Send: false}}
+		m := &model{run: run, summary: last, failed: map[string]string{}, width: 100, height: 40}
+		last.failed = m.failed
+		m.steps = []step{&welcome{run: run}, faulty{in: in}, newQuestions(run, probe.Facts{}, map[string]bool{"usb": true, "external-display": true}), last}
+		m.Update(press(tea.KeyEnter))
+		m.View()
+		m.Update(press('x'))
+		if m.at != 2 || m.failed["Faulty"] == "" {
+			t.Fatalf("a fault in %s: at step %d, failed %v", in, m.at, m.failed)
+		}
+		// The owner goes on answering, and the summary says what was passed over
+		m.Update(press('1'))
+		if run.State("installer") != report.Works || m.at != 3 {
+			t.Fatalf("after the fault: step %d, results %+v", m.at, run.Results)
+		}
+		if drawn := m.View().Content; !strings.Contains(drawn, "Faulty step ran into a problem") {
+			t.Errorf("the summary doesn't mention the step:\n%s", drawn)
+		}
+	}
+}
+
+func TestTheTestIsSavedAsEachStepBegins(t *testing.T) {
+	run := &report.Run{}
+	var saved []string
+	last := &summary{run: run}
+	m := &model{run: run, summary: last, failed: map[string]string{}, save: func(step string) { saved = append(saved, step) }}
+	m.steps = []step{&welcome{run: run}, newTouchscreen(run, "screen"), newQuestions(run, probe.Facts{}, map[string]bool{"usb": true, "external-display": true}), last}
+	m.Update(press(tea.KeyEnter))
+	m.Update(press('s'))
+	if got := strings.Join(saved, ", "); got != "Touchscreen, Questions" {
+		t.Errorf("saved at: %s", got)
+	}
+}
+
+func TestAStoppedTestGoesOnFromItsStepAndACrashIsThatStepsResult(t *testing.T) {
+	dir := t.TempDir()
+	build := func(run *report.Run) []step {
+		return []step{newKeyboard(run), newCamera(run, dir), newSleep(run, probe.Facts{}), newQuestions(run, probe.Facts{}, nil)}
+	}
+	saved := report.Pending{Boot: "an-earlier-boot", Step: "Camera", Results: []report.Result{{Check: "keyboard", State: report.Works, How: report.Measured, Evidence: "60 keys"}}}
+
+	// The computer restarted, and the owner says it went down by itself
+	run := &report.Run{}
+	opening, steps := resume(run, saved, "this-boot", &welcome{run: run}, build(run))
+	back, ok := opening.(*resumed)
+	if !ok || !back.restarted || len(steps) != 3 || run.State("keyboard") != report.Works {
+		t.Fatalf("resumed=%v, %d steps, results %+v", ok, len(steps), run.Results)
+	}
+	back.update(press('1'))
+	camera, _ := run.Get("camera")
+	if camera.State != report.Broken || !strings.Contains(camera.Evidence, "restarted by itself during the test's Camera step") {
+		t.Errorf("camera: %+v", camera)
+	}
+	if !steps[0].done() || steps[0].start() != nil {
+		t.Error("the step it crashed in would run again")
+	}
+
+	// The owner restarted it themselves: no blame, and the step runs again
+	run = &report.Run{}
+	opening, steps = resume(run, saved, "this-boot", &welcome{run: run}, build(run))
+	opening.update(press('2'))
+	if run.State("camera") != "" || steps[0].done() {
+		t.Errorf("camera %q, step done %v", run.State("camera"), steps[0].done())
+	}
+
+	// A saved step this run doesn't have leaves the run as it is
+	run = &report.Run{}
+	opening, steps = resume(run, report.Pending{Step: "USB ports"}, "this-boot", &welcome{run: run}, build(run))
+	if _, isWelcome := opening.(*welcome); !isWelcome || len(steps) != 4 || len(run.Results) != 0 {
+		t.Error("a test for another set of steps was resumed")
+	}
+}
+
+func TestChosenStepsRunAlone(t *testing.T) {
+	run := &report.Run{}
+	dir := t.TempDir()
+	all := []step{newKeyboard(run), &effects{run: run}, newSpeakers(run, dir), newMicrophones(run, dir), newHeadphones(run, dir), newCamera(run, dir), newQuestions(run, probe.Facts{}, nil)}
+	names := func(steps []step) string {
+		var out []string
+		for _, s := range steps {
+			out = append(out, s.name())
+		}
+		return strings.Join(out, ", ")
+	}
+	if got := names(choose(all, []string{"sound"})); got != "Speakers, Microphone, Headphones" {
+		t.Errorf("sound: %s", got)
+	}
+	if got := names(choose(all, []string{"camera", "keyboard"})); got != "Keyboard, Volume and brightness keys, Camera" {
+		t.Errorf("camera and keyboard: %s", got)
+	}
+	if len(choose(all, []string{"usb"})) != 0 || !KnownStep("usb") || KnownStep("nonsense") {
+		t.Error("step words are off")
+	}
+}
+
+func TestUSBPlugInsAreSeenWithTheirSpeed(t *testing.T) {
+	root := t.TempDir()
+	device := func(name, speed, product string) {
+		dir := filepath.Join(root, "sys/bus/usb/devices", name)
+		os.MkdirAll(dir, 0o755)
+		os.WriteFile(filepath.Join(dir, "speed"), []byte(speed+"\n"), 0o644)
+		os.WriteFile(filepath.Join(dir, "idVendor"), []byte("0781\n"), 0o644)
+		os.WriteFile(filepath.Join(dir, "idProduct"), []byte(product+"\n"), 0o644)
+	}
+	unplug := func(name string) { os.RemoveAll(filepath.Join(root, "sys/bus/usb/devices", name)) }
+	device("usb1", "480", "0002")
+	device("1-4", "480", "9999") // the built-in camera or fingerprint reader, there from the start
+	os.MkdirAll(filepath.Join(root, "sys/bus/usb/devices/1-4:1.0"), 0o755)
+
+	run := &report.Run{}
+	u := newUSB(run, machine.Fixture(root))
+	u.start()
+	seen := func() { u.update(usbMsg{u.devices()}) }
+	seen()
+	if len(u.plugs) != 0 {
+		t.Fatalf("what was already there counted as a plug-in: %+v", u.plugs)
+	}
+	device("2-1", "5000", "5581")
+	seen()
+	unplug("2-1")
+	seen()
+	// A hub comes with the devices on it; it is one plug-in
+	device("1-2", "480", "0608")
+	device("1-2.1", "480", "c52b")
+	seen()
+	if len(u.plugs) != 2 || u.plugs[0].speed != 5000 || u.slowed() {
+		t.Fatalf("plugs %+v, slowed %v", u.plugs, u.slowed())
+	}
+	u.update(press(tea.KeyEnter))
+	result, _ := run.Get("usb")
+	if result.State != report.Works || result.How != report.Measured || !strings.Contains(result.Evidence, "2-1 at 5 Gb/s") || strings.Contains(result.Evidence, "0781") {
+		t.Errorf("result %+v", result)
+	}
+
+	// The same stick at full speed one way round and USB 2 speed the other
+	run = &report.Run{}
+	u = newUSB(run, machine.Fixture(root))
+	u.start()
+	device("2-2", "5000", "5581")
+	u.update(usbMsg{u.devices()})
+	unplug("2-2")
+	u.update(usbMsg{u.devices()})
+	device("1-3", "480", "5581")
+	u.update(usbMsg{u.devices()})
+	u.update(press(tea.KeyEnter))
+	if result, _ := run.Get("usb"); result.State != report.Partial || !strings.Contains(result.Note, "one orientation") {
+		t.Errorf("one orientation only: %+v", result)
+	}
+
+	// Plugged in, and nothing ever appeared
+	run = &report.Run{}
+	u = newUSB(run, machine.Fixture(root))
+	u.start()
+	u.update(press('n'))
+	u.update(press(tea.KeyEnter))
+	if run.State("usb") != report.Broken {
+		t.Errorf("nothing appeared: %q", run.State("usb"))
+	}
+}
+
+func TestAnExternalScreenIsReadWhenItIsPluggedIn(t *testing.T) {
+	root := t.TempDir()
+	set := func(path, text string) {
+		os.MkdirAll(filepath.Dir(filepath.Join(root, path)), 0o755)
+		os.WriteFile(filepath.Join(root, path), []byte(text), 0o644)
+	}
+	set("sys/class/drm/card0-eDP-1/status", "connected\n")
+	set("sys/class/drm/card0-DP-2/status", "disconnected\n")
+	sys := machine.Fixture(root)
+	sys.Command = func(name string, args ...string) (string, error) {
+		if name == "hyprctl" {
+			return `[{"name":"eDP-1","width":2944,"height":1840,"refreshRate":90.0},{"name":"DP-2","width":3840,"height":2160,"refreshRate":59.997}]`, nil
+		}
+		return "", os.ErrNotExist
+	}
+	run := &report.Run{}
+	s := newScreen(run, sys)
+	s.start()
+	s.update(screenMsg{s.external()})
+	if s.phase != "waiting" {
+		t.Fatalf("the built-in screen counted: %q", s.phase)
+	}
+	// Plugged into a USB-C port
+	set("sys/class/drm/card0-DP-2/status", "connected\n")
+	os.MkdirAll(filepath.Join(root, "sys/class/typec/port0-partner"), 0o755)
+	s.update(screenMsg{s.external()})
+	if s.phase != "picture" || s.details != "DP-2 (DisplayPort over USB-C), 3840x2160 at 60 Hz" {
+		t.Fatalf("phase %q, details %q", s.phase, s.details)
+	}
+	s.update(press('1'))
+	set("sys/class/drm/card0-DP-2/status", "disconnected\n")
+	s.update(screenMsg{s.external()})
+	set("sys/class/drm/card0-DP-2/status", "connected\n")
+	s.update(screenMsg{s.external()})
+	result, _ := run.Get("external-display")
+	if !s.done() || result.State != report.Works || !strings.Contains(result.Evidence, "DP-2 (DisplayPort over USB-C), 3840x2160 at 60 Hz; it came back") {
+		t.Errorf("result %+v", result)
+	}
+
+	// It never comes back after unplugging
+	run = &report.Run{}
+	s = newScreen(run, sys)
+	s.start() // already connected
+	s.update(press('1'))
+	set("sys/class/drm/card0-DP-2/status", "disconnected\n")
+	s.update(screenMsg{s.external()})
+	s.update(press('n'))
+	if result, _ := run.Get("external-display"); result.State != report.Partial {
+		t.Errorf("no hotplug: %+v", result)
 	}
 }
 
@@ -342,10 +568,14 @@ func TestNothingIsDrawnInAFaintColour(t *testing.T) {
 	dir := t.TempDir()
 	last := &summary{run: run, options: Options{Send: true}}
 	last.start()
-	steps := []step{&welcome{run: run}, newKeyboard(run), &effects{run: run, items: []effect{{label: "Volume up"}}}, newTouchpad(run, "pad"), newTouchscreen(run, "screen"),
-		newSpeakers(run, dir), newMicrophones(run, dir), newHeadphones(run, dir), newCamera(run, dir), newSleep(run, probe.Facts{}), newQuestions(run, probe.Facts{Laptop: true}), last}
+	sys := machine.Fixture(dir)
+	back := &resumed{run: run, pending: report.Pending{Step: "Camera"}, restarted: true}
+	back.ask = back.question()
+	steps := []step{&welcome{run: run}, back, newKeyboard(run), &effects{run: run, items: []effect{{label: "Volume up"}}}, newTouchpad(run, "pad"), newTouchscreen(run, "screen"),
+		newSpeakers(run, dir), newMicrophones(run, dir), newHeadphones(run, dir), newCamera(run, dir), newUSB(run, sys), newScreen(run, sys), newSleep(run, probe.Facts{}),
+		newQuestions(run, probe.Facts{Laptop: true}, nil), last}
 	for at, s := range steps {
-		m := &model{run: run, summary: last, steps: steps, at: at, width: 100, height: 40}
+		m := &model{run: run, summary: last, failed: map[string]string{}, steps: steps, at: at, width: 100, height: 40}
 		drawn := m.View().Content
 		for _, code := range []string{"\x1b[90m", "\x1b[2m", ";90m", "\x1b[97m"} {
 			if strings.Contains(drawn, code) {

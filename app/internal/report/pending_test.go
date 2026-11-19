@@ -20,7 +20,7 @@ func TestARestartDuringSleepIsFoundAndKeepsTheAnswers(t *testing.T) {
 		t.Fatalf("found=%v, %+v", found, pending)
 	}
 	// The same boot means the test was only stopped; another boot means the computer restarted
-	if pending.Restarted(pending.Boot) || !(Pending{Step: "Sleep", Boot: "a"}).Restarted("b") || (Pending{Step: "Camera", Boot: "a"}).Restarted("b") {
+	if pending.Restarted(pending.Boot) || !(Pending{Step: "Sleep", Boot: "a"}).Restarted("b") || (Pending{Step: "Camera"}).Restarted("b") {
 		t.Error("restart detection is off")
 	}
 
@@ -28,6 +28,7 @@ func TestARestartDuringSleepIsFoundAndKeepsTheAnswers(t *testing.T) {
 	after := &Run{}
 	after.Set("wifi", Broken, Measured, "no Wi-Fi interface", "")
 	pending.Restore(after)
+	pending.Crashed(after, "suspend")
 	if after.State("wifi") != Broken {
 		t.Error("an old measurement replaced a new one")
 	}
@@ -44,5 +45,14 @@ func TestARestartDuringSleepIsFoundAndKeepsTheAnswers(t *testing.T) {
 	ClearPending()
 	if _, found := LoadPending(); found {
 		t.Error("the saved test wasn't cleared")
+	}
+}
+
+func TestACrashInAnyStepIsThatStepsResult(t *testing.T) {
+	run := &Run{}
+	Pending{Step: "Camera"}.Crashed(run, "camera")
+	camera, _ := run.Get("camera")
+	if camera.State != Broken || camera.Evidence != "the computer restarted by itself during the test's Camera step, before the step finished" {
+		t.Errorf("camera: %+v", camera)
 	}
 }

@@ -24,6 +24,8 @@ type summary struct {
 	err     error
 	skipped bool
 	over    bool
+	// failed holds the steps that hit a fault of the test's own, by name.
+	failed map[string]string
 }
 
 func (s *summary) name() string { return "Send" }
@@ -113,6 +115,10 @@ func (s *summary) view(width, height int) string {
 	text := ""
 	if s.phase == "review" {
 		text = resultsTable(s.run.Results, width) + "\n\n"
+		// Said plainly, so a step that was passed over isn't taken for one that found nothing
+		for name, fault := range s.failed {
+			text += close_.Render(wrap("The "+name+" step ran into a problem of the test's own and was passed over ("+fault+"). Nothing is reported for it.", width)) + "\n\n"
+		}
 	}
 	return text + s.ask.view(width)
 }

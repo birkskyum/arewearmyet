@@ -33,11 +33,31 @@ func (s System) Read(p string) string {
 	return strings.TrimSpace(line)
 }
 
+// readLimit is how long one file may take. A file under /sys is answered by a driver, and a
+// driver whose hardware or firmware is broken can leave a read hanging for good.
+const readLimit = 2 * time.Second
+
 // ReadAll returns a small file's text with NUL bytes turned into newlines, as the device
-// tree's string lists need, or "" when it can't be read.
+// tree's string lists need, or "" when it can't be read or the read hangs.
 func (s System) ReadAll(p string) string {
-	data, err := os.ReadFile(s.path(p))
-	if err != nil {
+	type answer struct {
+		data []byte
+		err  error
+	}
+	done := make(chan answer, 1)
+	go func() {
+		data, err := os.ReadFile(s.path(p))
+		done <- answer{data, err}
+	}()
+	var data []byte
+	select {
+	case got := <-done:
+		if got.err != nil {
+			return ""
+		}
+		data = got.data
+	case <-time.After(readLimit):
+		// The read stays stuck in its own goroutine; the check goes on without the value
 		return ""
 	}
 	if len(data) > 64*1024 {
@@ -115,7 +135,10 @@ func (s System) Run(name string, args ...string) string {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	out, err := exec.CommandContext(ctx, name, args...).Output()
+	command := exec.CommandContext(ctx, name, args...)
+	// Not held up either by something the program started that keeps its output open
+	command.WaitDelay = time.Second
+	out, err := command.Output()
 	if err != nil {
 		return ""
 	}

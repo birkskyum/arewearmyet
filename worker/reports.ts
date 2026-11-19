@@ -118,40 +118,57 @@ const NEWEST_FIRST = 'ORDER BY runs.created DESC, runs.rowid DESC';
  * working and now reports it broken is a regression, with the kernels on both sides.
  */
 function summarize(rows: ResultRow[]) {
-  const newest = new Map<string, ResultRow>();
-  const changed = new Set<string>();
-  // The oldest result so far that still has the machine's newest state
-  const turned = new Map<string, ResultRow>();
-  const checks: Record<string, OwnerCheck> = {};
-  const machines = new Set<string>();
   const good = (state: string) => state === 'works';
   const bad = (state: string) => state === 'broken' || state === 'partial';
+  // Every machine's results for a check, newest first
+  const history = new Map<string, ResultRow[]>();
   for (const row of rows) {
     const key = `${row.machine} ${row.check_id}`;
-    const latest = newest.get(key);
-    if (!latest) {
-      newest.set(key, row);
-      machines.add(row.machine);
-      const entry = (checks[row.check_id] ??= { machines: 0, states: {}, how: {}, latest: [] });
-      entry.machines++;
-      entry.states[row.state] = (entry.states[row.state] ?? 0) + 1;
-      entry.how[row.how] = (entry.how[row.how] ?? 0) + 1;
-      if (entry.latest.length < 5) entry.latest.push({ state: row.state, how: row.how, note: row.note, evidence: row.evidence, kernel: row.kernel, created: row.created, run: row.run });
-      continue;
+    const list = history.get(key);
+    if (list) list.push(row);
+    else history.set(key, [row]);
+  }
+
+  const picked: { row: ResultRow; older: ResultRow[] }[] = [];
+  for (const list of history.values()) {
+    // The newest result counts, with one exception: a later measurement that merely finds a
+    // thing working doesn't take back what the owner reported as failing. The probe measures
+    // "it slept once"; the owner saw the second sleep crash. The owner's result stands until
+    // the owner tests that again.
+    let at = 0;
+    if (list[0].how === 'measured' && good(list[0].state)) {
+      const owner = list.findIndex((row) => row.how === 'owner');
+      if (owner > 0 && bad(list[owner].state)) at = owner;
     }
-    // Going back from the newest result, the first one with another state is where it turned:
-    // the change counts once per machine and check, from that result's kernel to the first kernel after it
-    if (changed.has(key)) continue;
-    if (row.state === latest.state) {
-      turned.set(key, row);
-      continue;
+    picked.push({ row: list[at], older: list.slice(at + 1) });
+  }
+  picked.sort((a, b) => (a.row.created < b.row.created ? 1 : a.row.created > b.row.created ? -1 : 0));
+
+  const checks: Record<string, OwnerCheck> = {};
+  const machines = new Set<string>();
+  for (const { row, older } of picked) {
+    machines.add(row.machine);
+    const entry = (checks[row.check_id] ??= { machines: 0, states: {}, how: {}, latest: [] });
+    entry.machines++;
+    entry.states[row.state] = (entry.states[row.state] ?? 0) + 1;
+    entry.how[row.how] = (entry.how[row.how] ?? 0) + 1;
+    if (entry.latest.length < 5) entry.latest.push({ state: row.state, how: row.how, note: row.note, evidence: row.evidence, kernel: row.kernel, created: row.created, run: row.run });
+
+    // Going back from that result, the first one with another state is where it turned: the
+    // change counts once per machine and check, from that result's kernel to the first kernel after it
+    let first = row;
+    for (const before of older) {
+      if (before.state === row.state) {
+        first = before;
+        continue;
+      }
+      const kind = bad(row.state) && good(before.state) ? 'regressed' : good(row.state) && bad(before.state) ? 'fixed' : null;
+      if (kind) {
+        const change = (entry[kind] ??= { machines: 0, from: before.kernel, to: first.kernel, since: first.created });
+        change.machines++;
+      }
+      break;
     }
-    changed.add(key);
-    const kind = bad(latest.state) && good(row.state) ? 'regressed' : good(latest.state) && bad(row.state) ? 'fixed' : null;
-    if (!kind) continue;
-    const first = turned.get(key) ?? latest;
-    const change = (checks[row.check_id][kind] ??= { machines: 0, from: row.kernel, to: first.kernel, since: first.created });
-    change.machines++;
   }
   return { machines: machines.size, checks };
 }

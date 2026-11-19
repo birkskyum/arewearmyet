@@ -8,9 +8,11 @@ import (
 	"time"
 )
 
-// Pending is a guided test that was under way, kept on disk while the computer sleeps for
-// the sleep step. If the computer restarts instead of waking, the next run finds it: the
-// restart is itself the result, and the answers given before it aren't lost.
+// Pending is a guided test that is under way, kept on disk from step to step. These tests run
+// on machines where a step can take the whole computer down: sleep that never wakes, a camera
+// or sound driver that crashes the kernel. The next run then finds the test where it stopped:
+// the answers given so far aren't lost, and a restart in the middle of a step is itself what
+// that step found.
 type Pending struct {
 	// Boot is the kernel's id for the boot the test ran in. A different one now means a restart.
 	Boot      string    `json:"boot"`
@@ -50,22 +52,31 @@ func LoadPending() (Pending, bool) {
 // ClearPending forgets the saved test.
 func ClearPending() { os.Remove(pendingFile()) }
 
-// Restarted says whether the computer restarted while this test waited for it to wake.
+// Restarted says whether the computer has restarted since this test was saved.
 func (p Pending) Restarted(boot string) bool {
-	return p.Step == "Sleep" && p.Boot != "" && boot != "" && p.Boot != boot
+	return p.Boot != "" && boot != "" && p.Boot != boot
 }
 
-// Restore puts a restarted test's results back into a fresh run: the owner's answers, and
-// anything the new quick check didn't measure again. Sleep itself is recorded as broken.
+// Restore puts an interrupted test's results back into a fresh run: the owner's answers, and
+// anything the new quick check didn't measure again.
 func (p Pending) Restore(run *Run) {
 	for _, saved := range p.Results {
 		if _, measuredAgain := run.Get(saved.Check); !measuredAgain || saved.How == Owner {
 			run.Set(saved.Check, saved.State, saved.How, saved.Evidence, saved.Note)
 		}
 	}
-	mode := p.SleepMode
-	if mode == "" {
-		mode = "unknown"
+}
+
+// Crashed records that the computer went down during a step, as that step's result. The owner
+// has confirmed it restarted by itself.
+func (p Pending) Crashed(run *Run, check string) {
+	evidence := "the computer restarted by itself during the test's " + p.Step + " step, before the step finished"
+	if p.Step == "Sleep" {
+		mode := p.SleepMode
+		if mode == "" {
+			mode = "unknown"
+		}
+		evidence = "closing the lid ended in a restart instead of a wake: the test was waiting for the computer to wake when it booted fresh (sleep modes " + mode + ")"
 	}
-	run.Set("suspend", Broken, Measured, "closing the lid ended in a restart instead of a wake: the test was waiting for the computer to wake when it booted fresh (sleep modes "+mode+")", "")
+	run.Set(check, Broken, Measured, evidence, "")
 }

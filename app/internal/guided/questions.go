@@ -26,8 +26,10 @@ type questions struct {
 	state string
 }
 
-// newQuestions leaves out what the machine doesn't have and what was already measured as working.
-func newQuestions(run *report.Run, facts probe.Facts) *questions {
+// newQuestions leaves out what the machine doesn't have, what was already measured as working
+// and what a step of its own covers. Hardware whose step can't run here, for want of a tool,
+// is asked about instead.
+func newQuestions(run *report.Run, facts probe.Facts, covered map[string]bool) *questions {
 	unmeasured := func(check string) bool { return run.State(check) != report.Works }
 	q := &questions{run: run}
 	add := func(when bool, check, text string) {
@@ -36,8 +38,12 @@ func newQuestions(run *report.Run, facts probe.Facts) *questions {
 		}
 	}
 	add(facts.Encrypted, "disk-unlock", "When you started the laptop, did you see the disk password prompt and type into it with the built-in keyboard?")
-	add(true, "usb", "Have USB sticks and other devices worked in every USB port you've tried?")
-	add(unmeasured("external-display"), "external-display", "An external screen, if you've tried one: did it show a picture?")
+	add(facts.Touchpad != "" && !covered["touchpad"], "touchpad", "Does the touchpad move the pointer, click and scroll with two fingers?")
+	add(facts.SoundCard != "" && !covered["speakers"], "speakers", "Do the speakers play sound, on both sides?")
+	add(facts.SoundCard != "" && !covered["microphones"], "microphones", "Does the microphone pick you up in calls or recordings?")
+	add(facts.Camera != "" && !covered["camera"], "camera", "Does the webcam give a picture in the browser?")
+	add(!covered["usb"], "usb", "Have USB sticks and other devices worked in every USB port you've tried?")
+	add(!covered["external-display"] && unmeasured("external-display"), "external-display", "An external screen, if you've tried one: did it show a picture?")
 	add(facts.Laptop && unmeasured("charging"), "charging", "With its own charger plugged in, does the battery percentage go up?")
 	add(facts.Fingerprint != "", "fingerprint", "The fingerprint reader, if you've set it up: does it unlock with your finger?")
 	add(facts.Bluetooth != "" && unmeasured("bluetooth"), "bluetooth", "Bluetooth headphones or a mouse, if you've tried some: do they pair and stay connected?")

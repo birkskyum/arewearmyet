@@ -2,6 +2,7 @@
 //
 //	hw-test            the guided test: the quick check, then keyboard, sound, camera and sleep with you
 //	hw-test quick      the quick check alone: read-only, a few seconds, no questions
+//	hw-test sound      one part of the guided test alone, reporting only that part
 //
 // Both show the results and send them to the model's page. What's sent: the maker, model, SKU,
 // board and BIOS version, the hardware IDs made from those, the kernel, OS and a few package
@@ -26,10 +27,29 @@ import (
 var version = "dev"
 
 func main() {
+	// Whatever goes wrong, the owner is told in a sentence, not shown a stack of the program's insides
+	defer func() {
+		if fault := recover(); fault != nil {
+			fmt.Fprintln(os.Stderr, "hw-test ran into a problem of its own and stopped:", fault)
+			os.Exit(1)
+		}
+	}()
+
+	// The words before the options: a command, or the steps to run alone
 	args := os.Args[1:]
 	command := "guided"
-	if len(args) > 0 && !strings.HasPrefix(args[0], "-") {
-		command, args = args[0], args[1:]
+	var only []string
+	for len(args) > 0 && !strings.HasPrefix(args[0], "-") {
+		word := args[0]
+		args = args[1:]
+		switch {
+		case guided.KnownStep(word):
+			only = append(only, word)
+		case len(only) == 0 && command == "guided":
+			command = word
+		default:
+			command = "unknown " + word
+		}
 	}
 	flags := flag.NewFlagSet("hw-test "+command, flag.ExitOnError)
 	jsonOnly := flags.Bool("json", false, "print what would be sent, and send nothing")
@@ -52,8 +72,12 @@ func main() {
 			command = "quick"
 		}
 	default:
-		fmt.Fprintf(os.Stderr, "hw-test: no command %q\n\n", command)
+		fmt.Fprintf(os.Stderr, "hw-test: %q is neither a command nor a step\n\n", strings.TrimPrefix(command, "unknown "))
 		usage()
+		os.Exit(2)
+	}
+	if len(only) > 0 && (command != "guided" || !guided.Interactive()) {
+		fmt.Fprintln(os.Stderr, "hw-test: a single step is done with you, so it needs a terminal and can't be combined with", command)
 		os.Exit(2)
 	}
 
@@ -70,11 +94,18 @@ func main() {
 	}
 	// The guided test needs someone at the keyboard; without a terminal it is the quick check
 	if command == "guided" && guided.Interactive() {
-		if err := guided.Run(run, facts, guided.Options{API: *api, Send: !*noSend}); err != nil {
-			fmt.Fprintln(os.Stderr, "hw-test:", err)
+		// The quick results are kept aside: if the guided test can't run here, they are still sent
+		measured := append([]report.Result(nil), run.Results...)
+		err := guided.Run(run, facts, guided.Options{API: *api, Send: !*noSend, Only: only})
+		if err == nil {
+			return
+		}
+		fmt.Fprintln(os.Stderr, "hw-test: the guided test couldn't run here:", err)
+		if len(only) > 0 {
 			os.Exit(1)
 		}
-		return
+		fmt.Fprintln(os.Stderr, "Going on with what could be measured.")
+		run.Mode, run.Results = "quick", measured
 	}
 
 	printResults(run)
@@ -114,6 +145,8 @@ func usage() {
 
   hw-test            the guided test: the quick check, then keyboard, sound, camera and sleep with you
   hw-test quick      the quick check alone: read-only, a few seconds, no questions
+  hw-test STEP...    one part of the guided test alone, reporting only that part:
+                     `+strings.Join(guided.StepWords(), ", ")+`
   hw-test version
 
 Options:

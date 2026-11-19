@@ -51,6 +51,12 @@ func Quick(sys machine.System) (*report.Run, Facts, error) {
 		return nil, Facts{}, fmt.Errorf("this is a %s machine, and the check is for ARM PCs", arch)
 	}
 
+	// Without /sys there is nothing to read, and every device would look missing: that is a
+	// container or another system, not a computer with broken hardware
+	if !sys.IsDir("/sys/class/input") && !sys.IsDir("/sys/class/drm") {
+		return nil, Facts{}, fmt.Errorf("this system's /sys can't be read, so there is nothing to check (is this a container?)")
+	}
+
 	run := &report.Run{Mode: "quick", Hardware: map[string]string{}, Packages: map[string]string{}, Chids: []string{}}
 	dmi := "/sys/class/dmi/id/"
 	for key, file := range map[string]string{"maker": "sys_vendor", "product": "product_name", "family": "product_family", "sku": "product_sku", "board": "board_name", "bios": "bios_version"} {
@@ -78,18 +84,30 @@ func Quick(sys machine.System) (*report.Run, Facts, error) {
 	measured := func(check, state, evidence string) { run.Set(check, state, report.Measured, evidence, "") }
 	klog := sys.Run("journalctl", "-k", "-b", "--no-pager", "-q", "-o", "cat")
 
-	screen(sys, measured)
-	gpu(sys, klog, measured)
-	input(sys, &facts, measured)
-	wireless(sys, &facts, measured)
-	processors(sys, measured)
-	sound(sys, &facts, measured)
-	power(sys, &facts, measured)
-	sleep(sys, measured)
-	ports(sys, measured)
-	media(sys, &facts, measured)
-	sensors(sys, &facts, measured)
+	// Each part on its own: these machines have half-working drivers and odd values in /sys,
+	// and one part tripping over them mustn't cost the others their results
+	for _, part := range []func(){
+		func() { screen(sys, measured) },
+		func() { gpu(sys, klog, measured) },
+		func() { input(sys, &facts, measured) },
+		func() { wireless(sys, &facts, measured) },
+		func() { processors(sys, measured) },
+		func() { sound(sys, &facts, measured) },
+		func() { power(sys, &facts, measured) },
+		func() { sleep(sys, measured) },
+		func() { ports(sys, measured) },
+		func() { media(sys, &facts, measured) },
+		func() { sensors(sys, &facts, measured) },
+	} {
+		safely(part)
+	}
 	return run, facts, nil
+}
+
+// safely runs one part of the check and lets nothing it does stop the rest.
+func safely(part func()) {
+	defer func() { _ = recover() }()
+	part()
 }
 
 type set func(check, state, evidence string)
