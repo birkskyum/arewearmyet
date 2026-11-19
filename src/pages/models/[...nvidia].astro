@@ -30,10 +30,12 @@ const pieces = [
 ];
 const upstream = [{ name: 'Linux', cell: nvidiaLinuxCell(model) }];
 const boots = model.omarchy === 'works' || model.omarchy === 'expected';
+import { SHELL } from '../../lib/shell';
 ---
 
 <Layout title={`${title} · Are we ARM yet?`} description={`What works on the ${title} under Linux and Omarchy: starting it, and every check from sound to sleep.`}>
-  <main class="mx-auto max-w-5xl px-4 py-10 text-zinc-400 sm:px-6">
+  <main class={`${SHELL} py-10 text-zinc-400`}>
+  <div class="max-w-5xl">
     <div class="flex items-start justify-between gap-4">
       <h1 class="text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">{title}</h1>
       <a href={`${REPO}/edit/main/data/findings.yaml`} class="flex shrink-0 items-center gap-2 rounded-md p-2 text-sm text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100 sm:px-3 sm:py-1.5">
@@ -113,5 +115,6 @@ hw-test</code></pre>
         </div>
       )}
     </section>
+  </div>
   </main>
 </Layout>

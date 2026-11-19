@@ -3,9 +3,10 @@
 // model on the board, whichever group it is in.
 import ChipIcon from '../assets/chip-icon.svg';
 import GitHubIcon from '../assets/github-icon.svg';
+import { SHELL } from '../lib/shell';
 
 interface Props {
-  // The home page shows the name as its own heading, so the bar leaves it out there
+  // The home page, where the name in the bar is the page itself
   home?: boolean;
 }
 
@@ -19,13 +20,11 @@ const PAGES = [
 ---
 
 <header class="border-b border-zinc-800/80">
-  <div class="mx-auto flex max-w-[96rem] flex-wrap items-center gap-x-5 gap-y-2 px-4 py-3 sm:px-6 lg:px-8">
-    {!home && (
-      <a href="/" class="flex items-center gap-2.5 text-zinc-200 hover:text-zinc-50">
-        <ChipIcon class="h-7 w-7 text-[#9ece6a]" aria-hidden="true" />
-        <span class="font-semibold">Are we ARM yet?</span>
-      </a>
-    )}
+  <div class={`${SHELL} flex flex-wrap items-center gap-x-5 gap-y-2 py-3`}>
+    <a href="/" class="flex items-center gap-2.5 text-zinc-200 hover:text-zinc-50" aria-current={home ? 'page' : undefined}>
+      <ChipIcon class="h-7 w-7 text-[#9ece6a]" aria-hidden="true" />
+      <span class="font-semibold">Are we ARM yet?</span>
+    </a>
     <nav class="flex items-center gap-1 text-sm" aria-label="Site">
       {PAGES.map((page) => (
         <a href={page.href} aria-current={page.on ? 'page' : undefined} class={`rounded-md px-2.5 py-1.5 font-medium ${page.on ? 'bg-zinc-800 text-zinc-50' : 'text-zinc-400 hover:bg-zinc-900 hover:text-zinc-100'}`}>{page.label}</a>

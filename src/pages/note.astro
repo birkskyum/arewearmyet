@@ -3,10 +3,13 @@
 // address (/note?id=NOTE-...), read in the browser, since notes arrive after the site is built.
 import Layout from '../layouts/Layout.astro';
 import NoteView from '../components/NoteView';
+import { SHELL } from '../lib/shell';
 ---
 
 <Layout title="Note · Are we ARM yet?" description="A problem, workaround or pointer an owner or their agent wrote down about a computer model.">
-  <main class="mx-auto max-w-4xl px-4 py-10 text-zinc-400 sm:px-6">
+  <main class={`${SHELL} py-10 text-zinc-400`}>
+  <div class="max-w-4xl">
     <NoteView client:load />
+  </div>
   </main>
 </Layout>
