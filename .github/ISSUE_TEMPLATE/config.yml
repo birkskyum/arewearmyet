@@ -5,4 +5,4 @@ contact_links:
     about: The Omarchy Arm Installer reads the laptop and files a hardware report by itself. No issue needed here.
   - name: Linux boots on it, and I want to say what works
     url: https://arewearmyet.com/help#check
-    about: Run the probe. It measures what works and puts it on the model's page, without an issue.
+    about: Run the hardware test (hw-test on Omarchy, the probe on another distro). It measures what works and puts it on the model's page, without an issue.
