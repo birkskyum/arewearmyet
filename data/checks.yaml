@@ -106,7 +106,7 @@ checks:
     probe: Whether a touchscreen device exists.
     person: Tap and drag on the screen, and try the pen if it came with one.
     optional: true
-    debug: "HID over I2C again, often with a reset GPIO and a power-on delay (`post-power-on-delay-ms`). `libinput list-devices` shows whether the desktop sees it. `hw-test facts` prints the interrupt it found for it. Touches that land in the wrong place are a rotation matter in the desktop, not the driver."
+    debug: "HID over I2C again, often with a reset GPIO and a power-on delay (`post-power-on-delay-ms`). `hyprctl devices` shows whether the desktop sees it. `hw-test facts` prints the interrupt it found for it. Touches that land in the wrong place are a rotation matter in the desktop, not the driver."
 
   - id: wifi
     group: network
@@ -137,7 +137,7 @@ checks:
     works: Every built-in speaker plays, at a normal volume, without crackling.
     probe: Whether a sound card with a playback device exists, besides HDMI and USB ones.
     person: Play music and say whether both sides (and the tweeters, if it has them) play cleanly.
-    debug: "Sound runs through the audio DSP. In order: the ADSP must be running (see the `adsp` check), the sound card must exist (`cat /proc/asound/cards`), the topology file the card asks for must be under `/lib/firmware/qcom/` (the journal names it when it's missing), and alsa-ucm-conf needs a profile for the card (`alsaucm listcards`, `wpctl status`). The speaker amplifiers (WSA883x or WSA884x on SoundWire) need their reset GPIOs and supplies in the tree. One silent side is usually one amplifier's GPIO or the channel mapping. `hw-test speakers` measures each side with the microphones. `ls /sys/bus/soundwire/devices/` shows whether every amplifier is there. `dtc -I fs -O dts /proc/device-tree | grep -B4 -A14 wsa88` shows the amplifiers' reset GPIOs in the running tree, and the right values are in the DSDT (the model's `upstream.acpiUrls`)."
+    debug: "Sound runs through the audio DSP. In order: the ADSP must be running (see the `adsp` check), the sound card must exist (`cat /proc/asound/cards`), the topology file the card asks for must be under `/lib/firmware/qcom/` (the journal names it when it's missing), and alsa-ucm-conf needs a profile for the card (`alsaucm listcards`, `wpctl status`). The speaker amplifiers (WSA883x or WSA884x on SoundWire) need their reset GPIOs and supplies in the tree. One silent side is usually one amplifier's GPIO or the channel mapping. `hw-test speakers` measures each side with the microphones. `ls /sys/bus/soundwire/devices/` shows whether every amplifier is there. `dtc -I fs -O dts /proc/device-tree 2>/dev/null | grep -A9 'speaker@'` shows each one's reset GPIO in the running tree, and `tr '\\0' '\\n' < /proc/device-tree/sound/audio-routing | paste - -` the output each speaker is fed from. On a side with a woofer and a tweeter, the two should come from different outputs (`WSA_SPK1` and `WSA_SPK2`). A quiet or silent side with every amplifier present is usually this routing, not a GPIO. Never raise amplifier or speaker gains above what the sound profile sets: the kernel has no speaker protection on these computers, and a speaker can be damaged."
 
   - id: microphones
     group: sound
@@ -183,7 +183,7 @@ checks:
     works: Closing the lid sleeps, opening it wakes to the lock screen, every time.
     probe: The sleep mode the kernel uses and how many sleeps succeeded or failed since boot.
     person: Close the lid for a few minutes, five times in a row, and say whether it woke each time.
-    debug: "`cat /sys/power/mem_sleep` shows the sleep mode in brackets, s2idle or deep. After a sleep, `journalctl -k -b | grep -E 'PM:|suspend'` shows which device refused, and the files under `/sys/power/suspend_stats/` count failures and name the last failing device. A restart in place of a wake leaves no line after 'suspend entry' at the end of `journalctl -k -b -1`. Try the other sleep mode to tell a firmware problem from a driver's. `hw-test sleep` measures a lid-close sleep with the owner. For a freeze on wake, check before the long press on power whether the Caps Lock light still toggles and whether the computer answers a ping from another machine: that tells a frozen desktop from a frozen kernel. Record `lsusb -t` and `cat /sys/class/drm/card*-*/status` with the same things plugged in. `journalctl --list-boots` lists the boots, and `hw-test note --log boot-N` attaches the kernel's log of the one that froze."
+    debug: "`cat /sys/power/mem_sleep` shows the sleep mode in brackets, s2idle or deep. After a sleep, `journalctl -k -b | grep -E 'PM:|suspend'` shows which device refused, and the files under `/sys/power/suspend_stats/` count failures and name the last failing device. A restart in place of a wake leaves no line after 'suspend entry' at the end of `journalctl -k -b -1`. Try the other sleep mode to tell a firmware problem from a driver's. `hw-test sleep` measures a lid-close sleep with the owner. For a freeze on wake, check before the long press on power whether the Caps Lock light still toggles and whether the computer answers a ping from another machine: that tells a frozen desktop from a frozen kernel. Record `grep -H . /sys/bus/usb/devices/*/{product,speed}` and `cat /sys/class/drm/card*-*/status` with the same things plugged in. `journalctl --list-boots` lists the boots, and `hw-test note --log boot-N` attaches the kernel's log of the one that froze."
 
   - id: suspend-drain
     group: power
@@ -213,7 +213,7 @@ checks:
     works: Every USB-A and USB-C port takes devices at full speed, in both plug orientations.
     probe: Which USB controllers exist and the fastest speed each offers.
     person: Plug a USB stick into each port, both ways round on USB-C.
-    debug: "Each USB-C port is a controller, a combo PHY and a connector under `pmic-glink` in the tree. USB-A ports hang off the multiport controller or a USB 2 controller, often behind a supply that has to be switched on. `lsusb -t` shows the speeds and `journalctl -k -b | grep -iE 'dwc3|xhci|typec|ucsi'` the errors. Full speed in only one orientation of the plug means the port's orientation switch or retimer isn't described. `hw-test usb` reads the speed per port as things are plugged in."
+    debug: "Each USB-C port is a controller, a combo PHY and a connector under `pmic-glink` in the tree. USB-A ports hang off the multiport controller or a USB 2 controller, often behind a supply that has to be switched on. `grep -H . /sys/bus/usb/devices/*/speed` shows the speed of each port and device (`lsusb -t` does too, where usbutils is installed) and `journalctl -k -b | grep -iE 'dwc3|xhci|typec|ucsi'` the errors. Full speed in only one orientation of the plug means the port's orientation switch or retimer isn't described. `hw-test usb` reads the speed per port as things are plugged in."
 
   - id: external-display
     group: ports
@@ -270,7 +270,7 @@ checks:
     probe: Whether a known fingerprint reader is on USB.
     person: Enroll a finger with fprintd and try it.
     optional: true
-    debug: "Readers are USB devices, supported or not by libfprint: `lsusb` gives the ID to look up in libfprint's list of supported devices. A reader missing from `lsusb` sits on an internal USB port whose supply or controller isn't enabled in the tree."
+    debug: "Readers are USB devices, supported or not by libfprint: `grep -H . /sys/bus/usb/devices/*/{idVendor,idProduct,product}` gives the ID to look up in libfprint's list of supported devices. A reader that isn't among them sits on an internal USB port whose supply or controller isn't enabled in the tree."
 
   - id: modem
     group: sensors
@@ -278,4 +278,4 @@ checks:
     works: The 4G or 5G modem registers on a network.
     probe: Whether a modem processor or modem device exists.
     optional: true
-    debug: "The modem is a PCIe or USB module (`lspci`, `lsusb`, `mmcli -L`). It needs its port and power enabled in the tree, and ModemManager."
+    debug: "The modem is a PCIe or USB module (`lspci`, `grep -H . /sys/bus/usb/devices/*/product`, and `mmcli -L` where ModemManager is installed). It needs its port and power enabled in the tree, and ModemManager."

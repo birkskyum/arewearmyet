@@ -82,7 +82,7 @@ const REPORT_TONE = { works: 'good', workaround: 'close', problems: 'wanted' } a
             </>
           ))}
         </dl>
-        <p class="mt-4 text-xs text-zinc-500">{cover.known} of {cover.total} checks are written up for this model, {cover.works} of them working.</p>
+        <p class="mt-4 text-xs text-zinc-500">{cover.known} of {cover.total} checks are written up for this model on Omarchy, {cover.works} of them working.{cover.elsewhere > 0 && ` ${cover.elsewhere} more are reported from another distro or by the device tree's author, which shows they can work, not that they do on Omarchy.`}</p>
       </div>
     </section>
 
@@ -110,7 +110,8 @@ const REPORT_TONE = { works: 'good', workaround: 'close', problems: 'wanted' } a
         <p class="text-xs text-zinc-500">Click a check to see what it means, how it's checked and every result.</p>
       </div>
       <div class="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm text-zinc-400">
-        <p><span class="text-zinc-200">Notes</span> are written by hand, from discussions and what people reported. They can be old.</p>
+        <p><span class="text-zinc-200">Notes</span> are what people reported on Omarchy, each checked against its source. They can be old.</p>
+        <p><span class="text-zinc-200">Elsewhere</span> is what was reported on another distro or by the device tree's author. It shows a part can work, not that it does on Omarchy.</p>
         <p><span class="text-zinc-200">Tested</span> is what <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs">hw-test</code> found on people's machines, with the date.</p>
       </div>
       <div class="mt-4">

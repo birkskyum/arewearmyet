@@ -5,7 +5,10 @@ import { createSignal, For, onMount, Show } from 'solid-js';
 import { PILL, TONE } from '../lib/tones';
 
 type State = 'works' | 'partial' | 'broken' | 'untested' | 'absent';
-type Finding = { state: State; note?: string; version?: string; checked?: string; source?: string };
+type Finding = { state: State; note?: string; version?: string; checked?: string; source?: string; basis?: string; where?: string; quote?: string };
+// A finding from another distro or from the device tree's author is a hint, not this model's status on Omarchy
+const elsewhere = (f: Finding) => f.basis === 'other-distro' || f.basis === 'tree-author';
+const FROM: Record<string, string> = { 'other-distro': 'on another distro', 'tree-author': "by the device tree's author" };
 type Row = { id: string; group: string; title: string; works: string; probe?: string; person?: string; debug?: string; optional?: boolean; finding: Finding | null; from: 'model' | 'family' | null; familySource: string | null };
 type Change = { machines: number; from: string | null; to: string | null; since: string };
 type Owner = { machines: number; states: Record<string, number>; how: Record<string, number>; regressed?: Change; fixed?: Change; latest: { state: State; how: string; note: string | null; evidence: string | null; kernel: string | null; created: string; run: string }[] };
@@ -103,8 +106,10 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                         <Show when={row.finding}>
                           {(f) => (
                             <span class="block">
-                              <span class="text-zinc-500">Notes{f().checked ? ` (${f().checked})` : ''}: </span>
-                              {f().note ?? (row.from === 'family' ? 'Holds across this chip family.' : LABEL[f().state] + '.')}
+                              <span class="text-zinc-500">
+                                {elsewhere(f()) ? `Elsewhere (${[f().where ?? FROM[f().basis!], f().checked].filter(Boolean).join(', ')}): ` : `Notes${f().checked ? ` (${f().checked})` : ''}: `}
+                              </span>
+                              <span class={elsewhere(f()) ? 'text-zinc-500' : ''}>{f().note ?? (row.from === 'family' ? 'Holds across this chip family.' : LABEL[f().state] + '.')}</span>
                               <Show when={row.from === 'family'}><span class="text-zinc-500"> (across this chip family)</span></Show>
                             </span>
                           )}
@@ -123,7 +128,18 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                       </span>
                       <span class="col-start-2 row-start-1 flex flex-wrap justify-end gap-1.5 sm:col-start-3">
                         <Show when={row.finding} fallback={<Show when={!owner(row.id)}><Pill state="untested" /></Show>}>
-                          {(f) => <Pill state={f().state} dim={row.from === 'family'} prefix="Notes" tip="Written by hand, from discussions and reports. Not measured on this page." />}
+                          {(f) => (
+                            <Show
+                              when={!elsewhere(f())}
+                              fallback={
+                                <span class={`${PILL} ${TONE.muted}`} data-tip={`Reported ${FROM[f().basis!]}, not on Omarchy. It shows this can work on the model, not that it does here.`}>
+                                  Elsewhere: {LABEL[f().state].toLowerCase()}
+                                </span>
+                              }
+                            >
+                              <Pill state={f().state} dim={row.from === 'family'} prefix="Notes" tip="Reported on Omarchy and checked against its source. Not measured on this page." />
+                            </Show>
+                          )}
                         </Show>
                         <Show when={owner(row.id)}>
                           {(o) => (
@@ -149,10 +165,18 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                       <Show when={row.debug}><p><span class="text-zinc-300">When it fails, look at:</span> {row.debug}</p></Show>
                       <Show when={row.finding}>
                         {(f) => (
-                          <p class="text-xs text-zinc-500">
-                            Notes written {[f().version ? `on ${f().version}` : null, f().checked ? `in ${f().checked}` : null].filter(Boolean).join(' ')}
-                            <Show when={f().source ?? row.familySource}>{(href) => <>{' · '}<a class={LINK} href={href()}>source</a></>}</Show>
-                          </p>
+                          <>
+                            <Show when={f().quote}>
+                              <blockquote class="border-l-2 border-zinc-700 pl-3 text-zinc-400">
+                                <span class="text-xs text-zinc-500">The source says: </span>“{f().quote}”
+                              </blockquote>
+                            </Show>
+                            <p class="text-xs text-zinc-500">
+                              {elsewhere(f()) ? `Reported ${FROM[f().basis!]}` : 'Reported on Omarchy'}
+                              {[f().where ? `, ${f().where}` : f().version ? `, on ${f().version}` : null, f().checked ? `, in ${f().checked}` : null].filter(Boolean).join('')}
+                              <Show when={f().source ?? row.familySource}>{(href) => <>{' · '}<a class={LINK} href={href()}>source</a></>}</Show>
+                            </p>
+                          </>
                         )}
                       </Show>
                       <Show when={owner(row.id)?.regressed}>{(change) => <p class="text-rose-300">{changeText(change(), 'regressed')}</p>}</Show>

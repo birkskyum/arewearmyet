@@ -218,7 +218,12 @@ func Brief(b Briefing) string {
 		}
 		// What is written up on the site about this part, which often names the cause
 		if finding, ok := b.Findings[check]; ok && finding.Note != "" {
-			line := fmt.Sprintf("- Already known on the site (%s", stateLabel[finding.State])
+			// A report from another distro or from the tree's author is a hint, and is said to be one
+			line := fmt.Sprintf("- Already known on the site, on Omarchy (%s", stateLabel[finding.State])
+			if !finding.OnOmarchy() {
+				from := map[string]string{"other-distro": "on another distro", "tree-author": "by the device tree's author"}[finding.Basis]
+				line = fmt.Sprintf("- Reported %s, not on Omarchy, so a hint and no more (%s", first(finding.Where, from), stateLabel[finding.State])
+			}
 			if finding.Checked != "" {
 				line += ", " + finding.Checked
 			}

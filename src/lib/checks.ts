@@ -10,7 +10,17 @@ import type { Model } from './labels';
 export type CheckState = 'works' | 'partial' | 'broken' | 'untested' | 'absent';
 export type Check = { id: string; group: string; title: string; works: string; probe?: string; person?: string; debug?: string; optional?: boolean };
 export type Group = { id: string; title: string };
-export type Finding = { state: CheckState; note?: string; version?: string; checked?: string; source?: string };
+/**
+ * What a finding rests on. Only a result on Omarchy says how the model does under Omarchy. One from
+ * another distro, or from the device tree's author, is a hint that it can work, and is shown as that.
+ */
+export type Basis = 'omarchy' | 'other-distro' | 'tree-author' | 'maker-spec';
+export type Finding = { state: CheckState; note?: string; version?: string; checked?: string; source?: string; basis?: Basis; where?: string; quote?: string };
+
+/** A finding with no basis named was written by hand from Omarchy's own threads. */
+export const basisOf = (finding: Finding): Basis => finding.basis ?? 'omarchy';
+/** Whether a finding says how the model does under Omarchy, and so counts as its status. */
+export const countsAsStatus = (finding: Finding): boolean => basisOf(finding) === 'omarchy' || basisOf(finding) === 'maker-spec';
 type FindingsFile = {
   families?: Record<string, { source?: string; checks?: Record<string, Finding> }>;
   models?: Record<string, { details?: string; links?: { title: string; url: string }[]; checks?: Record<string, Finding> }>;
@@ -52,13 +62,18 @@ export function modelExtra(model: Model) {
   return { details: entry?.details?.trim() ?? null, links: entry?.links ?? [] };
 }
 
-/** How many checks a model's own findings cover, for the board's column. */
+/**
+ * How many checks a model's own findings cover. Only what was seen on Omarchy counts as known and
+ * working. What is reported from elsewhere is counted apart.
+ */
 export function coverage(model: Model) {
   const rows = modelChecks(model);
   const own = rows.filter((row) => row.from === 'model');
+  const status = own.filter((row) => countsAsStatus(row.finding!));
   return {
-    known: own.length,
-    works: own.filter((row) => row.finding!.state === 'works').length,
+    known: status.length,
+    works: status.filter((row) => row.finding!.state === 'works').length,
+    elsewhere: own.length - status.length,
     total: CHECKS.length,
   };
 }
@@ -86,6 +101,7 @@ export function modelData(model: Model) {
     reports: model.reports,
     checks: checks.map(({ id, group, title, finding, from }) => ({ id, group, title, finding, from })),
     // Checks nobody has written up for this model, the ones an owner's run helps most with
-    wanted: checks.filter((row) => row.from !== 'model' && !row.optional).map((row) => row.id),
+    // A check known only from another distro or from the tree's author is still wanted on Omarchy
+    wanted: checks.filter((row) => !(row.from === 'model' && countsAsStatus(row.finding!)) && !row.optional).map((row) => row.id),
   };
 }

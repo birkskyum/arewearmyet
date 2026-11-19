@@ -583,6 +583,11 @@ for (const [id, entry] of Object.entries<{ checks?: Record<string, { state: stri
   for (const [check, f] of Object.entries(entry.checks ?? {})) {
     if (!checkIds.has(check)) throw new Error(`data/findings.yaml: ${id} names unknown check ${check}`);
     if (!STATES_ALLOWED.includes(f.state)) throw new Error(`data/findings.yaml: ${id}, ${check}: unknown state ${f.state}`);
+    // What a finding rests on. One that was collected from a public page carries the words of the
+    // page it rests on, which scripts/quotes.ts looks for in the page itself.
+    const { basis, quote, source } = f as { basis?: string; quote?: string; source?: string };
+    if (basis !== undefined && !['omarchy', 'other-distro', 'tree-author', 'maker-spec'].includes(basis)) throw new Error(`data/findings.yaml: ${id}, ${check}: unknown basis ${basis}`);
+    if (basis !== undefined && basis !== 'maker-spec' && (!quote || !source)) throw new Error(`data/findings.yaml: ${id}, ${check}: a finding with a basis needs its source and the quote it rests on`);
   }
 }
 // Which models each hardware ID (CHID) belongs to, from every ID file the board knows: systemd's, Ubuntu's

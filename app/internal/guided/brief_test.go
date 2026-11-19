@@ -61,7 +61,7 @@ func TestTheBriefSaysWhatFailsWhatIsKnownAndHowToGoAboutIt(t *testing.T) {
 		"### Speakers (check `speakers`): partly", "Measured on 19 November 2026 with kernel 7.3.0-59-omarchy, seen by the owner", "left speaker heard at -31 dB", "the left is louder than the right",
 		"Working means: Both speakers play at a usable volume.", "Where to look: Sound runs through the audio DSP.",
 		// What the site has written up goes beside what was measured, with its source
-		"### Hibernation (check `hibernate`): broken", "Already known on the site (broken, 2026-10): Waking from hibernation restarts the laptop. Source: https://github.com/omacom/omarchy/discussions/11823",
+		"### Hibernation (check `hibernate`): broken", "Already known on the site, on Omarchy (broken, 2026-10): Waking from hibernation restarts the laptop. Source: https://github.com/omacom/omarchy/discussions/11823",
 		// A part that takes the owner is said to, and one that runs by itself has its command
 		"Measure again: `hw-test speakers`, run by the owner in their own terminal", "Measure again: `hw-test graphics --no-send`, which runs by itself", "Measure again: `hw-test quick --no-send`",
 		"- works: wifi", "- not tested:",
@@ -80,6 +80,12 @@ func TestTheBriefSaysWhatFailsWhatIsKnownAndHowToGoAboutIt(t *testing.T) {
 	}
 	if broken, partly := strings.Index(brief, "### Hibernation"), strings.Index(brief, "### Speakers"); broken > partly {
 		t.Error("what is broken doesn't come before what partly works")
+	}
+	// What was seen on another distro is told apart from what was seen on Omarchy
+	other := yoga()
+	other.Findings = map[string]report.Finding{"speakers": {State: report.Works, Basis: "other-distro", Where: "Ubuntu 25.04, kernel 6.14", Note: "All four speakers play.", Checked: "2025-05", Source: "https://bugs.launchpad.net/x"}}
+	if with := Brief(other); !strings.Contains(with, "Reported Ubuntu 25.04, kernel 6.14, not on Omarchy, so a hint and no more (works, 2025-05): All four speakers play.") || strings.Contains(with, "Already known on the site, on Omarchy (works") {
+		t.Errorf("a report from another distro isn't told apart:\n%s", with)
 	}
 	// What works isn't something to work on, and its finding isn't quoted
 	if strings.Contains(brief, "### Wi-Fi") || strings.Contains(brief, "Fine.") {

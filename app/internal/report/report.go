@@ -246,6 +246,18 @@ type Finding struct {
 	Version string `json:"version"`
 	Checked string `json:"checked"`
 	Source  string `json:"source"`
+	// Basis is what the finding rests on: omarchy (or empty, the same), other-distro,
+	// tree-author or maker-spec. Where says where it was seen, and Quote is the passage of the
+	// source it rests on.
+	Basis string `json:"basis"`
+	Where string `json:"where"`
+	Quote string `json:"quote"`
+}
+
+// OnOmarchy says whether a finding is about how the model does under Omarchy. One from
+// another distro or from the device tree's author only shows that the part can work.
+func (f Finding) OnOmarchy() bool {
+	return f.Basis == "" || f.Basis == "omarchy" || f.Basis == "maker-spec"
 }
 
 // Findings asks the site what is written up about a model, by check. Only what is the
