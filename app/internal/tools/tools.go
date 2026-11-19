@@ -362,12 +362,30 @@ func TerminalIn(dir, program string, args ...string) error {
 	}
 	command := exec.Command(line[0], append(append(line[1:], program), args...)...)
 	command.Dir = dir
+	command.Env = OwnersEnv(os.Environ())
 	command.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
 	if err := command.Start(); err != nil {
 		return err
 	}
 	go command.Wait()
 	return nil
+}
+
+// OwnersEnv is an environment for a window the owner looks at, made from one that may be an
+// agent's. Agents run their commands with colours off and paging off, which suits their
+// reading and makes a window opened from there come up grey and bare.
+func OwnersEnv(env []string) []string {
+	var kept []string
+	for _, entry := range env {
+		name, value, _ := strings.Cut(entry, "=")
+		switch {
+		case name == "NO_COLOR", name == "CLICOLOR" && value == "0", name == "FORCE_COLOR" && value == "0", name == "TERM" && value == "dumb":
+		case (name == "PAGER" || name == "GIT_PAGER") && value == "cat":
+		default:
+			kept = append(kept, entry)
+		}
+	}
+	return kept
 }
 
 // Session is a conversation of the owner's agent, as its own program names it. People use
@@ -491,6 +509,118 @@ func T3Show(dir string) {
 		defer cancel()
 		_ = exec.CommandContext(ctx, "omarchy-hyprland-focus-app", "T3Code").Run()
 	}
+}
+
+// t3Threads lists the threads T3 Code has for a folder's project, by id, with their titles.
+func t3Threads(dir string) map[string]string {
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, "t3", "thread", "list", "--json", "--project", dir)
+	out, err := command.Output()
+	listed := map[string]string{}
+	if err != nil {
+		return listed
+	}
+	var rows []struct {
+		Thread string `json:"threadId"`
+		ID     string `json:"id"`
+		Title  string `json:"title"`
+	}
+	if at := strings.IndexAny(string(out), "[{"); at >= 0 && out[at] == '[' {
+		_ = json.Unmarshal(out[at:], &rows)
+	}
+	for _, row := range rows {
+		listed[first(row.Thread, row.ID)] = row.Title
+	}
+	return listed
+}
+
+func first(values ...string) string {
+	for _, value := range values {
+		if value != "" {
+			return value
+		}
+	}
+	return ""
+}
+
+// activeWindow is the class of the window that has the keyboard.
+func activeWindow() string {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	out, err := exec.CommandContext(ctx, "hyprctl", "activewindow", "-j").Output()
+	if err != nil {
+		return ""
+	}
+	var window struct {
+		Class string `json:"class"`
+	}
+	_ = json.Unmarshal(out, &window)
+	return window.Class
+}
+
+// t3Settle is how long T3 Code's window is given to come forward before it is typed into,
+// and t3Appear how long a typed thread is looked for afterwards.
+var t3Settle, t3Appear = 1500 * time.Millisecond, 20 * time.Second
+
+// T3Type opens a new thread for the folder in T3 Code's own window and types the message
+// into it, as the owner would. T3 Code can only be told from outside to open a new, empty
+// thread, never an existing one. So this is the way to have the thread the owner is looking
+// at be the one at work, with nothing to hunt for. It needs the desktop in front of it: it
+// types only while T3 Code's window has the keyboard, and gives up otherwise.
+func T3Type(dir, message string) (id, title string, err error) {
+	if !Have("t3", "wtype", "hyprctl", "omarchy-hyprland-focus-app") {
+		return "", "", ErrNoSession
+	}
+	// T3 Code refuses to open its window for a caller that came in over ssh
+	if os.Getenv("SSH_CONNECTION") != "" || os.Getenv("SSH_TTY") != "" {
+		return "", "", ErrNoSession
+	}
+	if !t3Up(dir) {
+		return "", "", fmt.Errorf("T3 Code isn't running and couldn't be started")
+	}
+	run := func(wait time.Duration, name string, args ...string) error {
+		ctx, cancel := context.WithTimeout(context.Background(), wait)
+		defer cancel()
+		command := exec.CommandContext(ctx, name, args...)
+		command.Dir = dir
+		return command.Run()
+	}
+	before := t3Threads(dir)
+	if err := run(30*time.Second, "t3", "app", dir); err != nil {
+		return "", "", fmt.Errorf("T3 Code didn't open the folder: %v", err)
+	}
+	// Its window is asked forward until it has the keyboard, which takes a moment longer when
+	// it sits on another workspace. Then the new thread's box is given time to be ready
+	typing := func() bool { return strings.Contains(activeWindow(), "T3Code") }
+	for tries := 0; tries < 10 && !typing(); tries++ {
+		_ = run(3*time.Second, "omarchy-hyprland-focus-app", "T3Code")
+		time.Sleep(t3Settle / 3)
+	}
+	if !typing() {
+		return "", "", fmt.Errorf("T3 Code's window didn't come to the front")
+	}
+	time.Sleep(t3Settle)
+	if err := run(20*time.Second, "wtype", strings.Join(strings.Fields(message), " ")); err != nil {
+		return "", "", fmt.Errorf("the message couldn't be typed: %v", err)
+	}
+	time.Sleep(300 * time.Millisecond)
+	if !typing() {
+		return "", "", fmt.Errorf("T3 Code's window lost the keyboard while the message was typed, so it wasn't sent")
+	}
+	if err := run(5*time.Second, "wtype", "-k", "Return"); err != nil {
+		return "", "", fmt.Errorf("the message couldn't be sent: %v", err)
+	}
+	// The thread exists once its first message is in. It is the one that wasn't there before
+	for waited := time.Duration(0); waited < t3Appear; waited += time.Second {
+		time.Sleep(time.Second)
+		for thread, named := range t3Threads(dir) {
+			if _, was := before[thread]; !was {
+				return thread, named, nil
+			}
+		}
+	}
+	return "", "", nil
 }
 
 // T3Start starts a thread in T3 Code for the work in a folder and returns its id. T3 Code
@@ -686,6 +816,7 @@ func agent(dir, prompt string, wait time.Duration) error {
 	}
 	command := exec.Command("omarchy-agent", "--prompt", prompt)
 	command.Dir = dir
+	command.Env = OwnersEnv(os.Environ())
 	command.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
 	return started(command)
 }

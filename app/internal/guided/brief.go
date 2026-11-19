@@ -87,7 +87,11 @@ func InThread(dir, title, message string) (string, error) {
 		switch {
 		case err == nil && kept.Kind == "t3":
 			tools.T3Show(dir)
-			return "Your agent has it in T3 Code, in the same thread as before. It is in the list on the left, under " + filepath.Base(dir) + ".", nil
+			which := "the same thread as before"
+			if kept.Title != "" {
+				which += ", \"" + kept.Title + "\""
+			}
+			return "Your agent has it in T3 Code, in " + which + ". It is in the list on the left, under " + filepath.Base(dir) + ".", nil
 		case err == nil:
 			return "Your agent has it, in the same conversation as before.", nil
 		case errors.Is(err, tools.ErrAgentOpen):
@@ -95,11 +99,21 @@ func InThread(dir, title, message string) (string, error) {
 			return "Your agent's window is open, and it can't be written to from here. Tell it: read BRIEF.md again, it is about " + strings.TrimPrefix(title, "Hardware: ") + " now.", nil
 		}
 	}
+	// In T3 Code's own window first, typed into the thread it opens: then the thread in front
+	// of the owner is the one at work. Where that can't be done, a thread is started behind
+	// the window and the owner is told which one to click
+	prior, _ := report.ThreadFor(dir)
+	if id, named, err := tools.T3Type(dir, message); err == nil {
+		if id != "" {
+			_ = report.KeepThread(dir, report.Thread{Kind: "t3", ID: id, When: time.Now(), Title: named, Checks: prior.Checks})
+		}
+		return "Your agent has it in T3 Code, in the thread that just opened.", nil
+	}
 	id, err := tools.T3Start(dir, title, message)
 	if err != nil {
 		return "", err
 	}
-	_ = report.KeepThread(dir, report.Thread{Kind: "t3", ID: id, When: time.Now()})
+	_ = report.KeepThread(dir, report.Thread{Kind: "t3", ID: id, When: time.Now(), Title: title, Checks: prior.Checks})
 	tools.T3Show(dir)
 	return "Your agent has it in T3 Code, in a new thread called \"" + title + "\". Click it in the list on the left, under " + filepath.Base(dir) + ", to watch.", nil
 }

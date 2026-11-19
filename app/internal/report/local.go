@@ -134,6 +134,8 @@ type Thread struct {
 	When time.Time `json:"when"`
 	// Checks are the parts the owner last handed to it, for saying what the agent is on.
 	Checks []string `json:"checks,omitempty"`
+	// Title is what its program calls it, where that is known, for telling the owner which it is.
+	Title string `json:"title,omitempty"`
 }
 
 func threads() map[string]Thread {

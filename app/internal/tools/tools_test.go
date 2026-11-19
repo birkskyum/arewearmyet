@@ -348,3 +348,92 @@ func TestAnOpenCodexTakesTheMessageAndAClosedOneOpensAgain(t *testing.T) {
 		t.Errorf("going to a closed Claude Code: %q", got)
 	}
 }
+
+func TestTheMessageIsTypedIntoTheThreadT3CodeOpensInFront(t *testing.T) {
+	dir, bin := t.TempDir(), t.TempDir()
+	for _, name := range []string{"SSH_CONNECTION", "SSH_TTY"} {
+		t.Setenv(name, "")
+	}
+	script := func(name, body string) {
+		os.WriteFile(filepath.Join(bin, name), []byte("#!/bin/sh\n"+body), 0o755)
+	}
+	// T3 Code: one thread there already, and a new one once a message has been typed and sent
+	script("t3", `printf '%s|' "$@" >> `+dir+`/called; echo >> `+dir+`/called
+[ "$1" = app ] && touch `+dir+`/opened
+if [ "$1 $2" = "thread list" ]; then
+  if [ -e `+dir+`/sent ]; then echo '[{"threadId":"8411","title":"Speaker balance"},{"threadId":"mcp:old","title":"Earlier"}]'
+  else echo '[{"threadId":"mcp:old","title":"Earlier"}]'; fi
+fi
+exit 0
+`)
+	script("wtype", `if [ "$1" = -k ]; then [ -e `+dir+`/text ] && touch `+dir+`/sent; else printf '%s' "$1" > `+dir+`/text; fi
+`)
+	script("omarchy-hyprland-focus-app", "echo \"$1\" > "+dir+"/focused\n")
+	front := func(class string) { script("hyprctl", `echo '{"class":"`+class+`"}'`+"\n") }
+	t.Setenv("PATH", bin+":"+os.Getenv("PATH"))
+	t3Settle, t3Appear = 50*time.Millisecond, 3*time.Second
+	defer func() { t3Settle, t3Appear = 1500*time.Millisecond, 20*time.Second }()
+	work := t.TempDir()
+
+	// T3 Code's window has the keyboard: the message is typed as one line and sent, and the
+	// thread that wasn't there before is the one
+	front("com.t3tools.T3Code")
+	id, title, err := T3Type(work, "Read BRIEF.md in this folder\nand help me")
+	text, _ := os.ReadFile(filepath.Join(dir, "text"))
+	focused, _ := os.ReadFile(filepath.Join(dir, "focused"))
+	if err != nil || id != "8411" || title != "Speaker balance" || string(text) != "Read BRIEF.md in this folder and help me" {
+		t.Errorf("typed into the open thread: id %q, title %q, %v, text %q", id, title, err, text)
+	}
+	// Its window had the keyboard already, so it wasn't asked forward
+	if len(focused) != 0 {
+		t.Errorf("the window was asked forward though it was in front: %q", focused)
+	}
+	if _, opened := os.Stat(filepath.Join(dir, "opened")); opened != nil {
+		t.Error("T3 Code wasn't asked to open the folder")
+	}
+	// Another window has the keyboard: nothing is typed into it
+	os.Remove(filepath.Join(dir, "text"))
+	os.Remove(filepath.Join(dir, "sent"))
+	front("com.mitchellh.ghostty")
+	if _, _, err := T3Type(work, "Read BRIEF.md"); err == nil || !strings.Contains(err.Error(), "didn't come to the front") {
+		t.Errorf("another window in front: %v", err)
+	}
+	if _, typed := os.Stat(filepath.Join(dir, "text")); typed == nil {
+		t.Error("the message was typed into another window")
+	}
+	if asked, _ := os.ReadFile(filepath.Join(dir, "focused")); strings.TrimSpace(string(asked)) != "T3Code" {
+		t.Errorf("T3 Code's window wasn't asked forward: %q", asked)
+	}
+	// Over ssh there is no desktop to type on
+	front("com.t3tools.T3Code")
+	t.Setenv("SSH_CONNECTION", "100.1.2.3 5555 100.4.5.6 22")
+	if _, _, err := T3Type(work, "Read BRIEF.md"); !errors.Is(err, ErrNoSession) {
+		t.Errorf("over ssh: %v", err)
+	}
+}
+
+func TestAWindowForTheOwnerDoesNotInheritAnAgentsBareSettings(t *testing.T) {
+	// As measured in a Codex thread: colours off and paging off, in a terminal that has colours
+	agent := []string{"HOME=/home/owner", "NO_COLOR=1", "PAGER=cat", "GIT_PAGER=cat", "TERM=xterm-ghostty", "COLORTERM=truecolor", "CLICOLOR=0", "FORCE_COLOR=0", "PATH=/usr/bin"}
+	if got := strings.Join(OwnersEnv(agent), " "); got != "HOME=/home/owner TERM=xterm-ghostty COLORTERM=truecolor PATH=/usr/bin" {
+		t.Errorf("an agent's environment became %q", got)
+	}
+	// What the owner set themselves stays
+	own := []string{"PAGER=less", "TERM=xterm-256color", "FORCE_COLOR=1", "CLICOLOR=1"}
+	if got := strings.Join(OwnersEnv(append(own, "TERM=dumb")), " "); got != strings.Join(own, " ") {
+		t.Errorf("the owner's own settings became %q", got)
+	}
+	// The window is started with the cleaned settings
+	dir, bin := t.TempDir(), t.TempDir()
+	os.WriteFile(filepath.Join(bin, "window"), []byte("#!/bin/sh\necho \"colour:${NO_COLOR:-on} pager:${PAGER:-unset}\" > "+dir+"/seen\n"), 0o755)
+	t.Setenv("HW_TEST_TERMINAL", filepath.Join(bin, "window"))
+	t.Setenv("NO_COLOR", "1")
+	t.Setenv("PAGER", "cat")
+	if err := Terminal("true"); err != nil {
+		t.Fatal(err)
+	}
+	time.Sleep(400 * time.Millisecond)
+	if seen, _ := os.ReadFile(filepath.Join(dir, "seen")); strings.TrimSpace(string(seen)) != "colour:on pager:unset" {
+		t.Errorf("the window saw %q", seen)
+	}
+}
