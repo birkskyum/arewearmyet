@@ -169,10 +169,10 @@ models:
       gpu: { state: partial, note: "The GPU is off in its tree for now; the desktop runs on software rendering with LIBGL_ALWAYS_SOFTWARE=1.", version: "7.3-72", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45" }
       keyboard: { state: works, version: "7.3-72", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45" }
       touchpad: { state: works, version: "7.3-72", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45" }
-      wifi: { state: partial, note: "Works, but doesn't come back after deep sleep.", version: "7.3-72", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45" }
+      wifi: { state: partial, note: "Works, but is gone after a sleep, short or long and in either sleep mode, and restarting the Wi-Fi service doesn't bring it back.", version: "7.3-72", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45" }
       battery: { state: works, version: "7.3-72", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45" }
       bluetooth: { state: broken, note: "Its QCC2072 card has no Bluetooth support in Linux yet.", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45" }
-      suspend: { state: broken, note: "Short sleeps work. Deep sleep cycled three times and the laptop restarted into Windows on the third; s2idle is being tested.", version: "7.3-72", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45" }
+      suspend: { state: broken, note: "A sleep of a few minutes wakes. A sleep of about half an hour ends in a restart, in both sleep modes (deep and s2idle), as its owner found on 18 November 2026.", version: "7.3-72", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45" }
 
   microsoft-surface-pro-11:
     links:
