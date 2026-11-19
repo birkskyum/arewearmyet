@@ -41,12 +41,19 @@ type camera struct {
 	open func(file string) *tools.Viewer
 	// canOpen says whether there is a viewer to open it in.
 	canOpen bool
-	ask     choice
-	over    bool
+	// inTerminal says the terminal draws pictures itself, sharp. Otherwise the picture is drawn
+	// in coloured blocks.
+	inTerminal bool
+	// columns and rows are the cells the terminal was told to draw the picture in, when it was.
+	columns, rows int
+	// width and height are the space the step was last drawn in.
+	width, height int
+	ask           choice
+	over          bool
 }
 
 func newCamera(run *report.Run, dir string) *camera {
-	return &camera{run: run, dir: dir, phase: "intro", open: tools.View, canOpen: tools.Have("imv")}
+	return &camera{run: run, dir: dir, phase: "intro", open: tools.View, canOpen: tools.Have("imv"), inTerminal: picture.InTerminal()}
 }
 
 func (c *camera) name() string   { return "Camera" }
@@ -83,6 +90,38 @@ func (c *camera) cleanup() {
 func (c *camera) finish() {
 	c.cleanup()
 	c.over = true
+}
+
+// The terminal holds one picture for the test, under this number.
+const pictureID = 77
+
+// space is how many columns and rows the picture may take, beside the question.
+func (c *camera) space(width, height int) (int, int) {
+	return min(width, 96), max(4, min(30, height-len(c.ask.options)-9))
+}
+
+// hand gives the picture to the terminal to draw, in the cells the step has room for.
+func (c *camera) hand() tea.Cmd {
+	c.columns, c.rows = 0, 0
+	if !c.inTerminal || !c.shown() {
+		return nil
+	}
+	columns, rows := c.frame.Fit(c.space(c.width, c.height))
+	sequence, err := c.frame.Hand(pictureID, columns, rows)
+	if columns == 0 || err != nil {
+		return nil
+	}
+	c.columns, c.rows = columns, rows
+	return tea.Raw(sequence)
+}
+
+// forget makes the terminal drop the picture once the step is over.
+func (c *camera) forget() tea.Cmd {
+	if c.columns == 0 {
+		return nil
+	}
+	c.columns, c.rows = 0, 0
+	return tea.Raw(picture.Forget(pictureID))
 }
 
 func (c *camera) capture() tea.Cmd {
@@ -134,11 +173,12 @@ func (c *camera) question() {
 	}
 }
 
-func (c *camera) update(msg tea.Msg) tea.Cmd {
+func (c *camera) update(msg tea.Msg) (dropped tea.Cmd) {
 	switch msg := msg.(type) {
 	case frameMsg:
 		c.frame, c.took, c.settled, c.err = msg.frame, msg.took, msg.settled, msg.err
 		c.question()
+		return c.hand()
 	case tea.KeyPressMsg:
 		switch c.phase {
 		case "intro":
@@ -167,6 +207,12 @@ func (c *camera) update(msg tea.Msg) tea.Cmd {
 		if picked < 0 {
 			return nil
 		}
+		// Whatever the answer, the terminal lets go of the picture
+		defer func() {
+			if c.over {
+				dropped = c.forget()
+			}
+		}()
 		switch {
 		case errors.Is(c.err, tools.ErrCameraBusy):
 			if picked == 0 {
@@ -212,6 +258,7 @@ func (c *camera) update(msg tea.Msg) tea.Cmd {
 }
 
 func (c *camera) view(width, height int) string {
+	c.width, c.height = width, height
 	switch c.phase {
 	case "intro":
 		return wrap("Now the camera. When you press Enter it takes one picture and shows it here, so you can see whether the camera works. Cover the camera first if you'd rather not be in it: a picture of anything shows it works.", width) + "\n\n" + private(width)
@@ -225,8 +272,13 @@ func (c *camera) view(width, height int) string {
 		}
 		return c.ask.view(width) + "\n\n" + wrap("Measured: "+c.evidence()+".", width)
 	}
-	// The picture, in whatever height the question leaves
-	rows := max(4, min(26, height-len(c.ask.options)-9))
-	return c.frame.Render(min(width, 96), rows) + "\n\n" + c.ask.view(width) + "\n\n" +
+	// The picture, in whatever height the question leaves: sharp where the terminal draws it
+	// itself, and in coloured blocks elsewhere or once the window is narrower than it
+	columns, rows := c.space(width, height)
+	drawn := c.frame.Render(columns, rows)
+	if c.columns > 0 && c.columns <= width {
+		drawn = picture.Cells(pictureID, c.columns, c.rows)
+	}
+	return drawn + "\n\n" + c.ask.view(width) + "\n\n" +
 		wrap("Measured: "+c.evidence()+". Only these numbers are sent, never the picture.", width)
 }

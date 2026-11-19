@@ -360,6 +360,42 @@ func TestCameraTakesItsPictureOnlyWhenToldAndShowsItInTheTerminal(t *testing.T) 
 		t.Errorf("evidence: %s", c.evidence())
 	}
 
+	// In a terminal that draws pictures itself, the picture is handed to it and drawn sharp in
+	// its cells, replaced by another on "Take another", and dropped with the answer
+	sharp := &report.Run{}
+	c = newCamera(sharp, dir)
+	c.inTerminal = true
+	c.view(100, 40)
+	c.update(press(tea.KeyEnter))
+	handed := c.update(frameMsg{frame: scene(), took: time.Second, settled: true})
+	raw, isRaw := tea.Msg(nil), false
+	if handed != nil {
+		raw = handed()
+		_, isRaw = raw.(tea.RawMsg)
+	}
+	if !isRaw || !strings.HasPrefix(fmt.Sprint(raw.(tea.RawMsg).Msg), "\x1b_Ga=T,U=1,f=100,q=2,i=77,") {
+		t.Fatalf("the picture wasn't handed to the terminal: %v", raw)
+	}
+	if view := c.view(100, 40); !strings.Contains(view, "\U0010EEEE") || strings.Contains(view, "▀") {
+		t.Errorf("the terminal's own picture isn't in the view:\n%s", view)
+	}
+	// In a window now narrower than the picture, the blocks stand in
+	if view := c.view(c.columns-2, 40); strings.Contains(view, "\U0010EEEE") || !strings.Contains(view, "▀") {
+		t.Error("a window narrower than the picture still shows the terminal's own")
+	}
+	dropped := c.update(press('1'))
+	if !c.done() || dropped == nil || fmt.Sprint(dropped().(tea.RawMsg).Msg) != picture.Forget(pictureID) || sharp.State("camera") != report.Works {
+		t.Errorf("after the answer: done %v, dropped %v, state %q", c.done(), dropped != nil, sharp.State("camera"))
+	}
+	// Elsewhere nothing is handed over
+	c = newCamera(&report.Run{}, dir)
+	c.inTerminal = false
+	c.view(100, 40)
+	c.update(press(tea.KeyEnter))
+	if c.update(frameMsg{frame: scene(), settled: true}) != nil || c.update(press('1')) != nil {
+		t.Error("a terminal that can't draw pictures was sent one")
+	}
+
 	// Another program holding the camera is named as that, and nothing is reported for it
 	busy := &report.Run{}
 	c = newCamera(busy, dir)
