@@ -9,7 +9,7 @@ values and can differ from a running machine where the firmware fills fields in 
 dumps published here first. Each folder's SOURCE.md says where its tables came from. The SoC serial number (SOSN)
 is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. Disassemble a table with `iasl -d`.
 
-94 of 116 models have at least one dump.
+95 of 117 models have at least one dump.
 
 | Model | Dumps |
 | --- | --- |
@@ -46,6 +46,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | HP EliteBook 6 G1q | [hp-elitebook-6-g1q](aarch64-laptops/hp-elitebook-6-g1q) |
 | HP EliteBook Ultra G1q | [hp-elitebook-ultra-g1q](aarch64-laptops/hp-elitebook-ultra-g1q) |
 | HP OmniBook 3 16 (16-bz0) | [hardware-reports/hp/hp-omnibook-3-laptop-16-bz0xxx](../reports/hp/hp-omnibook-3-laptop-16-bz0xxx) |
+| HP OmniBook 3 16 (16-ct0) | [firmware/hp-omnibook-3-16-ct0](firmware/hp-omnibook-3-16-ct0) |
 | HP OmniBook 5 14 | [hp-omnibook-5-14-he0xxx](aarch64-laptops/hp-omnibook-5-14-he0xxx), [hardware-reports/hp/hp-omnibook-5-laptop-14-he0xxx](../reports/hp/hp-omnibook-5-laptop-14-he0xxx) |
 | HP OmniBook X 14 | [hp-omnibook-x14-fe0xxx](aarch64-laptops/hp-omnibook-x14-fe0xxx) |
 | HP EliteBook 6 G2q | [firmware/hp-elitebook-6-g2q](firmware/hp-elitebook-6-g2q) |
@@ -117,7 +118,6 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 - ASUS Vivobook 16
 - Fujitsu FMV Note U
 - HP OmniBook 3 14
-- HP OmniBook 3 16 (16-ct0)
 - HP OmniBook 5 16
 - HP ProBook 4 G1q
 - HP EliteBook X G2q
@@ -125,6 +125,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 - HP OmniBook X 14 (2026)
 - HP OmniBook X 16 (2026)
 - HUMAIN Horizon
+- HUMAIN Horizon Pro
 - Lenovo V15 G7 Q7X
 - Lenovo ThinkPad T14s Gen 7
 - Microsoft Surface Laptop 13-inch
@@ -135,6 +136,9 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 
 ## Not matched to a model yet
 
+- [hardware-reports/hp/hp-omnibook-x-laptop-14-fe0xxx](../reports/hp/hp-omnibook-x-laptop-14-fe0xxx)
+- [hardware-reports/samsung/galaxy-book6-edge-palf](../reports/samsung/galaxy-book6-edge-palf)
+- [hardware-reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa](../reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa)
 - [hardware-reports/microsoft-corporation/surface-pro-x](../reports/microsoft-corporation/surface-pro-x)
 - [hardware-reports/hp/hp-omnibook-x-laptop-14-kr1xxx](../reports/hp/hp-omnibook-x-laptop-14-kr1xxx)
 - [hardware-reports/hp/hp-omnibook-3-laptop-14-hz0xxx](../reports/hp/hp-omnibook-3-laptop-14-hz0xxx)

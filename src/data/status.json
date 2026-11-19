@@ -1,18 +1,18 @@
 {
-  "collected": "2026-11-17T07:14:55.608Z",
+  "collected": "2026-11-19T21:28:56.515Z",
   "stale": [],
-  "linuxNext": "20261113",
+  "linuxNext": "20261119",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-71",
+    "kernel": "7.3-72",
     "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.16.492",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.16.492/omarchy-edge-2026.11.16.492-aarch64.iso",
-      "kernel": "7.3.0-66-omarchy"
+      "version": "2026.11.19.496",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.19.496/omarchy-edge-2026.11.19.496-aarch64.iso",
+      "kernel": "7.3.0-72-omarchy"
     },
     "channels": [
       {
@@ -397,7 +397,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-71",
+        "kernel": "7.3-72",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -3873,9 +3873,9 @@
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261030064149.14736-3-kaipeng94@gmail.com/",
         "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/linux-omarchy-aarch64/2581-arm64-dts-qcom-Add-support-for-Acer-Swift-Go-Pro-AI-.patch",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/acer-swift-go-pro-ai-sfa14-11",
-        "ids": "mismatch",
+        "ids": "ubuntu",
         "idsCollected": null,
-        "idsStubble": null,
+        "idsStubble": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e78100-acer-sfa14-11.json",
         "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
@@ -3925,7 +3925,13 @@
             "qcom/x1e80100/ACER/SFA14-11/qccdsp8380.mbn",
             "qcom/x1e80100/ACER/SFA14-11/cdsp_dtbs.elf"
           ],
-          "stubble": [],
+          "stubble": [
+            {
+              "file": "x1e78100-acer-sfa14-11.json",
+              "state": "merged",
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e78100-acer-sfa14-11.json"
+            }
+          ],
           "outcome": "should",
           "reports": []
         }
@@ -5960,7 +5966,7 @@
         "firmware": "none"
       },
       "upstream": {
-        "deviceTree": "posted",
+        "deviceTree": "next",
         "firstRelease": null,
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261113-qn10-v1-2-e09b2aa7ccbe@oss.qualcomm.com/",
         "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2854",
@@ -5999,9 +6005,9 @@
           "deviceTree": {
             "file": "glymur-asus-ascent-qn10.dts",
             "firstRelease": null,
-            "inNext": false,
-            "upstream": false,
-            "patch": "linux-omarchy-dtbs/0035-arm64-dts-qcom-glymur-Add-ASUS-Ascent-QN10.patch"
+            "inNext": true,
+            "upstream": true,
+            "patch": null
           },
           "firmwareNeeded": [
             "qcom/glymur/ASUSTeK/QN10/qcadsp8480.mbn",
@@ -17952,6 +17958,9 @@
       "qcom/x1e80100/ASUSTeK/vivobook-16"
     ],
     "acpi": [
+      "hardware-reports/hp/hp-omnibook-x-laptop-14-fe0xxx",
+      "hardware-reports/samsung/galaxy-book6-edge-palf",
+      "hardware-reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa",
       "hardware-reports/microsoft-corporation/surface-pro-x",
       "hardware-reports/hp/hp-omnibook-x-laptop-14-kr1xxx",
       "hardware-reports/hp/hp-omnibook-3-laptop-14-hz0xxx"

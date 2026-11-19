@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-17T07:14:55.608Z",
+  "collected": "2026-11-19T21:28:56.515Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -44,8 +44,24 @@
     "v261",
     "v262"
   ],
-  "linuxNext": "20261113",
+  "linuxNext": "20261119",
   "deviceTrees": [
+    {
+      "file": "glymur-asus-ascent-qn10.dts",
+      "firstRelease": null,
+      "inNext": true,
+      "model": "ASUS Ascent QN10",
+      "compatible": [
+        "asus,ascent-qn10",
+        "qcom,glymur"
+      ],
+      "firmware": [
+        "qcom/glymur/ASUSTeK/QN10/qcadsp8480.mbn",
+        "qcom/glymur/ASUSTeK/QN10/adsp_dtbs.elf",
+        "qcom/glymur/ASUSTeK/QN10/qccdsp8480.mbn",
+        "qcom/glymur/ASUSTeK/QN10/cdsp_dtbs.elf"
+      ]
+    },
     {
       "file": "glymur-asus-zenbook-a14-ux3407na.dts",
       "firstRelease": null,
@@ -3342,8 +3358,8 @@
       "file": "x1e78100-acer-sfa14-11.json",
       "state": "merged",
       "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e78100-acer-sfa14-11.json",
-      "name": "Acer Swift 14 Go Pro AI",
-      "compatible": "acer,swift-sfa14-11",
+      "name": "Acer Swift Go Pro AI (SFA14-11)",
+      "compatible": "acer,swift-go-sfa14-11",
       "hwids": [
         "730dea6f-efd9-5686-a975-656c9b8423f1",
         "97f3186d-0ad3-5f8a-98bb-72674271590d",
@@ -4232,28 +4248,6 @@
         "2eed3ed5-f1a6-5f09-a129-5f569481f81e",
         "cc7b1cce-6b99-5385-b37b-646c0a08c509",
         "1df04289-d893-5db6-a2f7-706662991cae"
-      ]
-    },
-    {
-      "file": "x1e78100-acer-sfa14-11.json",
-      "state": "open",
-      "url": "https://github.com/ubuntu/stubble/pull/88",
-      "name": "Acer Swift 14 AI",
-      "compatible": "acer,sfa14-11",
-      "hwids": [
-        "730dea6f-efd9-5686-a975-656c9b8423f1",
-        "97f3186d-0ad3-5f8a-98bb-72674271590d",
-        "39379ca2-ff12-5f56-b54f-05064dc42166",
-        "c6d7090e-7535-5a11-aa9e-c61e2bf3e21c",
-        "b4835065-fd33-5d49-99d2-4e8a16147c23",
-        "74439855-9bdf-5cf1-9bf8-4057ee0fb250",
-        "7e4796fa-aa40-55f4-ac92-7350759fe5b7",
-        "eb342e11-e7f8-5b4b-b193-d379f676ec8b",
-        "3e7aed1f-e80e-59b9-a0e7-0011d93d05ba",
-        "488a4452-62a8-5362-87ba-8265d0d0ef61",
-        "3e7aed1f-e80e-59b9-a0e7-0011d93d05ba",
-        "dace3a5d-f5c6-5b0b-b15c-ff1ebfc2f5c2",
-        "c97fd9d6-efec-54e0-a6e2-3ba4cadd9655"
       ]
     },
     {
@@ -5256,6 +5250,42 @@
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
     },
     {
+      "folder": "hardware-reports/hp/hp-omnibook-x-laptop-14-fe0xxx",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/56",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "ead0b558fa323de10cd6e7d6254fec3bce64b500",
+      "dir": "reports/hp/hp-omnibook-x-laptop-14-fe0xxx/29e98fde",
+      "pull": {
+        "number": 56,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
+      "folder": "hardware-reports/samsung/galaxy-book6-edge-palf",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/54",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "f5582b95880d9d7de3d103619706c8b9b377334b",
+      "dir": "reports/samsung/galaxy-book6-edge-palf/13d4892b",
+      "pull": {
+        "number": 54,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
+      "folder": "hardware-reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/52",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "bae5ccee24e7e1019dc514e869f6f2712f557be3",
+      "dir": "reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa/a7d05faf",
+      "pull": {
+        "number": 52,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
       "folder": "hardware-reports/samsung-electronics-co-ltd/galaxy-book-go-5g",
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/50",
       "repo": "turbineBMW/omarchy-hardware-reports",
@@ -5936,7 +5966,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-71",
+        "kernel": "7.3-72",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -9606,10 +9636,32 @@
       }
     ],
     "image": {
-      "version": "2026.11.16.492",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.16.492/omarchy-edge-2026.11.16.492-aarch64.iso",
-      "kernel": "7.3.0-66-omarchy"
+      "version": "2026.11.19.496",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.19.496/omarchy-edge-2026.11.19.496-aarch64.iso",
+      "kernel": "7.3.0-72-omarchy"
     },
-    "pulls": []
+    "pulls": [
+      {
+        "number": 3051,
+        "title": "microsoft-surface-laptop-7-firmware: install Surface Wi-Fi board data",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/3051",
+        "draft": true,
+        "deviceTrees": [],
+        "ids": [],
+        "firmware": [
+          "qcom/x1e80100/microsoft/Romulus/adsp_dtbs.elf",
+          "qcom/x1e80100/microsoft/Romulus/adspr.jsn",
+          "qcom/x1e80100/microsoft/Romulus/adsps.jsn",
+          "qcom/x1e80100/microsoft/Romulus/adspua.jsn",
+          "qcom/x1e80100/microsoft/Romulus/battmgr.jsn",
+          "qcom/x1e80100/microsoft/Romulus/cdsp_dtbs.elf",
+          "qcom/x1e80100/microsoft/Romulus/cdspr.jsn",
+          "qcom/x1e80100/microsoft/Romulus/qcadsp8380.mbn",
+          "qcom/x1e80100/microsoft/Romulus/qccdsp8380.mbn",
+          "qcom/x1e80100/microsoft/Romulus/qcvss8380.mbn",
+          "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn"
+        ]
+      }
+    ]
   }
 }

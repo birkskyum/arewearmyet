@@ -18,6 +18,7 @@
        "note": null,
        "evidence": "eDP-1 connected, 1920x1200",
        "kernel": "7.2.0-18-qcom-x1e",
+       "os": "Ubuntu 26.04.1 LTS",
        "created": "2026-11-19T14:14:59.619Z",
        "run": "RUN-PY44RZ2CAE"
       }
@@ -38,6 +39,7 @@
        "note": null,
        "evidence": "adreno bound to 3d00000.gpu, render node from msm_dpu",
        "kernel": "7.2.0-18-qcom-x1e",
+       "os": "Ubuntu 26.04.1 LTS",
        "created": "2026-11-19T14:14:59.619Z",
        "run": "RUN-PY44RZ2CAE"
       }
@@ -58,6 +60,7 @@
        "note": null,
        "evidence": "wlP4p1s0 (ath12k_wifi7_pci) connected",
        "kernel": "7.2.0-18-qcom-x1e",
+       "os": "Ubuntu 26.04.1 LTS",
        "created": "2026-11-19T14:14:59.619Z",
        "run": "RUN-PY44RZ2CAE"
       }
@@ -78,6 +81,7 @@
        "note": null,
        "evidence": "wlP4p1s0 (ath12k_wifi7_pci): permanent address",
        "kernel": "7.2.0-18-qcom-x1e",
+       "os": "Ubuntu 26.04.1 LTS",
        "created": "2026-11-19T14:14:59.619Z",
        "run": "RUN-PY44RZ2CAE"
       }
@@ -98,6 +102,7 @@
        "note": null,
        "evidence": "hci0 powered",
        "kernel": "7.2.0-18-qcom-x1e",
+       "os": "Ubuntu 26.04.1 LTS",
        "created": "2026-11-19T14:14:59.619Z",
        "run": "RUN-PY44RZ2CAE"
       }
@@ -118,6 +123,7 @@
        "note": null,
        "evidence": "adsp running (qcom/x1e80100/ASUSTeK/zenbook-a14/qcadsp8380.mbn)",
        "kernel": "7.2.0-18-qcom-x1e",
+       "os": "Ubuntu 26.04.1 LTS",
        "created": "2026-11-19T14:14:59.619Z",
        "run": "RUN-PY44RZ2CAE"
       }
@@ -138,6 +144,7 @@
        "note": null,
        "evidence": "cdsp running (qcom/x1e80100/ASUSTeK/zenbook-a14/qccdsp8380.mbn)",
        "kernel": "7.2.0-18-qcom-x1e",
+       "os": "Ubuntu 26.04.1 LTS",
        "created": "2026-11-19T14:14:59.619Z",
        "run": "RUN-PY44RZ2CAE"
       }
@@ -158,6 +165,7 @@
        "note": null,
        "evidence": "qcom-battmgr-bat at 48%, Discharging",
        "kernel": "7.2.0-18-qcom-x1e",
+       "os": "Ubuntu 26.04.1 LTS",
        "created": "2026-11-19T14:14:59.619Z",
        "run": "RUN-PY44RZ2CAE"
       }
@@ -178,6 +186,7 @@
        "note": null,
        "evidence": "the kernel offers no hibernation",
        "kernel": "7.2.0-18-qcom-x1e",
+       "os": "Ubuntu 26.04.1 LTS",
        "created": "2026-11-19T14:14:59.619Z",
        "run": "RUN-PY44RZ2CAE"
       }
@@ -198,6 +207,7 @@
        "note": null,
        "evidence": "no iris or venus video decoder",
        "kernel": "7.2.0-18-qcom-x1e",
+       "os": "Ubuntu 26.04.1 LTS",
        "created": "2026-11-19T14:14:59.619Z",
        "run": "RUN-PY44RZ2CAE"
       }
@@ -223,6 +233,7 @@
        "note": null,
        "evidence": "eDP-1 connected, 1920x1200",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -243,6 +254,7 @@
        "note": null,
        "evidence": "msm drives the display, but no GPU is bound (the device tree has it off or its firmware failed); software rendering is on",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -263,6 +275,7 @@
        "note": null,
        "evidence": "connected at 5745 MHz, signal -43 dBm, sending at 780.0 Mb/s",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -283,6 +296,7 @@
        "note": null,
        "evidence": "wlo1 (ath12k_wifi7_pci): address set by the system (not from the card)",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -303,6 +317,7 @@
        "note": null,
        "evidence": "no Bluetooth controller",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -323,6 +338,7 @@
        "note": null,
        "evidence": "adsp running (qcom/glymur/hp/omnibook-x16/qcadsp8480.mbn)",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -343,6 +359,7 @@
        "note": null,
        "evidence": "cdsp running (qcom/glymur/hp/omnibook-x16/qccdsp8480.mbn)",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -363,6 +380,7 @@
        "note": null,
        "evidence": "no built-in sound card",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -383,6 +401,7 @@
        "note": null,
        "evidence": "no built-in sound card",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -403,6 +422,7 @@
        "note": null,
        "evidence": "qcom-battmgr-bat at 100%, Not charging",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -423,6 +443,7 @@
        "note": null,
        "evidence": "ucsi-source-psy-pmic_glink.ucsi.01 PD, 3250 mA",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -443,6 +464,7 @@
        "note": null,
        "evidence": "the kernel offers no hibernation",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -463,6 +485,7 @@
        "note": null,
        "evidence": "the hardware decoder gave no frames: Error opening output files: Invalid argument",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -483,6 +506,7 @@
        "note": null,
        "evidence": "61 keys registered, every letter, number and arrow among them",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -503,6 +527,7 @@
        "note": null,
        "evidence": "both brightness keys work: the backlight moved between 184 and 287",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -523,6 +548,7 @@
        "note": null,
        "evidence": "hid-over-i2c 04F3:32ED Touchpad: moving the pointer, clicking and two-finger scrolling both ways registered",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -543,6 +569,7 @@
        "note": null,
        "evidence": "hid-over-i2c 04F3:44BE: 3 touches, its interrupt fired 36 times",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -563,6 +590,7 @@
        "note": null,
        "evidence": "5 plug-ins detected: 3-1 at 5 Gb/s, 5-1 at 5 Gb/s, 5-1 at 5 Gb/s, 5-1 at 5 Gb/s, 5-1 at 5 Gb/s",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -583,6 +611,7 @@
        "note": null,
        "evidence": null,
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -603,6 +632,7 @@
        "note": "The fan's speed can't be read, for want of a sensor.",
        "evidence": "78 temperature sensors; the hottest went from 37 to 81 °C in 51 s with every core busy, drawing up to 40 W from the battery, and back to 42 °C after; no fan speed sensor; the owner heard the fan speed up at 81 °C, 50 s in",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T05:58:13.492Z",
        "run": "RUN-XHST7QQWC3"
       }
@@ -628,6 +658,7 @@
        "note": "Boots from USB to the installer, but the NVMe drive is never found, so the disk list is empty and the installer loops on 'no options provided'. PCIe 3 (1bd0000) fails to probe (its PHY has no init sequence on Purwa) and unwinding it drops the second NVMe regulator, which shares TLMM 18 with the real slot's. With PCIe 3, its PHY and that regulator turned off in the tree, PCIe 6a links at Gen4 x4 and the installer lists the drive.",
        "evidence": "qcom-pcie 1bf8000.pcie: Device not found",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy edge live ISO 2026.11.18.495 (aarch64)",
        "created": "2026-11-19T05:42:20.045Z",
        "run": "RUN-F6GAX9K3RH"
       }
@@ -648,6 +679,7 @@
        "note": "A monitor shows the console and installer at boot. Hot-plug not tried; the GPU firmware (gen71500_sqe.fw) isn't in the live system, so only the boot framebuffer was seen.",
        "evidence": null,
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy edge live ISO 2026.11.18.495 (aarch64)",
        "created": "2026-11-19T05:42:20.045Z",
        "run": "RUN-F6GAX9K3RH"
       }
@@ -668,6 +700,7 @@
        "note": "Five of six ports work (front USB-C, front USB-A and three rear USB-A are on the multiport controller). The rear USB-A second from the right is the only port on usb_1_ss0 (a600000), which stays deferred: its eUSB2 PHY waits for an SMB2360 repeater at SPMI SID 7 that this machine doesn't have. With smb2360_0 off and the PHY's repeater dropped, the controller probes and a keyboard in that port works (omarchy-pkgs#3070).",
        "evidence": "a600000.usb  platform: supplier fd3000.phy not ready",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy edge live ISO 2026.11.18.495 (aarch64)",
        "created": "2026-11-19T05:42:20.045Z",
        "run": "RUN-F6GAX9K3RH"
       }
@@ -688,6 +721,7 @@
        "note": "Desktop mini PC; no built-in screen.",
        "evidence": null,
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy edge live ISO 2026.11.18.495 (aarch64)",
        "created": "2026-11-19T05:42:20.045Z",
        "run": "RUN-F6GAX9K3RH"
       }
@@ -708,6 +742,7 @@
        "note": "Desktop mini PC; no built-in keyboard.",
        "evidence": null,
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy edge live ISO 2026.11.18.495 (aarch64)",
        "created": "2026-11-19T05:42:20.045Z",
        "run": "RUN-F6GAX9K3RH"
       }
@@ -728,6 +763,7 @@
        "note": "Desktop mini PC; no battery.",
        "evidence": null,
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy edge live ISO 2026.11.18.495 (aarch64)",
        "created": "2026-11-19T05:42:20.045Z",
        "run": "RUN-F6GAX9K3RH"
       }
@@ -753,6 +789,7 @@
        "note": null,
        "evidence": "Vulkan draws on Adreno X1-85 (turnip Mesa driver)",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T15:44:41.050Z",
        "run": "RUN-85CBV653X8"
       }
@@ -773,6 +810,7 @@
        "note": null,
        "evidence": "ANGLE (angleisbroken, Adreno X1-85, OpenGL ES 3.2), WebGL 2.0 (OpenGL ES 3.0 Chromium)",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T15:44:41.050Z",
        "run": "RUN-85CBV653X8"
       }
@@ -793,6 +831,7 @@
        "note": null,
        "evidence": "Chromium offers WebGPU on qualcomm adreno-7xx",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T15:44:41.050Z",
        "run": "RUN-85CBV653X8"
       }
@@ -819,6 +858,7 @@
        "note": null,
        "evidence": "1 keys registered; the owner didn't press Esc, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, Backspace, Tab, Q, W, E, R, T, Y, U, I, O, P, A, S, D, F, G, H, J, K, L, Enter, Z, X, C, V, B, N, M, ←, ↑, ↓, →",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T12:46:51.932Z",
        "run": "RUN-WSB55388EF"
       }
@@ -839,6 +879,7 @@
        "note": null,
        "evidence": "both brightness keys work: the backlight moved between 205 and 614",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T12:46:51.932Z",
        "run": "RUN-WSB55388EF"
       }
@@ -859,6 +900,7 @@
        "note": null,
        "evidence": "by the microphones at half volume: left speaker heard at -47 dB, right speaker heard at -55 dB; the left side 8 dB louder than the right at the microphones",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T12:45:11.157Z",
        "run": "RUN-PCXJPZYC77"
       }
@@ -879,6 +921,7 @@
        "note": null,
        "evidence": "the lid switch reported closed and then open again",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T12:43:56.345Z",
        "run": "RUN-RS5AV7M8JP"
       }
@@ -899,6 +942,7 @@
        "note": "The fan's speed can't be read, for want of a sensor.",
        "evidence": "59 temperature sensors; the hottest went from 42 to 96 °C in 41 s with every core and the GPU busy, and back to 57 °C after; no fan speed sensor; the owner heard the fan speed up at 96 °C, 41 s in",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T12:43:12.429Z",
        "run": "RUN-AGGBY9CSQ4"
       }
@@ -925,6 +969,7 @@
        "note": null,
        "evidence": "a 1920x1092 frame, brightness 86 of 255, contrast 28",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T12:37:31.866Z",
        "run": "RUN-E3RQHKRZWJ"
       }
@@ -951,6 +996,7 @@
        "note": null,
        "evidence": "hid-over-i2c 0488:1054 Touchpad: moving the pointer, clicking and two-finger scrolling both ways registered",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T03:08:23.079Z",
        "run": "RUN-CA9N4HBKHW"
       }
@@ -971,6 +1017,7 @@
        "note": null,
        "evidence": "hid-over-i2c 27C6:0123: 3 touches, its interrupt fired 77 times",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T03:07:38.287Z",
        "run": "RUN-BMMNBEJN6Y"
       }
@@ -991,6 +1038,7 @@
        "note": null,
        "evidence": "connected at 5180 MHz, signal -47 dBm, sending at 2401.9 Mb/s",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T03:05:34.195Z",
        "run": "RUN-X5ENYP5NBP"
       }
@@ -1011,6 +1059,7 @@
        "note": null,
        "evidence": "heard 28 Bluetooth devices nearby in 8 s",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T03:05:34.195Z",
        "run": "RUN-X5ENYP5NBP"
       }
@@ -1031,6 +1080,7 @@
        "note": null,
        "evidence": "60 frames of 720p H.264 decoded on the hardware decoder in 0.2 s",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T03:05:34.195Z",
        "run": "RUN-X5ENYP5NBP"
       }
@@ -1051,6 +1101,7 @@
        "note": null,
        "evidence": "slept and woke in s2idle [deep]; Wi-Fi was back 17 s after waking, the audio processor is running",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T02:04:04.163Z",
        "run": "RUN-K978V6HK5S"
       }
@@ -1077,6 +1128,7 @@
        "note": null,
        "evidence": "DP-2 (DisplayPort over USB-C), 3840x2160 at 60 Hz; it came back 8 s after plugging it in again",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T01:45:55.502Z",
        "run": "RUN-YQ79E2W74F"
       }
@@ -1097,6 +1149,7 @@
        "note": null,
        "evidence": "6 plug-ins detected: 2-1 at 5 Gb/s, 2-1 at 5 Gb/s, 4-1 at 5 Gb/s, 4-1 at 5 Gb/s, 6-1 at 5 Gb/s, 6-1 at 5 Gb/s",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T01:35:02.670Z",
        "run": "RUN-JV5HVVCT77"
       }
@@ -1117,6 +1170,7 @@
        "note": "The recording plays back quiet or muffled.",
        "evidence": "voice level 760, loudest 3296; the microphones heard the left tone for 2.5 s (level 161), the right for 2.5 s (level 40)",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T00:40:46.186Z",
        "run": "RUN-MQW53YXVRD"
       }
@@ -1137,6 +1191,7 @@
        "note": null,
        "evidence": "eDP-1 connected, 2944x1840",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T00:40:46.186Z",
        "run": "RUN-MQW53YXVRD"
       }
@@ -1157,6 +1212,7 @@
        "note": null,
        "evidence": "wlan0 (ath12k_wifi7_pci): address set by the system (not from the card)",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T00:40:46.186Z",
        "run": "RUN-MQW53YXVRD"
       }
@@ -1177,6 +1233,7 @@
        "note": null,
        "evidence": "adsp running (qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn)",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T00:40:46.186Z",
        "run": "RUN-MQW53YXVRD"
       }
@@ -1197,6 +1254,7 @@
        "note": null,
        "evidence": "cdsp running (qcom/x1e80100/LENOVO/83ED/qccdsp8380.mbn)",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T00:40:46.186Z",
        "run": "RUN-MQW53YXVRD"
       }
@@ -1217,6 +1275,7 @@
        "note": null,
        "evidence": "qcom-battmgr-bat at 98%, Not charging",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T00:40:46.186Z",
        "run": "RUN-MQW53YXVRD"
       }
@@ -1237,6 +1296,7 @@
        "note": null,
        "evidence": "ucsi-source-psy-pmic_glink.ucsi.02 PD, 3250 mA",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T00:40:46.186Z",
        "run": "RUN-MQW53YXVRD"
       }
@@ -1257,6 +1317,7 @@
        "note": null,
        "evidence": "the kernel offers no hibernation",
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T00:40:46.186Z",
        "run": "RUN-MQW53YXVRD"
       }
@@ -1277,6 +1338,7 @@
        "note": null,
        "evidence": null,
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T00:40:46.186Z",
        "run": "RUN-MQW53YXVRD"
       }
@@ -1297,6 +1359,7 @@
        "note": null,
        "evidence": null,
        "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T00:40:46.186Z",
        "run": "RUN-MQW53YXVRD"
       }
@@ -1322,6 +1385,7 @@
        "note": null,
        "evidence": "eDP-1 connected, 2880x1920",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1342,6 +1406,7 @@
        "note": null,
        "evidence": "adreno bound to 3d00000.gpu, render node from msm_dpu",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1362,6 +1427,7 @@
        "note": null,
        "evidence": "connected at 5640 MHz, signal -36 dBm, sending at 866.7 Mb/s",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1382,6 +1448,7 @@
        "note": null,
        "evidence": "wlP4p1s0 (ath12k_wifi7_pci): address set by the system (not from the card)",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1402,6 +1469,7 @@
        "note": null,
        "evidence": "heard 12 Bluetooth devices nearby in 8 s",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1422,6 +1490,7 @@
        "note": null,
        "evidence": "adsp running (qcom/x1e80100/microsoft/Denali/qcadsp8380.mbn)",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1442,6 +1511,7 @@
        "note": null,
        "evidence": "cdsp running (qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn)",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1462,6 +1532,7 @@
        "note": null,
        "evidence": "qcom-battmgr-bat at 100%, Not charging",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1482,6 +1553,7 @@
        "note": null,
        "evidence": "slept and woke in s2idle [deep]; Wi-Fi was back 17 s after waking, the audio processor is running",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1502,6 +1574,7 @@
        "note": null,
        "evidence": "the kernel offers no hibernation",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1522,6 +1595,7 @@
        "note": null,
        "evidence": "the hardware decoder gave no frames: Error opening output files: Invalid argument",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1542,6 +1616,7 @@
        "note": null,
        "evidence": "59 temperature sensors; the hottest went from 36 to 97 °C in 49 s with every core and the GPU busy, and back to 60 °C after; the fan (surface_fan) went from 0 to 1475 rpm",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1562,6 +1637,7 @@
        "note": null,
        "evidence": "78 keys registered, every letter, number and arrow among them",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1582,6 +1658,7 @@
        "note": null,
        "evidence": "both brightness keys work: the backlight moved between 1229 and 2662",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1602,6 +1679,7 @@
        "note": null,
        "evidence": "Microsoft Surface 045E:09AF Touchpad: moving the pointer, clicking and two-finger scrolling both ways registered",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1622,6 +1700,7 @@
        "note": null,
        "evidence": "IPTSD Virtual Touchscreen 045E:0C83: 3 taps reached the terminal as clicks in different places",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1642,6 +1721,7 @@
        "note": null,
        "evidence": "by the microphones at half volume: left speaker heard at -62 dB, right speaker heard at -62 dB; both sides about equally loud at the microphones",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1662,6 +1742,7 @@
        "note": null,
        "evidence": "the speakers at half volume recorded as 300 Hz at -64 dB, 1000 Hz at -57 dB, 3000 Hz at -48 dB; noise with nothing playing -100 dB; input volume 70%",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1682,6 +1763,7 @@
        "note": null,
        "evidence": null,
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1702,6 +1784,7 @@
        "note": "The frame is black or blank with nothing covering the camera.",
        "evidence": "a 4216x3136 frame, brightness 38 of 255, contrast 0",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1722,6 +1805,7 @@
        "note": "The same device ran at full speed in one plug-in and only at USB 2 speed in another, as a USB-C port does when only one orientation is wired for SuperSpeed.",
        "evidence": "6 plug-ins detected: 1-1 at 480 Mb/s, 1-1.1 at 12 Mb/s, 1-1.2 at 12 Mb/s, 1-1.5 at 480 Mb/s, 2-1 at 10 Gb/s, 4-1 at 5 Gb/s",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1742,6 +1826,7 @@
        "note": null,
        "evidence": "the lid switch reported closed and then open again; the computer slept 15 s while it was down",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1762,6 +1847,7 @@
        "note": null,
        "evidence": null,
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1782,6 +1868,7 @@
        "note": null,
        "evidence": null,
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1802,6 +1889,7 @@
        "note": null,
        "evidence": null,
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1822,6 +1910,7 @@
        "note": null,
        "evidence": "ANGLE (angleisbroken, Adreno X1-85, OpenGL ES 3.2), WebGL 2.0 (OpenGL ES 3.0 Chromium)",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1842,6 +1931,7 @@
        "note": "Chromium doesn't offer WebGPU by itself here. It works when started with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU.",
        "evidence": "WebGPU on qualcomm adreno-7xx with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU; without them: no adapter",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:31:53.053Z",
        "run": "RUN-3ZN9RAZ2HZ"
       }
@@ -1867,6 +1957,7 @@
        "note": null,
        "evidence": "eDP-1 connected, 2880x1800",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -1887,6 +1978,7 @@
        "note": null,
        "evidence": "adreno bound to 3d00000.gpu, render node from msm_dpu",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -1907,6 +1999,7 @@
        "note": null,
        "evidence": "connected at 6295 MHz, signal -67 dBm, sending at 864.6 Mb/s",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -1927,6 +2020,7 @@
        "note": null,
        "evidence": "wlP4p1s0 (ath12k_wifi7_pci): address set by the system (not from the card)",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -1947,6 +2041,7 @@
        "note": null,
        "evidence": "adsp running (qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn)",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -1967,6 +2062,7 @@
        "note": null,
        "evidence": "cdsp running (qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn)",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -1987,6 +2083,7 @@
        "note": null,
        "evidence": "no built-in sound card",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2007,6 +2104,7 @@
        "note": null,
        "evidence": "no built-in sound card",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2027,6 +2125,7 @@
        "note": null,
        "evidence": "no battery reports its charge",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2047,6 +2146,7 @@
        "note": null,
        "evidence": "the kernel offers no hibernation",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2067,6 +2167,7 @@
        "note": null,
        "evidence": "no camera device",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2087,6 +2188,7 @@
        "note": null,
        "evidence": "the hardware decoder gave no frames: Error opening output files: Invalid argument",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2107,6 +2209,7 @@
        "note": null,
        "evidence": "both brightness keys pressed, the backlight stayed at 1024",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2127,6 +2230,7 @@
        "note": "No effect from: volume up, volume down, mute, mute again",
        "evidence": null,
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2147,6 +2251,7 @@
        "note": null,
        "evidence": "hid-over-i2c 4D49:4150 Touchpad: moving the pointer, clicking and two-finger scrolling both ways registered",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2167,6 +2272,7 @@
        "note": null,
        "evidence": "hid-over-i2c 27C6:0123: 3 touches, its interrupt fired 104 times",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2187,6 +2293,7 @@
        "note": "2 plug-ins gave no device.",
        "evidence": "2 plug-ins detected: 5-2 at 12 Mb/s, 5-2 at 12 Mb/s",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2207,6 +2314,7 @@
        "note": null,
        "evidence": "HDMI-A-1 (HDMI), 1920x1080 at 60 Hz; it came back 7 s after plugging it in again",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2227,6 +2335,7 @@
        "note": null,
        "evidence": "the lid switch reported closed and then open again",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2247,6 +2356,7 @@
        "note": null,
        "evidence": "slept and woke in s2idle [deep]; Wi-Fi was back 17 s after waking, the audio processor is running",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2267,6 +2377,7 @@
        "note": null,
        "evidence": "the computer restarted by itself during the test's Temperatures and fan step, before the step finished",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2287,6 +2398,7 @@
        "note": "Limine bootloader is dark/invisible by default. Disk encryption unlock prompt is \"invisible\" due to the screen being pitch black/off. Built-in keyboard works to enter decryption password. Pressing enter after to boot into the desktop also works, but then the keyboard doesn\\t function after that. Hav",
        "evidence": null,
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2307,6 +2419,7 @@
        "note": "Battery percentage permanently stuck at \"0%\". Plugging in lets me use the machine \"indefinitely\", removing charger leaves the machine running on battery. Rebooting into Windows reflects real-world usage.",
        "evidence": null,
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2327,6 +2440,7 @@
        "note": null,
        "evidence": null,
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2347,6 +2461,7 @@
        "note": null,
        "evidence": "ANGLE (angleisbroken, Adreno X1-85, OpenGL ES 3.2), WebGL 2.0 (OpenGL ES 3.0 Chromium)",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
@@ -2367,6 +2482,7 @@
        "note": "Chromium doesn't offer WebGPU by itself here. It works when started with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU.",
        "evidence": "WebGPU on qualcomm adreno-7xx with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU; without them: no adapter",
        "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
        "created": "2026-11-19T18:47:44.644Z",
        "run": "RUN-M4V4RAWQQD"
       }
