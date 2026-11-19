@@ -76,8 +76,12 @@ func main() {
 		usage()
 		os.Exit(2)
 	}
-	if len(only) > 0 && (command != "guided" || !guided.Interactive()) {
-		fmt.Fprintln(os.Stderr, "hw-test: a single step is done with you, so it needs a terminal and can't be combined with", command)
+	if len(only) > 0 && command != "guided" {
+		fmt.Fprintf(os.Stderr, "hw-test: steps can't be combined with %s\n", command)
+		os.Exit(2)
+	}
+	if len(only) > 0 && !guided.Interactive() {
+		fmt.Fprintln(os.Stderr, "hw-test: a step is done with you at the keyboard, so it needs a terminal")
 		os.Exit(2)
 	}
 
