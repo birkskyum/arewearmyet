@@ -116,10 +116,15 @@ func lastLine(text string) string {
 }
 
 // Volume is the default speakers' volume, 0 to 1 and above, and whether they are muted.
-func Volume() (level float64, muted, ok bool) {
+func Volume() (level float64, muted, ok bool) { return volume("@DEFAULT_AUDIO_SINK@") }
+
+// InputVolume is the default microphone's input volume, and whether it is muted.
+func InputVolume() (level float64, muted, ok bool) { return volume("@DEFAULT_AUDIO_SOURCE@") }
+
+func volume(device string) (level float64, muted, ok bool) {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, "wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@")
+	command := exec.CommandContext(ctx, "wpctl", "get-volume", device)
 	command.WaitDelay = time.Second
 	out, err := command.Output()
 	if err != nil {

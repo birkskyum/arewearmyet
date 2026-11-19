@@ -140,3 +140,49 @@ func Hear(samples []int16) Heard {
 	}
 	return heard
 }
+
+// Decibels is a level relative to the loudest a recording can hold: 0 is full scale, -6 is
+// half of it, and silence is far below.
+func Decibels(level int) float64 {
+	if level <= 0 {
+		return -100
+	}
+	return 20 * math.Log10(float64(level)/32768)
+}
+
+// ToneLevel is the level the test tone plays at, the loudness the owner has just heard and
+// set their volume by.
+var ToneLevel = Level(func() []int16 {
+	stereo := Samples(Tone(Left, 1))
+	mono := make([]int16, len(stereo)/2)
+	for i := range mono {
+		mono[i] = stereo[i*2]
+	}
+	return mono
+}())
+
+// Loudest is the level of a recording's loudest fifth of a second, which for speech is the
+// level of the voice and not of the pauses.
+func Loudest(samples []int16) int {
+	loudest := 0
+	for at := 0; at+Rate/5 <= len(samples); at += Rate / 5 {
+		loudest = max(loudest, Level(samples[at:at+Rate/5]))
+	}
+	return loudest
+}
+
+// Boost returns a recording made as loud as the test tone, so a quiet recording can be
+// judged for clearness. It never boosts more than a hundredfold, which would only be noise,
+// and never makes a recording quieter.
+func Boost(samples []int16) (boosted []int16, gain float64) {
+	loudest := Loudest(samples)
+	if loudest == 0 {
+		return samples, 1
+	}
+	gain = math.Max(1, math.Min(100, float64(ToneLevel)/float64(loudest)))
+	boosted = make([]int16, len(samples))
+	for i, sample := range samples {
+		boosted[i] = int16(math.Max(-32768, math.Min(32767, float64(sample)*gain)))
+	}
+	return boosted, gain
+}

@@ -89,3 +89,34 @@ func TestReadsARecordingWhoseHeaderWasNeverFinished(t *testing.T) {
 		t.Error("a header alone gave samples")
 	}
 }
+
+func TestAQuietRecordingIsBoostedToTheTonesLoudness(t *testing.T) {
+	// Speech-like: a quiet stretch, then a louder second
+	quiet := build(func(i int) float64 {
+		if i < Rate {
+			return sine(i, 200, 20)
+		}
+		return sine(i, 200, 200)
+	})
+	if got := Decibels(Loudest(quiet)); got > -46 || got < -48 {
+		t.Errorf("the quiet recording is at %.1f dB", got)
+	}
+	boosted, gain := Boost(quiet)
+	if gain < 50 || gain > 70 {
+		t.Errorf("gain %.1f", gain)
+	}
+	if difference := Decibels(Loudest(boosted)) - Decibels(ToneLevel); difference > 0.5 || difference < -0.5 {
+		t.Errorf("boosted to %.1f dB, the tone is at %.1f", Decibels(Loudest(boosted)), Decibels(ToneLevel))
+	}
+	// A loud recording is left as it is, and silence isn't turned into noise
+	loud := build(func(i int) float64 { return sine(i, 200, 20000) })
+	if _, gain := Boost(loud); gain != 1 {
+		t.Errorf("a loud recording was changed by %.1f", gain)
+	}
+	if _, gain := Boost(build(func(i int) float64 { return 0 })); gain != 1 {
+		t.Errorf("silence was boosted by %.1f", gain)
+	}
+	if Decibels(0) > -99 || Decibels(32768) != 0 {
+		t.Error("decibels are off")
+	}
+}
