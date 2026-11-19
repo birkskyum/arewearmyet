@@ -637,13 +637,13 @@ type menuEntry struct {
 
 // The menu, in two groups: what measures itself, then what takes someone at the computer.
 var menu = []menuEntry{
-	{word: "auto", label: "All of these in one go", auto: true, about: "about four minutes, plays test tones"},
+	{word: "auto", label: "All of these in one go", auto: true, about: "plays test tones"},
 	{word: "speakers", label: "Speakers and microphones", checks: []string{"speakers", "microphones"}, auto: true},
 	{word: "graphics", label: "Graphics: Vulkan, WebGL and WebGPU", checks: []string{"gpu", "webgl", "webgpu"}, auto: true},
 	{word: "wireless", label: "Wi-Fi signal and Bluetooth range", checks: []string{"wifi", "bluetooth"}, auto: true},
 	{word: "video", label: "Video decoding", checks: []string{"video-decode"}, auto: true},
 	{word: "temperatures", label: "Temperatures and fans", checks: []string{"fans"}, auto: true, step: heatAlone},
-	{word: "manual", label: "All of these in one go", about: "about ten minutes"},
+	{word: "manual", label: "All of these in one go"},
 	{word: "keyboard", label: "Keyboard, volume and brightness keys", checks: []string{"keyboard", "backlight"}},
 	{word: "touchpad", label: "Touchpad", checks: []string{"touchpad"}},
 	{word: "touchscreen", label: "Touchscreen", checks: []string{"touchscreen"}},

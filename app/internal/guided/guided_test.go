@@ -520,7 +520,7 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 		t.Errorf("the two groups are off:\n%s", drawn)
 	}
 	// Each group opens with a way to run all of it
-	if both := strings.LastIndex(drawn, "All of these in one go"); strings.Count(drawn, "All of these in one go") != 2 || !(with < both && both < strings.Index(drawn, "Keyboard, volume")) || !strings.Contains(drawn, "about ten minutes") {
+	if both := strings.LastIndex(drawn, "All of these in one go"); strings.Count(drawn, "All of these in one go") != 2 || !(with < both && both < strings.Index(drawn, "Keyboard, volume")) || strings.Contains(drawn, "about ten minutes") || strings.Contains(drawn, "about four minutes") {
 		t.Errorf("the group done with the owner has no way to run all of it:\n%s", drawn)
 	}
 	// Each part shows how it stood the last time it was tested here, and the screen says where

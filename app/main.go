@@ -843,9 +843,9 @@ func usage() {
   hw-test quick      the quick check alone: read-only, a few seconds, no questions
   hw-test STEP...    one part alone, reporting only that part:
                      `+wrapWords(guided.StepWords())+`
-  hw-test manual     every test done with you, about ten minutes: keyboard, touchpad, touchscreen,
+  hw-test manual     every test done with you: keyboard, touchpad, touchscreen,
                      headphones, camera, USB ports, external screen, sleep and a few questions
-  hw-test auto       every test that needs nobody, about four minutes: sound, graphics, WebGL and
+  hw-test auto       every test that needs nobody: sound, graphics, WebGL and
                      WebGPU, Wi-Fi and Bluetooth, video decoding, temperatures. Without a
                      terminal it runs all but the sound, which plays tones out loud
   hw-test fix [WHAT...]    hand what doesn't work to your agent: writes a brief with what was
