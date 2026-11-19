@@ -146,7 +146,8 @@ func (s *speakers) balance() string {
 	if !left.Clearly() || !right.Clearly() || left.Level == 0 || right.Level == 0 {
 		return ""
 	}
-	difference := audio.Decibels(left.Level) - audio.Decibels(right.Level)
+	// From the levels as they are shown, so that the difference is the one a reader works out
+	difference := math.Round(audio.Decibels(left.Level)) - math.Round(audio.Decibels(right.Level))
 	louder, quieter := "left", "right"
 	if difference < 0 {
 		louder, quieter, difference = "right", "left", -difference

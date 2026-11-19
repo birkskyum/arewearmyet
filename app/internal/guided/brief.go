@@ -188,7 +188,7 @@ func Brief(b Briefing) string {
 				channels = append(channels, channel+" "+version)
 			}
 		}
-		say("- Omarchy's channels have linux-omarchy at: %s. This computer has %s. If it is behind its channel, ask the owner to run `omarchy update`, restart and run `hw-test fix` again before you debug: the fault may be fixed already.", strings.Join(channels, ", "), first(b.Run.Packages["linux-omarchy"], "an unknown version"))
+		say("- Omarchy's channels have linux-omarchy at: %s. This computer has %s. If it is behind its channel, ask the owner to run `omarchy update` and restart before you debug (leave word with `hw-test resume` first, as before any restart): the fault may be fixed already.", strings.Join(channels, ", "), first(b.Run.Packages["linux-omarchy"], "an unknown version"))
 	}
 
 	say("")
@@ -308,12 +308,12 @@ func Brief(b Briefing) string {
 	say("")
 	say("Each step is explained in the guide's step 5 and 6. In short:")
 	say("")
-	say("1. **Check it is worth chasing.** Up to date (above)? Already known, with a cause? Some parts can't be fixed from here: a missing kernel feature, or something Omarchy has no place for. Then say so to the owner, leave a note (step 8) and go on to the next part.")
-	say("2. **Snapshot.** `hw-test verify before`, before you change anything.")
+	say("1. **Check it is worth chasing.** Up to date (above)? Already known, with a cause? Some parts can't be fixed from here: a missing kernel feature, or something Omarchy has no place for. Then say so to the owner, leave a note (item 8 of this list) and go on to the next part.")
+	say("2. **Snapshot.** `hw-test verify before`, once, before you change anything. When the owner hears or sees a part differently than the test says, record that first with `hw-test report`.")
 	say("3. **Look.** The commands under \"Where to look\" only read. `dtc -I fs -O dts /proc/device-tree` shows the device tree the computer is running.")
-	say("4. **Change.** A setting: try it on this computer, keeping a copy of what you change. The device tree: `hw-test tree start`, edit, `hw-test tree build`, then the owner runs `hw-test tree boot`, which makes a boot entry of its own. Never install a rebuilt `linux-omarchy-dtbs`, write under `/boot/dtbs` or edit `/boot/limine.conf` by hand: each can stop the computer from starting.")
+	say("4. **Change.** A setting: try it on this computer, keeping a copy of what you change. The device tree: `hw-test tree start`, edit, `hw-test tree build`, then the owner runs `hw-test tree boot`, which makes a boot entry of its own, and picks it at the next start. When it works, `hw-test tree patch` writes the change as the patch Omarchy's package takes. Never install a rebuilt `linux-omarchy-dtbs`, write under `/boot/dtbs` or edit `/boot/limine.conf` by hand: each can stop the computer from starting.")
 	say("5. **Before a restart, or a test that may freeze the computer:** write where you are into `PROGRESS.md`, then `hw-test resume \"<what to go on with>\"`. You are opened again at the owner's next login.")
-	say("6. **Measure again.** The \"Measure again\" command of each part you touched, and a neighbouring part. Then `hw-test verify after`, which prints a before-and-after block.")
+	say("6. **Measure again.** The \"Measure again\" command of each part you touched, and a neighbouring part. Then `hw-test verify after`, which prints a before-and-after block (`--check <check>` gives a row to a part that works on both sides but measures better).")
 	say("7. **Pull request.** Open it as a draft. Its description starts with a line that says only %s, then the block. Then `hw-test verify after --pr <its address> --title \"<the change in a line>\"`, which records it on the model's page, and mark it ready. Tell the owner.", familyLine(family))
 	say("8. **Not fixed?** Leave it for the next agent: `hw-test note --kind problem --check <check> --title \"...\" --body-file <file> --log kernel`. What the owner told you about a part goes in with `hw-test report --check <check> --state partial --note \"...\"`.")
 	say("9. **Clean up.** `hw-test tree remove` (run by the owner), restore the settings you changed, and say what is left.")
@@ -376,7 +376,7 @@ func HandOver(b Briefing, dir string, launch func(dir, prompt string) error) Han
 	for _, check := range work {
 		titles = append(titles, strings.ToLower(first(checkTitle[check], check)))
 	}
-	prompt := fmt.Sprintf("Read BRIEF.md in this folder and help me get this working on my computer: %s. It says what was measured, how to measure again with hw-test, where to look and where a fix goes. Start by reading the guide it points to, %s.", strings.Join(titles, ", "), Guide)
+	prompt := fmt.Sprintf("Read BRIEF.md in this folder and help me get this working on my computer: %s. It says what was measured, how to measure again with hw-test and where to look. The guide it points to, %s, has the rules and says where a fix goes, so read that first.", strings.Join(titles, ", "), Guide)
 	err := launch(dir, prompt)
 	switch {
 	case err == nil:

@@ -54,7 +54,7 @@ It answers with the model's id, its `family`, and `kernels`, the `linux-omarchy`
 curl -s https://arewearmyet.com/api/models/<id>
 ```
 
-- `checks[].finding`: what is written up about each check, by hand, with its source. It often names the cause.
+- `checks[].finding`: what is written up about each check, with its `source` and the `quote` of the source it rests on. It often names the cause. `basis` says where it was seen: `omarchy` (or none, which means the same) is a result on Omarchy. `other-distro` and `tree-author` were seen on another distro or by the device tree's author on their own kernel, and `where` says which. Those show that a part can work, not that it does on Omarchy, so treat them as a hint and measure.
 - `owners`: what `hw-test` measured on owners' computers. `fixes`: pull requests linked to the model, with what each changed. `notes`: problems and workarounds others left (step 6).
 - `variants[].deviceTree.file`: the model's device tree. `upstream.acpiUrls`: its ACPI tables, where the right GPIO or address for a part is found.
 - `wanted`: the checks nobody has written up. When you were sent to check a computer, not to fix one part, start there.
@@ -113,10 +113,11 @@ curl -s -X POST https://arewearmyet.com/api/runs \
 
 ### Before you change anything
 
-1. **Is the computer up to date?** Compare its `linux-omarchy` version with `kernels` from step 1. When it is behind its channel, ask the owner to run `omarchy update`, restart, and measure again: the fault may be fixed already. A patch also has to fit Omarchy's current sources, not old ones.
+1. **Is the computer up to date?** Compare its `linux-omarchy` version with `kernels` from step 1. When it is behind its channel, ask the owner to run `omarchy update`. Leave word with `hw-test resume "Updated. Measure the failing parts again."` first, then they restart, and you measure again: the fault may be fixed already. A patch also has to fit Omarchy's current sources, not old ones.
 2. **Is it known?** Read the check's `finding` and the model's notes (step 6). Search every model's notes too: a fault in the chip shows on all of them.
 3. **Can it be fixed from here?** Some things can't: a kernel feature that doesn't exist yet (hibernation, a fan speed driver), or something Omarchy has no place for (a libcamera tuning file). Then tell the owner, leave a note saying what you found, and go on to the next part. "Everything green" isn't always within reach, and saying so is part of the job.
-4. **Take a snapshot:** `hw-test verify before`. It keeps where every check stands, with the kernel and package versions, to measure your change against.
+4. **Take a snapshot:** `hw-test verify before`. It keeps where every check stands, with the kernel and package versions, to measure your change against. Take it once per change. A snapshot that is still in use is not replaced, so after a restart you go on from `PROGRESS.md` and don't take another. `--new` replaces it when you start on another change.
+5. **Does the owner hear or see it differently than the test says?** Then record that first, since the snapshot holds what is recorded: `hw-test report --check speakers --state partial --note "The right side is clearly quieter."`
 
 ### Where a fix goes
 
@@ -131,33 +132,40 @@ curl -s -X POST https://arewearmyet.com/api/runs \
 | Something Omarchy has no place for, or that needs another project to change | No pull request. An issue on Omarchy and a note (step 6) |
 
 - **omarchy-pkgs:** `README.md` says how packages are built (`bin/build --package <name> --arch aarch64`, which needs Docker or Podman), and `AGENTS.md` what a recipe change needs, like a `pkgrel` bump. Each package's own `README.md` explains its patches. Add a paragraph for yours there.
-- **A device tree fix** is one patch in the kernel's format (`git format-patch`) named `00NN-arm64-dts-qcom-<board>-<what>.patch`, listed in the recipe's `source` and `b2sums`. It may only touch files under `arch/arm64/boot/dts/` and `include/dt-bindings/`.
+- **A device tree fix** is one patch in the kernel's format, named `00NN-arm64-dts-qcom-<board>-<what>.patch`, listed in the recipe's `source` and `b2sums`. It may only touch files under `arch/arm64/boot/dts/` and `include/dt-bindings/`. `hw-test tree patch` writes it for you (below).
 - **Omarchy:** read `AGENTS.md` and `agents/skills/install-scripts.md` (and `migrations.md` when existing installs need the change). Fork, branch from `quattro`, run the changed `bin/` command from your checkout on the computer, run the area's tests in `test/shell.d/`, and open the pull request against `quattro`. Put a setting whose cause is the chip behind `omarchy-hw-aarch64-qualcomm`, and one model's behind `omarchy-hw-match`. In the pull request, call a platform setting a workaround and name the cause it works around.
 
 ### Trying a device tree change
 
-`hw-test` does this from the same sources Omarchy's package builds from, in the folder you work in:
+`hw-test` does this from the same sources Omarchy's package builds from, with the patches the package lays over them, in the folder you work in:
 
 ```sh
-hw-test tree start       # copies the sources into ./tree, under git, and names this computer's file
+hw-test tree start       # the sources in ./tree, under git, and Omarchy's packages in ./omarchy-pkgs
 $EDITOR tree/arch/arm64/boot/dts/qcom/<this computer>.dts
 hw-test tree build       # compiles it as the package does, and writes your change to ./tree.diff
 hw-test tree boot        # run by the owner: makes a boot image and a boot menu entry of its own
 ```
 
-- `tree start` needs the kernel's headers, which hold the sources: `sudo pacman -S linux-omarchy-headers`.
+- `tree start` needs the kernel's headers, which hold the sources: `sudo pacman -S linux-omarchy-headers`. It fetches Omarchy's packages for their patches, and says whether the sources, compiled unchanged, are the tree the computer starts with. When they are, a test image differs by your change and nothing else. When they are not, the computer is behind: update it first.
 - `tree boot` needs the owner's password, so they run it in their own terminal (`cd <your folder> && hw-test tree boot`). It writes what it does to `tree-boot.sh` first, for them to read. It builds an image from the stock kernel and your tree, and adds an entry called `linux-omarchy-hwtest` through the boot menu's own tool.
-- The entry is listed under Omarchy in the boot menu, after the usual kernel. The usual entry stays the default and is not touched. Tell the owner: pick `linux-omarchy-hwtest` at the menu. If the screen stays black for a minute, hold the power button until the computer is off, start it again, and let the usual entry run.
+- The entry is listed under Omarchy in the boot menu, after the usual kernel. The usual entry stays the default and is not touched. So the owner has to be at the keyboard for the restart, to pick `linux-omarchy-hwtest` at the menu. Tell them: if the screen stays black for a minute, hold the power button until the computer is off, start it again, and let the usual entry run.
+- When Direct Boot is on, the computer starts its image without showing the boot menu, and `tree boot` stops and says so. The owner turns it off in the Omarchy menu under Setup, Direct Boot (or with `omarchy-setup-direct-boot`), and can turn it on again when you're done.
 - After the restart, `hw-test tree status` says for certain which image is running, and `dtc -I fs -O dts /proc/device-tree | grep -A12 <node>` shows your change in the running tree.
 - `hw-test tree remove`, run by the owner, takes the entry and its image away.
+
+When the change works, write it as the patch the package takes:
+
+```sh
+hw-test tree patch "arm64: dts: qcom: <board>: <what it does>" --body-file why.md
+```
+
+It writes the whole change as one patch, with the next free number, under the owner's name as their git has it, and says what to add to the recipe in `./omarchy-pkgs`: the patch, its line in `source` and `b2sums`, a `pkgrel` bump and a paragraph in the README. `why.md` says what was wrong and how it was measured. Run it again after a further edit and it writes the patch anew. To open the pull request from that checkout: `gh repo fork --remote` in `./omarchy-pkgs`, a branch, and `gh pr create --draft`.
 
 **Three things that can stop the computer from starting. Don't do them:**
 
 - **Don't edit `/boot/limine.conf` by hand.** Omarchy's boot menu checks its config and files against stored checksums and refuses to start when they differ. Entries are added and removed through `limine-entry-tool`, which `hw-test tree boot` uses.
-- **Don't install a rebuilt `linux-omarchy-dtbs`, and don't write under `/boot/dtbs`.** The stock boot image is rebuilt from what is there, so a bad tree would end up in the one image that has to work.
+- **Don't install a rebuilt `linux-omarchy-dtbs`, and don't write under `/boot/dtbs`.** The stock boot image is rebuilt from what is there, so a bad tree would end up in the one image that has to work. The package's own build (`bin/build`) is for seeing that the recipe builds with your patch, which the pull request's checks do as well. What it makes is not for `pacman -U` on the owner's computer.
 - **Don't run `omarchy kernel set`, `limine-update` or `limine-mkinitcpio` while a test is under way.** They rebuild the stock image.
-
-When Direct Boot is on, the computer starts its image without showing the boot menu, and `hw-test tree boot` stops and says to turn it off first.
 
 ### Trying a kernel change
 
@@ -172,12 +180,12 @@ $EDITOR PROGRESS.md      # what you changed, which entry to boot, what to check 
 hw-test resume "Booted linux-omarchy-hwtest with the right speaker's reset GPIO changed. Ask the owner to run hw-test speakers."
 ```
 
-At the owner's next login their agent opens again in the same folder, once, and is told to read `BRIEF.md` and `PROGRESS.md` and what you left. Set it again before each restart. `hw-test resume --show` says what is left and `--cancel` takes it back. Word older than a day is dropped, so for a fault that takes days to show, a note (step 6) is where the next session starts from.
+Then tell the owner to restart when it suits them, or restart yourself with `systemctl reboot` once they have said to (rule 9). For a test boot entry they have to be at the keyboard to pick it. At the owner's next login their agent opens again in the same folder, once, and is told to read `BRIEF.md` and `PROGRESS.md` and what you left. That is how you go on after any restart, an `omarchy update` included. `hw-test fix` is only for starting on other parts, and it writes a new brief. Set it again before each restart. `hw-test resume --show` says what is left and `--cancel` takes it back. Word older than a day is dropped, so for a fault that takes days to show, a note (step 6) is where the next session starts from.
 
 ### Showing what the change did, and the pull request
 
 1. Measure again: the test of each part you touched, and a neighbouring part or two, to show nothing else broke. Tests that take the owner are run by them.
-2. `hw-test verify after` prints a block with each check before and after. It can be run as often as you like.
+2. `hw-test verify after` prints a block with each check before and after. It can be run as often as you like. A check that works on both sides is only named. When your change moved a number and not the state (the right speaker 11 dB louder, both sides "works"), give that check a row with `--check speakers`.
 3. Open the pull request **as a draft**. On omarchy-pkgs a pull request that is ready merges and publishes by itself once its checks pass, so a draft is how you keep it until the measurement is in. One fix per pull request. Its description starts with the family alone on a line, then the block:
 
    ```
@@ -196,7 +204,7 @@ At the owner's next login their agent opens again in the same folder, once, and 
    ```
 
 4. `hw-test verify after --pr <the pull request's address> --title "<the change in a line>"` records the same on the model's page, tied to the pull request. That links the fix, so there is nothing more to send.
-5. Mark the pull request ready (`gh pr ready`), and tell the owner it is out under their account.
+5. Mark the pull request ready (`gh pr ready`), and tell the owner it is out under their account. On omarchy-pkgs, a first pull request from someone builds nothing until a maintainer approves the build, and its check reads "Awaiting build approval" until then. That is the normal wait, often a day or more, and nothing for you to fix.
 
 - A check counts only when its own test ran again after the snapshot.
 - What got worse is shown as plainly as what got better. Fix it or say so. Don't leave it out.

@@ -45,8 +45,14 @@ func versionsChanged(before, after report.Versions) []string {
 }
 
 // VerifyBlock is what goes into a pull request to show what it changed: the machine, the
-// versions on both sides, and each check tested before and after, in Markdown.
-func VerifyBlock(run *report.Run, model report.Model, snapshot report.Snapshot, changes []report.Change, testImage bool) string {
+// versions on both sides, and each check tested before and after, in Markdown. A check that
+// works on both sides is only named, unless it is among rows: those get a row with what was
+// measured, for a change that moves a number and not the state.
+func VerifyBlock(run *report.Run, model report.Model, snapshot report.Snapshot, changes []report.Change, testImage bool, rows ...string) string {
+	row := map[string]bool{}
+	for _, check := range rows {
+		row[check] = true
+	}
 	var out strings.Builder
 	say := func(format string, args ...any) { fmt.Fprintf(&out, format+"\n", args...) }
 	machine := strings.TrimSpace(run.Hardware["maker"] + " " + first(run.Hardware["family"], run.Hardware["product"]))
@@ -77,7 +83,7 @@ func VerifyBlock(run *report.Run, model report.Model, snapshot report.Snapshot, 
 		}
 		from, known := report.Rank[change.From.State]
 		to, measured := report.Rank[change.To.State]
-		if known && measured && from == to && change.From.State == report.Works {
+		if known && measured && from == to && change.From.State == report.Works && !row[change.Check] {
 			same = append(same, strings.ToLower(first(checkTitle[change.Check], change.Check)))
 			continue
 		}

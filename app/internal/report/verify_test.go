@@ -36,6 +36,19 @@ func TestAChangeIsMeasuredAgainstTheSnapshotByWhatWasTestedAgain(t *testing.T) {
 	if err != nil || len(snapshot.Results) != 6 || snapshot.Versions.Packages["linux-omarchy-dtbs"] != "7.3-9" {
 		t.Fatalf("snapshot %+v, %v", snapshot, err)
 	}
+	// Once its change is recorded the snapshot says so, and is still there to measure against
+	if loaded, _ := LoadSnapshot(); loaded.Used {
+		t.Fatal("a fresh snapshot counts as used")
+	}
+	if err := MarkSnapshotUsed(); err != nil {
+		t.Fatal(err)
+	}
+	if loaded, ok := LoadSnapshot(); !ok || !loaded.Used || len(loaded.Results) != 6 {
+		t.Fatalf("the used snapshot: %+v", loaded)
+	}
+	if snapshot, err = TakeSnapshot(quick, start); err != nil || snapshot.Used {
+		t.Fatalf("a new snapshot: used %v, %v", snapshot.Used, err)
+	}
 	if loaded, ok := LoadSnapshot(); !ok || !loaded.When.Equal(start) || loaded.Results["speakers"].State != Partial {
 		t.Fatalf("the snapshot wasn't kept: %+v", loaded)
 	}

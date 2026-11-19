@@ -42,6 +42,11 @@ func TestTheBlockForAPullRequestShowsEachCheckBeforeAndAfter(t *testing.T) {
 	if strings.Contains(block, "mesa") || strings.Contains(block, "| Wi-Fi |") || strings.Contains(block, "| Built-in microphones |") {
 		t.Errorf("the block lists what didn't change:\n%s", block)
 	}
+	// A check that works on both sides gets a row when it is asked for: a change can move a
+	// number without moving the state
+	if block = VerifyBlock(run, report.Model{}, snapshot, changes, false, "wifi"); !strings.Contains(block, "| Wi-Fi | works: connected (measured by the test) | works: connected (measured by the test) |") || strings.Contains(block, "still working") {
+		t.Errorf("an asked-for row isn't shown:\n%s", block)
+	}
 	// A change tried outside the packages says so, since the versions alone would show nothing
 	snapshot.Versions.Packages["linux-omarchy-dtbs"] = "7.3-10"
 	if block = VerifyBlock(run, report.Model{}, snapshot, changes, false); !strings.Contains(block, "the same package versions on both sides, so the change was tried outside the packages") {

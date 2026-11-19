@@ -88,6 +88,8 @@ func main() {
 	// For hw-test resume
 	cancel := flags.Bool("cancel", false, "for hw-test resume: take back what was left for after the restart")
 	show := flags.Bool("show", false, "for hw-test resume: show what is left for after the restart")
+	// For hw-test verify
+	again := flags.Bool("new", false, "for hw-test verify before: replace the snapshot that is there, to start on another change")
 	atLogin := flags.Bool("run", false, "for hw-test resume: what the login service calls")
 	// For hw-test report
 	state := flags.String("state", "", "for hw-test report: works, partial or broken")
@@ -109,7 +111,17 @@ func main() {
 	case "resume":
 		os.Exit(comeBack(strings.Join(topics, " "), *cancel, *show, *atLogin))
 	case "tree":
-		os.Exit(deviceTree(topics))
+		// The patch's text, which says why, comes as a note's does
+		why := *body
+		if why == "" && *bodyFile != "" {
+			data, err := os.ReadFile(*bodyFile)
+			if err != nil {
+				fmt.Fprintln(os.Stderr, "hw-test:", err)
+				os.Exit(1)
+			}
+			why = string(data)
+		}
+		os.Exit(deviceTree(topics, why))
 	case "status":
 		// The latest result of every check on this machine, without running anything
 		announce()
@@ -154,7 +166,7 @@ func main() {
 
 	// Before and after a change: what a pull request changed on this machine, as measured
 	if command == "verify" {
-		os.Exit(verify(run, topics, *api, *pr, *title, !*noSend && !*jsonOnly))
+		os.Exit(verify(run, topics, *api, *pr, *title, *check, *again, !*noSend && !*jsonOnly))
 	}
 
 	// A note: what fits no check, written down where other owners' agents read it
@@ -323,7 +335,7 @@ func tell(run *report.Run, api, check, state, how, note, evidence string, send b
 
 // deviceTree is the way to try a changed device tree: the sources, a build, a boot entry of
 // its own, and taking it away again.
-func deviceTree(words []string) int {
+func deviceTree(words []string, body string) int {
 	system := tree.Real()
 	dir, err := os.Getwd()
 	if err != nil {
@@ -359,13 +371,35 @@ func deviceTree(words []string) int {
 	}
 	switch step {
 	case "start":
-		root, err := system.Start(dir)
+		started, err := system.Start(dir)
 		if err != nil {
 			return fail(err)
 		}
-		fmt.Fprintf(os.Stderr, "The device tree sources of linux-omarchy %s are in %s, under git.\n", system.Kernel, root)
-		if machine, err := system.Machine(); err == nil {
-			fmt.Fprintf(os.Stderr, "This computer's tree is arch/arm64/boot/dts/qcom/%s.dts, with the files it includes.\n", machine)
+		fmt.Fprintf(os.Stderr, "The device tree sources of linux-omarchy %s are in %s, under git, with %d of Omarchy's patches from %s laid over them, as its package builds them.\n", system.Kernel, started.Root, started.Applied, started.Recipe)
+		if len(started.Skipped) > 0 {
+			fmt.Fprintf(os.Stderr, "%d patches were passed over, since this kernel's sources have them already.\n", len(started.Skipped))
+		}
+		if started.Machine != "" {
+			fmt.Fprintf(os.Stderr, "This computer's tree is arch/arm64/boot/dts/qcom/%s.dts, with the files it includes.\n", started.Machine)
+		} else {
+			fmt.Fprintln(os.Stderr, "This computer's tree wasn't found among them by itself. Name it when you build: hw-test tree build <name>, without .dts")
+		}
+		if len(started.Misfit) > 0 {
+			named := started.Misfit
+			if len(named) > 4 {
+				named = append(append([]string{}, named[:4]...), fmt.Sprintf("and %d more", len(started.Misfit)-4))
+			}
+			fmt.Fprintf(os.Stderr, "%d of Omarchy's patches don't fit this kernel's sources and were left out (%s). That happens when the computer is behind Omarchy's packages or on another channel.\n", len(started.Misfit), strings.Join(named, ", "))
+		}
+		switch {
+		case started.Stock == "same" && len(started.Misfit) > 0:
+			fmt.Fprintln(os.Stderr, "They don't touch this computer's tree: compiled unchanged, it is the tree this computer starts with, byte for byte. So a test image differs by your change and nothing else. A patch for Omarchy still has to fit its current sources, which the pull request's build shows.")
+		case started.Stock == "same":
+			fmt.Fprintln(os.Stderr, "Compiled unchanged, it is the tree this computer starts with, byte for byte. So a test image differs by your change and nothing else.")
+		case started.Stock == "differs":
+			fmt.Fprintln(os.Stderr, "Compiled unchanged, it is NOT the tree this computer starts with: the installed linux-omarchy-dtbs and Omarchy's packages as they are now differ for this model. A test image would carry that difference besides your change. Have the owner run omarchy update and restart, then move this folder's tree away and start again.")
+		case len(started.Misfit) > 0:
+			fmt.Fprintln(os.Stderr, "Whether that touches this computer's tree couldn't be told. Have the owner run omarchy update and restart, then move this folder's tree away and start again.")
 		}
 		fmt.Fprintln(os.Stderr, "Change it, then: hw-test tree build")
 		return 0
@@ -373,7 +407,7 @@ func deviceTree(words []string) int {
 		machine := ""
 		if len(words) > 1 {
 			machine = strings.TrimSuffix(words[1], ".dts")
-		} else if machine, err = system.Machine(); err != nil {
+		} else if machine, err = system.MachineIn(dir); err != nil {
 			return fail(err)
 		}
 		built, err := system.Build(dir, machine)
@@ -388,11 +422,23 @@ func deviceTree(words []string) int {
 		}
 		fmt.Fprintln(os.Stderr, "To try it from a boot entry of its own, the owner runs: hw-test tree boot")
 		return 0
+	case "patch":
+		patched, err := system.Patch(dir, strings.Join(words[1:], " "), body)
+		if err != nil {
+			return fail(err)
+		}
+		name := filepath.Base(patched.File)
+		fmt.Fprintf(os.Stderr, "The change is written as one patch: %s\nIt touches %s.\n\n", patched.File, strings.Join(patched.Changed, ", "))
+		if !patched.Numbered {
+			fmt.Fprintf(os.Stderr, "Omarchy's device tree package wasn't found at %s, so the number in its name is a guess. Give it the next free number among the package's patches.\n", patched.Recipe)
+		}
+		fmt.Fprintf(os.Stderr, "To put it into Omarchy's package, in %s:\n  1. Copy it there.\n  2. In PKGBUILD, add %s to source after the last patch, and its sum at the same place in b2sums: b2sum %s\n  3. Raise pkgrel by one.\n  4. Add a paragraph on it to README.md.\nRunning hw-test tree patch again writes the patch anew from the sources as they are then.\n", patched.Recipe, name, name)
+		return 0
 	case "boot":
 		machine := ""
 		if len(words) > 1 {
 			machine = strings.TrimSuffix(words[1], ".dts")
-		} else if machine, err = system.Machine(); err != nil {
+		} else if machine, err = system.MachineIn(dir); err != nil {
 			return fail(err)
 		}
 		dtb := filepath.Join(dir, machine+".dtb")
@@ -414,7 +460,7 @@ func deviceTree(words []string) int {
 		}
 		return 0
 	}
-	fmt.Fprintln(os.Stderr, "hw-test: tree takes start, build, boot, remove or status. Start with: hw-test tree start")
+	fmt.Fprintln(os.Stderr, "hw-test: tree takes start, build, boot, status, patch or remove. Start with: hw-test tree start")
 	return 2
 }
 
@@ -521,7 +567,7 @@ func update() int {
 }
 
 // verify takes the snapshot a change is measured against, or measures the change against it.
-func verify(run *report.Run, words []string, api, pr, what string, send bool) int {
+func verify(run *report.Run, words []string, api, pr, what, rows string, again, send bool) int {
 	now := time.Now()
 	step := ""
 	if len(words) == 1 {
@@ -529,6 +575,12 @@ func verify(run *report.Run, words []string, api, pr, what string, send bool) in
 	}
 	switch step {
 	case "before":
+		// A snapshot that is still being measured against is not written over: after a
+		// restart, a second one would hold the change already and show it as no change
+		if standing, ok := report.LoadSnapshot(); ok && !standing.Used && !again && len(standing.Results) > 0 {
+			fmt.Fprintf(os.Stderr, "hw-test: a snapshot from %s is there already, and no change has been recorded against it yet.\nIf you are in the middle of that change (after a restart, say), leave it: hw-test verify after measures against it.\nTo start on another change: hw-test verify before --new\n", standing.When.Format("2 Jan 15:04"))
+			return 2
+		}
 		snapshot, err := report.TakeSnapshot(run, now)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, "hw-test: the snapshot couldn't be kept:", err)
@@ -560,7 +612,13 @@ func verify(run *report.Run, words []string, api, pr, what string, send bool) in
 		if matched, err := report.Match(api, run); err == nil && matched.ID != "" {
 			model = matched
 		}
-		fmt.Println(guided.VerifyBlock(run, model, snapshot, changes, tree.Running("/proc/device-tree")))
+		var shown []string
+		for _, row := range strings.Split(rows, ",") {
+			if row = strings.TrimSpace(row); row != "" {
+				shown = append(shown, row)
+			}
+		}
+		fmt.Println(guided.VerifyBlock(run, model, snapshot, changes, tree.Running("/proc/device-tree"), shown...))
 		if pr == "" {
 			fmt.Fprintln(os.Stderr, "That is the block for the pull request's description. To record it on the model's page too, give the pull request: hw-test verify after --pr <its address>")
 			return 0
@@ -580,6 +638,8 @@ func verify(run *report.Run, words []string, api, pr, what string, send bool) in
 			return 1
 		}
 		fmt.Fprintf(os.Stderr, "Recorded as %s on %s\nWhat this pull request changed, over every machine that measured it: %s\n", sent.Fix, first(sent.Page, model.Page), sent.URL)
+		// From here the snapshot has served, and the next change takes its own
+		_ = report.MarkSnapshotUsed()
 		return 0
 	}
 	fmt.Fprintln(os.Stderr, "hw-test: verify takes before or after. Take a snapshot with hw-test verify before, make the change, test again, then hw-test verify after --pr <address>.")
@@ -757,14 +817,18 @@ func usage() {
                      and names; boot-3 is the third boot before this one
                      --reply NOTE-ID answers a note, --solved NOTE-ID closes your own problem
                      --no-send shows what would be sent, logs included, and sends nothing
-  hw-test verify before    take a snapshot of where this computer stands, before a change
+  hw-test verify before    take a snapshot of where this computer stands, before a change.
+                     One that is still in use isn't replaced unless --new says so
   hw-test verify after --pr URL   after testing again: what the change did, check by check, as a
                      block for the pull request, and recorded with the pull request on the
-                     model's page. --title says in a line what the change is
+                     model's page. --title says in a line what the change is. --check ID,ID
+                     gives those checks a row even when they work on both sides
   hw-test status     where this computer stands: the latest result of every check, nothing is run
-  hw-test tree start|build|boot|remove|status   try a changed device tree from a boot entry of
-                     its own: the sources Omarchy builds from, a build, and (run by the
-                     owner, with their password) a test entry in the boot menu
+  hw-test tree start|build|boot|status|patch|remove   try a changed device tree from a boot entry of
+                     its own: the sources Omarchy's package builds from, with its patches, a
+                     build, and (run by the owner, with their password) a test entry in the
+                     boot menu. hw-test tree patch "arm64: dts: qcom: BOARD: WHAT" --body-file WHY
+                     writes the change as the one patch the package takes
   hw-test report --check ID --state works|partial|broken --note TEXT   send one result
                      that no test measured: what the owner saw (--how owner, the default)
                      or what was read from logs (--how agent)

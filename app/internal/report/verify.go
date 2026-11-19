@@ -24,6 +24,8 @@ type Snapshot struct {
 	When     time.Time       `json:"when"`
 	Versions Versions        `json:"versions"`
 	Results  map[string]Kept `json:"results"`
+	// Used is set once a change measured against it was recorded with its pull request.
+	Used bool `json:"used,omitempty"`
 }
 
 // Change is one check before and after a fix.
@@ -61,6 +63,18 @@ func TakeSnapshot(run *Run, when time.Time) (Snapshot, error) {
 	}
 	data, _ := json.MarshalIndent(snapshot, "", " ")
 	return snapshot, os.WriteFile(snapshotFile(), data, 0o600)
+}
+
+// MarkSnapshotUsed notes that the snapshot's change is recorded, so that the next
+// hw-test verify before takes a new one without being asked twice.
+func MarkSnapshotUsed() error {
+	snapshot, ok := LoadSnapshot()
+	if !ok {
+		return nil
+	}
+	snapshot.Used = true
+	data, _ := json.MarshalIndent(snapshot, "", " ")
+	return os.WriteFile(snapshotFile(), data, 0o600)
 }
 
 // LoadSnapshot reads the snapshot taken before a change, if there is one.
