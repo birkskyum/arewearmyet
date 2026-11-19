@@ -78,6 +78,20 @@ func TestAChangeIsMeasuredAgainstTheSnapshotByWhatWasTestedAgain(t *testing.T) {
 	if _, claimed := by["webgpu"]; claimed {
 		t.Error("the quick check's look was taken for the closer test's")
 	}
+	// A closer test run after the change is what counts for its part, also when the quick
+	// check looks at the same part afterwards
+	closer := &Run{Kernel: "7.3.0-72-omarchy", Results: []Result{result("webgpu", Works, Measured, "Chromium offers WebGPU on qualcomm adreno-7xx")}}
+	_ = Remember(closer, start.Add(12*time.Minute))
+	_ = Remember(again, start.Add(13*time.Minute))
+	if got := Latest()["webgpu"]; got.Evidence != "Chromium offers WebGPU on qualcomm adreno-7xx" || got.Shallow {
+		t.Errorf("the quick check covered up the closer test: %+v", got)
+	}
+	for _, change := range Changes(snapshot, Latest()) {
+		if change.Check == "webgpu" && (change.From.State != Partial || change.To.State != Works) {
+			t.Errorf("webgpu after its own test: %+v", change)
+		}
+	}
+	_ = Remember(&Run{Kernel: "7.3.0-72-omarchy", Results: []Result{result("webgpu", Partial, Measured, "WebGPU only with switches")}}, start.Add(14*time.Minute))
 	// And where the machine stands keeps the closer test's failure too
 	if kept := Local()["webgpu"]; kept.State != Partial {
 		t.Errorf("the quick check took back a closer test's failure: %+v", kept)

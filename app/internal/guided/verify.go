@@ -62,8 +62,13 @@ func VerifyBlock(run *report.Run, model report.Model, snapshot report.Snapshot, 
 	say("")
 	say("| Check | Before | After |")
 	say("| --- | --- | --- |")
-	var same []string
+	var same, fresh []string
 	for _, change := range changes {
+		// With nothing from before, a result says nothing of what the change did
+		if change.From.State == report.Untested {
+			fresh = append(fresh, strings.ToLower(first(checkTitle[change.Check], change.Check))+" ("+stateLabel[change.To.State]+")")
+			continue
+		}
 		from, known := report.Rank[change.From.State]
 		to, measured := report.Rank[change.To.State]
 		if known && measured && from == to && change.From.State == report.Works {
@@ -83,6 +88,10 @@ func VerifyBlock(run *report.Run, model report.Model, snapshot report.Snapshot, 
 	if len(same) > 0 {
 		say("")
 		say("Tested again and still working: %s.", strings.Join(same, ", "))
+	}
+	if len(fresh) > 0 {
+		say("")
+		say("Tested for the first time after the change, so with nothing to compare: %s.", strings.Join(fresh, ", "))
 	}
 	if model.ID != "" {
 		say("")

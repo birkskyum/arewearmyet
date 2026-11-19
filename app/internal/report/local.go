@@ -61,9 +61,15 @@ func Remember(run *Run, when time.Time) error {
 	// a fix is measured by
 	last := Latest()
 	for _, result := range run.Results {
-		if result.State != Untested {
-			last[result.Check] = Kept{Result: result, Kernel: run.Kernel, When: when, Shallow: run.Shallow(result)}
+		if result.State == Untested {
+			continue
 		}
+		// The quick check's look doesn't cover up what a closer test of the part found last
+		shallow := run.Shallow(result)
+		if before, had := last[result.Check]; had && shallow && !before.Shallow {
+			continue
+		}
+		last[result.Check] = Kept{Result: result, Kernel: run.Kernel, When: when, Shallow: shallow}
 	}
 	if data, err := json.MarshalIndent(last, "", " "); err == nil {
 		_ = os.WriteFile(latestFile(), data, 0o600)

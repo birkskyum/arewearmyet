@@ -30,7 +30,8 @@ func TestTheBlockForAPullRequestShowsEachCheckBeforeAndAfter(t *testing.T) {
 		"| ✅ Speakers | partly: left heard at -31 dB, right not heard (seen by the owner) | works: left heard at -31 dB, right heard at -32 dB (measured by the test) |",
 		// What got worse is shown as plainly as what got better
 		"| ❌ Headphone jack | works (seen by the owner) | broken: no sound / after the change (seen by the owner) |",
-		"| Built-in microphones | not tested | works: 1000 Hz at -35 dB (measured by the test) |",
+		// What was never tested before isn't a row: it says nothing of what the change did
+		"Tested for the first time after the change, so with nothing to compare: built-in microphones (works).",
 		"Tested again and still working: wi-fi.",
 		"https://arewearmyet.com/models/lenovo-yoga-slim-7x-14q8x9",
 	} {
@@ -38,7 +39,7 @@ func TestTheBlockForAPullRequestShowsEachCheckBeforeAndAfter(t *testing.T) {
 			t.Errorf("the block lacks %q:\n%s", text, block)
 		}
 	}
-	if strings.Contains(block, "mesa") || strings.Contains(block, "| Wi-Fi |") {
+	if strings.Contains(block, "mesa") || strings.Contains(block, "| Wi-Fi |") || strings.Contains(block, "| Built-in microphones |") {
 		t.Errorf("the block lists what didn't change:\n%s", block)
 	}
 	// A change tried outside the packages says so, since the versions alone would show nothing
