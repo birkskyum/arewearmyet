@@ -233,7 +233,8 @@ export default function StatusTable(props: Props) {
 
   return (
     <div ref={root}>
-      <div class="flex flex-wrap items-center gap-3">
+      {/* relative, so below the lg width the model number pop-up opens from the toolbar's left edge and stays on the screen */}
+      <div class="relative flex flex-wrap items-center gap-3">
         <Show when={views.length > 1}>
           <div class="inline-flex rounded-lg bg-zinc-900 p-0.5 ring-1 ring-zinc-700" role="tablist" aria-label="View">
             <For each={views}>
@@ -262,9 +263,9 @@ export default function StatusTable(props: Props) {
             setTyped(event.currentTarget.value);
             setQuery(normalized(event.currentTarget.value));
           }}
-          class="w-72 rounded-md bg-zinc-900 px-3 py-1.5 text-sm text-zinc-100 ring-1 ring-zinc-700 placeholder:text-zinc-500 focus:outline-none focus:ring-zinc-400"
+          class="w-72 max-w-full rounded-md bg-zinc-900 px-3 py-1.5 text-sm text-zinc-100 ring-1 ring-zinc-700 placeholder:text-zinc-500 focus:outline-none focus:ring-zinc-400"
         />
-        <details class="relative text-sm text-zinc-500">
+        <details class="text-sm text-zinc-500 lg:relative">
           <summary class="cursor-pointer list-none hover:text-zinc-300">Where's my model number?</summary>
           <div class="absolute left-0 z-20 mt-2 w-80 max-w-[calc(100vw-2rem)] rounded-md bg-zinc-900 p-3 text-zinc-300 shadow-lg ring-1 ring-zinc-700">
             <p>It's on the sticker underneath. In Windows, open System Information and look at System Model and System SKU. On Linux, run</p>
@@ -313,10 +314,12 @@ export default function StatusTable(props: Props) {
         </div>
       </Show>
 
+      {/* Below the xl width a row is a card: the model on top, then each status under its column's name.
+          The header row stays, wrapped, since sorting and filtering are done from it. */}
       <div class="mt-4 overflow-x-auto rounded-xl ring-1 ring-zinc-800">
-        <table class="w-full text-left text-sm">
-          <thead class="bg-zinc-900 text-xs uppercase tracking-wide text-zinc-400">
-            <tr>
+        <table class="w-full text-left text-sm max-xl:block">
+          <thead class="bg-zinc-900 text-xs uppercase tracking-wide text-zinc-400 max-xl:block">
+            <tr class="max-xl:flex max-xl:flex-wrap max-xl:px-1">
               <For each={headers()}>
                 {(header) => {
                   const direction = () => (sorting()[0]?.id === header.id ? (sorting()[0].desc ? 'desc' : 'asc') : null);
@@ -330,7 +333,7 @@ export default function StatusTable(props: Props) {
                     menu.style.left = `${Math.max(8, Math.min(rect.left, innerWidth - 272))}px`;
                   };
                   return (
-                    <th class={`${header.id === 'brand' ? 'px-4 py-3 font-medium' : 'px-3 py-3 font-medium'} ${header.filterColumn && selected(header.filterColumn).length ? 'bg-sky-400/10 text-sky-200' : ''}`} data-tip={header.question} data-tip-title={header.header} aria-sort={direction() === 'asc' ? 'ascending' : direction() === 'desc' ? 'descending' : 'none'}>
+                    <th class={`${header.id === 'brand' ? 'px-4 py-3 font-medium max-xl:px-3 max-xl:py-2' : 'px-3 py-3 font-medium max-xl:py-2'} ${header.filterColumn && selected(header.filterColumn).length ? 'bg-sky-400/10 text-sky-200' : ''}`} data-tip={header.question} data-tip-title={header.header} aria-sort={direction() === 'asc' ? 'ascending' : direction() === 'desc' ? 'descending' : 'none'}>
                       <span class="inline-flex items-center gap-1">
                         <button type="button" class="inline-flex items-center gap-1 uppercase tracking-wide hover:text-zinc-100" onClick={table.getColumn(header.id)!.getToggleSortingHandler()} data-sort={header.id}>
                           {header.header}
@@ -400,14 +403,14 @@ export default function StatusTable(props: Props) {
               </For>
             </tr>
           </thead>
-          <tbody class="divide-y divide-zinc-800">
+          <tbody class="divide-y divide-zinc-800 max-xl:block">
             <For each={table.getRowModel().rows}>
               {(row) => {
                 const model = row.original;
                 return (
-                  <tr class="align-top hover:bg-zinc-900/60" data-row data-chip={model.generation} data-outcome={model.outcome}>
-                    <td class="whitespace-nowrap px-4 py-3 text-zinc-300">{model.vendor}</td>
-                    <td class="px-3 py-3">
+                  <tr class="align-top hover:bg-zinc-900/60 max-xl:grid max-xl:grid-cols-2 max-xl:gap-x-4 max-xl:gap-y-3 max-xl:px-4 max-xl:py-4 sm:max-xl:grid-cols-3 md:max-xl:grid-cols-4 lg:max-xl:grid-cols-6" data-row data-chip={model.generation} data-outcome={model.outcome}>
+                    <td class="whitespace-nowrap px-4 py-3 text-zinc-300 max-xl:col-span-full max-xl:-mb-2.5 max-xl:p-0 max-xl:text-xs max-xl:uppercase max-xl:tracking-wide max-xl:text-zinc-500">{model.vendor}</td>
+                    <td class="px-3 py-3 max-xl:col-span-full max-xl:p-0">
                       <div class="font-medium text-zinc-100">
                         {model.href ? (
                           <a href={model.href} class="hover:underline hover:decoration-zinc-500 hover:underline-offset-2">
@@ -435,7 +438,7 @@ export default function StatusTable(props: Props) {
                         </ul>
                       </Show>
                       <Show when={model.notes || model.discussion}>
-                        <p class="mt-1.5 max-w-xs text-xs text-zinc-500">
+                        <p class="mt-1.5 text-xs text-zinc-500 xl:max-w-xs">
                           {model.notes}
                           <Show when={model.discussion}>
                             {' '}
@@ -448,7 +451,8 @@ export default function StatusTable(props: Props) {
                     </td>
                     <For each={statusColumns()}>
                       {(column) => (
-                        <td class="px-3 py-3">
+                        <td class="px-3 py-3 max-xl:p-0">
+                          <span class="mb-1 block text-xs text-zinc-500 xl:hidden">{column.header}</span>
                           <Pill cell={model.cells[column.id]} column={column.header} />
                         </td>
                       )}

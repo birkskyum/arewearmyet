@@ -78,13 +78,13 @@ const exportRows = folders.flatMap((folder) => {
       {folders.map((folder) => (
         <section class={CARD} id={folder.path.replaceAll('/', '-')}>
           <h2 class="text-base font-semibold text-zinc-100">{folder.models.map((id) => modelName.get(id) ?? id).join(', ')}</h2>
-          <p class="mt-1 text-xs"><code class={INLINE}>/usr/lib/firmware/{folder.path}/</code></p>
+          <p class="mt-1 text-xs"><code class={`${INLINE} break-all`}>/usr/lib/firmware/{folder.path}/</code></p>
           {downloads(folder).length > 0 && (
             <ul class="mt-3 space-y-1 text-sm">
               {downloads(folder).map((p) => (
                 <li>
                   <a class={LINK} href={p.page ?? (p.url.startsWith('wu://') ? 'https://github.com/birkskyum/wudrivers' : p.url)}>{p.maker}: {p.title}</a> <span class="text-zinc-500">({mb(p.size)})</span>
-                  {p.note && <span class="block text-xs text-zinc-500">{p.note}</span>}
+                  {p.note && <span class="block text-xs wrap-anywhere text-zinc-500">{p.note}</span>}
                 </li>
               ))}
             </ul>
@@ -93,19 +93,19 @@ const exportRows = folders.flatMap((folder) => {
             <p class="mt-2 text-sm text-amber-300/90"><code class={INLINE}>{f.name}</code>: {f.note}</p>
           ))}
           {folder.links && folder.links.length > 0 && (
-            <p class="mt-2 text-sm">Some names point at another folder's files, as linux-firmware links them. {folder.links.map((l) => <code class={`${INLINE} mr-1`}>{l.name} → {l.target}</code>)}</p>
+            <p class="mt-2 text-sm">Some names point at another folder's files, as linux-firmware links them. {folder.links.map((l) => <code class={`${INLINE} mr-1 break-all`}>{l.name} → {l.target}</code>)}</p>
           )}
           {folder.files && folder.files.length > 0 && (
             <details class="mt-3 text-xs">
               <summary class="cursor-pointer text-zinc-300">{folder.files.length} files with their checksums</summary>
               <div class="mt-2 overflow-x-auto">
-                <table class="w-full text-left">
-                  <tbody>
+                <table class="w-full text-left max-sm:block">
+                  <tbody class="max-sm:block">
                     {folder.files.map((f) => (
-                      <tr class="border-t border-zinc-800 align-top">
-                        <td class="py-1 pr-3 text-zinc-200">{f.name}</td>
+                      <tr class="border-t border-zinc-800 align-top max-sm:flex max-sm:flex-wrap">
+                        <td class="py-1 pr-3 text-zinc-200 max-sm:w-full max-sm:pb-0">{f.name}</td>
                         <td class="py-1 pr-3 font-mono" title={f.sha256}>{f.sha256?.slice(0, 16)}…</td>
-                        <td class="py-1 text-zinc-500">{f.from[0] ? <span title={f.from[0].member}>{packages.get(f.from[0].package)?.maker}: {f.from[0].member.split('/').at(-1)}</span> : 'not in a download'}</td>
+                        <td class="py-1 text-zinc-500 max-sm:min-w-0 max-sm:flex-1 max-sm:break-all">{f.from[0] ? <span title={f.from[0].member}>{packages.get(f.from[0].package)?.maker}: {f.from[0].member.split('/').at(-1)}</span> : 'not in a download'}</td>
                       </tr>
                     ))}
                   </tbody>
