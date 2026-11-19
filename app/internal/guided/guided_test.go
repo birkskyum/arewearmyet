@@ -80,7 +80,7 @@ func TestKeyboardAsksAboutKeysThatNeverLit(t *testing.T) {
 	if k.wantsAllKeys() {
 		t.Error("the question still takes every key")
 	}
-	k.update(press('1')) // "I pressed them and they don't respond"
+	k.update(press('2')) // "I pressed them and they don't respond"
 	result, _ := run.Get("keyboard")
 	if !k.done() || result.State != report.Partial || result.Note != "No response from: 7, Q" {
 		t.Errorf("result=%+v", result)

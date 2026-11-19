@@ -100,10 +100,10 @@ func (k *keyboard) update(msg tea.Msg) tea.Cmd {
 	if k.missing != nil {
 		switch k.missing.update(press) {
 		case 0:
-			k.run.Set("keyboard", report.Partial, report.Owner, fmt.Sprintf("%d keys registered", k.count()), "No response from: "+strings.Join(k.unlit(), ", "))
+			k.run.Set("keyboard", report.Works, report.Owner, fmt.Sprintf("%d keys registered; the owner didn't press %s", k.count(), strings.Join(k.unlit(), ", ")), "")
 			k.over = true
 		case 1:
-			k.run.Set("keyboard", report.Works, report.Owner, fmt.Sprintf("%d keys registered; the owner didn't press %s", k.count(), strings.Join(k.unlit(), ", ")), "")
+			k.run.Set("keyboard", report.Partial, report.Owner, fmt.Sprintf("%d keys registered", k.count()), "No response from: "+strings.Join(k.unlit(), ", "))
 			k.over = true
 		case 2:
 			k.missing = nil
@@ -142,7 +142,7 @@ func (k *keyboard) update(msg tea.Msg) tea.Cmd {
 		if a == b && b == c && (c == tea.KeyEnter || c == tea.KeySpace || c == tea.KeyEscape) && len(k.unlit()) > 0 {
 			k.missing = &choice{
 				question: "These keys never lit up: " + strings.Join(k.unlit(), " ") + ". What's true?",
-				options:  []string{"I pressed them and they don't respond", "I didn't press them all, the keyboard is fine", "Go back and press them"},
+				options:  []string{"The keyboard is fine", "I pressed them and they don't respond", "Go back and press them"},
 			}
 		}
 	}
