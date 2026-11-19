@@ -82,29 +82,159 @@ func (r *Recording) SoFar() []byte {
 	return data
 }
 
-// Frame takes a few frames from the first camera and returns the last one as a PPM file's
-// bytes. The first frames are still adjusting their exposure. cam takes its optional values
-// attached (--capture=8), and a PPM file holds only 24-bit pixels, hence the pixel format.
-func Frame(dir string) ([]byte, error) {
+// ErrCameraBusy says another program holds the camera. Outside PipeWire only one can at a time.
+var ErrCameraBusy = errors.New("another program is using the camera")
+
+// Shot is a camera frame as a PPM file's bytes, and how the camera got to it.
+type Shot struct {
+	PPM []byte
+	// Took is how long the camera ran before the frame that was kept.
+	Took time.Duration
+	// Settled is false when the picture was still getting brighter or darker at the end.
+	Settled bool
+}
+
+// The camera is given this long to adjust to the light. libcamera's software processing raises a
+// sensor's gain a step at a time, and from a cold start in a dim room that was measured at
+// eight seconds on a Yoga Slim 7x.
+const (
+	settleFrames = 450
+	settleWindow = time.Second
+	settleWithin = 2.0
+)
+
+type sample struct {
+	at   time.Duration
+	mean float64
+}
+
+// settled says whether the brightness has stopped changing: over the last second it moved by
+// no more than two of 255. The first frames are left out, as the camera's processing has only
+// just started on them.
+func settled(samples []sample) bool {
+	if len(samples) < 4 {
+		return false
+	}
+	samples = samples[2:]
+	now := samples[len(samples)-1].at
+	if now-samples[0].at < settleWindow {
+		return false
+	}
+	low, high := samples[len(samples)-1].mean, samples[len(samples)-1].mean
+	for _, s := range samples {
+		if now-s.at <= settleWindow {
+			low, high = min(low, s.mean), max(high, s.mean)
+		}
+	}
+	return high-low <= settleWithin
+}
+
+// brightness is the mean of a PPM frame's colour values, and whether the frame is whole.
+func brightness(ppm []byte) (float64, bool) {
+	var width, height, depth, at int
+	if n, err := fmt.Sscanf(string(ppm[:min(len(ppm), 40)]), "P6\n%d %d\n%d\n", &width, &height, &depth); n != 3 || err != nil {
+		return 0, false
+	}
+	for newlines := 0; at < len(ppm) && newlines < 3; at++ {
+		if ppm[at] == '\n' {
+			newlines++
+		}
+	}
+	pixels := ppm[at:]
+	if width < 1 || height < 1 || len(pixels) != width*height*3 {
+		return 0, false
+	}
+	step := max(1, len(pixels)/60000)
+	sum, count := 0, 0
+	for i := 0; i < len(pixels); i += step {
+		sum += int(pixels[i])
+		count++
+	}
+	return float64(sum) / float64(count), true
+}
+
+// Frame runs the first camera until its picture has settled on a brightness, and returns that
+// frame. A fixed handful of frames is too few: the picture starts dark and brightens over
+// seconds. cam takes its optional values attached (--capture=450), and a PPM file holds only
+// 24-bit pixels, hence the pixel format. Frames are deleted as they come, so a long wait
+// doesn't fill the folder.
+func Frame(dir string) (Shot, error) {
 	var last error
 	for _, format := range []string{"BGR888", "RGB888"} {
-		ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
-		command := exec.CommandContext(ctx, "cam", "-c", "1", "--capture=8", "--stream", "pixelformat="+format, "--file="+filepath.Join(dir, "frame-#.ppm"))
-		command.WaitDelay = 3 * time.Second
-		out, err := command.CombinedOutput()
-		cancel()
-		frames, _ := filepath.Glob(filepath.Join(dir, "frame-*.ppm"))
-		if len(frames) > 0 {
-			sort.Strings(frames)
-			data, err := os.ReadFile(frames[len(frames)-1])
-			for _, frame := range frames {
-				os.Remove(frame)
-			}
-			return data, err
+		shot, out, err := capture(dir, format)
+		if len(shot.PPM) > 0 {
+			return shot, nil
 		}
-		last = fmt.Errorf("cam gave no frame (%v): %s", err, lastLine(string(out)))
+		if strings.Contains(out, "resource busy") {
+			return Shot{}, ErrCameraBusy
+		}
+		last = fmt.Errorf("cam gave no frame (%v): %s", err, lastLine(out))
 	}
-	return nil, last
+	return Shot{}, last
+}
+
+func capture(dir, format string) (Shot, string, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 25*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, "cam", "-c", "1", "--capture="+strconv.Itoa(settleFrames), "--stream", "pixelformat="+format, "--file="+filepath.Join(dir, "frame-#.ppm"))
+	// Interrupted, cam stops the camera and finishes the frame it is writing
+	command.Cancel = func() error { return command.Process.Signal(os.Interrupt) }
+	command.WaitDelay = 3 * time.Second
+	var out strings.Builder
+	command.Stdout, command.Stderr = &out, &out
+	if err := command.Start(); err != nil {
+		return Shot{}, "", err
+	}
+	done := make(chan error, 1)
+	go func() { done <- command.Wait() }()
+	frames := func() []string {
+		found, _ := filepath.Glob(filepath.Join(dir, "frame-*.ppm"))
+		sort.Strings(found)
+		return found
+	}
+	var shot Shot
+	var samples []sample
+	var seen string
+	var started time.Time
+	var err error
+	for running := true; running; {
+		select {
+		case err = <-done:
+			running = false
+		case <-time.After(150 * time.Millisecond):
+		}
+		found := frames()
+		// The newest file may be half written, so the one before it is read
+		if running && len(found) > 0 {
+			found = found[:len(found)-1]
+		}
+		for len(found) > 1 {
+			os.Remove(found[0])
+			found = found[1:]
+		}
+		if len(found) == 0 || found[0] == seen {
+			continue
+		}
+		data, readErr := os.ReadFile(found[0])
+		mean, whole := brightness(data)
+		if readErr != nil || !whole {
+			continue
+		}
+		if started.IsZero() {
+			started = time.Now()
+		}
+		seen = found[0]
+		shot.PPM, shot.Took = data, time.Since(started)
+		samples = append(samples, sample{shot.Took, mean})
+		if running && !shot.Settled && settled(samples) {
+			shot.Settled = true
+			cancel()
+		}
+	}
+	for _, frame := range frames() {
+		os.Remove(frame)
+	}
+	return shot, out.String(), err
 }
 
 func lastLine(text string) string {

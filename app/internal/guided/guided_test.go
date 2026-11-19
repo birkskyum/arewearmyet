@@ -1,6 +1,7 @@
 package guided
 
 import (
+	"fmt"
 	"math"
 	"os"
 	"path/filepath"
@@ -287,10 +288,11 @@ func scene() picture.Frame {
 	return frame
 }
 
-func TestCameraTakesItsPictureOnlyWhenToldAndShowsItInAWindow(t *testing.T) {
+func TestCameraTakesItsPictureOnlyWhenToldAndShowsItInTheTerminal(t *testing.T) {
 	dir := t.TempDir()
 	run := &report.Run{}
 	c := newCamera(run, dir)
+	c.canOpen = true
 	window := &tools.Viewer{Closed: make(chan struct{})}
 	opened := ""
 	c.open = func(file string) *tools.Viewer {
@@ -300,29 +302,38 @@ func TestCameraTakesItsPictureOnlyWhenToldAndShowsItInAWindow(t *testing.T) {
 	if c.start() != nil || c.phase != "intro" {
 		t.Fatalf("it started at %q", c.phase)
 	}
-	if intro := c.view(80, 30); !strings.Contains(intro, "When you press Enter it takes one picture") || !strings.Contains(intro, "never leaves this computer") {
+	if intro := c.view(80, 30); !strings.Contains(intro, "When you press Enter it takes one picture and shows it here") || !strings.Contains(intro, "never leaves this computer") {
 		t.Errorf("the intro doesn't say what will happen:\n%s", intro)
 	}
 	// Enter takes it at once: the intro was the warning
 	if c.update(press(tea.KeyEnter)) == nil || c.phase != "capturing" {
 		t.Fatalf("after Enter it is %q", c.phase)
 	}
-	wait := c.update(frameMsg{frame: scene()})
-	if c.phase != "viewing" || opened != filepath.Join(dir, "camera.png") || wait == nil {
-		t.Fatalf("phase %q, opened %q", c.phase, opened)
+	if waiting := c.view(80, 30); !strings.Contains(waiting, "adjusted to the light") {
+		t.Errorf("the wait isn't explained:\n%s", waiting)
+	}
+	// The picture is drawn here with the question. No window opens and nothing is written
+	c.update(frameMsg{frame: scene(), took: 8 * time.Second, settled: true})
+	if c.phase != "ask" || opened != "" || !strings.Contains(c.view(80, 40), "▀") || !strings.Contains(c.view(80, 40), "Is that a real picture") {
+		t.Fatalf("phase %q, opened %q:\n%s", c.phase, opened, c.view(80, 40))
+	}
+	if _, err := os.Stat(filepath.Join(dir, "camera.png")); err == nil {
+		t.Error("the picture was written without being asked for")
+	}
+	// o opens it at full size, and the question stays
+	if !strings.Contains(c.keys(), "o to see it at full size") {
+		t.Errorf("keys: %s", c.keys())
+	}
+	c.update(press('o'))
+	if c.phase != "ask" || opened != filepath.Join(dir, "camera.png") {
+		t.Fatalf("after o: phase %q, opened %q", c.phase, opened)
 	}
 	if _, err := os.Stat(opened); err != nil {
 		t.Fatal("the picture wasn't written for the viewer")
 	}
-	// The owner closes the window with q, and only then is asked
-	close(window.Closed)
-	c.update(wait())
-	if c.phase != "ask" {
-		t.Fatalf("after the window closed it is %q", c.phase)
-	}
 	c.update(press('2'))
 	result, _ := run.Get("camera")
-	if !c.done() || result.State != report.Partial || !strings.Contains(result.Evidence, "a 64x36 frame") {
+	if !c.done() || result.State != report.Partial || !strings.Contains(result.Evidence, "a 64x36 frame") || !strings.HasSuffix(result.Evidence, ", after 8 s of adjusting to the light") {
 		t.Errorf("result %+v", result)
 	}
 	// Nothing of the picture is left behind
@@ -337,13 +348,28 @@ func TestCameraTakesItsPictureOnlyWhenToldAndShowsItInAWindow(t *testing.T) {
 		t.Error("skipping didn't end the step")
 	}
 
-	// Without a viewer the question comes with the picture drawn in the terminal
+	// A camera that was still getting brighter when time ran out says so, and a quick one says nothing of it
 	c = newCamera(&report.Run{}, dir)
-	c.open = func(string) *tools.Viewer { return nil }
 	c.update(press(tea.KeyEnter))
-	c.update(frameMsg{frame: scene()})
-	if c.phase != "ask" || !strings.Contains(c.view(80, 40), "▀") {
-		t.Errorf("without a viewer: phase %q", c.phase)
+	c.update(frameMsg{frame: scene(), took: 15 * time.Second, settled: false})
+	if !strings.HasSuffix(c.evidence(), ", still adjusting to the light after 15 s") {
+		t.Errorf("evidence: %s", c.evidence())
+	}
+	c.update(frameMsg{frame: scene(), took: 1200 * time.Millisecond, settled: true})
+	if !strings.HasSuffix(c.evidence(), "contrast "+fmt.Sprint(func() int { _, contrast := scene().Brightness(); return contrast }())) {
+		t.Errorf("evidence: %s", c.evidence())
+	}
+
+	// Another program holding the camera is named as that, and nothing is reported for it
+	busy := &report.Run{}
+	c = newCamera(busy, dir)
+	c.update(press(tea.KeyEnter))
+	c.update(frameMsg{err: tools.ErrCameraBusy})
+	if view := c.view(80, 30); !strings.Contains(view, "Another program is using the camera") || strings.Contains(view, "Measured") || strings.Contains(c.keys(), "full size") {
+		t.Errorf("a busy camera:\n%s", view)
+	}
+	if c.update(press('1')) == nil || c.phase != "capturing" || len(busy.Results) != 0 {
+		t.Errorf("trying again: phase %q, results %v", c.phase, busy.Results)
 	}
 }
 

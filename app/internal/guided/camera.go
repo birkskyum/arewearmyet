@@ -1,9 +1,11 @@
 package guided
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
+	"time"
 
 	tea "charm.land/bubbletea/v2"
 
@@ -14,36 +16,47 @@ import (
 
 type frameMsg struct {
 	frame picture.Frame
-	err   error
+	// took is how long the camera ran before this frame, and settled whether its picture had
+	// stopped getting brighter or darker by then.
+	took    time.Duration
+	settled bool
+	err     error
 }
 
-// viewedMsg says the picture's window was closed.
-type viewedMsg struct{}
-
-// camera takes one picture when the owner says so, shows it in a window of its own at full
-// size, and asks whether it looks right. The picture stays on the computer: only how bright
-// it is and how much contrast it has are reported.
+// camera takes one picture when the owner says so, draws it in the terminal and asks whether
+// it looks right. A window with the picture at full size opens only when asked for. The
+// picture stays on the computer: only how bright it is and how much contrast it has are
+// reported.
 type camera struct {
-	run   *report.Run
-	dir   string
-	phase string // intro, capturing, viewing, ask
-	frame picture.Frame
-	err   error
-	// viewer is the window the picture is open in, or nil when it is drawn in the terminal only.
+	run     *report.Run
+	dir     string
+	phase   string // intro, capturing, ask
+	frame   picture.Frame
+	took    time.Duration
+	settled bool
+	err     error
+	// viewer is the window the picture is open in at full size, or nil.
 	viewer *tools.Viewer
 	// open is what shows the picture in a window, which tests replace.
 	open func(file string) *tools.Viewer
-	ask  choice
-	over bool
+	// canOpen says whether there is a viewer to open it in.
+	canOpen bool
+	ask     choice
+	over    bool
 }
 
 func newCamera(run *report.Run, dir string) *camera {
-	return &camera{run: run, dir: dir, phase: "intro", open: tools.View}
+	return &camera{run: run, dir: dir, phase: "intro", open: tools.View, canOpen: tools.Have("imv")}
 }
 
 func (c *camera) name() string   { return "Camera" }
 func (c *camera) done() bool     { return c.over }
 func (c *camera) start() tea.Cmd { return nil }
+
+// shown says whether a real picture is on screen, which can then be opened at full size.
+func (c *camera) shown() bool {
+	return c.phase == "ask" && c.err == nil && !c.frame.Blank()
+}
 
 func (c *camera) keys() string {
 	switch c.phase {
@@ -51,8 +64,9 @@ func (c *camera) keys() string {
 		return "Enter to take the picture · s to skip"
 	case "capturing":
 		return "Taking the picture…"
-	case "viewing":
-		return "Press q in the picture's window to close it · Enter here if no window opened"
+	}
+	if c.shown() && c.canOpen {
+		return choiceKeys + " · o to see it at full size"
 	}
 	return choiceKeys
 }
@@ -76,12 +90,12 @@ func (c *camera) capture() tea.Cmd {
 	c.phase = "capturing"
 	dir := c.dir
 	return func() tea.Msg {
-		data, err := tools.Frame(dir)
+		shot, err := tools.Frame(dir)
 		if err != nil {
 			return frameMsg{err: err}
 		}
-		frame, err := picture.PPM(data)
-		return frameMsg{frame: frame, err: err}
+		frame, err := picture.PPM(shot.PPM)
+		return frameMsg{frame: frame, took: shot.Took, settled: shot.Settled, err: err}
 	}
 }
 
@@ -90,13 +104,24 @@ func (c *camera) evidence() string {
 		return c.err.Error()
 	}
 	mean, contrast := c.frame.Brightness()
-	return fmt.Sprintf("a %dx%d frame, brightness %d of 255, contrast %d", c.frame.Width, c.frame.Height, mean, contrast)
+	evidence := fmt.Sprintf("a %dx%d frame, brightness %d of 255, contrast %d", c.frame.Width, c.frame.Height, mean, contrast)
+	seconds := int(c.took.Round(time.Second).Seconds())
+	switch {
+	case !c.settled && seconds > 0:
+		evidence += fmt.Sprintf(", still adjusting to the light after %d s", seconds)
+	case seconds >= 3:
+		evidence += fmt.Sprintf(", after %d s of adjusting to the light", seconds)
+	}
+	return evidence
 }
 
 // question puts up what to ask about the picture just taken.
 func (c *camera) question() {
 	c.phase = "ask"
 	switch {
+	case errors.Is(c.err, tools.ErrCameraBusy):
+		c.ask = choice{question: "Another program is using the camera, like a browser tab with a video call or a camera page. Close it, then try again.",
+			options: []string{"Try again", "Skip"}}
 	case c.err != nil:
 		c.ask = choice{question: "The camera gave no picture here. Does it work in other apps, like a video call in the browser?",
 			options: []string{"Yes, it works there", "No, it doesn't work anywhere", "Try again", "Skip"}}
@@ -104,7 +129,7 @@ func (c *camera) question() {
 		c.ask = choice{question: "The picture came out black or blank. Is the camera covered, or its shutter closed?",
 			options: []string{"It was covered: take another", "No, nothing covers it", "Skip"}}
 	default:
-		c.ask = choice{question: "Was that a real picture of what's in front of the camera?",
+		c.ask = choice{question: "Is that a real picture of what's in front of the camera?",
 			options: []string{"Yes, and the colours look right", "Yes, but it's too dark, pale or off in colour", "No, it's black, frozen or garbage", "Take another", "Skip"}}
 	}
 }
@@ -112,29 +137,8 @@ func (c *camera) question() {
 func (c *camera) update(msg tea.Msg) tea.Cmd {
 	switch msg := msg.(type) {
 	case frameMsg:
-		c.frame, c.err = msg.frame, msg.err
-		if c.err != nil || c.frame.Blank() {
-			c.question()
-			return nil
-		}
-		// A real picture: shown at full size in a window, which the owner closes with q
-		if file, err := c.frame.PNG(); err == nil && os.WriteFile(c.picture(), file, 0o600) == nil {
-			c.viewer = c.open(c.picture())
-		}
-		if c.viewer == nil {
-			c.question()
-			return nil
-		}
-		c.phase = "viewing"
-		closed := c.viewer.Closed
-		return func() tea.Msg {
-			<-closed
-			return viewedMsg{}
-		}
-	case viewedMsg:
-		if c.phase == "viewing" {
-			c.question()
-		}
+		c.frame, c.took, c.settled, c.err = msg.frame, msg.took, msg.settled, msg.err
+		c.question()
 	case tea.KeyPressMsg:
 		switch c.phase {
 		case "intro":
@@ -145,13 +149,14 @@ func (c *camera) update(msg tea.Msg) tea.Cmd {
 				c.finish()
 			}
 			return nil
-		case "viewing":
-			if msg.String() == "enter" {
-				c.viewer.Close()
-				c.question()
-			}
-			return nil
 		case "capturing":
+			return nil
+		}
+		// The picture at full size, in a window of its own that q closes. Answering closes it too.
+		if msg.String() == "o" && c.shown() && c.viewer == nil {
+			if file, err := c.frame.PNG(); err == nil && os.WriteFile(c.picture(), file, 0o600) == nil {
+				c.viewer = c.open(c.picture())
+			}
 			return nil
 		}
 		set := func(state, how, note string) {
@@ -163,6 +168,11 @@ func (c *camera) update(msg tea.Msg) tea.Cmd {
 			return nil
 		}
 		switch {
+		case errors.Is(c.err, tools.ErrCameraBusy):
+			if picked == 0 {
+				return c.capture()
+			}
+			c.finish()
 		case c.err != nil:
 			switch picked {
 			case 0:
@@ -204,18 +214,19 @@ func (c *camera) update(msg tea.Msg) tea.Cmd {
 func (c *camera) view(width, height int) string {
 	switch c.phase {
 	case "intro":
-		return wrap("Now the camera. When you press Enter it takes one picture and opens it in a window, so you can see whether the camera works. Cover the camera first if you'd rather not be in it: a picture of anything shows it works.", width) + "\n\n" + private(width)
+		return wrap("Now the camera. When you press Enter it takes one picture and shows it here, so you can see whether the camera works. Cover the camera first if you'd rather not be in it: a picture of anything shows it works.", width) + "\n\n" + private(width)
 	case "capturing":
-		return accent.Render("● Taking a picture with the camera") + "\n\n" + "Its light may come on for a moment."
-	case "viewing":
-		return accent.Render("The picture is open in its own window.") + "\n\n" +
-			wrap("Have a look at it, then press q in that window to close it and come back here.", width) + "\n\n" + private(width)
+		return accent.Render("● Taking a picture with the camera") + "\n\n" +
+			wrap("It waits until the camera has adjusted to the light, which takes a few seconds, and up to fifteen in a dim room. Its light is on meanwhile.", width)
 	}
 	if c.err != nil || c.frame.Blank() {
+		if errors.Is(c.err, tools.ErrCameraBusy) {
+			return c.ask.view(width)
+		}
 		return c.ask.view(width) + "\n\n" + wrap("Measured: "+c.evidence()+".", width)
 	}
-	// A small copy of the picture as a reminder, in whatever height the question leaves
-	rows := max(4, min(14, height-len(c.ask.options)-9))
-	return c.frame.Render(min(width, 60), rows) + "\n\n" + c.ask.view(width) + "\n\n" +
-		wrap("Measured: "+c.evidence()+". Only these numbers are sent, never the picture, which is deleted when you answer.", width)
+	// The picture, in whatever height the question leaves
+	rows := max(4, min(26, height-len(c.ask.options)-9))
+	return c.frame.Render(min(width, 96), rows) + "\n\n" + c.ask.view(width) + "\n\n" +
+		wrap("Measured: "+c.evidence()+". Only these numbers are sent, never the picture.", width)
 }
