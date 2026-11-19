@@ -6,6 +6,7 @@ import (
 	"net"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	tea "charm.land/bubbletea/v2"
@@ -60,20 +61,39 @@ type summary struct {
 	recorded bool
 	// handed is how handing what failed to an agent went.
 	handed string
+	// asked is the last screen's question, put back after a part was picked for the agent.
+	asked string
 }
 
-// The last screen's offer to hand what failed in this round to the owner's agent.
-const askAgent = "Let an agent look into what doesn't work"
-
-// failed lists the checks this round found partly working or broken.
+// failing lists the checks this round found partly working or broken, or working with
+// something worth a second look: what an agent can be asked to look into.
 func (s *summary) failing() []string {
 	var failing []string
 	for _, result := range s.run.Results {
-		if severity[result.State] > 1 {
+		if severity[result.State] > 1 || worthALook(result) {
 			failing = append(failing, result.Check)
 		}
 	}
 	return failing
+}
+
+// agentOption is the last screen's offer to hand a part to the owner's agent. An agent takes
+// one part at a time, so a part that can't be fixed doesn't hold up the others: with several
+// to choose from, the owner picks one, and the offer is there again for the next.
+func (s *summary) agentOption() string {
+	switch failing := s.failing(); len(failing) {
+	case 0:
+		return ""
+	case 1:
+		return "Let an agent look into the " + strings.ToLower(first(checkTitle[failing[0]], failing[0]))
+	}
+	return "Let an agent look into one of them"
+}
+
+// hand gives one check to the agent, and leaves the last choice up for what comes after.
+func (s *summary) hand(check string) tea.Cmd {
+	s.handed = "Writing the brief and opening your agent…"
+	return handOver(s.run, s.options, report.Model{ID: s.sent.Model, Page: s.sent.Page}, []string{check})
 }
 
 func (s *summary) name() string { return "Send" }
@@ -105,7 +125,7 @@ func (s *summary) start() tea.Cmd {
 // end puts up the last choice of a round: back to the start, which is where the cursor
 // rests, the page when something was sent, or leaving.
 func (s *summary) end(question string) {
-	s.phase = "end"
+	s.phase, s.asked = "end", question
 	options := []string{"Back to the start"}
 	if s.sent.Run != "" {
 		open := "Open this computer's page in the browser"
@@ -114,8 +134,8 @@ func (s *summary) end(question string) {
 		}
 		options = append(options, open)
 	}
-	if len(s.failing()) > 0 {
-		options = append(options, askAgent)
+	if offer := s.agentOption(); offer != "" {
+		options = append(options, offer)
 	}
 	s.ask = choice{question: question, options: append(options, "Quit")}
 }
@@ -188,16 +208,31 @@ func (s *summary) update(msg tea.Msg) tea.Cmd {
 				return s.send()
 			}
 			s.end("Not sent. The results are kept on this computer.")
+		case "pick":
+			failing, asked := s.failing(), s.asked
+			s.end(asked)
+			if picked < len(failing) {
+				return s.hand(failing[picked])
+			}
 		case "end":
 			switch s.ask.options[picked] {
 			case "Back to the start":
 				s.again, s.over = true, true
 			case "Quit":
 				s.over = true
-			case askAgent:
+			case s.agentOption():
 				// The choice stays up: the agent works in a window of its own
-				s.handed = "Writing the brief and opening your agent…"
-				return handOver(s.run, s.options, report.Model{ID: s.sent.Model, Page: s.sent.Page}, s.failing())
+				failing := s.failing()
+				if len(failing) == 1 {
+					return s.hand(failing[0])
+				}
+				s.phase = "pick"
+				var lines []string
+				for _, check := range failing {
+					result, _ := s.run.Get(check)
+					lines = append(lines, summed(check, result))
+				}
+				s.ask = choice{question: "Which one? An agent takes one part at a time, so a part that can't be fixed doesn't hold up the others. You can come back here for the next.", options: append(lines, "Back")}
 			default:
 				// The page opens in the browser, and the choice stays up for what comes after
 				tools.Open(s.page())

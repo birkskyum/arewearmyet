@@ -32,8 +32,10 @@ type Options struct {
 	Only []string
 	// Version is the app's, for the brief an agent is given.
 	Version string
-	// launch opens the agent, which tests replace.
+	// launch opens the agent, which tests replace, and guide fetches the guide for a copy
+	// beside the brief, which tests leave out.
 	launch func(dir, prompt string) error
+	guide  func() ([]byte, error)
 }
 
 // Interactive says whether someone is at a terminal to answer.
@@ -691,6 +693,12 @@ func (e menuEntry) status(kept map[string]report.Kept) side {
 		}
 		return side{mark: map[string]string{report.Partial: "◐", report.Broken: "✗"}[worst.State], text: text, style: stateStyle(worst.State)}
 	}
+	// What works but measured something odd says so, as that is what an agent can be asked about
+	for _, check := range e.checks {
+		if result, ok := kept[check]; ok && worthALook(result.Result) {
+			return side{mark: "✓", text: when + " · worth a look: " + strings.TrimRight(result.Look, "."), style: good}
+		}
+	}
 	if tested < len(e.checks) {
 		return side{mark: "✓", text: fmt.Sprintf("%s · %d of %d tested", when, tested, len(e.checks)), style: good}
 	}
@@ -724,6 +732,9 @@ type welcome struct {
 	handed  string
 	// newer is the newest release when this isn't it.
 	newer string
+	// offer is the choice put up for a part that fails or is worth a look: test it again, or
+	// have an agent look into it. Nil when the menu is up.
+	offer *choice
 }
 
 // releaseMsg carries the newest release, when it is newer than the running one.
@@ -803,9 +814,12 @@ func (w *welcome) done() bool      { return w.started || w.only }
 func (w *welcome) isOpening() bool { return true }
 
 func (w *welcome) keys() string {
+	if w.offer != nil {
+		return choiceKeys + " · Esc to go back"
+	}
 	keys := menuKeys
 	if len(w.failing()) > 0 {
-		keys += " · a to let an agent look into what fails"
+		keys += " · a to let an agent look into it"
 	}
 	if w.model.Page != "" {
 		keys += " · o to open this computer's page"
@@ -813,13 +827,15 @@ func (w *welcome) keys() string {
 	return keys
 }
 
-// failing lists what an agent would be handed from where the cursor is: the failing checks
-// of the part under it, or on any other line everything that fails on this computer.
+// failing lists what an agent would be handed from where the cursor is: the checks of the
+// part under it that fail or are worth a look. An agent takes one part at a time, so a part
+// that can't be fixed doesn't hold up the others, and on any other line there is nothing to
+// hand over.
 func (w *welcome) failing() []string {
 	all := Failing(w.kept)
 	at := w.ask.cursor - 1
 	if at < 0 || at >= len(w.parts) || len(w.parts[at].checks) == 0 {
-		return all
+		return nil
 	}
 	var part []string
 	for _, check := range all {
@@ -874,9 +890,34 @@ func (w *welcome) update(msg tea.Msg) tea.Cmd {
 		tools.Open(w.model.Page)
 		return nil
 	}
-	if failing := w.failing(); press.String() == "a" && len(failing) > 0 {
+	failing := w.failing()
+	hand := func() tea.Cmd {
 		w.handed = "Writing the brief and opening your agent…"
 		return handOver(w.run, w.options, w.model, failing)
+	}
+	// The choice for a part with something to look into: nothing has to be tested again to
+	// have an agent work on it
+	if w.offer != nil {
+		picked := w.offer.update(press)
+		if press.String() == "esc" {
+			picked = 2
+		}
+		switch picked {
+		case 0:
+			w.offer = nil
+			w.part = w.parts[w.ask.cursor-1].word
+			w.pick(w.part)
+			w.started = true
+		case 1:
+			w.offer = nil
+			return hand()
+		case 2:
+			w.offer = nil
+		}
+		return nil
+	}
+	if press.String() == "a" && len(failing) > 0 {
+		return hand()
 	}
 	if len(w.ask.options) == 0 {
 		w.ask = w.question()
@@ -889,6 +930,11 @@ func (w *welcome) update(msg tea.Msg) tea.Cmd {
 		w.quit = true
 		return tea.Quit
 	case picked > 0 && w.pick != nil:
+		// A part that fails, or works with something worth a look, can go to an agent as it stands
+		if failing = w.failing(); len(failing) > 0 {
+			w.offer = &choice{question: strings.Join(Summed(w.kept, failing), "\n"), options: []string{"Test it again", "Let an agent look into it", "Back to the list"}}
+			return nil
+		}
 		w.part = w.parts[picked-1].word
 		w.pick(w.part)
 	}
@@ -899,6 +945,9 @@ func (w *welcome) update(msg tea.Msg) tea.Cmd {
 func (w *welcome) view(width, height int) string {
 	if len(w.ask.options) == 0 {
 		w.ask = w.question()
+	}
+	if w.offer != nil {
+		return w.offer.view(width)
 	}
 	// What this is, and where this computer's results are once the site has said which model it is
 	intro := wrap("Checks what works on this computer and puts it on its page on arewearmyet.com.", width)

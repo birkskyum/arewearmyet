@@ -1,6 +1,7 @@
 package guided
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -172,6 +173,45 @@ func TestWhatFailsIsHandedToTheOwnersAgentWithTheBrief(t *testing.T) {
 			t.Errorf("the agent's first message lacks %q: %s", text, prompt)
 		}
 	}
+	// One part alone, as the owner picks it: the brief is for that part, says so, names what
+	// else is left for later, and has what an agent without a network or a PATH needs
+	one := yoga()
+	one.Only, one.Binary = []string{"speakers"}, "/home/owner/.local/share/mise/installs/hw/0.16.0/hw-test"
+	one.GetGuide = func() ([]byte, error) { return []byte("# Are we ARM yet? Guide for AI agents\n"), nil }
+	one.Kept["camera"] = report.Kept{Result: report.Result{Check: "camera", State: report.Works, How: report.Owner, Evidence: "a 1920x1092 frame", Look: "The picture is 30 of 255 bright."}, Kernel: "7.3.0-59-omarchy", When: one.When}
+	handed = HandOver(one, dir, launch)
+	written, _ = os.ReadFile(filepath.Join(dir, "BRIEF.md"))
+	guide, _ := os.ReadFile(filepath.Join(dir, "GUIDE.md"))
+	if !handed.Opened || !strings.HasPrefix(string(guide), "# Are we ARM yet? Guide for AI agents") {
+		t.Fatalf("handed %+v, guide %q", handed, guide)
+	}
+	if !strings.Contains(prompt, "on my computer: speakers.") || !strings.Contains(prompt, "GUIDE.md beside it (a copy of https://arewearmyet.com/agents.md)") {
+		t.Errorf("the agent's first message: %s", prompt)
+	}
+	for _, text := range []string{
+		"A copy of the guide is in GUIDE.md beside this file", "hw-test 0.9.0 is at `/home/owner/.local/share/mise/installs/hw/0.16.0/hw-test`. If plain `hw-test` doesn't start",
+		"## One part at a time", "tell the owner what you found and stop", "Also failing or worth a look on this computer: `hibernate`, `webgpu`, `camera`.", "`hw-test brief <check>` prints the brief for one of them from the results already here, without testing anything again",
+	} {
+		if !strings.Contains(string(written), text) {
+			t.Errorf("the brief for one part lacks %q:\n%s", text, written)
+		}
+	}
+	if strings.Contains(string(written), "### Hibernation") || strings.Contains(string(written), "### Webcam") {
+		t.Error("the brief for one part goes into the others")
+	}
+	// A part that works with something worth a look is briefed as that
+	one.Only = []string{"camera"}
+	if brief := Brief(one); !strings.Contains(brief, "### Webcam (check `camera`): works, with something to look into") || !strings.Contains(brief, "- Worth a second look: The picture is 30 of 255 bright. Find out whether it is a fault") {
+		t.Errorf("a part worth a look:\n%s", brief)
+	}
+	// Without the guide to copy, the brief and the message point at the site
+	one.GetGuide = func() ([]byte, error) { return nil, fmt.Errorf("no network") }
+	os.Remove(filepath.Join(dir, "GUIDE.md"))
+	HandOver(one, dir, launch)
+	if strings.Contains(prompt, "GUIDE.md") || !strings.Contains(prompt, "https://arewearmyet.com/agents.md, has the rules") {
+		t.Errorf("without a copy: %s", prompt)
+	}
+
 	// With no agent chosen, or not on Omarchy, the brief is still written and the owner told what to do
 	none := HandOver(yoga(), dir, func(string, string) error { return tools.ErrNoAgent })
 	if none.Opened || !strings.Contains(none.Said, "omarchy default agent") || !strings.Contains(none.Said, "BRIEF.md") {
@@ -204,14 +244,14 @@ func TestTheScreensOfferTheAgentOnlyWhenSomethingFails(t *testing.T) {
 	// A round where everything works ends without the offer
 	s := &summary{run: run, options: options}
 	s.start()
-	if strings.Contains(strings.Join(s.ask.options, "|"), askAgent) {
+	if strings.Contains(strings.Join(s.ask.options, "|"), "agent") {
 		t.Errorf("the agent is offered with nothing failing: %v", s.ask.options)
 	}
 	// A round with a failure offers it, between going back and leaving, and choosing it keeps the choice up
 	run.Set("webgpu", report.Partial, report.Measured, "WebGPU only with switches", "")
 	s = &summary{run: run, options: options}
 	s.start()
-	if got := strings.Join(s.ask.options, " | "); got != "Back to the start | "+askAgent+" | Quit" || s.ask.cursor != 0 {
+	if got := strings.Join(s.ask.options, " | "); got != "Back to the start | Let an agent look into the webgpu in the browser | Quit" || s.ask.cursor != 0 {
 		t.Fatalf("the last choice: %s", got)
 	}
 	cmd := s.update(press('2'))
@@ -223,35 +263,108 @@ func TestTheScreensOfferTheAgentOnlyWhenSomethingFails(t *testing.T) {
 		t.Errorf("asked %q\n%s", asked, s.view(90, 30))
 	}
 
-	// The start screen: a for the part under the cursor, or for everything that fails
+	// With several to look into, the owner picks one, and the offer is there again for the next:
+	// a part that can't be fixed, like hibernation here, holds up nothing
+	run.Set("hibernate", report.Broken, report.Measured, "the kernel offers no hibernation", "")
+	run.Set("speakers", report.Works, report.Measured, "left -47 dB, right -55 dB", "")
+	run.Flag("speakers", "The right speaker measures 8 dB quieter than the other.")
+	s = &summary{run: run, options: options}
+	s.start()
+	if got := strings.Join(s.ask.options, " | "); got != "Back to the start | Let an agent look into one of them | Quit" {
+		t.Fatalf("the last choice with several: %s", got)
+	}
+	if s.update(press('2')) != nil || s.phase != "pick" {
+		t.Fatalf("choosing the agent with several: phase %q", s.phase)
+	}
+	if got := strings.Join(s.ask.options, " | "); got != "WebGPU in the browser: partly. WebGPU only with switches | Hibernation: broken. the kernel offers no hibernation | Speakers: works, with something to look into. The right speaker measures 8 dB quieter than the other | Back" ||
+		!strings.Contains(s.ask.question, "one part at a time") {
+		t.Fatalf("what to pick from: %s\n%s", got, s.ask.question)
+	}
+	asked = ""
+	cmd = s.update(press('3'))
+	if cmd == nil || s.phase != "end" || s.done() {
+		t.Fatalf("after picking: phase %q", s.phase)
+	}
+	s.update(cmd())
+	if !strings.Contains(asked, "on my computer: speakers.") || strings.Contains(asked, "hibernation") || !strings.Contains(strings.Join(s.ask.options, "|"), "Let an agent look into one of them") {
+		t.Errorf("asked %q, then offered %v", asked, s.ask.options)
+	}
+	// Back from the list leaves everything as it was
+	s.update(press('2'))
+	if s.update(press('4')) != nil || s.phase != "end" {
+		t.Errorf("Back: phase %q", s.phase)
+	}
+
+	// The start screen: an agent takes one part at a time, the one under the cursor. On
+	// "Everything" there is nothing to hand over, so a part that can't be fixed holds up nothing
 	when := time.Date(2026, 11, 19, 2, 0, 0, 0, time.UTC)
 	kept := map[string]report.Kept{
-		"camera": {Result: report.Result{Check: "camera", State: report.Partial, Note: "Too dark."}, When: when},
-		"usb4":   {Result: report.Result{Check: "usb4", State: report.Broken}, When: when},
-		"wifi":   {Result: report.Result{Check: "wifi", State: report.Works}, When: when},
+		"camera":   {Result: report.Result{Check: "camera", State: report.Partial, Note: "Too dark."}, When: when},
+		"usb4":     {Result: report.Result{Check: "usb4", State: report.Broken}, When: when},
+		"wifi":     {Result: report.Result{Check: "wifi", State: report.Works}, When: when},
+		"speakers": {Result: report.Result{Check: "speakers", State: report.Works, Look: "The right speaker measures 8 dB quieter than the other."}, When: when},
+	}
+	// What fails comes first, then what works with something worth a look
+	if got := strings.Join(Failing(kept), " "); got != "usb4 camera speakers" {
+		t.Errorf("what an agent can look into: %s", got)
 	}
 	start := &welcome{run: run, parts: menu, kept: kept, options: options}
 	start.ask = start.question()
-	if !strings.Contains(start.keys(), "a to let an agent look into what fails") || strings.Join(start.failing(), " ") != "usb4 camera" {
-		t.Errorf("keys %q, failing %v", start.keys(), start.failing())
+	if strings.Contains(start.keys(), "agent") || len(start.failing()) != 0 || start.update(press('a')) != nil {
+		t.Errorf("on Everything: keys %q, failing %v", start.keys(), start.failing())
 	}
-	for at, part := range start.parts {
-		if part.word == "camera" {
-			start.ask.cursor = at + 1
+	at := func(word string) {
+		for i, part := range start.parts {
+			if part.word == word {
+				start.ask.cursor = i + 1
+			}
 		}
 	}
-	if strings.Join(start.failing(), " ") != "camera" {
-		t.Errorf("on the camera: %v", start.failing())
+	at("camera")
+	if strings.Join(start.failing(), " ") != "camera" || !strings.Contains(start.keys(), "a to let an agent look into it") {
+		t.Errorf("on the camera: %v, keys %q", start.failing(), start.keys())
 	}
 	if start.update(press('a')) == nil || start.started {
 		t.Error("a didn't hand the camera over")
 	}
-	// On a part that works there is nothing to hand over, and no hint to
-	for at, part := range start.parts {
-		if part.word == "wireless" {
-			start.ask.cursor = at + 1
-		}
+	// Enter on such a part asks first: test it again, or have an agent look into it as it stands
+	picked := ""
+	start.pick = func(word string) { picked = word }
+	start.handed = ""
+	if start.update(press(tea.KeyEnter)) != nil || start.offer == nil || start.started || picked != "" {
+		t.Fatalf("Enter on a failing part: offer %v, started %v", start.offer != nil, start.started)
 	}
+	if view := start.view(90, 30); !strings.Contains(view, "Webcam: partly. Too dark") || !strings.Contains(view, "Test it again") || !strings.Contains(view, "Let an agent look into it") {
+		t.Errorf("the offer:\n%s", view)
+	}
+	handing := start.update(press('2'))
+	if handing != nil {
+		handing()
+	}
+	if handing == nil || start.offer != nil || start.started || picked != "" || !strings.Contains(asked, "webcam") {
+		t.Errorf("the agent wasn't handed the camera: started %v, picked %q, asked %q", start.started, picked, asked)
+	}
+	start.update(press(tea.KeyEnter))
+	start.update(press('1'))
+	if !start.started || picked != "camera" || start.offer != nil {
+		t.Errorf("testing it again: started %v, picked %q", start.started, picked)
+	}
+	// A part that works with something worth a look is offered the same way, and says so in the list
+	start.started, picked = false, ""
+	at("speakers")
+	if list := start.question(); !strings.Contains(list.view(110), "worth a look: The right speaker measures 8 dB quieter") {
+		t.Errorf("the list doesn't say what is worth a look:\n%s", list.view(110))
+	}
+	start.update(press(tea.KeyEnter))
+	if start.offer == nil || !strings.Contains(start.view(120, 30), "Speakers: works, with something to look into. The right speaker measures 8 dB quieter than the other") {
+		t.Errorf("the speakers' offer:\n%s", start.view(90, 30))
+	}
+	start.update(press(tea.KeyEscape))
+	if start.offer != nil || start.started {
+		t.Error("Esc didn't go back to the list")
+	}
+	// On a part that works there is nothing to hand over, and no hint to
+	at("wireless")
 	if strings.Contains(start.keys(), "agent") || start.update(press('a')) != nil {
 		t.Errorf("an agent is offered for a part that works: %q", start.keys())
 	}

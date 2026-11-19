@@ -1116,6 +1116,17 @@ func TestSoundIsMeasuredFromTheRecordingWithNobodyListening(t *testing.T) {
 	if speakers.State != report.Works || speakers.How != report.Measured || !strings.Contains(speakers.Evidence, "left speaker heard at -43 dB, right speaker heard at -50 dB; the left side 7 dB louder than the right") {
 		t.Errorf("speakers: %+v", speakers)
 	}
+	// Both play, so it works. A side that far below the other is said, and marked as worth a look
+	if speakers.Look != "The right speaker measures 7 dB quieter than the other." || !strings.Contains(speakers.Note, "That is worth a listen") {
+		t.Errorf("an uneven pair: look %q, note %q", speakers.Look, speakers.Note)
+	}
+	// A few dB apart is how most laptops measure, and nothing to look into
+	even := &report.Run{}
+	close := newSpeakers(even, t.TempDir())
+	played(close, 240, 150, 60, 300, 180)
+	if result, _ := even.Get("speakers"); result.State != report.Works || result.Look != "" || result.Note != "" {
+		t.Errorf("an even pair: %+v", result)
+	}
 	if microphones.State != report.Works || microphones.How != report.Measured || !strings.Contains(microphones.Evidence, "300 Hz at -55 dB, 1000 Hz at -41 dB, 3000 Hz at -45 dB; noise with nothing playing -71 dB") {
 		t.Errorf("microphones: %+v", microphones)
 	}

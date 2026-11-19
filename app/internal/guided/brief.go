@@ -3,6 +3,8 @@ package guided
 import (
 	"errors"
 	"fmt"
+	"io"
+	"net/http"
 	"os"
 	"path/filepath"
 	"sort"
@@ -43,6 +45,61 @@ type Briefing struct {
 	// Only names the checks to work on. Empty means everything that fails.
 	Only []string
 	When time.Time
+	// Binary is where the hw-test that wrote the brief is, for an agent whose surroundings
+	// don't find it by name.
+	Binary string
+	// GetGuide fetches the guide's text, to put a copy beside the brief. Nil leaves it out.
+	GetGuide func() ([]byte, error)
+	// guideCopy is set once that copy is written.
+	guideCopy bool
+}
+
+// FetchGuide reads the guide from the site.
+func FetchGuide() ([]byte, error) {
+	client := http.Client{Timeout: 5 * time.Second}
+	response, err := client.Get(Guide)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("the site answered %s", response.Status)
+	}
+	return io.ReadAll(io.LimitReader(response.Body, 1<<20))
+}
+
+// worthALook says whether a result works but measured something an agent could look into.
+func worthALook(result report.Result) bool {
+	return result.State == report.Works && result.Look != ""
+}
+
+// summed says a result in a line for a list to pick from: the part, how it stands and why.
+func summed(check string, result report.Result) string {
+	state := stateLabel[result.State]
+	if worthALook(result) {
+		state = "works, with something to look into"
+	}
+	line := first(checkTitle[check], check) + ": " + state
+	if why := first(result.Look, result.Note, result.Evidence); why != "" {
+		if len(why) > 90 {
+			why = why[:90]
+			if cut := strings.LastIndexByte(why, ' '); cut > 50 {
+				why = why[:cut]
+			}
+			why += "…"
+		}
+		line += ". " + strings.TrimRight(why, ".")
+	}
+	return line
+}
+
+// Summed says each of the given checks in a line, from the machine's latest results.
+func Summed(kept map[string]report.Kept, checks []string) []string {
+	var lines []string
+	for _, check := range checks {
+		lines = append(lines, summed(check, kept[check].Result))
+	}
+	return lines
 }
 
 // Fill adds what the machine and the site know beyond the results: the family, the device
@@ -102,17 +159,28 @@ func remeasure(check string) (command string, owner bool) {
 	return "hw-test quick --json", false
 }
 
-// Failing lists the checks that are partly working or broken in the machine's latest results.
+// Failing lists what an agent can be asked to look into in the machine's latest results: the
+// checks that are broken, those partly working, and those that work with something worth a
+// second look, in that order.
 func Failing(kept map[string]report.Kept) []string {
+	rank := func(check string) int {
+		if worthALook(kept[check].Result) {
+			return 1
+		}
+		if severity[kept[check].State] > 1 {
+			return severity[kept[check].State]
+		}
+		return 0
+	}
 	var failing []string
-	for check, result := range kept {
-		if severity[result.State] > 1 {
+	for check := range kept {
+		if rank(check) > 0 {
 			failing = append(failing, check)
 		}
 	}
 	sort.Slice(failing, func(a, b int) bool {
-		if severity[kept[failing[a]].State] != severity[kept[failing[b]].State] {
-			return severity[kept[failing[a]].State] > severity[kept[failing[b]].State]
+		if rank(failing[a]) != rank(failing[b]) {
+			return rank(failing[a]) > rank(failing[b])
 		}
 		return failing[a] < failing[b]
 	})
@@ -140,7 +208,7 @@ func Brief(b Briefing) string {
 	say("")
 	say("Written by hw-test %s on %s. The owner of this computer asked for help getting the parts below to work under Omarchy.", b.Version, b.When.Format("2 January 2006"))
 	say("")
-	say("The guide for this work is %s. Its steps 1 to 4 are done for you: the computer is identified and measured. **Read its Words and Rules, then step 5 (Fix it) and step 6 (Notes), before you change anything.** This file has what is particular to this computer.", Guide)
+	say("The guide for this work is %s. Its steps 1 to 4 are done for you: the computer is identified and measured. **Read its Words and Rules, then step 5 (Fix it) and step 6 (Notes), before you change anything.** This file has what is particular to this computer.%s", Guide, map[bool]string{true: " A copy of the guide is in GUIDE.md beside this file, for where the network is closed to you.", false: ""}[b.guideCopy])
 	say("")
 	say("## This computer")
 	say("")
@@ -172,6 +240,9 @@ func Brief(b Briefing) string {
 		say("%s", line)
 	}
 	say("- Kernel: %s, on %s", b.Run.Kernel, b.Run.OS)
+	if b.Binary != "" {
+		say("- hw-test %s is at `%s`. If plain `hw-test` doesn't start where you run, as in a sandbox, call it by that path.", b.Version, b.Binary)
+	}
 	var packages []string
 	for name, version := range b.Run.Packages {
 		packages = append(packages, name+" "+version)
@@ -204,6 +275,9 @@ func Brief(b Briefing) string {
 		state := "not tested yet"
 		if tested {
 			state = stateLabel[result.State]
+			if worthALook(result.Result) {
+				state = "works, with something to look into"
+			}
 		}
 		say("### %s (check `%s`): %s", first(checkTitle[check], known.Title, check), check, state)
 		say("")
@@ -214,6 +288,9 @@ func Brief(b Briefing) string {
 			}
 			if result.Note != "" {
 				say("- Noted: %s", result.Note)
+			}
+			if worthALook(result.Result) {
+				say("- Worth a second look: %s Find out whether it is a fault, and say so to the owner either way.", result.Look)
 			}
 		}
 		// What is written up on the site about this part, which often names the cause
@@ -274,6 +351,22 @@ func Brief(b Briefing) string {
 	}
 	say("")
 	say("Several parts hang on one: sound, the battery, charging and USB-C all need the audio processor (`adsp`) running, and WebGL and WebGPU need the GPU. `hw-test status` shows all of it at any time.")
+
+	// One part at a time: a part that can't be fixed must not hold up the others
+	var others []string
+	for _, check := range Failing(b.Kept) {
+		if !covered[check] {
+			others = append(others, "`"+check+"`")
+		}
+	}
+	say("")
+	say("## One part at a time")
+	say("")
+	say("This brief is for what is under \"What to work on\" and nothing else. When it works, or you find that it can't be fixed from here, tell the owner what you found and stop. A part that needs work in the kernel or elsewhere is a finding too: write it down as a note (step 6) and say so.")
+	if len(others) > 0 {
+		say("")
+		say("Also failing or worth a look on this computer: %s. They are for later. `hw-test brief <check>` prints the brief for one of them from the results already here, without testing anything again, and the owner can hand you one with `hw-test fix`.", strings.Join(others, ", "))
+	}
 
 	say("")
 	say("## Notes on this model")
@@ -369,6 +462,14 @@ func HandOver(b Briefing, dir string, launch func(dir, prompt string) error) Han
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		return Handed{Said: "The brief couldn't be written: " + err.Error()}
 	}
+	// A copy of the guide goes beside the brief: an agent's surroundings often have no network
+	where := Guide
+	if b.GetGuide != nil {
+		if text, err := b.GetGuide(); err == nil && len(text) > 0 && os.WriteFile(filepath.Join(dir, "GUIDE.md"), text, 0o644) == nil {
+			b.guideCopy = true
+			where = "GUIDE.md beside it (a copy of " + Guide + ")"
+		}
+	}
 	if err := os.WriteFile(file, []byte(Brief(b)), 0o644); err != nil {
 		return Handed{Said: "The brief couldn't be written: " + err.Error()}
 	}
@@ -376,7 +477,7 @@ func HandOver(b Briefing, dir string, launch func(dir, prompt string) error) Han
 	for _, check := range work {
 		titles = append(titles, strings.ToLower(first(checkTitle[check], check)))
 	}
-	prompt := fmt.Sprintf("Read BRIEF.md in this folder and help me get this working on my computer: %s. It says what was measured, how to measure again with hw-test and where to look. The guide it points to, %s, has the rules and says where a fix goes, so read that first.", strings.Join(titles, ", "), Guide)
+	prompt := fmt.Sprintf("Read BRIEF.md in this folder and help me get this working on my computer: %s. It says what was measured, how to measure again with hw-test and where to look. The guide it points to, %s, has the rules and says where a fix goes, so read that first.", strings.Join(titles, ", "), where)
 	err := launch(dir, prompt)
 	switch {
 	case err == nil:
@@ -406,11 +507,12 @@ func handOver(run *report.Run, options Options, model report.Model, only []strin
 				model = matched
 			}
 		}
-		launch := options.launch
+		launch, guide := options.launch, options.guide
 		if launch == nil {
-			launch = tools.Agent
+			launch, guide = tools.Agent, FetchGuide
 		}
-		briefing := Briefing{Version: options.Version, Run: run, Kept: report.Local(), Model: model, Checks: checks, Only: only, When: time.Now()}
+		briefing := Briefing{Version: options.Version, Run: run, Kept: report.Local(), Model: model, Checks: checks, Only: only, When: time.Now(), GetGuide: guide}
+		briefing.Binary, _ = os.Executable()
 		briefing.Fill(options.API)
 		return handedMsg{HandOver(briefing, Workspace(), launch)}
 	}

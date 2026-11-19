@@ -42,6 +42,9 @@ type Result struct {
 	How      string `json:"how"`
 	Evidence string `json:"evidence,omitempty"`
 	Note     string `json:"note,omitempty"`
+	// Look is set on a result that works but measured something worth a second look, like one
+	// speaker much quieter than the other. It is what an agent can be asked to look into.
+	Look string `json:"look,omitempty"`
 }
 
 // Run is what's sent: the machine, its software and the results. It holds no serial
@@ -103,6 +106,15 @@ func (r *Run) Set(check, state, how, evidence, note string) {
 		}
 	}
 	r.Results = append(r.Results, result)
+}
+
+// Flag marks a check's result as worth a second look, in a sentence.
+func (r *Run) Flag(check, look string) {
+	for i := range r.Results {
+		if r.Results[i].Check == check {
+			r.Results[i].Look = Scrub(look, 300)
+		}
+	}
 }
 
 // Get returns a check's result, if the run has one.

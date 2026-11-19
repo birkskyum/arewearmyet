@@ -2,7 +2,9 @@
 
 You're helping the owner of an ARM PC get Linux working on it, usually Omarchy on a Snapdragon laptop. This guide tells you how to measure what works, report it to arewearmyet.com, and fix what doesn't in Omarchy.
 
-**Opened by `hw-test fix`, with a `BRIEF.md` in your folder?** Steps 1 to 4 are done for you: the computer is identified and measured, and the brief lists what fails. Read **Words** and **Rules**, then **step 5 (Fix it)** and **step 6 (Notes)**. Work on the brief's parts in the order the owner asks for.
+**Opened by `hw-test fix`, with a `BRIEF.md` in your folder?** Steps 1 to 4 are done for you: the computer is identified and measured, and the brief names the one part the owner picked. Read **Words** and **Rules**, then **step 5 (Fix it)** and **step 6 (Notes)**. A copy of this guide is in `GUIDE.md` beside the brief, and the brief gives the path of `hw-test` in case its name isn't found where you run.
+
+**One part at a time.** Work on the brief's part and nothing else. When it works, or you find it can't be fixed from here, tell the owner what you found and stop: a part that needs work in the kernel is a finding, to be written as a note, and must not hold up the rest. The brief lists what else fails or is worth a look. `hw-test brief <check>` prints the brief for one of those from the results already on the computer, without testing anything again, and the owner hands you one with `hw-test fix`, which asks them which.
 
 Base URL: `https://arewearmyet.com`. Everything is plain HTTP and JSON. Chromebooks and Googlebooks start differently, and getting Linux onto them isn't covered here. Measuring, reporting and fixing work the same once it runs.
 

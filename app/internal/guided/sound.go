@@ -142,20 +142,33 @@ func (s *speakers) heardTone() bool {
 // microphones sit closer to one speaker on some machines, so a difference here is something
 // to look into, not a verdict.
 func (s *speakers) balance() string {
-	left, right := s.left(), s.right()
-	if !left.Clearly() || !right.Clearly() || left.Level == 0 || right.Level == 0 {
+	louder, quieter, difference, heard := s.sides()
+	switch {
+	case !heard:
 		return ""
-	}
-	// From the levels as they are shown, so that the difference is the one a reader works out
-	difference := math.Round(audio.Decibels(left.Level)) - math.Round(audio.Decibels(right.Level))
-	louder, quieter := "left", "right"
-	if difference < 0 {
-		louder, quieter, difference = "right", "left", -difference
-	}
-	if difference < 3 {
+	case difference < 3:
 		return "both sides about equally loud at the microphones"
 	}
 	return fmt.Sprintf("the %s side %.0f dB louder than the %s at the microphones", louder, difference, quieter)
+}
+
+// uneven is how far apart the two sides have to be before it is worth a second look: half
+// as loud to the ear, and more than where the microphones sit usually explains.
+const uneven = 6
+
+// sides compares the two speakers as the microphones heard them, when both were heard.
+func (s *speakers) sides() (louder, quieter string, difference float64, heard bool) {
+	left, right := s.left(), s.right()
+	if !left.Clearly() || !right.Clearly() || left.Level == 0 || right.Level == 0 {
+		return "", "", 0, false
+	}
+	// From the levels as they are shown, so that the difference is the one a reader works out
+	difference = math.Round(audio.Decibels(left.Level)) - math.Round(audio.Decibels(right.Level))
+	louder, quieter = "left", "right"
+	if difference < 0 {
+		louder, quieter, difference = "right", "left", -difference
+	}
+	return louder, quieter, difference, true
 }
 
 // evidence is what the microphones made of the two speakers.
@@ -202,6 +215,14 @@ func (s *speakers) pickup() string {
 func (s *speakers) measure() {
 	switch left, right := s.left().Clearly(), s.right().Clearly(); {
 	case left && right:
+		// Both play, which is what the check asks. A side well below the other is said, and can
+		// be handed to an agent: it is a quiet speaker, or only where the microphones sit
+		if _, quieter, difference, _ := s.sides(); difference >= uneven {
+			look := fmt.Sprintf("The %s speaker measures %.0f dB quieter than the other.", quieter, difference)
+			s.run.Set("speakers", report.Works, report.Measured, s.evidence(), look+" That is worth a listen: it can be where the microphones sit, or a speaker that plays too quietly.")
+			s.run.Flag("speakers", look)
+			break
+		}
 		s.run.Set("speakers", report.Works, report.Measured, s.evidence(), "")
 	case left:
 		s.run.Set("speakers", report.Partial, report.Measured, s.evidence(), "Only the left speaker was heard by the microphones.")

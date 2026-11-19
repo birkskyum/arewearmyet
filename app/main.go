@@ -25,6 +25,7 @@ import (
 	"os/user"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 
@@ -218,7 +219,21 @@ func main() {
 		}
 		known, _ := report.Checks(*api)
 		matched, _ := report.Match(*api, run)
+		// An agent takes one part at a time, so one that can't be fixed doesn't hold up the others.
+		// Nothing is tested again for this: it goes by the results already on this computer
+		if candidates := guided.Failing(kept); command == "fix" && len(checks) == 0 && len(candidates) > 1 && guided.Interactive() {
+			picked, ok := pickOne(terminal, os.Stderr, guided.Summed(kept, candidates))
+			if !ok {
+				fmt.Fprintln(os.Stderr, "Nothing handed over.")
+				return
+			}
+			checks = []string{candidates[picked]}
+		}
 		briefing := guided.Briefing{Version: version, Run: run, Kept: kept, Model: matched, Checks: known, Only: checks, When: time.Now()}
+		briefing.Binary, _ = os.Executable()
+		if command == "fix" {
+			briefing.GetGuide = guided.FetchGuide
+		}
 		briefing.Fill(*api)
 		if command == "brief" {
 			fmt.Print(guided.Brief(briefing))
@@ -759,6 +774,21 @@ func attached(logs []report.Log) string {
 		"It goes on the model's page, for others with the same computer. To read it first, run this again with --json.\n"
 }
 
+// pickOne asks which of several parts an agent should look into, by its number.
+func pickOne(in *bufio.Reader, out io.Writer, lines []string) (int, bool) {
+	fmt.Fprintln(out, "Which one should your agent look into? It takes one part at a time, so a part that can't be fixed doesn't hold up the others.")
+	for at, line := range lines {
+		fmt.Fprintf(out, "  %d  %s\n", at+1, line)
+	}
+	fmt.Fprint(out, "Its number, or Enter for none\n> ")
+	answer, _ := in.ReadString('\n')
+	number, err := strconv.Atoi(strings.TrimSpace(answer))
+	if err != nil || number < 1 || number > len(lines) {
+		return 0, false
+	}
+	return number - 1, true
+}
+
 // agreed asks whether to send. Enter or anything but a no is a yes, and no answer at all is a no.
 func agreed(in io.Reader, out io.Writer) bool {
 	fmt.Fprint(out, "Send it? [Y/n] ")
@@ -876,7 +906,8 @@ func usage() {
   hw-test fix [WHAT...]    hand what doesn't work to your agent: writes a brief with what was
                      measured, where to look and where a fix goes, and opens Omarchy's
                      agent on it. WHAT is a check or a part, like speakers. Without it,
-                     everything that fails
+                     it asks which one: an agent takes one part at a time, from the
+                     results already here, and nothing is tested again
   hw-test brief [WHAT...]  print that brief, to give to any agent yourself
   hw-test note       write down what fits no check, where other owners' agents read it and can
                      answer: a problem that takes a sequence of events, a way around one, a

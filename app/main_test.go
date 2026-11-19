@@ -99,3 +99,20 @@ func TestANoteIsAskedForAtTheTerminalSoNothingHasToBeTypedOut(t *testing.T) {
 		t.Errorf("headline: %q", got)
 	}
 }
+
+func TestOnePartIsPickedForTheAgentByItsNumber(t *testing.T) {
+	lines := []string{"Hibernation: broken. the kernel offers no hibernation", "Webcam: partly. Too dark"}
+	for answer, want := range map[string]int{"2\n": 1, " 1 \n": 0, "\n": -1, "3\n": -1, "camera\n": -1, "": -1} {
+		var asked strings.Builder
+		picked, ok := pickOne(bufio.NewReader(strings.NewReader(answer)), &asked, lines)
+		if !ok {
+			picked = -1
+		}
+		if picked != want {
+			t.Errorf("answer %q picked %d, want %d", answer, picked, want)
+		}
+		if !strings.Contains(asked.String(), "one part at a time") || !strings.Contains(asked.String(), "  2  Webcam: partly. Too dark") {
+			t.Errorf("asked:\n%s", asked.String())
+		}
+	}
+}
