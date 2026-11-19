@@ -68,7 +68,7 @@ const UNLOCK_FIXED = [
         <li>
           <span class="text-zinc-200">Find your model on <a class={LINK} href="/">the board</a>.</span> Its Bootable column says whether the image starts it, and its own page says what works once it runs, part by part.
           <ul class={BULLETS}>
-            <li>A channel there, like <span class={`${PILL} ${TONE.good}`}>Edge</span>, means the edge image picks the model's device tree by itself. Today that holds for {starts} of the {models.length} Snapdragon models here.</li>
+            <li><span class={`${PILL} ${TONE.good}`}>Boots</span> or <span class={`${PILL} ${TONE['good-seen']}`}>Should boot</span> there means the edge image picks the model's device tree by itself. Today that holds for {starts} of the {models.length} Snapdragon models here.</li>
             <li>Anything else means the image can't start it by itself yet. <a class={LINK} href="/help">How to help</a> says what gets it there.</li>
           </ul>
         </li>

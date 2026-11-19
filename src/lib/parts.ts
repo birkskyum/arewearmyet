@@ -23,7 +23,7 @@ export const PARTS: Part[] = [
 
 type Level = 'omarchy' | 'elsewhere';
 type Seen = { check: string; title: string; state: Exclude<CheckState, 'untested'>; level: Level; how: string };
-type OwnerCheck = { machines: number; states: Record<string, number> };
+type OwnerCheck = { machines: number; states: Record<string, number>; latest?: { kernel: string | null }[] };
 const OWNERS = (owners as { models: Record<string, { checks: Record<string, OwnerCheck> }> }).models;
 const TITLE = new Map(CHECKS.map((check) => [check.id, check.title]));
 
@@ -43,7 +43,9 @@ function seen(model: Machine): Map<string, Seen> {
     const states = owner ? Object.keys(owner.states).filter((s) => s !== 'untested') : [];
     if (states.length) {
       const state = states.every((s) => s === 'absent') ? 'absent' : overall(states.filter((s) => s !== 'absent'));
-      out.set(row.id, { check: row.id, title, state, level: 'omarchy', how: owner.machines === 1 ? `an owner's test` : `${owner.machines} owners' tests` });
+      // The kernel says how current the result is: a fault seen on an older kernel may be fixed since
+      const kernel = owner.latest?.[0]?.kernel ? `, on ${owner.latest[0].kernel.replace(/-omarchy$/, '')}` : '';
+      out.set(row.id, { check: row.id, title, state, level: 'omarchy', how: (owner.machines === 1 ? `an owner's test` : `${owner.machines} owners' tests`) + kernel });
       continue;
     }
     const finding = row.finding;
@@ -53,7 +55,7 @@ function seen(model: Machine): Map<string, Seen> {
       if (!boots) continue;
       out.set(row.id, { check: row.id, title, state: finding.state, level: 'elsewhere', how: 'known for the chip family' });
     } else if (countsAsStatus(finding)) {
-      out.set(row.id, { check: row.id, title, state: finding.state, level: 'omarchy', how: finding.basis === 'maker-spec' ? `the maker's description` : 'reported on Omarchy' });
+      out.set(row.id, { check: row.id, title, state: finding.state, level: 'omarchy', how: finding.basis === 'maker-spec' ? `the maker's description` : 'reported on Omarchy' + (finding.version ? `, on ${finding.version}` : '') });
     } else {
       out.set(row.id, { check: row.id, title, state: finding.state, level: 'elsewhere', how: finding.basis === 'tree-author' ? `said by the device tree's author` : 'seen on another distro' });
     }

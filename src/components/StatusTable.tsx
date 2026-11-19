@@ -64,7 +64,7 @@ const bySearch = (row: Row, _id: string, value: unknown) =>
 const normalized = (text: string) => text.trim().toLowerCase().split(/\s+/).join(' ');
 const byRank = (a: Row, b: Row, id: string) => (a.original.cells[id]?.rank ?? Infinity) - (b.original.cells[id]?.rank ?? Infinity);
 // A status cell as the table shows it
-const cellText = (cell: CellData | undefined) => (!cell ? null : 'text' in cell ? cell.text || null : cell.label);
+const cellText = (cell: CellData | undefined) => (!cell ? null : 'text' in cell ? cell.text || null : ('full' in cell && cell.full) || cell.label);
 
 const DOT = {
   good: ['bg-emerald-400', 'ring-1 ring-inset ring-emerald-400/80'],

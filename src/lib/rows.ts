@@ -5,7 +5,7 @@ import { partCells, type Dot } from './parts';
 import { ANNOUNCED, GENERATION, acpiCell, bootableCell, bootloaderCell, deviceTreeCell, googlebookOmarchyCell, idsCell, linuxImageCell, machineCell, nvidiaKernelCell, nvidiaLinuxCell, nvidiaOmarchyCell, omarchyFirmwareCell, omarchyIdsCell, omarchyTreeCell, upstreamFirmwareCell, type Cell, type Model, type NvidiaModel } from './labels';
 
 export type CellData =
-  | Pick<Cell, 'key' | 'label' | 'tone' | 'title' | 'href' | 'rank'>
+  | Pick<Cell, 'key' | 'label' | 'tone' | 'title' | 'href' | 'rank' | 'full'>
   | { key: string; text: string; rank: number }
   // The parts past booting as a row of dots, one per part of the hardware view
   | { key: string; label: string; dots: Dot[]; title: string; rank: number };
@@ -28,12 +28,12 @@ export type TableRow = {
 };
 
 const year = (released: string | number | null) => (released ? String(released).slice(0, 4) : '');
-const plain = ({ key, label, tone, title, href, rank }: Cell) => ({ key, label, tone, title, href, rank });
+const plain = ({ key, label, tone, title, href, rank, full }: Cell) => ({ key, label, tone, title, href, rank, full });
 const announcedTitle = (statusText: string | null) => (statusText ? `${ANNOUNCED.meaning} The vendor said: ${statusText}.` : null);
 
 const VARIANT: Record<string, { tone: TableRow['variants'][number]['tone']; state: string }> = {
-  works: { tone: 'good', state: 'yes' },
-  should: { tone: 'good', state: 'yes' },
+  works: { tone: 'good', state: 'boots' },
+  should: { tone: 'good', state: 'should boot' },
   workaround: { tone: 'close', state: 'workaround' },
   problems: { tone: 'wanted', state: 'problems' },
   manual: { tone: 'wanted', state: 'needs IDs' },
@@ -41,9 +41,8 @@ const VARIANT: Record<string, { tone: TableRow['variants'][number]['tone']; stat
   none: { tone: 'wanted', state: 'needs a tree' },
 };
 
-// A variant that boots names its channel, like the model's cell does
-const variantState = (v: Model['variants'][number]) =>
-  v.bootChannel && (v.outcome === 'works' || v.outcome === 'should') ? { ...VARIANT[v.outcome], state: v.bootChannel === 'rc' ? 'RC' : v.bootChannel[0].toUpperCase() + v.bootChannel.slice(1) } : VARIANT[v.outcome];
+// A variant that boots says so, like the model's cell does: the channel is no verdict on how well
+const variantState = (v: Model['variants'][number]) => VARIANT[v.outcome];
 
 const modelRow = (model: Model, cells: Record<string, CellData>): TableRow => ({
   id: model.id,

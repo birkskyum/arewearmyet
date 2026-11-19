@@ -58,13 +58,13 @@ const HARDWARE_VIEW = { id: 'hardware', label: 'Hardware', question: HARDWARE_QU
 const HARDWARE_KEYS = [{ dot: 'bg-emerald-400', text: 'works' }, { dot: 'bg-amber-400', text: 'partly' }, { dot: 'bg-rose-400', text: 'broken' }, { dot: 'ring-1 ring-inset ring-zinc-400', text: 'outlined: known from elsewhere' }];
 const HARDWARE_DOTS = { id: 'parts', header: 'Hardware', question: `The parts past booting, in the order of the Hardware view: ${PARTS.map((part) => part.title.toLowerCase()).join(', ')}. Filled is seen on Omarchy, outlined is known from elsewhere, faint is not known yet. Click for the Hardware view.` };
 const snapdragonViews = [
-  { id: 'omarchy', label: 'Omarchy', question: `What Omarchy's packages ship today, by the most stable channel that has it.`, columns: [...OMARCHY_LEGEND.map((group, i) => ({ id: omarchyIds[i], header: group.column, question: group.question, options: FILTERS[omarchyIds[i]] })), HARDWARE_DOTS] },
+  { id: 'omarchy', label: 'Omarchy', question: `What Omarchy's packages ship today. A check is a piece Omarchy ships, and pointing at it says which channel has it.`, columns: [...OMARCHY_LEGEND.map((group, i) => ({ id: omarchyIds[i], header: group.column, question: group.question, options: FILTERS[omarchyIds[i]] })), HARDWARE_DOTS] },
   { id: 'upstream', label: 'Upstream', question: 'What Linux, systemd and linux-firmware have, which every distro gets.', columns: UPSTREAM_LEGEND.map((group, i) => ({ id: upstreamIds[i], header: group.column, question: group.question, options: FILTERS[upstreamIds[i]] })) },
   HARDWARE_VIEW,
 ];
 const nvidiaNotes = { id: 'notes', header: 'Notes', question: 'What else to know' };
 const nvidiaViews = [
-  { id: 'omarchy', label: 'Omarchy', question: `What Omarchy's kernel ships today, by the most stable channel that has it.`, columns: [
+  { id: 'omarchy', label: 'Omarchy', question: `What Omarchy's kernel ships today. A check means it carries the patches, and pointing at it says which channel has them.`, columns: [
     { id: 'kernel', header: 'Kernel', question: NVIDIA_OMARCHY_LEGEND[0].question, options: FILTERS.nvidiaKernel },
     { id: 'omarchy', header: NVIDIA_OMARCHY_LEGEND[1].column, question: NVIDIA_OMARCHY_LEGEND[1].question, options: FILTERS.nvidiaOmarchy },
     nvidiaNotes,
@@ -81,6 +81,7 @@ const legendExtra = [
   { label: 'Amber', tone: 'close' as const, meaning: 'On its way, or partly there.' },
   { label: 'Red', tone: 'wanted' as const, meaning: 'Missing or failing, and where help counts most.' },
   { label: 'Grey', tone: 'muted' as const, meaning: 'Works another way today, or not needed.' },
+  { label: 'Outlined', tone: 'good-seen' as const, meaning: 'Expected, but nobody has confirmed it yet.' },
   ANNOUNCED,
 ];
 const googlebookViews = [
@@ -125,7 +126,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
       </div>
       <p class="mt-3 text-lg text-zinc-400">Omarchy on ARM PCs, model by model.</p>
       <p class="mt-5 max-w-3xl text-sm text-zinc-400 hw:hidden">
-        Every ARM laptop needs a device tree, hardware IDs and firmware. Omarchy ships them in its own packages, often before Linux, systemd and linux-firmware have them. The Omarchy view shows what its channels ship today, and the Upstream view what every distro gets. Bootable names the most stable channel whose install image picks the model's device tree by itself. Edge is the {image ? <a class={LINK} href={image.url}>nightly image</a> : 'nightly image'}, with <span class="whitespace-nowrap">linux-omarchy {status.omarchy.kernel}</span> and systemd {status.omarchy.systemd}. Booting is the first goal. Each model's page, behind its name, goes on to everything past booting, from sound and the camera to sleep and USB4, with what owners and their agents measured.
+        Every ARM laptop needs a device tree, hardware IDs and firmware. Omarchy ships them in its own packages, often before Linux, systemd and linux-firmware have them. The Omarchy view shows what Omarchy ships today, and the Upstream view what every distro gets. A check means Omarchy ships the piece, and pointing at it says which channel has it. Bootable says whether an owner reached the desktop. The newest fixes are on edge, the {image ? <a class={LINK} href={image.url}>nightly image</a> : 'nightly image'}, with <span class="whitespace-nowrap">linux-omarchy {status.omarchy.kernel}</span> and systemd {status.omarchy.systemd}. Booting is the first goal. Each model's page, behind its name, goes on to everything past booting, from sound and the camera to sleep and USB4, with what owners and their agents measured.
       </p>
       <p class="mt-5 hidden max-w-3xl text-sm text-zinc-400 hw:block">
         Booting is the first goal. This is what comes after it: whether the screen, keyboard, Wi-Fi, sound, camera, sleep and ports work on each model. A filled label is a result from Omarchy itself, measured by <a class={LINK} href="/docs/hw-test">hw-test</a> or reported by an owner. An outlined label comes from another distro, the device tree's author or the chip family, and shows that a part can work. An empty cell means nobody has reported yet, and running hw-test on that model fills it in. Each model's page, behind its name, has every check with its source.
@@ -147,7 +148,7 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
     ]} />
 
     <Group id="snapdragon-pcs" title="Snapdragon PCs" total={current.length + older.length + entry.length}>
-      Laptops, tablets and desktops sold with Windows or Linux. They start through UEFI and need a device tree, hardware IDs and firmware. <a class={LINK} href="#chromebooks-and-googlebooks">Chromebooks and Googlebooks</a> are further down.
+      Laptops, tablets and desktops sold with Windows or Linux. They start through UEFI and need a device tree, hardware IDs and firmware. Until Omarchy 4.6 is out, <a class={LINK} href="/install">install from the edge image</a>, which has the newest fixes for these machines. <a class={LINK} href="#chromebooks-and-googlebooks">Chromebooks and Googlebooks</a> are further down.
     </Group>
 
     <Family id="snapdragon" title="Snapdragon X and X2" total={current.length}>

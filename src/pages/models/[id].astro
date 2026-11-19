@@ -35,6 +35,17 @@ const upstream = [
   { name: 'systemd', cell: idsCell(model) },
   { name: 'linux-firmware', cell: upstreamFirmwareCell(model) },
 ];
+// Which channel has each piece Omarchy ships, in words: the cells show a check, and a phone has no hover text
+const WHERE: Record<string, string> = { stable: 'in stable', rc: 'in RC', edge: 'on edge only' };
+const shippedIn = [
+  ['Device tree', model.omarchy.deviceTree],
+  ['hardware IDs', model.omarchy.ids],
+  ['firmware', model.omarchy.firmwareChannel],
+]
+  .filter(([, channel]) => channel)
+  .map(([piece, channel]) => `${piece} ${WHERE[channel as string] ?? channel}`)
+  .join(', ')
+  .replace(/^(.)(.*)$/, (_all, first: string, rest: string) => `${first.toUpperCase()}${rest}.`);
 const links = [...(model.discussion ? [{ title: 'Discussion', url: model.discussion }] : []), ...extra.links];
 const sources = model.sources;
 const firmware = [...new Set(model.variants.flatMap((v) => v.firmwareNeeded ?? []))];
@@ -65,6 +76,7 @@ const REPORT_TONE = { works: 'good', workaround: 'close', problems: 'wanted' } a
             </>
           ))}
         </dl>
+        {shippedIn && <p class="mt-4 text-xs text-zinc-500">{shippedIn} A first version can be in stable while later fixes are still on edge only.</p>}
       </div>
       <div class={CARD}>
         <h2 class="text-sm font-semibold text-zinc-100">Upstream, for every distro</h2>

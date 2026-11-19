@@ -8,18 +8,20 @@ export type NvidiaModel = (typeof status.nvidia)[number];
 // A label as the legend shows it; cells reuse its text as their hover title and sort by rank
 type State = { label: string; tone: Tone; meaning: string };
 type Channel = 'stable' | 'rc' | 'edge';
-export type Cell = State & { key: string; title: string; href?: string; rank: number };
+// `full` is the cell in words, for the spreadsheet, where the table shows only a mark
+export type Cell = State & { key: string; title: string; href?: string; rank: number; full?: string };
 
 const kernel = status.omarchy.kernelBase.replace(/^v/, '');
 const channelKernel = (name: string) => status.omarchy.channels.find((c) => c.name === name)?.kernel ?? '';
 
 const STATES = {
-  // The most stable channel whose install image picks its device tree, whether or not an owner has tried it yet
+  // Whether it boots: an owner reached the desktop, or the pieces are shipped and nobody has confirmed it.
+  // The channel that has the pieces is in the hover text, since a first version of a device tree can be in
+  // stable while the fixes to it are on edge only, and "Stable" in the cell read as "stable is enough"
   bootable: {
-    stable: { label: 'Stable', tone: 'good', meaning: `Omarchy's stable channel ships its device tree and hardware IDs, so its install image picks the tree by itself. Not every feature has to work yet.` },
-    rc: { label: 'RC', tone: 'good', meaning: `Omarchy's RC channel, the current install image, ships its device tree and hardware IDs, so its install image picks the tree by itself. Not every feature has to work yet.` },
-    edge: { label: 'Edge', tone: 'good', meaning: `Omarchy's edge channel, the nightly image, ships its device tree and hardware IDs, so its install image picks the tree by itself. Not every feature has to work yet.` },
-    works: { label: 'Yes', tone: 'good', meaning: `An owner booted into the Omarchy desktop, with a device tree or hardware IDs Omarchy doesn't ship yet.` },
+    boots: { label: 'Boots', tone: 'good', meaning: `An owner reached the Omarchy desktop on it, with the device tree and hardware IDs Omarchy ships. Not every feature has to work yet.` },
+    should: { label: 'Should boot', tone: 'good-seen', meaning: `Omarchy ships its device tree and hardware IDs, so the install image picks the tree by itself. No owner has confirmed that it boots yet.` },
+    works: { label: 'Boots by hand', tone: 'good', meaning: `An owner booted into the Omarchy desktop, with a device tree or hardware IDs Omarchy doesn't ship yet.` },
     workaround: { label: 'Workaround', tone: 'close', meaning: `An owner reached the Omarchy desktop on the current release with a workaround, such as typing the disk password while the screen is dark. The notes say which.` },
     problems: { label: 'Problems', tone: 'wanted', meaning: `An owner tried the current release and couldn't get to the Omarchy desktop.` },
     pr: { label: 'After PRs', tone: 'close', meaning: 'Open pull requests on omarchy-pkgs add the device tree or hardware IDs it still lacks.' },
@@ -44,9 +46,9 @@ const STATES = {
   },
   // The Omarchy view: what Omarchy's packages ship, by the most stable channel that has it
   omarchyTree: {
-    stable: { label: 'Stable', tone: 'good', meaning: `Omarchy's stable kernel ships it (linux-omarchy ${channelKernel('stable')}).` },
-    rc: { label: 'RC', tone: 'good', meaning: `Omarchy's RC kernel ships it (linux-omarchy ${channelKernel('rc')}), the one the current install image has.` },
-    edge: { label: 'Edge', tone: 'good', meaning: `Omarchy's edge kernel ships it (linux-omarchy ${channelKernel('edge')}), the one the nightly image has.` },
+    stable: { label: '✓ Stable', tone: 'good', meaning: `Omarchy's stable kernel ships it (linux-omarchy ${channelKernel('stable')}). Later fixes to it can still be on edge only.` },
+    rc: { label: '✓ RC', tone: 'good', meaning: `Omarchy's RC kernel ships it (linux-omarchy ${channelKernel('rc')}), the one the current install image has. Later fixes to it can still be on edge only.` },
+    edge: { label: '✓ Edge only', tone: 'good', meaning: `Omarchy's edge kernel ships it (linux-omarchy ${channelKernel('edge')}), the one the nightly image has. Stable and RC don't have it yet.` },
     pr: { label: 'Open PR', tone: 'close', meaning: `An open pull request on omarchy-pkgs adds it to Omarchy's kernel.` },
     elsewhere: { label: 'Not carried', tone: 'close', meaning: `One exists, in a newer Linux, a posted patch or out of tree, but Omarchy's kernel doesn't carry it yet. Whoever wrote it had the machine, unless its notes say otherwise.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: `Doesn't exist yet. An ACPI dump is what one gets written from.` },
@@ -58,18 +60,18 @@ const STATES = {
     nobody: { label: 'Nobody yet', tone: 'wanted', meaning: `Nobody we know has one, since there's no device tree, ACPI dump or owner report for it. An owner's hardware report is the first step.` },
   },
   omarchyIds: {
-    stable: { label: 'Stable', tone: 'good', meaning: `Omarchy's stable channel recognises it and picks its device tree, through systemd's list or the IDs Omarchy's kernel adds.` },
-    rc: { label: 'RC', tone: 'good', meaning: `Omarchy's RC channel recognises it and picks its device tree, through systemd's list or the IDs Omarchy's kernel adds.` },
-    edge: { label: 'Edge', tone: 'good', meaning: `Omarchy's edge channel recognises it and picks its device tree, through systemd's list or the IDs Omarchy's kernel adds.` },
+    stable: { label: '✓ Stable', tone: 'good', meaning: `Omarchy's stable channel recognises it and picks its device tree, through systemd's list or the IDs Omarchy's kernel adds. Later fixes to it can still be on edge only.` },
+    rc: { label: '✓ RC', tone: 'good', meaning: `Omarchy's RC channel recognises it and picks its device tree, through systemd's list or the IDs Omarchy's kernel adds. Later fixes to it can still be on edge only.` },
+    edge: { label: '✓ Edge only', tone: 'good', meaning: `Omarchy's edge channel recognises it and picks its device tree, through systemd's list or the IDs Omarchy's kernel adds. Stable and RC don't have it yet.` },
     pr: { label: 'Open PR', tone: 'close', meaning: `An open pull request on omarchy-pkgs adds its hardware IDs to Omarchy's kernel.` },
     elsewhere: { label: 'Not carried', tone: 'close', meaning: `Its hardware IDs exist, in a newer systemd, Ubuntu's stubble or sent in here, but Omarchy doesn't carry them yet.` },
     mismatch: { label: 'Mismatch', tone: 'close', meaning: `systemd's entry names a different device tree than the kernel's, so it never matches.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: `Nobody has sent its hardware IDs yet.` },
   },
   omarchyFirmware: {
-    stable: { label: 'Stable', tone: 'good', meaning: `Every file its device tree loads is in Omarchy's stable packages, from linux-firmware or the maker's own package.` },
-    rc: { label: 'RC', tone: 'good', meaning: `Every file its device tree loads is in Omarchy's RC packages, from linux-firmware or the maker's own package.` },
-    edge: { label: 'Edge', tone: 'good', meaning: `Every file its device tree loads is in Omarchy's edge packages, from linux-firmware or the maker's own package.` },
+    stable: { label: '✓ Stable', tone: 'good', meaning: `Every file its device tree loads is in Omarchy's stable packages, from linux-firmware or the maker's own package. Later fixes to it can still be on edge only.` },
+    rc: { label: '✓ RC', tone: 'good', meaning: `Every file its device tree loads is in Omarchy's RC packages, from linux-firmware or the maker's own package. Later fixes to it can still be on edge only.` },
+    edge: { label: '✓ Edge only', tone: 'good', meaning: `Every file its device tree loads is in Omarchy's edge packages, from linux-firmware or the maker's own package. Stable and RC don't have it yet.` },
     pr: { label: 'Open PR', tone: 'close', meaning: `An open pull request on omarchy-pkgs packages the maker's files.` },
     partial: { label: 'Partly', tone: 'close', meaning: `Omarchy's packages have some of the files its device tree loads. The installer copies the rest from Windows.` },
     download: { label: 'Not packaged', tone: 'close', meaning: `The maker's driver download has it, but Omarchy doesn't package it yet. Until then the installer copies it from Windows.` },
@@ -90,18 +92,17 @@ const STATES = {
     helps: { label: 'Still useful', tone: 'muted', meaning: `It has a device tree, but a report still gives the hardware IDs for each of its model numbers, the maker's firmware list, its panels and the tables to check the tree against.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: 'The first thing to send for a model without a device tree.' },
   },
-  // The most stable channel that boots it, whether someone booted this model or another of its platform
+  // Whether it boots: someone booted this model, or another of its platform
   nvidiaOmarchy: {
-    stable: { label: 'Stable', tone: 'good', meaning: `Omarchy's stable channel boots it. Not every feature has to work yet.` },
-    rc: { label: 'RC', tone: 'good', meaning: `Omarchy's RC channel, the current install image, boots it. Not every feature has to work yet.` },
-    edge: { label: 'Edge', tone: 'good', meaning: `Omarchy's edge channel, the nightly image, boots it. Not every feature has to work yet.` },
+    boots: { label: 'Boots', tone: 'good', meaning: `Someone booted into Omarchy on it. Not every feature has to work yet.` },
+    should: { label: 'Should boot', tone: 'good-seen', meaning: `Same platform as a model that boots, but nobody has tried this one yet.` },
     problems: { label: 'Problems', tone: 'wanted', meaning: `Someone tried it and couldn't get to the Omarchy desktop.` },
     untested: { label: 'Not tested', tone: 'muted', meaning: 'Nobody has tried Omarchy on it yet.' },
   },
   nvidiaKernel: {
-    stable: { label: 'Stable', tone: 'good', meaning: `Omarchy's stable kernel carries the patches it needs (linux-omarchy ${channelKernel('stable')}).` },
-    rc: { label: 'RC', tone: 'good', meaning: `Omarchy's RC kernel carries the patches it needs (linux-omarchy ${channelKernel('rc')}), the one the current install image has.` },
-    edge: { label: 'Edge', tone: 'good', meaning: `Omarchy's edge kernel carries the patches it needs (linux-omarchy ${channelKernel('edge')}), the one the nightly image has.` },
+    stable: { label: '✓ Stable', tone: 'good', meaning: `Omarchy's stable kernel carries the patches it needs (linux-omarchy ${channelKernel('stable')}). Later fixes to it can still be on edge only.` },
+    rc: { label: '✓ RC', tone: 'good', meaning: `Omarchy's RC kernel carries the patches it needs (linux-omarchy ${channelKernel('rc')}), the one the current install image has. Later fixes to it can still be on edge only.` },
+    edge: { label: '✓ Edge only', tone: 'good', meaning: `Omarchy's edge kernel carries the patches it needs (linux-omarchy ${channelKernel('edge')}), the one the nightly image has. Stable and RC don't have it yet.` },
   },
   nvidiaLinux: {
     omarchy: { label: 'Not in Linux yet', tone: 'close', meaning: `Needs patches Linux doesn't have yet. Omarchy's kernel carries them.` },
@@ -130,20 +131,23 @@ export const ANNOUNCED = STATES.announced as State;
 type Group = { column: string; question: string; states: State[] };
 
 const ACPI_GROUP: Group = { column: 'Hardware report', question: `The laptop's own hardware tables, hardware IDs, panel and firmware list, from Omarchy's report tool or a dump in aarch64-laptops. A device tree is written from it and checked against it.`, states: Object.values(STATES.acpi) as State[] };
-// The legend names the channel cells once, as Stable, RC and Edge share a meaning
-const BOOTABLE_LEGEND: State[] = [
-  { ...STATES.bootable.edge, meaning: `The most stable Omarchy channel, Stable, RC or Edge, whose install image picks its device tree by itself. Pointing at it says whether an owner has reached the desktop yet. Not every feature has to work yet.` },
-  ...(['works', 'workaround', 'problems', 'pr', 'carry', 'needs-ids', 'needs-deviceTree'] as const).map((key) => STATES.bootable[key] as State),
+const CHECK = '✓';
+const CHANNELS = ['stable', 'rc', 'edge'];
+// A piece Omarchy ships shows a check, whichever channel has it: the legend says so once, and the
+// states that aren't a channel follow
+const shipped = (group: Record<string, State>, what: string): State[] => [
+  { label: CHECK, tone: 'good', meaning: `${what} Pointing at it says which channel has it: stable, RC, or edge only. A first version can be in stable while later fixes are still on edge only.` },
+  ...Object.entries(group).filter(([key]) => !CHANNELS.includes(key)).map(([, state]) => state),
 ];
-const BOOTABLE_GROUP: Group = { column: 'Bootable', question: `Which Omarchy channel boots it, and otherwise what it still needs. Reports from any distro are welcome. Booting needs no firmware, and features like suspend and USB4 come next.`, states: BOOTABLE_LEGEND };
+const BOOTABLE_GROUP: Group = { column: 'Bootable', question: `Whether it boots Omarchy, and otherwise what it still needs. A filled label means an owner reached the desktop, an outlined one that nobody has confirmed it yet. Reports from any distro are welcome. Booting needs no firmware, and features like suspend and USB4 come next.`, states: Object.values(STATES.bootable) as State[] };
 
 // The Omarchy view: what Omarchy's packages ship today
 export const OMARCHY_LEGEND: Group[] = [
   BOOTABLE_GROUP,
   ACPI_GROUP,
-  { column: 'Device tree', question: `The description of the hardware that Linux needs for each model, in Omarchy's kernel.`, states: Object.values(STATES.omarchyTree) as State[] },
-  { column: 'Hardware IDs', question: `How Omarchy's install image recognises the model and picks its device tree.`, states: Object.values(STATES.omarchyIds) as State[] },
-  { column: 'Firmware', question: `Signed files for its audio, sensor and graphics chips, in Omarchy's packages. Booting doesn't need them, but without them there's no sound, battery status, USB-C display, sensors or graphics acceleration.`, states: Object.values(STATES.omarchyFirmware) as State[] },
+  { column: 'Device tree', question: `The description of the hardware that Linux needs for each model, in Omarchy's kernel.`, states: shipped(STATES.omarchyTree, `Omarchy's kernel ships it.`) },
+  { column: 'Hardware IDs', question: `How Omarchy's install image recognises the model and picks its device tree.`, states: shipped(STATES.omarchyIds, `Omarchy recognises it and picks its device tree.`) },
+  { column: 'Firmware', question: `Signed files for its audio, sensor and graphics chips, in Omarchy's packages. Booting doesn't need them, but without them there's no sound, battery status, USB-C display, sensors or graphics acceleration.`, states: shipped(STATES.omarchyFirmware, `Every file its device tree loads is in Omarchy's packages.`) },
   { column: 'Who has one', question: 'Who we know has the machine and can try changes on it.', states: Object.values(STATES.machine) as State[] },
 ];
 
@@ -157,7 +161,7 @@ export const UPSTREAM_LEGEND: Group[] = [
 // The Omarchy view: what Omarchy's packages ship for it, and what owners reached
 export const GOOGLEBOOK_OMARCHY_LEGEND: Group[] = [
   { column: 'Bootloader', question: 'Whether its Android-style bootloader lets owners start another system.', states: Object.values(STATES.bootloader) as State[] },
-  { column: 'Device tree', question: `The description of the hardware that Linux needs, in Omarchy's kernel, the same work as for the other Snapdragon laptops.`, states: Object.values(STATES.omarchyTree) as State[] },
+  { column: 'Device tree', question: `The description of the hardware that Linux needs, in Omarchy's kernel, the same work as for the other Snapdragon laptops.`, states: shipped(STATES.omarchyTree, `Omarchy's kernel ships it.`) },
   { column: 'Linux image', question: 'Whether a Linux image starts on it, the step before Omarchy can.', states: Object.values(STATES.linuxImage) as State[] },
   { column: 'Bootable', question: 'Has an owner reached the desktop on it? Tested on Omarchy so far.', states: Object.values(STATES.googlebookOmarchy) as State[] },
 ];
@@ -174,8 +178,8 @@ export const GOOGLEBOOK_UPSTREAM_LEGEND: Group[] = [
 
 // The Omarchy view: Omarchy's kernel and whether it boots
 export const NVIDIA_OMARCHY_LEGEND: Group[] = [
-  { column: 'Kernel', question: `Omarchy's kernel with the patches it needs, by the most stable channel that has it.`, states: Object.values(STATES.nvidiaKernel) as State[] },
-  { column: 'Bootable', question: `Which Omarchy channel boots it, because someone reached the desktop on it or on another model of the same platform. Reports from any distro are welcome.`, states: [{ ...STATES.nvidiaOmarchy.stable, meaning: `The most stable Omarchy channel, Stable, RC or Edge, that boots it. Pointing at it says whether someone booted this model or another of the same platform. Not every feature has to work yet.` }, STATES.nvidiaOmarchy.problems, STATES.nvidiaOmarchy.untested] },
+  { column: 'Kernel', question: `Omarchy's kernel with the patches it needs.`, states: shipped(STATES.nvidiaKernel, `Omarchy's kernel carries the patches it needs.`) },
+  { column: 'Bootable', question: `Whether it boots Omarchy. A filled label means someone reached the desktop on it, an outlined one that another model of the same platform boots and nobody has tried this one. Reports from any distro are welcome.`, states: Object.values(STATES.nvidiaOmarchy) as State[] },
 ];
 
 // The upstream view: what Linux itself has, which every distro gets
@@ -184,9 +188,18 @@ export const NVIDIA_UPSTREAM_LEGEND: Group[] = [
 ];
 
 // Ranks sort best first: a state's position in its group, or a release number within "done"
-const cell = (group: Record<string, State>, key: string, extra: { label?: string; tone?: Tone; title?: string; href?: string; rank?: number } = {}): Cell => {
+const cell = (group: Record<string, State>, key: string, extra: { label?: string; tone?: Tone; title?: string; href?: string; rank?: number; full?: string } = {}): Cell => {
   const state = group[key];
-  return { ...state, key, label: extra.label ?? state.label, tone: extra.tone ?? state.tone, title: extra.title ?? state.meaning, href: extra.href, rank: extra.rank ?? 1000 + Object.keys(group).indexOf(key) };
+  return { ...state, key, label: extra.label ?? state.label, tone: extra.tone ?? state.tone, title: extra.title ?? state.meaning, href: extra.href, rank: extra.rank ?? 1000 + Object.keys(group).indexOf(key), full: extra.full };
+};
+// A piece Omarchy ships: a check in the cell, and the channel that has it in the hover text and the spreadsheet
+const CHANNEL_WORD: Record<string, string> = { stable: 'stable', rc: 'RC', edge: 'edge only' };
+const check = (group: Record<string, State>, channel: string, title?: string): Cell => cell(group, channel, { label: CHECK, title, full: `Yes (${CHANNEL_WORD[channel] ?? channel})` });
+// Which channel has the pieces a model boots with, said after whether it boots
+const SINCE: Record<string, string> = {
+  stable: `Omarchy's stable channel has them. Later fixes can still be on edge only.`,
+  rc: `Omarchy's RC channel, the current install image, has them. Later fixes can still be on edge only.`,
+  edge: `Only Omarchy's edge channel, the nightly image, has them so far.`,
 };
 const release = (tag: string) => tag.replace(/^v/, '');
 const releaseRank = (tag: string) => {
@@ -202,15 +215,19 @@ export function edgeStarts(model: Model): boolean {
 }
 
 export function bootableCell(model: Model): Cell {
-  const key = model.bootable as keyof typeof STATES.bootable;
+  // With the pieces shipped, the cell says whether an owner confirmed it, and the hover text which channel has them
+  const channel = CHANNELS.includes(model.bootable) ? model.bootable : null;
+  const key = (channel ? (model.outcome === 'works' ? 'boots' : 'should') : model.bootable) as keyof typeof STATES.bootable;
   const meaning = STATES.bootable[key].meaning;
   const notes = ['works', 'workaround', 'problems'].includes(model.outcome) ? reportNotes(model.reports) : '';
-  // A channel says whether an owner has confirmed it
-  const confirmed = ['stable', 'rc', 'edge'].includes(key) ? (model.outcome === 'works' ? 'An owner reached the desktop on it.' : 'No owner has confirmed it boots yet.') : '';
   // Each piece it still needs, and the pull request that adds it
   const pulls = { deviceTree: model.omarchy.deviceTreePull, ids: model.omarchy.idsPull };
   const pull = key === 'pr' ? (['deviceTree', 'ids'] as const).map((piece) => (model.pieces[piece] === 'pr' ? pulls[piece] : null)).find(Boolean) : null;
-  return cell(STATES.bootable, key, { title: [meaning, confirmed, notes, pull ? `#${pull.number}: ${pull.title}.` : ''].filter(Boolean).join(' '), href: pull?.url });
+  return cell(STATES.bootable, key, {
+    title: [meaning, channel ? SINCE[channel] : '', notes, pull ? `#${pull.number}: ${pull.title}.` : ''].filter(Boolean).join(' '),
+    href: pull?.url,
+    full: channel ? `${STATES.bootable[key].label} (${CHANNEL_WORD[channel]})` : undefined,
+  });
 }
 
 export function deviceTreeCell(model: Model): Cell {
@@ -242,7 +259,7 @@ const pullTitle = (meaning: string, pull: { number: number; title: string } | nu
 
 export function omarchyTreeCell(model: Model): Cell {
   const { deviceTree, deviceTreePull } = model.omarchy;
-  if (deviceTree) return cell(STATES.omarchyTree, deviceTree);
+  if (deviceTree) return check(STATES.omarchyTree, deviceTree);
   if (deviceTreePull) return cell(STATES.omarchyTree, 'pr', { href: deviceTreePull.url, title: pullTitle(STATES.omarchyTree.pr.meaning, deviceTreePull) });
   if (model.upstream.deviceTree === 'missing') return cell(STATES.omarchyTree, 'wanted');
   return cell(STATES.omarchyTree, 'elsewhere', { href: deviceTreeCell(model).href });
@@ -250,7 +267,7 @@ export function omarchyTreeCell(model: Model): Cell {
 
 export function omarchyIdsCell(model: Model): Cell {
   const { ids, idsPull } = model.omarchy;
-  if (ids) return cell(STATES.omarchyIds, ids);
+  if (ids) return check(STATES.omarchyIds, ids);
   if (idsPull) return cell(STATES.omarchyIds, 'pr', { href: idsPull.url, title: pullTitle(STATES.omarchyIds.pr.meaning, idsPull) });
   if (model.upstream.ids === 'mismatch') return cell(STATES.omarchyIds, 'mismatch');
   if (model.upstream.ids === 'missing') return cell(STATES.omarchyIds, 'wanted');
@@ -259,7 +276,7 @@ export function omarchyIdsCell(model: Model): Cell {
 
 export function omarchyFirmwareCell(model: Model): Cell {
   const { firmware, firmwareChannel, firmwarePackages, firmwarePull } = model.omarchy;
-  if (firmwareChannel) return cell(STATES.omarchyFirmware, firmwareChannel, { title: `${STATES.omarchyFirmware[firmwareChannel as Channel].meaning} Packages: ${firmwarePackages.join(', ')}.` });
+  if (firmwareChannel) return check(STATES.omarchyFirmware, firmwareChannel, `${STATES.omarchyFirmware[firmwareChannel as Channel].meaning} Packages: ${firmwarePackages.join(', ')}.`);
   if (firmware === 'pr') return cell(STATES.omarchyFirmware, 'pr', { href: firmwarePull?.url, title: pullTitle(STATES.omarchyFirmware.pr.meaning, firmwarePull) });
   if (firmware === 'download') return cell(STATES.omarchyFirmware, 'download', { href: model.upstream.firmwareDownload ?? undefined });
   return cell(STATES.omarchyFirmware, firmware === 'partial' ? 'partial' : 'windows');
@@ -309,15 +326,16 @@ export function linuxImageCell(model: Model): Cell {
 
 export function nvidiaOmarchyCell(model: NvidiaModel): Cell {
   if (model.omarchy === 'works' || model.omarchy === 'expected') {
-    const channel = (model.kernel ?? 'edge') as Channel;
-    const who = model.omarchy === 'works' ? 'Someone booted into Omarchy on it.' : 'Same platform as a model that boots, but nobody has tried this one yet.';
-    return cell(STATES.nvidiaOmarchy, channel, { title: `${STATES.nvidiaOmarchy[channel].meaning} ${who}` });
+    const channel = model.kernel ?? 'edge';
+    const key = model.omarchy === 'works' ? 'boots' : 'should';
+    const since = channel === 'edge' ? `Only Omarchy's edge channel, the nightly image, boots it so far.` : `Omarchy's ${CHANNEL_WORD[channel]} channel boots it.`;
+    return cell(STATES.nvidiaOmarchy, key, { title: `${STATES.nvidiaOmarchy[key].meaning} ${since}`, full: `${STATES.nvidiaOmarchy[key].label} (${CHANNEL_WORD[channel]})` });
   }
   return cell(STATES.nvidiaOmarchy, model.omarchy === 'problems' ? 'problems' : 'untested');
 }
 
 export function nvidiaKernelCell(model: NvidiaModel): Cell {
-  return cell(STATES.nvidiaKernel, model.kernel ?? 'edge');
+  return check(STATES.nvidiaKernel, model.kernel ?? 'edge');
 }
 
 export function nvidiaLinuxCell(model: NvidiaModel): Cell {
