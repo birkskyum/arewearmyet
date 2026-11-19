@@ -347,18 +347,39 @@ var ErrNotOmarchy = errors.New("this system has no omarchy-agent")
 
 // Agent opens the owner's chosen coding agent in a window of its own, in the given folder
 // and with the given first message, the way Omarchy's own menu does.
-func Agent(dir, prompt string) error {
+func Agent(dir, prompt string) error { return agent(dir, prompt, 0) }
+
+// AgentHandedOver opens the agent as Agent does, and returns only once its launcher has
+// handed the window over to the desktop, or after a while. A caller that ends right away
+// needs this: a service's leftover processes are stopped with it, and a launcher stopped
+// halfway opens nothing.
+func AgentHandedOver(dir, prompt string) error { return agent(dir, prompt, 30*time.Second) }
+
+func agent(dir, prompt string, wait time.Duration) error {
+	// started lets the launcher go on by itself, or waits for it to finish its part
+	started := func(command *exec.Cmd) error {
+		if err := command.Start(); err != nil {
+			return err
+		}
+		done := make(chan error, 1)
+		go func() { done <- command.Wait() }()
+		if wait == 0 {
+			return nil
+		}
+		select {
+		case err := <-done:
+			return err
+		case <-time.After(wait):
+			return nil
+		}
+	}
 	// Another way of opening an agent than Omarchy's, for other distros: a command line that
 	// gets the first message as its last argument, like HW_TEST_AGENT="foot -e claude"
 	if line := strings.Fields(os.Getenv("HW_TEST_AGENT")); len(line) > 0 {
 		command := exec.Command(line[0], append(line[1:], prompt)...)
 		command.Dir = dir
 		command.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
-		if err := command.Start(); err != nil {
-			return err
-		}
-		go command.Wait()
-		return nil
+		return started(command)
 	}
 	if !Have("omarchy-agent", "omarchy-default-agent") {
 		return ErrNotOmarchy
@@ -370,9 +391,5 @@ func Agent(dir, prompt string) error {
 	command := exec.Command("omarchy-agent", "--prompt", prompt)
 	command.Dir = dir
 	command.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
-	if err := command.Start(); err != nil {
-		return err
-	}
-	go command.Wait()
-	return nil
+	return started(command)
 }

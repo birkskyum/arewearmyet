@@ -60,7 +60,8 @@ func quote(text string) string { return "'" + strings.ReplaceAll(text, "'", `'\'
 
 // Unit is the service that runs once at login. It goes through a login shell, so the agent
 // starts with the same programs on its path as in the owner's terminal, and waits a moment
-// for the desktop to be up.
+// for the desktop to be up. What it started is left running when it ends: the agent's
+// launcher would otherwise be stopped with the service, before any window is open.
 func Unit(program string) string {
 	return `[Unit]
 Description=hw-test: bring the agent back after a restart
@@ -69,6 +70,7 @@ PartOf=graphical-session.target
 
 [Service]
 Type=oneshot
+KillMode=process
 ExecStart=/bin/bash -lc "sleep 5; exec ` + strings.ReplaceAll(quote(program), `"`, `\"`) + ` resume --run"
 
 [Install]

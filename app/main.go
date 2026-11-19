@@ -529,11 +529,15 @@ func comeBack(prompt string, cancel, show, atLogin bool) int {
 		case resume.Open:
 			// Used up before the agent opens, so nothing can make it open twice
 			places.Clear()
-			if tools.Have("notify-send") {
-				_ = exec.Command("notify-send", "-a", "hw-test", "Your agent is back", "It goes on with the hardware work from before the restart. hw-test resume left this.").Run()
-			}
-			if err := tools.Agent(word.Dir, resume.Said(word)); err != nil {
+			// The launcher is waited for: this service ends here, and would take a launcher that is
+			// still at it down with it. The owner is told how it went either way
+			said := []string{"Your agent is back", "It goes on with the hardware work from before the restart. hw-test resume left this."}
+			if err := tools.AgentHandedOver(word.Dir, resume.Said(word)); err != nil {
 				fmt.Fprintln(os.Stderr, "hw-test: the agent couldn't be opened:", err)
+				said = []string{"Your agent didn't open", "The hardware work from before the restart is in " + word.Dir + ". Open your agent there and tell it to read PROGRESS.md."}
+			}
+			if tools.Have("notify-send") {
+				_ = exec.Command("notify-send", "-a", "hw-test", said[0], said[1]).Run()
 			}
 		case resume.Stale:
 			places.Clear()

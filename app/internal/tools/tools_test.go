@@ -117,3 +117,26 @@ func TestFrameSaysWhenAnotherProgramHoldsTheCamera(t *testing.T) {
 		t.Errorf("a missing camera gave %v", err)
 	}
 }
+
+func TestTheAgentsLauncherIsWaitedForWhereTheCallerEndsAtOnce(t *testing.T) {
+	dir := t.TempDir()
+	launcher := filepath.Join(dir, "launcher")
+	os.WriteFile(launcher, []byte("#!/bin/sh\nsleep 1\necho \"$1\" > "+dir+"/opened\n"), 0o755)
+	t.Setenv("HW_TEST_AGENT", launcher)
+	opened := func() bool { _, err := os.Stat(filepath.Join(dir, "opened")); return err == nil }
+	// From the test's own screen nothing is waited for
+	if err := Agent(dir, "read the brief"); err != nil || opened() {
+		t.Fatalf("Agent: %v, opened at once %v", err, opened())
+	}
+	time.Sleep(1500 * time.Millisecond)
+	os.Remove(filepath.Join(dir, "opened"))
+	// At login the launcher has done its part by the time this returns
+	if err := AgentHandedOver(dir, "read the brief"); err != nil || !opened() {
+		t.Errorf("AgentHandedOver: %v, opened %v", err, opened())
+	}
+	// And a launcher that fails is reported
+	os.WriteFile(launcher, []byte("#!/bin/sh\nexit 3\n"), 0o755)
+	if err := AgentHandedOver(dir, "read the brief"); err == nil {
+		t.Error("a launcher that failed wasn't reported")
+	}
+}
