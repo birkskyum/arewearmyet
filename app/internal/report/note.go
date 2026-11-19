@@ -148,7 +148,7 @@ var (
 )
 
 // Removed says in a line what ScrubLog takes out, for the owner before a log is sent.
-const Removed = "hardware and network addresses, serial numbers, disk and install IDs, and the names of this computer, its user and its Bluetooth devices"
+const Removed = "addresses, serial numbers, disk IDs and names"
 
 // ScrubText takes out of a note's own text what names the owner's computer, disk or network:
 // hardware addresses, serial numbers, the addresses in a firewall's lines, private network

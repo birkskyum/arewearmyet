@@ -722,15 +722,16 @@ func owner() (host, account string, names []string) {
 	return host, account, names
 }
 
-// attached says which logs go with a note, what was taken out of them and who can read them.
+// attached says in a line or two which logs go with a note and what was taken out of them.
+// Reading a log first is the owner's choice, with --json: nobody is shown one unasked.
 func attached(logs []report.Log) string {
 	var listed []string
 	for _, log := range logs {
 		lines := strings.Count(log.Text, "\n") + 1
 		listed = append(listed, fmt.Sprintf("%s (%d line%s)", log.Name, lines, map[bool]string{true: "", false: "s"}[lines == 1]))
 	}
-	return "With the note: " + strings.Join(listed, ", ") + ".\nTaken out first: " + report.Removed + ".\n" +
-		"The note and its logs are public on the model's page. The same command with --json prints all of it and sends nothing.\n"
+	return "Attaching " + strings.Join(listed, ", ") + ", with " + report.Removed + " taken out.\n" +
+		"It goes on the model's page, for others with the same computer. To read it first, run this again with --json.\n"
 }
 
 // agreed asks whether to send. Enter or anything but a no is a yes, and no answer at all is a no.
@@ -860,7 +861,7 @@ func usage() {
                      --kind problem|workaround|upstream|note   --check ID   --link URL...
                      --log kernel|previous|boot-N|FILE...  attaches a log, cleaned of addresses,
                      serial numbers, disk IDs and names; boot-3 is the third boot before this
-                     one. A note and its logs are public: --json prints what would go
+                     one. --json prints what would go and sends nothing
                      --reply NOTE-ID answers a note, --solved NOTE-ID closes your own problem
                      --no-send shows what would be sent, logs included, and sends nothing
   hw-test verify before    take a snapshot of where this computer stands, before a change.

@@ -9,7 +9,16 @@ import (
 
 func TestBeforeALogGoesTheOwnerIsToldWhatGoesAndCanSayNo(t *testing.T) {
 	said := attached([]report.Log{{Name: "previous.log", Text: "one\ntwo\nthree"}, {Name: "kernel.log", Text: "one"}})
-	for _, part := range []string{"previous.log (3 lines), kernel.log (1 line)", "disk and install IDs", "public on the model's page", "--json"} {
+	if said != "Attaching previous.log (3 lines), kernel.log (1 line), with addresses, serial numbers, disk IDs and names taken out.\nIt goes on the model's page, for others with the same computer. To read it first, run this again with --json.\n" {
+		t.Errorf("the notice:\n%s", said)
+	}
+	// The log itself is never printed unasked
+	for _, part := range []string{"one\ntwo"} {
+		if strings.Contains(said, part) {
+			t.Errorf("the notice shows the log:\n%s", said)
+		}
+	}
+	for _, part := range []string{"--json"} {
 		if !strings.Contains(said, part) {
 			t.Errorf("the notice lacks %q:\n%s", part, said)
 		}
