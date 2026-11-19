@@ -38,11 +38,11 @@ func (c *choice) view(width int) string {
 	out.WriteString(bold.Render(wrap(c.question, width)))
 	out.WriteString("\n\n")
 	for i, option := range c.options {
-		marker, style := "  ", dim
+		marker, style := "  ", soft
 		if i == c.cursor {
 			marker, style = accent.Render("› "), bold
 		}
-		fmt.Fprintf(&out, "%s%s %s\n", marker, dim.Render(fmt.Sprint(i+1)), style.Render(option))
+		fmt.Fprintf(&out, "%s%s %s\n", marker, soft.Render(fmt.Sprint(i+1)), style.Render(option))
 	}
 	return strings.TrimRight(out.String(), "\n")
 }

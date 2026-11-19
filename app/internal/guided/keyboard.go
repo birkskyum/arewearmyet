@@ -158,13 +158,13 @@ func (k *keyboard) view(width, height int) string {
 		var cells []string
 		for _, key := range row {
 			style := lipgloss.NewStyle().Width(key.width).Align(lipgloss.Center)
+			// Three looks that read on any theme: a pressed key is black on green, a key still
+			// to press is the text colour reversed like a key cap, an optional key is plain text
 			switch {
 			case k.lit[key.code]:
 				style = style.Background(lipgloss.Green).Foreground(lipgloss.Black).Bold(true)
 			case key.needed:
-				style = style.Background(lipgloss.BrightBlack).Foreground(lipgloss.BrightWhite)
-			default:
-				style = style.Foreground(lipgloss.BrightBlack)
+				style = style.Reverse(true)
 			}
 			cells = append(cells, style.Render(key.label))
 		}
@@ -176,6 +176,6 @@ func (k *keyboard) view(width, height int) string {
 		status = good.Render(fmt.Sprintf("Every letter, number and arrow works (%d keys seen).", k.count())) + " Press Enter to go on."
 	}
 	intro := "Press every letter, number and arrow key once, plus Space, Enter, Backspace, Tab and Esc. Each lights up green when the computer sees it. " +
-		"The dim keys are optional: some keyboards don't have them, and the desktop keeps some for itself."
+		"The keys without a background are optional: some keyboards don't have them, and the desktop keeps some for itself."
 	return wrap(intro, width) + "\n\n" + strings.Join(rows, "\n\n") + "\n\n" + status
 }

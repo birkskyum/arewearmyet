@@ -167,15 +167,15 @@ func (m *model) View() tea.View {
 	for i, s := range m.steps {
 		switch {
 		case i < m.at:
-			progress = append(progress, good.Render("✓ ")+dim.Render(s.name()))
+			progress = append(progress, good.Render("✓ ")+soft.Render(s.name()))
 		case i == m.at:
 			progress = append(progress, accent.Render("● "+s.name()))
 		default:
-			progress = append(progress, dim.Render("○ "+s.name()))
+			progress = append(progress, soft.Render("○ "+s.name()))
 		}
 	}
 	machine := strings.TrimSpace(m.run.Hardware["maker"] + " " + first(m.run.Hardware["family"], m.run.Hardware["product"]))
-	header := title.Render("Are we ARM yet?") + dim.Render("  "+machine)
+	header := title.Render("Are we ARM yet?") + soft.Render("  "+machine)
 	body := current.view(width-4, m.height-8)
 	content := lipgloss.JoinVertical(lipgloss.Left,
 		header,
@@ -183,7 +183,7 @@ func (m *model) View() tea.View {
 		"",
 		body,
 		"",
-		dim.Render(current.keys()+" · Ctrl+C to stop"),
+		soft.Render(current.keys()+" · Ctrl+C to stop"),
 	)
 	view := tea.NewView(lipgloss.NewStyle().Padding(1, 2).Render(content))
 	view.AltScreen = true

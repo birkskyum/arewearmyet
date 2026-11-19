@@ -105,7 +105,7 @@ func (q *questions) view(width, height int) string {
 	if q.done() {
 		return ""
 	}
-	count := dim.Render(fmt.Sprintf("Question %d of %d", q.at+1, len(q.list)))
+	count := soft.Render(fmt.Sprintf("Question %d of %d", q.at+1, len(q.list)))
 	if q.note != nil {
 		return count + "\n\n" + q.note.view(width)
 	}

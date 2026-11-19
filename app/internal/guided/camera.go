@@ -173,15 +173,15 @@ func (c *camera) view(width, height int) string {
 	case "intro":
 		return wrap("Now the camera. It takes one picture and draws it here, so you can see whether the camera works. Nothing is taken until you press Enter, and then it counts down from five.", width) + "\n\n" + private(width)
 	case "countdown":
-		return accent.Render(fmt.Sprintf("Taking a picture in  %d", c.count)) + "\n\n" + dim.Render("Look at the camera, or cover it if you'd rather not be in it: a picture of anything shows it works.") + "\n\n" + private(width)
+		return accent.Render(fmt.Sprintf("Taking a picture in  %d", c.count)) + "\n\n" + soft.Render("Look at the camera, or cover it if you'd rather not be in it: a picture of anything shows it works.") + "\n\n" + private(width)
 	}
 	if c.phase == "capturing" {
-		return accent.Render("● Taking a picture with the camera") + "\n\n" + dim.Render("Its light may come on for a moment.") + "\n\n" + private(width)
+		return accent.Render("● Taking a picture with the camera") + "\n\n" + soft.Render("Its light may come on for a moment.") + "\n\n" + private(width)
 	}
 	if c.err != nil || c.frame.Blank() {
-		return c.ask.view(width) + "\n\n" + dim.Render(wrap("Measured: "+c.evidence()+".", width))
+		return c.ask.view(width) + "\n\n" + soft.Render(wrap("Measured: "+c.evidence()+".", width))
 	}
 	// The picture gets whatever height the question leaves
 	rows := max(6, height-len(c.ask.options)-8)
-	return c.frame.Render(width, rows) + "\n\n" + c.ask.view(width) + "\n\n" + dim.Render("Measured: "+c.evidence()+". Only these numbers are sent.") + "\n" + private(width)
+	return c.frame.Render(width, rows) + "\n\n" + c.ask.view(width) + "\n\n" + soft.Render("Measured: "+c.evidence()+". Only these numbers are sent.") + "\n" + private(width)
 }

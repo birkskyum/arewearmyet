@@ -332,3 +332,25 @@ func TestHeadphonesAskOnlyAfterPlaying(t *testing.T) {
 		t.Error("skipping left a result")
 	}
 }
+
+// A theme's "bright black" can be nearly its background, so nothing that's read may use it,
+// nor the faint attribute.
+func TestNothingIsDrawnInAFaintColour(t *testing.T) {
+	run := &report.Run{Hardware: map[string]string{"maker": "LENOVO", "product": "83ED"}}
+	run.Set("wifi", report.Works, report.Measured, "wlan0 connected", "")
+	run.Set("hibernate", report.Broken, report.Measured, "the kernel offers no hibernation", "")
+	dir := t.TempDir()
+	last := &summary{run: run, options: Options{Send: true}}
+	last.start()
+	steps := []step{&welcome{run: run}, newKeyboard(run), &effects{run: run, items: []effect{{label: "Volume up"}}}, newTouchpad(run, "pad"), newTouchscreen(run, "screen"),
+		newSpeakers(run, dir), newMicrophones(run, dir), newHeadphones(run, dir), newCamera(run, dir), newSleep(run, probe.Facts{}), newQuestions(run, probe.Facts{Laptop: true}), last}
+	for at, s := range steps {
+		m := &model{run: run, summary: last, steps: steps, at: at, width: 100, height: 40}
+		drawn := m.View().Content
+		for _, code := range []string{"\x1b[90m", "\x1b[2m", ";90m", "\x1b[97m"} {
+			if strings.Contains(drawn, code) {
+				t.Errorf("%s is drawn with %q", s.name(), code)
+			}
+		}
+	}
+}

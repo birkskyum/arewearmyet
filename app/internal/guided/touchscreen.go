@@ -64,7 +64,7 @@ func (t *touchscreen) update(msg tea.Msg) tea.Cmd {
 
 func (t *touchscreen) view(width, height int) string {
 	seen := min(len(t.taps), tapsWanted)
-	dots := good.Render(strings.Repeat("● ", seen)) + dim.Render(strings.Repeat("○ ", tapsWanted-seen))
+	dots := good.Render(strings.Repeat("● ", seen)) + soft.Render(strings.Repeat("○ ", tapsWanted-seen))
 	text := wrap("Now the touchscreen. Tap this window with a finger in three different places.", width) + "\n\n  " + dots
 	if seen >= tapsWanted {
 		text += "\n\n" + good.Render("The touchscreen works.") + " Press Enter to go on."

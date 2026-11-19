@@ -140,7 +140,7 @@ func (s *speakers) view(width, height int) string {
 	case "right":
 		return accent.Render("Playing on the RIGHT speaker  ▶ ▶ ▶")
 	}
-	text := s.ask.view(width) + "\n\n" + dim.Render(wrap("Measured: "+s.evidence()+".", width))
+	text := s.ask.view(width) + "\n\n" + soft.Render(wrap("Measured: "+s.evidence()+".", width))
 	if s.err != nil {
 		text += "\n" + bad.Render(wrap("The player reported: "+s.err.Error(), width))
 	}
@@ -281,7 +281,7 @@ func meter(level, width int) string {
 		filled = int(math.Log10(float64(level)) / math.Log10(20000) * float64(width))
 	}
 	filled = max(0, min(width, filled))
-	return good.Render(strings.Repeat("█", filled)) + dim.Render(strings.Repeat("░", width-filled))
+	return good.Render(strings.Repeat("█", filled)) + soft.Render(strings.Repeat("░", width-filled))
 }
 
 func (m *microphones) view(width, height int) string {
@@ -290,9 +290,9 @@ func (m *microphones) view(width, height int) string {
 		return wrap("Now the microphone. Press Enter, then say a few words. It records four seconds and plays them back, so you can hear whether the microphone works.", width) + "\n\n" + private(width)
 	case "recording":
 		left := recordFor - time.Since(m.began)
-		return accent.Render(fmt.Sprintf("● Recording, speak now  (%.0f s left)", math.Max(0, left.Seconds()))) + "\n\n" + meter(m.level, min(width, 60)) + "\n\n" + dim.Render("Only on this computer. Not sent.")
+		return accent.Render(fmt.Sprintf("● Recording, speak now  (%.0f s left)", math.Max(0, left.Seconds()))) + "\n\n" + meter(m.level, min(width, 60)) + "\n\n" + soft.Render("Only on this computer. Not sent.")
 	case "playing":
 		return accent.Render("▶ Playing your recording back")
 	}
-	return m.ask.view(width) + "\n\n" + dim.Render(fmt.Sprintf("Measured: recording level %d, loudest %d. Only these two numbers are sent, not the recording.", m.voice, m.peak))
+	return m.ask.view(width) + "\n\n" + soft.Render(fmt.Sprintf("Measured: recording level %d, loudest %d. Only these two numbers are sent, not the recording.", m.voice, m.peak))
 }

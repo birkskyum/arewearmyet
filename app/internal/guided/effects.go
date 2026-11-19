@@ -174,11 +174,11 @@ func (e *effects) view(width, height int) string {
 		case item.outcome == "failed":
 			out.WriteString(bad.Render("  ✗ "+item.label+": nothing happened") + "\n")
 		case item.outcome == "skipped":
-			out.WriteString(dim.Render("  – "+item.label+": skipped") + "\n")
+			out.WriteString(soft.Render("  – "+item.label+": skipped") + "\n")
 		case i == e.at:
 			out.WriteString(accent.Render("  › "+item.label) + "\n")
 		default:
-			out.WriteString(dim.Render("    "+item.label) + "\n")
+			out.WriteString(soft.Render("    "+item.label) + "\n")
 		}
 	}
 	state := fmt.Sprintf("Volume %d%%", int(e.now.volume*100+0.5))
@@ -188,5 +188,5 @@ func (e *effects) view(width, height int) string {
 	if e.backlight != "" {
 		state += fmt.Sprintf(" · backlight %d", e.now.brightness)
 	}
-	return out.String() + "\n" + dim.Render(state)
+	return out.String() + "\n" + soft.Render(state)
 }

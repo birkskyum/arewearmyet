@@ -8,15 +8,18 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 )
 
-// The terminal's own sixteen colours, so the test looks like the rest of the desktop's theme.
+// The terminal's own colours, so the test looks like the rest of the desktop's theme. Only
+// its normal text colour is used for anything that has to be read: a theme's "bright black"
+// can be nearly its background, as it is on a blue theme, so secondary text is told apart by
+// not being bold or coloured, never by being fainter.
 var (
 	bold   = lipgloss.NewStyle().Bold(true)
-	dim    = lipgloss.NewStyle().Foreground(lipgloss.BrightBlack)
+	soft   = lipgloss.NewStyle()
 	good   = lipgloss.NewStyle().Foreground(lipgloss.Green)
 	close_ = lipgloss.NewStyle().Foreground(lipgloss.Yellow)
 	bad    = lipgloss.NewStyle().Foreground(lipgloss.Red)
 	accent = lipgloss.NewStyle().Foreground(lipgloss.Green).Bold(true)
-	title  = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.BrightWhite)
+	title  = lipgloss.NewStyle().Bold(true)
 )
 
 // stateStyle is the colour a check's state is shown in.
@@ -29,7 +32,7 @@ func stateStyle(state string) lipgloss.Style {
 	case report.Broken:
 		return bad
 	}
-	return dim
+	return soft
 }
 
 var stateLabel = map[string]string{report.Works: "works", report.Partial: "partly", report.Broken: "broken", report.Absent: "not on this model", report.Untested: "untested"}
@@ -94,7 +97,7 @@ func resultsTable(results []report.Result, width int) string {
 			if lipgloss.Width(detail) > room {
 				detail = detail[:room-1] + "…"
 			}
-			line += dim.Render(detail)
+			line += soft.Render(detail)
 		}
 		out.WriteString(line)
 		if i < len(results)-1 {

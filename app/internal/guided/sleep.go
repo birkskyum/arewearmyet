@@ -159,7 +159,7 @@ func (s *sleep) view(width, height int) string {
 	switch s.phase {
 	case "intro":
 		return wrap("Now sleep. When you press Enter, close the lid, wait about twenty seconds, open it and unlock. This screen will be here when you're back, and it then checks that Wi-Fi and sound came back too.", width) + "\n\n" +
-			dim.Render(wrap("If the computer restarts instead of waking up, just run the test again: it knows what happened and keeps your answers.", width))
+			soft.Render(wrap("If the computer restarts instead of waking up, just run the test again: it knows what happened and keeps your answers.", width))
 	case "waiting":
 		return accent.Render("● Close the lid now, wait twenty seconds, then open it and unlock")
 	case "settling":
@@ -167,5 +167,5 @@ func (s *sleep) view(width, height int) string {
 	case "note":
 		return s.note.view(width)
 	}
-	return s.ask.view(width) + "\n\n" + dim.Render(wrap("Measured: "+s.evidence()+".", width))
+	return s.ask.view(width) + "\n\n" + soft.Render(wrap("Measured: "+s.evidence()+".", width))
 }
