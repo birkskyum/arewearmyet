@@ -94,11 +94,15 @@ const googlebookViews = [
   { id: 'upstream', label: 'Upstream', question: 'What Linux itself has, which every distro gets.', columns: [
     { id: 'device-tree', header: 'Linux', question: GOOGLEBOOK_UPSTREAM_LEGEND[0].question, options: FILTERS.googlebookDeviceTree },
   ] },
+  HARDWARE_VIEW,
 ];
 const chromebookViews = [
-  { ...googlebookViews[0], columns: googlebookViews[0].columns.map((column, i) => ({ ...column, question: CHROMEBOOK_OMARCHY_LEGEND[i].question })) },
+  { ...googlebookViews[0], columns: [...googlebookViews[0].columns.map((column, i) => ({ ...column, question: CHROMEBOOK_OMARCHY_LEGEND[i].question })), HARDWARE_DOTS] },
   { ...googlebookViews[1], columns: [{ ...googlebookViews[1].columns[0], options: FILTERS.chromebookDeviceTree }] },
+  HARDWARE_VIEW,
 ];
+// The Googlebooks' Omarchy view gets the row of dots too, after the Chromebooks took their own copy of its columns
+googlebookViews[0].columns.push(HARDWARE_DOTS as never);
 const HELP = 'mt-2 max-w-3xl text-sm text-zinc-400';
 
 const collected = new Date(status.collected).toISOString().slice(0, 10);
@@ -246,11 +250,16 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
       <p class={HELP}>
         To help, read the device tree Googlebook OS starts with, following the <a class={LINK} href="https://github.com/omacom/omarchy/discussions/16627">owner guide</a>. It changes nothing on the laptop.
       </p>
-      <p class="mt-4 hidden max-w-3xl text-sm text-zinc-400 hw:block">No hardware results for these yet. They come once Omarchy starts on them, which is still the open step. The switch at the top goes back to Booting.</p>
-      <div class="group/views mt-4 hw:hidden" data-views data-view="omarchy">
+      <div class="group/views mt-4" data-views data-view="omarchy">
         <ViewState prefix="googlebook-" views={googlebookViews.map((v) => v.id)} />
-        <div class="group-data-[view=upstream]/views:hidden">
+        <div class="mb-8 hidden group-data-[view=hardware]/views:block">
+          <PartBars models={googlebooks} anchor="googlebooks" urlPrefix="googlebook-" />
+        </div>
+        <div class="group-data-[view=hardware]/views:hidden group-data-[view=upstream]/views:hidden">
           <Legend title="What the labels mean" groups={GOOGLEBOOK_OMARCHY_LEGEND} />
+        </div>
+        <div class="hidden group-data-[view=hardware]/views:block">
+          <Legend title="What the labels mean" groups={HARDWARE_LEGEND} keys={HARDWARE_KEYS} />
         </div>
         <div class="hidden group-data-[view=upstream]/views:block">
           <Legend title="What the labels mean" groups={GOOGLEBOOK_UPSTREAM_LEGEND} />
@@ -265,11 +274,16 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
       <p class="max-w-3xl text-sm text-zinc-400">
         Arm Chromebooks start through ChromeOS's bootloader instead of UEFI, so like the Googlebooks they need no ACPI tables or hardware IDs, and Omarchy's ARM image doesn't start on them. Their device trees have been in Linux for years, so what they need is a Linux image built for that bootloader, which developer mode lets them start.
       </p>
-      <p class="mt-4 hidden max-w-3xl text-sm text-zinc-400 hw:block">No hardware results for these yet. They come once Omarchy starts on them, which is still the open step. The switch at the top goes back to Booting.</p>
-      <div class="group/views mt-4 hw:hidden" data-views data-view="omarchy">
+      <div class="group/views mt-4" data-views data-view="omarchy">
         <ViewState prefix="chromebook-" views={chromebookViews.map((v) => v.id)} />
-        <div class="group-data-[view=upstream]/views:hidden">
+        <div class="mb-8 hidden group-data-[view=hardware]/views:block">
+          <PartBars models={chromebooks} anchor="chromebooks" urlPrefix="chromebook-" />
+        </div>
+        <div class="group-data-[view=hardware]/views:hidden group-data-[view=upstream]/views:hidden">
           <Legend title="What the labels mean" groups={CHROMEBOOK_OMARCHY_LEGEND} />
+        </div>
+        <div class="hidden group-data-[view=hardware]/views:block">
+          <Legend title="What the labels mean" groups={HARDWARE_LEGEND} keys={HARDWARE_KEYS} />
         </div>
         <div class="hidden group-data-[view=upstream]/views:block">
           <Legend title="What the labels mean" groups={GOOGLEBOOK_UPSTREAM_LEGEND} />

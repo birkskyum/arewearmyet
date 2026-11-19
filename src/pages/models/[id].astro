@@ -4,12 +4,12 @@
 import Layout from '../../layouts/Layout.astro';
 import CheckTable from '../../components/CheckTable';
 import GitHubIcon from '../../assets/github-icon.svg';
-import { GENERATION, TONE, acpiCell, bootableCell, edgeStarts, deviceTreeCell, idsCell, machineCell, omarchyFirmwareCell, omarchyIdsCell, omarchyTreeCell, upstreamFirmwareCell, type Model } from '../../lib/labels';
+import { GENERATION, TONE, acpiCell, bootableCell, bootloaderCell, edgeStarts, deviceTreeCell, googlebookOmarchyCell, idsCell, linuxImageCell, machineCell, omarchyFirmwareCell, omarchyIdsCell, omarchyTreeCell, upstreamFirmwareCell, type Model } from '../../lib/labels';
 import { PILL } from '../../lib/tones';
-import { GROUPS, coverage, modelChecks, modelExtra, pageModels } from '../../lib/checks';
+import { GROUPS, coverage, googlePageModels, modelChecks, modelExtra, pageModels } from '../../lib/checks';
 
 export function getStaticPaths() {
-  return pageModels().map((model) => ({ params: { id: model.id }, props: { model } }));
+  return [...pageModels(), ...googlePageModels()].map((model) => ({ params: { id: model.id }, props: { model } }));
 }
 
 const model = Astro.props.model as Model;
@@ -22,25 +22,37 @@ const CARD = 'rounded-xl bg-zinc-900 p-5 ring-1 ring-zinc-800';
 const CODE = 'mt-2 overflow-x-auto rounded-md bg-zinc-950 p-3 text-xs text-zinc-300';
 const title = `${model.vendor} ${model.name}`;
 const subtitle = [GENERATION[model.generation], model.released ? String(model.released).slice(0, 7) : null, model.chips.join(', '), model.modelNumbers.join(', ')].filter(Boolean).join(' · ');
-const pieces = [
-  { name: 'Bootable', cell: bootableCell(model) },
-  { name: 'ACPI dump', cell: acpiCell(model) },
-  { name: 'Device tree', cell: omarchyTreeCell(model) },
-  { name: 'Hardware IDs', cell: omarchyIdsCell(model) },
-  { name: 'Firmware', cell: omarchyFirmwareCell(model) },
-  { name: 'Who has one', cell: machineCell(model) },
-];
-const upstream = [
-  { name: 'Linux', cell: deviceTreeCell(model) },
-  { name: 'systemd', cell: idsCell(model) },
-  { name: 'linux-firmware', cell: upstreamFirmwareCell(model) },
-];
+// A Chromebook or Googlebook starts through Google's own boot software, so what it takes to start
+// one is another set of pieces: a bootloader that lets another system in, a device tree, a Linux image
+const google = model.boot !== 'uefi';
+const pieces = google
+  ? [
+      { name: 'Bootable', cell: googlebookOmarchyCell(model) },
+      { name: 'Bootloader', cell: bootloaderCell(model) },
+      { name: 'Device tree', cell: omarchyTreeCell(model) },
+      { name: 'Linux image', cell: linuxImageCell(model) },
+    ]
+  : [
+      { name: 'Bootable', cell: bootableCell(model) },
+      { name: 'ACPI dump', cell: acpiCell(model) },
+      { name: 'Device tree', cell: omarchyTreeCell(model) },
+      { name: 'Hardware IDs', cell: omarchyIdsCell(model) },
+      { name: 'Firmware', cell: omarchyFirmwareCell(model) },
+      { name: 'Who has one', cell: machineCell(model) },
+    ];
+const upstream = google
+  ? [{ name: 'Linux', cell: deviceTreeCell(model) }]
+  : [
+      { name: 'Linux', cell: deviceTreeCell(model) },
+      { name: 'systemd', cell: idsCell(model) },
+      { name: 'linux-firmware', cell: upstreamFirmwareCell(model) },
+    ];
 // Which channel has each piece Omarchy ships, in words: the cells show a check, and a phone has no hover text
 const WHERE: Record<string, string> = { stable: 'in stable', rc: 'in RC', edge: 'on edge only' };
 const shippedIn = [
   ['Device tree', model.omarchy.deviceTree],
-  ['hardware IDs', model.omarchy.ids],
-  ['firmware', model.omarchy.firmwareChannel],
+  ['hardware IDs', google ? null : model.omarchy.ids],
+  ['firmware', google ? null : model.omarchy.firmwareChannel],
 ]
   .filter(([, channel]) => channel)
   .map(([piece, channel]) => `${piece} ${WHERE[channel as string] ?? channel}`)
@@ -77,6 +89,7 @@ const REPORT_TONE = { works: 'good', workaround: 'close', problems: 'wanted' } a
           ))}
         </dl>
         {shippedIn && <p class="mt-4 text-xs text-zinc-500">{shippedIn} A first version can be in stable while later fixes are still on edge only.</p>}
+        {google && <p class="mt-4 text-xs text-zinc-500">{model.boot === 'android' ? 'A Googlebook starts through an Android-style bootloader' : "A Chromebook starts through ChromeOS's bootloader"}, not through UEFI. Omarchy's install image doesn't start on it, so it needs no ACPI tables or hardware IDs, and getting past the bootloader comes first.</p>}
       </div>
       <div class={CARD}>
         <h2 class="text-sm font-semibold text-zinc-100">Upstream, for every distro</h2>
@@ -127,7 +140,11 @@ const REPORT_TONE = { works: 'good', workaround: 'close', problems: 'wanted' } a
 
     <section class="mt-10 rounded-xl bg-[#9ece6a]/10 p-5 ring-1 ring-[#9ece6a]/40">
       <h2 class="text-base font-semibold text-[#9ece6a]">Own one? Test it</h2>
-      <p class="mt-2 text-sm text-zinc-300">{edgeStarts(model) ? "Omarchy's edge image starts this model by itself." : "Omarchy's install image can't start this model by itself yet."} <a class={LINK} href={edgeStarts(model) ? '/install' : '/help'}>{edgeStarts(model) ? 'How to install it' : 'How to help it get there'}</a>.</p>
+      {google ? (
+        <p class="mt-2 text-sm text-zinc-300">Omarchy's install image doesn't start on Chromebooks and Googlebooks, so there is no installer for this one yet. {model.discussion ? <><a class={LINK} href={model.discussion}>The owner guide</a> says how to help it get there.</> : <><a class={LINK} href="/help">How to help it get there</a>.</>} Once Omarchy runs on it by other means, the test below works as on any other machine.</p>
+      ) : (
+        <p class="mt-2 text-sm text-zinc-300">{edgeStarts(model) ? "Omarchy's edge image starts this model by itself." : "Omarchy's install image can't start this model by itself yet."} <a class={LINK} href={edgeStarts(model) ? '/install' : '/help'}>{edgeStarts(model) ? 'How to install it' : 'How to help it get there'}</a>.</p>
+      )}
       <p class="mt-2 text-sm text-zinc-300">On Omarchy, install the hardware test once and run it. It measures what it can by itself (graphics, Wi-Fi and Bluetooth, sound, video decoding, temperatures), tests the rest with you, shows the results and puts them on this page unless you say no. No serial numbers, addresses or names are sent, and a picture or recording it makes never leaves the computer.</p>
       <pre class={CODE}><code>omarchy-mise-install github:birkskyum/arewearmyet hw-test
 hw-test</code></pre>

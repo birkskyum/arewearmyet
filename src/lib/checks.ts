@@ -43,13 +43,19 @@ export function pageModels(): Model[] {
   return status.models.filter((model: Model) => model.boot === 'uefi');
 }
 
+/** Chromebooks and Googlebooks, which start through Google's own boot software. They get a page and the same checks. */
+export function googlePageModels(): Model[] {
+  return status.models.filter((model: Model) => model.boot === 'android' || model.boot === 'depthcharge');
+}
+
 /** The NVIDIA machines, which start through UEFI with ACPI and get a page and the same checks. */
 export function nvidiaPageModels(): NvidiaModel[] {
   return status.nvidia as NvidiaModel[];
 }
 
 /** What the checks need to know about a machine, whichever group it is in. */
-export type Subject = { id: string; generation: string; form?: string | null };
+// `boot` is how it starts: uefi, or Google's boot software (android, depthcharge)
+export type Subject = { id: string; generation: string; form?: string | null; boot?: string | null };
 
 const NVIDIA = new Set(['n1x', 'gb10']);
 // Parts a machine can't have, by what it is, so nobody is asked to test them and they don't read as unknown
@@ -68,7 +74,10 @@ export type CheckRow = Check & { finding: Finding | null; from: 'model' | 'famil
 /** Every check for one model, with the model's own finding, or else its chip family's. */
 export function modelChecks(model: Subject): CheckRow[] {
   const own = findings.models?.[model.id]?.checks ?? {};
-  const family = findings.families?.[FAMILY[model.generation] ?? ''];
+  // What holds for a chip family was seen on machines that start Omarchy's own image. A Chromebook or
+  // Googlebook has the same chip and starts another way, so none of it is taken over for one
+  const google = model.boot === 'android' || model.boot === 'depthcharge';
+  const family = google ? undefined : findings.families?.[FAMILY[model.generation] ?? ''];
   return CHECKS.map((check) => {
     if (own[check.id]) return { ...check, finding: own[check.id], from: 'model' as const, familySource: null };
     const lacks = notOn(model, check.id);

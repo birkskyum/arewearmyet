@@ -1,8 +1,8 @@
-// Every model with a page, served as GET /api/models.
-import { coverage, nvidiaPageModels, pageModels } from '../../lib/checks';
+// Every model with a page, served as GET /api/models: Snapdragon PCs, Chromebooks and Googlebooks, and NVIDIA machines.
+import { coverage, googlePageModels, nvidiaPageModels, pageModels } from '../../lib/checks';
 
 export function GET() {
-  const models = pageModels().map((model) => ({
+  const models = [...pageModels(), ...googlePageModels()].map((model) => ({
     id: model.id,
     vendor: model.vendor,
     name: model.name,

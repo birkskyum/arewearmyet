@@ -72,7 +72,9 @@ export function googlebookRows(boot: 'android' | 'depthcharge' = 'android'): Tab
         tree: plain(omarchyTreeCell(model)),
         bootloader: plain(bootloaderCell(model)),
         image: plain(linuxImageCell(model)),
+        ...partCells(model),
       }),
+      href: `/models/${model.id}`,
       variants: [],
     }));
 }
