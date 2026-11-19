@@ -1659,7 +1659,7 @@
     "workaround": 5,
     "problems": 2,
     "notYet": 8,
-    "deviceTree": 83,
+    "deviceTree": 84,
     "ids": 60,
     "firmware": 73,
     "googlebooks": 2,
@@ -1678,7 +1678,7 @@
         "fromUpstream": 19,
         "added": 63,
         "pull": 0,
-        "available": 1,
+        "available": 2,
         "upstream": 19,
         "channels": {
           "stable": 19,
@@ -1774,7 +1774,8 @@
           ],
           "pull": [],
           "available": [
-            "humain-horizon"
+            "humain-horizon",
+            "samsung-galaxy-book6-edge-16"
           ]
         }
       },
@@ -14653,9 +14654,9 @@
         "https://news.samsung.com/us/galaxy-book6-edge-available-next-generation-ai-performance-premium-portability",
         "https://browser.geekbench.com/v6/cpu/18993073"
       ],
-      "notes": "An owner's hardware report gives its strings, hardware IDs and ACPI tables. It calls itself Galaxy Book6 Edge - PALF from the maker Samsung (earlier Galaxy Books report SAMSUNG ELECTRONICS CO., LTD.), SKU PALF-960XRD-GLYM-0, board NP960XRD-KB1DE, with the panel the Galaxy Book4 Edge 16 has. Nobody has written a device tree for it yet. Samsung offers no driver pack for it and Windows Update has no bundle for its hardware IDs, so its firmware comes from the laptop's own Windows. Its audio DSP, GPU and video images are Samsung's own builds, and its compute DSP image is the one the other X2 laptops have.",
+      "notes": "An owner's hardware report gives its strings, hardware IDs and ACPI tables. It calls itself Galaxy Book6 Edge - PALF from the maker Samsung (earlier Galaxy Books report SAMSUNG ELECTRONICS CO., LTD.), SKU PALF-960XRD-GLYM-0, board NP960XRD-KB1DE, with the panel the Galaxy Book4 Edge 16 has. A device tree written from that report is in review and nobody has booted it yet. Its only drive is UFS, which Omarchy's kernel can't reach on this chip until the same change lands, and its speakers and battery reading have no Linux driver. Samsung offers no driver pack for it and Windows Update has no bundle for its hardware IDs, so its firmware comes from the laptop's own Windows. Its audio DSP, GPU and video images are Samsung's own builds, and its compute DSP image is the one the other X2 laptops have.",
       "outcome": "none",
-      "bootable": "needs-deviceTree",
+      "bootable": "carry",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
@@ -14669,21 +14670,26 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "none",
+        "deviceTree": "elsewhere",
         "ids": "elsewhere",
         "firmware": "none"
       },
       "upstream": {
-        "deviceTree": "missing",
+        "deviceTree": "out-of-tree",
         "firstRelease": null,
         "devicetreePosted": null,
-        "devicetreeOutOfTree": null,
-        "devicetreeArchive": null,
+        "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/3111",
+        "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/samsung-galaxy-book6-edge-16",
         "ids": "collected",
         "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/53",
         "idsStubble": null,
         "firmware": "windows",
-        "firmwareMissing": [],
+        "firmwareMissing": [
+          "qcadsp8480.mbn",
+          "adsp_dtbs.elf",
+          "qccdsp8480.mbn",
+          "cdsp_dtbs.elf"
+        ],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwarePosted": null,
@@ -14697,6 +14703,8 @@
       },
       "variants": [
         {
+          "chip": "X2E-88-100",
+          "compatible": "samsung,galaxy-book6-edge-16",
           "computed": "none",
           "treeChannel": null,
           "idsChannel": null,

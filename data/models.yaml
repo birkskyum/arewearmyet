@@ -1910,7 +1910,12 @@ models:
     released: "2026-05"
     chips: ["X2E-88-100"]
     model_numbers: ["NP960XRD", "NT960XRD"]
-    notes: "An owner's hardware report gives its strings, hardware IDs and ACPI tables. It calls itself Galaxy Book6 Edge - PALF from the maker Samsung (earlier Galaxy Books report SAMSUNG ELECTRONICS CO., LTD.), SKU PALF-960XRD-GLYM-0, board NP960XRD-KB1DE, with the panel the Galaxy Book4 Edge 16 has. Nobody has written a device tree for it yet. Samsung offers no driver pack for it and Windows Update has no bundle for its hardware IDs, so its firmware comes from the laptop's own Windows. Its audio DSP, GPU and video images are Samsung's own builds, and its compute DSP image is the one the other X2 laptops have."
+    notes: "An owner's hardware report gives its strings, hardware IDs and ACPI tables. It calls itself Galaxy Book6 Edge - PALF from the maker Samsung (earlier Galaxy Books report SAMSUNG ELECTRONICS CO., LTD.), SKU PALF-960XRD-GLYM-0, board NP960XRD-KB1DE, with the panel the Galaxy Book4 Edge 16 has. A device tree written from that report is in review and nobody has booted it yet. Its only drive is UFS, which Omarchy's kernel can't reach on this chip until the same change lands, and its speakers and battery reading have no Linux driver. Samsung offers no driver pack for it and Windows Update has no bundle for its hardware IDs, so its firmware comes from the laptop's own Windows. Its audio DSP, GPU and video images are Samsung's own builds, and its compute DSP image is the one the other X2 laptops have."
+    variants:
+      - { chip: "X2E-88-100", compatible: "samsung,galaxy-book6-edge-16" }
+    devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/3111"
+    devicetree_files:
+      - "https://raw.githubusercontent.com/birkskyum/omarchy-pkgs/64dd4404efc62768301dabb9246787f1349753d4/pkgbuilds/linux-omarchy-dtbs/0061-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book6-Edge.patch#glymur-samsung-galaxy-book6-edge.dts"
     acpi: ["hardware-reports/samsung/galaxy-book6-edge-palf"]
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/53"
     sources:
