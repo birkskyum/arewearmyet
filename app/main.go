@@ -553,9 +553,18 @@ func deviceTree(words []string, body string) int {
 		if err != nil {
 			return fail(err)
 		}
-		return asRoot("tree-boot.sh", system.Script(dtb, string(started)), "puts the changed device tree into a boot image and a boot menu entry of its own, "+tree.Entry+". The usual entry is not touched")
+		code := asRoot("tree-boot.sh", system.Script(dtb, string(started)), "puts the changed device tree into a boot image and a boot menu entry of its own, "+tree.Entry+". The usual entry is not touched")
+		if code == 0 {
+			// Noted so that a system update isn't started while the entry stands (hw-test ask update)
+			_ = report.NoteTestEntry(system.Kernel, time.Now())
+		}
+		return code
 	case "remove":
-		return asRoot("tree-remove.sh", tree.RemoveScript(), "takes the test entry "+tree.Entry+" and its boot image away")
+		code := asRoot("tree-remove.sh", tree.RemoveScript(), "takes the test entry "+tree.Entry+" and its boot image away")
+		if code == 0 {
+			report.ClearTestEntry()
+		}
+		return code
 	case "status":
 		if tree.Running("/proc/device-tree") {
 			fmt.Println("This computer is running a device tree built by hw-test tree build: the test entry is what started.")
@@ -888,6 +897,10 @@ func attached(logs []report.Log) string {
 // until they are through, and prints what the steps found. It is how an agent, which has no
 // terminal the owner sits at, has the owner do a test without anything being retyped.
 func ask(steps []string) int {
+	// The system update is a step for the owner too, with its own care (update.go)
+	if len(steps) == 1 && steps[0] == "update" {
+		return askUpdate()
+	}
 	if len(steps) == 0 {
 		fmt.Fprintln(os.Stderr, "hw-test: ask needs the steps to open for the owner, as in hw-test ask camera. They are: "+strings.Join(guided.StepWords(), ", "))
 		return 2
@@ -1070,7 +1083,10 @@ func usageText() string {
   hw-test ask STEP...      for an agent: open a step that takes the owner in a window on
                      their desktop, wait until they are through, and print the result.
                      The sound test needs no window: hw-test speakers --play, on the
-                     owner's yes. hw-test status --json gives every latest result as data
+                     owner's yes. hw-test status --json gives every latest result as data.
+                     hw-test ask update opens Omarchy's update for the owner the same way and
+                     prints how it ended. It refuses, with the reason, where an update would
+                     do harm, as while a test boot entry stands
   hw-test note       write down what fits no check, where other owners' agents read it and can
                      answer: a problem that takes a sequence of events, a way around one, a
                      pointer to work elsewhere. In a terminal, hw-test note asks for the

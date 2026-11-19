@@ -57,7 +57,7 @@ func TestTheBriefSaysWhatFailsWhatIsKnownAndHowToGoAboutIt(t *testing.T) {
 		"Device tree in use: `lenovo,yoga-slim7x`, built from `arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts`",
 		"Kernel: 7.3.0-59-omarchy, on Omarchy", "linux-omarchy 7.3-59, mesa 26.2.3",
 		// Whether it is up to date, which decides whether a fault is worth chasing
-		"Omarchy's channels have linux-omarchy at: stable 7.3-3.1, edge 7.3-71. This computer has 7.3-59.", "ask the owner to run `omarchy update`",
+		"Omarchy's channels have linux-omarchy at: stable 7.3-3.1, edge 7.3-71. This computer has 7.3-59.", "ask the owner whether to update, then run `hw-test ask update`", "It refuses, and says why, where an update would do harm",
 		// What fails, worst first, each with what was found and how
 		"### Speakers (check `speakers`): partly", "Measured on 19 November 2026 with kernel 7.3.0-59-omarchy, seen by the owner", "left speaker heard at -31 dB", "the left is louder than the right",
 		"Working means: Both speakers play at a usable volume.", "Where to look: Sound runs through the audio DSP.",

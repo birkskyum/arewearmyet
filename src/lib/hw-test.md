@@ -138,6 +138,7 @@ These commands let an agent run the test without the owner passing results back 
 | `hw-test auto --no-send` | The tests that need nobody. Runs without a terminal, without the sound test |
 | `hw-test speakers --no-send --play` | The sound test without a terminal. `--play` says the owner agreed to the tones |
 | `hw-test ask STEP...` | Opens a step that takes the owner in a window on their desktop, waits up to half an hour, and prints the result as JSON |
+| `hw-test ask update` | Opens Omarchy's update in a window for the owner, who confirms it there, and prints how it ended as JSON: whether it finished, which packages moved, whether a restart is due, and the last lines of its log. It refuses, with the reasons, where an update would do harm: while a test boot entry stands, when the running kernel is not Omarchy's own, or when a kernel, device tree or firmware package was built on the computer |
 | `hw-test report --check ID --state works\|partial\|broken\|absent --note TEXT` | Sends one result that no test measured. `absent` is for a part the computer turns out not to have. `--how owner` (the default) is what the owner saw, `--how agent` a reading of logs. `--evidence` holds the line of output that shows it |
 
 `hw-test status --json` gives an object with one entry per check.
@@ -198,6 +199,7 @@ The usual boot entry stays the default and is never touched.
 | `before.json`, `before-PART.json` | The snapshots of `hw-test verify before`, one per named part |
 | `handed.json`, `threads.json` | Which parts went to an agent, and the conversation each is in |
 | `resume.json` | What is left for after a restart |
+| `test-entry.json` | That a test boot entry is installed, since the boot partition can't be read without your password |
 | `pending.json` | Results that couldn't be sent yet. Kept for a week |
 
 Deleting the folder makes the computer a new one to the site.

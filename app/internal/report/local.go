@@ -186,3 +186,35 @@ func KeepThread(dir string, thread Thread) error {
 	}
 	return os.WriteFile(threadFile(), data, 0o600)
 }
+
+func testEntryFile() string { return filepath.Join(stateDir(), "test-entry.json") }
+
+// TestEntry is the test boot entry hw-test tree boot installed, noted here because the boot
+// partition can't be read without the owner's password. Kernel is the kernel its image was
+// built from: an update to another kernel leaves the entry with one that no longer matches.
+type TestEntry struct {
+	Kernel string    `json:"kernel"`
+	When   time.Time `json:"when"`
+}
+
+// NoteTestEntry records that a test boot entry was installed.
+func NoteTestEntry(kernel string, when time.Time) error {
+	if err := os.MkdirAll(stateDir(), 0o700); err != nil {
+		return err
+	}
+	data, _ := json.MarshalIndent(TestEntry{Kernel: kernel, When: when}, "", " ")
+	return os.WriteFile(testEntryFile(), data, 0o600)
+}
+
+// ClearTestEntry records that the test boot entry was taken away.
+func ClearTestEntry() { os.Remove(testEntryFile()) }
+
+// InstalledTestEntry is the test boot entry that was noted, if one stands.
+func InstalledTestEntry() (TestEntry, bool) {
+	var entry TestEntry
+	data, err := os.ReadFile(testEntryFile())
+	if err != nil || json.Unmarshal(data, &entry) != nil || entry.When.IsZero() {
+		return TestEntry{}, false
+	}
+	return entry, true
+}

@@ -326,7 +326,7 @@ func Brief(b Briefing) string {
 				channels = append(channels, channel+" "+version)
 			}
 		}
-		say("- Omarchy's channels have linux-omarchy at: %s. This computer has %s. If it is behind its channel, ask the owner to run `omarchy update` and restart before you debug (leave word with `hw-test resume` first, as before any restart): the fault may be fixed already.", strings.Join(channels, ", "), first(b.Run.Packages["linux-omarchy"], "an unknown version"))
+		say("- Omarchy's channels have linux-omarchy at: %s. This computer has %s. If it is behind its channel, ask the owner whether to update, then run `hw-test ask update`: it opens Omarchy's update in a window for them and gives you how it ended, so they relay nothing. It refuses, and says why, where an update would do harm (a test boot entry stands, the kernel is not Omarchy's own, a kernel or device tree package was built on this computer). Restart after it before you debug (leave word with `hw-test resume` first, as before any restart): the fault may be fixed already.", strings.Join(channels, ", "), first(b.Run.Packages["linux-omarchy"], "an unknown version"))
 	}
 
 	say("")
