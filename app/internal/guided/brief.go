@@ -87,7 +87,7 @@ func InThread(dir, title, message string) (string, error) {
 		switch {
 		case err == nil && kept.Kind == "t3":
 			tools.T3Show(dir)
-			return "Your agent has it in T3 Code, in the same thread as before.", nil
+			return "Your agent has it in T3 Code, in the same thread as before. It is in the list on the left, under " + filepath.Base(dir) + ".", nil
 		case err == nil:
 			return "Your agent has it, in the same conversation as before.", nil
 		case errors.Is(err, tools.ErrAgentOpen):
@@ -101,7 +101,7 @@ func InThread(dir, title, message string) (string, error) {
 	}
 	_ = report.KeepThread(dir, report.Thread{Kind: "t3", ID: id, When: time.Now()})
 	tools.T3Show(dir)
-	return "Your agent has it in T3 Code, in a new thread called \"" + title + "\".", nil
+	return "Your agent has it in T3 Code, in a new thread called \"" + title + "\". Click it in the list on the left, under " + filepath.Base(dir) + ", to watch.", nil
 }
 
 // FetchGuide reads the guide from the site.

@@ -482,12 +482,15 @@ func t3Up(dir string) bool {
 	return false
 }
 
-// T3Show brings the folder's project up in T3 Code's window, so the owner sees where their
-// agent is. It is a courtesy: nothing depends on it.
+// T3Show brings T3 Code's window to the front, so the owner sees their agent's thread in its
+// list. T3 Code has no way from outside to open one given thread: what it offers, t3 app,
+// always opens a new, empty one for the folder, which would hide the thread that is at work.
 func T3Show(dir string) {
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
-	defer cancel()
-	_ = exec.CommandContext(ctx, "t3", "app", dir).Run()
+	if Have("omarchy-hyprland-focus-app") {
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+		_ = exec.CommandContext(ctx, "omarchy-hyprland-focus-app", "T3Code").Run()
+	}
 }
 
 // T3Start starts a thread in T3 Code for the work in a folder and returns its id. T3 Code
