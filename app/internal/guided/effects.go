@@ -44,10 +44,14 @@ type effects struct {
 	started   bool
 	// span is the brightness at its lowest and highest during the step, as evidence.
 	low, high int64
+	// halve sets the volume to half, unmuted, and returns what puts it back. A key shows by
+	// what it does, and volume up does nothing at full volume.
+	halve   func() (restore func())
+	restore func()
 }
 
 func newEffects(run *report.Run, facts probe.Facts) *effects {
-	e := &effects{run: run, backlight: facts.Backlight}
+	e := &effects{run: run, backlight: facts.Backlight, halve: tools.AtHalfVolume}
 	if _, _, ok := tools.Volume(); ok {
 		e.items = append(e.items,
 			effect{label: "Volume up", happened: func(b, n levels) bool { return n.volume > b.volume }},
@@ -57,12 +61,27 @@ func newEffects(run *report.Run, facts probe.Facts) *effects {
 		)
 	}
 	if e.backlight != "" {
-		e.items = append(e.items,
-			effect{label: "Brightness down", happened: func(b, n levels) bool { return n.brightness < b.brightness }},
-			effect{label: "Brightness up", happened: func(b, n levels) bool { return n.brightness > b.brightness }},
-		)
+		down := effect{label: "Brightness down", happened: func(b, n levels) bool { return n.brightness < b.brightness }}
+		up := effect{label: "Brightness up", happened: func(b, n levels) bool { return n.brightness > b.brightness }}
+		// Down first, since most screens are near full. On one at its dimmest, down would
+		// show nothing, so up goes first there.
+		now, _ := machine.Real().Int(e.backlight + "/brightness")
+		most, _ := machine.Real().Int(e.backlight + "/max_brightness")
+		if most > 0 && now*10 < most {
+			e.items = append(e.items, up, down)
+		} else {
+			e.items = append(e.items, down, up)
+		}
 	}
 	return e
+}
+
+// cleanup puts the volume back as it was, also when the step ends early.
+func (e *effects) cleanup() {
+	if e.restore != nil {
+		e.restore()
+		e.restore = nil
+	}
 }
 
 func (e *effects) read() levels {
@@ -87,6 +106,12 @@ func (e *effects) keys() string {
 func (e *effects) start() tea.Cmd {
 	if e.done() {
 		return nil
+	}
+	// With the volume at half, both volume keys have room to show
+	for _, item := range e.items {
+		if strings.HasPrefix(item.label, "Volume") && e.restore == nil && e.halve != nil {
+			e.restore = e.halve()
+		}
 	}
 	e.before = e.read()
 	e.now = e.before
@@ -134,13 +159,18 @@ func (e *effects) update(msg tea.Msg) tea.Cmd {
 // finish turns what was seen into results: the brightness keys are the backlight check, and
 // a volume or mute key without effect makes the keyboard only partly working.
 func (e *effects) finish() {
-	var deadKeys []string
+	e.cleanup()
+	var deadKeys, unchecked []string
 	bright := map[string]int{}
 	for _, item := range e.items {
-		if strings.HasPrefix(item.label, "Brightness") {
+		key := strings.ToLower(strings.Split(item.label, ",")[0])
+		switch {
+		case strings.HasPrefix(item.label, "Brightness"):
 			bright[item.outcome]++
-		} else if item.outcome == "failed" {
-			deadKeys = append(deadKeys, strings.ToLower(strings.Split(item.label, ",")[0]))
+		case item.outcome == "failed":
+			deadKeys = append(deadKeys, key)
+		case item.outcome == "skipped" && !strings.HasPrefix(item.label, "Mute again"):
+			unchecked = append(unchecked, key)
 		}
 	}
 	span := fmt.Sprintf("the backlight moved between %d and %d", e.low, e.high)
@@ -152,19 +182,34 @@ func (e *effects) finish() {
 	case bright["failed"] == 2:
 		e.run.Set("backlight", report.Broken, report.Owner, fmt.Sprintf("both brightness keys pressed, the backlight stayed at %d", e.now.brightness), "")
 	}
-	if len(deadKeys) == 0 {
+	keyboard, tested := e.run.Get("keyboard")
+	// With nothing known of the keyboard, a key that was only skipped says nothing of it
+	if len(deadKeys) == 0 && (len(unchecked) == 0 || !tested) {
 		return
 	}
-	keyboard, _ := e.run.Get("keyboard")
-	note := "No effect from: " + strings.Join(deadKeys, ", ")
+	var notes []string
 	if keyboard.Note != "" {
-		note = keyboard.Note + ". " + note
+		notes = append(notes, keyboard.Note)
 	}
-	e.run.Set("keyboard", report.Partial, report.Owner, keyboard.Evidence, note)
+	if len(deadKeys) > 0 {
+		notes = append(notes, "No effect from: "+strings.Join(deadKeys, ", "))
+	}
+	// A key that was skipped isn't called working: the result says it wasn't checked
+	if len(unchecked) > 0 {
+		notes = append(notes, "Not checked: "+strings.Join(unchecked, ", "))
+	}
+	if len(deadKeys) > 0 {
+		e.run.Set("keyboard", report.Partial, report.Owner, keyboard.Evidence, strings.Join(notes, ". "))
+		return
+	}
+	e.run.Set("keyboard", keyboard.State, keyboard.How, keyboard.Evidence, strings.Join(notes, ". "))
 }
 
 func (e *effects) view(width, height int) string {
 	intro := "The desktop handles the volume and brightness keys itself, so these are checked by what they do. Press the key marked with the arrow."
+	if e.restore != nil {
+		intro += " The volume is at half for this, so both keys have room, and goes back to where it was afterwards."
+	}
 	var out strings.Builder
 	out.WriteString(wrap(intro, width) + "\n\n")
 	for i, item := range e.items {

@@ -184,6 +184,69 @@ func TestEffectsTurnWhatWasSeenIntoResults(t *testing.T) {
 	if skipped.run.State("backlight") != "" || skipped.run.State("keyboard") != report.Works {
 		t.Errorf("skipped: %+v", skipped.run.Results)
 	}
+	// A skipped key isn't called working: the keyboard's result says which weren't checked
+	if keyboard, _ = skipped.run.Get("keyboard"); keyboard.Note != "Not checked: volume up, volume down, mute" || keyboard.How != report.Measured {
+		t.Errorf("skipped keys aren't named: %+v", keyboard)
+	}
+	one := outcomes("skipped", "seen", "failed", "seen", "seen", "seen")
+	if keyboard, _ = one.run.Get("keyboard"); keyboard.State != report.Partial || keyboard.Note != "No effect from: mute. Not checked: volume up" {
+		t.Errorf("one skipped, one failed: %+v", keyboard)
+	}
+	// With the keyboard itself untested, a dead key still counts and a skipped one says nothing
+	alone := &effects{run: &report.Run{}, items: []effect{{label: "Volume up", outcome: "skipped"}, {label: "Mute", outcome: "failed"}}}
+	alone.finish()
+	if keyboard, _ = alone.run.Get("keyboard"); keyboard.State != report.Partial || keyboard.Note != "No effect from: mute. Not checked: volume up" {
+		t.Errorf("the keys alone: %+v", keyboard)
+	}
+	only := &effects{run: &report.Run{}, items: []effect{{label: "Volume up", outcome: "skipped"}}}
+	only.finish()
+	if _, tested := only.run.Get("keyboard"); tested {
+		t.Error("a skipped key made a keyboard result out of nothing")
+	}
+}
+
+func TestTheVolumeKeysAreTestedFromHalfVolumeAndItIsPutBack(t *testing.T) {
+	// At full volume the volume up key does nothing, so the step makes room first
+	volume, restored := 1.0, 0
+	e := &effects{run: &report.Run{}, items: []effect{
+		{label: "Volume up", happened: func(b, n levels) bool { return n.volume > b.volume }},
+		{label: "Volume down", happened: func(b, n levels) bool { return n.volume < b.volume }}}}
+	e.halve = func() func() {
+		before := volume
+		volume = 0.5
+		return func() { volume = before; restored++ }
+	}
+	e.start()
+	if volume != 0.5 || e.restore == nil {
+		t.Fatalf("the volume wasn't set to half: %v", volume)
+	}
+	// Coming back to the step doesn't take half as the level to put back
+	e.start()
+	if !strings.Contains(e.view(80, 20), "goes back to where it was afterwards") {
+		t.Errorf("the step doesn't say the volume was changed:\n%s", e.view(80, 20))
+	}
+	e.before = levels{volume: 0.5}
+	e.update(levelsMsg(levels{volume: 0.55}))
+	e.update(levelsMsg(levels{volume: 0.5}))
+	if !e.done() || e.items[0].outcome != "seen" || e.items[1].outcome != "seen" {
+		t.Fatalf("the keys weren't seen: %+v", e.items)
+	}
+	if volume != 1.0 || restored != 1 {
+		t.Errorf("the volume wasn't put back once: %v, %d times", volume, restored)
+	}
+	// Ending the step early puts it back too
+	early := &effects{run: &report.Run{}, items: []effect{{label: "Volume up", happened: func(b, n levels) bool { return false }}}}
+	early.halve = e.halve
+	early.start()
+	early.cleanup()
+	early.cleanup()
+	if volume != 1.0 || restored != 2 {
+		t.Errorf("ending early: %v, %d times", volume, restored)
+	}
+	// Without volume keys to ask for, the volume is left alone
+	bright := &effects{run: &report.Run{}, items: []effect{{label: "Brightness down", happened: func(b, n levels) bool { return false }}}}
+	bright.halve = func() func() { t.Error("the volume was changed for the brightness keys"); return func() {} }
+	bright.start()
 }
 
 func TestTheTestSkipsStepsWithNothingToDoAndDrawsAtAnySize(t *testing.T) {
