@@ -609,7 +609,7 @@ async function postNote(request: Request, env: Env, parent: string | null): Prom
       const { name, text: log } = (item ?? {}) as Record<string, unknown>;
       if (typeof name !== 'string' || !LOG_NAME.test(name) || logs.some((l) => l.name === name)) return json({ error: 'Each log needs its own name of lowercase letters, digits, dots and dashes, like kernel.log.' }, 400);
       if (typeof log !== 'string' || !log.trim() || log.length > LOG_SIZE) return json({ error: `${name}: a log is text of at most ${LOG_SIZE / 1024} KB. Send the part that shows the problem.` }, 400);
-      logs.push({ name, text: cleanLong(log, LOG_SIZE) });
+      logs.push({ name, text: cleanLong(log, LOG_SIZE, true) });
     }
   }
 
@@ -721,12 +721,29 @@ function clean(text: string, max: number): string {
 }
 
 // Longer text, a note or a log: cleaned as above, and also of the network addresses a firewall or a
-// driver writes into logs. Only addresses in private ranges and those named as a packet's source or
-// destination go, so version numbers with four parts stay readable.
-function cleanLong(text: string, max: number): string {
-  return clean(text, max)
+// driver writes into logs. Only addresses in private ranges, those named as a packet's source or
+// destination and those with a port go, so version numbers with four parts stay readable.
+// A kernel log also names the disk, the install and the devices around it: disk, partition and
+// file system IDs, the machine ID, network names made from a hardware address, and what the owner
+// called a Bluetooth device. Those go too.
+function cleanLong(text: string, max: number, log = false): string {
+  const cleaned = clean(text, text.length)
     .replace(/\b(SRC|DST)=\S+/g, '$1=[removed]')
-    .replace(/\b(?:10\.\d{1,3}|192\.168|172\.(?:1[6-9]|2\d|3[01])|100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7]))\.\d{1,3}\.\d{1,3}\b/g, 'x.x.x.x');
+    .replace(/\b(?:10\.\d{1,3}|192\.168|172\.(?:1[6-9]|2\d|3[01])|100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7]))\.\d{1,3}\.\d{1,3}\b/g, 'x.x.x.x')
+    .replace(/\b\d{1,3}(?:\.\d{1,3}){3}(:\d{2,5})\b/g, 'x.x.x.x$1')
+    .replace(/\[[0-9a-f:]*:[0-9a-f:]*:[0-9a-f:]*\](:\d{2,5})\b/gi, '[removed]$1')
+    .replace(/\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b/gi, 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
+    .replace(/\b(PARTUUID=)[0-9a-f]{8}-[0-9a-f]{2}\b/gi, '$1xxxxxxxx-xx')
+    .replace(/\b[0-9a-f]{32}\b/gi, 'x'.repeat(32))
+    .replace(/\b(enx|wlx)[0-9a-f]{12}\b/gi, '$1xxxxxxxxxxxx');
+  // Device names are only taken out of logs: in a note's own text "Lenovo's firmware" is the owner's wording
+  const named = log
+    ? cleaned
+        .replace(/\b(input: ).+?( \(AVRCP\) as | as \S*(?:\/uhid\/|\/bluetooth\/|\/0005:))/g, '$1[name removed]$2')
+        .replace(/\b(0005:[0-9a-f]{4}:[0-9a-f]{4}\.[0-9a-f]{4}: [^\[\n]*\[)[^\]\n]*\]/gi, '$1name removed]')
+        .replace(/\b[A-Z][\w-]*['’]s\b/g, "Someone's")
+    : cleaned;
+  return named.trim().slice(0, max);
 }
 
 async function sha256(text: string): Promise<string> {

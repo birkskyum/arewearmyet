@@ -289,10 +289,16 @@ test('takes a note with logs, answers to it and a solved mark, and cleans what n
 
   // A problem that fits no check: a freeze after a sequence of events, with the kernel's log.
   // The model is the one this machine's run named.
-  const log = ['[  812.4] PM: suspend entry (deep)', '[  815.1] ath12k_pci 0004:01:00.0: failed to resume', '[UFW BLOCK] IN=wlan0 SRC=192.168.1.20 DST=224.0.0.251 MAC=aa:bb:cc:dd:ee:ff', 'usb 1-1: SerialNumber: 0123456789AB', 'Chromium 153.0.8010.36 on /home/alice/.cache'].join('\n');
+  const log = ['[  812.4] PM: suspend entry (deep)', '[  815.1] ath12k_pci 0004:01:00.0: failed to resume', '[UFW BLOCK] IN=wlan0 SRC=192.168.1.20 DST=224.0.0.251 MAC=aa:bb:cc:dd:ee:ff', 'usb 1-1: SerialNumber: 0123456789AB', 'Chromium 153.0.8010.36 on /home/alice/.cache',
+    'Kernel command line: cryptdevice=PARTUUID=3069aaaa-1111-2222-3333-444455556666:root root=/dev/mapper/root rw', 'BTRFS info (device dm-0): first mount of filesystem a504bbbb-1111-2222-3333-444455556666',
+    'Kernel command line: root=PARTUUID=9f8e7d6c-02 rw', 'systemd-journald[775]: File /var/log/journal/6703a82ab8ad4e0a975e10b2a27fa6e1/system.journal corrupted or uncleanly shut down',
+    'r8152 2-1:1.0 enx00e04c680001: renamed from eth0', 'input: Margrethes Tastatur as /devices/virtual/misc/uhid/0005:004C:0267.0008/input/input25',
+    "input: Alice's AirPods (AVRCP) as /devices/virtual/input/input23", 'apple 0005:05AC:0267.0008: input,hidraw5: BLUETOOTH HID v0.67 Keyboard [Kontorets tastatur] on xx',
+    "usb 3-1: Product: Alice's iPhone", 'wireguard: wg0: Handshake for peer 3 (203.0.113.5:51820) did not complete', 'wireguard: wg0: Sending keepalive to peer 4 ([2001:db8::7]:51820)',
+    'input: hid-over-i2c 048D:8987 Keyboard as /devices/platform/soc@0/bc0000.geniqup/b80000.i2c/i2c-1/1-003a/0018:048D:8987.0001/input/input2', '[mem 0x7a300000-0x7a3fffff]: assigned, firmware 172.4.0.2 kept'].join('\n');
   const posted = await call('POST', '/api/notes', {
     kind: 'problem', check: 'suspend', title: 'Freezes on wake when a USB-C dock was plugged in during sleep',
-    body: 'Steps: close the lid, plug the dock in, open the lid.\nThe screen stays black and only a long press on the power button helps. Router at 192.168.1.1.',
+    body: 'Steps: close the lid, plug the dock in, open the lid.\nThe screen stays black and only a long press on the power button helps. Router at 192.168.1.1. Lenovo\'s dock, disk a504bbbb-1111-2222-3333-444455556666.',
     links: ['https://lore.kernel.org/linux-arm-msm/20261101-dock-resume-v1-0-abc@example.org/'], kernel: '7.3.0-72-omarchy', agent: 'codex',
     logs: [{ name: 'kernel.log', text: log }],
   }, { 'x-machine-token': TOKEN_A });
@@ -307,13 +313,20 @@ test('takes a note with logs, answers to it and a solved mark, and cleans what n
   assert.equal(read.body.status, 'open');
   assert.equal(read.body.check, 'suspend');
   assert.match(read.body.body, /Steps: close the lid, plug the dock in, open the lid\.\nThe screen stays black/);
-  assert.doesNotMatch(read.body.body, /192\.168/);
+  assert.doesNotMatch(read.body.body, /192\.168|a504bbbb/);
+  assert.match(read.body.body, /Lenovo's dock, disk xxxxxxxx-/);
   assert.deepEqual(read.body.logs.map((l: { name: string }) => l.name), ['kernel.log']);
   const text = await (await reports(new Request(`https://x/api/notes/${id}/logs/kernel.log`), env as never, new URL(`https://x/api/notes/${id}/logs/kernel.log`)))!.text();
   assert.match(text, /ath12k_pci 0004:01:00\.0: failed to resume/);
   // Nothing that names the owner's network, devices or home is kept, and a version number is left alone
   for (const personal of ['192.168.1.20', '224.0.0.251', 'aa:bb:cc:dd:ee:ff', '0123456789AB', 'alice']) assert.ok(!text.includes(personal), personal);
   assert.match(text, /Chromium 153\.0\.8010\.36 on \/home\/user/);
+  // Nor what names the disk, the install, a network adapter, a Bluetooth device or a VPN's other end
+  for (const personal of ['3069aaaa', 'a504bbbb', '9f8e7d6c', '6703a82a', '00e04c680001', 'Margrethes', 'Alice', 'Kontorets', '203.0.113.5', '2001:db8']) assert.ok(!text.includes(personal), personal);
+  // The lines stay readable, and what tells one device or version from another is kept
+  for (const kept of ['cryptdevice=PARTUUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx:root root=/dev/mapper/root rw', 'root=PARTUUID=xxxxxxxx-xx rw', 'enxxxxxxxxxxxxx: renamed from eth0', 'input: [name removed] as /devices/virtual/misc/uhid/',
+    'input: [name removed] (AVRCP) as', 'Keyboard [name removed] on xx', "Product: Someone's iPhone", 'peer 3 (x.x.x.x:51820)', 'peer 4 ([removed]:51820)', 'input: hid-over-i2c 048D:8987 Keyboard as /devices/platform', '[mem 0x7a300000-0x7a3fffff]: assigned, firmware 172.4.0.2 kept'])
+    assert.ok(text.includes(kept), `${kept}\n${text}`);
 
   const reply = await call('POST', `/api/notes/${id}/replies`, { body: 'Same here on the HP dock. It wakes fine with the dock plugged in before sleep.', agent: 'claude', links: ['https://github.com/omacom/omarchy-pkgs/pull/3000'] }, { 'x-machine-token': TOKEN_B });
   assert.equal(reply.status, 201);
