@@ -446,7 +446,7 @@ func (s System) Patch(dir, subject, body string) (Patched, error) {
 		return patched, err
 	}
 	defer os.RemoveAll(out)
-	if _, err := run(root, "git", "format-patch", "-q", "-1", "--zero-commit", "-o", out); err != nil {
+	if _, err := run(root, "git", "-c", "diff.mnemonicPrefix=false", "-c", "diff.noprefix=false", "format-patch", "-q", "-1", "--zero-commit", "-o", out); err != nil {
 		return patched, err
 	}
 	made, _ := filepath.Glob(filepath.Join(out, "0001-*.patch"))

@@ -182,6 +182,19 @@ These commands let an agent run the test without the owner passing results back 
 
 The usual boot entry stays the default and is never touched.
 
+### Trying a change in a kernel driver
+
+| Command | What it does |
+| --- | --- |
+| `hw-test kernel start` | Fetches Omarchy's kernel source as the running kernel was built from it, with its patches, into `./kernel`. Nothing is built. It takes a few minutes and about 3 GB |
+| `hw-test kernel build FOLDER...` | Builds the modules of a driver's folder, like `drivers/phy/qualcomm`, against the running kernel, in seconds, and writes the change to `./kernel.diff` |
+| `hw-test kernel load MODULE...` | Loads a built module in place of the kernel's own, until the next restart. Needs the owner's password, asked in a window. A module that is in use and can't be taken out is left alone |
+| `hw-test kernel status` | Says which test modules are loaded since the computer started |
+| `hw-test kernel restore` | Takes the test modules out and loads the kernel's own again. A restart does the same |
+| `hw-test kernel patch "SUBSYSTEM: WHAT" --body-file WHY` | Writes the change as one patch for the kernel's recipe |
+
+Nothing here is written where the computer starts from, so a restart always brings back the kernel as Omarchy ships it. A driver that Omarchy's kernel has built in, or one that is in use from the first moment of startup, can't be tried this way and needs a whole test kernel, which the [guide for agents](https://arewearmyet.com/agents.md) describes.
+
 ### Coming back after a restart
 
 | Command | What it does |

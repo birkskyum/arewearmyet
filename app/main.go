@@ -31,6 +31,7 @@ import (
 
 	"github.com/birkskyum/arewearmyet/app/internal/deep"
 	"github.com/birkskyum/arewearmyet/app/internal/guided"
+	"github.com/birkskyum/arewearmyet/app/internal/kernel"
 	"github.com/birkskyum/arewearmyet/app/internal/machine"
 	"github.com/birkskyum/arewearmyet/app/internal/probe"
 	"github.com/birkskyum/arewearmyet/app/internal/report"
@@ -62,7 +63,7 @@ func main() {
 		word := args[0]
 		args = args[1:]
 		switch {
-		case command == "brief" || command == "fix" || command == "verify" || command == "resume" || command == "tree" || command == "note" || command == "ask":
+		case command == "brief" || command == "fix" || command == "verify" || command == "resume" || command == "tree" || command == "kernel" || command == "note" || command == "ask":
 			// What follows these two names what to hand over: checks, or parts of the test
 			topics = append(topics, word)
 		case guided.KnownStep(word):
@@ -128,7 +129,7 @@ func main() {
 		os.Exit(update())
 	case "resume":
 		os.Exit(comeBack(strings.Join(topics, " "), *cancel, *show, *atLogin))
-	case "tree":
+	case "tree", "kernel":
 		// The patch's text, which says why, comes as a note's does
 		why := *body
 		if why == "" && *bodyFile != "" {
@@ -138,6 +139,9 @@ func main() {
 				os.Exit(1)
 			}
 			why = string(data)
+		}
+		if command == "kernel" {
+			os.Exit(kernelChange(topics, why))
 		}
 		os.Exit(deviceTree(topics, why))
 	case "status":
@@ -415,6 +419,53 @@ func tell(run *report.Run, api, check, state, how, note, evidence string, send b
 	return 0
 }
 
+// asOwner runs a step that needs the owner's password: written out as a script to read, and
+// run with sudo where there is a terminal to ask in. Without one, as with an agent, the same
+// step is opened for the owner in a window of their own, and waited for.
+func asOwner(dir, command, step, file, script, what string) int {
+	fail := func(err error) int {
+		fmt.Fprintln(os.Stderr, "hw-test:", err)
+		return 1
+	}
+	path := filepath.Join(dir, file)
+	if err := os.WriteFile(path, []byte(script), 0o755); err != nil {
+		return fail(err)
+	}
+	if !guided.Interactive() {
+		// No terminal here to ask for the password in, as with an agent: the step is opened
+		// for the owner in a window of their own, and waited for
+		self, _ := os.Executable()
+		quote := func(text string) string { return "'" + strings.ReplaceAll(text, "'", `'\''`) + "'" }
+		answered := filepath.Join(dir, "."+file+".done")
+		os.Remove(answered)
+		line := fmt.Sprintf("cd %s && %s %s %s; echo $? > %s; echo; read -n1 -rsp 'Press a key to close this window.'", quote(dir), quote(self), command, step, quote(answered))
+		if err := tools.Terminal("bash", "-c", line); err == nil {
+			fmt.Fprintf(os.Stderr, "This %s. It needs the owner's password, so it is open for them in a window of its own. Waiting until they are through, fifteen minutes at most.\n", what)
+			for waited := time.Duration(0); waited < 15*time.Minute; waited += 500 * time.Millisecond {
+				if data, err := os.ReadFile(answered); err == nil && len(strings.TrimSpace(string(data))) > 0 {
+					os.Remove(answered)
+					if code := strings.TrimSpace(string(data)); code != "0" {
+						return fail(fmt.Errorf("it didn't go through in the owner's window (it ended with %s)", code))
+					}
+					fmt.Fprintln(os.Stderr, "Done in the owner's window.")
+					return 0
+				}
+				time.Sleep(500 * time.Millisecond)
+			}
+			return fail(fmt.Errorf("the owner didn't get to it"))
+		}
+		fmt.Fprintf(os.Stderr, "This step needs the owner's password, and there is no terminal here to ask for it.\nAsk the owner to run this in their own terminal:\n\n  cd %s && hw-test %s %s\n\nIt %s. What it runs is in %s.\n", dir, command, step, what, path)
+		return 3
+	}
+	fmt.Fprintf(os.Stderr, "This %s. It needs your password. What it runs is in %s.\n\n", what, path)
+	sudo := exec.Command("sudo", "bash", path)
+	sudo.Stdin, sudo.Stdout, sudo.Stderr = os.Stdin, os.Stderr, os.Stderr
+	if err := sudo.Run(); err != nil {
+		return fail(fmt.Errorf("it didn't go through: %v", err))
+	}
+	return 0
+}
+
 // deviceTree is the way to try a changed device tree: the sources, a build, a boot entry of
 // its own, and taking it away again.
 func deviceTree(words []string, body string) int {
@@ -432,47 +483,7 @@ func deviceTree(words []string, body string) int {
 		fmt.Fprintln(os.Stderr, "hw-test:", err)
 		return 1
 	}
-	// A step that needs the owner's password: written out as a script to read, and run with
-	// sudo where there is a terminal to ask in
-	asRoot := func(file, script, what string) int {
-		path := filepath.Join(dir, file)
-		if err := os.WriteFile(path, []byte(script), 0o755); err != nil {
-			return fail(err)
-		}
-		if !guided.Interactive() {
-			// No terminal here to ask for the password in, as with an agent: the step is opened
-			// for the owner in a window of their own, and waited for
-			self, _ := os.Executable()
-			quote := func(text string) string { return "'" + strings.ReplaceAll(text, "'", `'\''`) + "'" }
-			answered := filepath.Join(dir, "."+file+".done")
-			os.Remove(answered)
-			line := fmt.Sprintf("cd %s && %s tree %s; echo $? > %s; echo; read -n1 -rsp 'Press a key to close this window.'", quote(dir), quote(self), step, quote(answered))
-			if err := tools.Terminal("bash", "-c", line); err == nil {
-				fmt.Fprintf(os.Stderr, "This %s. It needs the owner's password, so it is open for them in a window of its own. Waiting until they are through, fifteen minutes at most.\n", what)
-				for waited := time.Duration(0); waited < 15*time.Minute; waited += 500 * time.Millisecond {
-					if data, err := os.ReadFile(answered); err == nil && len(strings.TrimSpace(string(data))) > 0 {
-						os.Remove(answered)
-						if code := strings.TrimSpace(string(data)); code != "0" {
-							return fail(fmt.Errorf("it didn't go through in the owner's window (it ended with %s)", code))
-						}
-						fmt.Fprintln(os.Stderr, "Done in the owner's window.")
-						return 0
-					}
-					time.Sleep(500 * time.Millisecond)
-				}
-				return fail(fmt.Errorf("the owner didn't get to it"))
-			}
-			fmt.Fprintf(os.Stderr, "This step needs the owner's password, and there is no terminal here to ask for it.\nAsk the owner to run this in their own terminal:\n\n  cd %s && hw-test tree %s\n\nIt %s. What it runs is in %s.\n", dir, step, what, path)
-			return 3
-		}
-		fmt.Fprintf(os.Stderr, "This %s. It needs your password. What it runs is in %s.\n\n", what, path)
-		command := exec.Command("sudo", "bash", path)
-		command.Stdin, command.Stdout, command.Stderr = os.Stdin, os.Stderr, os.Stderr
-		if err := command.Run(); err != nil {
-			return fail(fmt.Errorf("it didn't go through: %v", err))
-		}
-		return 0
-	}
+	asRoot := func(file, script, what string) int { return asOwner(dir, "tree", step, file, script, what) }
 	switch step {
 	case "start":
 		started, err := system.Start(dir)
@@ -574,6 +585,115 @@ func deviceTree(words []string, body string) int {
 		return 0
 	}
 	fmt.Fprintln(os.Stderr, "hw-test: tree takes start, build, boot, status, patch or remove. Start with: hw-test tree start")
+	return 2
+}
+
+// kernelChange is the way to try a change in one kernel driver: Omarchy's kernel source as
+// the running kernel was built from it, one driver folder built against the running kernel,
+// the result loaded until the next restart, and the change written as a patch.
+func kernelChange(words []string, body string) int {
+	system := kernel.Real()
+	dir, err := os.Getwd()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "hw-test:", err)
+		return 1
+	}
+	step := ""
+	if len(words) > 0 {
+		step = words[0]
+	}
+	fail := func(err error) int {
+		fmt.Fprintln(os.Stderr, "hw-test:", err)
+		return 1
+	}
+	// The modules of the last build, and the ones picked to load, kept beside the source
+	builtList, loadList := filepath.Join(dir, "kernel", "built"), filepath.Join(dir, "kernel", "load")
+	lines := func(file string) []string {
+		data, _ := os.ReadFile(file)
+		return strings.Fields(string(data))
+	}
+	switch step {
+	case "start":
+		fmt.Fprintf(os.Stderr, "Fetching Omarchy's kernel source for linux-omarchy %s and applying its patches. This takes a few minutes and about 3 GB.\n", system.Release)
+		started, err := system.Start(dir)
+		if err != nil {
+			return fail(err)
+		}
+		fmt.Fprintf(os.Stderr, "The kernel source is in %s, under git, with Omarchy's %d patches applied, and nothing is built.\n", started.Source, started.Patches)
+		if !started.Exact {
+			fmt.Fprintf(os.Stderr, "Omarchy's recipe for exactly linux-omarchy %s wasn't found, so this is its newest. A driver built from it may not fit the running kernel: have the owner run omarchy update and restart first, then start again.\n", system.Release)
+		}
+		fmt.Fprintln(os.Stderr, "Change a driver, then build its folder: hw-test kernel build drivers/...")
+		return 0
+	case "build":
+		built, err := system.Build(dir, words[1:])
+		if err != nil {
+			return fail(err)
+		}
+		_ = os.WriteFile(builtList, []byte(strings.Join(built.Modules, "\n")+"\n"), 0o644)
+		os.Remove(loadList)
+		fmt.Fprintf(os.Stderr, "Built %d modules for the running kernel %s:\n", len(built.Modules), system.Kernel)
+		for _, module := range built.Modules {
+			fmt.Fprintln(os.Stderr, "  "+module)
+		}
+		if len(built.Changed) == 0 {
+			fmt.Fprintln(os.Stderr, "Nothing differs from Omarchy's source yet, so these are the kernel's own drivers built again.")
+		} else {
+			fmt.Fprintf(os.Stderr, "Changed against Omarchy's source: %s\nThe change as a diff: %s\n", strings.Join(built.Changed, ", "), built.Diff)
+		}
+		fmt.Fprintln(os.Stderr, "To try one until the next restart: hw-test kernel load <module>")
+		return 0
+	case "load":
+		all := lines(builtList)
+		if len(all) == 0 {
+			return fail(fmt.Errorf("nothing is built yet. Build the driver's folder first: hw-test kernel build drivers/..."))
+		}
+		picked := lines(loadList)
+		if len(words) > 1 {
+			picked = nil
+			for _, name := range words[1:] {
+				want := strings.ReplaceAll(strings.TrimSuffix(filepath.Base(name), ".ko"), "-", "_")
+				found := ""
+				for _, module := range all {
+					if strings.ReplaceAll(strings.TrimSuffix(filepath.Base(module), ".ko"), "-", "_") == want {
+						found = module
+					}
+				}
+				if found == "" {
+					return fail(fmt.Errorf("%s isn't among the modules of the last build. hw-test kernel build lists them", name))
+				}
+				picked = append(picked, found)
+			}
+			_ = os.WriteFile(loadList, []byte(strings.Join(picked, "\n")+"\n"), 0o644)
+		}
+		if len(picked) == 0 {
+			return fail(fmt.Errorf("name the module to load, as in: hw-test kernel load %s", strings.TrimSuffix(filepath.Base(all[0]), ".ko")))
+		}
+		return asOwner(dir, "kernel", step, "kernel-load.sh", system.LoadScript(picked), "loads the built modules in place of the kernel's own, until the next restart. Nothing is written to disk")
+	case "restore":
+		if len(system.Loaded()) == 0 {
+			fmt.Fprintln(os.Stderr, "No test module is loaded: the kernel's own drivers are what runs.")
+			return 0
+		}
+		return asOwner(dir, "kernel", step, "kernel-restore.sh", system.RestoreScript(), "takes the test modules out and loads the kernel's own again")
+	case "status":
+		if loaded := system.Loaded(); len(loaded) > 0 {
+			fmt.Printf("Test modules loaded since this start, in place of the kernel's own: %s. A restart, or hw-test kernel restore, brings the kernel's own back.\n", strings.Join(loaded, ", "))
+		} else {
+			fmt.Println("No test module is loaded: the kernel's own drivers are what runs.")
+		}
+		return 0
+	case "patch":
+		patched, err := system.Patch(dir, strings.Join(words[1:], " "), body)
+		if err != nil {
+			return fail(err)
+		}
+		name := filepath.Base(patched.File)
+		fmt.Fprintf(os.Stderr, "The change is written as one patch: %s\nIt touches %s.\n\n", patched.File, strings.Join(patched.Changed, ", "))
+		fmt.Fprintf(os.Stderr, "To put it into Omarchy's kernel, in pkgbuilds/linux-omarchy-aarch64 of omarchy-pkgs:\n  1. Copy it there. Its number is the next after the recipe's last. The recipe's README says which numbers belong to what, so give it one from the right group.\n  2. In PKGBUILD, add %s to source after the last patch, and its checksum at the same place: sha256sum %s\n  3. Raise pkgrel by one, and say in the README what the patch does.\n", name, name)
+		return 0
+	}
+	fmt.Fprintln(os.Stderr, "hw-test: kernel takes start, build, load, status, restore or patch. Start with: hw-test kernel start")
 	return 2
 }
 
@@ -1115,6 +1235,13 @@ func usageText() string {
                      build, and (run by the owner, with their password) a test entry in the
                      boot menu. hw-test tree patch "arm64: dts: qcom: BOARD: WHAT" --body-file WHY
                      writes the change as the one patch the package takes
+  hw-test kernel start|build|load|status|restore|patch   try a change in one kernel driver
+                     without building a kernel: Omarchy's kernel source as the running
+                     kernel was built from it, a build of one driver's folder (hw-test kernel
+                     build drivers/phy/qualcomm), and (run by the owner, with their password)
+                     the built module loaded in place of the kernel's own until the next
+                     restart. hw-test kernel patch "SUBSYSTEM: WHAT" --body-file WHY writes
+                     the change as a patch for the kernel's recipe
   hw-test report --check ID --state works|partial|broken|absent --note TEXT   send one result
                      that no test measured: what the owner saw (--how owner, the default)
                      or what was read from logs (--how agent). absent is for a part the

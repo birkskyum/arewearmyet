@@ -28,7 +28,7 @@ Base URL: `https://arewearmyet.com`. Everything is plain HTTP and JSON. Chromebo
 5. **No firmware files in public.** They are signed by the computer's maker and can't be passed on. Never attach one to an issue or a pull request.
 6. **Don't use the camera or the microphones yourself.** The tests that do are run by the owner, who sees what is recorded. One exception: the sound test, `hw-test speakers --no-send`, which you run yourself once the owner has said yes to it. Handing you the speakers or the microphones (`hw-test fix`, or the test's own screen) is that yes. Otherwise ask them once, and add `--play`. It plays tones at half volume for about twenty seconds, listens to them, keeps only how loud each one was and deletes the recording.
 7. **Fixes, issues and pull requests go to Omarchy, and to no other project.** Don't post to Linux, linux-firmware, Mesa, libcamera, Chromium, systemd or anyone else, even if the owner agrees. The Omarchy team carries things on from there. What you learn about work going on elsewhere goes into a note of kind `upstream` (step 6).
-8. **What needs no asking:** reading, measuring, reporting to this site, test boot entries, installing a test package under a name of its own, opening yourself again after a restart, and a pull request or an issue on Omarchy's repositories.
+8. **What needs no asking:** reading, measuring, reporting to this site, test boot entries, a test module loaded until the next restart, installing a test package under a name of its own, opening yourself again after a restart, and a pull request or an issue on Omarchy's repositories.
 9. **What you tell the owner first:** a restart, since it closes what they have open (unless they said to restart as you need), and a pull request or issue, since it goes out under their GitHub account.
 10. **What you ask the owner first:** changing a system file, replacing a stock package, changing a settings file in their home folder (like `~/.config/chromium-flags.conf`), and running `omarchy update`. Keep a copy of what you change and write into `PROGRESS.md` how to undo it.
 11. **Root goes through `sudo`.** When it asks for a password you can't give, hand the owner the exact command to run in their own terminal.
@@ -210,32 +210,24 @@ It writes the whole change as one patch, with the next free number, under the ow
 
 ### Trying a kernel change
 
-**One driver, the quick way.** Most fixes touch one driver, and a driver that is a module builds alone, in seconds, against the kernel that is running. Get the kernel's source as Omarchy builds it, with its patches:
+**One driver, the quick way.** Most fixes touch one driver, and a driver that is a module builds alone, in seconds, against the kernel that is running. `hw-test` does the steps that could go wrong.
 
 ```sh
-git clone --filter=blob:none --sparse https://github.com/omacom/omarchy-pkgs && cd omarchy-pkgs
-git sparse-checkout set pkgbuilds/linux-omarchy-aarch64
-rel=$(pacman -Q linux-omarchy | awk '{print $2}')   # like 7.3-72
-P=pkgbuilds/linux-omarchy-aarch64/PKGBUILD
-# the recipe as it was for the kernel that is running
-for c in $(git log --format=%H origin/master -- $P); do
-  git show $c:$P | grep -q "^pkgrel=${rel##*-}\$" && git show $c:$P | grep -q "^pkgver=${rel%-*}\$" && git checkout -q $c && break
-done
-cd pkgbuilds/linux-omarchy-aarch64 && makepkg -o --skippgpcheck --nodeps   # fetches and patches, builds nothing
+hw-test kernel start                       # Omarchy's kernel source for the running kernel, patched, nothing built
+# change the driver under kernel/recipe/pkgbuilds/linux-omarchy-aarch64/src/linux-*/
+hw-test kernel build drivers/phy/qualcomm  # that folder's modules, built for the running kernel
+hw-test kernel load phy-qcom-qmp-usb       # in place of the kernel's own, until the next restart
+hw-test kernel status                      # which test modules are loaded
+hw-test kernel restore                     # the kernel's own again (a restart does the same)
 ```
 
-That takes a minute or two and 2 GB. Then change the driver under `src/linux-*/` and build its folder:
+`start` takes a few minutes and about 3 GB. `load` needs the owner's password: without a terminal it opens a window on their desktop where they type it, and waits. Tell them a window is coming. It writes nothing to disk, so a restart always brings the kernel back as Omarchy ships it. A module that is in use and can't be taken out is left as it is, and a built module that won't load gets the kernel's own put back. Measure with `hw-test` while your module is loaded, and say in the pull request that the result was measured that way.
 
-```sh
-cd src/linux-*/
-make -C /usr/lib/modules/$(uname -r)/build M=$PWD/drivers/phy/qualcomm modules
-```
+When it works, `hw-test kernel patch "phy: qcom-qmp-usb: WHAT" --body-file why.md` writes the change as one patch for the kernel's recipe, and says where it goes.
 
-The modules that come out carry the running kernel's version, so they load into it: `sudo rmmod <module>; sudo insmod ./<module>.ko` (the owner types the password, rule 11). That lasts until the next restart and changes nothing on disk. Measure with `hw-test`, and go on.
+**A whole kernel, when the quick way doesn't reach.** A driver that is in use can't be taken out while it runs (the disk's, the screen's), one that the computer needs from the first moment of startup has to be in the boot image, and some drivers are built into the kernel and are no module at all. Then build a test kernel, which takes a container and half an hour or more. Copy `pkgbuilds/linux-omarchy-aarch64`, give it a name of its own (`pkgbase=linux-omarchy-test`, and the same in `pkgname`), add your patch, build it and install the result. Every installed kernel package gets a boot image and a menu entry of its own, listed after the stock kernel, so the stock one stays the default. Remove the package when you're done. Check with `df -h /boot` that the boot partition has 400 MB free first: a full one breaks the next ordinary update.
 
-**A whole kernel, when the quick way doesn't reach.** A driver that is in use can't be taken out while it runs (the disk's, the screen's), one that loads in early boot sits in the boot image, and some changes are outside any module. Then build a test kernel, which takes a container and half an hour or more. Copy `pkgbuilds/linux-omarchy-aarch64`, give it a name of its own (`pkgbase=linux-omarchy-test`, and the same in `pkgname`), add your patch, build it and install the result. Every installed kernel package gets a boot image and a menu entry of its own, listed after the stock kernel, so the stock one stays the default. Remove the package when you're done. Check with `df -h /boot` that the boot partition has 400 MB free first: a full one breaks the next ordinary update.
-
-**When it works**, the change goes into `pkgbuilds/linux-omarchy-aarch64` as a numbered patch. The recipe's README says how they are numbered and listed. A patch taken from elsewhere keeps its author and the link to where it came from.
+**Either way**, the change goes into `pkgbuilds/linux-omarchy-aarch64` as a numbered patch. The recipe's README says how they are numbered and listed. A patch taken from elsewhere keeps its author and the link to where it came from.
 
 ### Restarting, and coming back
 
