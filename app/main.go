@@ -144,7 +144,7 @@ func main() {
 		}
 		known, _ := report.Checks(*api)
 		matched, _ := report.Match(*api, run)
-		briefing := guided.Briefing{Version: version, Run: run, Kept: kept, Model: matched, Checks: known, Only: checks, When: time.Now()}
+		briefing := guided.Briefing{Version: version, Run: run, Kept: kept, Model: matched, Family: probe.Family(machine.Real()), Checks: known, Only: checks, When: time.Now()}
 		if matched.ID != "" {
 			briefing.Notes, _ = report.Notes(*api, matched.ID)
 		}

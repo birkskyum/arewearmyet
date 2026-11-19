@@ -233,11 +233,13 @@ async function modelFixes(env: Env, id: string) {
  * 83ED for the Yoga Slim 7x or 14-fe0 for HP's OmniBook X 14-fe0xxx.
  */
 function match(params: URLSearchParams) {
-  // "family" is the line a pull request for the machine opens with: Chromebooks and Googlebooks, which start
-  // through Google's own boot software, are one family, and every other Snapdragon computer the other
+  // "family" is the line a pull request for the machine opens with. Every model the board matches has a
+  // Snapdragon chip: Chromebooks and Googlebooks, which start through Google's own boot software, are
+  // arm-dragon-google, and the ones that came with Windows arm-dragon-msft. NVIDIA and Apple machines have
+  // families of their own (arm-nvidia, arm-apple), which the test names from the machine itself
   const found = (model: Index['models'][number], by: string) => ({
     model: model.id, by, vendor: model.vendor, name: model.name, generation: model.generation, boot: model.boot,
-    family: model.boot === 'depthcharge' || model.boot === 'android' ? 'snapdragon-google' : 'snapdragon-pc',
+    family: model.boot === 'depthcharge' || model.boot === 'android' ? 'arm-dragon-google' : 'arm-dragon-msft',
     page: `${SITE}/models/${model.id}`,
   });
 

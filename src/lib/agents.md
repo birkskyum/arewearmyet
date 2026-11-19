@@ -174,13 +174,17 @@ A pull request is opened from the owner's GitHub account, so ask them first (rul
 
 The description starts with a line that names the family of machine, and nothing else on that line. It is how the Omarchy team finds these pull requests:
 
-- `snapdragon-pc` for a Snapdragon laptop, tablet or mini PC that came with Windows.
-- `snapdragon-google` for a Chromebook or a Googlebook.
+| Line | Machines |
+| --- | --- |
+| `arm-dragon-msft` | Snapdragon laptops, tablets and mini PCs that came with Windows |
+| `arm-dragon-google` | Snapdragon Chromebooks and Googlebooks |
+| `arm-nvidia` | NVIDIA machines: N1x laptops, the DGX Spark and other GB10 machines |
+| `arm-apple` | Apple Silicon Macs. These belong to the Omarchy Mac team, which works apart from this guide |
 
-`GET /api/match` gives the line for a machine as `family`. Under it, say which model and kernel it was tested on and what was measured before and after:
+`GET /api/match` gives the line for a Snapdragon machine as `family`, and `hw-test brief` names it for any machine. Under it, say which model and kernel it was tested on and what was measured before and after:
 
 ```
-snapdragon-pc
+arm-dragon-msft
 
 Lenovo Yoga Slim 7x (83ED), linux-omarchy 7.3-72.
 The right speaker was silent: hw-test speakers heard only the left one. With this change both are heard.

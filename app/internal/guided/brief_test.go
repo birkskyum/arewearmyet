@@ -30,7 +30,7 @@ func yoga() Briefing {
 			"wifi":      kept("wifi", report.Works, report.Measured, "connected at 5180 MHz", ""),
 			"webgpu":    kept("webgpu", report.Partial, report.Measured, "WebGPU on qualcomm adreno-7xx with --enable-unsafe-webgpu", ""),
 		},
-		Model: report.Model{ID: "lenovo-yoga-slim-7x-14q8x9", Page: "https://arewearmyet.com/models/lenovo-yoga-slim-7x-14q8x9"},
+		Model: report.Model{ID: "lenovo-yoga-slim-7x-14q8x9", Page: "https://arewearmyet.com/models/lenovo-yoga-slim-7x-14q8x9", Family: "arm-dragon-msft"},
 		Checks: map[string]report.Check{
 			"speakers": {ID: "speakers", Works: "Both speakers play at a usable volume.", Debug: "Sound runs through the audio DSP. The speaker amplifiers need their reset GPIOs in the tree."},
 		},
@@ -54,7 +54,7 @@ func TestTheBriefSaysWhatFailsHowToMeasureItAndWhereAFixGoes(t *testing.T) {
 		"- works: wifi", "- not tested:",
 		// How to measure, the rules, and where a fix belongs
 		"`hw-test status`", "hw-test auto --no-send", "The parts that take the owner at the computer:", "Never replace what boots", "Ask the owner before anything that needs sudo",
-		"pkgbuilds/linux-omarchy-dtbs", "pkgbuilds/linux-omarchy`", "https://github.com/omacom/omarchy ", "open it as a draft", "starts with a line that says only `snapdragon-pc`", `"model": "lenovo-yoga-slim-7x-14q8x9"`,
+		"pkgbuilds/linux-omarchy-dtbs", "pkgbuilds/linux-omarchy`", "https://github.com/omacom/omarchy ", "open it as a draft", "starts with a line that says only `arm-dragon-msft`", `"model": "lenovo-yoga-slim-7x-14q8x9"`,
 	} {
 		if !strings.Contains(brief, text) {
 			t.Errorf("the brief lacks %q", text)
@@ -88,9 +88,25 @@ func TestTheBriefSaysWhatFailsHowToMeasureItAndWhereAFixGoes(t *testing.T) {
 	}
 	// A Chromebook or a Googlebook is Google's family, which its pull requests name
 	b = yoga()
-	b.Model.Family = "snapdragon-google"
-	if brief = Brief(b); !strings.Contains(brief, "says only `snapdragon-google`") || strings.Contains(brief, "snapdragon-pc") {
+	b.Model.Family = "arm-dragon-google"
+	if brief = Brief(b); !strings.Contains(brief, "says only `arm-dragon-google`") || strings.Contains(brief, "arm-dragon-msft") {
 		t.Error("a Chromebook's brief doesn't name Google's family")
+	}
+	// A machine the board doesn't know is named by what it says of itself
+	b = yoga()
+	b.Model, b.Family = report.Model{}, "arm-nvidia"
+	if brief = Brief(b); !strings.Contains(brief, "says only `arm-nvidia`") {
+		t.Error("an NVIDIA machine's brief doesn't name its family")
+	}
+	// A Mac's brief says whose it is
+	b.Family = "arm-apple"
+	if brief = Brief(b); !strings.Contains(brief, "says only `arm-apple` (Apple Silicon Macs belong to the Omarchy Mac team") {
+		t.Error("a Mac's brief doesn't say it is the Mac team's")
+	}
+	// And where nothing tells, the brief gives the choice
+	b.Family = ""
+	if brief = Brief(b); !strings.Contains(brief, "says only the machine's family (`arm-dragon-msft` for a Snapdragon machine that came with Windows, `arm-dragon-google`") {
+		t.Error("an unknown machine's brief doesn't list the families")
 	}
 	// A computer the board doesn't know, with nothing failing
 	b = yoga()

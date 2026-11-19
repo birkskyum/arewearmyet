@@ -505,3 +505,42 @@ func sensors(sys machine.System, facts *Facts, measured set) {
 		}
 	}
 }
+
+// The families Omarchy sorts ARM machines into, each named by the line a pull request for
+// one of its machines opens with.
+const (
+	DragonMsft   = "arm-dragon-msft"   // Snapdragon machines that came with Windows
+	DragonGoogle = "arm-dragon-google" // Snapdragon Chromebooks and Googlebooks
+	Nvidia       = "arm-nvidia"
+	Apple        = "arm-apple" // the Omarchy Mac team's
+)
+
+// Family names the family of the machine from what it says of itself: the makers in its
+// device tree, and where it started without one, its maker's name and its processor. It is
+// "" when nothing tells.
+func Family(sys machine.System) string {
+	// One name to a line, as the file is read
+	tree := strings.Split(sys.ReadAll("/proc/device-tree/compatible"), "\n")
+	has := func(maker string) bool {
+		for _, name := range tree {
+			if strings.HasPrefix(strings.TrimSpace(name), maker+",") {
+				return true
+			}
+		}
+		return false
+	}
+	maker := strings.ToLower(sys.Read("/sys/class/dmi/id/sys_vendor") + " " + sys.Read("/sys/class/dmi/id/product_name"))
+	cpu := strings.ToLower(sys.ReadAll("/proc/cpuinfo"))
+	switch {
+	case has("apple") || strings.Contains(maker, "apple"):
+		return Apple
+	case has("nvidia") || strings.Contains(maker, "nvidia"):
+		return Nvidia
+	case has("qcom") && has("google"):
+		return DragonGoogle
+	// 0x51 is Qualcomm's mark on the processors it designs, for a machine started without a tree
+	case has("qcom") || strings.Contains(cpu, "implementer\t: 0x51"):
+		return DragonMsft
+	}
+	return ""
+}

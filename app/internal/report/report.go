@@ -214,8 +214,7 @@ type Model struct {
 	ID   string `json:"model"`
 	Name string `json:"name"`
 	Page string `json:"page"`
-	// Family is the line a pull request for the machine opens with: snapdragon-pc, or
-	// snapdragon-google for a Chromebook or a Googlebook.
+	// Family is the line a pull request for the machine opens with, like arm-dragon-msft.
 	Family string `json:"family"`
 }
 

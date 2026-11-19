@@ -11,6 +11,8 @@ import (
 
 	tea "charm.land/bubbletea/v2"
 
+	"github.com/birkskyum/arewearmyet/app/internal/machine"
+	"github.com/birkskyum/arewearmyet/app/internal/probe"
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 	"github.com/birkskyum/arewearmyet/app/internal/tools"
 )
@@ -29,6 +31,8 @@ type Briefing struct {
 	// Checks is the site's list, with where to look when a check fails. It may be empty when
 	// the site couldn't be reached.
 	Checks map[string]report.Check
+	// Family is the family the machine names itself as, for where the site doesn't know it.
+	Family string
 	// Notes are what other owners and their agents wrote down about this model.
 	Notes []report.Listed
 	// Only names the checks to work on. Empty means everything that fails.
@@ -297,13 +301,25 @@ func Brief(b Briefing) string {
 	say("| A sound profile | omarchy-pkgs, `pkgbuilds/alsa-ucm-conf` |")
 	say("| A setting Omarchy applies per machine (a kernel option, an environment variable, a service) | https://github.com/omacom/omarchy (branch `quattro`), `install/hardware/` |")
 	say("")
-	say("Read the repository's `AGENTS.md` first. A pull request is opened from the owner's GitHub account, so ask them before opening one, and open it as a draft. Its description starts with a line that says only `%s`, which is how the Omarchy team finds the pull requests for this family of machines. Under that line, say which model and kernel it was tested on and what `hw-test` measured before and after. Then link it to the model, so the next owner finds it:", first(b.Model.Family, "snapdragon-pc"))
+	say("Read the repository's `AGENTS.md` first. A pull request is opened from the owner's GitHub account, so ask them before opening one, and open it as a draft. Its description starts with a line that says only %s, which is how the Omarchy team finds the pull requests for this family of machines. Under that line, say which model and kernel it was tested on and what `hw-test` measured before and after. Then link it to the model, so the next owner finds it:", familyLine(first(b.Model.Family, b.Family)))
 	say("")
 	say("```sh")
 	say("curl -s -X POST %s/api/fixes -H 'content-type: application/json' \\", report.Site)
 	say("  -d '{\"model\": \"%s\", \"check\": \"<check>\", \"url\": \"<the pull request>\", \"note\": \"<what it fixes>\"}'", first(b.Model.ID, "<model id>"))
 	say("```")
 	return out.String()
+}
+
+// familyLine is how the brief names the line a pull request opens with: the machine's
+// family when it is known, and the choice of them when it isn't.
+func familyLine(family string) string {
+	switch family {
+	case "":
+		return "the machine's family (`" + probe.DragonMsft + "` for a Snapdragon machine that came with Windows, `" + probe.DragonGoogle + "` for a Chromebook or Googlebook, `" + probe.Nvidia + "` or `" + probe.Apple + "`)"
+	case probe.Apple:
+		return "`" + probe.Apple + "` (Apple Silicon Macs belong to the Omarchy Mac team, so ask the owner where that team takes changes before opening anything)"
+	}
+	return "`" + family + "`"
 }
 
 // Workspace is the folder the brief is written to and the agent starts in, where what it
@@ -386,6 +402,6 @@ func handOver(run *report.Run, options Options, model report.Model, only []strin
 		if model.ID != "" {
 			notes, _ = report.Notes(options.API, model.ID)
 		}
-		return handedMsg{HandOver(Briefing{Version: options.Version, Run: run, Kept: report.Local(), Model: model, Checks: checks, Notes: notes, Only: only, When: time.Now()}, Workspace(), launch)}
+		return handedMsg{HandOver(Briefing{Version: options.Version, Run: run, Kept: report.Local(), Model: model, Family: probe.Family(machine.Real()), Checks: checks, Notes: notes, Only: only, When: time.Now()}, Workspace(), launch)}
 	}
 }
