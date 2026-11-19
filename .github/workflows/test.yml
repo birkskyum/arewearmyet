@@ -14,8 +14,15 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: app/go.mod
+          cache-dependency-path: app/go.sum
       - run: pnpm status
       - run: pnpm typecheck
       - run: pnpm test
+      - name: Test the app
+        working-directory: app
+        run: go vet ./... && go test ./...
       - run: shellcheck -S warning public/probe.sh scripts/probe-fixture.sh test/probe/bin/*
       - run: pnpm build

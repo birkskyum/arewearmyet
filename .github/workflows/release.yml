@@ -1,0 +1,44 @@
+name: Release the app
+
+# A tag like v0.1.0 builds awy for Linux on ARM and x86 and publishes it as a release, which
+# mise installs from: mise x github:birkskyum/arewearmyet -- awy
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: app/go.mod
+          cache-dependency-path: app/go.sum
+
+      - name: Test
+        working-directory: app
+        run: go vet ./... && go test ./...
+
+      - name: Build
+        working-directory: app
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          for arch in arm64 amd64; do
+            GOOS=linux GOARCH=$arch CGO_ENABLED=0 go build -trimpath -ldflags "-s -w -X main.version=$version" -o "build/$arch/awy" .
+            tar -czf "awy-$version-linux-$arch.tar.gz" -C "build/$arch" awy
+          done
+          sha256sum awy-*.tar.gz > checksums.txt
+
+      - name: Publish
+        working-directory: app
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" awy-*.tar.gz checksums.txt \
+            --title "awy ${GITHUB_REF_NAME#v}" \
+            --notes "The hardware check for Snapdragon PCs on Omarchy. Run it with \`mise x github:birkskyum/arewearmyet -- awy\`."

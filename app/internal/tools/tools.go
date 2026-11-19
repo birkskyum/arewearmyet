@@ -1,0 +1,136 @@
+// Package tools runs the programs the guided test needs: PipeWire's player and recorder,
+// libcamera's cam, the volume control and the browser. Every one of them is given a time
+// limit and killed at the end of it, because players and recorders have been seen to hang
+// after their last sample.
+package tools
+
+import (
+	"context"
+	"fmt"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"sort"
+	"strconv"
+	"strings"
+	"syscall"
+	"time"
+)
+
+// Have says whether a program is installed.
+func Have(names ...string) bool {
+	for _, name := range names {
+		if _, err := exec.LookPath(name); err != nil {
+			return false
+		}
+	}
+	return true
+}
+
+// Play plays a sound file and returns when it ends, or after limit.
+func Play(file string, limit time.Duration) error {
+	ctx, cancel := context.WithTimeout(context.Background(), limit)
+	defer cancel()
+	err := exec.CommandContext(ctx, "pw-play", file).Run()
+	if ctx.Err() != nil {
+		return nil // it played, and hung on the way out
+	}
+	return err
+}
+
+// Recording is a microphone recording in progress.
+type Recording struct {
+	File    string
+	command *exec.Cmd
+	done    chan error
+}
+
+// Record starts recording the default microphone to a mono WAV file.
+func Record(file string) (*Recording, error) {
+	command := exec.Command("pw-record", "--rate", "48000", "--channels", "1", "--format", "s16", file)
+	if err := command.Start(); err != nil {
+		return nil, err
+	}
+	recording := &Recording{File: file, command: command, done: make(chan error, 1)}
+	go func() { recording.done <- command.Wait() }()
+	return recording, nil
+}
+
+// Stop ends the recording, asking first and killing after a second, and returns the file's bytes.
+func (r *Recording) Stop() []byte {
+	_ = r.command.Process.Signal(syscall.SIGINT)
+	select {
+	case <-r.done:
+	case <-time.After(time.Second):
+		_ = r.command.Process.Kill()
+		<-r.done
+	}
+	data, _ := os.ReadFile(r.File)
+	return data
+}
+
+// So far returns what has been written to the recording up to now, for a level meter.
+func (r *Recording) SoFar() []byte {
+	data, _ := os.ReadFile(r.File)
+	return data
+}
+
+// Frame takes a few frames from the first camera and returns the last one as a PPM file's
+// bytes. The first frames are still adjusting their exposure. cam takes its optional values
+// attached (--capture=8), and a PPM file holds only 24-bit pixels, hence the pixel format.
+func Frame(dir string) ([]byte, error) {
+	var last error
+	for _, format := range []string{"BGR888", "RGB888"} {
+		ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+		command := exec.CommandContext(ctx, "cam", "-c", "1", "--capture=8", "--stream", "pixelformat="+format, "--file="+filepath.Join(dir, "frame-#.ppm"))
+		command.WaitDelay = 3 * time.Second
+		out, err := command.CombinedOutput()
+		cancel()
+		frames, _ := filepath.Glob(filepath.Join(dir, "frame-*.ppm"))
+		if len(frames) > 0 {
+			sort.Strings(frames)
+			data, err := os.ReadFile(frames[len(frames)-1])
+			for _, frame := range frames {
+				os.Remove(frame)
+			}
+			return data, err
+		}
+		last = fmt.Errorf("cam gave no frame (%v): %s", err, lastLine(string(out)))
+	}
+	return nil, last
+}
+
+func lastLine(text string) string {
+	lines := strings.Split(strings.TrimSpace(text), "\n")
+	line := lines[len(lines)-1]
+	if len(line) > 160 {
+		line = line[:160]
+	}
+	return line
+}
+
+// Volume is the default speakers' volume, 0 to 1 and above, and whether they are muted.
+func Volume() (level float64, muted, ok bool) {
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+	out, err := exec.CommandContext(ctx, "wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@").Output()
+	if err != nil {
+		return 0, false, false
+	}
+	// "Volume: 0.50" or "Volume: 0.50 [MUTED]"
+	fields := strings.Fields(string(out))
+	if len(fields) < 2 {
+		return 0, false, false
+	}
+	level, err = strconv.ParseFloat(fields[1], 64)
+	return level, strings.Contains(string(out), "MUTED"), err == nil
+}
+
+// Open shows a web page in the default browser, without waiting for it.
+func Open(url string) {
+	command := exec.Command("xdg-open", url)
+	command.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
+	if command.Start() == nil {
+		go command.Wait()
+	}
+}
