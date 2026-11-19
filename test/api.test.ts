@@ -61,6 +61,12 @@ test('finds a machine by its device tree, then by its model number', async () =>
   assert.equal(byNumber.body.by, 'model number');
   assert.equal((await call('GET', '/api/match?product=HP%20OmniBook%20X%20Laptop%2014-fe0xxx&vendor=HP')).body.model, 'hp-omnibook-x-14-fe');
   assert.equal((await call('GET', '/api/match?product=Unheard%20Of')).body.model, null);
+  // The family a pull request for the machine names: Chromebooks and Googlebooks are Google's, the rest are PCs
+  assert.equal(byNumber.body.family, 'snapdragon-pc');
+  const chromebook = await call('GET', '/api/match?compatible=google,lazor-rev1');
+  assert.equal(chromebook.body.model, 'acer-chromebook-spin-513-cp513-1h');
+  assert.equal(chromebook.body.family, 'snapdragon-google');
+  assert.equal((await call('GET', '/api/match?compatible=google,mica')).body.family, 'snapdragon-google');
 });
 
 test('refuses a run without a token, with an unknown check or with a bad state', async () => {

@@ -297,7 +297,7 @@ func Brief(b Briefing) string {
 	say("| A sound profile | omarchy-pkgs, `pkgbuilds/alsa-ucm-conf` |")
 	say("| A setting Omarchy applies per machine (a kernel option, an environment variable, a service) | https://github.com/omacom/omarchy (branch `quattro`), `install/hardware/` |")
 	say("")
-	say("Read the repository's `AGENTS.md` first. A pull request is opened from the owner's GitHub account, so ask them before opening one, and open it as a draft. Its description starts with a line that says only `snapdragon`, which is how the Omarchy team finds the pull requests for these machines. Under that line, say which model and kernel it was tested on and what `hw-test` measured before and after. Then link it to the model, so the next owner finds it:")
+	say("Read the repository's `AGENTS.md` first. A pull request is opened from the owner's GitHub account, so ask them before opening one, and open it as a draft. Its description starts with a line that says only `%s`, which is how the Omarchy team finds the pull requests for this family of machines. Under that line, say which model and kernel it was tested on and what `hw-test` measured before and after. Then link it to the model, so the next owner finds it:", first(b.Model.Family, "snapdragon-pc"))
 	say("")
 	say("```sh")
 	say("curl -s -X POST %s/api/fixes -H 'content-type: application/json' \\", report.Site)
@@ -372,8 +372,11 @@ func handOver(run *report.Run, options Options, model report.Model, only []strin
 		// What this round found counts as the machine's latest before the brief is written from it
 		_ = report.Remember(run, time.Now())
 		checks, _ := report.Checks(options.API)
-		if model.ID == "" {
-			model, _ = report.Match(options.API, run)
+		// The site says which model this is and which family its pull requests name
+		if model.ID == "" || model.Family == "" {
+			if matched, err := report.Match(options.API, run); err == nil && matched.ID != "" {
+				model = matched
+			}
 		}
 		launch := options.launch
 		if launch == nil {

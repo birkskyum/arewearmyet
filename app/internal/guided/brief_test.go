@@ -54,7 +54,7 @@ func TestTheBriefSaysWhatFailsHowToMeasureItAndWhereAFixGoes(t *testing.T) {
 		"- works: wifi", "- not tested:",
 		// How to measure, the rules, and where a fix belongs
 		"`hw-test status`", "hw-test auto --no-send", "The parts that take the owner at the computer:", "Never replace what boots", "Ask the owner before anything that needs sudo",
-		"pkgbuilds/linux-omarchy-dtbs", "pkgbuilds/linux-omarchy`", "https://github.com/omacom/omarchy ", "open it as a draft", "starts with a line that says only `snapdragon`", `"model": "lenovo-yoga-slim-7x-14q8x9"`,
+		"pkgbuilds/linux-omarchy-dtbs", "pkgbuilds/linux-omarchy`", "https://github.com/omacom/omarchy ", "open it as a draft", "starts with a line that says only `snapdragon-pc`", `"model": "lenovo-yoga-slim-7x-14q8x9"`,
 	} {
 		if !strings.Contains(brief, text) {
 			t.Errorf("the brief lacks %q", text)
@@ -85,6 +85,12 @@ func TestTheBriefSaysWhatFailsHowToMeasureItAndWhereAFixGoes(t *testing.T) {
 	b.Only = []string{"camera"}
 	if brief = Brief(b); !strings.Contains(brief, "### Webcam (check `camera`): not tested yet") || strings.Contains(brief, "### Speakers") || !strings.Contains(brief, "- partly: speakers, webgpu") {
 		t.Errorf("a brief for the camera alone:\n%s", brief)
+	}
+	// A Chromebook or a Googlebook is Google's family, which its pull requests name
+	b = yoga()
+	b.Model.Family = "snapdragon-google"
+	if brief = Brief(b); !strings.Contains(brief, "says only `snapdragon-google`") || strings.Contains(brief, "snapdragon-pc") {
+		t.Error("a Chromebook's brief doesn't name Google's family")
 	}
 	// A computer the board doesn't know, with nothing failing
 	b = yoga()

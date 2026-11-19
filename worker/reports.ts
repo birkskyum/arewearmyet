@@ -233,7 +233,13 @@ async function modelFixes(env: Env, id: string) {
  * 83ED for the Yoga Slim 7x or 14-fe0 for HP's OmniBook X 14-fe0xxx.
  */
 function match(params: URLSearchParams) {
-  const found = (model: Index['models'][number], by: string) => ({ model: model.id, by, vendor: model.vendor, name: model.name, generation: model.generation, page: `${SITE}/models/${model.id}` });
+  // "family" is the line a pull request for the machine opens with: Chromebooks and Googlebooks, which start
+  // through Google's own boot software, are one family, and every other Snapdragon computer the other
+  const found = (model: Index['models'][number], by: string) => ({
+    model: model.id, by, vendor: model.vendor, name: model.name, generation: model.generation, boot: model.boot,
+    family: model.boot === 'depthcharge' || model.boot === 'android' ? 'snapdragon-google' : 'snapdragon-pc',
+    page: `${SITE}/models/${model.id}`,
+  });
 
   const byIds = matchChids(params.getAll('chid').flatMap((value) => value.split(',')));
   if (byIds) return found(byIds, 'hardware IDs');

@@ -2,7 +2,7 @@
 
 You're helping the owner of an ARM PC with a Snapdragon chip (Snapdragon X, X2, 8cx, 7c, 850, C) get Linux working on it, usually Omarchy. This page tells you how to check what works, how to report it to arewearmyet.com, and how to propose fixes to Omarchy. Read it all before you start.
 
-Base URL: `https://arewearmyet.com`. Everything below is plain HTTP and JSON. Chromebooks and Googlebooks start differently and aren't covered here.
+Base URL: `https://arewearmyet.com`. Everything below is plain HTTP and JSON. Chromebooks and Googlebooks start differently, and getting Linux onto them isn't covered here. Checking, reporting and fixing work the same once it runs.
 
 In this guide a **model** always means a computer model, like the Lenovo Yoga Slim 7x or the HP OmniBook X 14, never an AI model.
 
@@ -172,10 +172,15 @@ Read the repository's `AGENTS.md` first: it says how packages are numbered, buil
 
 A pull request is opened from the owner's GitHub account, so ask them first (rule 6). Open it as a draft. One fix per pull request.
 
-The description starts with a line that says only `snapdragon`, which is how the Omarchy team finds the pull requests for these machines. Under it, say which model and kernel it was tested on and what was measured before and after:
+The description starts with a line that names the family of machine, and nothing else on that line. It is how the Omarchy team finds these pull requests:
+
+- `snapdragon-pc` for a Snapdragon laptop, tablet or mini PC that came with Windows.
+- `snapdragon-google` for a Chromebook or a Googlebook.
+
+`GET /api/match` gives the line for a machine as `family`. Under it, say which model and kernel it was tested on and what was measured before and after:
 
 ```
-snapdragon
+snapdragon-pc
 
 Lenovo Yoga Slim 7x (83ED), linux-omarchy 7.3-72.
 The right speaker was silent: hw-test speakers heard only the left one. With this change both are heard.
