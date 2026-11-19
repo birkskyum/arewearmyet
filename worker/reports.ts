@@ -40,7 +40,7 @@ const STATES = ['works', 'partial', 'broken', 'untested', 'absent'] as const;
 const HOW = ['measured', 'owner', 'agent'] as const;
 const MODES = ['quick', 'guided', 'agent'] as const;
 const HARDWARE_KEYS = ['maker', 'product', 'family', 'sku', 'board', 'bios'] as const;
-const PACKAGE_KEYS = ['linux-omarchy', 'linux-omarchy-dtbs', 'linux', 'linux-firmware', 'linux-firmware-qcom', 'mesa', 'systemd', 'omarchy', 'hyprland', 'pipewire', 'alsa-ucm-conf', 'bluez', 'libcamera'] as const;
+const PACKAGE_KEYS = ['linux-omarchy', 'linux-omarchy-dtbs', 'linux', 'linux-firmware', 'linux-firmware-qcom', 'mesa', 'systemd', 'omarchy', 'hyprland', 'pipewire', 'alsa-ucm-conf', 'bluez', 'libcamera', 'hw-test'] as const;
 const TOKEN = /^[A-Za-z0-9_-]{32,128}$/;
 // A hardware ID with its type, as systemd-analyze chid numbers them: "3:8073dbed-501f-5f5e-a619-4cdd9c00e865"
 const CHID = /^(ext)?\d{1,2}:[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/;

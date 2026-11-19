@@ -160,6 +160,13 @@ func main() {
 		os.Exit(1)
 	}
 	run.Model, run.Agent = *model, *agent
+	// Which version measured it goes along, so a result can be read knowing what the test did then
+	if version != "dev" {
+		if run.Packages == nil {
+			run.Packages = map[string]string{}
+		}
+		run.Packages["hw-test"] = version
+	}
 
 	// One result the owner told the agent, or the agent read from logs
 	if command == "report" {

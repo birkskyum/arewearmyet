@@ -86,7 +86,7 @@ test('stores a run, matches its model from the hardware and takes out what ident
     compatible: 'lenovo,yoga-slim7x',
     kernel: '7.3.0-59-omarchy',
     hardware: { maker: 'LENOVO', product: '83ED', serial: 'PF0000' },
-    packages: { 'linux-omarchy': '7.3-59', secret: 'x' },
+    packages: { 'linux-omarchy': '7.3-59', 'hw-test': '0.15.10', secret: 'x' },
     results: [{ check: 'wifi', state: 'works', how: 'measured', evidence: 'wlan0 6c:6e:07:11:22:33 in /home/birk/x, serial: PF0000' }],
   }, machine(TOKEN_A));
   assert.equal(sent.status, 201);
@@ -95,7 +95,8 @@ test('stores a run, matches its model from the hardware and takes out what ident
 
   const stored = (await call('GET', `/api/runs/${sent.body.run}`)).body;
   assert.deepEqual(stored.hardware, { maker: 'LENOVO', product: '83ED' });
-  assert.deepEqual(stored.packages, { 'linux-omarchy': '7.3-59' });
+  // The test's own version is kept, so a result can be read knowing which version made it
+  assert.deepEqual(stored.packages, { 'linux-omarchy': '7.3-59', 'hw-test': '0.15.10' });
   assert.equal(stored.results[0].evidence, 'wlan0 xx:xx:xx:xx:xx:xx in /home/user/x, serial [removed]');
 });
 
