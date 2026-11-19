@@ -21,6 +21,8 @@ export type Finding = { state: CheckState; note?: string; version?: string; chec
 export const basisOf = (finding: Finding): Basis => finding.basis ?? 'omarchy';
 /** Whether a finding says how the model does under Omarchy, and so counts as its status. */
 export const countsAsStatus = (finding: Finding): boolean => basisOf(finding) === 'omarchy' || basisOf(finding) === 'maker-spec';
+/** Whether a finding says how a part does on the model. One that only says the maker lists the part doesn't. */
+export const saysHowItDoes = (finding: Finding): boolean => countsAsStatus(finding) && finding.state !== 'untested';
 type FindingsFile = {
   families?: Record<string, { source?: string; checks?: Record<string, Finding> }>;
   models?: Record<string, { details?: string; links?: { title: string; url: string }[]; checks?: Record<string, Finding> }>;
@@ -65,6 +67,8 @@ const LAPTOP_ONLY = ['display', 'backlight', 'keyboard', 'touchpad', 'touchscree
 const ALL_IN_ONE_LACKS = ['keyboard', 'touchpad', 'battery', 'charging', 'suspend-drain', 'lid'];
 // Parts a desktop has by rule and few laptops do. On other machines the check shows once something is known about it
 const DESK_ONLY = ['ethernet'];
+// Parts many models lack. Their row shows on a model whose maker lists the part, or once an owner's test finds it
+const WHERE_LISTED = ['touchscreen', 'fingerprint', 'modem'];
 const DESKS = new Set(['desktop', 'devkit', 'all-in-one']);
 function notOn(model: Subject, check: string): Finding | null {
   if (NVIDIA.has(model.generation) && QUALCOMM_ONLY.includes(check)) return { state: 'absent', note: 'A Qualcomm processor. NVIDIA machines have no such part.', basis: 'maker-spec' };
@@ -73,7 +77,7 @@ function notOn(model: Subject, check: string): Finding | null {
   return null;
 }
 /** Whether a model is expected to have a check's part, by its form. */
-const expectedOn = (model: Subject, check: string): boolean => !DESK_ONLY.includes(check) || DESKS.has(model.form ?? '');
+const expectedOn = (model: Subject, check: string): boolean => !WHERE_LISTED.includes(check) && (!DESK_ONLY.includes(check) || DESKS.has(model.form ?? ''));
 
 // `given` marks a finding nobody had to write: a part the machine can't have, by what it is
 // `expected` is false for a part this kind of machine rarely has, whose row shows only once something is known
@@ -101,7 +105,7 @@ export function modelChecks(model: Subject): CheckRow[] {
 }
 
 /** Whether a check is one to ask an owner for: its part is on every model, or on this kind of machine. */
-const askedFor = (row: CheckRow): boolean => (DESK_ONLY.includes(row.id) ? row.expected : !row.optional);
+const askedFor = (row: CheckRow): boolean => (DESK_ONLY.includes(row.id) || WHERE_LISTED.includes(row.id) ? row.expected : !row.optional);
 
 export function modelExtra(model: Subject) {
   const entry = findings.models?.[model.id];
@@ -116,11 +120,12 @@ export function coverage(model: Subject) {
   // The checks that apply to this machine: the parts it has, and not those few of its kind have
   const rows = modelChecks(model).filter((row) => row.finding?.state !== 'absent' && (row.expected || row.finding));
   const own = rows.filter((row) => row.from === 'model');
-  const status = own.filter((row) => countsAsStatus(row.finding!));
+  // A part the maker lists and nobody has tested is neither written up nor reported from elsewhere
+  const status = own.filter((row) => saysHowItDoes(row.finding!));
   return {
     known: status.length,
     works: status.filter((row) => row.finding!.state === 'works').length,
-    elsewhere: own.length - status.length,
+    elsewhere: own.filter((row) => !countsAsStatus(row.finding!)).length,
     total: rows.length,
   };
 }
@@ -158,7 +163,7 @@ export function modelData(model: Model) {
     checks: checks.map(({ id, group, title, finding, from }) => ({ id, group, title, finding, from })),
     // Checks nobody has written up for this model, the ones an owner's run helps most with
     // A check known only from another distro or from the tree's author is still wanted on Omarchy
-    wanted: checks.filter((row) => !(row.from === 'model' && countsAsStatus(row.finding!)) && askedFor(row)).map((row) => row.id),
+    wanted: checks.filter((row) => !(row.from === 'model' && saysHowItDoes(row.finding!)) && askedFor(row)).map((row) => row.id),
   };
 }
 
@@ -180,6 +185,6 @@ export function nvidiaData(model: NvidiaModel) {
     details: extra.details,
     links: extra.links,
     checks: checks.map(({ id, group, title, finding, from }) => ({ id, group, title, finding, from })),
-    wanted: checks.filter((row) => !(row.from === 'model' && countsAsStatus(row.finding!)) && askedFor(row)).map((row) => row.id),
+    wanted: checks.filter((row) => !(row.from === 'model' && saysHowItDoes(row.finding!)) && askedFor(row)).map((row) => row.id),
   };
 }

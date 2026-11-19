@@ -90,7 +90,8 @@ async function read(url: string): Promise<string> {
         .replace(/<\/(?:tr|p|li|h[1-6]|div|dt|dd|pre)>|<br\s*\/?>/gi, '\n')
         .replace(/<[^>]+>/g, ' ')
         .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#0?39;|&apos;/g, "'")
-        .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)));
+        .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+        .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCodePoint(parseInt(code, 16)));
     }
     // A page that asks whether the reader is a person says nothing about the hardware
     if (/Making sure you're not a bot|Just a moment\.\.\.|Checking your browser|Enable JavaScript and cookies to continue/i.test(text)) throw new Error('bot check');

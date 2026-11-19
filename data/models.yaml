@@ -2009,6 +2009,7 @@ models:
     vendor: "Apcsilmic"
     name: "Dot 1"
     generation: 7c
+    form: desktop
     chips: ["SC7180"]
     variants:
       - { chip: "SC7180", compatible: "apcsilmic,dot-1" }

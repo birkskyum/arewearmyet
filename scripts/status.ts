@@ -570,7 +570,8 @@ console.log(summary);
 const checkList = parse(readFileSync('data/checks.yaml', 'utf8'));
 const findings = parse(readFileSync('data/findings.yaml', 'utf8'));
 const checkIds = new Set<string>(checkList.checks.map((c: { id: string }) => c.id));
-const modelIds = new Set(rows.map((row) => row.id));
+// The NVIDIA machines have findings like every model, and are listed apart
+const modelIds = new Set([...rows.map((row) => row.id), ...nvidia.map((model) => model.id)]);
 const STATES_ALLOWED = ['works', 'partial', 'broken', 'untested', 'absent'];
 // What a finding rests on. One that names a public page carries the words of the page it rests
 // on, which scripts/quotes.ts looks for in the page itself, and says where it was seen: on

@@ -9,6 +9,9 @@
 #   links     [{ title, url }] discussions, owner repos, write-ups
 #   checks    { <check id>: { state, note, version, checked, source } }
 #             state     works, partial, broken, untested or absent
+#                       With basis maker-spec, absent says the maker's specification shows the
+#                       model lacks the part, and untested that it lists the part and nobody
+#                       has tested it on Omarchy. The model's page shows rows for what it has.
 #             note      what was seen, in a sentence or two
 #             version   the linux-omarchy (or other kernel) version it was seen on
 #             checked   the month, as YYYY-MM
@@ -111,6 +114,22 @@ models:
       camera: { state: works, note: "Works since linux-omarchy 7.2.8-20, and Chromium shows live video with the privacy light on. About 1 in 100 camera starts still times out.", version: "7.2.8-21", checked: 2026-10, source: "https://github.com/omacom/omarchy-pkgs/pull/1277", basis: omarchy, where: "linux-omarchy 7.2.8-20, 2026-10-18", quote: "A capture after 60 s with the panel off works, and Chromium shows upright live video with the privacy LED on." }
       video-decode: { state: works, note: "H.264, HEVC, VP9 and AV1 in mpv and Chromium. 1080p takes about a fifth of the processor in mpv.", checked: 2026-10 }
       usb4: { state: partial, note: "Only with an experimental kernel, on one port.", checked: 2026-10, source: "https://github.com/birkskyum/yoga-slim7x-usb4", basis: other-distro, where: "Omarchy with a self-built experimental USB4 kernel, 2026-09 to 2026-10", quote: "the left rear port runs, and this is still not a release." }
+      touchscreen:
+        state: untested
+        note: It has a touchscreen.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/Yoga/Yoga_Slim_7_14Q8X9/Yoga_Slim_7_14Q8X9_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-03-12
+        quote: OGS (One Glass Solution) multi-touch, supports 10-point touch
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/Yoga/Yoga_Slim_7_14Q8X9/Yoga_Slim_7_14Q8X9_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-03-12
+        quote: Standard Ports 3x USB-C® (USB4® 40Gbps), with USB PD 3.1 and DisplayPort™ 1.4
 
   microsoft-surface-laptop-7-15:
     links:
@@ -150,6 +169,22 @@ models:
       bluetooth: { state: broken, note: "Works with the owner's board package.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1", basis: omarchy, where: "Omarchy edge image 2026.11.16.492, kernel 7.3.0-66, without the owner's board package", quote: "Bluetooth | **None**: hci0 stays unconfigured (no address) | Works" }
       camera: { state: broken, checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1", note: "", basis: omarchy, where: "Omarchy edge image 2026.11.16.492, kernel 7.3.0-66, without the owner's board package", quote: Camera | **None** (not in the tree) | Works }
       fans: { state: broken, note: "No fan control without the owner's board package.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/1", basis: omarchy, where: "Omarchy edge image 2026.11.16.492, kernel 7.3.0-66, without the owner's board package", quote: Fan | No control | Works }
+      touchscreen:
+        state: untested
+        note: It has a touchscreen.
+        checked: 2026-11
+        source: https://www.samsungmobilepress.com/press-releases/galaxy-book4-edge-samsungs-next-gen-ai-pc-expands-the-galaxy-ai-ecosystem/
+        basis: maker-spec
+        where: Samsung Mobile Press release of 2024-05-21, Galaxy Book4 Edge Product Specifications, Display row (14-inch)
+        quote: 14-inch**, 16:10 AMOLED 3K (2880x1800), 500nits (HDR)*, Up to 120Hz VRR, 120% DCI-P3 Color Volume, 10-Point Multi-Touch
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader.
+        checked: 2026-11
+        source: https://www.samsung.com/uk/computers/galaxy-book/galaxy-book4-edge-snapdragon-16gb-512gb-np940xma-kb1uk/
+        basis: maker-spec
+        where: Samsung UK product page for NP940XMA-KB1UK, specification table, Security group
+        quote: Security TPM Yes FingerPrint Reader Yes
 
   lenovo-ideacentre-mini-x-01q8x10:
     links:
@@ -159,6 +194,22 @@ models:
       external-display: { state: works, note: "A Lenovo 40B0 dock on the USB-C port comes up, with sound and video playback, once the DSPs run. On an install to a USB disk they had to be started by hand, and Omarchy's fix for that from 16 November 2026 is not yet confirmed on this computer.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/6", basis: omarchy, where: "Omarchy edge, kernel 7.3.0-59-omarchy test build, root disk on a USB-A SSD, 2026-11-13", quote: Loading the remoteprocs enables the type-c negotiation }
       disk-unlock: { state: works, note: "Shown on screen since omacom/omarchy#18629 on edge.", checked: 2026-11, source: "https://github.com/omacom/omarchy/pull/18629", basis: omarchy, where: "Omarchy install with the pull request's script applied, Snapdragon X (X1-26-100) model, 2026-11-13", quote: "Jens Glathe applied the script on his Snapdragon X (Purwa) Mini and rebuilt the boot image, and the unlock prompt now shows on his monitor (birkskyum/arewearmyet#6)." }
       adsp: { state: works, note: "Both DSPs start when their driver is loaded by hand with the root disk on a USB-A port, and the dock's displays, sound and video then work. Omarchy's change that starts them by itself in that setup has not been run on this computer.", checked: 2026-11, source: "https://github.com/omacom/omarchy/pull/18776", basis: omarchy, where: "Omarchy install on an SSD in a USB-A enclosure, driver loaded by hand, 2026-11-13", quote: "After `sudo modprobe qcom_q6v5_pas` both DSPs ran, the root disk stayed up, and the dock's displays, sound and video worked." }
+      ethernet:
+        state: untested
+        note: It has a gigabit network socket.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaCentre/IdeaCentre_Mini_01Q8X10/IdeaCentre_Mini_01Q8X10_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-04-01
+        quote: Onboard Ethernet Gigabit Ethernet, 1x RJ-45
+      speakers:
+        state: absent
+        note: It has no built-in speaker.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaCentre/IdeaCentre_Mini_01Q8X10/IdeaCentre_Mini_01Q8X10_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-04-01
+        quote: Audio Chip Soundwire, Qualcomm® WCD9385 codec Speakers No speakers
 
   acer-aspire-16-ai-a16-11m:
     links:
@@ -169,6 +220,14 @@ models:
       wifi: { state: partial, note: "Works on an installed system, which gets board data for the Wi-Fi card from Omarchy's ath12k board fallback. The card (1a3b:6580) isn't in linux-firmware's board data. The live image has no Wi-Fi yet, so the install needs USB Ethernet.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/5", basis: omarchy, where: "Omarchy edge image 2026.11.11.487, installed system, 2026-11-12", quote: Audio and Wifi drivers work this time which is great. }
       video-decode: { state: works, checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/5", note: mpv plays H.264 and HEVC on the video engine since linux-omarchy-dtbs 7.3-26. Steam Remote Play uses the decoder too but shows a green picture., basis: omarchy, where: "Omarchy edge, linux-omarchy-dtbs 7.3-26 and acer-aspire-16-ai-firmware 20261102-3, 2026-11-15", quote: "Video decode is working at the kernel level (/dev/video0, mpv --hwdec=v4l2m2m-copy plays H.264 and HEVC fine)." }
       disk-unlock: { state: works, note: "Owner confirmed the fix from omacom/omarchy#18743.", checked: 2026-11, source: "https://github.com/omacom/omarchy/pull/18743", basis: omarchy, where: "Omarchy install with the pull request's script applied, 2026-11-14", quote: "On the owner's Aspire 16 AI in birkskyum/arewearmyet#5, the script from this branch and a boot image rebuild bring the password prompt up on the built-in screen (issuecomment-6869339534)." }
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://news.acer.com/acer-expands-aspire-ai-series-with-six-new-copilot-pcs-powered-by-next-gen-processors
+        basis: maker-spec
+        where: Acer press release of 2025-05-16, paragraph on the Snapdragon X models (A14-11M/A14-11MT and A16-11M/A16-11MT)
+        quote: These Copilot+ PCs feature WUXGA displays with touchscreen options, and provide added convenience with biometric security features; QHD IR camera with privacy shutter, USB4 Type-C ports, and speedy Wi-Fi 7 connectivity.
 
   anduril-bluechip:
     details: |
@@ -200,6 +259,22 @@ models:
       battery: { state: works, version: "7.3-72", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45", note: "The battery applet appears to work, with three power profiles shown. The owner gives no readings.", basis: omarchy, where: "Omarchy edge image 2026.11.16.492, kernel 7.3.0-72-omarchy, 2026-11-17", quote: "* Battery applet appears to work with three profiles displayed" }
       bluetooth: { state: broken, note: "Its QCC2072 card has no Bluetooth support in Linux yet.", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45", basis: omarchy, where: "Omarchy edge image 2026.11.16.492, kernel 7.3.0-72-omarchy, 2026-11-17", quote: Bluetooth has to wait for the kernel. Linux drives the QCC2072's Wi-Fi but has no support for its Bluetooth yet. }
       suspend: { state: broken, note: "A sleep of a few minutes wakes. A sleep of about half an hour ends in a restart, in both sleep modes (deep and s2idle), as its owner found on 18 November 2026.", version: "7.3-72", checked: 2026-11, source: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/45", basis: omarchy, where: "Omarchy edge image 2026.11.16.492, kernel 7.3.0-72-omarchy, 2026-11-18", quote: "After about 30 minutes with the lid closed, the screen was blank. Tapping any keys seemed to have no effect to wake up the machine. But after two minutes, the boot-time password greeter was displayed." }
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://www.hp.com/ie-en/products/laptops/product-details/product-specifications/2103993541
+        basis: maker-spec
+        where: HP Ireland product specifications page, HP OmniBook X Laptop Next Gen AI 14-kr1001sax (DT4B3EA)
+        quote: Display 35.6 cm (14") diagonal, 2K (1920 x 1200), OLED, multitouch-enabled, 0.2 ms response time, UWVA, edge-to-edge glass, micro-edge
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://www.hp.com/ie-en/products/laptops/product-details/product-specifications/2103993541
+        basis: maker-spec
+        where: HP Ireland product specifications page, HP OmniBook X Laptop Next Gen AI 14-kr1001sax (DT4B3EA)
+        quote: Ports 1 USB Type-A 10Gbps signaling rate; 1 headphone/microphone combo; 2 USB Type-C® 10Gbps signaling rate (USB Power Delivery 3.0, DisplayPort™ 1.4a, HP Sleep and Charge)
 
   microsoft-surface-pro-11:
     links:
@@ -209,11 +284,44 @@ models:
       suspend: { state: works, checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/14391", note: "", basis: other-distro, where: "Dragon install from a locally built ISO with the owner's linux-sp11 kernel (v7.3-rc6 plus patches), 6 October 2026", quote: Suspend and resume | ✅ | iptsd restarted across sleep }
       camera: { state: works, note: "Both cameras.", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/14391", basis: omarchy, where: "Omarchy 4.5 edge, kernel 7.3.0.17-omarchy, 2026-11-06", quote: "Denali on 4.5 edge, uname -r 7.3.0.17-omarchy. Tried on straight 4.5 stable, but didn't have any of the SP11 goodies. And both cams are working." }
       touchscreen: { state: works, note: "Touch and pen.", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/14391", basis: other-distro, where: "Dragon install from a locally built ISO with the owner's linux-sp11 kernel (v7.3-rc6 plus patches), 6 October 2026", quote: "Touch and Slim Pen 2 | ✅ | HID-over-SPI in `linux-sp11`, plus `iptsd`" }
+      modem:
+        state: untested
+        note: A 5G modem is on some configurations.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-pro-snapdragon-tech-specs
+        basis: maker-spec
+        where: Microsoft Learn tech specs, Surface Pro for Business, Snapdragon X Series, 11th Edition, updated 2025-09
+        quote: Surface Pro 11 Wi-Fi + 5G models only. 5G not available in all areas; compatibility and performance depend on carrier network, plan, and other factors.
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-pro-snapdragon-tech-specs
+        basis: maker-spec
+        where: Microsoft Learn tech specs, Surface Pro for Business, Snapdragon X Series, 11th Edition, updated 2025-09
+        quote: "2 × USB-C/USB4 ports with support for: - Charging - Data transfer - DisplayPort 1.4a - Surface Thunderbolt 4 Dock and other accessories - Supports fast charging with minimum 65W power supply via Surface Connect or USB-C 15 - Surface Pro Keyboard port - Surface Connect port - Nano SIM 16"
 
   dell-inspiron-14-plus-7441:
     links:
       - title: Owner's results and fixes (discussion 12441)
         url: https://github.com/omacom/omarchy/discussions/12441
+    checks:
+      fingerprint:
+        state: untested
+        note: A fingerprint reader in the power button is on some configurations.
+        checked: 2026-11
+        source: https://www.dell.com/support/manuals/en-us/inspiron-14-7441-laptop/inspiron-14-7441-owners-manual/fingerprint-reader-optional?guid=guid-e8599d7b-7655-425b-9635-8aa5217daa2e&lang=en-us
+        basis: maker-spec
+        where: Dell owner's manual (online), Inspiron 14 Plus 7441, Fingerprint reader (optional)
+        quote: The following table lists the specifications of the optional fingerprint-reader of your Inspiron 14 Plus 7441 .
+      touchscreen:
+        state: untested
+        note: It has a touchscreen.
+        checked: 2026-11
+        source: https://www.dell.com/support/manuals/en-us/inspiron-14-7441-laptop/inspiron-14-7441-owners-manual/system-setup-options?guid=guid-d6204054-6737-456f-a450-0903378a0633&lang=en-us
+        basis: maker-spec
+        where: Dell owner's manual (online), Inspiron 14 Plus 7441, System setup options, Display menu
+        quote: Touchscreen Enables or disables the touch screen option.
 
   samsung-galaxy-book4-edge-15:
     links:
@@ -221,6 +329,14 @@ models:
         url: https://github.com/omacom/omarchy/discussions/15860
     checks:
       charging: { state: partial, note: "USB-C charging stays at 5 V and a trickle without the owner's userspace tool (book4-pd-charge).", checked: 2026-11 }
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader.
+        checked: 2026-11
+        source: https://www.samsung.com/uk/computers/galaxy-book/galaxy-book4-edge-15-6-inch-x-plus-42-16gb-256gb-np750xqa-kb1uk/
+        basis: maker-spec
+        where: Samsung UK product page for NP750XQA-KB1UK, specification table, Security group
+        quote: Security Slot Yes TPM Yes FingerPrint Reader Yes
 
   microsoft-surface-laptop-8-13:
     links:
@@ -228,6 +344,14 @@ models:
         url: https://github.com/jdvmi00/glymur-usb4
     checks:
       usb4: { state: works, note: "On both USB-C ports a USB4 drive enclosure shows up as an NVMe disk reading at 1.2 GB/s and a Thunderbolt 4 dock's PCIe devices appear, also across sleep. An enclosure attached at boot falls back to USB 3.", version: "7.3-67", checked: 2026-11, source: "https://github.com/omacom/omarchy-pkgs/pull/2880", basis: omarchy, where: "Local builds of the same patches on linux-omarchy 7.3-60 and one boot of the pull request's package (7.3-66), 13.8-inch model, 2026-11", quote: "The PCIe devices of a USB4 or Thunderbolt dock, and the drive in a USB4 NVMe enclosure, now appear on the Surface Laptop 8, on both USB-C ports." }
+      touchscreen:
+        state: untested
+        note: It has a touchscreen.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-laptop-138inch-15inch-8thedition-snapdragon
+        basis: maker-spec
+        where: Microsoft Learn tech specs, Surface Laptop for Business, 13.8-inch and 15-inch, 8th Edition, Snapdragon, updated 2026-10
+        quote: 13.8-inch PixelSense Flow™ touchscreen display
   acer-aspire-1-a114-61:
     links:
       - title: "postmarketOS wiki: Acer Aspire 1"
@@ -363,6 +487,14 @@ models:
         basis: omarchy
         where: Omarchy edge test image 2026.11.06.480 with speech
         quote: audio to the creative btw6 works perfectly, I hear espeak-ng speaking i hear Beautiful, Fun & Mystic Linux by DHH.
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://news.acer.com/acer-expands-aspire-ai-series-with-six-new-copilot-pcs-powered-by-next-gen-processors
+        basis: maker-spec
+        where: Acer press release of 2025-05-16, paragraph on the Snapdragon X models (A14-11M/A14-11MT and A16-11M/A16-11MT)
+        quote: These Copilot+ PCs feature WUXGA displays with touchscreen options, and provide added convenience with biometric security features; QHD IR camera with privacy shutter, USB4 Type-C ports, and speedy Wi-Fi 7 connectivity.
   acer-swift-14-ai-sf14-11:
     links:
       - title: Ubuntu concept bug for the Acer Swift 14 AI SF14-11
@@ -413,6 +545,14 @@ models:
         basis: other-distro
         where: Ubuntu concept image, 2024-11 and 2024-12
         quote: Battery info (battery percentage/charge detection)
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://news.acer.com/acer-announces-its-first-ngai-pc-the-swift-14-ai-laptop
+        basis: maker-spec
+        where: Acer press release of 2024-05-20, specification table for SF14-11/SF14-11T, Screen row
+        quote: 14.5" WQXGA (2560x1600) Display with IPS Technology, 120 Hz, 16:10 aspect ratio 100% sRGB, TÜV Rheinland Eyesafe® Certified 2.0[1], Touchscreen option
   acer-swift-go-14-ai-sfg14-01:
     links:
       - title: Owner's report of installing Ubuntu 26.04 on the Swift Go 14 AI
@@ -454,6 +594,14 @@ models:
         basis: other-distro
         where: Ubuntu 26.04 (resolute) ISO, 2026-04
         quote: Apart from the usual issues (no sound, no battery percentage, etc.) I had problems connecting to the Wi-Fi, but reboot fixed the issue.
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader in the power button.
+        checked: 2026-11
+        source: https://news.acer.com/acer-expands-its-copilot-pc-line-with-new-swift-14-ai-and-swift-go-14-ai-laptops
+        basis: maker-spec
+        where: Acer press release of 2024-09, specification table for Swift Go 14 AI SFG14-01, Security row
+        quote: Power keycap fingerprint reader with on-chip matching design, Discrete Trusted Platform Module (TPM) solution, camera shutter
   acer-swift-go-pro-ai-sfa14-11:
     links:
       - title: Device tree posting for the Acer Swift Go Pro AI (v6), with the list of tested hardware
@@ -650,6 +798,14 @@ models:
         basis: other-distro
         where: Armbian, Arch and other ARM64 install images, October 2024
         quote: Here's the list of images I tried so far, none of them works. OpenBSD is the one that went to most far
+      modem:
+        state: untested
+        note: A 4G modem is on some configurations.
+        checked: 2026-11
+        source: https://www.apcsilmic.com/
+        basis: maker-spec
+        where: Apcsilmic home page, which is the Dot 1 Mini PC product page. Its FAQ lists "one 4G antenna (optional)" in the box
+        quote: Dot 1 Mini PC offers 4G network support for instant internet access without having to worry about Wi-Fi.
   asus-ascent-qn10:
     links:
       - title: "Kernel list: ASUS Ascent QN10 device tree"
@@ -711,6 +867,14 @@ models:
         basis: tree-author
         where: Kernel list posting of November 2026, by the tree's author
         quote: The ASUS Ascent QN10 is a compact desktop computer based on the Qualcomm
+      ethernet:
+        state: untested
+        note: It has a 2.5-gigabit network socket.
+        checked: 2026-11
+        source: https://odinapi.asus.com/recent-data/apiv2/PDTechSpec?SystemCode=asus&WebSiteCode=global&ProductWebPath=asus-ascent-qn10&siteID=www&sitelang=
+        basis: maker-spec
+        where: ASUS's specification data for the Ascent QN10
+        quote: 2 x USB 3.2 Gen2 10Gbpd Type-A 1 x USB 4 Gen2 40Gbps Type-C (with DP2.1/PD, 5V/3A) 1 x HDMI 1 x RJ45 LAN Port 1 x DC-in
   asus-novago-tp370ql:
     links:
       - title: "aarch64-laptops: device status and Secure Boot steps"
@@ -803,6 +967,14 @@ models:
         basis: other-distro
         where: Ubuntu 18.04 image of the aarch64-laptops project, status list from 2019
         quote: "- [x] GUI Desktop (using Framebuffer) - [x] Keyboard - [x] Touchpad - [x] Touchscreen - [x] On-board Storage (UFS based) - [ ] WiFi - [ ] Bluetooth - [ ] LTE - [ ] Accelerated Graphics - [ ] Audio"
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader.
+        checked: 2026-11
+        source: https://dlcdnets.asus.com/pub/ASUS/GamingNB/TP370QL/0409_E14198_TP370QL_V4_A.pdf
+        basis: maker-spec
+        where: ASUS E-Manual for TP370QL (E14198, revised edition V4, April 2018), English user's manual
+        quote: This built-in fingerprint sensor captures your fingerprint and uses
   asus-proart-pz13-ht5306:
     links:
       - title: Owner's report on the speakers going silent on Omarchy
@@ -931,6 +1103,14 @@ models:
         state: broken
         note: The cameras don't work yet. The device tree's own notes list them as not done.
         checked: 2026-11
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://odinapi.asus.com/recent-data/apiv2/PDTechSpec?SystemCode=asus&WebSiteCode=global&ProductWebPath=proart-pz13-ht5306&siteID=www&sitelang=
+        basis: maker-spec
+        where: ASUS's specification data for the ProArt PZ13 (HT5306)
+        quote: 2x USB 4.0 Gen 3 Type-C with support for display / power delivery (data speed up to 40Gbps), SD Express 7.0 card reader
 
   asus-proart-pz14-ht7407:
     links:
@@ -1063,6 +1243,14 @@ models:
         basis: omarchy
         where: Omarchy 4.0.0.r7840 (edge), kernel 7.3.0-55-omarchy, in omarchy-arm-pz14-test.txt attached to the issue
         quote: vaInitialize fails; freedreno has no encode/decode support.
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://odinapi.asus.com/recent-data/apiv2/PDTechSpec?SystemCode=asus&WebSiteCode=global&ProductWebPath=proart-pz14-ht7407&siteID=www&sitelang=
+        basis: maker-spec
+        where: ASUS's specification data for the ProArt PZ14 (HT7407)
+        quote: 2x USB 4.0 Gen 3 Type-C with support for display / power delivery (data speed up to 40Gbps), SD Express 7.0 card reader
   asus-vivobook-14-x1407qa:
     links:
       - title: Wi-Fi board data for ASUS's Snapdragon X laptops in Omarchy
@@ -1859,6 +2047,14 @@ models:
         basis: omarchy
         where: Omarchy on the internal disk, with the pull request's device tree
         quote: Without it, all eight cores at 2.96 GHz passed 88 C with the fan at its maximum.
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://odinapi.asus.com/recent-data/apiv2/PDTechSpec?SystemCode=asus&WebSiteCode=global&ProductWebPath=asus-zenbook-14-ux3480-qualcomm&siteID=www&sitelang=
+        basis: maker-spec
+        where: ASUS's specification data for the Zenbook 14 (UX3480, Qualcomm)
+        quote: 2x USB 3.2 Gen 2 Type-C with support for display / power delivery (data speed up to 10Gbps) 1x USB 3.2 Gen 1 Type-A (data speed up to 5Gbps), 1x 3.5mm Combo Audio Jack 1x HDMI 2.1 TMDS
   asus-zenbook-a14-ux3407:
     links:
       - title: Owner's report for the UX3407QA with the LCD panel on Omarchy
@@ -2444,6 +2640,14 @@ models:
         basis: other-distro
         where: Fedora with kernel 7.3 and Slackware with kernel 7.2.15, by the device tree's author, 2026-11
         quote: scaling working. The lid switch, Bluetooth, audio, camera, microphone and
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://www.dell.com/support/manuals/en-us/inspiron-14-3420-laptop/inspiron_14_3420_ss/external-ports?guid=guid-b8f739cc-a41e-4ac9-b3f8-ff6d9c6d8c19&lang=en-us
+        basis: maker-spec
+        where: Dell Inspiron 14 3420 Setup and Specifications (online, the Snapdragon SC8180XP model), External ports
+        quote: Two USB 3.2 Gen 2 Type-C ports with Power Delivery
   dell-inspiron-14-5441:
     links:
       - title: Device tree for the X1P-64-100 model posted to the kernel list
@@ -2476,6 +2680,14 @@ models:
         basis: other-distro
         where: Self-written device tree, April 2026, distribution not named
         quote: have everything working but sound, also issues with shutdown.
+      fingerprint:
+        state: untested
+        note: A fingerprint reader in the power button is on some configurations.
+        checked: 2026-11
+        source: https://www.dell.com/support/manuals/en-us/inspiron-14-5441-laptop/inspiron-14-5441-owners-manual/fingerprint-reader-optional?guid=guid-e8599d7b-7655-425b-9635-8aa5217daa2e&lang=en-us
+        basis: maker-spec
+        where: Dell owner's manual (online), Inspiron 14 5441, Fingerprint reader (optional)
+        quote: The following table lists the specifications of the optional fingerprint-reader of your Inspiron 14 5441 .
   dell-latitude-5455:
     links:
       - title: Owner's notes on boot hangs, sound and battery on Ubuntu
@@ -2526,6 +2738,14 @@ models:
         basis: other-distro
         where: Ubuntu with the owner's experimental embedded controller driver, 2026-09
         quote: which seems to work but it’s a bit hacky
+      fingerprint:
+        state: untested
+        note: A fingerprint reader in the power button is on some configurations.
+        checked: 2026-11
+        source: https://www.delltechnologies.com/asset/en-us/products/laptops-and-2-in-1s/technical-support/latitude-5455-spec-sheet.pdf
+        basis: maker-spec
+        where: Dell Latitude 5455 spec sheet (PDF), Snapdragon X Series
+        quote: 1x Optional Touch Fingerprint Reader in Power Button
   dell-latitude-7455:
     links:
       - title: Latitude 7455 on Omarchy 4.5, what it took
@@ -2740,6 +2960,14 @@ models:
         basis: other-distro
         where: Ubuntu 26.10, kernel 7.3.0-21-qcom-x1e, October 2026
         quote: The fingerprint reader works at the COSMIC greeter and lock screen.
+      modem:
+        state: untested
+        note: A 5G modem is on some configurations.
+        checked: 2026-11
+        source: https://www.dell.com/support/manuals/en-us/latitude-14-7455-laptop/latitude-7455-owners-manual/wwan-module?guid=guid-96d56722-683d-4e16-b133-31f70973890d&lang=en-us
+        basis: maker-spec
+        where: Dell owner's manual (online), Latitude 7455, WWAN module
+        quote: The WWAN module is only available on computers that are manufactured with the WWAN (Cellular Internet) capability.
   dell-xps-13-9345:
     links:
       - title: Speakers and microphones tested on Omarchy
@@ -2901,6 +3129,14 @@ models:
         basis: other-distro
         where: Ubuntu, kernel 6.17 or newer, February 2026
         quote: fingerprint works perfectly for auth login and pam with sudo.
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://www.dell.com/support/manuals/en-us/xps-13-9345-laptop/xps-13-9345-owners-manual/external-ports-and-slots?guid=guid-8f0a5d6a-0f65-45f2-ba5a-33820dea8fc4&lang=en-us
+        basis: maker-spec
+        where: Dell owner's manual (online), XPS 13 9345, External ports and slots
+        quote: "Audio port Supported through the USB4 40 Gbps USB Type-C ports with DisplayPort and Power Delivery NOTE: A USB-C to 3.5 mm AUX audio adapter can be purchased separately to connect an audio device."
   ecs-liva-qc710:
     checks:
       display:
@@ -3234,6 +3470,14 @@ models:
         where: Kernel list posting, 13 October 2026, by the tree's author
         quote: "- WWAN modem"
         under: "Working:"
+      ethernet:
+        state: untested
+        note: It has a gigabit network socket.
+        checked: 2026-11
+        source: https://www.hp.com/h20195/v2/GetPDF.aspx/c09102584.pdf
+        basis: maker-spec
+        where: HP QuickSpecs c09102584, HP EliteBook 6 G1q 14 inch Notebook Next Gen AI PC, version 6, 2026-01-23
+        quote: USB4® with USB Type-C® 40Gbps signaling rate (USB 9 RJ45 Ethernet port
   hp-elitebook-ultra-g1q:
     links:
       - title: Omarchy ISO pull request with an owner's test report (September 2026)
@@ -3541,6 +3785,14 @@ models:
         where: linux-next 20260828 with the Glymur DP PHY series, by the tree's author
         quote: "- Fingerprint reader"
         under: "applied:"
+      modem:
+        state: untested
+        note: A 5G modem is on some configurations.
+        checked: 2026-11
+        source: https://www.hp.com/h20195/v2/GetPDF.aspx/c09232368.pdf
+        basis: maker-spec
+        where: HP QuickSpecs c09232368, HP EliteBook X G2q 14 inch Notebook Next Gen AI PC, version 13, 2026-09-11
+        quote: 5G module is optional and must be configured at the factory.
   hp-envy-x2-snapdragon:
     links:
       - title: "aarch64-laptops: device status and Secure Boot steps"
@@ -3640,6 +3892,14 @@ models:
         where: Ubuntu 18.04 image of the aarch64-laptops project, status list from 2019
         quote: "- [ ] LTE"
         under: HP Envy x2
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://h10032.www1.hp.com/ctg/Manual/c05865213.pdf
+        basis: maker-spec
+        where: HP Maintenance and Service Guide, HP ENVY x2 Detachable (model numbers 12-e001 through 12-e099), Snapdragon 835, first edition 2017-12 (Ports in the product description table)
+        quote: (1) USB Type-C (Generation 1) on left side
   hp-omnibook-3-14-hz0:
     links:
       - title: "Omarchy packages: speakers and microphones for the OmniBook 3 14"
@@ -3713,6 +3973,22 @@ models:
         basis: other-distro
         where: Ubuntu with jglathe's kernel, relayed in an Omarchy pull request, 2026-11
         quote: Its owners run it on jglathe's Ubuntu kernel with the keyboard, Wi-Fi, screen brightness, USB-C, USB-A, sound and video working.
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://kaas.hpcloud.hp.com/pdf-public/pdf_13221419_en-US-1.pdf
+        basis: maker-spec
+        where: HP Maintenance and Service Guide, HP OmniBook 3 14 inch Laptop Next Gen AI PC, model number 14-hz0xxx, first edition 2026-02
+        quote: Touch on panel, antiglare, LED, UWVA, 62.5% sRGB color coverage, True 8-bit color depth, 400 nits, 60 Hz
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://kaas.hpcloud.hp.com/pdf-public/pdf_13221419_en-US-1.pdf
+        basis: maker-spec
+        where: HP Maintenance and Service Guide, HP OmniBook 3 14 inch Laptop Next Gen AI PC, model number 14-hz0xxx, first edition 2026-02 (Ports in the product description table)
+        quote: "USB 3.2 Gen 2 Type-C ports (2), support:"
   hp-omnibook-5-16-bf0:
     links:
       - title: "Ubuntu bug: Support HP OmniBook 5 Laptop 16-bf0xxx (8E33)"
@@ -3772,6 +4048,22 @@ models:
         basis: other-distro
         where: Ubuntu 26.04.1, community kernel 7.2.2-jg-0-qcom-x1e
         quote: accelerated graphics, both DSP remote processors and physical speaker playback were verified
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://www.hp.com/content/dam/sites/garage-press/press/press-blogs/2025/new-hp-omnibook-5-series-with-snapdragon%C2%AE-sets-new-standard-for-mainstream-laptops-with-the-latest-ai-experiences/Product%20Datasheet_HP%20OmniBook%205%2016%20inch%20Next%20Gen%20AI%20PC.pdf
+        basis: maker-spec
+        where: HP press datasheet, HP OmniBook 5 16 inch Laptop Next Gen AI PC (Snapdragon X Plus X1P-42-100, Snapdragon X X1-26-100), 2025
+        quote: edge-to-edge 2K OLED display with an optional touch panel, true blacks, vivid contrast, and fast
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://www.hp.com/content/dam/sites/garage-press/press/press-blogs/2025/new-hp-omnibook-5-series-with-snapdragon%C2%AE-sets-new-standard-for-mainstream-laptops-with-the-latest-ai-experiences/Product%20Datasheet_HP%20OmniBook%205%2016%20inch%20Next%20Gen%20AI%20PC.pdf
+        basis: maker-spec
+        where: HP press datasheet, HP OmniBook 5 16 inch Laptop Next Gen AI PC (Snapdragon X Plus X1P-42-100, Snapdragon X X1-26-100), 2025, Ports row
+        quote: 2 USB Type-C® 10Gbps signaling rate (USB Power Delivery, DisplayPort™ 1.4a, HP Sleep
   hp-omnibook-5-16-bf1:
     links:
       - title: "Omarchy: add the HP OmniBook 5 16 (2026)"
@@ -4385,6 +4677,14 @@ models:
         where: Ubuntu's 7.3-based linux-qcom-x1e kernel (named in the series cover letter), by the tree's author, November 2026
         quote: "- ADSP and CDSP remoteprocs"
         under: "Supported and tested:"
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://kaas.hpcloud.hp.com/pdf-public/pdf_13599387_en-US-1.pdf
+        basis: maker-spec
+        where: HP Maintenance and Service Guide, HP OmniBook X 16 inch Laptop Next Gen AI PC, model numbers 16-cp0xxx and 16-cp1xxx, first edition 2026-01
+        quote: USB Type-C® 10 Gbps port Connects a USB device, provides high-speed data transfer,
   hp-probook-4-g1q:
     links:
       - title: "Ubuntu bug: HP ProBook 4 G1q, with an owner's report on Ubuntu 26.04"
@@ -4419,6 +4719,30 @@ models:
         where: Ubuntu 26.04, kernel 7.0.0-31-qcom-x1e, with the OmniBook X 14's device tree, September 2026
         quote: "- USB-C / external display support is still incomplete."
         under: "- Deep suspend is unreliable. The system froze after entering:"
+      ethernet:
+        state: untested
+        note: It has a gigabit network socket.
+        checked: 2026-11
+        source: https://www.hp.com/h20195/v2/GetPDF.aspx/c09102585.pdf
+        basis: maker-spec
+        where: HP QuickSpecs c09102585, HP ProBook 4 G1q 14 inch Notebook Next Gen AI PC, version 6, 2026-01-22
+        quote: USB4® with USB Type-C® 40Gbps signaling rate (USB 9 RJ45 Ethernet port
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://www.hp.com/h20195/v2/GetPDF.aspx/c09102585.pdf
+        basis: maker-spec
+        where: HP QuickSpecs c09102585, HP ProBook 4 G1q 14 inch Notebook Next Gen AI PC, version 6, 2026-01-22
+        quote: 35.6 cm (14") diagonal, WUXGA (1920 x 1200), LCD, Touch, UWVA, Anti-Glare, WLED, 300 nits, Low Power, sRGB 62.5%
+      fingerprint:
+        state: untested
+        note: A fingerprint reader is on some configurations.
+        checked: 2026-11
+        source: https://www.hp.com/h20195/v2/GetPDF.aspx/c09102585.pdf
+        basis: maker-spec
+        where: HP QuickSpecs c09102585, HP ProBook 4 G1q 14 inch Notebook Next Gen AI PC, version 6, 2026-01-22
+        quote: Fingerprint Sensor (optional)
   huawei-matebook-e-2019:
     links:
       - title: HUAWEI MateBook E 2019 on the postmarketOS wiki
@@ -4757,6 +5081,22 @@ models:
         basis: tree-author
         where: Kernel list posting of April 2026, by the tree's author
         quote: This series adds support for front camera on Gaokun3(3.0GHz version).
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader in the power button.
+        checked: 2026-11
+        source: https://consumer.huawei.com/ru/laptops/matebook-e-go/specs/
+        basis: maker-spec
+        where: Huawei Russia specification page of the MateBook E Go (Snapdragon 8cx Gen 3), power button row
+        quote: Кнопка питания со встроенным сканером отпечатков пальцев
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://consumer.huawei.com/ru/laptops/matebook-e-go/specs/
+        basis: maker-spec
+        where: Huawei Russia specification page of the MateBook E Go (Snapdragon 8cx Gen 3), ports row. The row lists these two USB-C ports and a 3.5 mm jack, nothing else
+        quote: "Слева: порт USB-C × 1, поддерживает зарядку, передачу данных (USB 3.2 Gen 1), подключение внешних источников питания 10 Вт (5В 2А) и DisplayPort (макс. 4K 60 Гц) Справа: USB-C × 1, поддерживает зарядку, передачу данных (USB 3.2 Gen 1), подключение внешних источников питания 10 Вт (5В 2А) и DisplayPort (макс. 4K 60 Гц)"
   hyrican-study-pad-one:
     links:
       - title: aarch64-laptops thread on the MateBook E 2019, with the Study Pad One reports
@@ -4967,6 +5307,22 @@ models:
         basis: other-distro
         where: postmarketOS wiki, page last edited May 2025
         quote: Mobile data Broken
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader in the power button.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/Lenovo/Lenovo_Flex_5G_14Q8CX05/Lenovo_Flex_5G_14Q8CX05_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2022-09-15
+        quote: Touch style fingerprint reader on power button
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/Lenovo/Lenovo_Flex_5G_14Q8CX05/Lenovo_Flex_5G_14Q8CX05_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2022-09-15
+        quote: 2x USB-C 3.1 Gen 2 (support data transfer, Power Delivery, and DisplayPort™)
   lenovo-ideapad-5g-14q8x05:
     links:
       - title: Manjaro forum thread on IdeaPad 5G 14Q8X05 support
@@ -4981,6 +5337,22 @@ models:
         basis: other-distro
         where: Debian unstable daily image, kernel 6.1, 2023-01
         quote: Now the problem is still the drivers (keyboard and touchpad do not work).
+      modem:
+        state: untested
+        note: It has a 5G modem.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_5G_14Q8X05/IdeaPad_5G_14Q8X05_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2022-12-08
+        quote: Qualcomm Snapdragon X55 5G Modem-RF System, Sub-6 GHz, M.2 card
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_5G_14Q8X05/IdeaPad_5G_14Q8X05_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2022-12-08
+        quote: 2x USB-C 3.2 Gen 2 (support data transfer, Power Delivery 3.0, and DisplayPort™ 1.4)
   lenovo-ideapad-5x-2-in-1-14q8x9:
     links:
       - title: "Ubuntu bug: Support Lenovo IdeaPad 5x, with a 2-in-1 owner's report"
@@ -5026,6 +5398,30 @@ models:
         basis: other-distro
         where: Community Ubuntu image, November 2025
         quote: it completed and this fixed the battery status and some other minor things.
+      touchscreen:
+        state: untested
+        note: It has a touchscreen. A pen is supported.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_5_2_in_1_14Q8X9/IdeaPad_5_2_in_1_14Q8X9_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-10-21
+        quote: OGM (One Glass Metal mesh) multi-touch, supports 10-point touch
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader on the palm rest.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_5_2_in_1_14Q8X9/IdeaPad_5_2_in_1_14Q8X9_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-10-21
+        quote: Touch style fingerprint reader on palm rest
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_5_2_in_1_14Q8X9/IdeaPad_5_2_in_1_14Q8X9_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-10-21
+        quote: 2x USB-C® (USB 10Gbps), with USB PD 45-65W and DisplayPort™ 1.4
   lenovo-ideapad-slim-3x-15q8x10:
     links:
       - title: "Ubuntu bug: Add support for Lenovo IdeaPad Slim 3"
@@ -5039,6 +5435,30 @@ models:
         basis: other-distro
         where: the author's own device tree, May 2026, on Ubuntu's bug tracker
         quote: The touchpad wont work without a GPIO IRQ MUX driver which I have written but have not published yet.
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_Slim_3_15Q8X10/IdeaPad_Slim_3_15Q8X10_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-11-06
+        quote: Touchscreen • Capacitive-type multi-touch, supports 10-point touch • Non-touch
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader on the palm rest.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_Slim_3_15Q8X10/IdeaPad_Slim_3_15Q8X10_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-11-06
+        quote: Touch style fingerprint reader on palm rest
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_Slim_3_15Q8X10/IdeaPad_Slim_3_15Q8X10_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-11-06
+        quote: 1x USB-C® (USB 5Gbps / USB 3.2 Gen 1), with USB PD 45-65W and DisplayPort™ 1.2
   lenovo-ideapad-slim-5x-14q8x9:
     links:
       - title: Omarchy on Snapdragon X laptops, with two owners' reports on the LCD model
@@ -5222,6 +5642,14 @@ models:
         where: Kernel list posting, 2026-09, by the tree's author
         quote: "- fingerprint (on usb1_ss2)"
         under: "Working:"
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_Slim_5_14Q8X9/IdeaPad_Slim_5_14Q8X9_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-09-01
+        quote: 2x USB-C® (USB 10Gbps / USB 3.2 Gen 2), with USB PD 45-65W and DisplayPort™ 1.4
   lenovo-miix-630:
     links:
       - title: "aarch64-laptops: device status and Secure Boot steps"
@@ -5301,6 +5729,22 @@ models:
         where: aarch64-laptops Ubuntu 18.04 image, status list from 2019
         quote: "- [ ] LTE"
         under: Lenovo Miix 630
+      touchscreen:
+        state: untested
+        note: It has a touchscreen. A pen is supported.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/Lenovo_Tablets/Miix_630_12Q35/Miix_630_12Q35_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2019-03
+        quote: Multi-touch Multi-touch, support 10 fingers, OGS
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/Lenovo_Tablets/Miix_630_12Q35/Miix_630_12Q35_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2019-03
+        quote: Ports One USB 3.1 Type-C Gen 1 (with the function of DC-in and DisplayPort 1.2),
   lenovo-thinkbook-16-gen-7-qoy:
     checks:
       display:
@@ -5460,6 +5904,14 @@ models:
         where: Linux 6.18, by the tree's author
         quote: "- Integrated fingerprint reader (FPC)"
         under: "Supported features:"
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkBook/ThinkBook_16_G7_QOY/ThinkBook_16_G7_QOY_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-05-06
+        quote: 2x USB-C® (USB 10Gbps / USB 3.2 Gen 2), with USB PD 45-65W and DisplayPort™ 1.4
   lenovo-thinkcentre-neo-50q-qc:
     checks:
       display:
@@ -5510,6 +5962,30 @@ models:
         basis: maker-spec
         where: Lenovo PSREF specification, updated 2026-11-18
         quote: Tiny only (without rubber feet)
+      ethernet:
+        state: untested
+        note: It has a gigabit network socket.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkCentre/ThinkCentre_neo_50q_QC/ThinkCentre_neo_50q_QC_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-09-10
+        quote: Gigabit Ethernet, Realtek® RTL8111K, 1x RJ-45
+      speakers:
+        state: untested
+        note: It has a built-in speaker.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkCentre/ThinkCentre_neo_50q_QC/ThinkCentre_neo_50q_QC_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-09-10
+        quote: Soundwire, Qualcomm® WCD9385 codec and WSA8845 amplifier Speakers Single speaker, 2W x1
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkCentre/ThinkCentre_neo_50q_QC/ThinkCentre_neo_50q_QC_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-09-10
+        quote: 1x USB-C® (USB 10Gbps / USB 3.2 Gen 2), with data transfer and 5V@0.9A charging
   lenovo-thinkpad-t14s-gen-6-snapdragon:
     links:
       - title: "Debian wiki: Debian on the ThinkPad T14s Gen 6 Snapdragon"
@@ -5647,6 +6123,30 @@ models:
         where: kernel commit of August 2024, by the tree's author
         quote: "- DSPs"
         under: "Add support for the aforementioned laptop. That includes:"
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T14s_Gen_6_Snapdragon/ThinkPad_T14s_Gen_6_Snapdragon_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-07-27
+        quote: Touchscreen • On-cell multi-touch, supports 10-point touch • Non-touch
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader in the power button.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T14s_Gen_6_Snapdragon/ThinkPad_T14s_Gen_6_Snapdragon_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-07-27
+        quote: Touch style fingerprint reader integrated in power button, match-on-chip
+      modem:
+        state: untested
+        note: A 5G modem is on some configurations.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T14s_Gen_6_Snapdragon/ThinkPad_T14s_Gen_6_Snapdragon_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-07-27
+        quote: Quectel RM520N-GL, 5G Sub-6 GHz, M.2 card, with embedded eSIM functionality
   lenovo-thinkpad-t14s-gen-7-snapdragon:
     links:
       - title: "Kernel list: Elan touchpad fix for the T14s Gen 7, tested on two units"
@@ -5790,6 +6290,14 @@ models:
         where: kernel commit of 28 September 2026, by the tree's author
         quote: "- Goodix fingerprint reader on usb_2"
         under: "Currently working:"
+      modem:
+        state: untested
+        note: A 5G modem is on some configurations.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T14s_Gen_7_Snapdragon/ThinkPad_T14s_Gen_7_Snapdragon_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-08-28
+        quote: Snapdragon® X61 5G Modem-RF System, 5G Sub-6 GHz, M.2 card, with embedded eSIM functionality
   lenovo-thinkpad-x13s-gen-1:
     links:
       - title: "Omarchy issue: ThinkPad X13s sleep, USB-C and panel problems"
@@ -5976,6 +6484,14 @@ models:
         basis: other-distro
         where: Debian testing and sid, per the Debian wiki (the Modem row carries the OK icon)
         quote: enable automatic FCC unlock (use the ID you retrieved in the previous step, caution some devices ship with 105b:e0ab make sure you have the right one)
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_X13s_Gen_1/ThinkPad_X13s_Gen_1_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2024-08-07
+        quote: 2x USB-C® 3.2 Gen 2 (support data transfer, Power Delivery 3.0 and DisplayPort™ 1.4a)
   lenovo-yoga-c630:
     links:
       - title: "postmarketOS wiki: Lenovo Yoga C630"
@@ -6110,6 +6626,22 @@ models:
         basis: other-distro
         where: postmarketOS, per its wiki's feature table
         quote: Mobile data Works
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader on the palm rest.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/Yoga/Yoga_C630_13Q50/Yoga_C630_13Q50_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2020-07
+        quote: Fingerprint reader Touch style Match-on-Host fingerprint reader on the palm rest
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/Yoga/Yoga_C630_13Q50/Yoga_C630_13Q50_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2020-07
+        quote: one USB 3.1 Type-C Gen 1 (with the function of Power Delivery and DisplayPort),
   lenovo-yoga-slim-7x-14q8y11:
     links:
       - title: "Kernel list: Lenovo Yoga Slim 7x Gen 11 support, with an owner's test"
@@ -6223,6 +6755,14 @@ models:
         basis: tree-author
         where: by the tree's authors, July 2026
         quote: Most notably, the camera support is missing today and there is no EC
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/Yoga/Yoga_Slim_7_14Q8Y11/Yoga_Slim_7_14Q8Y11_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-10-28
+        quote: Standard Ports 3x USB-C® (USB4® 40Gbps), with USB PD 45-65W and DisplayPort™ 1.4
   medion-sprchrgd-14-s1:
     checks:
       display:
@@ -6442,6 +6982,22 @@ models:
         basis: other-distro
         where: an owner's self-made device tree, distribution not stated, relayed November 2026
         quote: An owner keeps a working one as an edited decompiled DTB (kairunjp/Surface-Laptop-for-Business-13in-1st-Ed-with-Snapdragon-Linux), with the display, USB, keyboard, touchpad, UFS, Wi-Fi, Bluetooth, battery and touchscreen working
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader in the power button.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-laptop-copilot-plus-pc-13inch-tech-specs
+        basis: maker-spec
+        where: Microsoft Learn tech specs, Surface Laptop for Business, Copilot+ PC 13-inch (Snapdragon X Plus), updated 2026-10
+        quote: Windows Hello Fingerprint Power Button with Enhanced Sign-in Security
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-laptop-copilot-plus-pc-13inch-tech-specs
+        basis: maker-spec
+        where: Microsoft Learn tech specs, Surface Laptop for Business, Copilot+ PC 13-inch (Snapdragon X Plus), updated 2026-10
+        quote: "- 2 × USB-C/USB 3.2 ports with support for - Charging - Data transfer - DisplayPort 1.4a (up to 2 × 4K @ 60 Hz) - Surface Thunderbolt™ 4 Dock support - Supports fast charging with a minimum 60 W charger via USB-C 9 - USB-A 3.1 (Gen 2) - 3.5-mm headphone jack"
   microsoft-surface-laptop-7-13:
     links:
       - title: "linux-surface: Surface Laptop 7th Edition support thread"
@@ -6695,6 +7251,14 @@ models:
         basis: tree-author
         where: Kernel commit of June 2026, by the tree's author, tested on model 2110
         quote: "Currently supported: - UFS - Touchscreen - Pen - USB 3.2 x2 (DP Alt Mode) - Audio - Wifi - Bluetooth - CDSP"
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-pro-copilot-plus-pc-12inch-tech-specs
+        basis: maker-spec
+        where: Microsoft Learn tech specs, Surface Pro for Business, Copilot+ PC 12-inch (Snapdragon X Plus), updated 2025-09
+        quote: "- 2 × USB-C with USB4/Thunderbolt 4 ports: - Charging - Data transfer - DisplayPort 1.4a (up to 2 × 4K @ 60Hz) - Surface Thunderbolt 4 Dock support - Fast charging with minimum 45W USB-C charger 11 - Surface Pro 12-inch keyboard connector"
   microsoft-surface-pro-9-5g:
     checks:
       backlight:
@@ -6808,6 +7372,22 @@ models:
         basis: tree-author
         where: Linux 6.13, by the tree's author
         quote: Bluetooth, 5G cellular modem, audio output (via Bluetooth headsets
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://support.microsoft.com/en-us/surface/models/surface-pro-9-features-and-specs
+        basis: maker-spec
+        where: Microsoft Support, Surface Pro 9 features and specs (covers the Intel/Wifi and SQ 3/5G models), updated 2026-09
+        quote: "Surface Pro 9 (SQ® 3/5G): 2 x USB-C® 3.2 1 x Surface Connect port Surface Keyboard port 1 x nano SIM"
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://support.microsoft.com/en-us/surface/models/surface-pro-9-features-and-specs
+        basis: maker-spec
+        where: Microsoft Support, Surface Pro 9 features and specs (covers the Intel/Wifi and SQ 3/5G models), updated 2026-09
+        quote: "Surface Pro 9 (SQ® 3/5G): 2 x USB-C® 3.2 1 x Surface Connect port Surface Keyboard port 1 x nano SIM"
   microsoft-surface-pro-x:
     links:
       - title: linux-surface status report for the SQ1, November 2026
@@ -6976,6 +7556,22 @@ models:
         basis: other-distro
         where: Ubuntu 26.04, kernel 7.4.0-rc2-next-20261109 with extra patches, SQ1 with LTE, 2026-11
         quote: "| Remoteprocs: ADSP, CDSP, SLPI, modem (MPSS) | ✓ | All four boot |"
+      modem:
+        state: untested
+        note: A 4G modem is on some configurations.
+        checked: 2026-11
+        source: https://support.microsoft.com/en-us/surface/models/surface-pro-x-features-and-specs
+        basis: maker-spec
+        where: Microsoft Support, Surface Pro X features and specs, updated 2026-10
+        quote: Get online no matter where you are with optional built-in LTE.
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://support.microsoft.com/en-us/surface/models/surface-pro-x-features-and-specs
+        basis: maker-spec
+        where: Microsoft Support, Surface Pro X features and specs, updated 2026-10
+        quote: Connections 2 x USB-C® 1 x Surface Connect port Surface Keyboard port 1 x nano SIM
   microsoft-windows-dev-kit-2023:
     links:
       - title: Omarchy issue on the USB driver and boot option the Dev Kit needs
@@ -7143,6 +7739,14 @@ models:
         where: Kernel commit, December 2024, by the tree's author
         quote: "- ADSP and CDSP"
         under: "Supported features:"
+      ethernet:
+        state: untested
+        note: It has a network socket.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/windows/arm/dev-kit/
+        basis: maker-spec
+        where: Microsoft Learn, Windows Dev Kit 2023 (Project Volterra) device specifics, updated 2025-11
+        quote: "Ports: 3x USB-A, 2x USB-C, Mini-Display (HBR2 support), Ethernet (RJ45)"
   qualcomm-snapdragon-dev-kit-for-windows:
     checks:
       display:
@@ -7201,6 +7805,14 @@ models:
         basis: maker-spec
         where: Qualcomm product brief, DCN 87-77834-1 Rev C
         quote: and dev test labs, allowing you to rack and stack multiple devices
+      ethernet:
+        state: untested
+        note: It has a network socket.
+        checked: 2026-11
+        source: https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/documents/Snapdragon-Dev-Kit-for-Windows-Product-Brief.pdf
+        basis: maker-spec
+        where: Qualcomm Snapdragon Dev Kit for Windows product brief (PDF), X1E-00-1DE. The line runs across the page's three columns, "1x RJ45 Ethernet" stands under Connections
+        quote: LLMs and LVMs locally. NPU 1x RJ45 Ethernet
   samsung-galaxy-book-go:
     links:
       - title: "velvet-os: Snapdragon 7c Windows laptops status"
@@ -7304,6 +7916,14 @@ models:
         where: velvet-os Debian images, kernels 6.1 to 6.6, status list from 2023
         quote: "- lte modem (samsung galaxy book go)"
         under: broken
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://www.samsungmobilepress.com/articles/do-more-on-the-move-with-samsung-galaxy-book-go-and-galaxy-book-go-5g
+        basis: maker-spec
+        where: Samsung Mobile Press release of 2021-06-03, Galaxy Book Go specification table, the whole Port row
+        quote: Port * USB Type-C (2), USB 2.0 (1), 3.5pi Headphone/Mic, MicroSD, Nano SIM ** , Nano Security slot
   samsung-galaxy-book-go-5g:
     links:
       - title: Owner's hardware report for the Galaxy Book Go 5G
@@ -7317,6 +7937,14 @@ models:
         basis: other-distro
         where: A Linux distribution the owner does not remember, some time before November 2026
         quote: Some time ago tried to boot a linux distribution on it (I don't remember which) from a USB stick and refused to see it - it booted in Windows no matter what I did.
+      modem:
+        state: untested
+        note: It has a 5G modem.
+        checked: 2026-11
+        source: https://www.samsungmobilepress.com/articles/do-more-on-the-move-with-samsung-galaxy-book-go-and-galaxy-book-go-5g
+        basis: maker-spec
+        where: Samsung Mobile Press release of 2021-06-03 for the Galaxy Book Go and Galaxy Book Go 5G
+        quote: the Galaxy Book Go 5G powered by the Qualcomm ® Snapdragon 8cx Gen 2 5G compute platform delivers lightning-fast 5G connectivity speeds
   samsung-galaxy-book-s:
     links:
       - title: Samsung Galaxy Book S on the postmarketOS wiki
@@ -7457,6 +8085,14 @@ models:
         basis: other-distro
         where: postmarketOS, per its wiki's feature table; the device is archived there
         quote: Modem Mobile data Broken
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader.
+        checked: 2026-11
+        source: https://www.samsungmobilepress.com/articles/experience_the_new_era_of_mobile_computing_with_galaxy_book_s
+        basis: maker-spec
+        where: Samsung Mobile Press release of 2019-08-08, Galaxy Book S Product Specifications, Sensors row
+        quote: Sensors Fingerprint Sensor, Hall Sensor, Light Sensor (Keyboard Backlit on/off)
   samsung-galaxy-book2-go:
     links:
       - title: "Kernel list: Add Samsung Galaxy Book2 Go (v2)"
@@ -7626,6 +8262,14 @@ models:
         where: by the tree's authors, v2 posting, November 2026
         quote: "* Modem and mobile data"
         under: "Add initial functionality:"
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://news.samsung.com/uk/stay-connected-on-the-go-with-samsung-galaxy-book2-go-5g
+        basis: maker-spec
+        where: Samsung UK Newsroom press release for the Galaxy Book2 Go 5G (January 2023), specification table, the whole Ports row
+        quote: Ports 2xUSB-C, 1xUSB2.0, uSD, HP/Mic, Nano SIM Slot
   samsung-galaxy-book2-w737:
     checks:
       display:
@@ -7688,6 +8332,30 @@ models:
         where: Commit adding the device tree, by its author, 2022-02
         quote: "- Two USB 3 ports"
         under: "Currently working features:"
+      modem:
+        state: untested
+        note: It has a 4G modem.
+        checked: 2026-11
+        source: https://www.samsungmobilepress.com/articles/change-the-way-you-work-with-the-samsung-galaxy-book2
+        basis: maker-spec
+        where: Samsung Mobile Press release of 2018-10-18, Samsung Galaxy Book2 Product Specifications
+        quote: LTE SUPPORT Snapdragon X20 LTE Modem Cat.18 5CA, up to 4X4 MIMO
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader.
+        checked: 2026-11
+        source: https://www.samsungmobilepress.com/articles/change-the-way-you-work-with-the-samsung-galaxy-book2
+        basis: maker-spec
+        where: Samsung Mobile Press release of 2018-10-18, Samsung Galaxy Book2 Product Specifications
+        quote: SENSORS Accelerometer, Fingerprint Sensor, Gyro Sensor, Geomagnetic Sensor, Light Sensor
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://www.samsungmobilepress.com/articles/change-the-way-you-work-with-the-samsung-galaxy-book2
+        basis: maker-spec
+        where: Samsung Mobile Press release of 2018-10-18, Samsung Galaxy Book2 Product Specifications, the whole PORT row
+        quote: PORT USB Type-C x2, microSD, 3.5mm
   samsung-galaxy-book4-edge-16:
     links:
       - title: Device tree posting for the Samsung Galaxy Book4 Edge 14 and 16
@@ -7797,6 +8465,14 @@ models:
         basis: tree-author
         where: by the trees' author, v8 posting, September 2026
         quote: "Supported: - Keyboard - Touchpad - USB C (as init by firmware only) - USB A (on 16 inch) - Display - HDMI - WiFi - Bluetooth - ADSP / CDSP"
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader.
+        checked: 2026-11
+        source: https://www.samsung.com/uk/computers/galaxy-book/galaxy-book4-edge-snapdragon-16gb-1tb-np960xmb-kb1uk/
+        basis: maker-spec
+        where: Samsung UK product page for NP960XMB-KB1UK, specification table, Security group
+        quote: Security TPM Yes FingerPrint Reader Yes
   tcl-book-14-go:
     links:
       - title: "velvet-os: Snapdragon 7c Windows laptops status"
@@ -7851,6 +8527,22 @@ models:
         basis: other-distro
         where: an owner's own device tree, kernel 6.4-rc, May 2023
         quote: "What is working: - EFIFB - Keyboard - USB - Bluetooth"
+      modem:
+        state: untested
+        note: A 4G modem is on some configurations.
+        checked: 2026-11
+        source: https://www.tcl.com/global/en/laptops/tcl-book-14-go/specifications
+        basis: maker-spec
+        where: TCL Global specifications page of the TCL Book 14 Go (Snapdragon 7c), network section
+        quote: "*4G connectivity only available on the 9080G2 model."
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://www.tcl.com/global/en/laptops/tcl-book-14-go/specifications
+        basis: maker-spec
+        where: TCL Global specifications page of the TCL Book 14 Go (Snapdragon 7c), the USB list of the connectivity section
+        quote: Full function Type-C (PD+DP+USB2.0) × 1 PD Charging + USB2.0 Type-C × 1 USB3.0 Type-A × 1
   xiaomi-book-s:
     links:
       - title: aarch64-laptops issue on Xiaomi Book S support
@@ -7864,3 +8556,955 @@ models:
         basis: other-distro
         where: a kernel with an early Surface Pro X device tree, January 2024
         quote: using early version of dt from Surface Pro X is able to boot the kernel and logs are able to be successfully printed on the screen, but the kernel freezes late during systemd startup services
+  lenovo-v15-g7-q7x:
+    checks:
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/Lenovo/Lenovo_V15_G7_Q7X/Lenovo_V15_G7_Q7X_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-10-30
+        quote: Touchscreen • 10-point multi-touch • Non-touch
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/Lenovo/Lenovo_V15_G7_Q7X/Lenovo_V15_G7_Q7X_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-10-30
+        quote: 2x USB-C® (USB 5Gbps), with USB PD 45-65W and DisplayPort™ 1.4
+  lenovo-ideapad-vibe-14q8x12:
+    checks:
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_Vibe_14Q8X12/IdeaPad_Vibe_14Q8X12_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-10-22
+        quote: 2x USB-C® (USB 10Gbps), with USB PD 45-65W and DisplayPort™ 1.2
+  lenovo-ideapad-vibe-15q8x12:
+    checks:
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_Vibe_15Q8X12/IdeaPad_Vibe_15Q8X12_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-10-28
+        quote: Touchscreen • Capacitive-type multi-touch, supports 10-point touch • Non-touch
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_Vibe_15Q8X12/IdeaPad_Vibe_15Q8X12_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-10-28
+        quote: 2x USB-C® (USB 10Gbps), with USB PD 45-65W and DisplayPort™ 1.2
+  lenovo-ideapad-5x-2-in-1-14q8y11:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen. A pen is supported.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_5_2_in_1_14Q8Y11/IdeaPad_5_2_in_1_14Q8Y11_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-10-29
+        quote: OGS (One Glass Solution) multi-touch, supports 10-point touch
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_5_2_in_1_14Q8Y11/IdeaPad_5_2_in_1_14Q8Y11_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-10-29
+        quote: 2x USB-C® (USB 10Gbps), with USB PD 45-65W and DisplayPort™ 1.4
+  lenovo-ideapad-slim-5x-13q8y11:
+    checks:
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_Slim_5_13Q8Y11/IdeaPad_Slim_5_13Q8Y11_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-07-07
+        quote: Touchscreen • Capacitive-type multi-touch, supports 10-point touch • Non-touch
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_Slim_5_13Q8Y11/IdeaPad_Slim_5_13Q8Y11_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-07-07
+        quote: 2x USB-C® (USB 10Gbps), with USB PD 45-65W and DisplayPort™ 1.4
+  lenovo-ideapad-slim-5x-15q8y11:
+    checks:
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_Slim_5_15Q8Y11/IdeaPad_Slim_5_15Q8Y11_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-07-07
+        quote: Touchscreen • Capacitive-type multi-touch, supports 10-point touch • Non-touch
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/IdeaPad/IdeaPad_Slim_5_15Q8Y11/IdeaPad_Slim_5_15Q8Y11_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-07-07
+        quote: 2x USB-C® (USB 10Gbps), with USB PD 45-65W and DisplayPort™ 1.4
+  lenovo-thinkbook-14-gen-9-q8y:
+    checks:
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkBook/ThinkBook_14_G9_Q8Y/ThinkBook_14_G9_Q8Y_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-11-10
+        quote: Touchscreen • In-cell multi-touch, supports 10-point touch • Non-touch
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader in the power button.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkBook/ThinkBook_14_G9_Q8Y/ThinkBook_14_G9_Q8Y_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-11-10
+        quote: Touch style fingerprint reader integrated in power button, match-on-chip
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkBook/ThinkBook_14_G9_Q8Y/ThinkBook_14_G9_Q8Y_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2026-11-10
+        quote: 2x USB-C® (USB 10Gbps), with USB PD 45-65W and DisplayPort™ 1.4
+  lenovo-10w:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen. A pen is supported.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/Lenovo_Tablets/Lenovo_10w/Lenovo_10w_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2024-01-02
+        quote: OGS (One Glass Solution) multi-touch, supports 10-point touch
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/Lenovo_Tablets/Lenovo_10w/Lenovo_10w_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification PDF, dated 2024-01-02
+        quote: 1x USB-C® 3.2 Gen 1 (support data transfer, Power Delivery and DisplayPort™)
+  asus-v400-aio-vm441qa:
+    checks:
+      ethernet:
+        state: untested
+        note: It has a network socket.
+        checked: 2026-11
+        source: https://dlcdnets.asus.com/pub/ASUS/All-In-One/VM441QA/0409_E27272_VM441QA_UM_A.pdf
+        basis: maker-spec
+        where: ASUS All-in-One PC user's manual for VM441QA (E27272, released 2026-03-23), English edition
+        quote: This 8-pin RJ-45 LAN port supports a standard Ethernet cable
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://dlcdnets.asus.com/pub/ASUS/All-In-One/VM441QA/0409_E27272_VM441QA_UM_A.pdf
+        basis: maker-spec
+        where: ASUS All-in-One PC user's manual for VM441QA (E27272, released 2026-03-23), English edition
+        quote: On selected models, multi-touch is supported. You can
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://dlcdnets.asus.com/pub/ASUS/All-In-One/VM441QA/0409_E27272_VM441QA_UM_A.pdf
+        basis: maker-spec
+        where: ASUS All-in-One PC user's manual for VM441QA (E27272, released 2026-03-23), English edition
+        quote: The USB 3.2 (Universal Serial Bus 3.2) Gen 1 Type-C® port
+      speakers:
+        state: untested
+        note: It has a built-in speaker.
+        checked: 2026-11
+        source: https://dlcdnets.asus.com/pub/ASUS/All-In-One/VM441QA/0409_E27272_VM441QA_UM_A.pdf
+        basis: maker-spec
+        where: ASUS All-in-One PC user's manual for VM441QA (E27272, released 2026-03-23), English edition
+        quote: The built-in audio speaker allows you to hear audio straight
+      microphones:
+        state: untested
+        note: It has built-in microphones.
+        checked: 2026-11
+        source: https://dlcdnets.asus.com/pub/ASUS/All-In-One/VM441QA/0409_E27272_VM441QA_UM_A.pdf
+        basis: maker-spec
+        where: ASUS All-in-One PC user's manual for VM441QA (E27272, released 2026-03-23), English edition
+        quote: The array microphones feature echo canceling, noise
+      camera:
+        state: untested
+        note: It has a built-in camera.
+        checked: 2026-11
+        source: https://dlcdnets.asus.com/pub/ASUS/All-In-One/VM441QA/0409_E27272_VM441QA_UM_A.pdf
+        basis: maker-spec
+        where: ASUS All-in-One PC user's manual for VM441QA (E27272, released 2026-03-23), English edition
+        quote: The built-in camera allows you to take pictures or record
+  asus-v400-aio-vm471qa:
+    checks:
+      ethernet:
+        state: untested
+        note: It has a network socket.
+        checked: 2026-11
+        source: https://dlcdnets.asus.com/pub/ASUS/All-In-One/VM471QA/0409_E27871_VM471QA_UM_A.pdf
+        basis: maker-spec
+        where: ASUS All-in-One PC user's manual for VM471QA (E27871, released 2026-06-16), English edition
+        quote: This 8-pin RJ-45 LAN port supports a standard Ethernet cable
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://dlcdnets.asus.com/pub/ASUS/All-In-One/VM471QA/0409_E27871_VM471QA_UM_A.pdf
+        basis: maker-spec
+        where: ASUS All-in-One PC user's manual for VM471QA (E27871, released 2026-06-16), English edition
+        quote: On selected models, multi-touch is supported. You can
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://dlcdnets.asus.com/pub/ASUS/All-In-One/VM471QA/0409_E27871_VM471QA_UM_A.pdf
+        basis: maker-spec
+        where: ASUS All-in-One PC user's manual for VM471QA (E27871, released 2026-06-16), English edition
+        quote: The USB 3.2 (Universal Serial Bus 3.2) Gen 1 Type-C® port
+      speakers:
+        state: untested
+        note: It has a built-in speaker.
+        checked: 2026-11
+        source: https://dlcdnets.asus.com/pub/ASUS/All-In-One/VM471QA/0409_E27871_VM471QA_UM_A.pdf
+        basis: maker-spec
+        where: ASUS All-in-One PC user's manual for VM471QA (E27871, released 2026-06-16), English edition
+        quote: The built-in audio speaker allows you to hear audio straight
+      microphones:
+        state: untested
+        note: It has built-in microphones.
+        checked: 2026-11
+        source: https://dlcdnets.asus.com/pub/ASUS/All-In-One/VM471QA/0409_E27871_VM471QA_UM_A.pdf
+        basis: maker-spec
+        where: ASUS All-in-One PC user's manual for VM471QA (E27871, released 2026-06-16), English edition
+        quote: The array microphones feature echo canceling, noise
+      camera:
+        state: untested
+        note: It has a built-in camera.
+        checked: 2026-11
+        source: https://dlcdnets.asus.com/pub/ASUS/All-In-One/VM471QA/0409_E27871_VM471QA_UM_A.pdf
+        basis: maker-spec
+        where: ASUS All-in-One PC user's manual for VM471QA (E27871, released 2026-06-16), English edition
+        quote: The built-in camera allows you to take pictures or record
+  asus-vivobook-s14-s5408qa:
+    checks:
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://odinapi.asus.com/recent-data/apiv2/PDTechSpec?SystemCode=asus&WebSiteCode=global&ProductWebPath=asus-vivobook-s14-s5408-qualcomm&siteID=www&sitelang=
+        basis: maker-spec
+        where: ASUS's specification data for the Vivobook S14 (S5408, Qualcomm)
+        quote: 2x USB 3.2 Gen 2 Type-C with support for display / power delivery (data speed up to 10Gbps) 2x USB 3.2 Gen 1 Type-A (data speed up to 5Gbps), 1x 3.5mm Combo Audio Jack 1x HDMI 2.1 TMDS
+  asus-vivobook-s14-flip-tp5408qa:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen. A pen is supported.
+        checked: 2026-11
+        source: https://odinapi.asus.com/recent-data/apiv2/PDTechSpec?SystemCode=asus&WebSiteCode=global&ProductWebPath=asus-vivobook-s14-flip-tp5408-qualcomm&siteID=www&sitelang=
+        basis: maker-spec
+        where: ASUS's specification data for the Vivobook S14 Flip (TP5408, Qualcomm)
+        quote: Touch screen, (Screen-to-body ratio)85%, With stylus support
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://odinapi.asus.com/recent-data/apiv2/PDTechSpec?SystemCode=asus&WebSiteCode=global&ProductWebPath=asus-vivobook-s14-flip-tp5408-qualcomm&siteID=www&sitelang=
+        basis: maker-spec
+        where: ASUS's specification data for the Vivobook S14 Flip (TP5408, Qualcomm)
+        quote: 2x USB 3.2 Gen 2 Type-C with support for display / power delivery (data speed up to 10Gbps) 2x USB 3.2 Gen 1 Type-A (data speed up to 5Gbps), 1x 3.5mm Combo Audio Jack 1x HDMI 2.1 TMDS
+  asus-vivobook-s16-s5608qa:
+    checks:
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://odinapi.asus.com/recent-data/apiv2/PDTechSpec?SystemCode=asus&WebSiteCode=global&ProductWebPath=asus-vivobook-s16-s5608-qualcomm&siteID=www&sitelang=
+        basis: maker-spec
+        where: ASUS's specification data for the Vivobook S16 (S5608, Qualcomm)
+        quote: 2x USB 3.2 Gen 2 Type-C with support for display / power delivery (data speed up to 10Gbps) 2x USB 3.2 Gen 1 Type-A (data speed up to 5Gbps), 1x 3.5mm Combo Audio Jack 1x HDMI 2.1 TMDS 1x micro HDMI 2.1 TMDS
+  asus-vivobook-s16-flip-tp5608qa:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen. A pen is supported.
+        checked: 2026-11
+        source: https://odinapi.asus.com/recent-data/apiv2/PDTechSpec?SystemCode=asus&WebSiteCode=global&ProductWebPath=asus-vivobook-s16-flip-tp5608-qualcomm&siteID=www&sitelang=
+        basis: maker-spec
+        where: ASUS's specification data for the Vivobook S16 Flip (TP5608, Qualcomm)
+        quote: Touch screen, (Screen-to-body ratio)88%, With stylus support
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://odinapi.asus.com/recent-data/apiv2/PDTechSpec?SystemCode=asus&WebSiteCode=global&ProductWebPath=asus-vivobook-s16-flip-tp5608-qualcomm&siteID=www&sitelang=
+        basis: maker-spec
+        where: ASUS's specification data for the Vivobook S16 Flip (TP5608, Qualcomm)
+        quote: 2x USB 3.2 Gen 2 Type-C with support for display / power delivery (data speed up to 10Gbps) 2x USB 3.2 Gen 1 Type-A (data speed up to 5Gbps), 1x Headphone/Headset 1x HDMI 2.1 TMDS
+  hp-elitebook-6-g2q:
+    checks:
+      ethernet:
+        state: untested
+        note: It has a network socket.
+        checked: 2026-11
+        source: https://www.hp.com/emea_middle_east-en/products/laptops/product-details/product-specifications/2104002779
+        basis: maker-spec
+        where: HP product specifications page, HP EliteBook 6 G2q 14 inch Notebook Next Gen AI PC, configuration DU9T6AT
+        quote: Ports 1 HDMI 2.1; 1 stereo headphone/microphone combo jack; 1 RJ-45; 1 nano security lock slot; 2 USB Type-A 5Gbps signaling rate (powered)
+      fingerprint:
+        state: untested
+        note: A fingerprint reader is on some configurations.
+        checked: 2026-11
+        source: https://www.hp.com/emea_middle_east-en/products/laptops/product-details/product-specifications/2104002779
+        basis: maker-spec
+        where: HP product specifications page, HP EliteBook 6 G2q 14 inch Notebook Next Gen AI PC, configuration DU9T6AT (row label and value)
+        quote: Fingerprint reader Fingerprint reader
+  hp-omnibook-3-16-bz0:
+    checks:
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://kaas.hpcloud.hp.com/pdf-public/pdf_13631969_en-US-1.pdf
+        basis: maker-spec
+        where: HP Maintenance and Service Guide, HP OmniBook 3 16 inch Laptop Next Gen AI PC, model numbers 16-bz0xxx, first edition 2026-01
+        quote: WUXGA (1920 × 1200), LED, antiglare, sRGB 62.5%, 8 bit, eDP 1.2 without PSR, 300 nits, 60 Hz, touch or
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://kaas.hpcloud.hp.com/pdf-public/pdf_13631969_en-US-1.pdf
+        basis: maker-spec
+        where: HP Maintenance and Service Guide, HP OmniBook 3 16 inch Laptop Next Gen AI PC, model numbers 16-bz0xxx, first edition 2026-01 (left side components, item 3, ports (2))
+        quote: USB Type-C® 10 Gbps power connectors and Connect a USB device, provide high-speed data transfer, and
+  hp-omnibook-3-16-ct0:
+    checks:
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://www.hp.com/au-en/shop/hp-omnibook-3-laptop-ai-16-ct0030qu-e5hs8pa.html
+        basis: maker-spec
+        where: HP Australia product page, HP OmniBook 3 16 inch Laptop AI 16-ct0030QU (E5HS8PA), Ports row (the page writes the registered mark as &#xAE;)
+        quote: 2 USB Type-A 5Gbps signaling rate; 1 HDMI-out 1.4b; 1 headphone/microphone combo; 2 USB Type-C® 10Gbps signaling rate
+  hp-omnibook-5-14-he0:
+    checks:
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://kaas.hpcloud.hp.com/pdf-public/pdf_12370965_en-US-1.pdf
+        basis: maker-spec
+        where: HP Maintenance and Service Guide, HP OmniBook 5 14 inch Laptop Next Gen AI PC, model numbers 14-he0xxx, 14-he1xxx, second edition 2026-05
+        quote: For models equipped with touchscreen displays Q02684-001
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://kaas.hpcloud.hp.com/pdf-public/pdf_12370965_en-US-1.pdf
+        basis: maker-spec
+        where: HP Maintenance and Service Guide, HP OmniBook 5 14 inch Laptop Next Gen AI PC, model numbers 14-he0xxx, 14-he1xxx, second edition 2026-05
+        quote: USB Type-C® 10 Gbps port Connects a USB device, provides high-speed data transfer,
+  hp-omnibook-5-14-he1:
+    checks:
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations.
+        checked: 2026-11
+        source: https://kaas.hpcloud.hp.com/pdf-public/pdf_12370965_en-US-1.pdf
+        basis: maker-spec
+        where: HP Maintenance and Service Guide, HP OmniBook 5 14 inch Laptop Next Gen AI PC, model numbers 14-he0xxx, 14-he1xxx, second edition 2026-05
+        quote: For models equipped with touchscreen displays Q02684-001
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://kaas.hpcloud.hp.com/pdf-public/pdf_12370965_en-US-1.pdf
+        basis: maker-spec
+        where: HP Maintenance and Service Guide, HP OmniBook 5 14 inch Laptop Next Gen AI PC, model numbers 14-he0xxx, 14-he1xxx, second edition 2026-05
+        quote: USB Type-C® 10 Gbps port Connects a USB device, provides high-speed data transfer,
+  hp-omnibook-x-16-cp0:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen.
+        checked: 2026-11
+        source: https://kaas.hpcloud.hp.com/pdf-public/pdf_13599387_en-US-1.pdf
+        basis: maker-spec
+        where: HP Maintenance and Service Guide, HP OmniBook X 16 inch Laptop Next Gen AI PC, model numbers 16-cp0xxx and 16-cp1xxx, first edition 2026-01 (display assembly spare parts)
+        quote: Touch control board (includes cable and display adhesives) (not illustrated) P50358-001
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://kaas.hpcloud.hp.com/pdf-public/pdf_13599387_en-US-1.pdf
+        basis: maker-spec
+        where: HP Maintenance and Service Guide, HP OmniBook X 16 inch Laptop Next Gen AI PC, model numbers 16-cp0xxx and 16-cp1xxx, first edition 2026-01
+        quote: USB Type-C® 10 Gbps port Connects a USB device, provides high-speed data transfer,
+  microsoft-surface-laptop-13in-2nd-edition:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-laptop-13inch-2ndedition-snapdragon
+        basis: maker-spec
+        where: Microsoft Learn tech specs, Surface Laptop for Business, 13-inch, 2nd Edition, Snapdragon, updated 2026-10
+        quote: 13-inch PixelSense™ touchscreen display
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader in the power button.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-laptop-13inch-2ndedition-snapdragon
+        basis: maker-spec
+        where: Microsoft Learn tech specs, Surface Laptop for Business, 13-inch, 2nd Edition, Snapdragon, updated 2026-10
+        quote: Fingerprint Power Button with Enhanced Sign-in Security
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-laptop-13inch-2ndedition-snapdragon
+        basis: maker-spec
+        where: Microsoft Learn tech specs, Surface Laptop for Business, 13-inch, 2nd Edition, Snapdragon, updated 2026-10
+        quote: 2 × USB-C® / USB 3.2 ports with support for charging, data transfer, and DisplayPort™ 1.4a Support for up to two 4K monitors at 60 Hz Surface Thunderbolt™ 4 Dock and accessory support Fast charging with a minimum 60W USB-C® PD charger USB-A 3.2 3.5 mm headphone jack
+  microsoft-surface-laptop-8-15:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-laptop-138inch-15inch-8thedition-snapdragon
+        basis: maker-spec
+        where: Microsoft Learn tech specs, Surface Laptop for Business, 13.8-inch and 15-inch, 8th Edition, Snapdragon, updated 2026-10
+        quote: 15-inch PixelSense Flow™ touchscreen display
+  microsoft-surface-pro-12in-2nd-edition:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen. A pen is supported.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-pro-12inch-2ndedition-snapdragon-tech-specs
+        basis: maker-spec
+        where: Microsoft Learn tech specs, Surface Pro for Business, 12-inch, 2nd Edition, Snapdragon, updated 2026-10
+        quote: 12-inch PixelSense™ LCD touchscreen display
+      modem:
+        state: untested
+        note: A 5G modem is on some configurations.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-pro-12inch-2ndedition-snapdragon-tech-specs
+        basis: maker-spec
+        where: Microsoft Learn tech specs, Surface Pro for Business, 12-inch, 2nd Edition, Snapdragon, updated 2026-10
+        quote: 5G is available on select Surface Pro for Business, 12-inch, 2nd Edition configurations.
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-pro-12inch-2ndedition-snapdragon-tech-specs
+        basis: maker-spec
+        where: Microsoft Learn tech specs, Surface Pro for Business, 12-inch, 2nd Edition, Snapdragon, updated 2026-10
+        quote: 2 × USB-C® / USB 3.2 ports with support for charging, data transfer, and DisplayPort 1.4a Support for up to two 4K monitors at 60 Hz Surface Thunderbolt™ 4 Dock and accessory support Fast charging with a minimum 45W USB-C® PD charger Surface Pro 12-inch Keyboard connector
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-pro-12inch-2ndedition-snapdragon-tech-specs
+        basis: maker-spec
+        where: Microsoft Learn tech specs, Surface Pro for Business, 12-inch, 2nd Edition, Snapdragon, updated 2026-10
+        quote: 2 × USB-C® / USB 3.2 ports with support for charging, data transfer, and DisplayPort 1.4a Support for up to two 4K monitors at 60 Hz Surface Thunderbolt™ 4 Dock and accessory support Fast charging with a minimum 45W USB-C® PD charger Surface Pro 12-inch Keyboard connector
+  microsoft-surface-pro-12th-edition:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen. A pen is supported.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-pro-13inch-12thedition-snapdragon
+        basis: maker-spec
+        where: Microsoft Learn tech specs, Surface Pro for Business, 13-inch, 12th Edition, Snapdragon, updated 2026-10
+        quote: "OLED: 13-inch PixelSense™ Flow touchscreen display"
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-pro-13inch-12thedition-snapdragon
+        basis: maker-spec
+        where: Microsoft Learn tech specs, Surface Pro for Business, 13-inch, 12th Edition, Snapdragon, updated 2026-10
+        quote: 2 × USB-C® / USB4® ports with support for charging and data transfer DisplayPort 1.4a with support for up to three 4K monitors at 60 Hz Surface Thunderbolt™ 4 Dock and accessory support Fast charging with a minimum 65W Surface Power Supply or minimum 60W USB-C® PD charger Surface Pro 13-inch Keyboard port Surface Connect port
+  acer-swift-spin-14-ai-sfsp14-q51t:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen. A pen is supported.
+        checked: 2026-11
+        source: https://news.acer.com/acer-broadens-portfolio
+        basis: maker-spec
+        where: Acer press release of 2026, specification table for Swift Spin 14 AI SFSP14-Q51T, Display row
+        quote: 14”16:10 WUXGA 1920 x 1200 IPS; multi-touch 120 Hz sRGB 100% 300 nits display; Wacom AES 2.0 Stylus support, integrated stylus garage, 1200:1 contrast ratio
+  acer-spin-7-sp714-61na:
+    checks:
+      modem:
+        state: untested
+        note: It has a 5G modem.
+        checked: 2026-11
+        source: https://news.acer.com/acer-announces-new-spin-7-powered-by-the-qualcomm-snapdragon-8cx-gen-2-5g-compute-platform
+        basis: maker-spec
+        where: Acer press release of 2020-09-03 for the Spin 7 with Snapdragon 8cx Gen 2 5G
+        quote: The new Spin 7 notebook utilizes the Snapdragon 8cx Gen 2 5G compute platform with the Snapdragon X55 5G Modem-RF System, which supports 5G connectivity across both mmWave and sub-6 GHz frequencies with download speeds up to 7.5 Gbps.
+      touchscreen:
+        state: untested
+        note: It has a touchscreen. A pen is supported.
+        checked: 2026-11
+        source: https://news.acer.com/acer-announces-new-spin-7-powered-by-the-qualcomm-snapdragon-8cx-gen-2-5g-compute-platform
+        basis: maker-spec
+        where: Acer press release of 2020-09-03 for the Spin 7 with Snapdragon 8cx Gen 2 5G
+        quote: A dockable Wacom AES 1.0 pen with 4,096 levels of pressure sensitivity is included, enabling users to draw and take notes on the device’s Full HD IPS [2] touch display
+  samsung-galaxy-book5-edge-5g:
+    checks:
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader.
+        checked: 2026-11
+        source: https://www.samsung.com/uk/computers/galaxy-book/galaxy-book5-edge-5g-15-6-inch-x-26-16gb-512gb-np755xra-ka1uk/
+        basis: maker-spec
+        where: Samsung UK product page for NP755XRA-KA1UK, specification table, Security group
+        quote: Security Slot Yes TPM Yes FingerPrint Reader Yes
+      modem:
+        state: untested
+        note: It has a 5G modem.
+        checked: 2026-11
+        source: https://www.samsung.com/uk/computers/galaxy-book/galaxy-book5-edge-5g-15-6-inch-x-26-16gb-512gb-np755xra-ka1uk/
+        basis: maker-spec
+        where: Samsung UK product page for NP755XRA-KA1UK, specification table, Network group (rows Bluetooth Version and Mobile Network)
+        quote: Bluetooth Version Bluetooth v5.4 Mobile Network 5G Sub6
+  samsung-galaxy-book6-edge-16:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen.
+        checked: 2026-11
+        source: https://www.samsung.com/ca/computers/galaxy-book/galaxy-book6-edge-x2-elite-16gb-512gb-np960xrd-kb1ca/
+        basis: maker-spec
+        where: Samsung Canada product page for NP960XRD-KB1CA, feature text
+        quote: The touch-enabled screen on Galaxy Book6 Edge lets you open apps, drag and drop images or edit content instantly with your fingertips.
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader.
+        checked: 2026-11
+        source: https://www.samsung.com/ca/computers/galaxy-book/galaxy-book6-edge-x2-elite-16gb-512gb-np960xrd-kb1ca/
+        basis: maker-spec
+        where: Samsung Canada product page for NP960XRD-KB1CA, specification table, Security group
+        quote: Security TPM Yes FingerPrint Reader Yes
+  fujitsu-fmv-note-u-snapdragon:
+    checks:
+      ethernet:
+        state: untested
+        note: It has a gigabit network socket.
+        checked: 2026-11
+        source: https://www.fmworld.net/fmv/note_u_q/2610/spec/
+        basis: maker-spec
+        where: FMV (Fujitsu Client Computing) specification page of the FMV Note U with Snapdragon X, UQ-L3 (2026-10 model), LAN row. The 2601 page of UQ-L1 lists the same LAN
+        quote: 1000BASE-T/100BASE-TX/10BASE-T準拠、Wake on LAN機能対応
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader in the power button.
+        checked: 2026-11
+        source: https://www.fmworld.net/fmv/note_u_q/2610/spec/
+        basis: maker-spec
+        where: FMV (Fujitsu Client Computing) specification page of the FMV Note U with Snapdragon X, UQ-L3 (2026-10 model), sensor row. The 2601 page of UQ-L1 has the same row
+        quote: Windows Hello対応指紋センサー（電源ボタンに内蔵）、照度センサー
+  nvidia-dgx-spark:
+    checks:
+      ethernet:
+        state: untested
+        note: It has a 10-gigabit network socket.
+        checked: 2026-11
+        source: https://docs.nvidia.com/dgx/dgx-spark/hardware.html
+        basis: maker-spec
+        where: NVIDIA DGX Spark User Guide, Hardware Overview, last updated 2026-11-18
+        quote: 1x RJ-45 (10 GbE), ConnectX-7 Smart NIC, Wi-Fi 7, Bluetooth 5.4
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://docs.nvidia.com/dgx/dgx-spark/hardware.html
+        basis: maker-spec
+        where: NVIDIA DGX Spark User Guide, Hardware Overview, last updated 2026-11-18
+        quote: 4x USB Type-C, 1x HDMI 2.1a, HDMI multichannel audio
+      speakers:
+        state: absent
+        note: It has no built-in speaker.
+        checked: 2026-11
+        source: https://docs.nvidia.com/dgx/dgx-spark/hardware.html
+        basis: maker-spec
+        where: NVIDIA DGX Spark User Guide, Hardware Overview, last updated 2026-11-18
+        quote: 4x USB Type-C, 1x HDMI 2.1a, HDMI multichannel audio
+  acer-veriton-gn100:
+    checks:
+      ethernet:
+        state: untested
+        note: It has a network socket.
+        checked: 2026-11
+        source: https://news.acer.com/acer-unveils-the-veriton-gn100-ai-mini-workstation-built-on-the-nvidia-gb10-superchip
+        basis: maker-spec
+        where: Acer press release with specification table, 2025-09-03
+        quote: Four USB 3.2 Type C, HDMI 2.1b, RJ-45 connector, NVIDIA ConnectX-7 NIC
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://news.acer.com/acer-unveils-the-veriton-gn100-ai-mini-workstation-built-on-the-nvidia-gb10-superchip
+        basis: maker-spec
+        where: Acer press release with specification table, 2025-09-03
+        quote: Four USB 3.2 Type C, HDMI 2.1b, RJ-45 connector, NVIDIA ConnectX-7 NIC
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://news.acer.com/acer-unveils-the-veriton-gn100-ai-mini-workstation-built-on-the-nvidia-gb10-superchip
+        basis: maker-spec
+        where: Acer press release with specification table, 2025-09-03
+        quote: Four USB 3.2 Type C, HDMI 2.1b, RJ-45 connector, NVIDIA ConnectX-7 NIC
+      speakers:
+        state: absent
+        note: It has no built-in speaker.
+        checked: 2026-11
+        source: https://news.acer.com/acer-unveils-the-veriton-gn100-ai-mini-workstation-built-on-the-nvidia-gb10-superchip
+        basis: maker-spec
+        where: Acer press release with specification table, 2025-09-03
+        quote: Audio HDMI multi-channel audio output
+  asus-ascent-gx10:
+    checks:
+      ethernet:
+        state: untested
+        note: It has a 10-gigabit network socket.
+        checked: 2026-11
+        source: https://www.asus.com/networking-iot-servers/desktop-ai-supercomputer/ultra-small-ai-supercomputers/asus-ascent-gx10/techspec/
+        basis: maker-spec
+        where: ASUS Ascent GX10 tech specs page
+        quote: 3 x USB 3.2 Gen 2x2 Type-C, 20Gbps, alternate mode (DisplayPort 2.1) 1 x USB 3.2 Gen 2x2 Type-C,with PD in(EPR PD3.1 SPEC) 1 x HDMI 2.1a 1 x NVIDIA® ConnectX®-7 SmartNIC 1 x 10G LAN 1 x Kensington Lock
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://www.asus.com/networking-iot-servers/desktop-ai-supercomputer/ultra-small-ai-supercomputers/asus-ascent-gx10/techspec/
+        basis: maker-spec
+        where: ASUS Ascent GX10 tech specs page
+        quote: 3 x USB 3.2 Gen 2x2 Type-C, 20Gbps, alternate mode (DisplayPort 2.1) 1 x USB 3.2 Gen 2x2 Type-C,with PD in(EPR PD3.1 SPEC) 1 x HDMI 2.1a 1 x NVIDIA® ConnectX®-7 SmartNIC 1 x 10G LAN 1 x Kensington Lock
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://www.asus.com/networking-iot-servers/desktop-ai-supercomputer/ultra-small-ai-supercomputers/asus-ascent-gx10/techspec/
+        basis: maker-spec
+        where: ASUS Ascent GX10 tech specs page
+        quote: 3 x USB 3.2 Gen 2x2 Type-C, 20Gbps, alternate mode (DisplayPort 2.1)
+  dell-pro-max-gb10:
+    checks:
+      ethernet:
+        state: untested
+        note: It has a 10-gigabit network socket.
+        checked: 2026-11
+        source: https://www.dell.com/en-us/shop/desktop-computers/dell-pro-max-with-gb10/spd/dell-pro-max-fcm1253-micro/xcto_fcm1253_usx
+        basis: maker-spec
+        where: Dell product page for FCM1253 (now sold as Dell Pro Precision with GB10), Tech Specs
+        quote: 1 Power button 1 USB-C Power-In 3 USB-C Gen 2x2 w/ DP Alt mode 1 HDMI 2.1b 1 Network (RJ-45, 10GbE)
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://www.dell.com/en-us/shop/desktop-computers/dell-pro-max-with-gb10/spd/dell-pro-max-fcm1253-micro/xcto_fcm1253_usx
+        basis: maker-spec
+        where: Dell product page for FCM1253 (now sold as Dell Pro Precision with GB10), Tech Specs
+        quote: 1 Power button 1 USB-C Power-In 3 USB-C Gen 2x2 w/ DP Alt mode 1 HDMI 2.1b 1 Network (RJ-45, 10GbE)
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://www.dell.com/en-us/shop/desktop-computers/dell-pro-max-with-gb10/spd/dell-pro-max-fcm1253-micro/xcto_fcm1253_usx
+        basis: maker-spec
+        where: Dell product page for FCM1253 (now sold as Dell Pro Precision with GB10), Tech Specs
+        quote: 1 USB-C Power-In 3 USB-C Gen 2x2 w/ DP Alt mode 1 HDMI 2.1b
+  hp-zgx-nano-g1n:
+    checks:
+      ethernet:
+        state: untested
+        note: It has a 10-gigabit network socket.
+        checked: 2026-11
+        source: https://www8.hp.com/h20195/v2/getpdf.aspx/c09212373.pdf
+        basis: maker-spec
+        where: HP QuickSpecs c09212373, version 6, 2026-11-10 (Rear I/O row)
+        quote: 30W); 1x HDMI 2.1a; 1x RJ-45 (10GbE LAN); 2x QSFP (200GbE LAN)
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://www8.hp.com/h20195/v2/getpdf.aspx/c09212373.pdf
+        basis: maker-spec
+        where: HP QuickSpecs c09212373, version 6, 2026-11-10 (Rear I/O row, there is no front I/O)
+        quote: Rear I/O 1x USB Type-C (USB-C) power connector (240W); 3x USB 3.2 Type-C (USB-C) 20Gbps (total output power 30W); 1x HDMI 2.1a; 1x RJ-45 (10GbE LAN); 2x QSFP (200GbE LAN)
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://www8.hp.com/h20195/v2/getpdf.aspx/c09212373.pdf
+        basis: maker-spec
+        where: HP QuickSpecs c09212373, version 6, 2026-11-10
+        quote: 3x USB 3.2 Type-C (USB-C) 20Gbps ports; supports Alt mode DisplayPort 1.4a
+      speakers:
+        state: absent
+        note: It has no built-in speaker.
+        checked: 2026-11
+        source: https://www8.hp.com/h20195/v2/getpdf.aspx/c09212373.pdf
+        basis: maker-spec
+        where: HP QuickSpecs c09212373, version 6, 2026-11-10 (System Technical Specifications)
+        quote: Front Control Panel/Speaker Header None
+  lenovo-thinkstation-pgx:
+    checks:
+      ethernet:
+        state: untested
+        note: It has a 10-gigabit network socket.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkStation/ThinkStation_PGX/ThinkStation_PGX_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification, 2026-07-01
+        quote: Onboard Ethernet • 1x 10GbE RJ-45
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkStation/ThinkStation_PGX/ThinkStation_PGX_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification, 2026-07-01 (Rear Ports, the complete list)
+        quote: 1x USB-C® (USB 20Gbps / USB 3.2 Gen 2x2), with USB PD 3.1 in and DisplayPort™ 2.1 • 3x USB-C® (USB 20Gbps / USB 3.2 Gen 2x2), with DisplayPort™ 2.1 • 1x HDMI® • 1x Ethernet (10GbE RJ-45) • 2x QSFP (200Gbps each, for connecting two ThinkStation® PGX units)
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkStation/ThinkStation_PGX/ThinkStation_PGX_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification, 2026-07-01 (Rear Ports)
+        quote: 3x USB-C® (USB 20Gbps / USB 3.2 Gen 2x2), with DisplayPort™ 2.1
+      speakers:
+        state: absent
+        note: It has no built-in speaker.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkStation/ThinkStation_PGX/ThinkStation_PGX_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification, 2026-07-01 (Multi-Media)
+        quote: Audio Chip HDMI® multichannel audio output
+  msi-edgexpert-ms-c931:
+    checks:
+      ethernet:
+        state: untested
+        note: It has a 10-gigabit network socket.
+        checked: 2026-11
+        source: https://storage-asset.msi.com/excelSku/us/edge-ai/EdgeXpert-014US.pdf
+        basis: maker-spec
+        where: MSI specification sheet for EdgeXpert-014US, 2026-11-06
+        quote: LAN 1x RJ-45 connector 10 GbE, ConnectX-7 Smart NIC
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://storage-asset.msi.com/excelSku/us/edge-ai/EdgeXpert-014US.pdf
+        basis: maker-spec
+        where: MSI specification sheet for EdgeXpert-014US, 2026-11-06
+        quote: Audio HDMI multichannel audio output
+      speakers:
+        state: absent
+        note: It has no built-in speaker.
+        checked: 2026-11
+        source: https://storage-asset.msi.com/excelSku/us/edge-ai/EdgeXpert-014US.pdf
+        basis: maker-spec
+        where: MSI specification sheet for EdgeXpert-014US, 2026-11-06
+        quote: Audio HDMI multichannel audio output
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://download-2.msi.com/archive/mnu_exe/ipc/C931v1.1_English.pdf
+        basis: maker-spec
+        where: MSI EdgeXpert MS-C931 User Guide V1.1, 2026-10 (System Overview, item 4)
+        quote: USB 20Gbps Type-C Port 4 Each connector can provide up to 5V/3A of power, with a maximum
+  asus-proart-p14-h7407ba:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen. A pen is supported.
+        checked: 2026-11
+        source: https://www.asus.com/laptops/for-creators/proart/proart-p14-h7407/techspec/
+        basis: maker-spec
+        where: ASUS ProArt P14 (H7407) tech specs page (Display row)
+        quote: PANTONE Validated, Anti-reflection(AR) display, 70% less harmful blue light, Touch screen, (Screen-to-body ratio)88%, With stylus support
+  asus-proart-p16-h7607ba:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen. A pen is supported.
+        checked: 2026-11
+        source: https://www.asus.com/laptops/for-creators/proart/proart-p16-h7607/techspec/
+        basis: maker-spec
+        where: ASUS ProArt P16 (H7607) tech specs page (Display row)
+        quote: PANTONE Validated, Anti-reflection(AR) display, 70% less harmful blue light, Touch screen, (Screen-to-body ratio)90%, With stylus support
+  dell-xps-16-creator-edition:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen.
+        checked: 2026-11
+        source: https://www.dell.com/en-us/shop/laptop-computers/spd/xps16dx16263
+        basis: maker-spec
+        where: Dell product page for XPS 16 Creator Edition (DX16263), Tech Specs (Displays row)
+        quote: 16 in 3.2K OLED, Touch, 400 Nits, 20-120 Hz
+  hp-omnibook-ultra-16-bk0:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen.
+        checked: 2026-11
+        source: https://www.hp.com/ph-en/products/laptops/product-details/product-specifications/2104337923
+        basis: maker-spec
+        where: HP product specifications page for the 16-bk0018NU (Display row)
+        quote: 3K (2880 x 1800), OLED, multitouch-enabled, up to 120 Hz, 0.2 ms response time, UWVA, edge-to-edge glass
+  lenovo-yoga-pro-9n:
+    checks:
+      touchscreen:
+        state: untested
+        note: A touchscreen is on some configurations. A pen is supported.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/Yoga/Yoga_Pro_9_15N1X11/Yoga_Pro_9_15N1X11_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification for Yoga Pro 9 15N1X11, 2026-10-29 (Touchscreen, which also lists a non-touch panel)
+        quote: OGS (One Glass Solution) multi-touch, supports 10-point touch
+  lenovo-yoga-9n-2-in-1:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen. A pen is supported.
+        checked: 2026-11
+        source: https://psref.lenovo.com/syspool/Sys/PDF/Yoga/Yoga_9_2_in_1_16N1X11/Yoga_9_2_in_1_16N1X11_Spec.pdf
+        basis: maker-spec
+        where: Lenovo PSREF specification for Yoga 9 2-in-1 16N1X11, 2026-10-29 (Touchscreen)
+        quote: OGS (One Glass Solution) multi-touch, supports 10-point touch
+  microsoft-surface-laptop-ultra:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen.
+        checked: 2026-11
+        source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-laptop-ultra-1stedition
+        basis: maker-spec
+        where: "Microsoft Learn, Tech specs: Surface Laptop Ultra (Display)"
+        quote: 15-inch PixelSense™ Ultra touchscreen display
+  microsoft-surface-rtx-spark-dev-box:
+    checks:
+      ethernet:
+        state: untested
+        note: It has a network socket.
+        checked: 2026-11
+        source: https://www.microsoft.com/en-us/surface/devices/surface-rtx-spark-dev-box
+        basis: maker-spec
+        where: Microsoft product page for Surface RTX Spark Dev Box
+        quote: Connect peripherals, displays, and more with a full array of ports, including two USB-C® ports, USB-A, HDMI, Ethernet, and a headphone jack.
+  msi-prestige-n16-flip-ai-plus:
+    checks:
+      touchscreen:
+        state: untested
+        note: It has a touchscreen.
+        checked: 2026-11
+        source: https://storage-asset.msi.com/specSheet/us/bnp/Prestige%20N16%20Flip%20AI%2B%20C1XMT-067USY.pdf
+        basis: maker-spec
+        where: MSI specification sheet for Prestige N16 Flip AI+ C1XMT-067USY, 2026-11-19 (Display row)
+        quote: 16" 2.8K (2880 x 1800), 30~120Hz VRR, OLED, 100% DCI-P3(Typical), Support MSI Nano Pen Touchscreen, VESA DisplayHDR™ True Black 1000
+      fingerprint:
+        state: untested
+        note: It has a fingerprint reader.
+        checked: 2026-11
+        source: https://storage-asset.msi.com/specSheet/us/bnp/Prestige%20N16%20Flip%20AI%2B%20C1XMT-067USY.pdf
+        basis: maker-spec
+        where: MSI specification sheet for Prestige N16 Flip AI+ C1XMT-067USY, 2026-11-19 (Security row)
+        quote: Discrete Trusted Platform Module(dTPM) 2.0, Fingerprint Security, Microsoft Pluton Security Technology,
+  asus-proart-gr1x:
+    checks:
+      ethernet:
+        state: untested
+        note: It has a 10-gigabit network socket.
+        checked: 2026-11
+        source: https://www.asus.com/displays-desktops/mini-pcs/proart-mini-pc-series/proart-gr1x-mini-pc/techspec/
+        basis: maker-spec
+        where: ASUS ProArt GR1X tech specs page
+        quote: 1 × USB 3.2 Gen 2×2 Type-C with PD Input (EPR PD3.1 spec) 3 × USB 3.2 Gen 2×2 Type-C (DisplayPort Alt Mode) 1 x HDMI 2.1 1 x 10G RJ45 LAN 1 x Kensington Lock Slot
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://www.asus.com/displays-desktops/mini-pcs/proart-mini-pc-series/proart-gr1x-mini-pc/techspec/
+        basis: maker-spec
+        where: ASUS ProArt GR1X tech specs page
+        quote: 1 × USB 3.2 Gen 2×2 Type-C with PD Input (EPR PD3.1 spec) 3 × USB 3.2 Gen 2×2 Type-C (DisplayPort Alt Mode) 1 x HDMI 2.1 1 x 10G RJ45 LAN 1 x Kensington Lock Slot
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://www.asus.com/displays-desktops/mini-pcs/proart-mini-pc-series/proart-gr1x-mini-pc/techspec/
+        basis: maker-spec
+        where: ASUS ProArt GR1X tech specs page
+        quote: 3 × USB 3.2 Gen 2×2 Type-C (DisplayPort Alt Mode)
+  dell-creator-edition-desktop:
+    checks:
+      ethernet:
+        state: untested
+        note: It has a 10-gigabit network socket.
+        checked: 2026-11
+        source: https://www.dell.com/en-us/shop/desktop-computers/spd/dellcreatoreditiondesktopdm1273
+        basis: maker-spec
+        where: Dell product page for Creator Edition Desktop (DM1273), Tech Specs
+        quote: 1 Power-in port for Type-C® adapter 3 USB 3.2 Type-C® ports with DisplayPort® 1.4a alt-mode, power out 1 RJ45 (10GbE) Ethernet port 1 HDMI 2.1a port
+      headphones:
+        state: absent
+        note: It has no headphone jack.
+        checked: 2026-11
+        source: https://www.dell.com/en-us/shop/desktop-computers/spd/dellcreatoreditiondesktopdm1273
+        basis: maker-spec
+        where: Dell product page for Creator Edition Desktop (DM1273), Tech Specs
+        quote: 1 Power-in port for Type-C® adapter 3 USB 3.2 Type-C® ports with DisplayPort® 1.4a alt-mode, power out 1 RJ45 (10GbE) Ethernet port 1 HDMI 2.1a port
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://www.dell.com/en-us/shop/desktop-computers/spd/dellcreatoreditiondesktopdm1273
+        basis: maker-spec
+        where: Dell product page for Creator Edition Desktop (DM1273), Tech Specs
+        quote: 3 USB 3.2 Type-C® ports with DisplayPort® 1.4a alt-mode, power out
+  msi-edgemesa-n-ai-plus:
+    checks:
+      ethernet:
+        state: untested
+        note: It has a 10-gigabit network socket.
+        checked: 2026-11
+        source: https://storage-asset.msi.com/datasheet/edge-ai/us/EdgeMesa-N-AI-plus.pdf
+        basis: maker-spec
+        where: MSI datasheet for EdgeMesa N AI+, generated 2026-11-13
+        quote: 3. 1x RJ45 (10G LAN) 4. 1x Kensington Lock
+      usb4:
+        state: absent
+        note: It has no USB4 or Thunderbolt port.
+        checked: 2026-11
+        source: https://storage-asset.msi.com/datasheet/edge-ai/us/EdgeMesa-N-AI-plus.pdf
+        basis: maker-spec
+        where: MSI datasheet for EdgeMesa N AI+, generated 2026-11-13
+        quote: 1. 4x USB 20Gbps Type-C 2. 1x HDMI™ 2.1b

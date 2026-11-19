@@ -8,6 +8,8 @@ type State = 'works' | 'partial' | 'broken' | 'untested' | 'absent';
 type Finding = { state: State; note?: string; version?: string; checked?: string; source?: string; basis?: string; where?: string; quote?: string; under?: string };
 // A finding from another distro or from the device tree's author is a hint, not this model's status on Omarchy
 const elsewhere = (f: Finding) => f.basis === 'other-distro' || f.basis === 'tree-author';
+// The maker lists the part for the model, and nobody has tested it on Omarchy yet
+const listed = (f: Finding) => f.basis === 'maker-spec' && f.state === 'untested';
 const FROM: Record<string, string> = { 'other-distro': 'on another distro', 'tree-author': "by the device tree's author" };
 type Row = { id: string; group: string; title: string; works: string; probe?: string; person?: string; debug?: string; optional?: boolean; finding: Finding | null; from: 'model' | 'family' | null; familySource: string | null; expected?: boolean };
 type Change = { machines: number; from: string | null; to: string | null; since: string };
@@ -114,7 +116,7 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                           {(f) => (
                             <span class="block">
                               <span class="text-zinc-500">
-                                {elsewhere(f()) ? `Elsewhere (${[f().where ?? FROM[f().basis!], f().checked].filter(Boolean).join(', ')}): ` : `Notes${f().checked ? ` (${f().checked})` : ''}: `}
+                                {elsewhere(f()) ? `Elsewhere (${[f().where ?? FROM[f().basis!], f().checked].filter(Boolean).join(', ')}): ` : listed(f()) ? 'Spec: ' : `Notes${f().checked ? ` (${f().checked})` : ''}: `}
                               </span>
                               <span class={elsewhere(f()) ? 'text-zinc-500' : ''}>{f().note ?? (row.from === 'family' ? 'Holds across this chip family.' : LABEL[f().state] + '.')}</span>
                               <Show when={row.from === 'family'}><span class="text-zinc-500"> (across this chip family)</span></Show>
@@ -144,7 +146,12 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                                 </span>
                               }
                             >
-                              <Pill state={f().state} dim={row.from === 'family'} prefix="Notes" tip={f().quote ? 'Reported on Omarchy, and the passage it rests on was checked against its source. Not measured on this page.' : f().basis === 'maker-spec' ? "From the maker's description of the model." : "The Omarchy ARM team's own note, without a public source to check it against."} />
+                              <Show
+                                when={!listed(f())}
+                                fallback={<Show when={!owner(row.id)}><Pill state="untested" tip="The maker lists this part for the model. Nobody has tested it on Omarchy yet." /></Show>}
+                              >
+                                <Pill state={f().state} dim={row.from === 'family'} prefix="Notes" tip={f().basis === 'maker-spec' ? "From the maker's description of the model." : f().quote ? 'Reported on Omarchy, and the passage it rests on was checked against its source. Not measured on this page.' : "The Omarchy ARM team's own note, without a public source to check it against."} />
+                              </Show>
                             </Show>
                           )}
                         </Show>

@@ -98,7 +98,7 @@ What every check means. Read it before reporting, since a result names a check b
 | `probe` | What the quick check measures by itself. Missing when nothing can be measured |
 | `person` | What the owner does or says |
 | `debug` | Where to look when it fails, in the order worth trying |
-| `optional` | `true` for a part many computers don't have. Such a check is never in a model's `wanted` |
+| `optional` | `true` for a part many computers don't have. Such a check is in a model's `wanted` only where the model is known to have the part |
 
 ### `GET /api/models`
 
@@ -137,8 +137,8 @@ One model, with everything its page shows. `404` names the routes that find the 
 | `boots` | Whether Omarchy starts on it. `bootable` and `outcome` as in the list, `pieces` with the channel that has the device tree, the hardware IDs and the firmware, and `omarchy` with the pull requests they came in |
 | `upstream` | Where the same three pieces stand in Linux, systemd and linux-firmware |
 | `variants` | One entry per chip or board variant, with its `compatible`, its device tree file and the firmware files it needs |
-| `checks` | Every check with what the team wrote up, as `finding`. A finding has a `state`, a `note`, the `source` it comes from, `basis` (whose result it is, Omarchy's or another distro's) and often `where`, `version`, `checked` and a `quote` |
-| `wanted` | The checks with no finding for Omarchy on this model yet, optional ones left out. Start there |
+| `checks` | Every check with what the team wrote up, as `finding`. A finding has a `state`, a `note`, the `source` it comes from, `basis` (whose result it is, Omarchy's or another distro's) and often `where`, `version`, `checked` and a `quote`. A finding with `basis: maker-spec` comes from the maker's specification. With `state: absent` it says the model doesn't have the part, and with `state: untested` that the maker lists the part and nobody has tested it on Omarchy |
+| `wanted` | The checks with no finding for Omarchy on this model yet, for the parts the model has. Start there |
 | `owners` | What owners' computers reported, see below |
 | `fixes` | Fixes linked to the model, as `GET /api/fixes` returns them |
 | `notes` | Up to 100 notes on the model, newest first, as `GET /api/notes` returns them |
