@@ -102,7 +102,7 @@ What every check means. Read it before reporting, since a result names a check b
 
 ### `GET /api/models`
 
-Every computer model with a page: the Snapdragon PCs that start through UEFI, the Chromebooks and Googlebooks, and the NVIDIA machines. An NVIDIA machine has no `chips` or `compatibles`. A Chromebook or Googlebook has the same fields as a Snapdragon PC, and its `bootable` names what it still needs, since Omarchy's install image doesn't start on one.
+Every computer model with a page: the Snapdragon PCs that start through UEFI, the Chromebooks and Googlebooks, and the NVIDIA machines. An NVIDIA machine has no `chips` or `compatibles`. A Chromebook or Googlebook has the same fields as a Snapdragon PC. Omarchy's install image doesn't start on one, so its `bootable` is `works`, `workaround`, `problems`, `untested` (a Linux image starts, nobody tried Omarchy) or `notyet`.
 
 ```json
 {

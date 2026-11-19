@@ -1,5 +1,5 @@
 // Every model with a page, served as GET /api/models: Snapdragon PCs, Chromebooks and Googlebooks, and NVIDIA machines.
-import { coverage, googlePageModels, nvidiaPageModels, pageModels } from '../../lib/checks';
+import { bootableOf, coverage, googlePageModels, nvidiaPageModels, pageModels } from '../../lib/checks';
 
 export function GET() {
   const models = [...pageModels(), ...googlePageModels()].map((model) => ({
@@ -11,7 +11,7 @@ export function GET() {
     modelNumbers: model.modelNumbers,
     compatibles: model.variants.map((v) => v.compatible).filter(Boolean),
     outcome: model.outcome,
-    bootable: model.bootable,
+    bootable: bootableOf(model),
     checksWrittenUp: coverage(model).known,
     page: `https://arewearmyet.com/models/${model.id}`,
     api: `https://arewearmyet.com/api/models/${model.id}`,

@@ -5,7 +5,7 @@ import { parse } from 'yaml';
 import checksRaw from '../../data/checks.yaml?raw';
 import findingsRaw from '../../data/findings.yaml?raw';
 import status from '../data/status.json';
-import type { Model, NvidiaModel } from './labels';
+import { googlebookOmarchyCell, type Model, type NvidiaModel } from './labels';
 
 export type CheckState = 'works' | 'partial' | 'broken' | 'untested' | 'absent';
 export type Check = { id: string; group: string; title: string; works: string; probe?: string; person?: string; debug?: string; optional?: boolean };
@@ -109,6 +109,15 @@ export function coverage(model: Subject) {
   };
 }
 
+/**
+ * Whether a model boots, as the API says it: the channel whose image starts a Snapdragon PC, or what
+ * it still needs. A Chromebook or Googlebook starts another way and needs no hardware IDs, so for one
+ * it is what its own Bootable cell says: works, workaround, problems, untested or notyet.
+ */
+export function bootableOf(model: Model): string {
+  return model.boot === 'uefi' ? model.bootable : googlebookOmarchyCell(model).key;
+}
+
 /** What a model's page and GET /api/models/<id> say, before owners' live results are added. */
 export function modelData(model: Model) {
   const checks = modelChecks(model);
@@ -123,7 +132,7 @@ export function modelData(model: Model) {
     chips: model.chips,
     modelNumbers: model.modelNumbers,
     page: `https://arewearmyet.com/models/${model.id}`,
-    boots: { outcome: model.outcome, bootable: model.bootable, pieces: model.pieces, omarchy: model.omarchy },
+    boots: { outcome: model.outcome, bootable: bootableOf(model), pieces: model.pieces, omarchy: model.omarchy },
     upstream: model.upstream,
     variants: model.variants.map((v) => ({ chip: v.chip, compatible: v.compatible, deviceTree: v.deviceTree, firmwareNeeded: v.firmwareNeeded, outcome: v.outcome })),
     notes: model.notes,
