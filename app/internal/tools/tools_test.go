@@ -259,3 +259,34 @@ func TestAThreadIsStartedInT3CodeForTheOwnersOwnAgent(t *testing.T) {
 		t.Errorf("T3 Code not running: %q, %v", id, err)
 	}
 }
+
+func TestT3CodeIsStartedWhenItIsInstalledButNotRunning(t *testing.T) {
+	dir, bin := t.TempDir(), t.TempDir()
+	t.Setenv("HW_TEST_T3_MODEL", "codex/gpt-6-astra")
+	// T3 Code's command says no server is running until the app has been started
+	os.WriteFile(filepath.Join(bin, "t3"), []byte("#!/bin/sh\nif [ ! -e "+dir+"/running ]; then echo 'No running T3 Code server uses this folder. Start T3 Code, then retry.' >&2; exit 1; fi\nprintf '%s|' \"$@\" >> "+dir+"/called\necho >> "+dir+"/called\n[ \"$1\" = thread ] && [ \"$2\" = start ] && echo '{\"threadId\":\"mcp:77\"}'\nexit 0\n"), 0o755)
+	os.WriteFile(filepath.Join(bin, "gtk-launch"), []byte("#!/bin/sh\necho \"$1\" > "+dir+"/launched\n(sleep 1; touch "+dir+"/running) &\n"), 0o755)
+	t.Setenv("PATH", bin+":"+os.Getenv("PATH"))
+	work := t.TempDir()
+	id, err := T3Start(work, "Hardware: speakers", "read the brief")
+	launched, _ := os.ReadFile(filepath.Join(dir, "launched"))
+	if err != nil || id != "mcp:77" || strings.TrimSpace(string(launched)) != "t3code.desktop" {
+		t.Fatalf("id %q, %v, launched %q", id, err, launched)
+	}
+	// Running already, it is only written to
+	os.Remove(filepath.Join(dir, "launched"))
+	if err := Continue(Session{Kind: "t3", ID: "mcp:77"}, work, "go on"); err != nil {
+		t.Error(err)
+	}
+	if _, err := os.Stat(filepath.Join(dir, "launched")); err == nil {
+		t.Error("the app was started again while it was running")
+	}
+	// Where it can't be brought up, the caller is told, and opens the agent another way
+	os.Remove(filepath.Join(dir, "running"))
+	os.WriteFile(filepath.Join(bin, "gtk-launch"), []byte("#!/bin/sh\nexit 0\n"), 0o755)
+	t3Wait = 2 * time.Second
+	defer func() { t3Wait = 40 * time.Second }()
+	if _, err := T3Start(work, "Hardware: speakers", "read the brief"); err == nil || !strings.Contains(err.Error(), "couldn't be started") {
+		t.Errorf("T3 Code that never comes up: %v", err)
+	}
+}

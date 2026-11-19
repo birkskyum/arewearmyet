@@ -82,6 +82,7 @@ func InThread(dir, title, message string) (string, error) {
 	}
 	if kept, ok := report.ThreadFor(dir); ok && kept.Kind == "t3" {
 		if err := tools.Continue(tools.Session{Kind: kept.Kind, ID: kept.ID}, dir, message); err == nil {
+			tools.T3Show(dir)
 			return "Your agent has it in T3 Code, in the same thread as before.", nil
 		}
 	}
@@ -90,6 +91,7 @@ func InThread(dir, title, message string) (string, error) {
 		return "", err
 	}
 	_ = report.KeepThread(dir, report.Thread{Kind: "t3", ID: id, When: time.Now()})
+	tools.T3Show(dir)
 	return "Your agent has it in T3 Code, in a new thread called \"" + title + "\".", nil
 }
 

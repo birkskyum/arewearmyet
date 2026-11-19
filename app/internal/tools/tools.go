@@ -446,12 +446,59 @@ func t3Model() (provider, model string) {
 	return provider, model
 }
 
+// t3Wait is how long T3 Code is given to come up once it has been started.
+var t3Wait = 40 * time.Second
+
+// t3Up makes sure T3 Code's own server answers, starting the app when it is installed but
+// not running. Someone who uses T3 Code wants their agent there, not in a terminal, just
+// because the app happened to be closed.
+func t3Up(dir string) bool {
+	answers := func() bool {
+		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		defer cancel()
+		command := exec.CommandContext(ctx, "t3", "thread", "list", "--project", dir)
+		out, err := command.CombinedOutput()
+		// A folder that is no project yet is still an answer from a running server
+		return err == nil || !strings.Contains(string(out), "No running T3 Code server")
+	}
+	if answers() {
+		return true
+	}
+	if !Have("gtk-launch") {
+		return false
+	}
+	command := exec.Command("gtk-launch", "t3code.desktop")
+	command.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
+	if command.Start() != nil {
+		return false
+	}
+	go command.Wait()
+	for waited := time.Duration(0); waited < t3Wait; waited += time.Second {
+		time.Sleep(time.Second)
+		if answers() {
+			return true
+		}
+	}
+	return false
+}
+
+// T3Show brings the folder's project up in T3 Code's window, so the owner sees where their
+// agent is. It is a courtesy: nothing depends on it.
+func T3Show(dir string) {
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	_ = exec.CommandContext(ctx, "t3", "app", dir).Run()
+}
+
 // T3Start starts a thread in T3 Code for the work in a folder and returns its id. T3 Code
 // keeps the thread, so the same conversation can be written to again later, whatever agent
 // runs in it. It fails where T3 Code isn't installed or its app isn't running.
 func T3Start(dir, title, message string) (string, error) {
 	if !Have("t3") {
 		return "", ErrNoSession
+	}
+	if !t3Up(dir) {
+		return "", fmt.Errorf("T3 Code isn't running and couldn't be started")
 	}
 	run := func(args ...string) ([]byte, error) {
 		ctx, cancel := context.WithTimeout(context.Background(), 40*time.Second)
@@ -501,6 +548,9 @@ func Continue(session Session, dir, message string) error {
 	case session.ID == "":
 		return ErrNoSession
 	case session.Kind == "t3" && Have("t3"):
+		if !t3Up(dir) {
+			return fmt.Errorf("T3 Code isn't running and couldn't be started")
+		}
 		return told("T3 Code", "t3", "thread", "send", session.ID, message)
 	case session.Kind == "herdr" && Have("herdr"):
 		return told("herdr", "herdr", "agent", "prompt", session.ID, message)
