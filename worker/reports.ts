@@ -18,7 +18,8 @@
  *   POST /api/runs                    a probe run or an agent's report; answers {run, model, url}
  *   GET  /api/runs/<id>               one run as stored, for the owner to check
  *   POST /api/runs/<id>/results       more results for a run, from the same machine
- *   POST /api/fixes                   a link to a fix (pull request, patch) for a model
+ *   POST /api/fixes                   a link to a fix (pull request, patch) for a model, with what it changed as measured
+ *   GET  /api/fixes?url=              what a pull request changed, over every machine that measured it
  *   GET  /api/notes?model=&check=&kind=&status=   notes: problems, workarounds, pointers to work elsewhere
  *   GET  /api/notes/<id>              one note with its answers and the names of its logs
  *   GET  /api/notes/<id>/logs/<name>  one of its logs, as plain text
@@ -39,7 +40,7 @@ const STATES = ['works', 'partial', 'broken', 'untested', 'absent'] as const;
 const HOW = ['measured', 'owner', 'agent'] as const;
 const MODES = ['quick', 'guided', 'agent'] as const;
 const HARDWARE_KEYS = ['maker', 'product', 'family', 'sku', 'board', 'bios'] as const;
-const PACKAGE_KEYS = ['linux-omarchy', 'linux', 'linux-firmware', 'linux-firmware-qcom', 'mesa', 'systemd', 'omarchy', 'hyprland', 'pipewire', 'alsa-ucm-conf', 'bluez', 'libcamera'] as const;
+const PACKAGE_KEYS = ['linux-omarchy', 'linux-omarchy-dtbs', 'linux', 'linux-firmware', 'linux-firmware-qcom', 'mesa', 'systemd', 'omarchy', 'hyprland', 'pipewire', 'alsa-ucm-conf', 'bluez', 'libcamera'] as const;
 const TOKEN = /^[A-Za-z0-9_-]{32,128}$/;
 // A hardware ID with its type, as systemd-analyze chid numbers them: "3:8073dbed-501f-5f5e-a619-4cdd9c00e865"
 const CHID = /^(ext)?\d{1,2}:[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/;
@@ -74,6 +75,7 @@ export async function reports(request: Request, env: Env, url: URL): Promise<Res
     if (parts[0] === 'runs' && parts.length === 2 && RUN_ID.test(parts[1])) return getRun(env, parts[1]);
     if (path === 'review') return review(request, env, url);
     if (path === 'notes') return listNotes(env, url);
+    if (path === 'fixes') return fixesFor(env, url);
     if (parts[0] === 'notes' && parts.length === 2 && NOTE_ID.test(parts[1])) return getNote(env, parts[1]);
     if (parts[0] === 'notes' && parts.length === 4 && NOTE_ID.test(parts[1]) && parts[2] === 'logs' && LOG_NAME.test(parts[3])) return getLog(env, parts[1], parts[3]);
     if (parts[0] !== 'firmware') return json({ error: 'Not found. The API is described at https://arewearmyet.com/agents.md' }, 404);
@@ -221,9 +223,54 @@ async function allOwners(env: Env): Promise<Response> {
   }, 200, 'public, max-age=300');
 }
 
+type Side = { state: string; how: string | null; evidence: string | null; note: string | null };
+type FixChange = { check: string; from: Side; to: Side };
+type FixRow = { id: string; model: string; check: string | null; url: string; note: string | null; created: string; changes: string | null; versions: string | null };
+
+function fixOut(row: FixRow) {
+  return { id: row.id, model: row.model, check: row.check, url: row.url, note: row.note, created: row.created, changes: row.changes ? (JSON.parse(row.changes) as FixChange[]) : [], versions: row.versions ? JSON.parse(row.versions) : undefined };
+}
+
 async function modelFixes(env: Env, id: string) {
-  const { results } = await env.DB.prepare('SELECT id, check_id AS "check", url, note, created FROM fixes WHERE model = ? AND hidden = 0 ORDER BY created DESC LIMIT 100').bind(id).all();
-  return results;
+  const { results } = await env.DB.prepare('SELECT id, model, check_id AS "check", url, note, created, changes, versions FROM fixes WHERE model = ? AND hidden = 0 ORDER BY created DESC LIMIT 100').bind(id).all<FixRow>();
+  return results.map(fixOut);
+}
+
+// Fine to failing: a change towards the front is an improvement
+const RANK: Record<string, number> = { works: 0, partial: 1, broken: 2 };
+
+/** What one pull request changed, over every machine that measured before and after it. */
+async function fixesFor(env: Env, url: URL): Promise<Response> {
+  const link = allowedLink(url.searchParams.get('url') ?? '');
+  if (!link) return json({ error: 'Give the pull request as ?url=, an https link to where the change is reviewed.' }, 400);
+  const { results } = await env.DB.prepare(
+    `SELECT f.id, f.model, f.check_id AS "check", f.url, f.note, f.created, f.changes, f.versions, f.machine
+       FROM fixes f LEFT JOIN machines m ON m.id = f.machine WHERE f.url = ? AND f.hidden = 0 AND COALESCE(m.hidden, 0) = 0 ORDER BY f.created DESC LIMIT 200`,
+  ).bind(link).all<FixRow & { machine: string | null }>();
+  const checks: Record<string, { improved: number; unchanged: number; worse: number }> = {};
+  const machines = new Set<string>();
+  for (const row of results) {
+    const changes = row.changes ? (JSON.parse(row.changes) as FixChange[]) : [];
+    if (changes.length && row.machine) machines.add(row.machine);
+    for (const change of changes) {
+      const from = RANK[change.from.state];
+      const to = RANK[change.to.state];
+      if (from === undefined || to === undefined) continue;
+      const tally = (checks[change.check] ??= { improved: 0, unchanged: 0, worse: 0 });
+      if (to < from) tally.improved++;
+      else if (to > from) tally.worse++;
+      else tally.unchanged++;
+    }
+  }
+  const improved = Object.entries(checks).filter(([, t]) => t.improved > 0 && t.worse === 0).map(([check]) => check);
+  const worse = Object.entries(checks).filter(([, t]) => t.worse > 0).map(([check]) => check);
+  return json({ url: link, machines: machines.size, improved, worse, checks, fixes: results.map(fixOut) }, 200, 'public, max-age=30');
+}
+
+function parseSide(value: unknown): Side | null {
+  const { state, how, evidence, note } = (value ?? {}) as Record<string, unknown>;
+  if (!STATES.includes(state as never)) return null;
+  return { state: state as string, how: HOW.includes(how as never) ? (how as string) : null, evidence: typeof evidence === 'string' ? clean(evidence, 400) : null, note: typeof note === 'string' ? clean(note, 600) : null };
 }
 
 /**
@@ -370,18 +417,45 @@ async function getRun(env: Env, id: string): Promise<Response> {
 }
 
 async function postFix(request: Request, env: Env): Promise<Response> {
-  const body = (await readJson(request, 16 * 1024)) as { model?: unknown; check?: unknown; url?: unknown; note?: unknown } | null;
+  const body = (await readJson(request, 64 * 1024)) as { model?: unknown; check?: unknown; url?: unknown; note?: unknown; changes?: unknown; before?: unknown; after?: unknown } | null;
   if (!body || typeof body.model !== 'string' || !MODELS.has(body.model)) return json({ error: 'model must be an id from GET /api/models.' }, 400);
   if (body.check !== undefined && body.check !== null && (typeof body.check !== 'string' || !CHECKS.has(body.check))) return json({ error: 'check must be an id from GET /api/checks, or left out.' }, 400);
   const link = typeof body.url === 'string' ? allowedLink(body.url) : null;
   if (!link) return json({ error: `url must be an https link to ${LINK_HOSTS.join(', ')}.` }, 400);
   const token = request.headers.get('x-machine-token') ?? '';
+  const machine = TOKEN.test(token) ? await sha256(token) : null;
+
+  // What the fix changed, as this machine measured it before and after
+  const changes: FixChange[] = [];
+  if (body.changes !== undefined) {
+    if (!machine) return json({ error: 'Measured changes need X-Machine-Token, so each machine counts once.' }, 400);
+    if (!Array.isArray(body.changes) || body.changes.length === 0 || body.changes.length > 40) return json({ error: 'changes must be a list of 1 to 40 {check, from: {state, how, evidence}, to: {state, how, evidence}}.' }, 400);
+    for (const item of body.changes) {
+      const { check, from, to } = (item ?? {}) as Record<string, unknown>;
+      if (typeof check !== 'string' || !CHECKS.has(check) || changes.some((c) => c.check === check)) return json({ error: `changes: ${String(check)} is no check from GET /api/checks, or is there twice.` }, 400);
+      const before = parseSide(from);
+      const after = parseSide(to);
+      if (!before || !after) return json({ error: `changes: ${check} needs from and to, each with a state of ${STATES.join(', ')}.` }, 400);
+      changes.push({ check, from: before, to: after });
+    }
+  }
+  const side = (value: unknown) => {
+    const { kernel, packages } = (value ?? {}) as Record<string, unknown>;
+    return { kernel: typeof kernel === 'string' ? clean(kernel, 80) : null, packages: pick(packages, PACKAGE_KEYS, 60) };
+  };
+  const versions = changes.length ? JSON.stringify({ before: side(body.before), after: side(body.after) }) : null;
+
   const id = code('FIX-');
-  await env.DB.prepare('INSERT INTO fixes (id, model, check_id, url, note, machine, created) VALUES (?, ?, ?, ?, ?, ?, ?)').bind(
-    id, body.model, (body.check as string | undefined) ?? null, link, typeof body.note === 'string' ? clean(body.note, 600) : null,
-    TOKEN.test(token) ? await sha256(token) : null, new Date().toISOString(),
-  ).run();
-  return json({ fix: id }, 201);
+  const statements = [
+    env.DB.prepare('INSERT INTO fixes (id, model, check_id, url, note, machine, created, changes, versions) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)').bind(
+      id, body.model, (body.check as string | undefined) ?? null, link, typeof body.note === 'string' ? clean(body.note, 600) : null,
+      machine, new Date().toISOString(), changes.length ? JSON.stringify(changes) : null, versions,
+    ),
+  ];
+  // A machine that measures the same pull request again replaces what it said before
+  if (machine && changes.length) statements.unshift(env.DB.prepare('DELETE FROM fixes WHERE url = ? AND machine = ? AND changes IS NOT NULL').bind(link, machine));
+  await env.DB.batch(statements);
+  return json({ fix: id, url: `${SITE}/api/fixes?url=${encodeURIComponent(link)}`, page: `${SITE}/models/${body.model}` }, 201);
 }
 
 type NoteRow = { id: string; parent: string | null; model: string | null; check: string | null; kind: string; title: string | null; body: string; links: string | null; status: string; kernel: string | null; os: string | null; packages: string | null; agent: string | null; created: string; replies?: number; logs?: string | null };

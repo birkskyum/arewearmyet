@@ -57,6 +57,24 @@ type Run struct {
 	Chids      []string          `json:"chids"`
 	Packages   map[string]string `json:"packages"`
 	Results    []Result          `json:"results"`
+	// Quick is what the quick check found, by check, kept to tell its results from those of
+	// the tests that look closer. It isn't sent.
+	Quick map[string]Result `json:"-"`
+}
+
+// MarkQuick notes the results the run has now as the quick check's.
+func (r *Run) MarkQuick() {
+	r.Quick = map[string]Result{}
+	for _, result := range r.Results {
+		r.Quick[result.Check] = result
+	}
+}
+
+// Shallow says whether a result is the quick check's own, which only looks at whether the
+// hardware is there and its driver came up, and not that of a test that used it.
+func (r *Run) Shallow(result Result) bool {
+	quick, ok := r.Quick[result.Check]
+	return ok && quick == result
 }
 
 var (

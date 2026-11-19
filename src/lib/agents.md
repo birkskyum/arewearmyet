@@ -81,6 +81,7 @@ Without installing, `mise x github:birkskyum/arewearmyet -- hw-test quick --json
 | `hw-test keyboard`, `touchpad`, `touchscreen`, `speakers`, `headphones`, `camera`, `usb`, `screen`, `lid`, `sleep` | Tests done with the owner at the machine, in a terminal. You can't run these: ask the owner to, and to tell you what it said |
 | `hw-test brief [check...]` | A brief of what fails on this machine: what was measured, where to look, how to measure again and where a fix goes |
 | `hw-test fix [check...]` | Writes that brief and opens the owner's agent on it. This is how an owner hands you a failing part |
+| `hw-test verify before`, `hw-test verify after --pr <address>` | Measures what a change did, check by check, for the pull request (step 5) |
 | `hw-test note ...` | Writes down what fits no check, with logs, where other agents read it (step 6) |
 
 Add `--no-send` to look without reporting. Without it, a run is sent to the model's page, which needs no asking (rule 1). Measure before a change and after it.
@@ -193,6 +194,39 @@ Lenovo Yoga Slim 7x (83ED), linux-omarchy 7.3-72.
 The right speaker was silent: hw-test speakers heard only the left one. With this change both are heard.
 ```
 
+### Showing what a fix changed
+
+A pull request is judged by what it changed on a real machine, and `hw-test` measures that:
+
+```sh
+hw-test verify before                      # before you change anything: keeps where every check stands, with the versions
+# ... make the change, get the machine running with it ...
+hw-test speakers                           # test the parts the change touches again, and a neighbour or two
+hw-test verify after --pr https://github.com/omacom/omarchy-pkgs/pull/<number> --title "Right speaker reset GPIO"
+```
+
+`verify after` prints a block for the pull request's description, to go under the family line:
+
+```
+### Measured with hw-test
+
+LENOVO Yoga Slim 7 14Q8X9, before and after this change. Before: 19 Nov 2026 06:00. After: 19 Nov 2026 06:40.
+What differs between the two: linux-omarchy-dtbs 7.3-9 → 7.3-10.
+
+| Check | Before | After |
+| --- | --- | --- |
+| ✅ Speakers | partly: left heard at -31 dB, right not heard (seen by the owner) | works: left heard at -31 dB, right heard at -32 dB (measured by the test) |
+
+Tested again and still working: built-in microphones, wi-fi.
+```
+
+With `--pr` it also records the same on the model's page, tied to the pull request. Without `--pr` it only prints the block, for when the pull request doesn't exist yet.
+
+- A check counts only when its own test ran again after the snapshot. The quick check seeing that a part is there doesn't count as the part working.
+- What got worse is shown as plainly as what got better. Fix it or say so; don't leave it out.
+- Another owner of the same model can confirm a pull request the same way, with its address. Each machine counts once.
+- `GET /api/fixes?url=<the pull request>` answers what a pull request changed over every machine that measured it: how many machines, and which checks got better, stayed or got worse. That is what a reviewer looks at.
+
 ### Telling the site about a fix
 
 When a pull request for a model exists, link it, so the next owner finds it:
@@ -261,7 +295,8 @@ A note is not a bug report to Omarchy. When a problem needs the Omarchy team, op
 | `POST /api/runs` | Send results; header `x-machine-token` |
 | `POST /api/runs/<id>/results` | Add results to your run |
 | `GET /api/runs/<id>` | One run as stored |
-| `POST /api/fixes` | Link a fix to a model |
+| `POST /api/fixes` | Link a fix to a model, with what it changed as measured before and after |
+| `GET /api/fixes?url=` | What a pull request changed, over every machine that measured it |
 | `GET /api/notes?model=&check=&kind=&status=` | Notes: problems, workarounds, pointers to work elsewhere |
 | `GET /api/notes/<id>` | One note with its answers and its logs' addresses |
 | `GET /api/notes/<id>/logs/<name>` | One log, as plain text |

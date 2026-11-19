@@ -10,7 +10,7 @@ type Row = { id: string; group: string; title: string; works: string; probe?: st
 type Change = { machines: number; from: string | null; to: string | null; since: string };
 type Owner = { machines: number; states: Record<string, number>; how: Record<string, number>; regressed?: Change; fixed?: Change; latest: { state: State; how: string; note: string | null; evidence: string | null; kernel: string | null; created: string; run: string }[] };
 type Note = { id: string; check: string | null; kind: string; title: string; status?: string; created: string; replies: number; logs: { name: string }[]; kernel: string | null };
-type Live = { owners: { machines: number; checks: Record<string, Owner> }; fixes: { id: string; check: string | null; url: string; note: string | null; created: string }[]; notes?: Note[] };
+type Live = { owners: { machines: number; checks: Record<string, Owner> }; fixes: { id: string; check: string | null; url: string; note: string | null; created: string; changes?: { check: string; from: { state: State }; to: { state: State } }[] }[]; notes?: Note[] };
 const KIND: Record<string, string> = { problem: 'Problem', workaround: 'Workaround', upstream: 'Work elsewhere', note: 'Note' };
 
 const LABEL: Record<State, string> = { works: 'Works', partial: 'Partly', broken: 'Broken', untested: 'Untested', absent: 'Not on this model' };
@@ -57,7 +57,12 @@ export default function CheckTable(props: { model: string; groups: { id: string;
     setState(data ? 'done' : 'failed');
   });
   const owner = (id: string) => live()?.owners.checks[id];
-  const fixesFor = (id: string) => live()?.fixes.filter((fix) => fix.check === id) ?? [];
+  // A fix belongs to a check when it names it, or when it measured a change on it
+  const fixesFor = (id: string) => live()?.fixes.filter((fix) => fix.check === id || fix.changes?.some((change) => change.check === id)) ?? [];
+  const measured = (fix: Live['fixes'][number], id: string) => {
+    const change = fix.changes?.find((c) => c.check === id);
+    return change ? ` Measured before and after: ${LABEL[change.from.state].toLowerCase()} → ${LABEL[change.to.state].toLowerCase()}.` : '';
+  };
   const notesFor = (id: string) => live()?.notes?.filter((note) => note.check === id) ?? [];
   const noteLine = (note: Note) => (
     <li class="flex flex-wrap items-baseline gap-2">
@@ -176,7 +181,7 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                       <Show when={fixesFor(row.id).length}>
                         <ul class="space-y-1">
                           <For each={fixesFor(row.id)}>
-                            {(fix) => <li>Fix: <a class={LINK} href={fix.url}>{fix.note ?? fix.url}</a></li>}
+                            {(fix) => <li>Fix: <a class={LINK} href={fix.url}>{fix.note ?? fix.url}</a><span class="text-emerald-300/90">{measured(fix, row.id)}</span></li>}
                           </For>
                         </ul>
                       </Show>
@@ -196,11 +201,11 @@ export default function CheckTable(props: { model: string; groups: { id: string;
           </ul>
         </section>
       </Show>
-      <Show when={live()?.fixes.filter((fix) => !fix.check).length}>
+      <Show when={live()?.fixes.filter((fix) => !fix.check && !fix.changes?.length).length}>
         <section>
           <h3 class="text-sm font-semibold uppercase tracking-wide text-zinc-500">Linked fixes</h3>
           <ul class="mt-2 space-y-1 text-sm text-zinc-400">
-            <For each={live()!.fixes.filter((fix) => !fix.check)}>
+            <For each={live()!.fixes.filter((fix) => !fix.check && !fix.changes?.length)}>
               {(fix) => <li><a class={LINK} href={fix.url}>{fix.note ?? fix.url}</a> <span class="text-xs text-zinc-500">{fix.created.slice(0, 10)}</span></li>}
             </For>
           </ul>

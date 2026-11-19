@@ -35,7 +35,7 @@ type Facts struct {
 	Encrypted         bool   // the root disk asks for a password at startup
 }
 
-var packages = []string{"linux-omarchy", "linux-firmware", "linux-firmware-qcom", "mesa", "systemd", "omarchy", "hyprland", "pipewire", "alsa-ucm-conf", "bluez", "libcamera"}
+var packages = []string{"linux-omarchy", "linux-omarchy-dtbs", "linux-firmware", "linux-firmware-qcom", "mesa", "systemd", "omarchy", "hyprland", "pipewire", "alsa-ucm-conf", "bluez", "libcamera"}
 
 // Desktops, mini PCs and all-in-ones, by SMBIOS chassis type: no battery, lid or built-in keyboard to expect.
 var desktops = map[string]bool{"3": true, "4": true, "5": true, "6": true, "7": true, "13": true, "15": true, "16": true, "35": true, "36": true}
@@ -103,6 +103,7 @@ func Quick(sys machine.System) (*report.Run, Facts, error) {
 	} {
 		safely(part)
 	}
+	run.MarkQuick()
 	return run, facts, nil
 }
 

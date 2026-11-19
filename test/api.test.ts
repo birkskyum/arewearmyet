@@ -345,3 +345,52 @@ test('takes a note with logs, answers to it and a solved mark, and cleans what n
   assert.equal((await reports(new Request(`https://x/api/notes/${id}/logs/kernel.log`), env as never, new URL(`https://x/api/notes/${id}/logs/kernel.log`)))!.status, 404);
   assert.equal((await call('GET', `/api/models/${YOGA}`)).body.notes.length, 0);
 });
+
+test('ties what a pull request changed to it, as each machine measured before and after', async () => {
+  const pr = 'https://github.com/omacom/omarchy-pkgs/pull/3100';
+  const changed = (to: string) => ({
+    model: YOGA, url: pr, note: 'Right speaker reset GPIO',
+    changes: [
+      { check: 'speakers', from: { state: 'partial', how: 'measured', evidence: 'left heard at -31 dB, right not heard' }, to: { state: to, how: 'measured', evidence: 'left heard at -31 dB, right heard at -32 dB' } },
+      { check: 'microphones', from: { state: 'works', how: 'measured' }, to: { state: 'works', how: 'measured' } },
+    ],
+    before: { kernel: '7.3.0-72-omarchy', packages: { 'linux-omarchy-dtbs': '7.3-9', 'linux-omarchy': '7.3-72', 'my-own-tool': '1.0' } },
+    after: { kernel: '7.3.0-72-omarchy', packages: { 'linux-omarchy': '7.3-72' } },
+  });
+  // Measured changes count once per machine, so they need the machine's token
+  assert.equal((await call('POST', '/api/fixes', changed('works'))).status, 400);
+  assert.equal((await call('POST', '/api/fixes', { ...changed('works'), changes: [{ check: 'speakers', from: { state: 'partial' }, to: { state: 'splendid' } }] }, machine(TOKEN_A))).status, 400);
+  assert.equal((await call('POST', '/api/fixes', { ...changed('works'), changes: [{ check: 'nonsense', from: { state: 'partial' }, to: { state: 'works' } }] }, machine(TOKEN_A))).status, 400);
+
+  const first = await call('POST', '/api/fixes', changed('works'), machine(TOKEN_A));
+  assert.equal(first.status, 201);
+  assert.match(first.body.url, /api\/fixes\?url=https%3A%2F%2Fgithub\.com/);
+  await call('POST', '/api/fixes', changed('works'), machine(TOKEN_B));
+
+  // A reviewer asks what the pull request did, over every machine that measured it
+  let seen = await call('GET', '/api/fixes?url=' + encodeURIComponent(pr));
+  assert.equal(seen.body.machines, 2);
+  assert.deepEqual(seen.body.improved, ['speakers']);
+  assert.deepEqual(seen.body.worse, []);
+  assert.deepEqual(seen.body.checks.speakers, { improved: 2, unchanged: 0, worse: 0 });
+  assert.deepEqual(seen.body.checks.microphones, { improved: 0, unchanged: 2, worse: 0 });
+  assert.equal(seen.body.fixes[0].changes[0].to.evidence, 'left heard at -31 dB, right heard at -32 dB');
+  assert.equal(seen.body.fixes[0].versions.before.kernel, '7.3.0-72-omarchy');
+  // Only what Omarchy's packages are called is kept of the versions
+  assert.deepEqual(seen.body.fixes[0].versions.before.packages, { 'linux-omarchy': '7.3-72', 'linux-omarchy-dtbs': '7.3-9' });
+
+  // A machine that measures again replaces what it said, and one where it got worse shows
+  await call('POST', '/api/fixes', { ...changed('broken') }, machine(TOKEN_B));
+  seen = await call('GET', '/api/fixes?url=' + encodeURIComponent(pr));
+  assert.equal(seen.body.machines, 2);
+  assert.deepEqual(seen.body.checks.speakers, { improved: 1, unchanged: 0, worse: 1 });
+  assert.deepEqual(seen.body.improved, []);
+  assert.deepEqual(seen.body.worse, ['speakers']);
+
+  // It shows with the model's fixes, and a plain link without measurements still works
+  const model = await call('GET', `/api/models/${YOGA}`);
+  assert.ok(model.body.fixes.some((f: { url: string; changes: unknown[] }) => f.url === pr && f.changes.length === 2));
+  assert.equal((await call('POST', '/api/fixes', { model: YOGA, url: 'https://github.com/omacom/omarchy/pull/3101' })).status, 201);
+  assert.equal((await call('GET', '/api/fixes?url=' + encodeURIComponent('https://github.com/omacom/omarchy/pull/3101'))).body.machines, 0);
+  assert.equal((await call('GET', '/api/fixes?url=https://example.com/x')).status, 400);
+});

@@ -53,7 +53,7 @@ func main() {
 		word := args[0]
 		args = args[1:]
 		switch {
-		case command == "brief" || command == "fix":
+		case command == "brief" || command == "fix" || command == "verify":
 			// What follows these two names what to hand over: checks, or parts of the test
 			topics = append(topics, word)
 		case guided.KnownStep(word):
@@ -81,6 +81,7 @@ func main() {
 	solved := flags.String("solved", "", "the id of a problem written from this computer, to mark solved")
 	flags.Var(&logs, "log", "a log to attach, cleaned first: kernel, previous (the kernel's log of the boot before) or a file; may be given more than once")
 	flags.Var(&links, "link", "a link to where the work is; may be given more than once")
+	pr := flags.String("pr", "", "for hw-test verify after: the pull request the change is in")
 	flags.Usage = usage
 	flags.Parse(args)
 
@@ -95,7 +96,7 @@ func main() {
 		// The latest result of every check on this machine, without running anything
 		fmt.Println(guided.Status(report.Local()))
 		return
-	case "quick", "check", "guided", "facts", "brief", "fix", "note":
+	case "quick", "check", "guided", "facts", "brief", "fix", "note", "verify":
 		if command == "check" {
 			command = "quick"
 		}
@@ -121,6 +122,11 @@ func main() {
 		os.Exit(1)
 	}
 	run.Model, run.Agent = *model, *agent
+
+	// Before and after a change: what a pull request changed on this machine, as measured
+	if command == "verify" {
+		os.Exit(verify(run, topics, *api, *pr, *title, !*noSend && !*jsonOnly))
+	}
 
 	// A note: what fits no check, written down where other owners' agents read it
 	if command == "note" {
@@ -234,6 +240,81 @@ func printResults(run *report.Run) {
 		fmt.Fprintf(os.Stderr, "  %-17s %-8s %s\n", result.Check, result.State, result.Evidence)
 	}
 	fmt.Fprintln(os.Stderr)
+}
+
+// verify takes the snapshot a change is measured against, or measures the change against it.
+func verify(run *report.Run, words []string, api, pr, what string, send bool) int {
+	now := time.Now()
+	step := ""
+	if len(words) == 1 {
+		step = words[0]
+	}
+	switch step {
+	case "before":
+		snapshot, err := report.TakeSnapshot(run, now)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "hw-test: the snapshot couldn't be kept:", err)
+			return 1
+		}
+		failing := guided.Failing(snapshot.Results)
+		fmt.Fprintf(os.Stderr, "Snapshot taken: %d checks, %d of them failing", len(snapshot.Results), len(failing))
+		if len(failing) > 0 {
+			fmt.Fprintf(os.Stderr, " (%s)", strings.Join(failing, ", "))
+		}
+		fmt.Fprintln(os.Stderr, ".")
+		if len(snapshot.Results) == 0 {
+			fmt.Fprintln(os.Stderr, "Nothing has been tested on this computer yet, so there is nothing to measure a change against. Run the tests first, then take the snapshot again.")
+		}
+		fmt.Fprintln(os.Stderr, "\nNow make the change. Then test the parts it touches again, like hw-test speakers or hw-test graphics,\nand measure the change against this snapshot:\n\n  hw-test verify after --pr <the pull request's address>")
+		return 0
+	case "after":
+		snapshot, ok := report.LoadSnapshot()
+		if !ok {
+			fmt.Fprintln(os.Stderr, "hw-test: there is no snapshot to measure against. Take one before the change: hw-test verify before")
+			return 2
+		}
+		changes := report.Changes(snapshot, report.Latest())
+		if len(changes) == 0 {
+			fmt.Fprintf(os.Stderr, "hw-test: nothing has been tested since the snapshot of %s. Test the parts the change touches again, like hw-test speakers, then run this again.\n", snapshot.When.Format("2 Jan 15:04"))
+			return 2
+		}
+		model := report.Model{ID: run.Model}
+		if matched, err := report.Match(api, run); err == nil && matched.ID != "" {
+			model = matched
+		}
+		fmt.Println(guided.VerifyBlock(run, model, snapshot, changes))
+		if pr == "" {
+			fmt.Fprintln(os.Stderr, "That is the block for the pull request's description. To record it on the model's page too, give the pull request: hw-test verify after --pr <its address>")
+			return 0
+		}
+		if !send {
+			fmt.Fprintln(os.Stderr, "Not sent.")
+			return 0
+		}
+		if model.ID == "" {
+			fmt.Fprintln(os.Stderr, "hw-test: the board doesn't know this computer, so there is no page to record it on. Name the model with --model.")
+			return 2
+		}
+		sent, err := report.SendFix(api, report.Fix{Model: model.ID, URL: pr, Note: what, Changes: changes,
+			Before: snapshot.Versions, After: report.Versions{Kernel: run.Kernel, Packages: run.Packages}})
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "hw-test: the site didn't take it:", err)
+			return 1
+		}
+		fmt.Fprintf(os.Stderr, "Recorded as %s on %s\nWhat this pull request changed, over every machine that measured it: %s\n", sent.Fix, first(sent.Page, model.Page), sent.URL)
+		return 0
+	}
+	fmt.Fprintln(os.Stderr, "hw-test: verify takes before or after. Take a snapshot with hw-test verify before, make the change, test again, then hw-test verify after --pr <address>.")
+	return 2
+}
+
+func first(values ...string) string {
+	for _, value := range values {
+		if value != "" {
+			return value
+		}
+	}
+	return ""
 }
 
 // list is an option that may be given more than once.
@@ -393,6 +474,10 @@ func usage() {
                      --log kernel|previous|FILE...  attaches a log, cleaned of addresses and names
                      --reply NOTE-ID answers a note, --solved NOTE-ID closes your own problem
                      --no-send shows what would be sent, logs included, and sends nothing
+  hw-test verify before    take a snapshot of where this computer stands, before a change
+  hw-test verify after --pr URL   after testing again: what the change did, check by check, as a
+                     block for the pull request, and recorded with the pull request on the
+                     model's page. --title says in a line what the change is
   hw-test status     where this computer stands: the latest result of every check, nothing is run
   hw-test facts      what the test found on this computer to work with (nothing is sent)
   hw-test version
