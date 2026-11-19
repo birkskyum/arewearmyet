@@ -101,7 +101,7 @@ func main() {
 	again := flags.Bool("new", false, "for hw-test verify before: replace the snapshot that is there, to start on another change")
 	atLogin := flags.Bool("run", false, "for hw-test resume: what the login service calls")
 	// For hw-test report
-	state := flags.String("state", "", "for hw-test report: works, partial or broken")
+	state := flags.String("state", "", "for hw-test report: works, partial, broken or absent")
 	how := flags.String("how", "owner", "for hw-test report: owner (they saw or heard it) or agent (your reading of logs)")
 	noteText := flags.String("note", "", "for hw-test report: what was seen, in a sentence or two")
 	evidence := flags.String("evidence", "", "for hw-test report: the line of output that shows it")
@@ -378,8 +378,10 @@ func tell(run *report.Run, api, check, state, how, note, evidence string, send b
 	if checks, unknown := guided.ChecksFor([]string{check}); check == "" || len(unknown) > 0 || len(checks) != 1 || checks[0] != check {
 		return fail("report needs --check with a check's id, like suspend. hw-test status lists them.")
 	}
-	if state != report.Works && state != report.Partial && state != report.Broken {
-		return fail("report needs --state works, partial or broken.")
+	// absent is for a part the computer turns out not to have, like a headphone jack on a
+	// laptop with only USB-C ports: it takes back a "broken" that was recorded for it
+	if state != report.Works && state != report.Partial && state != report.Broken && state != report.Absent {
+		return fail("report needs --state works, partial, broken or absent (the computer doesn't have the part).")
 	}
 	if how != report.Owner && how != "agent" {
 		return fail("--how is owner (they saw or heard it and told you) or agent (your own reading of logs). What a test measured is sent by running the test.")
@@ -1076,9 +1078,10 @@ func usageText() string {
                      build, and (run by the owner, with their password) a test entry in the
                      boot menu. hw-test tree patch "arm64: dts: qcom: BOARD: WHAT" --body-file WHY
                      writes the change as the one patch the package takes
-  hw-test report --check ID --state works|partial|broken --note TEXT   send one result
+  hw-test report --check ID --state works|partial|broken|absent --note TEXT   send one result
                      that no test measured: what the owner saw (--how owner, the default)
-                     or what was read from logs (--how agent)
+                     or what was read from logs (--how agent). absent is for a part the
+                     computer doesn't have
   hw-test resume [WHAT]    for an agent, before it restarts the computer: at the owner's next
                      login the agent opens again in this folder, once, and is told WHAT.
                      --show says what is left, --cancel takes it back

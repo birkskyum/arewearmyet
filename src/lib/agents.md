@@ -100,7 +100,7 @@ hw-test report --check suspend --state partial --note "Wakes fine alone. With th
 hw-test report --check wifi --state broken --how agent --evidence "ath12k_pci: failed to fetch board data" --note "The firmware has no entry for this model."
 ```
 
-`--how` is `owner` by default (they saw or heard it and told you) or `agent` (your reading of logs). A report holds only the checks you name. The site keeps each check's newest result per computer, so the other results stand.
+`--how` is `owner` by default (they saw or heard it and told you) or `agent` (your reading of logs). `--state absent` is for a part the computer turns out not to have, like a headphone jack on a laptop with only USB-C ports. It takes back a result recorded for it. A report holds only the checks you name. The site keeps each check's newest result per computer, so the other results stand.
 
 Without `hw-test`, send the same as JSON. The token is the one `hw-test` keeps in `~/.local/state/arewearmyet/token`:
 

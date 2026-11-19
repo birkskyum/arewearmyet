@@ -138,7 +138,7 @@ These commands let an agent run the test without the owner passing results back 
 | `hw-test auto --no-send` | The tests that need nobody. Runs without a terminal, without the sound test |
 | `hw-test speakers --no-send --play` | The sound test without a terminal. `--play` says the owner agreed to the tones |
 | `hw-test ask STEP...` | Opens a step that takes the owner in a window on their desktop, waits up to half an hour, and prints the result as JSON |
-| `hw-test report --check ID --state works\|partial\|broken --note TEXT` | Sends one result that no test measured. `--how owner` (the default) is what the owner saw, `--how agent` a reading of logs. `--evidence` holds the line of output that shows it |
+| `hw-test report --check ID --state works\|partial\|broken\|absent --note TEXT` | Sends one result that no test measured. `absent` is for a part the computer turns out not to have. `--how owner` (the default) is what the owner saw, `--how agent` a reading of logs. `--evidence` holds the line of output that shows it |
 
 `hw-test status --json` gives an object with one entry per check.
 

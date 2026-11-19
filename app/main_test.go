@@ -157,3 +157,23 @@ printf '{"steps":["camera"],"results":[{"check":"camera","state":"works","how":"
 		t.Error("something that is no step was opened")
 	}
 }
+
+// An agent that finds the computer doesn't have a part records that, which takes back what was
+// recorded for it. Anything else that is no state is refused, with the states named.
+func TestOneResultCanSayThePartIsNotThere(t *testing.T) {
+	t.Setenv("XDG_STATE_HOME", t.TempDir())
+	// The owner said in the guided test that sound stayed on the speakers
+	if code := tell(&report.Run{Model: "lenovo-yoga-slim-7x-14q8x9"}, "http://127.0.0.1:1", "headphones", report.Broken, report.Owner, "Sound stays on the speakers.", "", false); code != 0 {
+		t.Fatalf("the owner's result was refused with exit code %d", code)
+	}
+	run := &report.Run{Model: "lenovo-yoga-slim-7x-14q8x9"}
+	if code := tell(run, "http://127.0.0.1:1", "headphones", report.Absent, "agent", "Three USB-C ports and no 3.5 mm jack.", "", false); code != 0 {
+		t.Fatalf("absent was refused with exit code %d", code)
+	}
+	if kept := report.Local()["headphones"]; kept.State != report.Absent {
+		t.Errorf("the computer's own results hold %q for the jack, not absent", kept.State)
+	}
+	if code := tell(&report.Run{Model: "lenovo-yoga-slim-7x-14q8x9"}, "http://127.0.0.1:1", "headphones", "missing", "agent", "No jack.", "", false); code != 2 {
+		t.Errorf("an unknown state was taken, with exit code %d", code)
+	}
+}
