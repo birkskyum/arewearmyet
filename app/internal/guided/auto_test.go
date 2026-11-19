@@ -145,8 +145,13 @@ func TestTheAutomaticRoundRunsTheSoundWithoutAKey(t *testing.T) {
 	if sound.handsOff || again.start() != nil || again.phase != "intro" {
 		t.Errorf("handsOff %v, phase %q", sound.handsOff, again.phase)
 	}
-	if !Automatic([]string{"graphics", "video"}) || !Automatic([]string{"auto"}) || Automatic([]string{"graphics", "camera"}) || Automatic([]string{"sound"}) || Automatic(nil) {
+	if !Automatic([]string{"graphics", "video"}, false) || !Automatic([]string{"auto"}, false) || Automatic([]string{"graphics", "camera"}, false) || Automatic([]string{"sound"}, false) || Automatic(nil, false) {
 		t.Error("which words need nobody is off")
+	}
+	// The sound test runs for an agent only on the owner's yes, which --play says was given
+	t.Setenv("XDG_STATE_HOME", t.TempDir())
+	if Automatic([]string{"speakers"}, false) || !Automatic([]string{"speakers"}, true) || !Automatic([]string{"microphone", "wifi"}, true) || Automatic([]string{"camera"}, true) {
+		t.Error("when the sound test runs without a terminal is off")
 	}
 	for _, word := range append(AutomaticWords(), "auto") {
 		if !KnownStep(word) {

@@ -325,8 +325,10 @@ func Brief(b Briefing) string {
 		command, owner := remeasure(check)
 		if sounds[check] && b.ByOwner {
 			say("- Measure again: `%s --no-send`, which you run yourself, also without a terminal: the owner handed you this part, and that lets the test play its tones at half volume for about twenty seconds and listen to them with the microphones. It keeps only how loud each tone was. The owner hears it, so say a word before the first run.", command)
+		} else if sounds[check] {
+			say("- Measure again: `%s --no-send --play`, which you run yourself, also without a terminal, once the owner has said yes to it: it plays tones at half volume for about twenty seconds and listens to them with the microphones, and keeps only how loud each tone was. Ask them once.", command)
 		} else if owner {
-			say("- Measure again: `%s`, run by the owner in their own terminal, since it needs them at the computer. Ask them to run it and tell you what it said.", command)
+			say("- Measure again: `%s`, which opens the test in a window for the owner, since it needs them at the computer, waits until they are through and prints the result. Tell them a window is coming.", strings.Replace(command, "hw-test ", "hw-test ask ", 1))
 		} else {
 			say("- Measure again: `%s --no-send`, which runs by itself, also without a terminal.", strings.TrimSuffix(command, " --json"))
 		}

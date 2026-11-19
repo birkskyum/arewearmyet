@@ -240,13 +240,14 @@ func Heard(run *report.Run, dir string, say func(string)) {
 }
 
 // Automatic says whether every word names a test that needs nobody and makes no sound, or
-// the sound test where the owner has agreed to it.
-func Automatic(words []string) bool {
+// the sound test where the owner has agreed to it: by handing the speakers over, or as the
+// agent says they did with --play.
+func Automatic(words []string, play bool) bool {
 	quiet := map[string]bool{}
 	for _, word := range automaticWords {
 		quiet[word] = true
 	}
-	if MaySound(time.Now()) {
+	if play || MaySound(time.Now()) {
 		for word := range soundWords {
 			quiet[word] = true
 		}

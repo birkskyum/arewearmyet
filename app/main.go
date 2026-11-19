@@ -62,7 +62,7 @@ func main() {
 		word := args[0]
 		args = args[1:]
 		switch {
-		case command == "brief" || command == "fix" || command == "verify" || command == "resume" || command == "tree" || command == "note":
+		case command == "brief" || command == "fix" || command == "verify" || command == "resume" || command == "tree" || command == "note" || command == "ask":
 			// What follows these two names what to hand over: checks, or parts of the test
 			topics = append(topics, word)
 		case guided.KnownStep(word):
@@ -75,6 +75,9 @@ func main() {
 	}
 	flags := flag.NewFlagSet("hw-test "+command, flag.ExitOnError)
 	jsonOnly := flags.Bool("json", false, "print what would be sent, and send nothing")
+	play := flags.Bool("play", false, "for an agent, without a terminal: the owner has said yes to the sound test's tones")
+	once := flags.Bool("once", false, "end after the named steps, without the last screen")
+	done := flags.String("done", "", "with --once: a file to write the steps' results to")
 	noSend := flags.Bool("no-send", false, "show the results without sending them")
 	model := flags.String("model", "", "the model's id on arewearmyet.com, when the machine isn't recognised by itself")
 	agent := flags.String("agent", "", "the agent running this, shown next to the run")
@@ -130,9 +133,17 @@ func main() {
 		os.Exit(deviceTree(topics, why))
 	case "status":
 		// The latest result of every check on this machine, without running anything
+		if *jsonOnly {
+			// The same as data, for an agent: every check's latest result, with when and on which kernel
+			data, _ := json.MarshalIndent(report.Local(), "", "  ")
+			fmt.Println(string(data))
+			return
+		}
 		announce()
 		fmt.Println(guided.Status(report.Local()))
 		return
+	case "ask":
+		os.Exit(ask(topics))
 	case "quick", "check", "guided", "facts", "brief", "fix", "note", "verify", "report":
 		if command == "check" {
 			command = "quick"
@@ -148,8 +159,8 @@ func main() {
 	}
 	// The automatic tests need nobody, so they also run without a terminal, as an agent has it
 	unattended := len(only) > 0 && !guided.Interactive()
-	if unattended && !guided.Automatic(only) {
-		fmt.Fprintln(os.Stderr, "hw-test: that step is done with you at the keyboard, so it needs a terminal. Without one, these run: "+strings.Join(guided.AutomaticWords(), ", ")+". The sound test (speakers, microphone) runs without one once the owner has handed the speakers or the microphones to an agent, with hw-test fix speakers.")
+	if unattended && !guided.Automatic(only, *play) {
+		fmt.Fprintln(os.Stderr, "hw-test: that step is done with you at the keyboard, so it needs a terminal. Without one, these run: "+strings.Join(guided.AutomaticWords(), ", ")+". The sound test (speakers, microphone) runs without one with --play, once the owner has said yes to its tones. A step done with the owner is opened for them by hw-test ask, as in hw-test ask camera, which waits and prints the result.")
 		os.Exit(2)
 	}
 
@@ -259,7 +270,7 @@ func main() {
 		guided.Unattended(run, deep.Tests(machine.Real(), facts.Wifi, facts.Bluetooth, dir), only, say)
 		// The sound test plays tones out loud, so it runs here only on the owner's yes: their
 		// handing the speakers or the microphones to an agent
-		if guided.WantsSound(only) && guided.MaySound(time.Now()) && facts.SoundCard != "" && tools.Have("pw-play", "pw-record") {
+		if guided.WantsSound(only) && (*play || guided.MaySound(time.Now())) && facts.SoundCard != "" && tools.Have("pw-play", "pw-record") {
 			guided.Heard(run, dir, say)
 		}
 		os.RemoveAll(dir)
@@ -285,7 +296,16 @@ func main() {
 	if command == "guided" && guided.Interactive() {
 		// The quick results are kept aside: if the guided test can't run here, they are still sent
 		measured := append([]report.Result(nil), run.Results...)
-		err := guided.Run(run, facts, guided.Options{API: *api, Send: !*noSend, Only: only, Version: version})
+		err := guided.Run(run, facts, guided.Options{API: *api, Send: !*noSend, Only: only, Version: version, Once: *once})
+		// The steps' results go back to whoever opened them for the owner
+		if *done != "" {
+			results := run.Results
+			if err != nil || !*once {
+				results = nil
+			}
+			data, _ := json.MarshalIndent(map[string]any{"steps": only, "results": results}, "", "  ")
+			_ = os.WriteFile(*done, append(data, '\n'), 0o600)
+		}
 		if err == nil {
 			return
 		}
@@ -786,6 +806,50 @@ func attached(logs []report.Log) string {
 		"It goes on the model's page, for others with the same computer. To read it first, run this again with --json.\n"
 }
 
+// ask opens steps that are done with the owner in a terminal window on their desktop, waits
+// until they are through, and prints what the steps found. It is how an agent, which has no
+// terminal the owner sits at, has the owner do a test without anything being retyped.
+func ask(steps []string) int {
+	if len(steps) == 0 {
+		fmt.Fprintln(os.Stderr, "hw-test: ask needs the steps to open for the owner, as in hw-test ask camera. They are: "+strings.Join(guided.StepWords(), ", "))
+		return 2
+	}
+	for _, word := range steps {
+		if !guided.KnownStep(word) {
+			fmt.Fprintf(os.Stderr, "hw-test: %q is no step. They are: %s\n", word, strings.Join(guided.StepWords(), ", "))
+			return 2
+		}
+	}
+	self, err := os.Executable()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "hw-test:", err)
+		return 1
+	}
+	file, err := os.CreateTemp("", "hw-test-asked-*.json")
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "hw-test:", err)
+		return 1
+	}
+	answered := file.Name()
+	file.Close()
+	os.Remove(answered)
+	defer os.Remove(answered)
+	if err := tools.Terminal(self, append(steps, "--no-send", "--once", "--done", answered)...); err != nil {
+		fmt.Fprintln(os.Stderr, "hw-test: the step couldn't be opened for the owner:", err)
+		return 1
+	}
+	fmt.Fprintf(os.Stderr, "Opened for the owner in a window of its own: %s. Waiting until they are through, half an hour at most.\n", strings.Join(steps, ", "))
+	for waited := time.Duration(0); waited < 30*time.Minute; waited += 500 * time.Millisecond {
+		if data, err := os.ReadFile(answered); err == nil && len(data) > 0 {
+			fmt.Print(string(data))
+			return 0
+		}
+		time.Sleep(500 * time.Millisecond)
+	}
+	fmt.Fprintln(os.Stderr, "hw-test: the owner didn't get to it. Nothing was measured.")
+	return 1
+}
+
 // pickOne asks which of several parts an agent should look into, by its number.
 func pickOne(in *bufio.Reader, out io.Writer, lines []string) (int, bool) {
 	fmt.Fprintln(out, "Which one should your agent look into? It takes one part at a time, so a part that can't be fixed doesn't hold up the others.")
@@ -921,6 +985,10 @@ func usage() {
                      it asks which one: an agent takes one part at a time, from the
                      results already here, and nothing is tested again
   hw-test brief [WHAT...]  print that brief, to give to any agent yourself
+  hw-test ask STEP...      for an agent: open a step that takes the owner in a window on
+                     their desktop, wait until they are through, and print the result.
+                     The sound test needs no window: hw-test speakers --play, on the
+                     owner's yes. hw-test status --json gives every latest result as data
   hw-test note       write down what fits no check, where other owners' agents read it and can
                      answer: a problem that takes a sequence of events, a way around one, a
                      pointer to work elsewhere. In a terminal, hw-test note asks for the

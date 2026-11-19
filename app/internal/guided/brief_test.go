@@ -64,7 +64,7 @@ func TestTheBriefSaysWhatFailsWhatIsKnownAndHowToGoAboutIt(t *testing.T) {
 		// What the site has written up goes beside what was measured, with its source
 		"### Hibernation (check `hibernate`): broken", "Already known on the site, on Omarchy (broken, 2026-10): Waking from hibernation restarts the laptop. Source: https://github.com/omacom/omarchy/discussions/11823",
 		// A part that takes the owner is said to, and one that runs by itself has its command
-		"Measure again: `hw-test speakers`, run by the owner in their own terminal", "Measure again: `hw-test graphics --no-send`, which runs by itself", "Measure again: `hw-test quick --no-send`",
+		"Measure again: `hw-test speakers --no-send --play`, which you run yourself, also without a terminal, once the owner has said yes", "Measure again: `hw-test graphics --no-send`, which runs by itself", "Measure again: `hw-test quick --no-send`",
 		"- works: wifi", "- not tested:",
 		// No notes yet isn't the same as nothing known
 		"Nobody has left a note on this model yet. That means nobody wrote one, not that nothing is known", "api/notes?q=<words>",
@@ -207,7 +207,7 @@ func TestWhatFailsIsHandedToTheOwnersAgentWithTheBrief(t *testing.T) {
 	// Handed over by the owner, the speakers are the agent's to measure: the brief says how, and
 	// the computer remembers the owner's yes for the sound test
 	t.Setenv("XDG_STATE_HOME", t.TempDir())
-	if Automatic([]string{"speakers"}) || MaySound(time.Now()) {
+	if Automatic([]string{"speakers"}, false) || MaySound(time.Now()) {
 		t.Error("the sound test would run for an agent before the owner handed the speakers over")
 	}
 	one.Only, one.ByOwner, one.When = []string{"speakers"}, true, time.Now()
@@ -216,7 +216,7 @@ func TestWhatFailsIsHandedToTheOwnersAgentWithTheBrief(t *testing.T) {
 	if !strings.Contains(string(written), "Measure again: `hw-test speakers --no-send`, which you run yourself, also without a terminal") {
 		t.Errorf("the brief doesn't give the agent the sound test:\n%s", written)
 	}
-	if !Automatic([]string{"speakers"}) || !Automatic([]string{"microphone", "graphics"}) || Automatic([]string{"camera"}) || !WantsSound([]string{"auto"}) || WantsSound([]string{"graphics"}) {
+	if !Automatic([]string{"speakers"}, false) || !Automatic([]string{"microphone", "graphics"}, false) || Automatic([]string{"camera"}, true) || !WantsSound([]string{"auto"}) || WantsSound([]string{"graphics"}) {
 		t.Error("after the owner handed the speakers over, the sound test still doesn't run for the agent, or more than it does")
 	}
 	// An agent that asks for the brief itself is given no such yes
@@ -224,8 +224,13 @@ func TestWhatFailsIsHandedToTheOwnersAgentWithTheBrief(t *testing.T) {
 	one.ByOwner = false
 	HandOver(one, dir, launch)
 	written, _ = os.ReadFile(filepath.Join(dir, "BRIEF.md"))
-	if MaySound(time.Now()) || strings.Contains(string(written), "which you run yourself") {
-		t.Error("an agent gave itself the sound test")
+	if MaySound(time.Now()) || !strings.Contains(string(written), "`hw-test speakers --no-send --play`, which you run yourself, also without a terminal, once the owner has said yes") {
+		t.Error("an agent gave itself the owner's yes to the sound test")
+	}
+	// A test that takes the owner is opened for them, and nothing is retyped
+	one.Only = []string{"camera"}
+	if brief := Brief(one); !strings.Contains(brief, "Measure again: `hw-test ask camera`, which opens the test in a window for the owner") {
+		t.Errorf("a test with the owner:\n%s", brief)
 	}
 
 	// Without the guide to copy, the brief and the message point at the site

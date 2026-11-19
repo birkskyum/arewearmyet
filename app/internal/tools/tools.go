@@ -339,6 +339,32 @@ func Open(url string) {
 	}
 }
 
+// ErrNoTerminal says there is no way here to open a terminal window.
+var ErrNoTerminal = errors.New("no terminal window can be opened from here")
+
+// Terminal opens a terminal window on the owner's desktop running the given program, the way
+// Omarchy opens its own screens, and returns once it is on its way.
+func Terminal(program string, args ...string) error {
+	var line []string
+	switch custom := strings.Fields(os.Getenv("HW_TEST_TERMINAL")); {
+	case len(custom) > 0:
+		line = custom
+	case Have("omarchy-launch-tui"):
+		line = []string{"omarchy-launch-tui", "--app-id=org.omarchy.hw-test"}
+	case Have("xdg-terminal-exec"):
+		line = []string{"xdg-terminal-exec", "-e"}
+	default:
+		return ErrNoTerminal
+	}
+	command := exec.Command(line[0], append(append(line[1:], program), args...)...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
+	if err := command.Start(); err != nil {
+		return err
+	}
+	go command.Wait()
+	return nil
+}
+
 // ErrNoAgent says Omarchy has no agent chosen to launch.
 var ErrNoAgent = errors.New("no default agent is chosen")
 

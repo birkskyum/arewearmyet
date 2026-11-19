@@ -32,6 +32,9 @@ type Options struct {
 	Only []string
 	// Version is the app's, for the brief an agent is given.
 	Version string
+	// Once ends the test after the steps named in Only, without the last screen: for a step an
+	// agent opened for the owner, whose result goes back to the agent.
+	Once bool
 	// launch opens the agent, which tests replace, and guide fetches the guide for a copy
 	// beside the brief, which tests leave out.
 	launch func(dir, prompt string) error
@@ -321,7 +324,7 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 	}
 	handsOff(steps, options.Only)
 
-	last := &summary{run: run, options: options, dir: dir, recorded: records(steps)}
+	last := &summary{run: run, options: options, dir: dir, recorded: records(steps), once: options.Once && len(options.Only) > 0}
 	m := &model{run: run, summary: last, width: 100, height: 30, failed: map[string]string{}}
 	last.failed = m.failed
 	sleepMode := machine.Real().Read("/sys/power/mem_sleep")
@@ -354,7 +357,7 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 	var opening step = start
 	resuming := false
 	// Only the first round looks: later ones follow a part that just finished
-	if pending, found := report.LoadPending(); found && initial {
+	if pending, found := report.LoadPending(); found && initial && !last.once {
 		opening, steps = resume(run, pending, report.BootID(), opening, steps)
 		_, resuming = opening.(*resumed)
 	}

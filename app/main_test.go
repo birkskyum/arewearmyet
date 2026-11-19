@@ -2,6 +2,9 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 
@@ -114,5 +117,43 @@ func TestOnePartIsPickedForTheAgentByItsNumber(t *testing.T) {
 		if !strings.Contains(asked.String(), "one part at a time") || !strings.Contains(asked.String(), "  2  Webcam: partly. Too dark") {
 			t.Errorf("asked:\n%s", asked.String())
 		}
+	}
+}
+
+func TestAnAgentHasTheOwnerDoAStepAndGetsItsResultBack(t *testing.T) {
+	// A stand-in for the terminal window: it finds the file the step is to answer in, and
+	// answers as the step would once the owner is through
+	dir := t.TempDir()
+	window := filepath.Join(dir, "window")
+	os.WriteFile(window, []byte(`#!/bin/sh
+echo "$@" > `+dir+`/opened
+while [ $# -gt 1 ]; do [ "$1" = --done ] && file=$2; shift; done
+sleep 1
+printf '{"steps":["camera"],"results":[{"check":"camera","state":"works","how":"owner"}]}\n' > "$file"
+`), 0o755)
+	t.Setenv("HW_TEST_TERMINAL", window)
+	out := os.Stdout
+	read, write, _ := os.Pipe()
+	os.Stdout = write
+	code := ask([]string{"camera"})
+	write.Close()
+	os.Stdout = out
+	var answered struct {
+		Steps   []string        `json:"steps"`
+		Results []report.Result `json:"results"`
+	}
+	if err := json.NewDecoder(read).Decode(&answered); err != nil || code != 0 || len(answered.Results) != 1 || answered.Results[0].State != report.Works {
+		t.Fatalf("exit %d, %v, answered %+v", code, err, answered)
+	}
+	// The step was opened for the owner alone, to end by itself, with nothing sent
+	opened, _ := os.ReadFile(filepath.Join(dir, "opened"))
+	for _, part := range []string{" camera ", "--no-send", "--once", "--done "} {
+		if !strings.Contains(string(opened), part) {
+			t.Errorf("the window was opened with %q, lacking %q", opened, part)
+		}
+	}
+	// A word that names no step opens nothing
+	if ask([]string{"flux"}) != 2 || ask(nil) != 2 {
+		t.Error("something that is no step was opened")
 	}
 }

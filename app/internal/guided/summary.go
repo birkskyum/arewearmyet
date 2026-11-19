@@ -63,6 +63,9 @@ type summary struct {
 	handed string
 	// asked is the last screen's question, put back after a part was picked for the agent.
 	asked string
+	// once ends the test here without a screen: the steps were opened for the owner by an
+	// agent, which gets their result.
+	once bool
 }
 
 // failing lists the checks this round found partly working or broken, or working with
@@ -114,6 +117,10 @@ func (s *summary) start() tea.Cmd {
 		for _, entry := range entries {
 			os.RemoveAll(filepath.Join(s.dir, entry.Name()))
 		}
+	}
+	if s.once {
+		s.skipped, s.over = true, true
+		return nil
 	}
 	s.ask = choice{question: "Send the lines above to arewearmyet.com?", options: []string{"Send", "Don't send"}}
 	if !s.options.Send {
@@ -278,6 +285,8 @@ func (s *summary) view(width, height int) string {
 // farewell is what's left in the terminal after the test closes.
 func (s *summary) farewell() string {
 	switch {
+	case s.once:
+		return ""
 	case s.err != nil:
 		return "Sending failed: " + s.err.Error() + "\nRun hw-test again to retry."
 	case s.skipped || s.sent.Run == "":

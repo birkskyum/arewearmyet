@@ -747,7 +747,7 @@ func TestChosenStepsRunAlone(t *testing.T) {
 	if got := names(choose(all, []string{"manual"})); got != "Keyboard, Volume and brightness keys, Headphones, Camera, Questions" {
 		t.Errorf("manual: %s", got)
 	}
-	if Automatic([]string{"manual"}) {
+	if Automatic([]string{"manual"}, false) {
 		t.Error("the tests done with the owner count as needing nobody")
 	}
 	if got := names(choose(all, []string{"voice"})); got != "Voice" {
@@ -1452,6 +1452,12 @@ func TestARoundEndsOnGoingBackToTheStartByDefault(t *testing.T) {
 	s.update(sentMsg{err: fmt.Errorf("reports are closed")})
 	if s.phase != "failed" || !strings.Contains(s.ask.question, "reports are closed") {
 		t.Errorf("a no from the site: phase %q", s.phase)
+	}
+
+	// Opened by an agent for the owner, the round ends after its steps with no screen and nothing sent
+	s = &summary{run: run, options: Options{Send: true}, once: true}
+	if s.start() != nil || !s.done() || s.farewell() != "" || s.phase == "sending" {
+		t.Errorf("once: done %v, farewell %q, phase %q", s.done(), s.farewell(), s.phase)
 	}
 
 	// Quit leaves, and doesn't come back
