@@ -362,7 +362,7 @@ curl -X POST https://arewearmyet.com/api/runs \
 | `compatible` | The device tree's first compatible string |
 | `hardware` | `maker`, `product`, `family`, `sku`, `board`, `bios`, from the firmware. Never a serial number |
 | `kernel`, `os`, `agent` | What ran, and which agent sent it |
-| `packages` | Versions of `linux-omarchy`, `linux-omarchy-dtbs`, `linux`, `linux-firmware`, `linux-firmware-qcom`, `mesa`, `systemd`, `omarchy`, `hyprland`, `pipewire`, `alsa-ucm-conf`, `bluez`, `libcamera`, `hw-test`. Other names are dropped |
+| `packages` | Versions of `linux-omarchy`, `linux-omarchy-dtbs`, `linux`, `linux-firmware`, `linux-firmware-qcom`, `mesa`, `systemd`, `omarchy`, `hyprland`, `pipewire`, `alsa-ucm-conf`, `bluez`, `libcamera`, `hw-test`, and on NVIDIA machines `linux-omarchy-nvidia-open`, `nvidia-utils`, `libva-nvidia-driver`. Other names are dropped |
 
 Answers `201`.
 

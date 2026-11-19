@@ -117,7 +117,7 @@ curl -s -X POST https://arewearmyet.com/api/runs \
 
 ### On an NVIDIA machine
 
-An NVIDIA N1x or GB10 machine (family `arm-nvidia`) describes its own hardware through ACPI. It has no device tree, so `hw-test tree` and the device tree package are not for it, and it needs no hardware IDs or firmware package. A fault there is in a kernel driver, a system setting or an application's setting, and goes where the table below says for those. Measuring, reporting, `hw-test verify`, `hw-test resume` and notes work the same. The two Qualcomm processors (`adsp`, `cdsp`) are not on these machines. No NVIDIA machine has sent results yet, so if a test itself misbehaves on one, say so in a note and in an issue on [arewearmyet](https://github.com/birkskyum/arewearmyet/issues).
+An NVIDIA N1x or GB10 machine (family `arm-nvidia`) describes its own hardware through ACPI. It has no device tree, so `hw-test tree` and the device tree package are not for it, and it needs no hardware IDs or firmware package. A fault there is in a kernel driver, a system setting or an application's setting, and goes where the table below says for those. Measuring, reporting, `hw-test verify`, `hw-test resume` and notes work the same. The two Qualcomm processors (`adsp`, `cdsp`) are not on these machines. `hw-test` knows an N1x laptop and a GB10 desktop for what they are, checks the driver bound to the GPU, and decodes video on the GPU through NVDEC or VA-API. These paths were written without such a machine at hand, so if a test itself misbehaves on one, say so in a note and in an issue on [arewearmyet](https://github.com/birkskyum/arewearmyet/issues).
 
 ### Before you change anything
 

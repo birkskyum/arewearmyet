@@ -22,6 +22,7 @@ import (
 	"time"
 
 	"github.com/birkskyum/arewearmyet/app/internal/machine"
+	"github.com/birkskyum/arewearmyet/app/internal/probe"
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 )
 
@@ -295,10 +296,23 @@ func Wireless(sys machine.System, wifi, bluetooth string) []report.Result {
 	return results
 }
 
-var frames = regexp.MustCompile(`frame=\s*(\d+)`)
+var frameCount = regexp.MustCompile(`frame=\s*(\d+)`)
+
+// decode runs ffmpeg over the clip with the given way of decoding, and says how many frames came out.
+func decode(sys machine.System, how ...string) (frames int, out string, err error, took time.Duration) {
+	started := time.Now()
+	args := append([]string{"-hide_banner", "-loglevel", "error", "-stats"}, how...)
+	out, err = sys.RunFor(40*time.Second, "ffmpeg", append(args, "-f", "null", "-")...)
+	took = time.Since(started)
+	for _, match := range frameCount.FindAllStringSubmatch(out, -1) {
+		frames, _ = strconv.Atoi(match[1])
+	}
+	return frames, out, err, took
+}
 
 // Video makes a two-second clip and decodes it on the hardware decoder. The quick check sees
-// that a decoder exists; this sees whether it gives frames.
+// that a decoder exists; this sees whether it gives frames. A Snapdragon machine decodes on
+// its video engine, an NVIDIA one on its GPU.
 func Video(sys machine.System, dir string) []report.Result {
 	clip := filepath.Join(dir, "clip.mp4")
 	defer os.Remove(clip)
@@ -308,13 +322,11 @@ func Video(sys machine.System, dir string) []report.Result {
 		_ = out
 		return nil
 	}
-	started := time.Now()
-	out, err := sys.RunFor(40*time.Second, "ffmpeg", "-hide_banner", "-loglevel", "error", "-stats", "-c:v", "h264_v4l2m2m", "-i", clip, "-f", "null", "-")
-	took := time.Since(started)
-	decoded := 0
-	for _, match := range frames.FindAllStringSubmatch(out, -1) {
-		decoded, _ = strconv.Atoi(match[1])
+	switch probe.Platform(sys) {
+	case "n1x", "gb10", "nvidia":
+		return videoOnGPU(sys, clip)
 	}
+	decoded, out, err, took := decode(sys, "-c:v", "h264_v4l2m2m", "-i", clip)
 	switch {
 	case decoded >= 55:
 		return []report.Result{result("video-decode", report.Works, fmt.Sprintf("%d frames of 720p H.264 decoded on the hardware decoder in %.1f s", decoded, took.Seconds()), "")}
@@ -326,6 +338,35 @@ func Video(sys machine.System, dir string) []report.Result {
 		why = err.Error()
 	}
 	return []report.Result{result("video-decode", report.Broken, "the hardware decoder gave no frames: "+why, "")}
+}
+
+// videoOnGPU decodes the clip on an NVIDIA GPU, through NVDEC and, failing that, through
+// VA-API, which Omarchy sets up with libva-nvidia-driver. The frames are asked for as GPU
+// frames and fetched back, so a decoder that quietly falls back to the processor gives an
+// error and no frames, and doesn't pass for the GPU.
+func videoOnGPU(sys machine.System, clip string) []report.Result {
+	var whys []string
+	for _, way := range []struct {
+		name string
+		how  []string
+	}{
+		{"NVDEC", []string{"-hwaccel", "nvdec", "-hwaccel_output_format", "cuda", "-i", clip, "-vf", "hwdownload,format=nv12"}},
+		{"VA-API", []string{"-hwaccel", "vaapi", "-hwaccel_output_format", "vaapi", "-i", clip, "-vf", "hwdownload,format=nv12"}},
+	} {
+		decoded, out, err, took := decode(sys, way.how...)
+		switch {
+		case decoded >= 55:
+			return []report.Result{result("video-decode", report.Works, fmt.Sprintf("%d frames of 720p H.264 decoded on the GPU through %s in %.1f s", decoded, way.name, took.Seconds()), "")}
+		case decoded > 0:
+			return []report.Result{result("video-decode", report.Partial, fmt.Sprintf("only %d of 60 frames came out of the GPU through %s", decoded, way.name), "")}
+		}
+		why := lastLine(out)
+		if why == "" && err != nil {
+			why = err.Error()
+		}
+		whys = append(whys, way.name+": "+why)
+	}
+	return []report.Result{result("video-decode", report.Broken, "the GPU gave no frames. "+strings.Join(whys, "; "), "")}
 }
 
 func lastLine(text string) string {

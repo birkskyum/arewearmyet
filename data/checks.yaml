@@ -58,7 +58,7 @@ checks:
     group: display
     title: Graphics acceleration
     works: The desktop runs on the GPU, not on software rendering.
-    probe: Whether a render node from the msm driver exists and the GPU's firmware loaded. The graphics test asks Vulkan which device programs draw on.
+    probe: On a Snapdragon, whether a render node from the msm driver exists and the GPU's firmware loaded. On an NVIDIA machine, whether a driver is bound to its GPU. The graphics test asks Vulkan which device programs draw on.
     debug: "The GPU needs the msm kernel driver, Mesa, and three firmware files: SQE and GMU firmware from linux-firmware, and a zap shader signed by the computer's maker, named by `firmware-name` under the tree's `gpu` node. `journalctl -k -b | grep -iE 'adreno|a7xx|a8xx|gmu|zap'` shows which is missing. Without the zap shader the desktop runs on software rendering, and `vulkaninfo --summary` shows llvmpipe."
 
   - id: webgl
@@ -243,8 +243,8 @@ checks:
   - id: video-decode
     group: media
     title: Hardware video decoding
-    works: Videos decode on the video engine, not on the processor.
-    probe: Whether the iris or venus video decoder exists. The video test decodes a two-second H.264 clip on it and counts the frames.
+    works: Videos decode on the video engine or the GPU, not on the processor.
+    probe: On a Snapdragon, whether the iris or venus video decoder exists. The video test decodes a two-second H.264 clip and counts the frames, on that decoder, or on an NVIDIA machine on its GPU through NVDEC or VA-API.
     person: Play a 1080p or 4K video in mpv or Chromium and say whether the processor stays mostly idle.
     debug: "The decoder is the `iris` driver (venus on older chips), with firmware from `qcom/vpu/` or the file the tree's `firmware-name` asks for. `journalctl -k -b | grep -iE 'iris|venus|vpu'` shows a missing file and `v4l2-ctl --list-devices` the decoder. `hw-test video` decodes a clip on it and counts the frames."
 

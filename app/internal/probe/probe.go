@@ -11,6 +11,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/birkskyum/arewearmyet/app/internal/machine"
 	"github.com/birkskyum/arewearmyet/app/internal/report"
@@ -35,7 +36,8 @@ type Facts struct {
 	Encrypted         bool   // the root disk asks for a password at startup
 }
 
-var packages = []string{"linux-omarchy", "linux-omarchy-dtbs", "linux-firmware", "linux-firmware-qcom", "mesa", "systemd", "omarchy", "hyprland", "pipewire", "alsa-ucm-conf", "bluez", "libcamera"}
+// The last three are what Omarchy installs for the GPU on NVIDIA's ARM machines
+var packages = []string{"linux-omarchy", "linux-omarchy-dtbs", "linux-firmware", "linux-firmware-qcom", "mesa", "systemd", "omarchy", "hyprland", "pipewire", "alsa-ucm-conf", "bluez", "libcamera", "linux-omarchy-nvidia-open", "nvidia-utils", "libva-nvidia-driver"}
 
 // Desktops, mini PCs and all-in-ones, by SMBIOS chassis type: no battery, lid or built-in keyboard to expect.
 var desktops = map[string]bool{"3": true, "4": true, "5": true, "6": true, "7": true, "13": true, "15": true, "16": true, "35": true, "36": true}
@@ -85,6 +87,7 @@ func Quick(sys machine.System) (*report.Run, Facts, error) {
 	facts.Encrypted = strings.Contains(sys.ReadAll("/proc/cmdline"), "cryptdevice=") || strings.Contains(sys.ReadAll("/proc/cmdline"), "rd.luks")
 	measured := func(check, state, evidence string) { run.Set(check, state, report.Measured, evidence, "") }
 	klog := sys.Run("journalctl", "-k", "-b", "--no-pager", "-q", "-o", "cat")
+	platform := Platform(sys)
 
 	// Each part on its own: these machines have half-working drivers and odd values in /sys,
 	// and one part tripping over them mustn't cost the others their results
@@ -98,7 +101,7 @@ func Quick(sys machine.System) (*report.Run, Facts, error) {
 		func() { power(sys, &facts, measured) },
 		func() { sleep(sys, measured) },
 		func() { ports(sys, measured) },
-		func() { media(sys, &facts, measured) },
+		func() { media(sys, platform, &facts, measured) },
 		func() { sensors(sys, &facts, measured) },
 	} {
 		safely(part)
@@ -156,8 +159,30 @@ func screen(sys machine.System, measured set) {
 	}
 }
 
-// The adreno driver bound to a GPU, or the msm display driver on its own.
+// nvidiaCard is the NVIDIA GPU on the PCI bus, with the driver bound to it. NVIDIA's ARM
+// machines have theirs in the processor's package, and it still shows as a PCI device.
+func nvidiaCard(sys machine.System) (id, driver string, found bool) {
+	for _, vendor := range sys.Glob("/sys/bus/pci/devices/*/vendor") {
+		device := filepath.Dir(vendor)
+		if sys.Read(vendor) != "0x10de" || !strings.HasPrefix(sys.Read(device+"/class"), "0x03") {
+			continue
+		}
+		return "10de:" + strings.TrimPrefix(sys.Read(device+"/device"), "0x"), sys.LinkName(device + "/driver"), true
+	}
+	return "", "", false
+}
+
+// The adreno driver bound to a GPU, or the msm display driver on its own. On an NVIDIA
+// machine, the driver bound to its GPU.
 func gpu(sys machine.System, klog string, measured set) {
+	if id, driver, found := nvidiaCard(sys); found {
+		if driver == "" {
+			measured("gpu", report.Broken, "the NVIDIA GPU ("+id+") has no driver bound")
+		} else {
+			measured("gpu", report.Works, "NVIDIA GPU ("+id+") driven by "+driver)
+		}
+		return
+	}
 	device := ""
 	for _, entry := range sys.Glob("/sys/bus/platform/drivers/adreno/*") {
 		if strings.Contains(filepath.Base(entry), "gpu") {
@@ -458,7 +483,7 @@ func ports(sys machine.System, measured set) {
 
 // A built-in camera is a sensor on I2C behind Qualcomm's camera subsystem, named like
 // "ov02c10 10-0036"; a USB one shows as a video device of its own.
-func media(sys machine.System, facts *Facts, measured set) {
+func media(sys machine.System, platform string, facts *Facts, measured set) {
 	decoder, subsystem := "", false
 	for _, video := range sys.Glob("/sys/class/video4linux/video*") {
 		name := sys.Read(video + "/name")
@@ -483,7 +508,9 @@ func media(sys machine.System, facts *Facts, measured set) {
 	case facts.Camera == "" && facts.Laptop:
 		measured("camera", report.Broken, "no camera device")
 	}
-	if decoder == "" {
+	// Only a Snapdragon machine decodes video through such a device. An NVIDIA one does it on
+	// its GPU, which the video test tries, and of any other machine nothing is known
+	if decoder == "" && platform == "qualcomm" {
 		measured("video-decode", report.Broken, "no iris or venus video decoder")
 	}
 }
@@ -516,13 +543,60 @@ const (
 	Apple        = "arm-apple" // the Omarchy Mac team's
 )
 
-// Family names the family of the machine from what it says of itself: the makers in its
-// device tree, and where it started without one, its maker's name and its processor. It is
-// "" when nothing tells.
-func Family(sys machine.System) string {
+// Platform names the kind of ARM machine this is, as Omarchy sorts them: "qualcomm", "n1x",
+// "gb10", "nvidia" (an NVIDIA machine that is neither), "apple", or "" when nothing tells. It
+// asks Omarchy's own detector first and reads the machine itself where that isn't there.
+//
+// A Snapdragon machine and a Mac name themselves in the device tree they start with. NVIDIA's
+// ARM PCs start through ACPI, with no device tree: an N1x laptop is known by its GPU (PCI
+// 10de:2e06) or by its I2C controllers (ACPI NVDA0200), a GB10 desktop by its GPU (10de:2e12).
+func Platform(sys machine.System) string {
+	if out, err := sys.RunFor(3*time.Second, "omarchy-hw-platform"); err == nil {
+		switch strings.TrimSpace(out) {
+		case "aarch64-qualcomm":
+			return "qualcomm"
+		case "aarch64-n1x":
+			return "n1x"
+		case "aarch64-gb10":
+			return "gb10"
+		case "aarch64-apple":
+			return "apple"
+		}
+	}
+	has := compatible(sys)
+	maker := strings.ToLower(sys.Read("/sys/class/dmi/id/sys_vendor") + " " + sys.Read("/sys/class/dmi/id/product_name"))
+	switch {
+	case has("apple") || strings.Contains(maker, "apple"):
+		return "apple"
+	case has("qcom"):
+		return "qualcomm"
+	}
+	if id, _, found := nvidiaCard(sys); found {
+		switch id {
+		case "10de:2e06":
+			return "n1x"
+		case "10de:2e12":
+			return "gb10"
+		}
+		return "nvidia"
+	}
+	switch {
+	case len(sys.Glob("/sys/bus/acpi/devices/NVDA0200:*")) > 0:
+		return "n1x"
+	case has("nvidia") || strings.Contains(maker, "nvidia"):
+		return "nvidia"
+	// 0x51 is Qualcomm's mark on the processors it designs, for a machine started without a tree
+	case strings.Contains(strings.ToLower(sys.ReadAll("/proc/cpuinfo")), "implementer\t: 0x51"):
+		return "qualcomm"
+	}
+	return ""
+}
+
+// compatible says whether the device tree the machine started with names a maker.
+func compatible(sys machine.System) func(maker string) bool {
 	// One name to a line, as the file is read
 	tree := strings.Split(sys.ReadAll("/proc/device-tree/compatible"), "\n")
-	has := func(maker string) bool {
+	return func(maker string) bool {
 		for _, name := range tree {
 			if strings.HasPrefix(strings.TrimSpace(name), maker+",") {
 				return true
@@ -530,17 +604,20 @@ func Family(sys machine.System) string {
 		}
 		return false
 	}
-	maker := strings.ToLower(sys.Read("/sys/class/dmi/id/sys_vendor") + " " + sys.Read("/sys/class/dmi/id/product_name"))
-	cpu := strings.ToLower(sys.ReadAll("/proc/cpuinfo"))
-	switch {
-	case has("apple") || strings.Contains(maker, "apple"):
+}
+
+// Family names the family of the machine from what it says of itself, as the line a pull
+// request for it opens with. It is "" when nothing tells.
+func Family(sys machine.System) string {
+	switch Platform(sys) {
+	case "apple":
 		return Apple
-	case has("nvidia") || strings.Contains(maker, "nvidia"):
+	case "n1x", "gb10", "nvidia":
 		return Nvidia
-	case has("qcom") && has("google"):
-		return DragonGoogle
-	// 0x51 is Qualcomm's mark on the processors it designs, for a machine started without a tree
-	case has("qcom") || strings.Contains(cpu, "implementer\t: 0x51"):
+	case "qualcomm":
+		if compatible(sys)("google") {
+			return DragonGoogle
+		}
 		return DragonMsft
 	}
 	return ""

@@ -267,3 +267,110 @@ func TestOddValuesInSysDoNotStopTheCheck(t *testing.T) {
 	}
 	expect(t, run, map[string]string{"display": report.Works, "wifi": report.Works, "suspend": ""})
 }
+
+// nvidia turns the copied machine into one of NVIDIA's ARM PCs: started through ACPI, so with
+// no device tree and none of Qualcomm's devices, and with NVIDIA's GPU on the PCI bus.
+func nvidia(t *testing.T, root, device, driver string) {
+	t.Helper()
+	for _, gone := range []string{"proc/device-tree", "sys/bus/platform/drivers/adreno", "sys/class/video4linux", "sys/class/remoteproc"} {
+		if err := os.RemoveAll(filepath.Join(root, gone)); err != nil {
+			t.Fatal(err)
+		}
+	}
+	card := "sys/bus/pci/devices/0000:01:00.0"
+	write(t, root, card+"/vendor", "0x10de\n")
+	write(t, root, card+"/class", "0x030000\n")
+	write(t, root, card+"/device", device+"\n")
+	if driver != "" {
+		if err := os.MkdirAll(filepath.Join(root, "sys/bus/pci/drivers", driver), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.Symlink("../../drivers/"+driver, filepath.Join(root, card, "driver")); err != nil {
+			t.Fatal(err)
+		}
+	}
+	write(t, root, "sys/class/dmi/id/sys_vendor", "ASUSTeK COMPUTER INC.\n")
+	write(t, root, "sys/class/dmi/id/product_name", "ProArt P16 H7607BA\n")
+}
+
+// An NVIDIA laptop is known for what it is although nothing on it says "NVIDIA" in its name,
+// and it isn't faulted for lacking a Snapdragon's parts. Before this it had no family, and the
+// quick check called its video decoding broken for want of Qualcomm's decoder.
+func TestAnNvidiaLaptopIsKnownAndNotMeasuredAsASnapdragon(t *testing.T) {
+	var root string
+	run, _ := fixture(t, func(r string) { root = r; nvidia(t, r, "0x2e06", "nvidia") })
+	sys := machine.Fixture(root)
+	if got := Platform(sys); got != "n1x" {
+		t.Errorf("platform %q", got)
+	}
+	if got := Family(sys); got != Nvidia {
+		t.Errorf("family %q", got)
+	}
+	if gpu, _ := run.Get("gpu"); gpu.State != report.Works || gpu.Evidence != "NVIDIA GPU (10de:2e06) driven by nvidia" {
+		t.Errorf("gpu: %+v", gpu)
+	}
+	for _, check := range []string{"video-decode", "adsp", "cdsp"} {
+		if result, found := run.Get(check); found {
+			t.Errorf("%s was measured on an NVIDIA machine: %+v", check, result)
+		}
+	}
+
+	// The GPU with no driver bound is a fault, said as one
+	run, _ = fixture(t, func(r string) { nvidia(t, r, "0x2e06", "") })
+	if gpu, _ := run.Get("gpu"); gpu.State != report.Broken || !strings.Contains(gpu.Evidence, "no driver bound") {
+		t.Errorf("gpu without a driver: %+v", gpu)
+	}
+
+	// A GB10 desktop by its own GPU, and an N1x whose GPU isn't on the bus by its I2C controllers
+	fixture(t, func(r string) { root = r; nvidia(t, r, "0x2e12", "nvidia") })
+	if got := Platform(machine.Fixture(root)); got != "gb10" {
+		t.Errorf("a GB10 desktop: %q", got)
+	}
+	fixture(t, func(r string) {
+		root = r
+		nvidia(t, r, "0x2e06", "")
+		if err := os.RemoveAll(filepath.Join(r, "sys/bus/pci")); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.MkdirAll(filepath.Join(r, "sys/bus/acpi/devices/NVDA0200:00"), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		// With nothing else to go by, the processor's maker would have named it a Snapdragon
+		write(t, r, "proc/cpuinfo", "CPU implementer\t: 0x41\n")
+	})
+	if got := Platform(machine.Fixture(root)); got != "n1x" {
+		t.Errorf("an N1x known by its I2C controllers: %q", got)
+	}
+
+	// Omarchy's own detector is believed where it answers
+	asked := machine.Fixture(root)
+	inner := asked.Command
+	asked.Command = func(name string, args ...string) (string, error) {
+		if name == "omarchy-hw-platform" {
+			return "aarch64-gb10\n", nil
+		}
+		return inner(name, args...)
+	}
+	if got := Platform(asked); got != "gb10" {
+		t.Errorf("Omarchy's detector said gb10, and the platform is %q", got)
+	}
+}
+
+// The Yoga is still a Snapdragon PC that came with Windows, and still faulted when its video
+// decoder is missing.
+func TestASnapdragonIsStillMeasuredAsOne(t *testing.T) {
+	var root string
+	run, _ := fixture(t, func(r string) {
+		root = r
+		if err := os.RemoveAll(filepath.Join(r, "sys/class/video4linux")); err != nil {
+			t.Fatal(err)
+		}
+	})
+	sys := machine.Fixture(root)
+	if Platform(sys) != "qualcomm" || Family(sys) != DragonMsft {
+		t.Errorf("platform %q, family %q", Platform(sys), Family(sys))
+	}
+	if video, _ := run.Get("video-decode"); video.State != report.Broken {
+		t.Errorf("video decoding without a decoder: %+v", video)
+	}
+}

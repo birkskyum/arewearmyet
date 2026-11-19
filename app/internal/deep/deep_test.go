@@ -338,6 +338,55 @@ func TestWirelessKeepsTheSignalAndOnlyHowManyDevicesWereHeard(t *testing.T) {
 	}
 }
 
+// On an NVIDIA machine the clip is decoded on the GPU, through NVDEC and, failing that, VA-API.
+// The Snapdragon decoder isn't asked for there, where it would always be reported as broken.
+func TestVideoIsDecodedOnTheGPUOfAnNvidiaMachine(t *testing.T) {
+	gpu := func(answers map[string]string) machine.System {
+		sys := machine.Fixture(t.TempDir())
+		card := filepath.Join(sys.Root, "sys/bus/pci/devices/0000:01:00.0")
+		if err := os.MkdirAll(card, 0o755); err != nil {
+			t.Fatal(err)
+		}
+		for name, text := range map[string]string{"vendor": "0x10de", "class": "0x030000", "device": "0x2e06"} {
+			if err := os.WriteFile(filepath.Join(card, name), []byte(text+"\n"), 0o644); err != nil {
+				t.Fatal(err)
+			}
+		}
+		sys.Command = func(name string, args ...string) (string, error) {
+			if name != "ffmpeg" {
+				return "", os.ErrNotExist
+			}
+			for _, arg := range args {
+				if arg == "h264_v4l2m2m" {
+					t.Error("the Snapdragon decoder was asked for on an NVIDIA machine")
+				}
+				if out, ok := answers[arg]; ok {
+					if strings.Contains(out, "frame=") {
+						return out, nil
+					}
+					return out, errors.New("exit status 1")
+				}
+			}
+			return "", nil // the clip was made
+		}
+		return sys
+	}
+	dir := t.TempDir()
+	all := "frame=   60 fps=0.0 q=-0.0 Lsize=N/A time=00:00:02.00\n"
+	video := one(t, Video(gpu(map[string]string{"nvdec": all}), dir), "video-decode")
+	if video.State != report.Works || !strings.Contains(video.Evidence, "decoded on the GPU through NVDEC") {
+		t.Errorf("through NVDEC: %+v", video)
+	}
+	video = one(t, Video(gpu(map[string]string{"nvdec": "Device creation failed: -12.\n", "vaapi": all}), dir), "video-decode")
+	if video.State != report.Works || !strings.Contains(video.Evidence, "through VA-API") {
+		t.Errorf("through VA-API when NVDEC fails: %+v", video)
+	}
+	video = one(t, Video(gpu(map[string]string{"nvdec": "Device creation failed: -12.\n", "vaapi": "Failed to initialise VAAPI connection: -1 (unknown libva error).\n"}), dir), "video-decode")
+	if video.State != report.Broken || !strings.Contains(video.Evidence, "NVDEC: Device creation failed") || !strings.Contains(video.Evidence, "VA-API: Failed to initialise") {
+		t.Errorf("neither way: %+v", video)
+	}
+}
+
 func TestVideoCountsTheFramesTheHardwareDecoderGave(t *testing.T) {
 	decoder := func(output string, err error) machine.System {
 		sys := machine.Fixture(t.TempDir())
