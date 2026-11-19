@@ -41,6 +41,9 @@ import (
 // version is set when a release is built.
 var version = "dev"
 
+// terminal is what the owner types, read a line at a time by whatever asks.
+var terminal = bufio.NewReader(os.Stdin)
+
 func main() {
 	// Whatever goes wrong, the owner is told in a sentence, not shown a stack of the program's insides
 	defer func() {
@@ -58,7 +61,7 @@ func main() {
 		word := args[0]
 		args = args[1:]
 		switch {
-		case command == "brief" || command == "fix" || command == "verify" || command == "resume" || command == "tree":
+		case command == "brief" || command == "fix" || command == "verify" || command == "resume" || command == "tree" || command == "note":
 			// What follows these two names what to hand over: checks, or parts of the test
 			topics = append(topics, word)
 		case guided.KnownStep(word):
@@ -180,8 +183,23 @@ func main() {
 
 	// A note: what fits no check, written down where other owners' agents read it
 	if command == "note" {
-		os.Exit(writeNote(run, noteArgs{api: *api, kind: *kind, title: *title, check: *check, body: *body, bodyFile: *bodyFile, reply: *reply, solved: *solved,
-			logs: logs, links: links, send: !*noSend && !*jsonOnly}))
+		args := noteArgs{api: *api, kind: *kind, title: *title, check: *check, body: *body, bodyFile: *bodyFile, reply: *reply, solved: *solved,
+			logs: logs, links: links, send: !*noSend && !*jsonOnly}
+		// At a terminal, what wasn't given is asked for: hw-test note, or hw-test note wifi, is the whole command
+		if args.solved == "" && args.body == "" && args.bodyFile == "" && guided.Interactive() {
+			checks, _ := report.Checks(*api)
+			asked, written := askNote(terminal, os.Stderr, checks, args, strings.Join(topics, " "))
+			if !written {
+				fmt.Fprintln(os.Stderr, "Nothing written.")
+				os.Exit(0)
+			}
+			args = asked
+		} else if len(topics) > 0 && args.check == "" {
+			if id, known := part(topics[0], nil); known {
+				args.check = id
+			}
+		}
+		os.Exit(writeNote(run, args))
 	}
 
 	// The brief for an agent: printed, or written down and handed to the owner's agent
@@ -814,7 +832,7 @@ func writeNote(run *report.Run, args noteArgs) int {
 	if len(note.Logs) > 0 {
 		// A log holds more than its owner remembers, so they are told what goes and where before it does
 		fmt.Fprint(os.Stderr, attached(note.Logs))
-		if guided.Interactive() && !agreed(os.Stdin, os.Stderr) {
+		if guided.Interactive() && !agreed(terminal, os.Stderr) {
 			fmt.Fprintln(os.Stderr, "Not sent.")
 			return 0
 		}
@@ -862,7 +880,9 @@ func usage() {
   hw-test brief [WHAT...]  print that brief, to give to any agent yourself
   hw-test note       write down what fits no check, where other owners' agents read it and can
                      answer: a problem that takes a sequence of events, a way around one, a
-                     pointer to work elsewhere. For example:
+                     pointer to work elsewhere. In a terminal, hw-test note asks for the
+                     part, what happened and which log shows it, and hw-test note wifi
+                     names the part at once. Everything can also be given, as agents do:
                        hw-test note --kind problem --check suspend --log previous \
                          --title "Restarts when woken with a dock plugged in" --body-file what-happens.md
                      --kind problem|workaround|upstream|note   --check ID   --link URL...

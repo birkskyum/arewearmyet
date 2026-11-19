@@ -230,7 +230,7 @@ curl -s https://arewearmyet.com/api/notes/<NOTE-ID>/logs/kernel.log
 
 Leaving `model` out lists every model's notes. Search Omarchy's issues as well before you write about a fault: `gh search issues --repo omacom/omarchy --repo omacom/omarchy-pkgs "<words>"`.
 
-Write one:
+Write one. An owner at a terminal runs `hw-test note`, or `hw-test note wifi` to name the part, and is asked what happened and whether the computer was restarted since: tell them that and no more. You, without a terminal, give everything:
 
 ```sh
 hw-test note --kind problem --check suspend --log previous \
