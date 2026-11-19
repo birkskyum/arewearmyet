@@ -45,7 +45,7 @@ var checkTitle = map[string]string{
 	"wifi": "Wi-Fi", "wifi-address": "Fixed Wi-Fi address", "bluetooth": "Bluetooth", "speakers": "Speakers", "microphones": "Built-in microphones",
 	"headphones": "Headphone jack", "adsp": "Audio and battery processor", "battery": "Battery readings", "charging": "USB-C charging",
 	"suspend": "Sleep and wake", "suspend-drain": "Battery use while asleep", "hibernate": "Hibernation", "lid": "Lid switch", "usb": "USB ports",
-	"external-display": "External screen", "usb4": "USB4 and Thunderbolt", "camera": "Webcam", "video-decode": "Hardware video decoding",
+	"external-display": "External screen", "usb4": "USB4 and Thunderbolt", "ethernet": "Ethernet", "camera": "Webcam", "video-decode": "Hardware video decoding",
 	"cdsp": "Compute DSP (NPU)", "fans": "Fans and temperatures", "fingerprint": "Fingerprint reader", "modem": "Mobile broadband",
 }
 

@@ -22,8 +22,18 @@ type settleMsg struct{}
 // ten or twenty seconds to find its network again, which is slow but not broken.
 const settleLimit = 60 * time.Second
 
-// sleep waits for the owner to close and open the lid, then looks at what came back.
+// asleepMsg says how asking the system for sleep ended, and how long the asking took.
+type asleepMsg struct {
+	said string
+	err  error
+	took time.Duration
+}
+
+// sleep waits for the computer to sleep and wake, then looks at what came back. The owner closes
+// and opens the lid, or, where there is no lid to close, the step asks the system for sleep itself.
 type sleep struct {
+	// command asks the system for sleep. Nil where the owner closes the lid.
+	command  func() (string, error)
 	run      *report.Run
 	sys      machine.System
 	wifi     string
@@ -48,6 +58,23 @@ func newSleep(run *report.Run, facts probe.Facts) *sleep {
 		note: line{prompt: "What was wrong after waking? (Enter to leave it empty)"}}
 }
 
+// newSleepAsked is the step for a computer with no lid to close: a desktop or mini PC, or a
+// laptop whose lid switch wasn't found. It asks the system for sleep, and the owner wakes it.
+func newSleepAsked(run *report.Run, facts probe.Facts, sys machine.System) *sleep {
+	s := newSleep(run, facts)
+	s.command = func() (string, error) { return sys.RunFor(30*time.Second, "systemctl", "suspend") }
+	return s
+}
+
+// asleep asks the system for sleep, off the screen's own thread.
+func (s *sleep) asleep() tea.Cmd {
+	return func() tea.Msg {
+		began := time.Now()
+		said, err := s.command()
+		return asleepMsg{said, err, time.Since(began)}
+	}
+}
+
 func (s *sleep) name() string   { return "Sleep" }
 func (s *sleep) start() tea.Cmd { return nil }
 func (s *sleep) done() bool     { return s.over }
@@ -57,6 +84,9 @@ func (s *sleep) keys() string {
 	case "intro":
 		return "Enter when you're ready · s to skip"
 	case "waiting":
+		if s.command != nil {
+			return "Wake it with a key or the power button · s to skip"
+		}
 		return "Close the lid now · s to skip"
 	case "settling":
 		return "Checking what came back…"
@@ -116,7 +146,11 @@ func (s *sleep) update(msg tea.Msg) tea.Cmd {
 		}
 		switch {
 		case msg.failed > s.failed:
-			s.run.Set("suspend", report.Broken, report.Measured, fmt.Sprintf("closing the lid started a sleep that failed (the kernel's count of failed sleeps went from %d to %d)", s.failed, msg.failed), "")
+			began := "closing the lid"
+			if s.command != nil {
+				began = "asking for sleep"
+			}
+			s.run.Set("suspend", report.Broken, report.Measured, fmt.Sprintf("%s started a sleep that failed (the kernel's count of failed sleeps went from %d to %d)", began, s.failed, msg.failed), "")
 			s.over = true
 		case msg.ok > s.ok:
 			// Awake. Now watch what comes back and time it, for up to a minute: how long Wi-Fi
@@ -125,6 +159,16 @@ func (s *sleep) update(msg tea.Msg) tea.Cmd {
 			return s.settle()
 		default:
 			return s.poll()
+		}
+	case asleepMsg:
+		// A refusal comes at once. A command that ends late, or was given up on, only waited for the wake
+		if ok, failed := s.counts(); s.phase == "waiting" && msg.err != nil && msg.took < 5*time.Second && ok == s.ok && failed == s.failed {
+			why := strings.TrimSpace(msg.said)
+			if why == "" {
+				why = msg.err.Error()
+			}
+			s.run.Set("suspend", report.Broken, report.Measured, "systemctl suspend was refused: "+why, "")
+			s.over = true
 		}
 	case settleMsg:
 		if s.phase != "settling" {
@@ -160,6 +204,9 @@ func (s *sleep) update(msg tea.Msg) tea.Cmd {
 					s.ok, s.failed = s.counts()
 					s.wifiWas = s.wifi != "" && s.sys.Read("/sys/class/net/"+s.wifi+"/operstate") == "up"
 					s.phase = "waiting"
+					if s.command != nil {
+						return tea.Batch(s.asleep(), s.poll())
+					}
 					return s.poll()
 				}
 			case "s":
@@ -194,9 +241,16 @@ func (s *sleep) update(msg tea.Msg) tea.Cmd {
 func (s *sleep) view(width, height int) string {
 	switch s.phase {
 	case "intro":
+		if s.command != nil {
+			return wrap("Now sleep. When you press Enter, the computer goes to sleep. Wait about twenty seconds, then wake it with a key on the keyboard, or with the power button if a key doesn't wake it, and unlock. This screen will be here when you're back, and it then checks that Wi-Fi and sound came back too.", width) + "\n\n" +
+				soft.Render(wrap("If the computer restarts instead of waking up, just run the test again: it knows what happened and keeps your answers.", width))
+		}
 		return wrap("Now sleep. When you press Enter, close the lid, wait about twenty seconds, open it and unlock. This screen will be here when you're back, and it then checks that Wi-Fi and sound came back too.", width) + "\n\n" +
 			soft.Render(wrap("If the computer restarts instead of waking up, just run the test again: it knows what happened and keeps your answers.", width))
 	case "waiting":
+		if s.command != nil {
+			return accent.Render("● Going to sleep. Wait twenty seconds, then wake it with a key or the power button, and unlock")
+		}
 		return accent.Render("● Close the lid now, wait twenty seconds, then open it and unlock")
 	case "settling":
 		waiting := "sound"

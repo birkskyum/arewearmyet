@@ -8,6 +8,8 @@
 #             alone never marks a check as working where a person has to see or hear it
 #   person    what the owner does to check it, for the parts no command can see
 #   optional  true when not every model has the hardware (touchscreen, modem, ...)
+#   desk      the title, works and person texts as they read on a desktop, mini PC or developer
+#             kit, which has no lid to close and whose only screen is one that is plugged in
 #
 # States a check can have on a model: works, partial, broken, untested, absent
 # (the model doesn't have that hardware).
@@ -183,6 +185,9 @@ checks:
     works: Closing the lid sleeps, opening it wakes to the lock screen, every time.
     probe: The sleep mode the kernel uses and how many sleeps succeeded or failed since boot.
     person: Close the lid for a few minutes, five times in a row, and say whether it woke each time.
+    desk:
+      works: The computer sleeps when asked to, and wakes to the lock screen with a key or the power button, every time.
+      person: Put it to sleep for a few minutes, five times in a row, and say whether it woke each time.
     debug: "`cat /sys/power/mem_sleep` shows the sleep mode in brackets, s2idle or deep. After a sleep, `journalctl -k -b | grep -E 'PM:|suspend'` shows which device refused, and the files under `/sys/power/suspend_stats/` count failures and name the last failing device. A restart in place of a wake leaves no line after 'suspend entry' at the end of `journalctl -k -b -1`. Try the other sleep mode to tell a firmware problem from a driver's. `hw-test sleep` measures a lid-close sleep with the owner. For a freeze on wake, check before the long press on power whether the Caps Lock light still toggles and whether the computer answers a ping from another machine: that tells a frozen desktop from a frozen kernel. Record `grep -H . /sys/bus/usb/devices/*/{product,speed}` and `cat /sys/class/drm/card*-*/status` with the same things plugged in. `journalctl --list-boots` lists the boots, and `hw-test note --log boot-N` attaches the kernel's log of the one that froze."
 
   - id: suspend-drain
@@ -221,6 +226,10 @@ checks:
     works: A screen on USB-C (or HDMI, if it has one) shows a picture and can be plugged in and out.
     probe: The external display connectors and whether any is connected.
     person: Plug in a screen through USB-C, unplug it and plug it in again.
+    desk:
+      title: Screen
+      works: A screen on HDMI, DisplayPort or USB-C shows a picture at its full resolution, and can be plugged in and out.
+      person: Say which socket the screen is on, then unplug it and plug it in again.
     debug: "DisplayPort over USB-C needs the port's DP controller, the combo PHY, the orientation switch and on many machines a retimer (Parade PS883x) in the tree. `cat /sys/class/drm/card*-DP-*/status` and `journalctl -k -b | grep -iE 'typec|altmode|ps883|msm_dp'` show how far it gets. An HDMI port is a DisplayPort output behind a converter chip with a node and supplies of its own. `hw-test screen` reads the connection and mode when a screen is plugged in."
 
   - id: usb4
@@ -231,6 +240,15 @@ checks:
     person: Plug in a USB4 or Thunderbolt dock or drive and say what speed it runs at.
     optional: true
     debug: "USB4 and Thunderbolt tunnelling don't work on these chips in Omarchy's kernel yet. Docks work as far as USB 3 and DisplayPort over USB-C carry them, and an empty `/sys/bus/thunderbolt/devices` is expected."
+
+  - id: ethernet
+    group: ports
+    title: Ethernet
+    works: A network cable gives a connection at the socket's full speed, also after sleep.
+    probe: The wired network interface, its driver and the speed of the link. The network test reaches the router through it.
+    person: Plug in a network cable and say whether the network comes up.
+    optional: true
+    debug: "The network chip is a card on PCIe (Realtek's `r8169` on most) or a USB one on an internal port (`r8152`). `ip -br link` lists the interfaces, and `journalctl -k -b | grep -iE 'r8169|r8152|atlantic|pci'` tells how far the driver gets. No PCI device means the tree's PCIe port, its PHY or the card's supply is missing or wrong, as for Wi-Fi. `cat /sys/class/net/*/speed` gives the speed a link settled on, and a link far below the socket's speed is more often the cable than the driver. `hw-test ethernet` reads the link and reaches the router through it."
 
   - id: camera
     group: media

@@ -277,7 +277,7 @@ func main() {
 			os.Exit(1)
 		}
 		say := func(line string) { fmt.Fprintln(os.Stderr, line) }
-		guided.Unattended(run, deep.Tests(machine.Real(), facts.Wifi, facts.Bluetooth, dir), only, say)
+		guided.Unattended(run, deep.Tests(machine.Real(), facts.Wifi, facts.Bluetooth, facts.Ethernet, dir), only, say)
 		// The sound test plays tones out loud, so it runs here only on the owner's yes: their
 		// handing the speakers or the microphones to an agent
 		if guided.WantsSound(only) && (*play || guided.MaySound(time.Now())) && facts.SoundCard != "" && tools.Have("pw-play", "pw-record") {
@@ -1072,8 +1072,9 @@ func usageText() string {
   hw-test manual     every test done with you: keyboard, touchpad, touchscreen,
                      headphones, camera, USB ports, external screen, sleep and a few questions
   hw-test auto       every test that needs nobody: sound, graphics, WebGL and
-                     WebGPU, Wi-Fi and Bluetooth, video decoding, temperatures. Without a
-                     terminal it runs all but the sound, which plays tones out loud
+                     WebGPU, Wi-Fi and Bluetooth, the network cable, video decoding,
+                     temperatures. Without a terminal it runs all but the sound, which
+                     plays tones out loud
   hw-test fix [WHAT...]    hand what doesn't work to your agent: writes a brief with what was
                      measured, where to look and where a fix goes, and opens Omarchy's
                      agent on it. WHAT is a check or a part, like speakers. Without it,

@@ -3,7 +3,7 @@
 // by hw-test or an owner. Outlined means seen on another distro, said by the device tree's author
 // or known for the chip family, which shows a part can work and not that it does here.
 import owners from '../../data/owners.json';
-import { CHECKS, countsAsStatus, modelChecks, type CheckState, type Subject } from './checks';
+import { countsAsStatus, modelChecks, type CheckState, type Subject } from './checks';
 import type { Tone } from './tones';
 
 export type Part = { id: string; title: string; question: string; checks: string[] };
@@ -18,7 +18,7 @@ export const PARTS: Part[] = [
   { id: 'sound', title: 'Sound', question: 'Speakers, built-in microphones and the headphone jack.', checks: ['speakers', 'microphones', 'headphones'] },
   { id: 'camera', title: 'Camera', question: 'The webcam, in the browser and in video calls.', checks: ['camera'] },
   { id: 'power', title: 'Battery and sleep', question: 'Battery readings, charging, sleep and wake, battery use while asleep, the lid switch, and fans and temperatures. Hibernation is on the model\'s page.', checks: ['battery', 'charging', 'suspend', 'suspend-drain', 'lid', 'fans'] },
-  { id: 'ports', title: 'Ports', question: 'USB ports, an external screen, and USB4.', checks: ['usb', 'external-display', 'usb4'] },
+  { id: 'ports', title: 'Ports', question: 'USB ports, an external screen, USB4, and the network socket where the model has one.', checks: ['usb', 'external-display', 'usb4', 'ethernet'] },
 ];
 
 type Level = 'omarchy' | 'elsewhere';
@@ -28,7 +28,6 @@ type OwnerCheck = { machines: number; states: Record<string, number>; latest?: L
 // A result is from Omarchy when its run says so, or, for results kept before runs said, when the kernel is Omarchy's
 const onOmarchy = (result: Latest) => (result.os ? /^omarchy/i.test(result.os) : /-omarchy/.test(result.kernel ?? ''));
 const OWNERS = (owners as { models: Record<string, { checks: Record<string, OwnerCheck> }> }).models;
-const TITLE = new Map(CHECKS.map((check) => [check.id, check.title]));
 
 const overall = (states: string[]): 'works' | 'partial' | 'broken' => (states.every((s) => s === 'works') ? 'works' : states.every((s) => s === 'broken') ? 'broken' : 'partial');
 
@@ -41,7 +40,7 @@ function seen(model: Machine): Map<string, Seen> {
   const measured = OWNERS[model.id]?.checks ?? {};
   const boots = ['stable', 'rc', 'edge'].includes(model.bootable ?? '');
   for (const row of modelChecks(model)) {
-    const title = TITLE.get(row.id) ?? row.id;
+    const title = row.title;
     // Owners' results come from hw-test on Omarchy and from the probe on other distros. Only the first
     // say how the part does on Omarchy. The others are a hint, like any finding from elsewhere
     const latest = (measured[row.id]?.latest ?? []).filter((r) => r.state !== 'untested');
@@ -80,13 +79,16 @@ const WORD = { works: 'works', partial: 'partly works', broken: 'is broken', abs
 
 export function modelParts(model: Machine): PartState[] {
   const known = seen(model);
+  const expected = new Set(modelChecks(model).filter((row) => row.expected).map((row) => row.id));
   return PARTS.map((part) => {
-    const rows = part.checks.map((check) => known.get(check)).filter((row): row is Seen => Boolean(row));
+    // A part few machines of this kind have counts only once something is known about it
+    const checks = part.checks.filter((check) => known.has(check) || expected.has(check));
+    const rows = checks.map((check) => known.get(check)).filter((row): row is Seen => Boolean(row));
     const there = rows.filter((row) => row.state !== 'absent');
-    const of = part.checks.length - (rows.length - there.length);
+    const of = checks.length - (rows.length - there.length);
     const lines = (list: Seen[]) => list.map((row) => `${row.title} ${WORD[row.state]} (${row.how})`).join('. ');
     if (there.length === 0) {
-      if (rows.length === part.checks.length) return { part, key: 'absent', state: 'absent', level: null, covered: 0, of: 0, title: 'This model does not have the part.' };
+      if (rows.length === checks.length) return { part, key: 'absent', state: 'absent', level: null, covered: 0, of: 0, title: 'This model does not have the part.' };
       return { part, key: 'unknown', state: 'unknown', level: null, covered: 0, of, title: 'Nobody has reported on it yet.' };
     }
     const onOmarchy = there.filter((row) => row.level === 'omarchy');

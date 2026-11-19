@@ -9,7 +9,7 @@ type Finding = { state: State; note?: string; version?: string; checked?: string
 // A finding from another distro or from the device tree's author is a hint, not this model's status on Omarchy
 const elsewhere = (f: Finding) => f.basis === 'other-distro' || f.basis === 'tree-author';
 const FROM: Record<string, string> = { 'other-distro': 'on another distro', 'tree-author': "by the device tree's author" };
-type Row = { id: string; group: string; title: string; works: string; probe?: string; person?: string; debug?: string; optional?: boolean; finding: Finding | null; from: 'model' | 'family' | null; familySource: string | null };
+type Row = { id: string; group: string; title: string; works: string; probe?: string; person?: string; debug?: string; optional?: boolean; finding: Finding | null; from: 'model' | 'family' | null; familySource: string | null; expected?: boolean };
 type Change = { machines: number; from: string | null; to: string | null; since: string };
 type Owner = { machines: number; states: Record<string, number>; how: Record<string, number>; regressed?: Change; fixed?: Change; latest: { state: State; how: string; note: string | null; evidence: string | null; kernel: string | null; created: string; run: string }[] };
 type Note = { id: string; check: string | null; kind: string; title: string; status?: string; created: string; replies: number; logs: { name: string }[]; kernel: string | null };
@@ -66,6 +66,13 @@ export default function CheckTable(props: { model: string; groups: { id: string;
     const change = fix.changes?.find((c) => c.check === id);
     return change ? ` Measured before and after: ${LABEL[change.from.state].toLowerCase()} → ${LABEL[change.to.state].toLowerCase()}.` : '';
   };
+  // A model's table has the rows of the parts it has. A part it doesn't have is named in one line
+  // below, and a part few machines of its kind have gets a row once something is known about it.
+  // An owner's result that found the part after all brings its row back
+  const found = (id: string) => owner(id)?.latest.some((r) => r.state !== 'absent' && r.state !== 'untested');
+  const lacks = (row: Row) => !found(row.id) && (row.finding?.state === 'absent' || (!row.finding && owner(row.id)?.latest.some((r) => r.state === 'absent')));
+  const has = (row: Row) => !lacks(row) && (row.expected !== false || Boolean(row.finding) || Boolean(owner(row.id)));
+  const why = (row: Row) => row.finding?.note ?? owner(row.id)?.latest.find((r) => r.state === 'absent')?.note ?? undefined;
   const notesFor = (id: string) => live()?.notes?.filter((note) => note.check === id) ?? [];
   const noteLine = (note: Note) => (
     <li class="flex flex-wrap items-baseline gap-2">
@@ -91,12 +98,12 @@ export default function CheckTable(props: { model: string; groups: { id: string;
           )}
         </Show>
       </p>
-      <For each={props.groups}>
+      <For each={props.groups.filter((group) => props.rows.some((row) => row.group === group.id && has(row)))}>
         {(group) => (
           <section>
             <h3 class="text-sm font-semibold uppercase tracking-wide text-zinc-500">{group.title}</h3>
             <div class="mt-2 divide-y divide-zinc-800 overflow-hidden rounded-xl bg-zinc-900 ring-1 ring-zinc-800">
-              <For each={props.rows.filter((row) => row.group === group.id)}>
+              <For each={props.rows.filter((row) => row.group === group.id && has(row))}>
                 {(row) => (
                   <details class="group/check">
                     <summary class="grid cursor-pointer list-none grid-cols-[1fr_auto] items-start gap-x-4 gap-y-1 px-4 py-3 hover:bg-zinc-800/50 sm:grid-cols-[14rem_1fr_auto] [&::-webkit-details-marker]:hidden">
@@ -217,6 +224,20 @@ export default function CheckTable(props: { model: string; groups: { id: string;
           </section>
         )}
       </For>
+      <Show when={props.rows.some(lacks)}>
+        <p class="text-sm text-zinc-500">
+          Not on this model:{' '}
+          <For each={props.rows.filter(lacks)}>
+            {(row, i) => (
+              <>
+                {i() > 0 ? ', ' : ''}
+                <span class={why(row) ? 'cursor-help underline decoration-zinc-700 decoration-dotted underline-offset-2' : ''} data-tip={why(row)}>{row.title}</span>
+              </>
+            )}
+          </For>
+          .
+        </p>
+      </Show>
       <Show when={live()?.notes?.filter((note) => !note.check).length}>
         <section>
           <h3 class="text-sm font-semibold uppercase tracking-wide text-zinc-500">Notes about no single check</h3>

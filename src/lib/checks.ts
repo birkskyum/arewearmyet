@@ -8,7 +8,7 @@ import status from '../data/status.json';
 import { googlebookOmarchyCell, type Model, type NvidiaModel } from './labels';
 
 export type CheckState = 'works' | 'partial' | 'broken' | 'untested' | 'absent';
-export type Check = { id: string; group: string; title: string; works: string; probe?: string; person?: string; debug?: string; optional?: boolean };
+export type Check = { id: string; group: string; title: string; works: string; probe?: string; person?: string; debug?: string; optional?: boolean; desk?: { title?: string; works?: string; person?: string } };
 export type Group = { id: string; title: string };
 /**
  * What a finding rests on. Only a result on Omarchy says how the model does under Omarchy. One from
@@ -60,16 +60,24 @@ export type Subject = { id: string; generation: string; form?: string | null; bo
 const NVIDIA = new Set(['n1x', 'gb10']);
 // Parts a machine can't have, by what it is, so nobody is asked to test them and they don't read as unknown
 const QUALCOMM_ONLY = ['adsp', 'cdsp'];
-const LAPTOP_ONLY = ['display', 'backlight', 'keyboard', 'touchpad', 'touchscreen', 'battery', 'charging', 'suspend-drain', 'lid'];
+const LAPTOP_ONLY = ['display', 'backlight', 'keyboard', 'touchpad', 'touchscreen', 'battery', 'charging', 'suspend-drain', 'lid', 'microphones', 'camera'];
+// An all-in-one is a desktop with a screen of its own, so the screen, its brightness and touch stay
+const ALL_IN_ONE_LACKS = ['keyboard', 'touchpad', 'battery', 'charging', 'suspend-drain', 'lid'];
+// Parts a desktop has by rule and few laptops do. On other machines the check shows once something is known about it
+const DESK_ONLY = ['ethernet'];
+const DESKS = new Set(['desktop', 'devkit', 'all-in-one']);
 function notOn(model: Subject, check: string): Finding | null {
-  if (!NVIDIA.has(model.generation)) return null;
-  if (QUALCOMM_ONLY.includes(check)) return { state: 'absent', note: 'A Qualcomm processor. NVIDIA machines have no such part.', basis: 'maker-spec' };
-  if ((model.form === 'desktop' || model.form === 'devkit') && LAPTOP_ONLY.includes(check)) return { state: 'absent', note: 'A desktop, without a built-in screen, keyboard, touchpad or battery.', basis: 'maker-spec' };
+  if (NVIDIA.has(model.generation) && QUALCOMM_ONLY.includes(check)) return { state: 'absent', note: 'A Qualcomm processor. NVIDIA machines have no such part.', basis: 'maker-spec' };
+  if ((model.form === 'desktop' || model.form === 'devkit') && LAPTOP_ONLY.includes(check)) return { state: 'absent', note: 'A desktop or mini PC, without a screen, keyboard, touchpad, battery, camera or microphone of its own.', basis: 'maker-spec' };
+  if (model.form === 'all-in-one' && ALL_IN_ONE_LACKS.includes(check)) return { state: 'absent', note: 'An all-in-one, with a screen of its own and no built-in keyboard, touchpad or battery.', basis: 'maker-spec' };
   return null;
 }
+/** Whether a model is expected to have a check's part, by its form. */
+const expectedOn = (model: Subject, check: string): boolean => !DESK_ONLY.includes(check) || DESKS.has(model.form ?? '');
 
 // `given` marks a finding nobody had to write: a part the machine can't have, by what it is
-export type CheckRow = Check & { finding: Finding | null; from: 'model' | 'family' | null; familySource: string | null; given?: true };
+// `expected` is false for a part this kind of machine rarely has, whose row shows only once something is known
+export type CheckRow = Check & { finding: Finding | null; from: 'model' | 'family' | null; familySource: string | null; given?: true; expected: boolean };
 
 /** Every check for one model, with the model's own finding, or else its chip family's. */
 export function modelChecks(model: Subject): CheckRow[] {
@@ -78,15 +86,22 @@ export function modelChecks(model: Subject): CheckRow[] {
   // Googlebook has the same chip and starts another way, so none of it is taken over for one
   const google = model.boot === 'android' || model.boot === 'depthcharge';
   const family = google ? undefined : findings.families?.[FAMILY[model.generation] ?? ''];
-  return CHECKS.map((check) => {
-    if (own[check.id]) return { ...check, finding: own[check.id], from: 'model' as const, familySource: null };
+  return CHECKS.map(({ desk, ...plain }) => {
+    // A desktop's rows read as they are on a desktop. An all-in-one has no lid either, but its screen is its own
+    const check = desk && DESKS.has(model.form ?? '') && !(model.form === 'all-in-one' && plain.id === 'external-display') ? { ...plain, ...desk } : plain;
+    // A finding written for the model says it has the part, whatever its kind of machine
+    const expected = expectedOn(model, check.id) || Boolean(own[check.id]);
+    if (own[check.id]) return { ...check, finding: own[check.id], from: 'model' as const, familySource: null, expected };
     const lacks = notOn(model, check.id);
-    if (lacks) return { ...check, finding: lacks, from: 'model' as const, familySource: null, given: true as const };
+    if (lacks) return { ...check, finding: lacks, from: 'model' as const, familySource: null, given: true as const, expected };
     const shared = family?.checks?.[check.id];
-    if (shared) return { ...check, finding: shared, from: 'family' as const, familySource: family?.source ?? null };
-    return { ...check, finding: null, from: null, familySource: null };
+    if (shared) return { ...check, finding: shared, from: 'family' as const, familySource: family?.source ?? null, expected };
+    return { ...check, finding: null, from: null, familySource: null, expected };
   });
 }
+
+/** Whether a check is one to ask an owner for: its part is on every model, or on this kind of machine. */
+const askedFor = (row: CheckRow): boolean => (DESK_ONLY.includes(row.id) ? row.expected : !row.optional);
 
 export function modelExtra(model: Subject) {
   const entry = findings.models?.[model.id];
@@ -98,14 +113,15 @@ export function modelExtra(model: Subject) {
  * working. What is reported from elsewhere is counted apart.
  */
 export function coverage(model: Subject) {
-  const rows = modelChecks(model);
-  const own = rows.filter((row) => row.from === 'model' && !row.given);
+  // The checks that apply to this machine: the parts it has, and not those few of its kind have
+  const rows = modelChecks(model).filter((row) => row.finding?.state !== 'absent' && (row.expected || row.finding));
+  const own = rows.filter((row) => row.from === 'model');
   const status = own.filter((row) => countsAsStatus(row.finding!));
   return {
     known: status.length,
     works: status.filter((row) => row.finding!.state === 'works').length,
     elsewhere: own.length - status.length,
-    total: CHECKS.length,
+    total: rows.length,
   };
 }
 
@@ -142,7 +158,7 @@ export function modelData(model: Model) {
     checks: checks.map(({ id, group, title, finding, from }) => ({ id, group, title, finding, from })),
     // Checks nobody has written up for this model, the ones an owner's run helps most with
     // A check known only from another distro or from the tree's author is still wanted on Omarchy
-    wanted: checks.filter((row) => !(row.from === 'model' && countsAsStatus(row.finding!)) && !row.optional).map((row) => row.id),
+    wanted: checks.filter((row) => !(row.from === 'model' && countsAsStatus(row.finding!)) && askedFor(row)).map((row) => row.id),
   };
 }
 
@@ -164,6 +180,6 @@ export function nvidiaData(model: NvidiaModel) {
     details: extra.details,
     links: extra.links,
     checks: checks.map(({ id, group, title, finding, from }) => ({ id, group, title, finding, from })),
-    wanted: checks.filter((row) => !(row.from === 'model' && countsAsStatus(row.finding!)) && !row.optional).map((row) => row.id),
+    wanted: checks.filter((row) => !(row.from === 'model' && countsAsStatus(row.finding!)) && askedFor(row)).map((row) => row.id),
   };
 }

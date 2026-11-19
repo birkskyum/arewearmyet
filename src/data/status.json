@@ -1655,9 +1655,9 @@
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
     "works": 5,
-    "should": 69,
+    "should": 68,
     "workaround": 5,
-    "problems": 1,
+    "problems": 2,
     "notYet": 7,
     "deviceTree": 83,
     "ids": 59,
@@ -4344,7 +4344,7 @@
       "vendor": "ASUS",
       "name": "V400 AiO (VM441QA)",
       "generation": "x1",
-      "form": "desktop",
+      "form": "all-in-one",
       "released": "2026-01",
       "modelNumbers": [
         "VM441QA"
@@ -4441,7 +4441,7 @@
       "vendor": "ASUS",
       "name": "V400 AiO (VM471QA)",
       "generation": "x1",
-      "form": "desktop",
+      "form": "all-in-one",
       "released": "2026",
       "modelNumbers": [
         "VM471QA"
@@ -11106,10 +11106,16 @@
         "https://psref.lenovo.com/Product/ThinkCentre/ThinkCentre_neo_50q_QC",
         "https://www.xda-developers.com/review-lenovo-thinkcenter-neo-50q-snapdragon/"
       ],
-      "notes": "Its device tree and hardware IDs are written from an owner's hardware report, on the IdeaCentre Mini x's board file, and nobody has booted them yet.",
-      "outcome": "should",
-      "bootable": "edge",
-      "reports": [],
+      "notes": "Its device tree and hardware IDs are written from an owner's hardware report, on the IdeaCentre Mini x's board file.",
+      "outcome": "problems",
+      "bootable": "problems",
+      "reports": [
+        {
+          "state": "problems",
+          "note": "The edge image of 18 November starts to the installer, which lists no disk to install to. The device tree switches on a second drive slot this model doesn't have, and that takes the power from the real one. With the slot switched off the owner's installer lists the drive. The fix is in review (omacom/omarchy-pkgs#3070), with one for the rear USB port that doesn't work.",
+          "checked": "2026-11"
+        }
+      ],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
@@ -11178,8 +11184,14 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "should",
-          "reports": []
+          "outcome": "problems",
+          "reports": [
+            {
+              "state": "problems",
+              "note": "The edge image of 18 November starts to the installer, which lists no disk to install to. The device tree switches on a second drive slot this model doesn't have, and that takes the power from the real one. With the slot switched off the owner's installer lists the drive. The fix is in review (omacom/omarchy-pkgs#3070), with one for the rear USB port that doesn't work.",
+              "checked": "2026-11"
+            }
+          ]
         }
       ],
       "boot": "uefi",

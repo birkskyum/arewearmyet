@@ -21,7 +21,7 @@ On a distro other than Omarchy, the probe does the quick check: `curl -fsSL http
 | --- | --- |
 | `hw-test` | The guided test. It opens with where the computer stands, runs the quick check, then goes through the parts with you |
 | `hw-test quick` | The quick check alone. It reads what the system says about each part, takes a few seconds, asks nothing and changes nothing |
-| `hw-test auto` | Every test that needs nobody: sound, graphics, WebGL and WebGPU, Wi-Fi and Bluetooth, video decoding, temperatures. It heats the computer for a few minutes |
+| `hw-test auto` | Every test that needs nobody: sound, graphics, WebGL and WebGPU, Wi-Fi and Bluetooth, the network cable, video decoding, temperatures. It heats the computer for a few minutes |
 | `hw-test manual` | Every test done with you: keyboard, touchpad, touchscreen, headphones, camera, USB ports, external screen, lid, sleep and a few questions |
 | `hw-test STEP...` | One part alone, or a few, like `hw-test camera` or `hw-test wifi bluetooth`. Only those parts are reported |
 | `hw-test status` | The latest result of every check on this computer. Nothing is run |
@@ -43,13 +43,16 @@ On a distro other than Omarchy, the probe does the quick check: `curl -fsSL http
 | `usb` | Each USB port, with something plugged in | yes |
 | `screen` | An external screen | yes |
 | `lid` | Closing and opening the lid | yes |
-| `sleep` | Sleep and wake, and what the battery lost | yes |
+| `sleep` | Sleep and wake. On a laptop you close the lid. A computer without a lid is put to sleep by the test, and you wake it | yes |
 | `questions` | What no test can see, like the disk password prompt at startup | yes |
 | `graphics`, `vulkan` | Drawing with the graphics chip | no |
 | `browser`, `webgl`, `webgpu` | WebGL and WebGPU in the browser | no |
 | `wireless`, `wifi`, `bluetooth` | Wi-Fi and Bluetooth | no |
+| `ethernet` | The network socket, by reaching the router through a cable that is plugged in | no |
 | `video` | Hardware video decoding | no |
 | `temperatures`, `fans` | Temperature sensors under load, and the fan, which you confirm by ear when no sensor reports it | for the fan |
+
+A step shows only where the computer has the part. A mini PC or desktop gets no keyboard, touchpad, lid or battery step, and its screen is tested in the `screen` step.
 
 The picture the camera takes and the recordings the sound tests make stay on the computer and are deleted after their step.
 

@@ -301,7 +301,7 @@ models:
     vendor: "ASUS"
     name: "V400 AiO (VM441QA)"
     generation: x1
-    form: desktop
+    form: all-in-one
     released: "2026-01"
     chips: ["X1-26-100"]
     variants:
@@ -320,7 +320,7 @@ models:
     vendor: "ASUS"
     name: "V400 AiO (VM471QA)"
     generation: x1
-    form: desktop
+    form: all-in-one
     released: "2026"
     chips: ["X1-26-100"]
     variants:
@@ -1380,7 +1380,9 @@ models:
       - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/65a4b0f646f7afe480fdebc7c0cf8cf2b56bf27f/pkgbuilds/linux-omarchy-aarch64/2821-arm64-dts-qcom-Split-IdeaCentre-Mini-into-a-common-D.patch#x1-lenovo-ideacentre-mini-01q8x10.dtsi"
     firmware_download: "https://pcsupport.lenovo.com/us/en/products/desktops-and-all-in-ones/thinkcentre-neo-series-desktops/thinkcentre-neo-50q-qc/13c8/downloads/driver-list"
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/25"
-    notes: "Its device tree and hardware IDs are written from an owner's hardware report, on the IdeaCentre Mini x's board file, and nobody has booted them yet."
+    notes: "Its device tree and hardware IDs are written from an owner's hardware report, on the IdeaCentre Mini x's board file."
+    reports:
+      - { state: "problems", note: "The edge image of 18 November starts to the installer, which lists no disk to install to. The device tree switches on a second drive slot this model doesn't have, and that takes the power from the real one. With the slot switched off the owner's installer lists the drive. The fix is in review (omacom/omarchy-pkgs#3070), with one for the rear USB port that doesn't work.", checked: "2026-11" }
     sources:
       - https://psref.lenovo.com/Product/ThinkCentre/ThinkCentre_neo_50q_QC
       - https://www.xda-developers.com/review-lenovo-thinkcenter-neo-50q-snapdragon/

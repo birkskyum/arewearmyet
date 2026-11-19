@@ -374,3 +374,63 @@ func TestASnapdragonIsStillMeasuredAsOne(t *testing.T) {
 		t.Errorf("video decoding without a decoder: %+v", video)
 	}
 }
+
+// socket gives the machine a wired network interface on the named bus, with or without a cable in it.
+func socket(t *testing.T, root, name, bus, carrier string) {
+	t.Helper()
+	net := "sys/class/net/" + name
+	write(t, root, net+"/type", "1\n")
+	write(t, root, net+"/carrier", carrier+"\n")
+	write(t, root, net+"/speed", "2500\n")
+	write(t, root, "sys/bus/"+bus+"/.keep", "")
+	write(t, root, "sys/bus/"+bus+"/drivers/r8169/.keep", "")
+	write(t, root, "sys/devices/"+name+"/.keep", "")
+	for link, target := range map[string]string{"sys/devices/" + name + "/subsystem": "../../bus/" + bus, "sys/devices/" + name + "/driver": "../../bus/" + bus + "/drivers/r8169", net + "/device": "../../../devices/" + name} {
+		if err := os.Symlink(target, filepath.Join(root, link)); err != nil {
+			t.Fatal(err)
+		}
+	}
+}
+
+func TestTheNetworkSocketIsADesktopsOwnAndALaptopsOnlyWhenBuiltIn(t *testing.T) {
+	desktop := func(root string) { write(t, root, "sys/class/dmi/id/chassis_type", "35\n") }
+
+	// A mini PC with a cable in its socket
+	run, facts := fixture(t, func(root string) { desktop(root); socket(t, root, "enp1s0", "pci", "1") })
+	if result, _ := run.Get("ethernet"); facts.Ethernet != "enp1s0" || result.State != report.Works || result.Evidence != "enp1s0 (r8169) connected at 2500 Mb/s" {
+		t.Errorf("with a cable: %q, %+v", facts.Ethernet, result)
+	}
+	// Without a cable the socket is known and nothing is said about it yet
+	run, facts = fixture(t, func(root string) { desktop(root); socket(t, root, "enp1s0", "pci", "0") })
+	if facts.Ethernet != "enp1s0" || run.State("ethernet") != "" {
+		t.Errorf("without a cable: %q, %q", facts.Ethernet, run.State("ethernet"))
+	}
+	// Of two sockets, the one with the cable is the one to test
+	_, facts = fixture(t, func(root string) {
+		desktop(root)
+		socket(t, root, "enp1s0", "pci", "0")
+		socket(t, root, "enp2s0", "pci", "1")
+	})
+	if facts.Ethernet != "enp2s0" {
+		t.Errorf("of two sockets it took %q", facts.Ethernet)
+	}
+	// A desktop's socket can be wired through USB inside
+	run, _ = fixture(t, func(root string) { desktop(root); socket(t, root, "enu1", "usb", "1") })
+	expect(t, run, map[string]string{"ethernet": report.Works})
+	// A desktop with no wired interface at all is missing its driver
+	run, _ = fixture(t, desktop)
+	expect(t, run, map[string]string{"ethernet": report.Broken})
+
+	// A laptop is expected to have none, and an adapter or dock on USB isn't its own
+	run, facts = fixture(t, nil)
+	if facts.Ethernet != "" || run.State("ethernet") != "" {
+		t.Errorf("a laptop without a socket: %q, %q", facts.Ethernet, run.State("ethernet"))
+	}
+	run, facts = fixture(t, func(root string) { socket(t, root, "enu1", "usb", "1") })
+	if facts.Ethernet != "" || run.State("ethernet") != "" {
+		t.Errorf("a laptop with an adapter: %q, %q", facts.Ethernet, run.State("ethernet"))
+	}
+	// A socket of the laptop's own counts
+	run, _ = fixture(t, func(root string) { socket(t, root, "enp1s0", "pci", "1") })
+	expect(t, run, map[string]string{"ethernet": report.Works})
+}

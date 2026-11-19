@@ -527,7 +527,7 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 	// the machine stands overall and what fails that no part of the menu covers
 	plain := ansi.ReplaceAllString(drawn, "")
 	for _, text := range []string{"◐ Speakers and microphones", "19 Nov · Speakers: Both speakers play", "✓ Camera", "○ Headphones", "○ Video decoding",
-		"3 working", "1 partly", "1 broken", "27 not tested", "✗ Hibernation: the kernel offers no hibernation"} {
+		"3 working", "1 partly", "1 broken", "28 not tested", "✗ Hibernation: the kernel offers no hibernation"} {
 		if !strings.Contains(plain, text) {
 			t.Errorf("the status lacks %q:\n%s", text, plain)
 		}
@@ -1468,7 +1468,7 @@ func TestStatusListsEveryCheckWithWhatFailsFirst(t *testing.T) {
 		"hibernate": {Result: report.Result{Check: "hibernate", State: report.Broken, Evidence: "the kernel offers no hibernation"}, Kernel: "7.3.0-59-omarchy", When: when},
 		"suspend":   {Result: report.Result{Check: "suspend", State: report.Partial, Note: "One sleep ended in a restart."}, Kernel: "7.3.0-59-omarchy", When: when},
 	})
-	if !strings.HasPrefix(listed, "1 working, 1 partly, 1 broken, 29 not tested") {
+	if !strings.HasPrefix(listed, "1 working, 1 partly, 1 broken, 30 not tested") {
 		t.Errorf("the head:\n%s", listed)
 	}
 	broken, partly, works, untested := strings.Index(listed, "✗ Hibernation"), strings.Index(listed, "◐ Sleep and wake"), strings.Index(listed, "✓ Wi-Fi"), strings.Index(listed, "○ ")
@@ -1487,7 +1487,7 @@ func TestStatusListsEveryCheckWithWhatFailsFirst(t *testing.T) {
 			checks++
 		}
 	}
-	if checks != 32 {
+	if checks != 33 {
 		t.Errorf("it lists %d checks", checks)
 	}
 }
@@ -1578,5 +1578,76 @@ func TestARoundEndsOnGoingBackToTheStartByDefault(t *testing.T) {
 	s.start()
 	if drawn := s.view(90, 30); !strings.Contains(drawn, "Webcam") || !strings.Contains(drawn, "Nothing is sent, as asked") || !strings.Contains(drawn, "Back to the start") {
 		t.Errorf("with sending off:\n%s", drawn)
+	}
+}
+
+func TestAComputerWithoutALidIsPutToSleepByTheTest(t *testing.T) {
+	names := func(steps []step) string {
+		var out []string
+		for _, s := range steps {
+			out = append(out, s.name())
+		}
+		return strings.Join(out, ", ")
+	}
+	// A laptop with a lid closes it. A mini PC has no lid step and still gets its sleep tested
+	if got := names(build(&report.Run{}, probe.Facts{Laptop: true, Lid: "lid"}, t.TempDir())); !strings.Contains(got, "Lid, Sleep") {
+		t.Errorf("a laptop's steps: %s", got)
+	}
+	if got := names(build(&report.Run{}, probe.Facts{}, t.TempDir())); strings.Contains(got, "Lid") || !strings.Contains(got, "Sleep") {
+		t.Errorf("a mini PC's steps: %s", got)
+	}
+
+	root := t.TempDir()
+	set := func(path, text string) {
+		os.MkdirAll(filepath.Dir(filepath.Join(root, path)), 0o755)
+		os.WriteFile(filepath.Join(root, path), []byte(text), 0o644)
+	}
+	set("sys/power/mem_sleep", "[s2idle]\n")
+	set("sys/power/suspend_stats/success", "0\n")
+	set("sys/power/suspend_stats/fail", "0\n")
+	sys := machine.Fixture(root)
+	var asked []string
+	sys.Command = func(name string, args ...string) (string, error) {
+		asked = append(asked, name+" "+strings.Join(args, " "))
+		return "", nil
+	}
+	run := &report.Run{}
+	s := newSleepAsked(run, probe.Facts{}, sys)
+	s.sys = sys
+	if view := s.view(90, 30); strings.Contains(view, "lid") || !strings.Contains(view, "the computer goes to sleep") {
+		t.Errorf("the step speaks of a lid:\n%s", view)
+	}
+	if s.update(press(tea.KeyEnter)) == nil || s.phase != "waiting" {
+		t.Fatalf("after Enter it is %q", s.phase)
+	}
+	s.update(s.asleep()())
+	if strings.Join(asked, ", ") != "systemctl suspend" || s.over {
+		t.Fatalf("asked %v, over %v", asked, s.over)
+	}
+	// Awake again: the kernel counted the sleep
+	s.update(sleepMsg{ok: 1})
+	s.update(settleMsg{})
+	s.update(press('1'))
+	if result, _ := run.Get("suspend"); result.State != report.Works || !strings.Contains(result.Evidence, "slept and woke in [s2idle]") {
+		t.Errorf("result %+v", result)
+	}
+
+	// A system that refuses to sleep says so at once, and that is the result
+	run = &report.Run{}
+	s = newSleepAsked(run, probe.Facts{}, sys)
+	s.sys = sys
+	s.update(press(tea.KeyEnter))
+	s.update(asleepMsg{said: "Call to Suspend failed: Sleep verb 'suspend' is not configured or configuration is not supported by kernel\n", err: os.ErrInvalid, took: time.Second})
+	if result, _ := run.Get("suspend"); !s.over || result.State != report.Broken || !strings.Contains(result.Evidence, "systemctl suspend was refused: Call to Suspend failed") {
+		t.Errorf("a refusal: over %v, %+v", s.over, result)
+	}
+	// A command that only ended when the wait for it was given up says nothing
+	run = &report.Run{}
+	s = newSleepAsked(run, probe.Facts{}, sys)
+	s.sys = sys
+	s.update(press(tea.KeyEnter))
+	s.update(asleepMsg{err: os.ErrDeadlineExceeded, took: 30 * time.Second})
+	if s.over || run.State("suspend") != "" {
+		t.Errorf("a late end was taken for a refusal: %+v", run.State("suspend"))
 	}
 }

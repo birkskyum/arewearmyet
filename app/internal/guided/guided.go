@@ -99,7 +99,7 @@ var stepWords = []struct {
 	{"lid", []string{"Lid"}},
 	{"sleep", []string{"Sleep"}},
 	{"questions", []string{"Questions"}},
-	{"auto", []string{"Sound", "Graphics", "Browser", "Wireless", "Video decoding", "Temperatures"}},
+	{"auto", []string{"Sound", "Graphics", "Browser", "Wireless", "Ethernet", "Video decoding", "Temperatures"}},
 	{"manual", []string{"Keyboard", "Volume and brightness keys", "Touchpad", "Touchscreen", "Headphones", "Camera", "USB ports", "External screen", "Lid", "Sleep", heatByEar, "Questions"}},
 	{"graphics", []string{"Graphics", "Browser"}},
 	{"vulkan", []string{"Graphics"}},
@@ -109,6 +109,7 @@ var stepWords = []struct {
 	{"wireless", []string{"Wireless"}},
 	{"wifi", []string{"Wireless"}},
 	{"bluetooth", []string{"Wireless"}},
+	{"ethernet", []string{"Ethernet"}},
 	{"video", []string{"Video decoding"}},
 	{"temperatures", []string{heatAlone, heatByEar}},
 	{"fans", []string{heatAlone, heatByEar}},
@@ -116,14 +117,14 @@ var stepWords = []struct {
 
 // The words whose tests need nobody at the keyboard and make no sound, so they can run in a
 // session without a terminal.
-var automaticWords = []string{"auto", "graphics", "vulkan", "browser", "webgl", "webgpu", "wireless", "wifi", "bluetooth", "video", "temperatures", "fans"}
+var automaticWords = []string{"auto", "graphics", "vulkan", "browser", "webgl", "webgpu", "wireless", "wifi", "bluetooth", "ethernet", "video", "temperatures", "fans"}
 
 // The check a crash during a step is recorded for.
 var stepCheck = map[string]string{
 	"Keyboard": "keyboard", "Volume and brightness keys": "keyboard", "Touchpad": "touchpad", "Touchscreen": "touchscreen",
 	"Sound": "speakers", "Voice": "microphones", "Headphones": "headphones", "Camera": "camera",
 	"USB ports": "usb", "External screen": "external-display", "Lid": "lid", "Sleep": "suspend",
-	"Graphics": "gpu", "Browser": "webgl", "Video decoding": "video-decode", heatAlone: "fans", heatByEar: "fans",
+	"Graphics": "gpu", "Browser": "webgl", "Ethernet": "ethernet", "Video decoding": "video-decode", heatAlone: "fans", heatByEar: "fans",
 }
 
 // StepWords lists the words a single step can be asked for by.
@@ -195,6 +196,9 @@ func build(run *report.Run, facts probe.Facts, dir string) []step {
 	add("external-display", newScreen(run, sys))
 	if facts.Laptop && facts.Lid != "" {
 		add("lid suspend", newLid(run, sys), newSleep(run, facts))
+	} else {
+		// No lid to close, on a desktop or where the lid switch wasn't found: the step asks for sleep itself
+		add("suspend", newSleepAsked(run, facts, sys))
 	}
 	// Where the fan's speed can't be read, only the owner can say when it starts. The
 	// temperature test is then done with them, before the part they can walk away from
@@ -207,7 +211,7 @@ func build(run *report.Run, facts probe.Facts, dir string) []step {
 	// What has no step of its own on this machine is asked about instead
 	steps = append(steps, newQuestions(run, facts, covered))
 	// Last, what needs nobody: by then the owner can walk away and come back to the results
-	for _, test := range deep.Tests(sys, facts.Wifi, facts.Bluetooth, dir) {
+	for _, test := range deep.Tests(sys, facts.Wifi, facts.Bluetooth, facts.Ethernet, dir) {
 		if test.Name == "Temperatures" {
 			// The one test that shows what it reads as it goes
 			if !warm.byEar {
@@ -649,6 +653,7 @@ var menu = []menuEntry{
 	{word: "speakers", label: "Speakers and microphones", checks: []string{"speakers", "microphones"}, auto: true},
 	{word: "graphics", label: "Graphics: Vulkan, WebGL and WebGPU", checks: []string{"gpu", "webgl", "webgpu"}, auto: true},
 	{word: "wireless", label: "Wi-Fi signal and Bluetooth range", checks: []string{"wifi", "bluetooth"}, auto: true},
+	{word: "ethernet", label: "Ethernet, with a cable plugged in", checks: []string{"ethernet"}, auto: true, step: "Ethernet"},
 	{word: "video", label: "Video decoding", checks: []string{"video-decode"}, auto: true},
 	{word: "temperatures", label: "Temperatures and fans", checks: []string{"fans"}, auto: true, step: heatAlone},
 	{word: "manual", label: "All of these in one go"},

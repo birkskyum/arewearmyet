@@ -296,6 +296,32 @@ func Wireless(sys machine.System, wifi, bluetooth string) []report.Result {
 	return results
 }
 
+var (
+	routeVia  = regexp.MustCompile(`default via (\S+)`)
+	pingCount = regexp.MustCompile(`(\d+) (?:packets )?received`)
+)
+
+// Wired reaches the router through the network socket. The quick check sees a link with a cable
+// in it. This sees that the network answers over it, which a link alone doesn't show.
+func Wired(sys machine.System, ethernet string) []report.Result {
+	net := "/sys/class/net/" + ethernet
+	if ethernet == "" || sys.Read(net+"/carrier") != "1" {
+		return nil
+	}
+	link := probe.WiredLink(sys, ethernet)
+	routes, _ := sys.RunFor(5*time.Second, "ip", "-4", "route", "show", "default", "dev", ethernet)
+	via := routeVia.FindStringSubmatch(routes)
+	if via == nil {
+		return []report.Result{result("ethernet", report.Partial, link+", but the network gave it no address or route", "The link comes up and nothing is reached through it. That can be the network as much as the socket.")}
+	}
+	// The router's address stays on the computer: only whether it answered is kept
+	out, _ := sys.RunFor(10*time.Second, "ping", "-c", "3", "-W", "2", "-I", ethernet, via[1])
+	if got := pingCount.FindStringSubmatch(out); got != nil && got[1] != "0" {
+		return []report.Result{result("ethernet", report.Works, link+", and the router answered "+got[1]+" of 3 pings through it", "")}
+	}
+	return []report.Result{result("ethernet", report.Partial, link+", but the router didn't answer a ping through it", "")}
+}
+
 var frameCount = regexp.MustCompile(`frame=\s*(\d+)`)
 
 // decode runs ffmpeg over the clip with the given way of decoding, and says how many frames came out.
@@ -859,7 +885,7 @@ type Test struct {
 // Tests lists the tests this machine can run, in the order to run them: each needs the
 // program it measures with, and the wireless one a radio. The temperature test comes last,
 // so the heat it makes doesn't slow the others.
-func Tests(sys machine.System, wifi, bluetooth, dir string) []Test {
+func Tests(sys machine.System, wifi, bluetooth, ethernet, dir string) []Test {
 	var tests []Test
 	if sys.Has("vulkaninfo") {
 		tests = append(tests, Test{Name: "Graphics", Doing: "Asking Vulkan which device it draws on", Checks: []string{"gpu"}, Takes: time.Second,
@@ -878,6 +904,12 @@ func Tests(sys machine.System, wifi, bluetooth, dir string) []Test {
 			About:   "This reads how strong the Wi-Fi link is and how fast it sends, then listens for eight seconds for Bluetooth devices nearby. Only how many it hears is kept, never which.",
 			Run:     func(func(string)) []report.Result { return Wireless(sys, wifi, bluetooth) },
 			Nothing: "Wi-Fi isn't connected and no Bluetooth device was heard nearby, which says nothing either way."})
+	}
+	if ethernet != "" && sys.Has("ip") && sys.Has("ping") {
+		tests = append(tests, Test{Name: "Ethernet", Doing: "Reaching the router through the network cable", Checks: []string{"ethernet"}, Takes: 5 * time.Second,
+			About:   "This reads the speed the network socket's link settled on, and asks the router for an answer through it. The router's address isn't kept.",
+			Run:     func(func(string)) []report.Result { return Wired(sys, ethernet) },
+			Nothing: "No network cable is plugged in, which says nothing either way."})
 	}
 	if sys.Has("ffmpeg") {
 		tests = append(tests, Test{Name: "Video decoding", Doing: "Decoding a two-second clip on the hardware decoder", Checks: []string{"video-decode"}, Takes: 5 * time.Second,

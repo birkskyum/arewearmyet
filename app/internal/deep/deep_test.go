@@ -690,15 +690,54 @@ func TestOnlyTheTestsThisMachineCanRunAreOffered(t *testing.T) {
 		return strings.Join(out, ", ")
 	}
 	everything := with(t, map[string]string{"vulkaninfo": "", "chromium": "", "iw": "", "bluetoothctl": "", "ffmpeg": ""})
-	if got := names(Tests(everything, "wlan0", "hci0", t.TempDir())); got != "Graphics, Browser, Wireless, Video decoding, Temperatures" {
+	if got := names(Tests(everything, "wlan0", "hci0", "", t.TempDir())); got != "Graphics, Browser, Wireless, Video decoding, Temperatures" {
 		t.Errorf("with every tool: %s", got)
 	}
 	// A bare system still has its sensors to read
-	if got := names(Tests(with(t, nil), "wlan0", "hci0", t.TempDir())); got != "Temperatures" {
+	if got := names(Tests(with(t, nil), "wlan0", "hci0", "", t.TempDir())); got != "Temperatures" {
 		t.Errorf("with no tools: %s", got)
 	}
 	// The tools without a radio to use them on
-	if got := names(Tests(with(t, map[string]string{"iw": "", "bluetoothctl": ""}), "", "", t.TempDir())); got != "Temperatures" {
+	if got := names(Tests(with(t, map[string]string{"iw": "", "bluetoothctl": ""}), "", "", "", t.TempDir())); got != "Temperatures" {
 		t.Errorf("with no radios: %s", got)
+	}
+}
+
+func TestTheNetworkCableIsTestedByReachingTheRouterThroughIt(t *testing.T) {
+	cable := func(carrier string, answers map[string]string) machine.System {
+		sys := with(t, answers)
+		for file, text := range map[string]string{"carrier": carrier, "speed": "1000"} {
+			path := filepath.Join(sys.Root, "sys/class/net/enp1s0", file)
+			os.MkdirAll(filepath.Dir(path), 0o755)
+			os.WriteFile(path, []byte(text+"\n"), 0o644)
+		}
+		return sys
+	}
+	route := "default via 192.168.1.1 proto dhcp src 192.168.1.20 metric 100\n"
+
+	// No cable: nothing to say either way
+	if results := Wired(cable("0", map[string]string{"ip": route}), "enp1s0"); len(results) != 0 {
+		t.Errorf("without a cable: %+v", results)
+	}
+	// The router answers through the socket, and its address stays on the computer
+	works := one(t, Wired(cable("1", map[string]string{"ip": route, "ping": "3 packets transmitted, 3 received, 0% packet loss, time 2003ms\n"}), "enp1s0"), "ethernet")
+	if works.State != report.Works || !strings.Contains(works.Evidence, "connected at 1000 Mb/s, and the router answered 3 of 3 pings") || strings.Contains(works.Evidence, "192.168") {
+		t.Errorf("with an answer: %+v", works)
+	}
+	// A link the router doesn't answer over
+	silent := one(t, Wired(cable("1", map[string]string{"ip": route, "ping": "3 packets transmitted, 0 received, 100% packet loss, time 2040ms\n"}), "enp1s0"), "ethernet")
+	if silent.State != report.Partial || !strings.Contains(silent.Evidence, "didn't answer") {
+		t.Errorf("without an answer: %+v", silent)
+	}
+	// A link the network gave no address
+	bare := one(t, Wired(cable("1", map[string]string{"ip": ""}), "enp1s0"), "ethernet")
+	if bare.State != report.Partial || !strings.Contains(bare.Evidence, "no address or route") {
+		t.Errorf("without a route: %+v", bare)
+	}
+
+	// The test is offered where there is a socket
+	offered := Tests(with(t, map[string]string{"ip": "", "ping": ""}), "", "", "enp1s0", t.TempDir())
+	if len(offered) != 2 || offered[0].Name != "Ethernet" {
+		t.Errorf("offered: %+v", offered)
 	}
 }

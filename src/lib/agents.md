@@ -113,6 +113,10 @@ curl -s -X POST https://arewearmyet.com/api/runs \
 
 `results[]` takes `check`, `state`, `how`, and optional `note` and `evidence`. Results show on the model's page right away. Wrong ones get hidden.
 
+### On a mini PC, desktop or all-in-one
+
+`hw-test` tells these from laptops by the chassis type in the firmware, and tests the parts they have. It expects no battery, lid, built-in keyboard, touchpad or camera, and the model's page lists those under "Not on this model" in place of rows. The screen is tested in the `screen` step, sleep by putting the computer to sleep itself (`hw-test ask sleep`, and the owner wakes it with a key or the power button), and the network socket by `hw-test ethernet`, which reaches the router through a cable that is plugged in. A part the model turns out not to have, like a headphone jack, is recorded with `hw-test report --check ID --state absent`.
+
 ## 5. Fix it
 
 ### On an NVIDIA machine

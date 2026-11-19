@@ -30,6 +30,7 @@ type Facts struct {
 	Backlight         string // its folder under /sys/class/backlight
 	Wifi              string // the interface, like wlan0
 	Bluetooth         string // the controller, like hci0
+	Ethernet          string // the wired network interface, like enp1s0
 	SoundCard         string
 	Camera            string
 	Fingerprint       string // USB vendor:product of a known reader
@@ -96,6 +97,7 @@ func Quick(sys machine.System) (*report.Run, Facts, error) {
 		func() { gpu(sys, klog, measured) },
 		func() { input(sys, &facts, measured) },
 		func() { wireless(sys, &facts, measured) },
+		func() { wired(sys, &facts, measured) },
 		func() { processors(sys, measured) },
 		func() { sound(sys, &facts, measured) },
 		func() { power(sys, &facts, measured) },
@@ -326,6 +328,46 @@ func wireless(sys machine.System, facts *Facts, measured set) {
 			return
 		}
 	}
+}
+
+// wired finds the network socket: an Ethernet interface with hardware behind it that isn't Wi-Fi.
+// One on USB is a desktop's own, where the socket is often wired that way inside. On a laptop
+// it is an adapter or a dock, which says nothing about the laptop.
+func wired(sys machine.System, facts *Facts, measured set) {
+	linked := false
+	for _, net := range sys.Glob("/sys/class/net/*") {
+		if sys.Read(net+"/type") != "1" || !sys.Exists(net+"/device") || sys.IsDir(net+"/wireless") || sys.Exists(net+"/phy80211") {
+			continue
+		}
+		if facts.Laptop && sys.LinkName(net+"/device/subsystem") == "usb" {
+			continue
+		}
+		// With several sockets, the one with a cable in it is the one to test
+		up := sys.Read(net+"/carrier") == "1"
+		if facts.Ethernet == "" || (up && !linked) {
+			facts.Ethernet, linked = filepath.Base(net), up
+		}
+	}
+	if facts.Ethernet == "" {
+		// Few laptops have the socket. A desktop without one would be the first
+		if !facts.Laptop {
+			measured("ethernet", report.Broken, "no wired network interface")
+		}
+		return
+	}
+	if linked {
+		measured("ethernet", report.Works, WiredLink(sys, facts.Ethernet))
+	}
+}
+
+// WiredLink describes a wired interface with a cable in it: its driver and the speed it settled on.
+func WiredLink(sys machine.System, name string) string {
+	net := "/sys/class/net/" + name
+	link := name + " (" + sys.LinkName(net+"/device/driver") + ") connected"
+	if speed, ok := sys.Int(net + "/speed"); ok && speed > 0 {
+		link += fmt.Sprintf(" at %d Mb/s", speed)
+	}
+	return link
 }
 
 // switchedOff says whether a radio is turned off in software, which the owner or airplane

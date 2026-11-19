@@ -52,6 +52,7 @@ func newQuestions(run *report.Run, facts probe.Facts, covered map[string]bool) *
 	add(!covered["usb"], "usb", "Have USB sticks and other devices worked in every USB port you've tried?")
 	add(!covered["external-display"] && unmeasured("external-display"), "external-display", "An external screen, if you've tried one: did it show a picture?")
 	add(facts.Laptop && unmeasured("charging"), "charging", "With its own charger plugged in, does the battery percentage go up?")
+	add(facts.Ethernet != "" && unmeasured("ethernet"), "ethernet", "The network socket, if you've had a cable in it: did the network come up?")
 	add(facts.Fingerprint != "", "fingerprint", "The fingerprint reader, if you've set it up: does it unlock with your finger?")
 	add(facts.Bluetooth != "" && unmeasured("bluetooth"), "bluetooth", "Bluetooth headphones or a mouse, if you've tried some: do they pair and stay connected?")
 	add(true, "installer", installer)
