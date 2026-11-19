@@ -3,6 +3,26 @@
   "lenovo-yoga-slim-7x-14q8x9": {
    "machines": 1,
    "checks": {
+    "camera": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "owner",
+       "note": "There is a picture, but too dark, pale or off in colour.",
+       "evidence": "a 1920x1092 frame, brightness 49 of 255, contrast 15",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T02:24:40.675Z",
+       "run": "RUN-MGJMDKQE8Q"
+      }
+     ]
+    },
     "suspend": {
      "machines": 1,
      "states": {
@@ -106,26 +126,6 @@
        "kernel": "7.3.0-59-omarchy",
        "created": "2026-11-19T01:35:02.670Z",
        "run": "RUN-JV5HVVCT77"
-      }
-     ]
-    },
-    "camera": {
-     "machines": 1,
-     "states": {
-      "partial": 1
-     },
-     "how": {
-      "owner": 1
-     },
-     "latest": [
-      {
-       "state": "partial",
-       "how": "owner",
-       "note": "There is a picture, but too dark, pale or off in colour.",
-       "evidence": "a 1920x1092 frame, brightness 22 of 255, contrast 24",
-       "kernel": "7.3.0-59-omarchy",
-       "created": "2026-11-19T01:29:26.953Z",
-       "run": "RUN-GXHMZHZP45"
       }
      ]
     },

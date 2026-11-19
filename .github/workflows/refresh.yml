@@ -55,7 +55,7 @@ jobs:
       # a model decides its "Who has one". A source being down mustn't stop the refresh, so this
       # one may fail, and the last copy is used then.
       - name: Copy the test results
-        run: pnpm owners || echo "::warning::the test results weren't copied"
+        run: pnpm run owners || echo "::warning::the test results weren't copied"
 
       - run: pnpm status
 

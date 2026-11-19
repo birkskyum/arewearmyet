@@ -1,6 +1,6 @@
 // Saves owners' results as the site serves them (GET /api/owners) to data/owners.json, so the
 // repository keeps their history next to the findings. They hold counts and notes per model and
-// check, nothing that names a machine or its owner. Run with `pnpm owners`.
+// check, nothing that names a machine or its owner. Run with `pnpm run owners`.
 
 import { writeFileSync } from 'node:fs';
 
