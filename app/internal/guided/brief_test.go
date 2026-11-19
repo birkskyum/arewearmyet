@@ -145,6 +145,35 @@ func TestTheBriefSaysWhatFailsWhatIsKnownAndHowToGoAboutIt(t *testing.T) {
 	}
 }
 
+// An NVIDIA machine describes its own hardware through ACPI, so its brief names no device tree
+// commands: there is no tree to read, build or boot.
+func TestTheBriefForAnNvidiaMachineLeavesTheDeviceTreeOut(t *testing.T) {
+	b := yoga()
+	b.Run.Compatible = ""
+	b.Run.Hardware = map[string]string{"maker": "ASUSTeK COMPUTER INC.", "product": "ProArt P16 H7607BA"}
+	b.Model = report.Model{ID: "asus-proart-p16-h7607ba", Page: "https://arewearmyet.com/models/asus-proart-p16-h7607ba", Family: "arm-nvidia"}
+	brief := Brief(b)
+	for _, text := range []string{
+		"Family, which is the first line of a pull request or an issue for it: `arm-nvidia`",
+		"describes its own hardware through ACPI, so there is no device tree",
+		"`hw-test tree` is not for this computer",
+		"9. **Clean up.** Restore the settings you changed",
+	} {
+		if !strings.Contains(brief, text) {
+			t.Errorf("the brief lacks %q", text)
+		}
+	}
+	for _, text := range []string{"hw-test tree start", "hw-test tree remove", "/proc/device-tree"} {
+		if strings.Contains(brief, text) {
+			t.Errorf("the brief for an NVIDIA machine names %q", text)
+		}
+	}
+	// A Snapdragon PC's brief keeps them
+	if pc := Brief(yoga()); !strings.Contains(pc, "hw-test tree start") || !strings.Contains(pc, "hw-test tree remove") {
+		t.Error("the brief for a Snapdragon PC lost its device tree steps")
+	}
+}
+
 func TestWordsNameChecksOrPartsOfTheTest(t *testing.T) {
 	checks, unknown := ChecksFor([]string{"speakers", "gpu", "graphics", "nonsense", "sleep"})
 	if got := strings.Join(checks, " "); got != "speakers gpu webgl webgpu suspend" || strings.Join(unknown, " ") != "nonsense" {

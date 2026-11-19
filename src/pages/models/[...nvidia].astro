@@ -1,0 +1,123 @@
+---
+// An NVIDIA machine's page: how it starts with Omarchy, then every check past booting, as on a
+// Snapdragon PC's page. These start through UEFI with ACPI, so there is no device tree, hardware ID
+// or firmware package to follow, and the box at the top is smaller.
+import Layout from '../../layouts/Layout.astro';
+import CheckTable from '../../components/CheckTable';
+import ChipIcon from '../../assets/chip-icon.svg';
+import GitHubIcon from '../../assets/github-icon.svg';
+import { GENERATION, TONE, nvidiaKernelCell, nvidiaLinuxCell, nvidiaOmarchyCell, type NvidiaModel } from '../../lib/labels';
+import { PILL } from '../../lib/tones';
+import { GROUPS, coverage, modelChecks, modelExtra, nvidiaPageModels } from '../../lib/checks';
+
+export function getStaticPaths() {
+  return nvidiaPageModels().map((model) => ({ params: { nvidia: model.id }, props: { model } }));
+}
+
+const model = Astro.props.model as NvidiaModel;
+const rows = modelChecks(model);
+const extra = modelExtra(model);
+const cover = coverage(model);
+const REPO = 'https://github.com/birkskyum/arewearmyet';
+const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
+const CARD = 'rounded-xl bg-zinc-900 p-5 ring-1 ring-zinc-800';
+const CODE = 'mt-2 overflow-x-auto rounded-md bg-zinc-950 p-3 text-xs text-zinc-300';
+const FORM: Record<string, string> = { laptop: 'laptop', desktop: 'desktop', '2-in-1': '2-in-1', devkit: 'developer kit' };
+const title = `${model.vendor} ${model.name}`;
+const subtitle = [GENERATION[model.generation], model.released ? String(model.released).slice(0, 7) : null, FORM[model.form ?? 'laptop'] ?? model.form, (model.modelNumbers ?? []).join(', ')].filter(Boolean).join(' · ');
+const pieces = [
+  { name: 'Omarchy', cell: nvidiaOmarchyCell(model) },
+  { name: 'Kernel', cell: nvidiaKernelCell(model) },
+];
+const upstream = [{ name: 'Linux', cell: nvidiaLinuxCell(model) }];
+const boots = model.omarchy === 'works' || model.omarchy === 'expected';
+---
+
+<Layout title={`${title} · Are we ARM yet?`} description={`What works on the ${title} under Linux and Omarchy: starting it, and every check from sound to sleep.`}>
+  <main class="mx-auto max-w-5xl px-4 py-10 text-zinc-400 sm:px-6">
+    <div class="flex items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 text-zinc-300 hover:text-zinc-100">
+        <ChipIcon class="h-8 w-8 text-[#9ece6a]" aria-hidden="true" />
+        <span class="font-semibold">Are we ARM yet?</span>
+      </a>
+      <a href={`${REPO}/edit/main/data/findings.yaml`} class="flex shrink-0 items-center gap-2 rounded-md p-2 text-sm text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100 sm:px-3 sm:py-1.5">
+        <GitHubIcon class="h-5 w-5" aria-hidden="true" />
+        <span class="hidden sm:inline">Edit the findings</span>
+      </a>
+    </div>
+
+    <h1 class="mt-8 text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">{title}</h1>
+    <p class="mt-2 text-sm text-zinc-500">{subtitle}</p>
+    {model.status && <p class="mt-4 max-w-3xl">The maker said: {model.status}.</p>}
+    {model.notes && <p class="mt-4 max-w-3xl">{model.notes}</p>}
+
+    <section class="mt-8 grid gap-4 md:grid-cols-2">
+      <div class={CARD}>
+        <h2 class="text-sm font-semibold text-zinc-100">Starting with Omarchy</h2>
+        <dl class="mt-3 grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-2 text-sm">
+          {pieces.map((p) => (
+            <>
+              <dt class="text-zinc-400">{p.name}</dt>
+              <dd><span class={`${PILL} ${TONE[p.cell.tone]}`} data-tip={p.cell.title}>{p.cell.label}</span></dd>
+            </>
+          ))}
+        </dl>
+        <p class="mt-4 text-xs text-zinc-500">NVIDIA's ARM machines start through UEFI and describe their own hardware, so a model needs no device tree, hardware IDs or firmware package of its own. What it needs is a kernel with the drivers.</p>
+      </div>
+      <div class={CARD}>
+        <h2 class="text-sm font-semibold text-zinc-100">Upstream, for every distro</h2>
+        <dl class="mt-3 grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-2 text-sm">
+          {upstream.map((p) => (
+            <>
+              <dt class="text-zinc-400">{p.name}</dt>
+              <dd><span class={`${PILL} ${TONE[p.cell.tone]}`} data-tip={p.cell.title}>{p.cell.label}</span></dd>
+            </>
+          ))}
+        </dl>
+        <p class="mt-4 text-xs text-zinc-500">{cover.known} of {cover.total} checks are written up for this model on Omarchy, {cover.works} of them working.{cover.elsewhere > 0 && ` ${cover.elsewhere} more are reported from another distro, which shows they can work, not that they do on Omarchy.`}</p>
+      </div>
+    </section>
+
+    <section class="mt-10">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <h2 class="text-lg font-semibold text-zinc-100">What works</h2>
+        <p class="text-xs text-zinc-500">Click a check to see what it means, how it's checked and every result.</p>
+      </div>
+      <div class="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm text-zinc-400">
+        <p><span class="text-zinc-200">Notes</span> are what people reported on Omarchy, each checked against its source. They can be old.</p>
+        <p><span class="text-zinc-200">Elsewhere</span> is what was reported on another distro. It shows a part can work, not that it does on Omarchy.</p>
+        <p><span class="text-zinc-200">Tested</span> is what <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs">hw-test</code> found on people's machines, with the date.</p>
+      </div>
+      <div class="mt-4">
+        <CheckTable client:load model={model.id} groups={GROUPS} rows={rows} />
+      </div>
+    </section>
+
+    <section class="mt-10 rounded-xl bg-[#9ece6a]/10 p-5 ring-1 ring-[#9ece6a]/40">
+      <h2 class="text-base font-semibold text-[#9ece6a]">Own one? Test it</h2>
+      <p class="mt-2 text-sm text-zinc-300">{boots ? "Omarchy's ARM image starts NVIDIA's machines." : 'Nobody has started Omarchy on this model yet.'} <a class={LINK} href="/install">How to install</a>.</p>
+      <p class="mt-2 text-sm text-zinc-300">On Omarchy, install the hardware test once and run it. It measures what it can by itself (graphics, Wi-Fi and Bluetooth, sound, video decoding, temperatures), tests the rest with you, shows the results and puts them on this page. Nothing personal is sent.</p>
+      <pre class={CODE}><code>omarchy-mise-install github:birkskyum/arewearmyet hw-test
+hw-test</code></pre>
+      <p class="mt-3 text-sm text-zinc-300">No NVIDIA machine has results here yet, so the first run on one also shows whether the test itself needs changes for these machines. Every command is in the <a class={LINK} href="/docs/hw-test">hw-test reference</a>.</p>
+    </section>
+
+    <section class="mt-10 grid gap-6 md:grid-cols-2 [&>div]:min-w-0">
+      {extra.details && (
+        <div class="md:col-span-2">
+          <h2 class="text-lg font-semibold text-zinc-100">Notes</h2>
+          {extra.details.split(/\n\n+/).map((paragraph) => <p class="mt-2 max-w-3xl">{paragraph}</p>)}
+        </div>
+      )}
+      {(extra.links.length > 0 || model.sources.length > 0) && (
+        <div class="md:col-span-2">
+          <h2 class="text-base font-semibold text-zinc-100">Links</h2>
+          <ul class="mt-2 space-y-1 text-sm">
+            {extra.links.map((link) => <li><a class={LINK} href={link.url}>{link.title}</a></li>)}
+            {model.sources.map((url) => <li><a class={LINK} href={url}>{new URL(url).hostname.replace(/^www\./, '')}</a></li>)}
+          </ul>
+        </div>
+      )}
+    </section>
+  </main>
+</Layout>

@@ -54,6 +54,21 @@ const machine = (token: string) => ({ 'x-machine-token': token });
 const tick = () => new Promise((resolve) => setTimeout(resolve, 5));
 const run = (results: unknown[], extra: Record<string, unknown> = {}) => ({ mode: 'agent', model: YOGA, kernel: '7.3.0-59-omarchy', results, ...extra });
 
+test('finds an NVIDIA machine by the model number in its firmware strings, and names its family', async () => {
+  // These start through ACPI, so no hardware ID list or compatible string names them
+  const laptop = await call('GET', '/api/match?product=ProArt%20P16%20H7607BA&vendor=ASUSTeK%20COMPUTER%20INC.');
+  assert.equal(laptop.body.model, 'asus-proart-p16-h7607ba');
+  assert.equal(laptop.body.by, 'model number');
+  assert.equal(laptop.body.family, 'arm-nvidia');
+  assert.equal(laptop.body.boot, 'acpi');
+  assert.equal((await call('GET', '/api/match?product=NVIDIA%20DGX%20Spark&vendor=NVIDIA')).body.model, 'nvidia-dgx-spark');
+  // A run from one is kept under its model, like any other
+  const sent = await call('POST', '/api/runs', { mode: 'quick', hardware: { maker: 'NVIDIA', product: 'NVIDIA DGX Spark' }, results: [{ check: 'wifi', state: 'works', how: 'measured' }] }, machine('machine-n-'.padEnd(40, 'n')));
+  assert.equal(sent.status, 201);
+  assert.equal(sent.body.model, 'nvidia-dgx-spark');
+  assert.equal(sent.body.page, 'https://arewearmyet.com/models/nvidia-dgx-spark');
+});
+
 test('finds a machine by its device tree, then by its model number', async () => {
   assert.equal((await call('GET', '/api/match?compatible=lenovo,yoga-slim7x')).body.model, YOGA);
   const byNumber = await call('GET', '/api/match?product=83ED&vendor=LENOVO');

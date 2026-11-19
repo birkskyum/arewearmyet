@@ -102,7 +102,7 @@ What every check means. Read it before reporting, since a result names a check b
 
 ### `GET /api/models`
 
-Every computer model on the board.
+Every computer model with a page: the Snapdragon PCs that start through UEFI and the NVIDIA machines. An NVIDIA machine has no `chips` or `compatibles`.
 
 ```json
 {
@@ -129,7 +129,7 @@ Every computer model on the board.
 
 ### `GET /api/models/<id>`
 
-One model, with everything its page shows. `404` names the routes that find the right id.
+One model, with everything its page shows. `404` names the routes that find the right id. An NVIDIA machine's record is smaller. It has no `upstream`, `variants` or `reports`, and its `boots` holds `outcome`, the `kernel` channel that starts it and `linux` (whether Linux itself has the drivers, or only Omarchy's kernel).
 
 | Field | Meaning |
 | --- | --- |
@@ -203,7 +203,7 @@ curl 'https://arewearmyet.com/api/match?compatible=lenovo,yoga-slim7x'
 }
 ```
 
-`by` is `hardware IDs`, `compatible` or `model number`. `family` is the line a pull request for the computer opens with. `kernels` is the `linux-omarchy` version on each of Omarchy's channels when the site was last built, to tell a computer that is behind. A computer the board doesn't know gets `{"model": null, "by": null, "hint": "..."}` with status `200`.
+`by` is `hardware IDs`, `compatible` or `model number`. `family` is the line a pull request for the computer opens with. It is `arm-dragon-msft` for a Snapdragon PC that came with Windows, `arm-dragon-google` for a Chromebook or Googlebook, and `arm-nvidia` for an NVIDIA machine. An NVIDIA machine starts through ACPI (`"boot": "acpi"`), has no hardware ID list or device tree, and is found by the model number in `product`, `sku` or `family` together with `vendor`. `kernels` is the `linux-omarchy` version on each of Omarchy's channels when the site was last built, to tell a computer that is behind. A computer the board doesn't know gets `{"model": null, "by": null, "hint": "..."}` with status `200`.
 
 ### `GET /api/owners`
 

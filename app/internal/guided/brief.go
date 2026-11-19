@@ -474,13 +474,24 @@ func Brief(b Briefing) string {
 	say("")
 	say("1. **Check it is worth chasing.** Up to date (above)? Already known, with a cause? Some parts can't be fixed from here: a missing kernel feature, or something Omarchy has no place for. Then say so to the owner, leave a note (item 8 of this list) and go on to the next part.")
 	say("2. **Snapshot.** `hw-test verify before`, once, before you change anything. When the owner hears or sees a part differently than the test says, record that first with `hw-test report`.")
-	say("3. **Look.** The commands under \"Where to look\" only read. `dtc -I fs -O dts /proc/device-tree` shows the device tree the computer is running.")
-	say("4. **Change.** A setting: try it on this computer, keeping a copy of what you change. The device tree: `hw-test tree start`, edit, `hw-test tree build`, then the owner runs `hw-test tree boot`, which makes a boot entry of its own, and picks it at the next start. When it works, `hw-test tree patch` writes the change as the patch Omarchy's package takes. Never install a rebuilt `linux-omarchy-dtbs`, write under `/boot/dtbs` or edit `/boot/limine.conf` by hand: each can stop the computer from starting.")
+	// An NVIDIA machine describes its own hardware through ACPI: it has no device tree to read or change
+	acpi := family == probe.Nvidia
+	if acpi {
+		say("3. **Look.** The commands under \"Where to look\" only read. This computer describes its own hardware through ACPI, so there is no device tree: `sudo dmesg` and `journalctl -k -b` say what each driver found.")
+		say("4. **Change.** A setting: try it on this computer, keeping a copy of what you change. There is no device tree here, so `hw-test tree` is not for this computer. A fault is in a kernel driver, a system setting or an application's setting, and the guide's table says where each of those is fixed.")
+	} else {
+		say("3. **Look.** The commands under \"Where to look\" only read. `dtc -I fs -O dts /proc/device-tree` shows the device tree the computer is running.")
+		say("4. **Change.** A setting: try it on this computer, keeping a copy of what you change. The device tree: `hw-test tree start`, edit, `hw-test tree build`, then the owner runs `hw-test tree boot`, which makes a boot entry of its own, and picks it at the next start. When it works, `hw-test tree patch` writes the change as the patch Omarchy's package takes. Never install a rebuilt `linux-omarchy-dtbs`, write under `/boot/dtbs` or edit `/boot/limine.conf` by hand: each can stop the computer from starting.")
+	}
 	say("5. **Before a restart, or a test that may freeze the computer:** write where you are into `PROGRESS.md`, then `hw-test resume \"<what to go on with>\"`. You are opened again at the owner's next login.")
 	say("6. **Measure again.** The \"Measure again\" command of each part you touched, and a neighbouring part. Then `hw-test verify after`, which prints a before-and-after block (`--check <check>` gives a row to a part that works on both sides but measures better).")
 	say("7. **Pull request.** Open it as a draft. Its description starts with a line that says only %s, then the block. Then `hw-test verify after --pr <its address> --title \"<the change in a line>\"`, which records it on the model's page, and mark it ready. Tell the owner.", familyLine(family))
 	say("8. **Not fixed?** Leave it for the next agent: `hw-test note --kind problem --check <check> --title \"...\" --body-file <file> --log kernel`. What the owner told you about a part goes in with `hw-test report --check <check> --state partial --note \"...\"`.")
-	say("9. **Clean up.** `hw-test tree remove` (run by the owner), restore the settings you changed, and say what is left.")
+	if acpi {
+		say("9. **Clean up.** Restore the settings you changed, remove test packages, and say what is left.")
+	} else {
+		say("9. **Clean up.** `hw-test tree remove` (run by the owner), restore the settings you changed, and say what is left.")
+	}
 	say("")
 	say("The owner's data is the line: never their files, the disk's partitions or its encryption, and no firmware flashing or BIOS changes. Commands that need root go through `sudo`. When it asks for a password you can't give, hand the owner the exact command to run.")
 	return out.String()

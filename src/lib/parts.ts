@@ -3,8 +3,7 @@
 // by hw-test or an owner. Outlined means seen on another distro, said by the device tree's author
 // or known for the chip family, which shows a part can work and not that it does here.
 import owners from '../../data/owners.json';
-import { CHECKS, countsAsStatus, modelChecks, type CheckState } from './checks';
-import type { Model } from './labels';
+import { CHECKS, countsAsStatus, modelChecks, type CheckState, type Subject } from './checks';
 import type { Tone } from './tones';
 
 export type Part = { id: string; title: string; question: string; checks: string[] };
@@ -31,10 +30,13 @@ const TITLE = new Map(CHECKS.map((check) => [check.id, check.title]));
 const overall = (states: string[]): 'works' | 'partial' | 'broken' => (states.every((s) => s === 'works') ? 'works' : states.every((s) => s === 'broken') ? 'broken' : 'partial');
 
 /** What is known about each check of a model, from the strongest evidence there is for it. */
-function seen(model: Model): Map<string, Seen> {
+// A machine as the roll-up needs it. `bootable` is the channel whose image starts a Snapdragon PC
+type Machine = Subject & { bootable?: string };
+
+function seen(model: Machine): Map<string, Seen> {
   const out = new Map<string, Seen>();
   const measured = OWNERS[model.id]?.checks ?? {};
-  const boots = ['stable', 'rc', 'edge'].includes(model.bootable);
+  const boots = ['stable', 'rc', 'edge'].includes(model.bootable ?? '');
   for (const row of modelChecks(model)) {
     const title = TITLE.get(row.id) ?? row.id;
     const owner = measured[row.id];
@@ -63,7 +65,7 @@ export type PartState = { part: Part; key: string; state: 'works' | 'partial' | 
 
 const WORD = { works: 'works', partial: 'partly works', broken: 'is broken', absent: 'is not on this model' } as const;
 
-export function modelParts(model: Model): PartState[] {
+export function modelParts(model: Machine): PartState[] {
   const known = seen(model);
   return PARTS.map((part) => {
     const rows = part.checks.map((check) => known.get(check)).filter((row): row is Seen => Boolean(row));
@@ -110,7 +112,7 @@ type TextCell = { key: string; text: string; rank: number };
 type DotsCell = { key: string; label: string; dots: Dot[]; title: string; rank: number };
 
 /** The cells of the hardware view for one model, and the row of dots the booting view shows. */
-export function partCells(model: Model): Record<string, PillCell | TextCell | DotsCell> {
+export function partCells(model: Machine): Record<string, PillCell | TextCell | DotsCell> {
   const parts = modelParts(model);
   const cells: Record<string, PillCell | TextCell | DotsCell> = {};
   for (const p of parts) {
@@ -141,7 +143,7 @@ export function partCells(model: Model): Record<string, PillCell | TextCell | Do
 }
 
 /** For the bars above the table: per part, how many models have it seen on Omarchy, known from elsewhere, or not at all. */
-export function partTotals(models: Model[]) {
+export function partTotals(models: Machine[]) {
   const all = models.map(modelParts);
   return PARTS.map((part, i) => {
     const states = all.map((parts) => parts[i]).filter((p) => p.state !== 'absent');

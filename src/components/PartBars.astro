@@ -3,7 +3,6 @@
 // is known about the part on it, each linking to the model in the family's hardware view
 import status from '../data/status.json';
 import { PARTS, modelParts } from '../lib/parts';
-import type { Model } from '../lib/labels';
 import type { TableRow } from '../lib/rows';
 
 interface Props {
@@ -15,7 +14,7 @@ interface Props {
 
 const { models, anchor, urlPrefix = '' } = Astro.props;
 const ids = new Set(models.map((model) => model.id));
-const family = (status.models as Model[]).filter((model) => ids.has(model.id)).map((model) => ({ name: `${model.vendor} ${model.name}`, parts: modelParts(model) }));
+const family = [...status.models, ...status.nvidia].filter((model) => ids.has(model.id)).map((model) => ({ name: `${model.vendor} ${model.name}`, parts: modelParts(model) }));
 
 const KINDS = [
   { key: 'omarchy-works', color: 'bg-emerald-400', label: 'Works on Omarchy' },

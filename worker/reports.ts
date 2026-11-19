@@ -267,11 +267,11 @@ function parseSide(value: unknown): Side | null {
 function match(params: URLSearchParams) {
   // "family" is the line a pull request for the machine opens with. Every model the board matches has a
   // Snapdragon chip: Chromebooks and Googlebooks, which start through Google's own boot software, are
-  // arm-dragon-google, and the ones that came with Windows arm-dragon-msft. NVIDIA and Apple machines have
-  // families of their own (arm-nvidia, arm-apple), which the test names from the machine itself
+  // arm-dragon-google, and the ones that came with Windows arm-dragon-msft. NVIDIA machines, which start
+  // through ACPI, are arm-nvidia. Apple machines (arm-apple) are not on the board: the test names them itself
   const found = (model: Index['models'][number], by: string) => ({
     model: model.id, by, vendor: model.vendor, name: model.name, generation: model.generation, boot: model.boot,
-    family: model.boot === 'depthcharge' || model.boot === 'android' ? 'arm-dragon-google' : 'arm-dragon-msft',
+    family: model.boot === 'acpi' ? 'arm-nvidia' : model.boot === 'depthcharge' || model.boot === 'android' ? 'arm-dragon-google' : 'arm-dragon-msft',
     page: `${SITE}/models/${model.id}`,
     // The linux-omarchy version on each of Omarchy's channels as of the site's last build, to compare the machine's with
     kernels: INDEX.kernels ?? {},

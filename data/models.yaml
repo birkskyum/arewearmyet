@@ -2319,10 +2319,14 @@ models:
 #   omarchy   works (someone booted it), expected (same platform as a tested
 #             model, not tried yet), untested, problems, or missing
 #   linux     omarchy (needs patches Omarchy's kernel carries) or mainline
+#   model_numbers   the maker's own model number, as its firmware is expected to report it, so a
+#             machine that runs hw-test is matched to its model. Taken from the makers' product
+#             names, and not yet confirmed against a machine's own strings.
 nvidia:
   - id: acer-veriton-gn100
     vendor: "Acer"
     name: "Veriton GN100"
+    model_numbers: ["GN100"]
     generation: gb10
     form: desktop
     released: "2025-10"
@@ -2335,6 +2339,7 @@ nvidia:
   - id: asus-ascent-gx10
     vendor: "ASUS"
     name: "Ascent GX10"
+    model_numbers: ["GX10"]
     generation: gb10
     form: desktop
     released: "2025-10"
@@ -2371,6 +2376,7 @@ nvidia:
   - id: hp-zgx-nano-g1n
     vendor: "HP"
     name: "ZGX Nano G1n"
+    model_numbers: ["ZGX Nano G1n"]
     generation: gb10
     form: desktop
     released: "2025-10"
@@ -2395,6 +2401,7 @@ nvidia:
   - id: msi-edgexpert-ms-c931
     vendor: "MSI"
     name: "EdgeXpert"
+    model_numbers: ["MS-C931"]
     generation: gb10
     form: desktop
     released: "2025-10"
@@ -2407,6 +2414,7 @@ nvidia:
   - id: nvidia-dgx-spark
     vendor: "NVIDIA"
     name: "DGX Spark"
+    model_numbers: ["DGX Spark"]
     generation: gb10
     form: desktop
     released: "2025-10"
@@ -2420,6 +2428,7 @@ nvidia:
   - id: asus-proart-p14-h7407ba
     vendor: "ASUS"
     name: "ProArt P14"
+    model_numbers: ["H7407BA"]
     generation: n1x
     released: "2026-10"
     omarchy: works
@@ -2431,6 +2440,7 @@ nvidia:
   - id: asus-proart-p16-h7607ba
     vendor: "ASUS"
     name: "ProArt P16"
+    model_numbers: ["H7607BA"]
     generation: n1x
     released: "2026-10"
     omarchy: works
@@ -2455,6 +2465,7 @@ nvidia:
   - id: hp-omnibook-ultra-16-bk0
     vendor: "HP"
     name: "OmniBook Ultra 16"
+    model_numbers: ["16-bk0xxx"]
     generation: n1x
     released: "2026-10"
     omarchy: works
@@ -2467,6 +2478,7 @@ nvidia:
   - id: hp-omnibook-x-14-ks0
     vendor: "HP"
     name: "OmniBook X 14"
+    model_numbers: ["14-ks0xxx"]
     generation: n1x
     released: "2026"
     omarchy: expected

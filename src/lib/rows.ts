@@ -109,7 +109,8 @@ export function nvidiaRows(): TableRow[] {
     id: model.id,
     vendor: model.vendor,
     name: model.name,
-    href: model.sources[0] ?? null,
+    // NVIDIA machines have a page of their own too, with every check past booting
+    href: `/models/${model.id}`,
     announced: announcedTitle(model.status),
     discussion: null,
     subtitle: [GENERATION[model.generation], year(model.released)].filter(Boolean).join(' · '),
@@ -124,6 +125,7 @@ export function nvidiaRows(): TableRow[] {
       kernel: plain(nvidiaKernelCell(model)),
       linux: plain(nvidiaLinuxCell(model)),
       notes: { key: model.notes ? 'notes' : 'none', text: model.notes ?? '', rank: model.notes ? 0 : 1 },
+      ...partCells(model),
     },
   }));
 }

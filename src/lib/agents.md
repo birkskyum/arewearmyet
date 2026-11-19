@@ -115,6 +115,10 @@ curl -s -X POST https://arewearmyet.com/api/runs \
 
 ## 5. Fix it
 
+### On an NVIDIA machine
+
+An NVIDIA N1x or GB10 machine (family `arm-nvidia`) describes its own hardware through ACPI. It has no device tree, so `hw-test tree` and the device tree package are not for it, and it needs no hardware IDs or firmware package. A fault there is in a kernel driver, a system setting or an application's setting, and goes where the table below says for those. Measuring, reporting, `hw-test verify`, `hw-test resume` and notes work the same. The two Qualcomm processors (`adsp`, `cdsp`) are not on these machines. No NVIDIA machine has sent results yet, so if a test itself misbehaves on one, say so in a note and in an issue on [arewearmyet](https://github.com/birkskyum/arewearmyet/issues).
+
 ### Before you change anything
 
 1. **Is the computer up to date?** Compare its `linux-omarchy` version with `kernels` from step 1. When it is behind its channel, ask the owner to run `omarchy update`. Leave word with `hw-test resume "Updated. Measure the failing parts again."` first, then they restart, and you measure again: the fault may be fixed already. A patch also has to fit Omarchy's current sources, not old ones.

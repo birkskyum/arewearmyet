@@ -47,8 +47,8 @@ const models: Model[] = list.models;
 const ignore: { ids?: string[]; firmware?: string[]; acpi?: string[] } = list.ignore ?? {};
 
 // NVIDIA's ARM PCs boot through ACPI; their status is what testers report
-type NvidiaModel = { id: string; vendor: string; name: string; generation: 'n1x' | 'gb10'; form?: string; released?: string | number; omarchy: 'works' | 'expected' | 'untested' | 'problems' | 'missing'; linux: 'omarchy' | 'mainline'; status?: string; notes?: string; sources?: string[] };
-const nvidia: NvidiaModel[] = (list.nvidia ?? []).map((model: NvidiaModel) => ({ form: 'laptop', released: null, status: null, notes: null, sources: [], ...model }));
+type NvidiaModel = { id: string; vendor: string; name: string; generation: 'n1x' | 'gb10'; form?: string; model_numbers?: string[]; modelNumbers?: string[]; released?: string | number; omarchy: 'works' | 'expected' | 'untested' | 'problems' | 'missing'; linux: 'omarchy' | 'mainline'; status?: string; notes?: string; sources?: string[] };
+const nvidia: NvidiaModel[] = (list.nvidia ?? []).map(({ model_numbers, ...model }: NvidiaModel) => ({ form: 'laptop', released: null, status: null, notes: null, sources: [], modelNumbers: model_numbers ?? [], ...model }));
 
 // An unquoted vendor,model inside { } is split at the comma by YAML, so catch it here
 for (const model of models) {
@@ -652,7 +652,11 @@ writeFileSync(
       boot: row.boot,
       compatibles: row.variants.map((v: { compatible?: string }) => v.compatible).filter(Boolean),
       modelNumbers: row.modelNumbers,
-    })),
+    })).concat(
+      // NVIDIA machines start through ACPI: no hardware IDs or compatible strings name them, so a
+      // machine is matched by the maker's model number in its firmware strings
+      nvidia.map((model) => ({ id: model.id, vendor: model.vendor, name: model.name, generation: model.generation, boot: 'acpi', compatibles: [], modelNumbers: model.modelNumbers ?? [] })),
+    ),
   }) + '\n',
 );
 // A file both linux-firmware-qcom and one of Omarchy's firmware packages ship on edge. The package's copy is
