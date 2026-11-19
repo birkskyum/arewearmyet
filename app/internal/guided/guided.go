@@ -116,6 +116,8 @@ type model struct {
 	summary *summary
 	// failed holds steps that hit a fault of the test's own and were passed over.
 	failed map[string]string
+	// skipped holds the steps the owner passed over with Ctrl+N.
+	skipped map[string]bool
 	// save writes the test to disk when a step begins. Nil in tests.
 	save func(step string)
 }
@@ -266,7 +268,7 @@ func (m *model) safeUpdate(s step, msg tea.Msg) (cmd tea.Cmd) {
 }
 
 func (m *model) over(s step) (done bool) {
-	if _, failed := m.failed[s.name()]; failed {
+	if _, failed := m.failed[s.name()]; failed || m.skipped[s.name()] {
 		return true
 	}
 	defer func() {
@@ -284,12 +286,26 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.width, m.height = msg.Width, msg.Height
 		return m, nil
 	case tea.KeyPressMsg:
-		if msg.String() == "ctrl+c" {
+		switch msg.String() {
+		case "ctrl+c":
 			m.aborted = true
 			return m, tea.Quit
+		case "ctrl+n":
+			// On to the next step from anywhere, whatever the step itself does with its keys.
+			// The last step, which sends the results, isn't one to skip.
+			if m.at < len(m.steps)-1 {
+				if m.skipped == nil {
+					m.skipped = map[string]bool{}
+				}
+				m.skipped[m.steps[m.at].name()] = true
+			}
+			msg = tea.KeyPressMsg{}
 		}
 	}
-	cmds := []tea.Cmd{m.safeUpdate(m.steps[m.at], msg)}
+	var cmds []tea.Cmd
+	if !m.skipped[m.steps[m.at].name()] {
+		cmds = append(cmds, m.safeUpdate(m.steps[m.at], msg))
+	}
 	// On to the next step, past any that has nothing to do on this machine
 	for m.over(m.steps[m.at]) {
 		if m.at == len(m.steps)-1 {
@@ -315,6 +331,8 @@ func (m *model) View() tea.View {
 		switch {
 		case failed:
 			progress = append(progress, close_.Render("! "+s.name()))
+		case m.skipped[s.name()]:
+			progress = append(progress, "– "+s.name())
 		case i < m.at:
 			progress = append(progress, good.Render("✓ ")+s.name())
 		case i == m.at:
@@ -331,7 +349,7 @@ func (m *model) View() tea.View {
 		"",
 		body,
 		"",
-		wrapHint(hint+" · Ctrl+C to stop", width-4),
+		wrapHint(hint+m.skipHint()+" · Ctrl+C to stop", width-4),
 	)
 	view := tea.NewView(lipgloss.NewStyle().Padding(1, 2).Render(content))
 	view.AltScreen = true
@@ -344,6 +362,14 @@ func (m *model) View() tea.View {
 		view.MouseMode = tea.MouseModeAllMotion
 	}
 	return view
+}
+
+// skipHint names the key that passes any step over, on every step but the last.
+func (m *model) skipHint() string {
+	if m.at < len(m.steps)-1 {
+		return " · Ctrl+N for the next step"
+	}
+	return ""
 }
 
 // draw is a step's picture and hint line, or a plain note when drawing it fails.

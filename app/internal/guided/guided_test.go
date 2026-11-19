@@ -852,3 +852,38 @@ func TestMicrophoneLevelIsMeasuredSoQuietIsNotBlamedOnTheSpeakers(t *testing.T) 
 		t.Errorf("no voice: %q", run.State("microphones"))
 	}
 }
+
+func TestCtrlNPassesAnyStepOver(t *testing.T) {
+	next := tea.KeyPressMsg{Code: 'n', Mod: tea.ModCtrl}
+	if next.String() != "ctrl+n" {
+		t.Fatalf("the key reads as %q", next.String())
+	}
+	run := &report.Run{}
+	dir := t.TempDir()
+	last := &summary{run: run, options: Options{Send: false}}
+	m := &model{run: run, summary: last, failed: map[string]string{}, width: 100, height: 40}
+	// The keyboard step takes every key for itself, and the keys step wants six presses
+	m.steps = []step{&welcome{run: run}, newKeyboard(run), &effects{run: run, items: []effect{{label: "Volume up"}, {label: "Mute"}}}, newSpeakers(run, dir), newCamera(run, dir),
+		newQuestions(run, probe.Facts{}, nil), last}
+	if !strings.Contains(m.View().Content, "Ctrl+N for the next step") {
+		t.Error("the key isn't shown")
+	}
+	for want := 1; want <= 6; want++ {
+		m.Update(next)
+		if m.at != want {
+			t.Fatalf("after %d presses it is at step %d", want, m.at)
+		}
+	}
+	// Nothing was reported for what was passed over, and the keyboard didn't take the n as a key
+	if len(run.Results) != 0 {
+		t.Errorf("results: %+v", run.Results)
+	}
+	// The last step isn't skipped, and doesn't offer it
+	m.Update(next)
+	if m.at != 6 || strings.Contains(m.View().Content, "Ctrl+N") {
+		t.Errorf("the send step: at %d", m.at)
+	}
+	if !strings.Contains(m.View().Content, "– Keyboard") {
+		t.Errorf("skipped steps aren't marked:\n%s", m.View().Content)
+	}
+}
