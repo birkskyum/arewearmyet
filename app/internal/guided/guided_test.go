@@ -12,6 +12,7 @@ import (
 	"charm.land/lipgloss/v2"
 
 	"github.com/birkskyum/arewearmyet/app/internal/audio"
+	"github.com/birkskyum/arewearmyet/app/internal/deep"
 	"github.com/birkskyum/arewearmyet/app/internal/machine"
 	"github.com/birkskyum/arewearmyet/app/internal/picture"
 	"github.com/birkskyum/arewearmyet/app/internal/probe"
@@ -283,7 +284,8 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 	run := &report.Run{}
 	run.Set("wifi", report.Works, report.Measured, "wlan0 connected", "")
 	dir := t.TempDir()
-	steps := []step{newKeyboard(run), &effects{run: run}, newSpeakers(run, dir), newHeadphones(run, dir), newCamera(run, dir), newQuestions(run, probe.Facts{}, nil)}
+	video := newAuto(run, deep.Test{Name: "Video decoding", Checks: []string{"video-decode"}, Run: func() []report.Result { return nil }})
+	steps := []step{newKeyboard(run), &effects{run: run}, newSpeakers(run, dir), newHeadphones(run, dir), newCamera(run, dir), newQuestions(run, probe.Facts{}, nil), video}
 	last := &summary{run: run, options: Options{Send: false}}
 	// What this machine found the last time each thing was tested
 	tested := time.Date(2026, 11, 19, 2, 0, 0, 0, time.UTC)
@@ -295,7 +297,7 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 		"hibernate":   {Result: report.Result{Check: "hibernate", State: report.Broken, How: report.Measured, Evidence: "the kernel offers no hibernation"}, When: tested},
 	}
 	open := func() (*model, *welcome) {
-		m := &model{run: run, summary: last, failed: map[string]string{}, width: 100, height: 50}
+		m := &model{run: run, summary: last, failed: map[string]string{}, width: 100, height: 60}
 		start := &welcome{run: run, kept: kept}
 		for _, entry := range menu {
 			if len(choose(steps, []string{entry.word})) > 0 {
@@ -313,18 +315,23 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 	// Only what this machine has is offered
 	m, start := open()
 	drawn := m.View().Content
-	for _, text := range []string{"Everything, about ten minutes", "Keyboard, with the volume", "Sound: speakers", "Camera", "hw-test camera"} {
+	for _, text := range []string{"Everything, about twelve minutes", "Keyboard, with the volume", "Speakers and microphones", "Headphones", "Camera", "hw-test camera", "Video decoding"} {
 		if !strings.Contains(drawn, text) {
 			t.Errorf("the menu lacks %q:\n%s", text, drawn)
 		}
 	}
-	if strings.Contains(drawn, "Touchscreen") || strings.Contains(drawn, "Sleep") {
+	if strings.Contains(drawn, "Touchscreen") || strings.Contains(drawn, "Sleep") || strings.Contains(drawn, "Graphics: Vulkan") {
 		t.Errorf("the menu offers what the machine doesn't have:\n%s", drawn)
+	}
+	// What runs by itself is listed apart from what is done with the owner, and comes first
+	alone, with := strings.Index(drawn, "Runs by itself"), strings.Index(drawn, "Done with you")
+	if alone < 0 || !(alone < strings.Index(drawn, "All of these in one go") && strings.Index(drawn, "Video decoding") < with && with < strings.Index(drawn, "Keyboard, with")) {
+		t.Errorf("the two groups are off:\n%s", drawn)
 	}
 	// Each part shows how it stood the last time it was tested here, and the screen says where
 	// the machine stands overall and what fails that no part of the menu covers
-	for _, text := range []string{"◐ partly (Speakers, 19 Nov): Both speakers play, but the left is louder", "✓ works, tested 19 Nov", "○ not tested here yet",
-		"3 working", "1 partly", "1 broken", "25 not tested", "✗ Hibernation: the kernel offers no hibernation"} {
+	for _, text := range []string{"◐ partly, 19 Nov", "Speakers: Both speakers play, but the left is louder", "✓ works, 19 Nov", "○ not tested",
+		"3 working", "1 partly", "1 broken", "27 not tested", "✗ Hibernation: the kernel offers no hibernation"} {
 		if !strings.Contains(drawn, text) {
 			t.Errorf("the status lacks %q:\n%s", text, drawn)
 		}
@@ -340,7 +347,7 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 	}
 	// Enter on the first entry runs it all
 	m.Update(press(tea.KeyEnter))
-	if m.at != 1 || len(m.steps) != 8 || run.State("wifi") != report.Works {
+	if m.at != 1 || len(m.steps) != 9 || run.State("wifi") != report.Works {
 		t.Errorf("the whole test: at %d of %d", m.at, len(m.steps))
 	}
 
@@ -352,7 +359,10 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 			at = i + 2
 		}
 	}
-	m.Update(press(rune('0' + at)))
+	for range at - 1 {
+		m.Update(press(tea.KeyDown))
+	}
+	m.Update(press(tea.KeyEnter))
 	if len(m.steps) != 3 || m.steps[m.at].name() != "Camera" || len(run.Results) != 0 {
 		t.Errorf("one part: %d steps, at %q, results %+v", len(m.steps), m.steps[m.at].name(), run.Results)
 	}
@@ -366,7 +376,8 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 	if !strings.Contains(m.View().Content, "Quit") {
 		t.Errorf("the menu lacks Quit:\n%s", m.View().Content)
 	}
-	quit := start.update(press(rune('0' + len(start.parts) + 2)))
+	start.update(press(tea.KeyUp))
+	quit := start.update(press(tea.KeyEnter))
 	if !start.quit || start.part != "" || quit == nil {
 		t.Errorf("quit %v, part %q", start.quit, start.part)
 	}
@@ -807,6 +818,7 @@ func TestNothingIsDrawnInAFaintColour(t *testing.T) {
 	steps := []step{&welcome{run: run}, back, newKeyboard(run), &effects{run: run, items: []effect{{label: "Volume up"}}}, newTouchpad(run, "pad"), newTouchscreen(run, machine.Fixture(dir), "screen", ""),
 		newSpeakers(run, dir), newMicrophones(run, dir), newHeadphones(run, dir), newCamera(run, dir), newUSB(run, sys), newScreen(run, sys), newSleep(run, probe.Facts{}),
 		newQuestions(run, probe.Facts{Laptop: true}, nil), last}
+	steps = append(steps, autos(run)...)
 	for at, s := range steps {
 		m := &model{run: run, summary: last, failed: map[string]string{}, steps: steps, at: at, width: 100, height: 40}
 		drawn := m.View().Content
@@ -832,6 +844,7 @@ func TestNoLineIsCutOffInANarrowWindow(t *testing.T) {
 	steps := []step{&welcome{run: run}, back, &effects{run: run, backlight: "x", items: []effect{{label: "Mute again, to turn the sound back on"}}}, newTouchpad(run, "pad"),
 		newTouchscreen(run, sys, "screen", ""), newSpeakers(run, dir), newMicrophones(run, dir), newHeadphones(run, dir), newCamera(run, dir), newUSB(run, sys),
 		newScreen(run, sys), newSleep(run, probe.Facts{}), newQuestions(run, probe.Facts{Laptop: true, Encrypted: true}, nil), last}
+	steps = append(steps, autos(run)...)
 	for _, width := range []int{72, 50} {
 		for at, s := range steps {
 			m := &model{run: run, summary: last, failed: map[string]string{}, steps: steps, at: at, width: width, height: 40}
@@ -1116,7 +1129,7 @@ func TestStatusListsEveryCheckWithWhatFailsFirst(t *testing.T) {
 		"hibernate": {Result: report.Result{Check: "hibernate", State: report.Broken, Evidence: "the kernel offers no hibernation"}, Kernel: "7.3.0-59-omarchy", When: when},
 		"suspend":   {Result: report.Result{Check: "suspend", State: report.Partial, Note: "One sleep ended in a restart."}, Kernel: "7.3.0-59-omarchy", When: when},
 	})
-	if !strings.HasPrefix(listed, "1 working, 1 partly, 1 broken, 27 not tested") {
+	if !strings.HasPrefix(listed, "1 working, 1 partly, 1 broken, 29 not tested") {
 		t.Errorf("the head:\n%s", listed)
 	}
 	broken, partly, works, untested := strings.Index(listed, "✗ Hibernation"), strings.Index(listed, "◐ Sleep and wake"), strings.Index(listed, "✓ Wi-Fi"), strings.Index(listed, "○ ")
@@ -1128,14 +1141,14 @@ func TestStatusListsEveryCheckWithWhatFailsFirst(t *testing.T) {
 			t.Errorf("the list lacks %q", text)
 		}
 	}
-	// One line for each of the thirty checks, and the reasons on lines of their own
+	// One line for each of the checks, and the reasons on lines of their own
 	checks := 0
 	for _, line := range strings.Split(listed, "\n") {
 		if strings.HasPrefix(line, "  ") && !strings.HasPrefix(line, "   ") {
 			checks++
 		}
 	}
-	if checks != 30 {
+	if checks != 32 {
 		t.Errorf("it lists %d checks", checks)
 	}
 }

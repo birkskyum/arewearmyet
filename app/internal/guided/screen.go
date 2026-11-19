@@ -27,8 +27,11 @@ type screen struct {
 	details   string
 	replugged string
 	since     time.Time
-	ask       choice
-	over      bool
+	// only is set when the screen under test is the only one the computer has: a mini PC's
+	// monitor, which nobody is asked to unplug.
+	only bool
+	ask  choice
+	over bool
 }
 
 func newScreen(run *report.Run, sys machine.System) *screen {
@@ -65,8 +68,28 @@ func (s *screen) poll() tea.Cmd {
 	return tea.Tick(400*time.Millisecond, func(time.Time) tea.Msg { return screenMsg{s.external()} })
 }
 
+// builtIn says whether the computer has a screen of its own that is on, as a laptop does.
+func (s *screen) builtIn() bool {
+	for _, pattern := range []string{"/sys/class/drm/card*-eDP-*", "/sys/class/drm/card*-DSI-*", "/sys/class/drm/card*-LVDS-*"} {
+		for _, path := range s.sys.Glob(pattern) {
+			if s.sys.Read(path+"/status") == "connected" {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 func (s *screen) start() tea.Cmd {
 	s.before = s.external()
+	plugged := 0
+	for _, connected := range s.before {
+		if connected {
+			plugged++
+		}
+	}
+	// On a computer without a screen of its own, the one monitor it has is what this is read on
+	s.only = plugged == 1 && !s.builtIn()
 	// A screen that is already plugged in is the one to test
 	for name, connected := range s.before {
 		if connected {
@@ -119,6 +142,10 @@ func (s *screen) found(name string) {
 	s.connector, s.details, s.phase = name, s.describe(name), "picture"
 	s.ask = choice{question: "The computer sees a screen on " + s.details + ". Does it show a picture?",
 		options: []string{"Yes, a steady picture", "Yes, but it flickers or has the wrong size", "No, it stays black"}}
+	if s.only {
+		s.ask = choice{question: "This computer's screen is the one on " + s.details + ". Is the picture steady and the right size?",
+			options: []string{"Yes, a steady picture", "No, it flickers or has the wrong size"}}
+	}
 }
 
 func (s *screen) evidence() string {
@@ -176,6 +203,11 @@ func (s *screen) update(msg tea.Msg) tea.Cmd {
 			s.details = s.describe(s.connector)
 			switch s.ask.update(msg) {
 			case 0:
+				if s.only {
+					// Unplugging it would leave nothing to read the test on
+					s.finish(report.Works, report.Owner, "")
+					return nil
+				}
 				s.phase = "replug-out"
 			case 1:
 				s.finish(report.Partial, report.Owner, "There is a picture, but it flickers or has the wrong size.")

@@ -17,6 +17,7 @@ import (
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
 
+	"github.com/birkskyum/arewearmyet/app/internal/deep"
 	"github.com/birkskyum/arewearmyet/app/internal/machine"
 	"github.com/birkskyum/arewearmyet/app/internal/probe"
 	"github.com/birkskyum/arewearmyet/app/internal/report"
@@ -88,13 +89,30 @@ var stepWords = []struct {
 	{"screen", []string{"External screen"}},
 	{"sleep", []string{"Sleep"}},
 	{"questions", []string{"Questions"}},
+	{"auto", []string{"Sound", "Graphics", "Browser", "Wireless", "Video decoding", "Temperatures"}},
+	{"graphics", []string{"Graphics", "Browser"}},
+	{"vulkan", []string{"Graphics"}},
+	{"browser", []string{"Browser"}},
+	{"webgl", []string{"Browser"}},
+	{"webgpu", []string{"Browser"}},
+	{"wireless", []string{"Wireless"}},
+	{"wifi", []string{"Wireless"}},
+	{"bluetooth", []string{"Wireless"}},
+	{"video", []string{"Video decoding"}},
+	{"temperatures", []string{"Temperatures"}},
+	{"fans", []string{"Temperatures"}},
 }
+
+// The words whose tests need nobody at the keyboard and make no sound, so they can run in a
+// session without a terminal.
+var automaticWords = []string{"auto", "graphics", "vulkan", "browser", "webgl", "webgpu", "wireless", "wifi", "bluetooth", "video", "temperatures", "fans"}
 
 // The check a crash during a step is recorded for.
 var stepCheck = map[string]string{
 	"Keyboard": "keyboard", "Volume and brightness keys": "keyboard", "Touchpad": "touchpad", "Touchscreen": "touchscreen",
 	"Sound": "speakers", "Voice": "microphones", "Headphones": "headphones", "Camera": "camera",
 	"USB ports": "usb", "External screen": "external-display", "Sleep": "suspend",
+	"Graphics": "gpu", "Browser": "webgl", "Video decoding": "video-decode", "Temperatures": "fans",
 }
 
 // StepWords lists the words a single step can be asked for by.
@@ -168,7 +186,26 @@ func build(run *report.Run, facts probe.Facts, dir string) []step {
 		add("suspend", newSleep(run, facts))
 	}
 	// What has no step of its own on this machine is asked about instead
-	return append(steps, newQuestions(run, facts, covered))
+	steps = append(steps, newQuestions(run, facts, covered))
+	// Last, what needs nobody: by then the owner can walk away and come back to the results
+	for _, test := range deep.Tests(sys, facts.Wifi, facts.Bluetooth, dir) {
+		steps = append(steps, newAuto(run, test))
+	}
+	return steps
+}
+
+// handsOff tells the steps whether the round is the automatic tests alone, which may run
+// with nobody there: they then start by themselves and ask nothing they can do without.
+func handsOff(steps []step, words []string) {
+	alone := false
+	for _, word := range words {
+		alone = alone || word == "auto"
+	}
+	for _, s := range steps {
+		if step, ok := s.(unattended); ok {
+			step.alone(alone)
+		}
+	}
 }
 
 // choose keeps the steps the given words name.
@@ -247,6 +284,7 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 			return outcome{}, fmt.Errorf("this computer has nothing to test for %s", strings.Join(options.Only, ", "))
 		}
 	}
+	handsOff(steps, options.Only)
 
 	last := &summary{run: run, options: options, dir: dir}
 	m := &model{run: run, summary: last, width: 100, height: 30, failed: map[string]string{}}
@@ -266,6 +304,7 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 	start.pick = func(word string) {
 		// One part alone reports that part only
 		run.Results = nil
+		handsOff(steps, []string{word})
 		m.steps = append(append([]step{start}, choose(steps, []string{word})...), last)
 	}
 	start.ask = start.question()
@@ -546,25 +585,38 @@ func (s *skippable) cleanup() {
 type menuEntry struct {
 	word, label string
 	checks      []string
+	// auto is set for what runs by itself, which the menu lists apart from what is done with
+	// the owner.
+	auto bool
 }
 
+// The menu, in two groups: what measures itself, then what takes someone at the computer.
 var menu = []menuEntry{
-	{"keyboard", "Keyboard, with the volume and brightness keys", []string{"keyboard", "backlight"}},
-	{"touchpad", "Touchpad", []string{"touchpad"}},
-	{"touchscreen", "Touchscreen", []string{"touchscreen"}},
-	{"sound", "Sound: speakers, microphone and headphones", []string{"speakers", "microphones", "headphones"}},
-	{"camera", "Camera", []string{"camera"}},
-	{"usb", "USB ports", []string{"usb"}},
-	{"screen", "External screen", []string{"external-display"}},
-	{"sleep", "Sleep", []string{"suspend"}},
+	{"auto", "All of these in one go, about two minutes", nil, true},
+	{"speakers", "Speakers and microphones (plays test tones)", []string{"speakers", "microphones"}, true},
+	{"graphics", "Graphics: Vulkan, WebGL and WebGPU", []string{"gpu", "webgl", "webgpu"}, true},
+	{"wireless", "Wi-Fi signal and Bluetooth range", []string{"wifi", "bluetooth"}, true},
+	{"video", "Video decoding", []string{"video-decode"}, true},
+	{"temperatures", "Temperatures and fans", []string{"fans"}, true},
+	{"keyboard", "Keyboard, with the volume and brightness keys", []string{"keyboard", "backlight"}, false},
+	{"touchpad", "Touchpad", []string{"touchpad"}, false},
+	{"touchscreen", "Touchscreen", []string{"touchscreen"}, false},
+	{"headphones", "Headphones", []string{"headphones"}, false},
+	{"camera", "Camera", []string{"camera"}, false},
+	{"usb", "USB ports", []string{"usb"}, false},
+	{"screen", "External screen", []string{"external-display"}, false},
+	{"sleep", "Sleep", []string{"suspend"}, false},
 }
 
 // severity orders states from fine to failing, for a part's or the machine's worst.
 var severity = map[string]int{report.Works: 1, report.Absent: 1, report.Partial: 2, report.Broken: 3}
 
-// status is a menu part's standing from the machine's latest results: its worst check, said
-// in a line and coloured, or that it hasn't been tested here.
-func (e menuEntry) status(kept map[string]report.Kept, width int) string {
+// status is a menu part's standing from the machine's latest results, in a few words to put
+// beside it, and for a part that fails, its worst check and why to put under it.
+func (e menuEntry) status(kept map[string]report.Kept, width int) (beside, under string) {
+	if len(e.checks) == 0 {
+		return "", ""
+	}
 	var worst report.Kept
 	tested := 0
 	for _, check := range e.checks {
@@ -576,26 +628,25 @@ func (e menuEntry) status(kept map[string]report.Kept, width int) string {
 		}
 	}
 	if tested == 0 {
-		return "○ not tested here yet"
+		return "○ not tested", ""
 	}
 	when := worst.When.Format("2 Jan")
 	switch worst.State {
 	case report.Partial, report.Broken:
-		why := first(worst.Note, worst.Evidence)
-		line := map[string]string{report.Partial: "◐ partly", report.Broken: "✗ broken"}[worst.State] + " (" + checkTitle[worst.Check] + ", " + when + ")"
-		if why != "" {
+		beside = stateStyle(worst.State).Render(map[string]string{report.Partial: "◐ partly", report.Broken: "✗ broken"}[worst.State] + ", " + when)
+		line := checkTitle[worst.Check]
+		if why := first(worst.Note, worst.Evidence); why != "" {
 			line += ": " + why
 		}
 		if letters := []rune(line); len(letters) > width-6 && width > 20 {
 			line = string(letters[:width-7]) + "…"
 		}
-		return stateStyle(worst.State).Render(line)
+		return beside, stateStyle(worst.State).Render(line)
 	}
-	line := "✓ works, tested " + when
 	if tested < len(e.checks) {
-		line = fmt.Sprintf("✓ works so far (%d of %d parts tested, %s)", tested, len(e.checks), when)
+		return good.Render(fmt.Sprintf("✓ works, %d of %d tested", tested, len(e.checks))), ""
 	}
-	return good.Render(line)
+	return good.Render("✓ works, " + when), ""
 }
 
 // welcome is the opening screen: what the test does, and a menu of all of it or one part.
@@ -629,12 +680,21 @@ type modelMsg struct {
 }
 
 func (w *welcome) question() choice {
-	options, notes := []string{"Everything, about ten minutes"}, []string{""}
-	for _, part := range w.parts {
-		options = append(options, part.label)
-		notes = append(notes, part.status(w.kept, 100))
+	options, beside, notes := []string{"Everything, about twelve minutes"}, []string{""}, []string{""}
+	heads := map[int]string{}
+	for at, part := range w.parts {
+		// The two groups, each under its own line
+		switch {
+		case part.auto && (at == 0 || !w.parts[at-1].auto):
+			heads[len(options)] = "Runs by itself, with nothing for you to do"
+		case !part.auto && (at == 0 || w.parts[at-1].auto):
+			heads[len(options)] = "Done with you at the computer"
+		}
+		short, why := part.status(w.kept, 100)
+		options, beside, notes = append(options, part.label), append(beside, short), append(notes, why)
 	}
-	return choice{question: "What would you like to test?", options: append(options, "Quit"), notes: notes}
+	heads[len(options)] = ""
+	return choice{question: "What would you like to test?", options: append(options, "Quit"), beside: beside, notes: notes, heads: heads}
 }
 
 // standing is where the machine stands over all checks: how many work, and what doesn't that
@@ -743,20 +803,51 @@ func (w *welcome) view(width, height int) string {
 	if len(w.ask.options) == 0 {
 		w.ask = w.question()
 	}
-	intro := "This checks what works on this computer and puts it on its page on arewearmyet.com, so the next owner knows and the people fixing things see what's left. It measures what it can by itself and tests the rest with you."
-	intro += "\n\n" + w.standing(width)
+	intro := wrap("This checks what works on this computer and puts it on its page on arewearmyet.com, so the next owner knows and the people fixing things see what's left. It measures what it can by itself and tests the rest with you.", width)
+	standing := wrap(w.standing(width), width)
 	// Where this computer's results are, once the site has said which model it is
 	page := ""
 	switch {
 	case w.model.Page != "":
-		page = "\n\n" + wrap("This computer's page, with what's known and tested so far:", width) + "\n" + accent.Hyperlink(w.model.Page).Render(w.model.Page)
+		page = wrap("This computer's page, with what's known and tested so far:", width) + "\n" + accent.Hyperlink(w.model.Page).Render(w.model.Page)
 	case w.looked && w.model.ID == "" && w.api != "":
-		page = "\n\n" + wrap("The board doesn't have this computer yet. Sending a test adds what it finds, with a form to put the model on the board.", width)
+		page = wrap("The board doesn't have this computer yet. Sending a test adds what it finds, with a form to put the model on the board.", width)
 	}
-	return wrap(intro, width) + page + "\n\n" + w.ask.view(width) + "\n\n" +
-		wrap("To go straight to one part next time, add its name to the command, like hw-test camera or hw-test sound.", width) + "\n\n" +
-		wrap("Only results are sent, with the model and software versions. No serial numbers, addresses or names.", width) + "\n" +
+	tip := wrap("To go straight to one part next time, add its name to the command, like hw-test camera or hw-test auto.", width)
+	private := wrap("Only results are sent, with the model and software versions. No serial numbers, addresses or names.", width) + "\n" +
 		good.Render("🔒 ") + wrap("A picture or recording the test makes never leaves this computer and is deleted when the test ends.", width-3)
+
+	// In a window too short for all of it, the menu comes first: what is only said around it
+	// gives way, and a menu that still doesn't fit scrolls with the cursor
+	lines := func(texts ...string) int {
+		total := 0
+		for _, text := range texts {
+			if text != "" {
+				total += strings.Count(text, "\n") + 2
+			}
+		}
+		return total
+	}
+	menu := w.ask.view(width)
+	around := []*string{&tip, &intro, &private, &page}
+	for _, text := range around {
+		if lines(intro, standing, page, menu, tip, private) <= height+1 {
+			break
+		}
+		*text = ""
+	}
+	if over := lines(intro, standing, page, menu, tip, private) - (height + 1); over > 0 {
+		// Only the line of counts is left of where the machine stands
+		standing, _, _ = strings.Cut(standing, "\n")
+		menu = w.ask.viewIn(width, max(6, height+1-lines(intro, standing, page, tip, private)-1))
+	}
+	var shown []string
+	for _, text := range []string{intro, standing, page, menu, tip, private} {
+		if text != "" {
+			shown = append(shown, text)
+		}
+	}
+	return strings.Join(shown, "\n\n")
 }
 
 // resumed opens a test that stopped before its end. When the computer has restarted since,

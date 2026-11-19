@@ -3,6 +3,7 @@
 //	hw-test            the guided test: the quick check, then keyboard, sound, camera and sleep with you
 //	hw-test quick      the quick check alone: read-only, a few seconds, no questions
 //	hw-test sound      one part of the guided test alone, reporting only that part
+//	hw-test auto       the tests that need nobody: graphics, browser, wireless, video, temperatures, sound
 //
 // Both show the results and send them to the model's page. What's sent: the maker, model, SKU,
 // board and BIOS version, the hardware IDs made from those, the kernel, OS and a few package
@@ -18,6 +19,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/birkskyum/arewearmyet/app/internal/deep"
 	"github.com/birkskyum/arewearmyet/app/internal/guided"
 	"github.com/birkskyum/arewearmyet/app/internal/machine"
 	"github.com/birkskyum/arewearmyet/app/internal/probe"
@@ -86,8 +88,10 @@ func main() {
 		fmt.Fprintf(os.Stderr, "hw-test: steps can't be combined with %s\n", command)
 		os.Exit(2)
 	}
-	if len(only) > 0 && !guided.Interactive() {
-		fmt.Fprintln(os.Stderr, "hw-test: a step is done with you at the keyboard, so it needs a terminal")
+	// The automatic tests need nobody, so they also run without a terminal, as an agent has it
+	unattended := len(only) > 0 && !guided.Interactive()
+	if unattended && !guided.Automatic(only) {
+		fmt.Fprintln(os.Stderr, "hw-test: that step is done with you at the keyboard, so it needs a terminal. Without one, these run: "+strings.Join(guided.AutomaticWords(), ", "))
 		os.Exit(2)
 	}
 
@@ -97,6 +101,17 @@ func main() {
 		os.Exit(1)
 	}
 	run.Model, run.Agent = *model, *agent
+
+	if unattended {
+		dir, err := os.MkdirTemp("", "hw-test-")
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "hw-test:", err)
+			os.Exit(1)
+		}
+		guided.Unattended(run, deep.Tests(machine.Real(), facts.Wifi, facts.Bluetooth, dir), only, func(line string) { fmt.Fprintln(os.Stderr, line) })
+		os.RemoveAll(dir)
+		fmt.Fprintln(os.Stderr)
+	}
 
 	if *jsonOnly {
 		fmt.Println(string(run.JSON()))
@@ -108,7 +123,7 @@ func main() {
 		for _, line := range guided.Describe(machine.Real(), facts.TouchscreenDevice) {
 			fmt.Println(line)
 		}
-		for _, tool := range []string{"pw-play", "pw-record", "cam", "wpctl", "hyprctl", "systemd-analyze", "xdg-open"} {
+		for _, tool := range []string{"pw-play", "pw-record", "cam", "wpctl", "hyprctl", "systemd-analyze", "xdg-open", "vulkaninfo", "chromium", "ffmpeg", "iw", "bluetoothctl"} {
 			fmt.Printf("%-16s %v\n", tool, tools.Have(tool))
 		}
 		return
@@ -163,13 +178,31 @@ func printResults(run *report.Run) {
 	fmt.Fprintln(os.Stderr)
 }
 
+// wrapWords lists words on lines that fit under the usage text's second column.
+func wrapWords(words []string) string {
+	lines, line := []string{}, ""
+	for _, word := range words {
+		if line != "" && len(line)+len(word)+2 > 58 {
+			lines, line = append(lines, line+","), ""
+		}
+		if line != "" {
+			line += ", "
+		}
+		line += word
+	}
+	return strings.Join(append(lines, line), "\n                     ")
+}
+
 func usage() {
 	fmt.Fprint(os.Stderr, `hw-test checks what works on a Snapdragon PC and reports it to arewearmyet.com.
 
   hw-test            the guided test: the quick check, then keyboard, sound, camera and sleep with you
   hw-test quick      the quick check alone: read-only, a few seconds, no questions
-  hw-test STEP...    one part of the guided test alone, reporting only that part:
-                     `+strings.Join(guided.StepWords(), ", ")+`
+  hw-test STEP...    one part alone, reporting only that part:
+                     `+wrapWords(guided.StepWords())+`
+  hw-test auto       every test that needs nobody, about two minutes: sound, graphics, WebGL and
+                     WebGPU, Wi-Fi and Bluetooth, video decoding, temperatures. Without a
+                     terminal it runs all but the sound, which plays tones out loud
   hw-test status     where this computer stands: the latest result of every check, nothing is run
   hw-test facts      what the test found on this computer to work with (nothing is sent)
   hw-test version

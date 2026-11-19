@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"syscall"
 	"time"
 )
 
@@ -164,6 +165,56 @@ func (s System) Run(name string, args ...string) string {
 		return ""
 	}
 	return string(out)
+}
+
+// RunFor runs a command with a time limit of its own and returns everything it printed, also
+// on its error output, for the tests that take a while or say what went wrong there.
+func (s System) RunFor(limit time.Duration, name string, args ...string) (string, error) {
+	if s.Command != nil {
+		return s.Command(name, args...)
+	}
+	if _, err := exec.LookPath(name); err != nil {
+		return "", err
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), limit)
+	defer cancel()
+	command := exec.CommandContext(ctx, name, args...)
+	command.WaitDelay = 2 * time.Second
+	out, err := command.CombinedOutput()
+	return string(out), err
+}
+
+// RunUntil runs a program that doesn't end by itself, like a browser, until stop is closed or
+// the limit passes, and then ends it with everything it started.
+func (s System) RunUntil(stop <-chan struct{}, limit time.Duration, name string, args ...string) {
+	if s.Command != nil {
+		_, _ = s.Command(name, args...)
+		return
+	}
+	if _, err := exec.LookPath(name); err != nil {
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), limit)
+	defer cancel()
+	command := exec.CommandContext(ctx, name, args...)
+	// In a group of its own, so the processes it starts end with it
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
+	command.WaitDelay = 2 * time.Second
+	if command.Start() != nil {
+		return
+	}
+	ended := make(chan struct{})
+	go func() {
+		_ = command.Wait()
+		close(ended)
+	}()
+	select {
+	case <-stop:
+		cancel()
+		<-ended
+	case <-ended:
+	}
 }
 
 // Has says whether a program is installed.

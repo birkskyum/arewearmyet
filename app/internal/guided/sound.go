@@ -86,16 +86,26 @@ type speakers struct {
 	ask   choice
 	// note takes the owner's own words when none of the answers fits.
 	note line
-	over bool
+	// handsOff is set when the round is the automatic tests alone: the tones then start by
+	// themselves and a result that measured fine goes on by itself.
+	handsOff bool
+	over     bool
 }
 
 func newSpeakers(run *report.Run, dir string) *speakers {
 	return &speakers{run: run, dir: dir, phase: "intro", heard: make([]audio.Heard, len(parts)), note: line{prompt: "What did you hear? (Enter when done)"}}
 }
 
-func (s *speakers) name() string   { return "Sound" }
-func (s *speakers) start() tea.Cmd { return nil }
-func (s *speakers) done() bool     { return s.over }
+func (s *speakers) name() string        { return "Sound" }
+func (s *speakers) done() bool          { return s.over }
+func (s *speakers) alone(handsOff bool) { s.handsOff = handsOff }
+
+func (s *speakers) start() tea.Cmd {
+	if s.handsOff && s.phase == "intro" {
+		return s.play()
+	}
+	return nil
+}
 
 func (s *speakers) keys() string {
 	switch s.phase {
@@ -104,6 +114,9 @@ func (s *speakers) keys() string {
 	case "playing":
 		return "Playing and listening…"
 	case "result":
+		if s.handsOff {
+			return "Goes on by itself in a moment · p if something sounded wrong to you · r to play them again"
+		}
 		return "Enter to go on · p if something sounded wrong to you · r to play them again"
 	case "note":
 		return "Type, then Enter"
@@ -221,12 +234,19 @@ func (s *speakers) update(msg tea.Msg) tea.Cmd {
 		if s.heardTone() {
 			s.measure()
 			s.phase = "result"
+			if s.handsOff {
+				return tea.Tick(2*linger, func(time.Time) tea.Msg { return goOnMsg{"Sound"} })
+			}
 			return nil
 		}
 		// Nothing of it in the recording: the speakers were silent, or the microphones deaf
 		s.phase = "silent"
 		s.ask = choice{question: "The microphones recorded none of the tones, so this can't be measured. Did you hear them?",
 			options: []string{"Yes, on the left and on the right", "Only on the left", "Only on the right", "No, nothing", "Play them again"}}
+	case goOnMsg:
+		if msg.name == "Sound" && s.phase == "result" {
+			s.over = true
+		}
 	case tea.KeyPressMsg:
 		switch s.phase {
 		case "intro":

@@ -40,6 +40,7 @@ var stateLabel = map[string]string{report.Works: "works", report.Partial: "partl
 // Names of the checks as the site shows them.
 var checkTitle = map[string]string{
 	"installer": "USB stick and installer", "disk-unlock": "Disk password prompt", "display": "Built-in screen", "gpu": "Graphics acceleration",
+	"webgl": "WebGL in the browser", "webgpu": "WebGPU in the browser",
 	"backlight": "Screen brightness", "keyboard": "Built-in keyboard", "touchpad": "Touchpad", "touchscreen": "Touchscreen and pen",
 	"wifi": "Wi-Fi", "wifi-address": "Fixed Wi-Fi address", "bluetooth": "Bluetooth", "speakers": "Speakers", "microphones": "Built-in microphones",
 	"headphones": "Headphone jack", "adsp": "Audio and battery processor", "battery": "Battery readings", "charging": "USB-C charging",
