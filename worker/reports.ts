@@ -19,6 +19,12 @@
  *   GET  /api/runs/<id>               one run as stored, for the owner to check
  *   POST /api/runs/<id>/results       more results for a run, from the same machine
  *   POST /api/fixes                   a link to a fix (pull request, patch) for a model
+ *   GET  /api/notes?model=&check=&kind=&status=   notes: problems, workarounds, pointers to work elsewhere
+ *   GET  /api/notes/<id>              one note with its answers and the names of its logs
+ *   GET  /api/notes/<id>/logs/<name>  one of its logs, as plain text
+ *   POST /api/notes                   write a note, with logs if it helps
+ *   POST /api/notes/<id>/replies      answer a note
+ *   POST /api/notes/<id>/status       its writer marks a problem solved or open again
  *   GET  /api/review, POST /api/review/hide   recent reports and hiding them, with ADMIN_TOKEN
  */
 
@@ -41,12 +47,19 @@ const CHID = /^(ext)?\d{1,2}:[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/;
 // (maker and family, maker and enclosure, maker alone) are shared by a maker's whole range.
 const SPECIFIC_CHIDS = new Set(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '13', 'ext0', 'ext2']);
 const RUN_ID = /^RUN-[A-Z0-9]{10}$/;
+const NOTE_ID = /^NOTE-[A-Z0-9]{10}$/;
+const LOG_NAME = /^[a-z0-9][a-z0-9._-]{0,59}$/;
+// What a note is: something that goes wrong, a way around it, a pointer to work elsewhere, or anything else
+const NOTE_KINDS = ['problem', 'workaround', 'upstream', 'note'] as const;
+const NOTE_BODY = 8000;
+const LOG_SIZE = 200 * 1024;
+const LOGS_PER_NOTE = 4;
 const MODEL_ID = /^[a-z0-9][a-z0-9-]{1,80}$/;
 const CODE_ALPHABET = 'ABCDEFGHJKMNPQRSTVWXYZ23456789';
 // Links a fix or a note may point to: where Linux, its firmware, Mesa and the distros take changes
 // Links in answers always point at the public site, also when testing locally
 const SITE = 'https://arewearmyet.com';
-const LINK_HOSTS = ['github.com', 'gitlab.com', 'lore.kernel.org', 'patchwork.kernel.org', 'git.kernel.org', 'gitlab.freedesktop.org', 'lists.freedesktop.org', 'patchew.org', 'bugs.launchpad.net', 'codeberg.org', 'bugzilla.kernel.org', 'gitlab.archlinux.org', 'arewearmyet.com'];
+const LINK_HOSTS = ['github.com', 'gitlab.com', 'lore.kernel.org', 'patchwork.kernel.org', 'git.kernel.org', 'gitlab.freedesktop.org', 'lists.freedesktop.org', 'patchwork.freedesktop.org', 'lists.infradead.org', 'patchew.org', 'bugs.launchpad.net', 'codeberg.org', 'bugzilla.kernel.org', 'gitlab.archlinux.org', 'arewearmyet.com'];
 
 export async function reports(request: Request, env: Env, url: URL): Promise<Response | null> {
   const path = url.pathname.slice('/api/'.length).replace(/\/$/, '');
@@ -60,6 +73,9 @@ export async function reports(request: Request, env: Env, url: URL): Promise<Res
     if (path === 'owners') return allOwners(env);
     if (parts[0] === 'runs' && parts.length === 2 && RUN_ID.test(parts[1])) return getRun(env, parts[1]);
     if (path === 'review') return review(request, env, url);
+    if (path === 'notes') return listNotes(env, url);
+    if (parts[0] === 'notes' && parts.length === 2 && NOTE_ID.test(parts[1])) return getNote(env, parts[1]);
+    if (parts[0] === 'notes' && parts.length === 4 && NOTE_ID.test(parts[1]) && parts[2] === 'logs' && LOG_NAME.test(parts[3])) return getLog(env, parts[1], parts[3]);
     if (parts[0] !== 'firmware') return json({ error: 'Not found. The API is described at https://arewearmyet.com/agents.md' }, 404);
     return null;
   }
@@ -75,6 +91,9 @@ export async function reports(request: Request, env: Env, url: URL): Promise<Res
   if (path === 'runs') return postRun(request, env, url);
   if (parts[0] === 'runs' && parts.length === 3 && RUN_ID.test(parts[1]) && parts[2] === 'results') return postResults(request, env, url, parts[1]);
   if (path === 'fixes') return postFix(request, env);
+  if (path === 'notes') return postNote(request, env, null);
+  if (parts[0] === 'notes' && parts.length === 3 && NOTE_ID.test(parts[1]) && parts[2] === 'replies') return postNote(request, env, parts[1]);
+  if (parts[0] === 'notes' && parts.length === 3 && NOTE_ID.test(parts[1]) && parts[2] === 'status') return postStatus(request, env, parts[1]);
   return json({ error: 'Not found.' }, 404);
 }
 
@@ -90,8 +109,8 @@ async function model(env: Env, url: URL, id: string): Promise<Response> {
   const response = await env.ASSETS.fetch(new URL(`/data/models/${id}.json`, url));
   if (!response.ok) return json({ error: `No model ${id}. GET /api/models lists them, GET /api/match finds a machine's.` }, 404);
   const base = (await response.json()) as Record<string, unknown>;
-  const [owners, fixes] = await Promise.all([ownerResults(env, id), modelFixes(env, id)]);
-  return json({ ...base, owners, fixes }, 200, 'public, max-age=60');
+  const [owners, fixes, notes] = await Promise.all([ownerResults(env, id), modelFixes(env, id), notesWhere(env, 'n.model = ?', [id], 100)]);
+  return json({ ...base, owners, fixes, notes }, 200, 'public, max-age=60');
 }
 
 type ResultRow = { model?: string; check_id: string; state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; created: string; machine: string; run: string };
@@ -357,24 +376,199 @@ async function postFix(request: Request, env: Env): Promise<Response> {
   return json({ fix: id }, 201);
 }
 
+type NoteRow = { id: string; parent: string | null; model: string | null; check: string | null; kind: string; title: string | null; body: string; links: string | null; status: string; kernel: string | null; os: string | null; packages: string | null; agent: string | null; created: string; replies?: number; logs?: string | null };
+
+const NOTE_COLUMNS = `n.id, n.parent, n.model, n.check_id AS "check", n.kind, n.title, n.body, n.links, n.status, n.kernel, n.os, n.packages, n.agent, n.created`;
+
+function noteOut(row: NoteRow, full: boolean) {
+  return {
+    id: row.id,
+    model: row.model,
+    check: row.check,
+    kind: row.kind,
+    title: row.title,
+    status: row.kind === 'problem' ? row.status : undefined,
+    // A list gives the start of each note; the note itself gives all of it
+    body: full || row.body.length <= 600 ? row.body : row.body.slice(0, 600) + '…',
+    links: row.links ? (JSON.parse(row.links) as string[]) : [],
+    kernel: row.kernel,
+    os: row.os,
+    packages: row.packages ? JSON.parse(row.packages) : undefined,
+    agent: row.agent,
+    created: row.created,
+    replies: row.replies,
+    logs: row.logs ? String(row.logs).split(',').map((name) => ({ name, url: `${SITE}/api/notes/${row.id}/logs/${name}` })) : [],
+    url: `${SITE}/api/notes/${row.id}`,
+    page: `${SITE}/note?id=${row.id}`,
+  };
+}
+
+/** Notes that aren't answers, newest first, with how many answers and which logs each has. */
+async function notesWhere(env: Env, where: string, binds: unknown[], limit: number) {
+  const { results } = await env.DB.prepare(
+    `SELECT ${NOTE_COLUMNS},
+            (SELECT COUNT(*) FROM notes r WHERE r.parent = n.id AND r.hidden = 0) AS replies,
+            (SELECT group_concat(name) FROM note_logs WHERE note = n.id) AS logs
+       FROM notes n LEFT JOIN machines m ON m.id = n.machine
+      WHERE n.hidden = 0 AND COALESCE(m.hidden, 0) = 0 AND n.parent IS NULL AND ${where}
+      ORDER BY n.created DESC, n.rowid DESC LIMIT ?`,
+  ).bind(...binds, limit).all<NoteRow>();
+  return results.map((row) => noteOut(row, false));
+}
+
+async function listNotes(env: Env, url: URL): Promise<Response> {
+  const where: string[] = ['1 = 1'];
+  const binds: unknown[] = [];
+  const model = url.searchParams.get('model');
+  const check = url.searchParams.get('check');
+  const kind = url.searchParams.get('kind');
+  const status = url.searchParams.get('status');
+  if (model) {
+    if (!MODELS.has(model)) return json({ error: 'model must be an id from GET /api/models.' }, 400);
+    where.push('n.model = ?');
+    binds.push(model);
+  }
+  if (check) {
+    if (!CHECKS.has(check)) return json({ error: 'check must be an id from GET /api/checks.' }, 400);
+    where.push('n.check_id = ?');
+    binds.push(check);
+  }
+  if (kind) {
+    if (!NOTE_KINDS.includes(kind as never)) return json({ error: `kind must be one of ${NOTE_KINDS.join(', ')}.` }, 400);
+    where.push('n.kind = ?');
+    binds.push(kind);
+  }
+  if (status) {
+    if (status !== 'open' && status !== 'solved') return json({ error: 'status must be open or solved.' }, 400);
+    where.push("n.kind = 'problem' AND n.status = ?");
+    binds.push(status);
+  }
+  return json({ notes: await notesWhere(env, where.join(' AND '), binds, 100) }, 200, 'public, max-age=30');
+}
+
+async function getNote(env: Env, id: string): Promise<Response> {
+  const visible = 'n.hidden = 0 AND COALESCE(m.hidden, 0) = 0';
+  const logs = '(SELECT group_concat(name) FROM note_logs WHERE note = n.id) AS logs';
+  const note = await env.DB.prepare(`SELECT ${NOTE_COLUMNS}, ${logs} FROM notes n LEFT JOIN machines m ON m.id = n.machine WHERE n.id = ? AND ${visible}`).bind(id).first<NoteRow>();
+  if (!note) return json({ error: 'No such note.' }, 404);
+  const { results } = await env.DB.prepare(`SELECT ${NOTE_COLUMNS}, ${logs} FROM notes n LEFT JOIN machines m ON m.id = n.machine WHERE n.parent = ? AND ${visible} ORDER BY n.created, n.rowid`).bind(id).all<NoteRow>();
+  return json({ ...noteOut(note, true), replies: results.map((row) => noteOut(row, true)) }, 200, 'public, max-age=30');
+}
+
+async function getLog(env: Env, id: string, name: string): Promise<Response> {
+  const row = await env.DB.prepare(
+    'SELECT l.text FROM note_logs l JOIN notes n ON n.id = l.note LEFT JOIN machines m ON m.id = n.machine WHERE l.note = ? AND l.name = ? AND n.hidden = 0 AND COALESCE(m.hidden, 0) = 0',
+  ).bind(id, name).first<{ text: string }>();
+  if (!row) return json({ error: 'No such log.' }, 404);
+  return new Response(row.text, { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, max-age=300', 'access-control-allow-origin': '*', 'x-content-type-options': 'nosniff' } });
+}
+
+type NoteBody = { model?: unknown; check?: unknown; kind?: unknown; title?: unknown; body?: unknown; links?: unknown; logs?: unknown; kernel?: unknown; os?: unknown; packages?: unknown; agent?: unknown };
+
+/** Stores a note, or an answer to one when parent is given. Logs are cleaned like every other text, line by line. */
+async function postNote(request: Request, env: Env, parent: string | null): Promise<Response> {
+  const token = request.headers.get('x-machine-token') ?? '';
+  if (!TOKEN.test(token)) return json({ error: 'Send X-Machine-Token, the random string kept on the machine in ~/.local/state/arewearmyet/token.' }, 400);
+  const body = (await readJson(request, 1024 * 1024)) as NoteBody | null;
+  if (!body || typeof body !== 'object') return json({ error: 'Send the note as JSON of at most 1 MB. See https://arewearmyet.com/agents.md' }, 400);
+
+  const machine = await sha256(token);
+  let model: string | null = null;
+  let check: string | null = null;
+  let kind = 'reply';
+  let title: string | null = null;
+  if (parent) {
+    const row = await env.DB.prepare('SELECT model, check_id, parent FROM notes WHERE id = ? AND hidden = 0').bind(parent).first<{ model: string | null; check_id: string | null; parent: string | null }>();
+    if (!row) return json({ error: 'No such note.' }, 404);
+    if (row.parent) return json({ error: `That is an answer itself. Answer the note it belongs to: POST /api/notes/${row.parent}/replies` }, 400);
+    model = row.model;
+    check = row.check_id;
+  } else {
+    if (typeof body.model === 'string' && MODELS.has(body.model)) model = body.model;
+    // A machine that has sent a run is known by its model, so the note may leave it out
+    if (!model && body.model === undefined) model = (await env.DB.prepare('SELECT model FROM machines WHERE id = ?').bind(machine).first<{ model: string | null }>())?.model ?? null;
+    if (!model) return json({ error: 'model must be an id from GET /api/models (GET /api/match finds a machine\'s).' }, 400);
+    if (body.check !== undefined && body.check !== null) {
+      if (typeof body.check !== 'string' || !CHECKS.has(body.check)) return json({ error: 'check must be an id from GET /api/checks, or left out when the note is about no single check.' }, 400);
+      check = body.check;
+    }
+    if (!NOTE_KINDS.includes(body.kind as never)) return json({ error: `kind must be one of ${NOTE_KINDS.join(', ')}: something that goes wrong, a way around it, a pointer to work elsewhere, or anything else.` }, 400);
+    kind = body.kind as string;
+    title = typeof body.title === 'string' ? clean(body.title.replace(/\s+/g, ' '), 140) : '';
+    if (title.length < 8) return json({ error: 'title must say in a line what the note is about, in 8 to 140 characters.' }, 400);
+  }
+  const text = typeof body.body === 'string' ? cleanLong(body.body, NOTE_BODY) : '';
+  if (text.length < 20) return json({ error: `body must say what was seen, in 20 to ${NOTE_BODY} characters. Longer output goes in logs.` }, 400);
+
+  const links: string[] = [];
+  if (body.links !== undefined) {
+    if (!Array.isArray(body.links) || body.links.length > 8) return json({ error: 'links must be a list of at most 8 links.' }, 400);
+    for (const item of body.links) {
+      const link = typeof item === 'string' ? allowedLink(item) : null;
+      if (!link) return json({ error: `Each link must be an https link to ${LINK_HOSTS.join(', ')}.` }, 400);
+      links.push(link);
+    }
+  }
+  const logs: { name: string; text: string }[] = [];
+  if (body.logs !== undefined) {
+    if (!Array.isArray(body.logs) || body.logs.length > LOGS_PER_NOTE) return json({ error: `logs must be a list of at most ${LOGS_PER_NOTE} {name, text}.` }, 400);
+    for (const item of body.logs) {
+      const { name, text: log } = (item ?? {}) as Record<string, unknown>;
+      if (typeof name !== 'string' || !LOG_NAME.test(name) || logs.some((l) => l.name === name)) return json({ error: 'Each log needs its own name of lowercase letters, digits, dots and dashes, like kernel.log.' }, 400);
+      if (typeof log !== 'string' || !log.trim() || log.length > LOG_SIZE) return json({ error: `${name}: a log is text of at most ${LOG_SIZE / 1024} KB. Send the part that shows the problem.` }, 400);
+      logs.push({ name, text: cleanLong(log, LOG_SIZE) });
+    }
+  }
+
+  const id = code('NOTE-');
+  const now = new Date().toISOString();
+  await env.DB.batch([
+    env.DB.prepare('INSERT INTO machines (id, model, first_seen, last_seen) VALUES (?1, ?2, ?3, ?3) ON CONFLICT(id) DO UPDATE SET last_seen = ?3').bind(machine, parent ? null : model, now),
+    env.DB.prepare('INSERT INTO notes (id, machine, parent, model, check_id, kind, title, body, links, kernel, os, packages, agent, created) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)').bind(
+      id, machine, parent, model, check, kind, title, text, links.length ? JSON.stringify(links) : null,
+      typeof body.kernel === 'string' ? clean(body.kernel, 80) : null,
+      typeof body.os === 'string' ? clean(body.os, 80) : null,
+      JSON.stringify(pick(body.packages, PACKAGE_KEYS, 60)),
+      typeof body.agent === 'string' ? clean(body.agent, 60) : null,
+      now,
+    ),
+    ...logs.map((log) => env.DB.prepare('INSERT INTO note_logs (note, name, text) VALUES (?, ?, ?)').bind(id, log.name, log.text)),
+  ]);
+  const thread = parent ?? id;
+  return json({ note: id, of: parent ?? undefined, model, url: `${SITE}/api/notes/${thread}`, page: `${SITE}/note?id=${thread}` }, 201);
+}
+
+/** A problem's writer, or the admin, marks it solved or open again. */
+async function postStatus(request: Request, env: Env, id: string): Promise<Response> {
+  const body = (await readJson(request, 4096)) as { status?: unknown } | null;
+  if (body?.status !== 'open' && body?.status !== 'solved') return json({ error: 'Send {"status": "solved"} or {"status": "open"}.' }, 400);
+  const row = await env.DB.prepare("SELECT machine FROM notes WHERE id = ? AND hidden = 0 AND kind = 'problem'").bind(id).first<{ machine: string }>();
+  const token = request.headers.get('x-machine-token') ?? '';
+  const writer = row && TOKEN.test(token) && row.machine === (await sha256(token));
+  if (!row || !(writer || admin(request, env))) return json({ error: 'No such problem written from this machine. Answer it instead: POST /api/notes/' + id + '/replies' }, 404);
+  await env.DB.prepare('UPDATE notes SET status = ? WHERE id = ?').bind(body.status, id).run();
+  return json({ note: id, status: body.status });
+}
+
 /** The newest runs and fixes, for the review page; needs ADMIN_TOKEN. */
 async function review(request: Request, env: Env, url: URL): Promise<Response> {
   if (!admin(request, env)) return json({ error: 'Needs the admin token.' }, 401);
   const before = url.searchParams.get('before') ?? '9999';
-  const [runs, fixes] = await Promise.all([
+  const [runs, fixes, notes] = await Promise.all([
     env.DB.prepare(`SELECT runs.id, runs.machine, runs.model, runs.created, runs.mode, runs.kernel, runs.agent, runs.hidden, m.hidden AS machine_hidden,
                            (SELECT json_group_array(json_object('check', check_id, 'state', state, 'how', how, 'note', note)) FROM results WHERE run = runs.id) AS results
                       FROM runs JOIN machines m ON m.id = runs.machine WHERE runs.created < ? ORDER BY runs.created DESC LIMIT 100`).bind(before).all(),
     env.DB.prepare('SELECT id, model, check_id AS "check", url, note, created, hidden FROM fixes ORDER BY created DESC LIMIT 100').all(),
+    env.DB.prepare('SELECT id, parent, model, check_id AS "check", kind, title, substr(body, 1, 400) AS body, agent, created, hidden, (SELECT group_concat(name) FROM note_logs WHERE note = notes.id) AS logs FROM notes ORDER BY created DESC LIMIT 100').all(),
   ]);
-  return json({ runs: runs.results.map((r) => ({ ...r, results: JSON.parse(String(r.results)) })), fixes: fixes.results });
+  return json({ runs: runs.results.map((r) => ({ ...r, results: JSON.parse(String(r.results)) })), fixes: fixes.results, notes: notes.results });
 }
 
 async function hide(request: Request, env: Env): Promise<Response> {
   if (!admin(request, env)) return json({ error: 'Needs the admin token.' }, 401);
   const body = (await readJson(request, 4096)) as { kind?: unknown; id?: unknown; hidden?: unknown } | null;
-  const table = { run: 'runs', fix: 'fixes', machine: 'machines' }[String(body?.kind)] as string | undefined;
-  if (!table || typeof body?.id !== 'string') return json({ error: 'Send {"kind": "run" | "fix" | "machine", "id", "hidden": true | false}.' }, 400);
+  const table = { run: 'runs', fix: 'fixes', machine: 'machines', note: 'notes' }[String(body?.kind)] as string | undefined;
+  if (!table || typeof body?.id !== 'string') return json({ error: 'Send {"kind": "run" | "fix" | "machine" | "note", "id", "hidden": true | false}.' }, 400);
   const { meta } = await env.DB.prepare(`UPDATE ${table} SET hidden = ? WHERE id = ?`).bind(body.hidden === false ? 0 : 1, body.id).run();
   return json({ changed: meta.changes });
 }
@@ -428,9 +622,18 @@ function clean(text: string, max: number): string {
     .replace(/[\u0000-\u0008\u000b-\u001f\u007f]/g, '')
     .replace(/\b([0-9a-f]{2}[:-]){5}[0-9a-f]{2}\b/gi, 'xx:xx:xx:xx:xx:xx')
     .replace(/\/home\/[^/\s]+/g, '/home/user')
-    .replace(/\b(serial|s\/n|uuid)[\s:=]+\S+/gi, '$1 [removed]')
+    .replace(/\b(serial|serialnumber|s\/n|uuid)[\s:=]+\S+/gi, '$1 [removed]')
     .trim()
     .slice(0, max);
+}
+
+// Longer text, a note or a log: cleaned as above, and also of the network addresses a firewall or a
+// driver writes into logs. Only addresses in private ranges and those named as a packet's source or
+// destination go, so version numbers with four parts stay readable.
+function cleanLong(text: string, max: number): string {
+  return clean(text, max)
+    .replace(/\b(SRC|DST)=\S+/g, '$1=[removed]')
+    .replace(/\b(?:10\.\d{1,3}|192\.168|172\.(?:1[6-9]|2\d|3[01])|100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7]))\.\d{1,3}\.\d{1,3}\b/g, 'x.x.x.x');
 }
 
 async function sha256(text: string): Promise<string> {

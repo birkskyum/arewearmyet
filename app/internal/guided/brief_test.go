@@ -60,6 +60,18 @@ func TestTheBriefSaysWhatFailsHowToMeasureItAndWhereAFixGoes(t *testing.T) {
 			t.Errorf("the brief lacks %q", text)
 		}
 	}
+	// How to leave what was found for the next agent, and that nobody has yet
+	for _, text := range []string{"Nobody has left a note on this model yet.", "hw-test note --kind problem --check <check>", "--log previous", "api/notes?model=lenovo-yoga-slim-7x-14q8x9", "leave a note saying how far you got"} {
+		if !strings.Contains(brief, text) {
+			t.Errorf("the brief lacks %q", text)
+		}
+	}
+	// What others wrote down about this model is listed, to read before starting
+	noted := yoga()
+	noted.Notes = []report.Listed{{ID: "NOTE-AAAAAAAAAA", Check: "suspend", Kind: "problem", Status: "open", Title: "Freezes on wake with a dock", Replies: 2, URL: "https://arewearmyet.com/api/notes/NOTE-AAAAAAAAAA"}}
+	if with := Brief(noted); !strings.Contains(with, "- Freezes on wake with a dock (problem, open, suspend): `curl -s https://arewearmyet.com/api/notes/NOTE-AAAAAAAAAA`, 2 answers") || strings.Contains(with, "Nobody has left a note") {
+		t.Errorf("the notes on the model aren't listed:\n%s", with)
+	}
 	if broken, partly := strings.Index(brief, "### Hibernation"), strings.Index(brief, "### Speakers"); broken > partly {
 		t.Error("what is broken doesn't come before what partly works")
 	}

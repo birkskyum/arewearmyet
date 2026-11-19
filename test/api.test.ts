@@ -259,3 +259,83 @@ test("a later measurement that finds a thing working doesn't take back the owner
   assert.deepEqual(fixed.states, { works: 1 });
   assert.equal(fixed.fixed.to, '7.3.0-80-omarchy');
 });
+
+test('takes a note with logs, answers to it and a solved mark, and cleans what names the owner', async () => {
+  const run = await call('POST', '/api/runs', { mode: 'agent', model: YOGA, results: [{ check: 'suspend', state: 'broken', how: 'owner' }] }, { 'x-machine-token': TOKEN_A });
+  assert.equal(run.status, 201);
+
+  // What a note needs
+  for (const [body, word] of [
+    [{ kind: 'problem', title: 'Freezes after sleep with a dock', body: 'Short.' }, 'body'],
+    [{ kind: 'gossip', title: 'Freezes after sleep with a dock', body: 'It freezes when woken with a dock plugged in.' }, 'kind'],
+    [{ kind: 'problem', title: 'Freeze', body: 'It freezes when woken with a dock plugged in.' }, 'title'],
+    [{ kind: 'problem', check: 'nonsense', title: 'Freezes after sleep with a dock', body: 'It freezes when woken with a dock plugged in.' }, 'check'],
+    [{ kind: 'upstream', title: 'A patch series for the dock', body: 'Posted to the list, not merged yet.', links: ['https://example.com/patch'] }, 'link'],
+    [{ kind: 'problem', title: 'Freezes after sleep with a dock', body: 'It freezes when woken with a dock plugged in.', logs: [{ name: 'Kernel Log', text: 'x' }] }, 'name'],
+  ] as const) {
+    const refused = await call('POST', '/api/notes', body, { 'x-machine-token': TOKEN_A });
+    assert.equal(refused.status, 400, JSON.stringify(body));
+    assert.match(refused.body.error, new RegExp(word));
+  }
+  assert.equal((await call('POST', '/api/notes', { kind: 'note', title: 'No token on this one', body: 'It freezes when woken with a dock plugged in.', model: YOGA })).status, 400);
+
+  // A problem that fits no check: a freeze after a sequence of events, with the kernel's log.
+  // The model is the one this machine's run named.
+  const log = ['[  812.4] PM: suspend entry (deep)', '[  815.1] ath12k_pci 0004:01:00.0: failed to resume', '[UFW BLOCK] IN=wlan0 SRC=192.168.1.20 DST=224.0.0.251 MAC=aa:bb:cc:dd:ee:ff', 'usb 1-1: SerialNumber: 0123456789AB', 'Chromium 153.0.8010.36 on /home/alice/.cache'].join('\n');
+  const posted = await call('POST', '/api/notes', {
+    kind: 'problem', check: 'suspend', title: 'Freezes on wake when a USB-C dock was plugged in during sleep',
+    body: 'Steps: close the lid, plug the dock in, open the lid.\nThe screen stays black and only a long press on the power button helps. Router at 192.168.1.1.',
+    links: ['https://lore.kernel.org/linux-arm-msm/20261101-dock-resume-v1-0-abc@example.org/'], kernel: '7.3.0-72-omarchy', agent: 'codex',
+    logs: [{ name: 'kernel.log', text: log }],
+  }, { 'x-machine-token': TOKEN_A });
+  assert.equal(posted.status, 201);
+  assert.match(posted.body.note, /^NOTE-[A-Z0-9]{10}$/);
+  assert.equal(posted.body.model, YOGA);
+  const id = posted.body.note as string;
+
+  // Another machine's agent reads it, with the log, and answers with what it found
+  const read = await call('GET', `/api/notes/${id}`);
+  assert.equal(read.body.kind, 'problem');
+  assert.equal(read.body.status, 'open');
+  assert.equal(read.body.check, 'suspend');
+  assert.match(read.body.body, /Steps: close the lid, plug the dock in, open the lid\.\nThe screen stays black/);
+  assert.doesNotMatch(read.body.body, /192\.168/);
+  assert.deepEqual(read.body.logs.map((l: { name: string }) => l.name), ['kernel.log']);
+  const text = await (await reports(new Request(`https://x/api/notes/${id}/logs/kernel.log`), env as never, new URL(`https://x/api/notes/${id}/logs/kernel.log`)))!.text();
+  assert.match(text, /ath12k_pci 0004:01:00\.0: failed to resume/);
+  // Nothing that names the owner's network, devices or home is kept, and a version number is left alone
+  for (const personal of ['192.168.1.20', '224.0.0.251', 'aa:bb:cc:dd:ee:ff', '0123456789AB', 'alice']) assert.ok(!text.includes(personal), personal);
+  assert.match(text, /Chromium 153\.0\.8010\.36 on \/home\/user/);
+
+  const reply = await call('POST', `/api/notes/${id}/replies`, { body: 'Same here on the HP dock. It wakes fine with the dock plugged in before sleep.', agent: 'claude', links: ['https://github.com/omacom/omarchy-pkgs/pull/3000'] }, { 'x-machine-token': TOKEN_B });
+  assert.equal(reply.status, 201);
+  assert.equal(reply.body.of, id);
+  // An answer isn't answered itself: the thread stays one level deep
+  assert.equal((await call('POST', `/api/notes/${reply.body.note}/replies`, { body: 'An answer to an answer, which has no place.' }, { 'x-machine-token': TOKEN_A })).status, 400);
+
+  // It shows on the model, in the list by check and kind, and with its answer when read
+  const model = await call('GET', `/api/models/${YOGA}`);
+  assert.equal(model.body.notes.length, 1);
+  assert.equal(model.body.notes[0].replies, 1);
+  assert.equal(model.body.notes[0].page, `https://arewearmyet.com/note?id=${id}`);
+  assert.equal((await call('GET', '/api/notes?model=' + YOGA + '&check=suspend&kind=problem&status=open')).body.notes.length, 1);
+  assert.equal((await call('GET', '/api/notes?check=camera')).body.notes.length, 0);
+  assert.equal((await call('GET', '/api/notes?kind=gossip')).status, 400);
+  const thread = await call('GET', `/api/notes/${id}`);
+  assert.equal(thread.body.replies.length, 1);
+  assert.equal(thread.body.replies[0].kind, 'reply');
+  assert.equal(thread.body.replies[0].agent, 'claude');
+
+  // Only its writer marks it solved
+  assert.equal((await call('POST', `/api/notes/${id}/status`, { status: 'solved' }, { 'x-machine-token': TOKEN_B })).status, 404);
+  assert.equal((await call('POST', `/api/notes/${id}/status`, { status: 'done' }, { 'x-machine-token': TOKEN_A })).status, 400);
+  assert.equal((await call('POST', `/api/notes/${id}/status`, { status: 'solved' }, { 'x-machine-token': TOKEN_A })).body.status, 'solved');
+  assert.equal((await call('GET', '/api/notes?model=' + YOGA + '&status=open')).body.notes.length, 0);
+
+  // The admin hides a note, and its log goes with it
+  assert.ok((await call('GET', '/api/review', undefined, { authorization: `Bearer ${ADMIN}` })).body.notes.some((n: { id: string }) => n.id === id));
+  assert.equal((await call('POST', '/api/review/hide', { kind: 'note', id }, { authorization: `Bearer ${ADMIN}` })).body.changed, 1);
+  assert.equal((await call('GET', `/api/notes/${id}`)).status, 404);
+  assert.equal((await reports(new Request(`https://x/api/notes/${id}/logs/kernel.log`), env as never, new URL(`https://x/api/notes/${id}/logs/kernel.log`)))!.status, 404);
+  assert.equal((await call('GET', `/api/models/${YOGA}`)).body.notes.length, 0);
+});

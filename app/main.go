@@ -15,9 +15,13 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
+	"io"
 	"os"
+	"path/filepath"
+	"regexp"
 	"strings"
 	"time"
 
@@ -66,6 +70,17 @@ func main() {
 	model := flags.String("model", "", "the model's id on arewearmyet.com, when the machine isn't recognised by itself")
 	agent := flags.String("agent", "", "the agent running this, shown next to the run")
 	api := flags.String("api", report.Site, "another server, for testing")
+	// For hw-test note
+	var logs, links list
+	kind := flags.String("kind", "problem", "what the note is: problem, workaround, upstream or note")
+	title := flags.String("title", "", "the note in a line")
+	check := flags.String("check", "", "the check the note is about, when it is about one")
+	body := flags.String("body", "", "the note's text; without it, read from --body-file or from standard input")
+	bodyFile := flags.String("body-file", "", "a file with the note's text")
+	reply := flags.String("reply", "", "the id of the note this answers")
+	solved := flags.String("solved", "", "the id of a problem written from this computer, to mark solved")
+	flags.Var(&logs, "log", "a log to attach, cleaned first: kernel, previous (the kernel's log of the boot before) or a file; may be given more than once")
+	flags.Var(&links, "link", "a link to where the work is; may be given more than once")
 	flags.Usage = usage
 	flags.Parse(args)
 
@@ -80,7 +95,7 @@ func main() {
 		// The latest result of every check on this machine, without running anything
 		fmt.Println(guided.Status(report.Local()))
 		return
-	case "quick", "check", "guided", "facts", "brief", "fix":
+	case "quick", "check", "guided", "facts", "brief", "fix", "note":
 		if command == "check" {
 			command = "quick"
 		}
@@ -107,6 +122,12 @@ func main() {
 	}
 	run.Model, run.Agent = *model, *agent
 
+	// A note: what fits no check, written down where other owners' agents read it
+	if command == "note" {
+		os.Exit(writeNote(run, noteArgs{api: *api, kind: *kind, title: *title, check: *check, body: *body, bodyFile: *bodyFile, reply: *reply, solved: *solved,
+			logs: logs, links: links, send: !*noSend && !*jsonOnly}))
+	}
+
 	// The brief for an agent: printed, or written down and handed to the owner's agent
 	if command == "brief" || command == "fix" {
 		checks, unknown := guided.ChecksFor(topics)
@@ -124,6 +145,9 @@ func main() {
 		known, _ := report.Checks(*api)
 		matched, _ := report.Match(*api, run)
 		briefing := guided.Briefing{Version: version, Run: run, Kept: kept, Model: matched, Checks: known, Only: checks, When: time.Now()}
+		if matched.ID != "" {
+			briefing.Notes, _ = report.Notes(*api, matched.ID)
+		}
 		if command == "brief" {
 			fmt.Print(guided.Brief(briefing))
 			return
@@ -212,6 +236,122 @@ func printResults(run *report.Run) {
 	fmt.Fprintln(os.Stderr)
 }
 
+// list is an option that may be given more than once.
+type list []string
+
+func (l *list) String() string     { return strings.Join(*l, ", ") }
+func (l *list) Set(v string) error { *l = append(*l, v); return nil }
+
+type noteArgs struct {
+	api, kind, title, check, body, bodyFile, reply, solved string
+	logs, links                                            []string
+	send                                                   bool
+}
+
+// attach reads a log by name and cleans it of what names the owner: the kernel's log of this
+// boot or the one before, or a file.
+func attach(name string) (report.Log, error) {
+	sys := machine.Real()
+	host, _ := os.Hostname()
+	user := os.Getenv("USER")
+	var text string
+	var err error
+	logName := name + ".log"
+	switch name {
+	case "kernel":
+		text, err = sys.RunFor(20*time.Second, "journalctl", "-k", "-b", "--no-hostname", "-o", "short-monotonic", "--no-pager")
+	case "previous":
+		text, err = sys.RunFor(20*time.Second, "journalctl", "-k", "-b", "-1", "--no-hostname", "-o", "short-monotonic", "--no-pager")
+	default:
+		var data []byte
+		if data, err = os.ReadFile(name); err == nil && len(data) > 8<<20 {
+			err = fmt.Errorf("it is over 8 MB: cut it down to the part that shows the problem")
+		}
+		text = string(data)
+		logName = strings.ToLower(filepath.Base(name))
+		logName = strings.Trim(regexp.MustCompile(`[^a-z0-9._-]+`).ReplaceAllString(logName, "-"), "-.")
+		if logName == "" {
+			logName = "attached.log"
+		}
+	}
+	if err != nil && strings.TrimSpace(text) == "" {
+		return report.Log{}, fmt.Errorf("%s: %w", name, err)
+	}
+	clean := report.ScrubLog(text, host, user)
+	if clean == "" {
+		return report.Log{}, fmt.Errorf("%s is empty", name)
+	}
+	return report.Log{Name: logName, Text: clean}, nil
+}
+
+// writeNote sends a note, an answer or a solved mark, and returns the exit code.
+func writeNote(run *report.Run, args noteArgs) int {
+	fail := func(format string, values ...any) int {
+		fmt.Fprintf(os.Stderr, "hw-test: "+format+"\n", values...)
+		return 2
+	}
+	if args.solved != "" {
+		if _, err := report.Solve(args.api, args.solved, true); err != nil {
+			return fail("%v", err)
+		}
+		fmt.Fprintln(os.Stderr, "Marked as solved:", report.Site+"/note?id="+args.solved)
+		return 0
+	}
+	text := args.body
+	switch {
+	case text != "":
+	case args.bodyFile != "":
+		data, err := os.ReadFile(args.bodyFile)
+		if err != nil {
+			return fail("%v", err)
+		}
+		text = string(data)
+	case !guided.Interactive():
+		data, _ := io.ReadAll(io.LimitReader(os.Stdin, 64<<10))
+		text = string(data)
+	}
+	if strings.TrimSpace(text) == "" {
+		return fail("a note needs its text: --body, --body-file, or on standard input. Say what happens, how to make it happen, and what was tried.")
+	}
+	if args.reply == "" && args.title == "" {
+		return fail("a note needs --title, the note in a line")
+	}
+	host, _ := os.Hostname()
+	note := report.Note{Body: report.ScrubLog(text, host, os.Getenv("USER")), Links: args.links, Kernel: run.Kernel, OS: run.OS, Packages: run.Packages, Agent: run.Agent}
+	if args.reply == "" {
+		note.Kind, note.Title, note.Check, note.Model = args.kind, args.title, args.check, run.Model
+		if note.Model == "" {
+			if matched, err := report.Match(args.api, run); err == nil {
+				note.Model = matched.ID
+			}
+		}
+		if note.Model == "" {
+			return fail("the board doesn't know this computer, so there is no page for the note. Name the model with --model, or send a test first: hw-test quick")
+		}
+	}
+	for _, name := range args.logs {
+		log, err := attach(name)
+		if err != nil {
+			return fail("the log couldn't be read: %v", err)
+		}
+		note.Logs = append(note.Logs, log)
+	}
+	if !args.send {
+		// Everything that would go, logs included, for the owner to read first
+		data, _ := json.MarshalIndent(note, "", "  ")
+		fmt.Println(string(data))
+		fmt.Fprintln(os.Stderr, "Not sent.")
+		return 0
+	}
+	sent, err := report.SendNote(args.api, note, args.reply)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "hw-test: the note wasn't taken:", err)
+		return 1
+	}
+	fmt.Fprintf(os.Stderr, "Written as %s.\n%s\n", sent.Note, sent.Page)
+	return 0
+}
+
 // wrapWords lists words on lines that fit under the usage text's second column.
 func wrapWords(words []string) string {
 	lines, line := []string{}, ""
@@ -244,6 +384,15 @@ func usage() {
                      agent on it. WHAT is a check or a part, like speakers. Without it,
                      everything that fails
   hw-test brief [WHAT...]  print that brief, to give to any agent yourself
+  hw-test note       write down what fits no check, where other owners' agents read it and can
+                     answer: a problem that takes a sequence of events, a way around one, a
+                     pointer to work elsewhere. For example:
+                       hw-test note --kind problem --check suspend --log previous \
+                         --title "Restarts when woken with a dock plugged in" --body-file what-happens.md
+                     --kind problem|workaround|upstream|note   --check ID   --link URL...
+                     --log kernel|previous|FILE...  attaches a log, cleaned of addresses and names
+                     --reply NOTE-ID answers a note, --solved NOTE-ID closes your own problem
+                     --no-send shows what would be sent, logs included, and sends nothing
   hw-test status     where this computer stands: the latest result of every check, nothing is run
   hw-test facts      what the test found on this computer to work with (nothing is sent)
   hw-test version

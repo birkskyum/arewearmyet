@@ -5,6 +5,7 @@ import { createResource, createSignal, For, Show } from 'solid-js';
 type Result = { check: string; state: string; how: string; note: string | null };
 type Run = { id: string; machine: string; model: string | null; created: string; mode: string; kernel: string | null; agent: string | null; hidden: number; machine_hidden: number; results: Result[] };
 type Fix = { id: string; model: string; check: string | null; url: string; note: string | null; created: string; hidden: number };
+type Note = { id: string; parent: string | null; model: string | null; check: string | null; kind: string; title: string | null; body: string; agent: string | null; created: string; hidden: number; logs: string | null };
 
 const KEY = 'arewearmyet-admin-token';
 const read = () => { try { return localStorage.getItem(KEY) ?? ''; } catch { return ''; } };
@@ -18,9 +19,9 @@ export default function Review() {
     if (!t) return null;
     const response = await fetch('/api/review', { headers: { authorization: `Bearer ${t}` } });
     if (!response.ok) throw new Error((await response.json().catch(() => ({}))).error ?? response.statusText);
-    return (await response.json()) as { runs: Run[]; fixes: Fix[] };
+    return (await response.json()) as { runs: Run[]; fixes: Fix[]; notes?: Note[] };
   });
-  const hide = async (kind: 'run' | 'fix' | 'machine', id: string, hidden: boolean) => {
+  const hide = async (kind: 'run' | 'fix' | 'machine' | 'note', id: string, hidden: boolean) => {
     await fetch('/api/review/hide', { method: 'POST', headers: { authorization: `Bearer ${token()}`, 'content-type': 'application/json' }, body: JSON.stringify({ kind, id, hidden }) });
     refetch();
   };
@@ -70,6 +71,24 @@ export default function Review() {
                       <span class="text-zinc-500">{fix.check ?? 'general'}</span>
                       <a class="text-zinc-200 underline decoration-zinc-600" href={fix.url}>{fix.note ?? fix.url}</a>
                       <button class={`${BUTTON} ml-auto`} onClick={() => hide('fix', fix.id, !fix.hidden)}>{fix.hidden ? 'Show' : 'Hide'}</button>
+                    </li>
+                  )}
+                </For>
+              </ul>
+            </section>
+            <section>
+              <h2 class="text-lg font-semibold text-zinc-100">Notes</h2>
+              <ul class="mt-3 space-y-3 text-sm">
+                <For each={d().notes ?? []}>
+                  {(note) => (
+                    <li class={`rounded-lg bg-zinc-900 p-3 ring-1 ring-zinc-800 ${note.hidden ? 'opacity-50' : ''}`}>
+                      <div class="flex flex-wrap items-center gap-3">
+                        <span class="text-zinc-500">{note.kind}</span>
+                        <a class="text-zinc-200 underline decoration-zinc-600" href={`/note?id=${note.parent ?? note.id}`}>{note.title ?? `answer to ${note.parent}`}</a>
+                        <span class="text-zinc-500">{note.model} · {note.check ?? 'general'} · {note.created.slice(0, 16)}{note.agent ? ` · ${note.agent}` : ''}{note.logs ? ` · logs: ${note.logs}` : ''}</span>
+                        <button class={`${BUTTON} ml-auto`} onClick={() => hide('note', note.id, !note.hidden)}>{note.hidden ? 'Show' : 'Hide'}</button>
+                      </div>
+                      <p class="mt-2 whitespace-pre-wrap break-words text-zinc-400">{note.body}</p>
                     </li>
                   )}
                 </For>

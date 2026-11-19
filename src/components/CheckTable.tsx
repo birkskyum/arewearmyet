@@ -9,7 +9,9 @@ type Finding = { state: State; note?: string; version?: string; checked?: string
 type Row = { id: string; group: string; title: string; works: string; probe?: string; person?: string; debug?: string; optional?: boolean; finding: Finding | null; from: 'model' | 'family' | null; familySource: string | null };
 type Change = { machines: number; from: string | null; to: string | null; since: string };
 type Owner = { machines: number; states: Record<string, number>; how: Record<string, number>; regressed?: Change; fixed?: Change; latest: { state: State; how: string; note: string | null; evidence: string | null; kernel: string | null; created: string; run: string }[] };
-type Live = { owners: { machines: number; checks: Record<string, Owner> }; fixes: { id: string; check: string | null; url: string; note: string | null; created: string }[] };
+type Note = { id: string; check: string | null; kind: string; title: string; status?: string; created: string; replies: number; logs: { name: string }[]; kernel: string | null };
+type Live = { owners: { machines: number; checks: Record<string, Owner> }; fixes: { id: string; check: string | null; url: string; note: string | null; created: string }[]; notes?: Note[] };
+const KIND: Record<string, string> = { problem: 'Problem', workaround: 'Workaround', upstream: 'Work elsewhere', note: 'Note' };
 
 const LABEL: Record<State, string> = { works: 'Works', partial: 'Partly', broken: 'Broken', untested: 'Untested', absent: 'Not on this model' };
 const TONES: Record<State, keyof typeof TONE> = { works: 'good', partial: 'close', broken: 'wanted', untested: 'muted', absent: 'muted' };
@@ -56,6 +58,19 @@ export default function CheckTable(props: { model: string; groups: { id: string;
   });
   const owner = (id: string) => live()?.owners.checks[id];
   const fixesFor = (id: string) => live()?.fixes.filter((fix) => fix.check === id) ?? [];
+  const notesFor = (id: string) => live()?.notes?.filter((note) => note.check === id) ?? [];
+  const noteLine = (note: Note) => (
+    <li class="flex flex-wrap items-baseline gap-2">
+      <span class={`${PILL} ${TONE[note.kind === 'problem' ? (note.status === 'solved' ? 'good' : 'wanted') : note.kind === 'workaround' ? 'close' : 'muted']}`}>{note.kind === 'problem' && note.status === 'solved' ? 'Solved' : (KIND[note.kind] ?? note.kind)}</span>
+      <a class={LINK} href={`/note?id=${note.id}`}>{note.title}</a>
+      <span class="text-xs text-zinc-500">
+        {note.created.slice(0, 10)}
+        {note.kernel ? ` · ${note.kernel}` : ''}
+        {note.replies ? ` · ${note.replies} ${note.replies === 1 ? 'answer' : 'answers'}` : ''}
+        {note.logs.length ? ` · ${note.logs.length} ${note.logs.length === 1 ? 'log' : 'logs'}` : ''}
+      </span>
+    </li>
+  );
 
   return (
     <div class="space-y-6">
@@ -115,6 +130,11 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                         <Show when={owner(row.id)?.regressed}>
                           {(change) => <span class={`${PILL} ${TONE.wanted}`} data-tip={changeText(change(), 'regressed')}>Regressed</span>}
                         </Show>
+                        <Show when={notesFor(row.id).length}>
+                          <span class={`${PILL} ${TONE.muted}`} data-tip="Problems, workarounds and pointers written by owners and their agents. Open the check to read them.">
+                            {notesFor(row.id).length} {notesFor(row.id).length === 1 ? 'note' : 'notes'}
+                          </span>
+                        </Show>
                       </span>
                     </summary>
                     <div class="space-y-3 border-t border-zinc-800 bg-zinc-950/40 px-4 py-3 text-sm text-zinc-400">
@@ -148,6 +168,11 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                           </ul>
                         )}
                       </Show>
+                      <Show when={notesFor(row.id).length}>
+                        <ul class="space-y-1.5">
+                          <For each={notesFor(row.id)}>{noteLine}</For>
+                        </ul>
+                      </Show>
                       <Show when={fixesFor(row.id).length}>
                         <ul class="space-y-1">
                           <For each={fixesFor(row.id)}>
@@ -163,6 +188,14 @@ export default function CheckTable(props: { model: string; groups: { id: string;
           </section>
         )}
       </For>
+      <Show when={live()?.notes?.filter((note) => !note.check).length}>
+        <section>
+          <h3 class="text-sm font-semibold uppercase tracking-wide text-zinc-500">Notes about no single check</h3>
+          <ul class="mt-2 space-y-1.5 text-sm text-zinc-400">
+            <For each={live()!.notes!.filter((note) => !note.check)}>{noteLine}</For>
+          </ul>
+        </section>
+      </Show>
       <Show when={live()?.fixes.filter((fix) => !fix.check).length}>
         <section>
           <h3 class="text-sm font-semibold uppercase tracking-wide text-zinc-500">Linked fixes</h3>

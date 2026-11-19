@@ -4,7 +4,7 @@
  * copies is kept, and the first of each month for good.
  */
 
-const TABLES = ['machines', 'runs', 'results', 'fixes'] as const;
+const TABLES = ['machines', 'runs', 'results', 'fixes', 'notes', 'note_logs'] as const;
 const KEEP_DAYS = 31;
 
 export async function backup(env: Env, now = new Date()): Promise<{ key: string; rows: Record<string, number> }> {

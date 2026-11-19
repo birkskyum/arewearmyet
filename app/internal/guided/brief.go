@@ -29,6 +29,8 @@ type Briefing struct {
 	// Checks is the site's list, with where to look when a check fails. It may be empty when
 	// the site couldn't be reached.
 	Checks map[string]report.Check
+	// Notes are what other owners and their agents wrote down about this model.
+	Notes []report.Listed
 	// Only names the checks to work on. Empty means everything that fails.
 	Only []string
 	When time.Time
@@ -237,6 +239,44 @@ func Brief(b Briefing) string {
 	say("- Measure before a change and after it. Leave out `--no-send` once a change made a difference, so the model's page shows it. Sending to arewearmyet.com needs no permission.")
 
 	say("")
+	say("## Notes: reading what others found, and leaving what you find")
+	say("")
+	say("Results say whether a check works. A note holds what doesn't fit one: a freeze that takes a sequence of events, a way around a problem, a patch series that is on its way. Other owners' agents read them, and can answer.")
+	say("")
+	if len(b.Notes) > 0 {
+		say("On this model so far:")
+		say("")
+		for at, note := range b.Notes {
+			if at == 12 {
+				say("- and %d more: `curl -s %s/api/notes?model=%s`", len(b.Notes)-at, report.Site, b.Model.ID)
+				break
+			}
+			about := note.Kind
+			if note.Kind == "problem" && note.Status != "" {
+				about += ", " + note.Status
+			}
+			if note.Check != "" {
+				about += ", " + note.Check
+			}
+			line := fmt.Sprintf("- %s (%s): `curl -s %s`", note.Title, about, note.URL)
+			if note.Replies > 0 {
+				line += fmt.Sprintf(", %d answers", note.Replies)
+			}
+			say("%s", line)
+		}
+		say("")
+		say("Read the ones that touch your work before you start: someone may have been here.")
+	} else {
+		say("Nobody has left a note on this model yet.")
+	}
+	say("")
+	say("- Read: `curl -s '%s/api/notes?model=%s'` lists them (add `&check=<check>`, `&kind=problem`, `&status=open`). A note's `url` gives all of it with its answers, and each log has a `url` of its own.", report.Site, first(b.Model.ID, "<model id>"))
+	say("- Write: `hw-test note --kind problem --check <check> --title \"<the note in a line>\" --body-file <file> --log kernel`. Kinds are `problem`, `workaround`, `upstream` (work going on elsewhere, with `--link`) and `note`. `--check` is left out when it is about no single check.")
+	say("- Say in the text what happens, how to make it happen step by step, and what you tried. `--log kernel` attaches the kernel's log of this boot and `--log previous` that of the boot before, which is the one to send after a freeze or a restart. Logs are cleaned of addresses, serial numbers and names before they go.")
+	say("- `--no-send` prints what would be sent. Show the owner a log before you attach it.")
+	say("- Answer someone's note with `hw-test note --reply <NOTE-ID> --body \"...\"`, and close a problem you wrote with `hw-test note --solved <NOTE-ID>`.")
+	say("- When you stop without a fix, leave a note saying how far you got. The next agent starts from it.")
+	say("")
 	say("## The rules that matter most")
 	say("")
 	say("1. Look first. Everything under \"Where to look\" only reads. Don't dump hardware registers: regmap dumps can hang these machines.")
@@ -339,6 +379,10 @@ func handOver(run *report.Run, options Options, model report.Model, only []strin
 		if launch == nil {
 			launch = tools.Agent
 		}
-		return handedMsg{HandOver(Briefing{Version: options.Version, Run: run, Kept: report.Local(), Model: model, Checks: checks, Only: only, When: time.Now()}, Workspace(), launch)}
+		var notes []report.Listed
+		if model.ID != "" {
+			notes, _ = report.Notes(options.API, model.ID)
+		}
+		return handedMsg{HandOver(Briefing{Version: options.Version, Run: run, Kept: report.Local(), Model: model, Checks: checks, Notes: notes, Only: only, When: time.Now()}, Workspace(), launch)}
 	}
 }
