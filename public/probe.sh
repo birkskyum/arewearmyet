@@ -377,6 +377,7 @@ guided() {
   }
   if command -v speaker-test >/dev/null 2>&1 && command -v arecord >/dev/null 2>&1 && command -v aplay >/dev/null 2>&1; then
     say "Sound: set the volume to about half. Two tones of three seconds play, left then right, while the microphones listen."
+    say "Nothing recorded is sent anywhere. It stays on this computer and is deleted when the test ends."
     ask "Press Enter to start (s to skip)." && [ "$REPLY" != s ] && {
       for side in 1 2; do
         timeout -s KILL 6 arecord -q -d 3 -f S16_LE -r 48000 -c 1 -t raw "$TMP/tone$side.raw" 2>/dev/null &
@@ -393,6 +394,7 @@ guided() {
       verdict speakers "Did you hear a tone from the left speaker, then from the right, cleanly?" "$loop"
 
       say "Microphones: after you press Enter, say a few words. The probe records 4 seconds and plays them back to you."
+      say "The recording never leaves this computer."
       ask "Press Enter, then speak (s to skip)." && [ "$REPLY" != s ] && {
         timeout -s KILL 8 arecord -q -d 4 -f S16_LE -r 48000 -c 1 "$TMP/voice.wav" 2>/dev/null
         tail -c +45 "$TMP/voice.wav" >"$TMP/voice.raw" 2>/dev/null
@@ -417,7 +419,7 @@ guided() {
 
   # Camera: one frame, checked for being more than black
   if [ -n "$cams" ] && command -v cam >/dev/null 2>&1; then
-    say "Camera: taking one frame (the light may flash)."
+    say "Camera: taking one frame (the light may flash). The picture never leaves this computer; only how bright it is gets reported."
     # cam takes its optional values attached, and a PPM file holds only 24-bit pixels
     timeout -k 3 20 cam -c 1 --capture=8 --stream pixelformat=BGR888 --file="$TMP/frame-#.ppm" >/dev/null 2>&1 ||
       timeout -k 3 20 cam -c 1 --capture=8 --stream pixelformat=RGB888 --file="$TMP/frame-#.ppm" >/dev/null 2>&1

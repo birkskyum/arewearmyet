@@ -130,11 +130,11 @@ func (s *speakers) update(msg tea.Msg) tea.Cmd {
 func (s *speakers) view(width, height int) string {
 	switch s.phase {
 	case "intro":
-		text := "Two tones play for a couple of seconds each, first on the left speaker, then on the right, while the microphones listen."
+		text := "Two tones play for a couple of seconds each, first on the left speaker, then on the right, while the microphones listen for them. Only how loud the tone was is kept."
 		if volume, muted, ok := tools.Volume(); ok && (muted || volume < 0.25) {
 			text += "\n\n" + close_.Render(fmt.Sprintf("The sound is %s. Turn it up to about half first, or you won't hear them.", map[bool]string{true: "muted", false: fmt.Sprintf("at %d%%", int(volume*100+0.5))}[muted]))
 		}
-		return wrap(text, width)
+		return wrap(text, width) + "\n\n" + private(width)
 	case "left":
 		return accent.Render("◀ ◀ ◀  Playing on the LEFT speaker")
 	case "right":
@@ -287,12 +287,12 @@ func meter(level, width int) string {
 func (m *microphones) view(width, height int) string {
 	switch m.phase {
 	case "intro":
-		return wrap("Now your voice. Press Enter, then say a few words in a normal voice. It records four seconds and plays them back to you.", width)
+		return wrap("Now your voice. Press Enter, then say a few words in a normal voice. It records four seconds and plays them back to you, so you can hear whether the microphones work.", width) + "\n\n" + private(width)
 	case "recording":
 		left := recordFor - time.Since(m.began)
-		return accent.Render(fmt.Sprintf("● Recording, speak now  (%.0f s left)", math.Max(0, left.Seconds()))) + "\n\n" + meter(m.level, min(width, 60))
+		return accent.Render(fmt.Sprintf("● Recording, speak now  (%.0f s left)", math.Max(0, left.Seconds()))) + "\n\n" + meter(m.level, min(width, 60)) + "\n\n" + dim.Render("Only on this computer. Not sent.")
 	case "playing":
 		return accent.Render("▶ Playing your recording back")
 	}
-	return m.ask.view(width) + "\n\n" + dim.Render(fmt.Sprintf("Measured: voice level %d, loudest %d.", m.voice, m.peak))
+	return m.ask.view(width) + "\n\n" + dim.Render(fmt.Sprintf("Measured: voice level %d, loudest %d. Only these two numbers are sent, not the recording.", m.voice, m.peak))
 }

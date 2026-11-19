@@ -38,7 +38,7 @@ func (s *summary) keys() string {
 
 func (s *summary) start() tea.Cmd {
 	s.phase = "review"
-	s.ask = choice{question: "Send these results to arewearmyet.com?", options: []string{"Send", "Don't send"}}
+	s.ask = choice{question: "Send these results to arewearmyet.com? This list is all that goes, with the model and software versions. No recording and no picture.", options: []string{"Send", "Don't send"}}
 	if !s.options.Send {
 		s.ask = choice{question: "These are the results. Nothing is sent, as asked.", options: []string{"Done"}}
 	}

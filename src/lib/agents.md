@@ -66,7 +66,7 @@ curl -fsSL https://arewearmyet.com/probe.sh -o probe.sh
 bash probe.sh --json            # prints what it found, as the JSON it would send, and sends nothing
 ```
 
-Go through its output with the owner. The probe only marks what it can measure: a check missing from its output needs the owner. The guided mode tests the speakers and microphones (a tone on each side while the microphones listen), takes a camera frame, waits for a lid close to test sleep, and asks the owner about everything else. It needs the owner at the keyboard:
+Go through its output with the owner. The probe only marks what it can measure: a check missing from its output needs the owner. The guided mode tests the speakers and microphones (a tone on each side while the microphones listen), takes a camera frame, waits for a lid close to test sleep, and asks the owner about everything else. The recording and the camera picture are only for the owner to check: they never leave the machine, and only numbers like the loudness and brightness are reported. It needs the owner at the keyboard:
 
 ```sh
 bash probe.sh --guided --agent "<your name>"

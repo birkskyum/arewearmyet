@@ -215,5 +215,6 @@ func (w *welcome) view(width, height int) string {
 		"It takes about five minutes. It has already measured what it can, and now tests the keyboard, speakers, microphones, camera and sleep with you."
 	measured := resultsTable(w.run.Results, width)
 	return wrap(intro, width) + "\n\n" + bold.Render("Measured just now") + "\n" + measured + "\n\n" +
-		dim.Render(wrap("Nothing personal is sent: no serial numbers, addresses, names or files. Recordings and camera frames stay on this computer and are deleted at the end.", width))
+		wrap("Only results like the ones above are sent, with the model and software versions. No serial numbers, addresses or names.", width) + "\n" +
+		good.Render("🔒 ") + wrap("The voice recording and the camera picture are only for you to check. They never leave this computer and are deleted when the test ends.", width-3)
 }

@@ -45,6 +45,14 @@ var checkTitle = map[string]string{
 	"cdsp": "Compute DSP (NPU)", "fans": "Fans and temperatures", "fingerprint": "Fingerprint reader", "modem": "Mobile broadband",
 }
 
+// Said wherever the microphones or the camera are used.
+const staysHere = "It never leaves this computer: nothing recorded or photographed is sent anywhere, and it's deleted when the test ends."
+
+// private is the line that says a recording or picture stays here, set apart so it's seen.
+func private(width int) string {
+	return good.Render("🔒 ") + wrap(staysHere, width-3)
+}
+
 // wrap breaks text into lines of at most width cells, at spaces.
 func wrap(text string, width int) string {
 	if width < 20 {

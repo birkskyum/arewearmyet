@@ -131,12 +131,12 @@ func (c *camera) update(msg tea.Msg) tea.Cmd {
 
 func (c *camera) view(width, height int) string {
 	if c.phase == "capturing" {
-		return accent.Render("● Taking a picture with the camera") + "\n\n" + dim.Render("Its light may come on for a moment.")
+		return accent.Render("● Taking a picture with the camera") + "\n\n" + dim.Render("Its light may come on for a moment.") + "\n\n" + private(width)
 	}
 	if c.err != nil || c.frame.Blank() {
 		return c.ask.view(width) + "\n\n" + dim.Render(wrap("Measured: "+c.evidence()+".", width))
 	}
 	// The picture gets whatever height the question leaves
-	rows := max(6, height-len(c.ask.options)-6)
-	return c.frame.Render(width, rows) + "\n\n" + c.ask.view(width) + "\n\n" + dim.Render("Measured: "+c.evidence()+".")
+	rows := max(6, height-len(c.ask.options)-8)
+	return c.frame.Render(width, rows) + "\n\n" + c.ask.view(width) + "\n\n" + dim.Render("Measured: "+c.evidence()+". Only these numbers are sent.") + "\n" + private(width)
 }
