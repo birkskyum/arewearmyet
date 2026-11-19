@@ -13,8 +13,10 @@ import (
 
 	"github.com/birkskyum/arewearmyet/app/internal/audio"
 	"github.com/birkskyum/arewearmyet/app/internal/machine"
+	"github.com/birkskyum/arewearmyet/app/internal/picture"
 	"github.com/birkskyum/arewearmyet/app/internal/probe"
 	"github.com/birkskyum/arewearmyet/app/internal/report"
+	"github.com/birkskyum/arewearmyet/app/internal/tools"
 )
 
 func press(code rune) tea.KeyPressMsg {
@@ -208,31 +210,145 @@ func TestTheTestSkipsStepsWithNothingToDoAndDrawsAtAnySize(t *testing.T) {
 	}
 }
 
-func TestCameraCountsDownBeforeItTakesAPicture(t *testing.T) {
-	c := newCamera(&report.Run{}, t.TempDir())
+// scene is a camera frame with a picture in it.
+func scene() picture.Frame {
+	frame := picture.Frame{Width: 64, Height: 36, Pixels: make([]byte, 64*36*3)}
+	for i := range frame.Pixels {
+		frame.Pixels[i] = byte(i * 7)
+	}
+	return frame
+}
+
+func TestCameraTakesItsPictureOnlyWhenToldAndShowsItInAWindow(t *testing.T) {
+	dir := t.TempDir()
+	run := &report.Run{}
+	c := newCamera(run, dir)
+	window := &tools.Viewer{Closed: make(chan struct{})}
+	opened := ""
+	c.open = func(file string) *tools.Viewer {
+		opened = file
+		return window
+	}
 	if c.start() != nil || c.phase != "intro" {
 		t.Fatalf("it started at %q", c.phase)
 	}
-	if !strings.Contains(c.view(80, 30), "Nothing is taken until you press Enter") || !strings.Contains(c.view(80, 30), "never leaves this computer") {
-		t.Errorf("the intro doesn't say what will happen:\n%s", c.view(80, 30))
+	if intro := c.view(80, 30); !strings.Contains(intro, "When you press Enter it takes one picture") || !strings.Contains(intro, "never leaves this computer") {
+		t.Errorf("the intro doesn't say what will happen:\n%s", intro)
 	}
-	c.update(press(tea.KeyEnter))
-	for want := 5; want >= 1; want-- {
-		if c.phase != "countdown" || c.count != want || !strings.Contains(c.view(80, 30), "Taking a picture in") {
-			t.Fatalf("at %d: phase %q, count %d", want, c.phase, c.count)
-		}
-		c.update(countMsg{})
+	// Enter takes it at once: the intro was the warning
+	if c.update(press(tea.KeyEnter)) == nil || c.phase != "capturing" {
+		t.Fatalf("after Enter it is %q", c.phase)
 	}
-	if c.phase != "capturing" {
-		t.Errorf("after the countdown it is %q", c.phase)
+	wait := c.update(frameMsg{frame: scene()})
+	if c.phase != "viewing" || opened != filepath.Join(dir, "camera.png") || wait == nil {
+		t.Fatalf("phase %q, opened %q", c.phase, opened)
+	}
+	if _, err := os.Stat(opened); err != nil {
+		t.Fatal("the picture wasn't written for the viewer")
+	}
+	// The owner closes the window with q, and only then is asked
+	close(window.Closed)
+	c.update(wait())
+	if c.phase != "ask" {
+		t.Fatalf("after the window closed it is %q", c.phase)
+	}
+	c.update(press('2'))
+	result, _ := run.Get("camera")
+	if !c.done() || result.State != report.Partial || !strings.Contains(result.Evidence, "a 64x36 frame") {
+		t.Errorf("result %+v", result)
+	}
+	// Nothing of the picture is left behind
+	if _, err := os.Stat(opened); err == nil {
+		t.Error("the picture is still on disk after the step")
 	}
 
-	// Skipping during the countdown takes no picture
-	c = newCamera(&report.Run{}, t.TempDir())
-	c.update(press(tea.KeyEnter))
+	// Skipping takes no picture
+	c = newCamera(&report.Run{}, dir)
 	c.update(press('s'))
-	if !c.done() || c.update(countMsg{}) != nil {
-		t.Error("skipping didn't stop the countdown")
+	if !c.done() {
+		t.Error("skipping didn't end the step")
+	}
+
+	// Without a viewer the question comes with the picture drawn in the terminal
+	c = newCamera(&report.Run{}, dir)
+	c.open = func(string) *tools.Viewer { return nil }
+	c.update(press(tea.KeyEnter))
+	c.update(frameMsg{frame: scene()})
+	if c.phase != "ask" || !strings.Contains(c.view(80, 40), "▀") {
+		t.Errorf("without a viewer: phase %q", c.phase)
+	}
+}
+
+func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
+	run := &report.Run{}
+	run.Set("wifi", report.Works, report.Measured, "wlan0 connected", "")
+	dir := t.TempDir()
+	steps := []step{newKeyboard(run), &effects{run: run}, newSpeakers(run, dir), newHeadphones(run, dir), newCamera(run, dir), newQuestions(run, probe.Facts{}, nil)}
+	last := &summary{run: run, options: Options{Send: false}}
+	open := func() (*model, *welcome) {
+		m := &model{run: run, summary: last, failed: map[string]string{}, width: 100, height: 50}
+		start := &welcome{run: run}
+		for _, entry := range menu {
+			if len(choose(steps, []string{entry.word})) > 0 {
+				start.parts = append(start.parts, entry)
+			}
+		}
+		start.pick = func(word string) {
+			run.Results = nil
+			m.steps = append(append([]step{start}, choose(steps, []string{word})...), last)
+		}
+		m.steps = append(append([]step{start}, steps...), last)
+		return m, start
+	}
+
+	// Only what this machine has is offered
+	m, start := open()
+	drawn := m.View().Content
+	for _, text := range []string{"The whole test", "Only: Keyboard", "Only: Sound", "Only: Camera"} {
+		if !strings.Contains(drawn, text) {
+			t.Errorf("the menu lacks %q:\n%s", text, drawn)
+		}
+	}
+	if strings.Contains(drawn, "Touchscreen") || strings.Contains(drawn, "Sleep") {
+		t.Errorf("the menu offers what the machine doesn't have:\n%s", drawn)
+	}
+	// Enter on the first entry runs it all
+	m.Update(press(tea.KeyEnter))
+	if m.at != 1 || len(m.steps) != 8 || run.State("wifi") != report.Works {
+		t.Errorf("the whole test: at %d of %d", m.at, len(m.steps))
+	}
+
+	// The camera alone: only it and the send step are left, and only it is reported
+	m, start = open()
+	at := 0
+	for i, part := range start.parts {
+		if part.word == "camera" {
+			at = i + 2
+		}
+	}
+	m.Update(press(rune('0' + at)))
+	if len(m.steps) != 3 || m.steps[m.at].name() != "Camera" || len(run.Results) != 0 {
+		t.Errorf("one part: %d steps, at %q, results %+v", len(m.steps), m.steps[m.at].name(), run.Results)
+	}
+}
+
+func TestTheSendScreenSaysWhatGoesAndThatNoPictureDoes(t *testing.T) {
+	dir := t.TempDir()
+	os.WriteFile(filepath.Join(dir, "camera.png"), []byte("a picture"), 0o600)
+	os.WriteFile(filepath.Join(dir, "voice.wav"), []byte("a recording"), 0o600)
+	run := &report.Run{}
+	run.Set("camera", report.Works, report.Owner, "a 1920x1092 frame, brightness 41 of 255, contrast 18", "")
+	s := &summary{run: run, options: Options{Send: true}, dir: dir}
+	s.start()
+	if left, _ := os.ReadDir(dir); len(left) != 0 {
+		t.Errorf("%d files are still there when the send screen comes up", len(left))
+	}
+	// Wrapped lines joined again, so a sentence broken across two is still found
+	drawn := strings.Join(strings.Fields(s.view(90, 30)), " ")
+	for _, text := range []string{"Webcam", "everything that is sent", "No picture and no recording is sent", "already deleted", "Send the lines above"} {
+		if !strings.Contains(drawn, text) {
+			t.Errorf("the send screen lacks %q:\n%s", text, drawn)
+		}
 	}
 }
 

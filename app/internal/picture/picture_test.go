@@ -1,7 +1,9 @@
 package picture
 
 import (
+	"bytes"
 	"fmt"
+	"image/png"
 	"strings"
 	"testing"
 )
@@ -57,5 +59,23 @@ func TestDrawsTheFrameInCellsThatKeepItsShape(t *testing.T) {
 	// A narrow terminal limits it by width instead
 	if narrow := strings.Split(frame.Render(40, 20), "\n"); strings.Count(narrow[0], "▀") != 40 || len(narrow) != 11 {
 		t.Errorf("narrow: %d rows of %d cells", len(narrow), strings.Count(narrow[0], "▀"))
+	}
+}
+
+func TestTheFrameBecomesAPNGOfTheSameSize(t *testing.T) {
+	frame, _ := PPM(ppm(64, 36, func(x, y int) (byte, byte, byte) { return byte(x * 4), 10, 200 }))
+	file, err := frame.PNG()
+	if err != nil || len(file) < 50 || string(file[1:4]) != "PNG" {
+		t.Fatalf("no PNG: %v", err)
+	}
+	decoded, err := png.Decode(bytes.NewReader(file))
+	if err != nil || decoded.Bounds().Dx() != 64 || decoded.Bounds().Dy() != 36 {
+		t.Fatalf("decoded %v, %v", decoded, err)
+	}
+	if r, g, b, _ := decoded.At(10, 5).RGBA(); r>>8 != 40 || g>>8 != 10 || b>>8 != 200 {
+		t.Errorf("pixel is %d %d %d", r>>8, g>>8, b>>8)
+	}
+	if _, err := (Frame{}).PNG(); err == nil {
+		t.Error("an empty frame gave a PNG")
 	}
 }

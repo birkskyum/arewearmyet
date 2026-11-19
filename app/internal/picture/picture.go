@@ -4,6 +4,8 @@ package picture
 import (
 	"bytes"
 	"fmt"
+	"image"
+	"image/png"
 	"math"
 	"strings"
 )
@@ -105,4 +107,20 @@ func (f Frame) Render(columns, rows int) string {
 		}
 	}
 	return out.String()
+}
+
+// PNG is the frame as a PNG file, for an image viewer to show at full size.
+func (f Frame) PNG() ([]byte, error) {
+	if f.Width == 0 || f.Height == 0 {
+		return nil, fmt.Errorf("there is no picture")
+	}
+	img := image.NewRGBA(image.Rect(0, 0, f.Width, f.Height))
+	for i := 0; i < f.Width*f.Height; i++ {
+		img.Pix[i*4], img.Pix[i*4+1], img.Pix[i*4+2], img.Pix[i*4+3] = f.Pixels[i*3], f.Pixels[i*3+1], f.Pixels[i*3+2], 255
+	}
+	var out bytes.Buffer
+	if err := png.Encode(&out, img); err != nil {
+		return nil, err
+	}
+	return out.Bytes(), nil
 }

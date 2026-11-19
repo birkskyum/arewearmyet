@@ -59,6 +59,10 @@ type allKeys interface{ wantsAllKeys() bool }
 // pointer is implemented by a step that needs the pointer's movement, clicks and scrolling.
 type pointer interface{ wantsMouse() bool }
 
+// cleaner is implemented by a step that has something open to close when the test ends early,
+// like the camera's picture window.
+type cleaner interface{ cleanup() }
+
 // The words a step can be asked for by on the command line, and the steps each one runs.
 var stepWords = []struct {
 	word  string
@@ -202,14 +206,28 @@ func Run(run *report.Run, facts probe.Facts, options Options) error {
 		}
 	}
 
-	last := &summary{run: run, options: options}
+	last := &summary{run: run, options: options, dir: dir}
 	m := &model{run: run, summary: last, width: 100, height: 30, failed: map[string]string{}}
 	last.failed = m.failed
 	sleepMode := machine.Real().Read("/sys/power/mem_sleep")
 	m.save = func(step string) { _ = report.SavePending(step, sleepMode, run) }
 
+	// Run without a step named, the test opens on a menu: all of it, or one part alone
+	start := &welcome{run: run, only: len(options.Only) > 0}
+	for _, entry := range menu {
+		if len(choose(steps, []string{entry.word})) > 0 {
+			start.parts = append(start.parts, entry)
+		}
+	}
+	start.pick = func(word string) {
+		// One part alone reports that part only
+		run.Results = nil
+		m.steps = append(append([]step{start}, choose(steps, []string{word})...), last)
+	}
+	start.ask = start.question()
+
 	// A test found on disk stopped before its end: the computer went down, or the test did
-	var opening step = &welcome{run: run, only: len(options.Only) > 0}
+	var opening step = start
 	if pending, found := report.LoadPending(); found {
 		opening, steps = resume(run, pending, report.BootID(), opening, steps)
 		report.ClearPending()
@@ -217,6 +235,12 @@ func Run(run *report.Run, facts probe.Facts, options Options) error {
 
 	m.steps = append(append([]step{opening}, steps...), last)
 	final, err := tea.NewProgram(m).Run()
+	// Whatever a step left open is closed, however the test ended
+	for _, s := range steps {
+		if open, ok := s.(cleaner); ok {
+			open.cleanup()
+		}
+	}
 	if err != nil {
 		// The saved test stays, so the next run picks it up
 		return err
@@ -454,33 +478,84 @@ func (s *skippable) wantsMouse() bool {
 	return ok && inner.wantsMouse()
 }
 
-// welcome shows what the quick check measured and what the guided test will do.
+func (s *skippable) cleanup() {
+	if inner, ok := s.step.(cleaner); ok {
+		inner.cleanup()
+	}
+}
+
+// The parts the opening menu offers, by the word that runs each alone.
+var menu = []struct{ word, label string }{
+	{"keyboard", "Keyboard, with the volume and brightness keys"},
+	{"touchpad", "Touchpad"},
+	{"touchscreen", "Touchscreen"},
+	{"sound", "Sound: speakers, microphone and headphones"},
+	{"camera", "Camera"},
+	{"usb", "USB ports"},
+	{"screen", "External screen"},
+	{"sleep", "Sleep"},
+}
+
+// welcome is the opening screen: what the test does, and a menu of all of it or one part.
 type welcome struct {
 	run *report.Run
-	// only is set when chosen steps are run and not the whole test, which need no introduction.
-	only    bool
+	// only is set when the steps were named on the command line, which need no menu.
+	only bool
+	// parts are the menu's entries for what this machine has.
+	parts []struct{ word, label string }
+	// pick narrows the test to one part.
+	pick    func(word string)
+	ask     choice
 	started bool
+}
+
+func (w *welcome) question() choice {
+	options := []string{"The whole test, about ten minutes"}
+	for _, part := range w.parts {
+		options = append(options, "Only: "+part.label)
+	}
+	return choice{question: "What would you like to test?", options: options}
 }
 
 func (w *welcome) name() string   { return "Start" }
 func (w *welcome) start() tea.Cmd { return nil }
 func (w *welcome) done() bool     { return w.started || w.only }
-func (w *welcome) keys() string   { return "Enter to start" }
+func (w *welcome) keys() string   { return choiceKeys }
 
 func (w *welcome) update(msg tea.Msg) tea.Cmd {
-	if key, ok := msg.(tea.KeyPressMsg); ok && (key.String() == "enter" || key.String() == "space") {
-		w.started = true
+	press, ok := msg.(tea.KeyPressMsg)
+	if !ok {
+		return nil
 	}
+	if len(w.ask.options) == 0 {
+		w.ask = w.question()
+	}
+	picked := w.ask.update(press)
+	if picked < 0 {
+		return nil
+	}
+	if picked > 0 && w.pick != nil {
+		w.pick(w.parts[picked-1].word)
+	}
+	w.started = true
 	return nil
 }
 
 func (w *welcome) view(width, height int) string {
+	if len(w.ask.options) == 0 {
+		w.ask = w.question()
+	}
+	working := 0
+	for _, result := range w.run.Results {
+		if result.State == report.Works {
+			working++
+		}
+	}
 	intro := "This checks what works on this computer and puts it on its page on arewearmyet.com, so the next owner knows and the people fixing things see what's left. " +
-		"It takes about ten minutes. It has already measured what it can, and now tests the keyboard, touchpad, sound, camera, ports and sleep with you. Any step can be skipped."
-	measured := resultsTable(w.run.Results, width)
-	return wrap(intro, width) + "\n\n" + bold.Render("Measured just now") + "\n" + measured + "\n\n" +
-		wrap("Only results like the ones above are sent, with the model and software versions. No serial numbers, addresses or names.", width) + "\n" +
-		good.Render("🔒 ") + wrap("The microphone recording and the camera picture are only for you to check. They never leave this computer and are deleted when the test ends.", width-3)
+		fmt.Sprintf("It has already measured %d things by itself, %d of them working. The rest it tests with you, and measures wherever it can. Any step can be skipped.", len(w.run.Results), working)
+	return wrap(intro, width) + "\n\n" + w.ask.view(width) + "\n\n" +
+		wrap("Only results are sent, with the model and software versions. No serial numbers, addresses or names.", width) + "\n" +
+		good.Render("🔒 ") + wrap("A picture or recording the test makes never leaves this computer and is deleted when the test ends.", width-3)
 }
 
 // resumed opens a test that stopped before its end. When the computer has restarted since,

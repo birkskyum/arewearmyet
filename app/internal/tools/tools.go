@@ -160,6 +160,45 @@ func volume(device string) (level float64, muted, ok bool) {
 	return level, strings.Contains(string(out), "MUTED"), err == nil
 }
 
+// Viewer is an image viewer showing a picture in a window of its own.
+type Viewer struct {
+	command *exec.Cmd
+	// Closed is closed when the viewer's window has gone.
+	Closed chan struct{}
+}
+
+// View opens a picture in imv, Omarchy's image viewer, where q closes it. It returns nil
+// when there is no viewer to open it in.
+func View(file string) *Viewer {
+	if !Have("imv") {
+		return nil
+	}
+	command := exec.Command("imv", file)
+	if command.Start() != nil {
+		return nil
+	}
+	viewer := &Viewer{command: command, Closed: make(chan struct{})}
+	go func() {
+		_ = command.Wait()
+		close(viewer.Closed)
+	}()
+	return viewer
+}
+
+// Close shuts the viewer's window if it is still open.
+func (v *Viewer) Close() {
+	if v == nil {
+		return
+	}
+	select {
+	case <-v.Closed:
+	default:
+		if v.command != nil && v.command.Process != nil {
+			_ = v.command.Process.Kill()
+		}
+	}
+}
+
 // Open shows a web page in the default browser, without waiting for it.
 func Open(url string) {
 	command := exec.Command("xdg-open", url)

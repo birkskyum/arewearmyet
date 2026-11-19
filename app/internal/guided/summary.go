@@ -2,6 +2,8 @@ package guided
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 
 	tea "charm.land/bubbletea/v2"
 
@@ -26,6 +28,8 @@ type summary struct {
 	over    bool
 	// failed holds the steps that hit a fault of the test's own, by name.
 	failed map[string]string
+	// dir holds the test's recordings and pictures, which are deleted before anything is sent.
+	dir string
 }
 
 func (s *summary) name() string { return "Send" }
@@ -40,7 +44,14 @@ func (s *summary) keys() string {
 
 func (s *summary) start() tea.Cmd {
 	s.phase = "review"
-	s.ask = choice{question: "Send these results to arewearmyet.com? This list is all that goes, with the model and software versions. No recording and no picture.", options: []string{"Send", "Don't send"}}
+	// Every recording and picture is gone before the question of sending comes up
+	if s.dir != "" {
+		entries, _ := os.ReadDir(s.dir)
+		for _, entry := range entries {
+			os.RemoveAll(filepath.Join(s.dir, entry.Name()))
+		}
+	}
+	s.ask = choice{question: "Send the lines above to arewearmyet.com?", options: []string{"Send", "Don't send"}}
 	if !s.options.Send {
 		s.ask = choice{question: "These are the results. Nothing is sent, as asked.", options: []string{"Done"}}
 	}
@@ -118,6 +129,11 @@ func (s *summary) view(width, height int) string {
 		// Said plainly, so a step that was passed over isn't taken for one that found nothing
 		for name, fault := range s.failed {
 			text += close_.Render(wrap("The "+name+" step ran into a problem of the test's own and was passed over ("+fault+"). Nothing is reported for it.", width)) + "\n\n"
+		}
+		if s.options.Send {
+			// What goes and what doesn't, said where the decision is made
+			text += wrap("Those lines are everything that is sent, with this computer's model and its software versions.", width) + "\n" +
+				good.Render("🔒 ") + wrap("No picture and no recording is sent. They were only for you to check, and are already deleted.", width-3) + "\n\n"
 		}
 	}
 	return text + s.ask.view(width)
