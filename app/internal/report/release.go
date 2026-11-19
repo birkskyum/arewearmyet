@@ -14,8 +14,13 @@ import (
 // Releases is where the newest release of the app is asked for. Tests point it elsewhere.
 var Releases = "https://api.github.com/repos/birkskyum/arewearmyet/releases/latest"
 
-// How long an answer about the newest release is trusted before asking again.
-const releaseAge = 12 * time.Hour
+// How long an answer about the newest release is trusted before asking again, and how long a
+// try that got no answer is left alone when nothing is known yet. Without the second, a
+// machine that has never been online would try, and wait, at every start.
+const (
+	releaseAge = 12 * time.Hour
+	retryAfter = 15 * time.Minute
+)
 
 type release struct {
 	Latest  string    `json:"latest"`
@@ -74,7 +79,11 @@ func Newer(current string, now time.Time) (newer string) {
 	if data, err := os.ReadFile(releaseFile()); err == nil {
 		_ = json.Unmarshal(data, &kept)
 	}
-	if kept.Latest == "" || now.Sub(kept.Checked) > releaseAge || now.Before(kept.Checked) {
+	wait := releaseAge
+	if kept.Latest == "" {
+		wait = retryAfter
+	}
+	if kept.Checked.IsZero() || now.Sub(kept.Checked) > wait || now.Before(kept.Checked) {
 		if latest := newest(); latest != "" {
 			kept.Latest = latest
 		}

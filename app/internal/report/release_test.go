@@ -86,6 +86,22 @@ func TestAMachineWithoutANetworkIsNotHeldUp(t *testing.T) {
 	if waited := time.Since(began); waited > 3*time.Second {
 		t.Errorf("the start was held up for %s", waited)
 	}
+
+	// A machine that has never had an answer doesn't try at every start: the next few starts
+	// ask nobody, and it tries again a quarter of an hour on
+	asked := 0
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		asked++
+		_, _ = w.Write([]byte(`{"tag_name": "v0.12.1"}`))
+	}))
+	defer server.Close()
+	Releases = server.URL
+	if got := Newer("0.12.0", began.Add(time.Minute)); got != "" || asked != 0 {
+		t.Errorf("a minute after a failed try: %q, asked %d times", got, asked)
+	}
+	if got := Newer("0.12.0", began.Add(16*time.Minute)); got != "0.12.1" || asked != 1 {
+		t.Errorf("a quarter of an hour after: %q, asked %d times", got, asked)
+	}
 }
 
 func TestNothingAboutTheReleaseCheckCanStopTheStart(t *testing.T) {
