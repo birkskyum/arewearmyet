@@ -1,0 +1,159 @@
+---
+// The bar at the top of every page: the way home, the main pages, and one search over every
+// model on the board, whichever group it is in.
+import ChipIcon from '../assets/chip-icon.svg';
+import GitHubIcon from '../assets/github-icon.svg';
+
+interface Props {
+  // The home page shows the name as its own heading, so the bar leaves it out there
+  home?: boolean;
+}
+
+const { home = false } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const PAGES = [
+  { href: '/', label: 'Models', on: path === '/' || path.startsWith('/models') },
+  { href: '/install', label: 'Install', on: path === '/install' },
+  { href: '/help', label: 'Help', on: path === '/help' },
+  { href: '/docs', label: 'Docs', on: path.startsWith('/docs') || path === '/agents' },
+];
+---
+
+<header class="border-b border-zinc-800/80">
+  <div class="mx-auto flex max-w-[96rem] flex-wrap items-center gap-x-5 gap-y-2 px-4 py-3 sm:px-6 lg:px-8">
+    {!home && (
+      <a href="/" class="flex items-center gap-2.5 text-zinc-200 hover:text-zinc-50">
+        <ChipIcon class="h-7 w-7 text-[#9ece6a]" aria-hidden="true" />
+        <span class="font-semibold">Are we ARM yet?</span>
+      </a>
+    )}
+    <nav class="flex items-center gap-1 text-sm" aria-label="Site">
+      {PAGES.map((page) => (
+        <a href={page.href} aria-current={page.on ? 'page' : undefined} class={`rounded-md px-2.5 py-1.5 font-medium ${page.on ? 'bg-zinc-800 text-zinc-50' : 'text-zinc-400 hover:bg-zinc-900 hover:text-zinc-100'}`}>{page.label}</a>
+      ))}
+    </nav>
+    <div class="relative ml-auto w-full sm:w-80" data-site-search>
+      <input
+        type="search"
+        role="combobox"
+        aria-expanded="false"
+        aria-controls="site-search-results"
+        aria-autocomplete="list"
+        aria-label="Find a model"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="Find a model, by name or number"
+        class="w-full rounded-md bg-zinc-900 px-3 py-1.5 text-sm text-zinc-100 ring-1 ring-zinc-700 placeholder:text-zinc-500 focus:outline-none focus:ring-zinc-400"
+      />
+      <ul id="site-search-results" role="listbox" hidden class="absolute right-0 z-40 mt-2 max-h-[70vh] w-full min-w-[min(24rem,calc(100vw-2rem))] overflow-y-auto rounded-lg bg-zinc-900 p-1 shadow-2xl ring-1 ring-zinc-700"></ul>
+    </div>
+    <a href="https://github.com/birkskyum/arewearmyet" class="flex shrink-0 items-center rounded-md p-1.5 text-zinc-400 hover:bg-zinc-900 hover:text-zinc-100 max-sm:hidden" aria-label="Are we ARM yet? on GitHub">
+      <GitHubIcon class="h-5 w-5" aria-hidden="true" />
+    </a>
+  </div>
+</header>
+
+<script>
+  // The list of models is fetched the first time the box is used. A model matches when every
+  // word typed is in its name, chips or model numbers, or when a full product number that was
+  // typed starts with one of its series, like 83ED0049US for 83ED.
+  type Model = { name: string; about: string; href: string; text: string; series: string[] };
+
+  const box = document.querySelector<HTMLElement>('[data-site-search]');
+  if (box) {
+    const input = box.querySelector('input')!;
+    const list = box.querySelector('ul')!;
+    let models: Model[] | null = null;
+    let loading: Promise<void> | null = null;
+    let shown: Model[] = [];
+    let at = -1;
+
+    const load = () => (loading ??= fetch('/data/search.json').then((response) => response.json()).then((data) => void (models = data)).catch(() => void (loading = null)));
+    const close = () => {
+      list.hidden = true;
+      input.setAttribute('aria-expanded', 'false');
+      input.removeAttribute('aria-activedescendant');
+      at = -1;
+    };
+    const mark = () => {
+      [...list.children].forEach((item, i) => {
+        item.setAttribute('aria-selected', String(i === at));
+        item.classList.toggle('bg-zinc-800', i === at);
+      });
+      if (at >= 0) {
+        input.setAttribute('aria-activedescendant', `site-search-${at}`);
+        list.children[at]?.scrollIntoView({ block: 'nearest' });
+      }
+    };
+    const draw = () => {
+      const words = input.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+      list.replaceChildren();
+      if (!words.length || !models) return close();
+      const found = models.filter((model) => words.every((word) => model.text.includes(word) || model.series.some((series) => word.startsWith(series))));
+      // A name that starts with what was typed comes first
+      const typed = words.join(' ');
+      shown = found.sort((a, b) => Number(b.name.toLowerCase().includes(typed)) - Number(a.name.toLowerCase().includes(typed))).slice(0, 8);
+      at = shown.length ? 0 : -1;
+      for (const [i, model] of shown.entries()) {
+        const item = document.createElement('li');
+        item.id = `site-search-${i}`;
+        item.setAttribute('role', 'option');
+        item.className = 'rounded-md';
+        const link = document.createElement('a');
+        link.href = model.href;
+        link.tabIndex = -1;
+        link.className = 'block px-3 py-2 hover:bg-zinc-800';
+        const name = document.createElement('span');
+        name.className = 'block text-sm font-medium text-zinc-100';
+        name.textContent = model.name;
+        const about = document.createElement('span');
+        about.className = 'block text-xs text-zinc-500';
+        about.textContent = model.about;
+        link.append(name, about);
+        item.append(link);
+        list.append(item);
+      }
+      if (!shown.length) {
+        const none = document.createElement('li');
+        none.className = 'px-3 py-2 text-sm text-zinc-400';
+        none.innerHTML = 'No model matches. <a class="underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100" href="/help">Add yours</a>.';
+        list.append(none);
+      } else if (found.length > shown.length) {
+        const more = document.createElement('li');
+        more.className = 'px-3 py-1.5 text-xs text-zinc-500';
+        more.textContent = `${found.length - shown.length} more. Keep typing to narrow it down.`;
+        list.append(more);
+      }
+      list.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+      mark();
+    };
+
+    input.addEventListener('focus', () => void load().then(draw));
+    input.addEventListener('input', () => void load().then(draw));
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        close();
+        input.blur();
+      } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        if (!shown.length || list.hidden) return;
+        event.preventDefault();
+        at = (at + (event.key === 'ArrowDown' ? 1 : shown.length - 1)) % shown.length;
+        mark();
+      } else if (event.key === 'Enter' && at >= 0 && shown[at] && !list.hidden) {
+        event.preventDefault();
+        location.href = shown[at].href;
+      }
+    });
+    document.addEventListener('click', (event) => {
+      if (!box.contains(event.target as Node)) close();
+    });
+    // "/" goes to the search from anywhere outside a text field
+    document.addEventListener('keydown', (event) => {
+      const target = event.target as HTMLElement;
+      if (event.key !== '/' || event.metaKey || event.ctrlKey || event.altKey || target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName)) return;
+      event.preventDefault();
+      input.focus();
+    });
+  }
+</script>

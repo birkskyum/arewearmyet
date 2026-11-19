@@ -1,7 +1,13 @@
 ---
-// The page-wide switch between Booting and Hardware. It stays at the top while the page scrolls,
-// and every section follows it: bars, legends and tables. The mode is on the <html> element
+// The page-wide switch between Booting and Hardware, with links to the page's groups. It stays
+// at the top while the page scrolls, and every section follows the switch: bars, legends and tables. The mode is on the <html> element
 // (src/lib/mode.ts), so the active side is styled with the hw: variant and no script redraws it.
+interface Props {
+  // The groups on the page, to jump between from wherever the page is scrolled to
+  groups?: { href: string; label: string; total: number }[];
+}
+
+const { groups = [] } = Astro.props;
 const SIDE = 'rounded-md px-4 py-1.5 text-sm font-semibold';
 ---
 
@@ -11,8 +17,15 @@ const SIDE = 'rounded-md px-4 py-1.5 text-sm font-semibold';
       <button type="button" data-set-mode="booting" aria-pressed="true" class={`${SIDE} bg-zinc-100 text-zinc-900 hw:bg-transparent hw:text-zinc-300 hw:hover:bg-zinc-800 hw:hover:text-zinc-100`}>Booting</button>
       <button type="button" data-set-mode="hardware" aria-pressed="false" class={`${SIDE} text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100 hw:bg-zinc-100 hw:text-zinc-900 hw:hover:bg-zinc-100 hw:hover:text-zinc-900`}>Hardware</button>
     </div>
-    <p class="text-sm text-zinc-400 max-sm:hidden hw:hidden">Does it start? The device tree, hardware IDs and firmware each model needs.</p>
-    <p class="hidden text-sm text-zinc-400 sm:hw:block">What works once it runs? Each part, as owners and <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs text-zinc-200">hw-test</code> found it.</p>
+    {groups.length > 0 && (
+      <nav class="flex flex-wrap items-center gap-x-1 text-sm" aria-label="Groups">
+        {groups.map((group) => (
+          <a href={group.href} class="rounded-md px-2 py-1 font-medium text-zinc-300 hover:bg-zinc-800 hover:text-zinc-50">{group.label} <span class="font-normal text-zinc-500">{group.total}</span></a>
+        ))}
+      </nav>
+    )}
+    <p class="ml-auto text-sm text-zinc-400 max-lg:hidden hw:hidden">Does it start? The device tree, hardware IDs and firmware each model needs.</p>
+    <p class="ml-auto hidden text-sm text-zinc-400 lg:hw:block">What works once it runs? Each part, as owners and <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs text-zinc-200">hw-test</code> found it.</p>
   </div>
 </div>
 

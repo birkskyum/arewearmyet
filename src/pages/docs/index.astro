@@ -1,7 +1,6 @@
 ---
 // Where every piece of documentation is, for owners, agents and anyone building on the data
 import Layout from '../../layouts/Layout.astro';
-import ChipIcon from '../../assets/chip-icon.svg';
 const DOCS = [
   { href: '/install', title: 'Installing Omarchy on an ARM PC', text: 'Making the stick, installing, and the fixes for known snags at the first start.' },
   { href: '/help', title: 'How to help', text: 'What to do with the laptop you have, whether it still runs Windows, runs another Linux, or runs Omarchy already.' },
@@ -13,11 +12,7 @@ const DOCS = [
 
 <Layout title="Docs · Are we ARM yet?" description="Documentation for arewearmyet.com: installing Omarchy on an ARM PC, the hw-test hardware test, the guide for AI agents and the API.">
   <main class="mx-auto max-w-4xl px-4 py-10 text-zinc-400 sm:px-6">
-    <a href="/" class="flex items-center gap-3 text-zinc-300 hover:text-zinc-100">
-      <ChipIcon class="h-8 w-8 text-[#9ece6a]" aria-hidden="true" />
-      <span class="font-semibold">Are we ARM yet?</span>
-    </a>
-    <h1 class="mt-8 text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">Docs</h1>
+    <h1 class="text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">Docs</h1>
     <ul class="mt-8 space-y-4">
       {DOCS.map((doc) => (
         <li>

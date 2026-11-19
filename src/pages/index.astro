@@ -6,7 +6,6 @@ import PieceBars from '../components/PieceBars.astro';
 import StatusTable from '../components/StatusTable';
 import ChipIcon from '../assets/chip-icon.svg';
 import OmarchyIcon from '../assets/omarchy-icon.svg';
-import GitHubIcon from '../assets/github-icon.svg';
 import status from '../data/status.json';
 import { ANNOUNCED, CHROMEBOOK_OMARCHY_LEGEND, FILTERS, GOOGLEBOOK_OMARCHY_LEGEND, GOOGLEBOOK_UPSTREAM_LEGEND, NVIDIA_OMARCHY_LEGEND, NVIDIA_UPSTREAM_LEGEND, OMARCHY_LEGEND, TONE, UPSTREAM_LEGEND } from '../lib/labels';
 import { PILL } from '../lib/tones';
@@ -110,7 +109,7 @@ const REPO = 'https://github.com/birkskyum/arewearmyet';
 const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100';
 ---
 
-<Layout title="Are we ARM yet? Omarchy on ARM PCs, model by model" description="Which ARM PCs boot Omarchy today, what Omarchy ships for each, and what Linux, systemd and linux-firmware have.">
+<Layout home title="Are we ARM yet? Omarchy on ARM PCs, model by model" description="Which ARM PCs boot Omarchy today, what Omarchy ships for each, and what Linux, systemd and linux-firmware have.">
   <script is:inline slot="head">
     // The page opens in the mode its address names, before anything is painted. An older link
     // that named one table's view (nvidia-view=hardware) counts too
@@ -123,35 +122,8 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
           <ChipIcon class="h-11 w-11 shrink-0 text-[#9ece6a] sm:h-14 sm:w-14" aria-hidden="true" />
           <h1 class="text-4xl font-bold tracking-tight text-zinc-50 sm:text-5xl">Are we ARM yet?</h1>
         </div>
-        <a href={REPO} class="flex shrink-0 items-center gap-2 rounded-md p-2 text-sm text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100 sm:px-3 sm:py-1.5" aria-label="Are we ARM yet? on GitHub">
-          <GitHubIcon class="h-5 w-5" aria-hidden="true" />
-          <span class="hidden sm:inline">GitHub</span>
-        </a>
       </div>
       <p class="mt-3 text-lg text-zinc-400">Omarchy on ARM PCs, model by model.</p>
-      <nav class="mt-5 space-y-2 text-sm">
-        <div class="flex flex-wrap items-center gap-2">
-          <a href="#snapdragon-pcs" class="mr-1 font-semibold text-zinc-200 hover:text-zinc-50">Snapdragon PCs</a>
-          <a href="#snapdragon" class={NAV}>X and X2 <span class="text-zinc-500">{current.length}</span></a>
-          <a href="#snapdragon-7c-8cx-835-850" class={NAV}>7c, 8cx, 835 and 850 <span class="text-zinc-500">{older.length}</span></a>
-          <a href="#snapdragon-c" class={NAV}>Snapdragon C <span class="text-zinc-500">{entry.length}</span></a>
-        </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <a href="#nvidia-pcs" class="mr-1 font-semibold text-zinc-200 hover:text-zinc-50">NVIDIA PCs</a>
-          <a href="#nvidia" class={NAV}>N1x and GB10 <span class="text-zinc-500">{nvidia.length}</span></a>
-        </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <a href="#chromebooks-and-googlebooks" class="mr-1 font-semibold text-zinc-200 hover:text-zinc-50">Chromebooks and Googlebooks</a>
-          <a href="#googlebooks" class={NAV}>Googlebooks <span class="text-zinc-500">{googlebooks.length}</span></a>
-          <a href="#chromebooks" class={NAV}>Chromebooks <span class="text-zinc-500">{chromebooks.length}</span></a>
-        </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <a href="#apple" class="mr-1 font-semibold text-zinc-200 hover:text-zinc-50">Apple Silicon</a>
-          <span class="text-zinc-600" aria-hidden="true">·</span>
-          <a href="#android" class="font-semibold text-zinc-200 hover:text-zinc-50">Android phones and tablets</a>
-          <span class="text-zinc-500">are covered elsewhere</span>
-        </div>
-      </nav>
       <p class="mt-5 max-w-3xl text-sm text-zinc-400 hw:hidden">
         Every ARM laptop needs a device tree, hardware IDs and firmware. Omarchy ships them in its own packages, often before Linux, systemd and linux-firmware have them. The Omarchy view shows what its channels ship today, and the Upstream view what every distro gets. Bootable names the most stable channel whose install image picks the model's device tree by itself. Edge is the {image ? <a class={LINK} href={image.url}>nightly image</a> : 'nightly image'}, with <span class="whitespace-nowrap">linux-omarchy {status.omarchy.kernel}</span> and systemd {status.omarchy.systemd}. Booting is the first goal. Each model's page, behind its name, goes on to everything past booting, from sound and the camera to sleep and USB4, with what owners and their agents measured.
       </p>
@@ -168,7 +140,11 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
       </div>
     </header>
 
-    <ModeSwitch />
+    <ModeSwitch groups={[
+      { href: '#snapdragon-pcs', label: 'Snapdragon', total: current.length + older.length + entry.length },
+      { href: '#nvidia-pcs', label: 'NVIDIA', total: nvidia.length },
+      { href: '#chromebooks-and-googlebooks', label: 'Chromebooks', total: googlebooks.length + chromebooks.length },
+    ]} />
 
     <Group id="snapdragon-pcs" title="Snapdragon PCs" total={current.length + older.length + entry.length}>
       Laptops, tablets and desktops sold with Windows or Linux. They start through UEFI and need a device tree, hardware IDs and firmware. <a class={LINK} href="#chromebooks-and-googlebooks">Chromebooks and Googlebooks</a> are further down.

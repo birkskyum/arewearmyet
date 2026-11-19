@@ -1,8 +1,6 @@
 ---
 import { parse } from 'yaml';
 import Layout from '../layouts/Layout.astro';
-import ChipIcon from '../assets/chip-icon.svg';
-import GitHubIcon from '../assets/github-icon.svg';
 import ExportButton from '../components/ExportButton';
 import sourcesRaw from '../../data/firmware-sources.yaml?raw';
 import modelsRaw from '../../data/models.yaml?raw';
@@ -51,18 +49,7 @@ const exportRows = folders.flatMap((folder) => {
 
 <Layout title="Firmware from the makers · Are we ARM yet?" description="Where to download each Snapdragon laptop's firmware from its maker, with the file in each package and its checksum.">
   <main class="mx-auto max-w-4xl px-4 py-10 text-zinc-400 sm:px-6">
-    <div class="flex items-center justify-between gap-4">
-      <a href="/" class="flex items-center gap-3 text-zinc-300 hover:text-zinc-100">
-        <ChipIcon class="h-8 w-8 text-[#9ece6a]" aria-hidden="true" />
-        <span class="font-semibold">Are we ARM yet?</span>
-      </a>
-      <a href={REPO} class="flex shrink-0 items-center gap-2 rounded-md p-2 text-sm text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100 sm:px-3 sm:py-1.5" aria-label="Are we ARM yet? on GitHub">
-        <GitHubIcon class="h-5 w-5" aria-hidden="true" />
-        <span class="hidden sm:inline">GitHub</span>
-      </a>
-    </div>
-
-    <h1 class="mt-8 text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">Firmware from the makers</h1>
+    <h1 class="text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">Firmware from the makers</h1>
     <p class="mt-4 text-lg">
       Most Snapdragon laptops load signed firmware for their audio and compute DSPs and their GPU that linux-firmware doesn't ship yet. Their makers publish it inside their Windows driver packages. This list says which package holds each file, where inside it, and each file's checksum, so you or your distro can get it from the maker even after Windows is gone. Nothing here is firmware, only links and checksums.
     </p>

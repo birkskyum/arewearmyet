@@ -2,7 +2,6 @@
 // A page of running text written in Markdown: the agent guide and the reference pages under /docs.
 // The same text is served as plain Markdown at the address given as `plain`.
 import Layout from './Layout.astro';
-import ChipIcon from '../assets/chip-icon.svg';
 
 interface Props {
   title: string;
@@ -17,13 +16,9 @@ const sections = headings.filter((h) => h.depth === 2);
 
 <Layout title={title} description={description}>
   <main class="mx-auto max-w-4xl px-4 py-10 text-zinc-400 sm:px-6">
-    <a href="/" class="flex items-center gap-3 text-zinc-300 hover:text-zinc-100">
-      <ChipIcon class="h-8 w-8 text-[#9ece6a]" aria-hidden="true" />
-      <span class="font-semibold">Are we ARM yet?</span>
-    </a>
     <slot name="top" />
     {sections.length > 0 && (
-      <nav class="mt-8 flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label="On this page">
+      <nav class="flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label="On this page">
         {sections.map((h) => <a class={LINK} href={`#${h.slug}`}>{h.text}</a>)}
       </nav>
     )}

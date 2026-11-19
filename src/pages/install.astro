@@ -2,8 +2,6 @@
 // How an owner installs Omarchy on an ARM PC, and what to do when the start doesn't go as it
 // should. Which image a model needs comes from the board's own data, so it stays right.
 import Layout from '../layouts/Layout.astro';
-import ChipIcon from '../assets/chip-icon.svg';
-import GitHubIcon from '../assets/github-icon.svg';
 import { TONE, edgeStarts } from '../lib/labels';
 import { PILL } from '../lib/tones';
 import { pageModels } from '../lib/checks';
@@ -44,18 +42,7 @@ const UNLOCK_FIXED = [
 
 <Layout title="Install Omarchy on an ARM PC · Are we ARM yet?" description="How to install Omarchy on a Snapdragon laptop or another ARM PC: which image your model needs, making the USB stick, installing, and the fixes for the known snags.">
   <main class="mx-auto max-w-4xl px-4 py-10 text-zinc-400 sm:px-6">
-    <div class="flex items-center justify-between gap-4">
-      <a href="/" class="flex items-center gap-3 text-zinc-300 hover:text-zinc-100">
-        <ChipIcon class="h-8 w-8 text-[#9ece6a]" aria-hidden="true" />
-        <span class="font-semibold">Are we ARM yet?</span>
-      </a>
-      <a href={REPO} class="flex shrink-0 items-center gap-2 rounded-md p-2 text-sm text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100 sm:px-3 sm:py-1.5" aria-label="Are we ARM yet? on GitHub">
-        <GitHubIcon class="h-5 w-5" aria-hidden="true" />
-        <span class="hidden sm:inline">GitHub</span>
-      </a>
-    </div>
-
-    <h1 class="mt-8 text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">Install Omarchy on an ARM PC</h1>
+    <h1 class="text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">Install Omarchy on an ARM PC</h1>
     <p class="mt-4 text-lg">
       Omarchy builds one install image for every ARM PC it supports. This page takes a Snapdragon laptop from Windows to the Omarchy desktop.
     </p>
