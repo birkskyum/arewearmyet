@@ -155,8 +155,8 @@ type recordedMsg struct{ samples []int16 }
 
 type playedMsg struct{ err error }
 
-// microphones records the owner's voice and plays it back, so they hear for themselves
-// whether the microphones work.
+// microphones records a few seconds and plays them back, so the owner hears for themselves
+// whether the microphone works.
 type microphones struct {
 	run       *report.Run
 	dir       string
@@ -175,7 +175,7 @@ const recordFor = 4 * time.Second
 
 func newMicrophones(run *report.Run, dir string) *microphones {
 	return &microphones{run: run, dir: dir, phase: "intro", ask: choice{
-		question: "Did you hear your own voice?",
+		question: "Did the microphone pick you up?",
 		options:  []string{"Yes, clearly", "Yes, but quiet or muffled", "No, only silence or noise", "Record again"},
 	}}
 }
@@ -251,7 +251,7 @@ func (m *microphones) update(msg tea.Msg) tea.Cmd {
 				m.over = true
 			}
 		case "ask":
-			evidence := fmt.Sprintf("voice level %d, loudest %d", m.voice, m.peak)
+			evidence := fmt.Sprintf("recording level %d, loudest %d", m.voice, m.peak)
 			if m.speakers != nil {
 				evidence += "; " + m.speakers.evidence()
 			}
@@ -287,12 +287,12 @@ func meter(level, width int) string {
 func (m *microphones) view(width, height int) string {
 	switch m.phase {
 	case "intro":
-		return wrap("Now your voice. Press Enter, then say a few words in a normal voice. It records four seconds and plays them back to you, so you can hear whether the microphones work.", width) + "\n\n" + private(width)
+		return wrap("Now the microphone. Press Enter, then say a few words. It records four seconds and plays them back, so you can hear whether the microphone works.", width) + "\n\n" + private(width)
 	case "recording":
 		left := recordFor - time.Since(m.began)
 		return accent.Render(fmt.Sprintf("● Recording, speak now  (%.0f s left)", math.Max(0, left.Seconds()))) + "\n\n" + meter(m.level, min(width, 60)) + "\n\n" + dim.Render("Only on this computer. Not sent.")
 	case "playing":
 		return accent.Render("▶ Playing your recording back")
 	}
-	return m.ask.view(width) + "\n\n" + dim.Render(fmt.Sprintf("Measured: voice level %d, loudest %d. Only these two numbers are sent, not the recording.", m.voice, m.peak))
+	return m.ask.view(width) + "\n\n" + dim.Render(fmt.Sprintf("Measured: recording level %d, loudest %d. Only these two numbers are sent, not the recording.", m.voice, m.peak))
 }

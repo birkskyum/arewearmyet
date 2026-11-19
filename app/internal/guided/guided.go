@@ -247,5 +247,5 @@ func (w *welcome) view(width, height int) string {
 	measured := resultsTable(w.run.Results, width)
 	return wrap(intro, width) + "\n\n" + bold.Render("Measured just now") + "\n" + measured + "\n\n" +
 		wrap("Only results like the ones above are sent, with the model and software versions. No serial numbers, addresses or names.", width) + "\n" +
-		good.Render("🔒 ") + wrap("The voice recording and the camera picture are only for you to check. They never leave this computer and are deleted when the test ends.", width-3)
+		good.Render("🔒 ") + wrap("The microphone recording and the camera picture are only for you to check. They never leave this computer and are deleted when the test ends.", width-3)
 }

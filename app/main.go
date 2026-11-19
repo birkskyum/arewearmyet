@@ -6,7 +6,7 @@
 // Both show the results and send them to the model's page. What's sent: the maker, model, SKU,
 // board and BIOS version, the hardware IDs made from those, the kernel, OS and a few package
 // versions, and the results. No serial numbers, addresses, user or host names, and no files:
-// the guided test's voice recording and camera picture stay on the computer and are deleted
+// the guided test's microphone recording and camera picture stay on the computer and are deleted
 // when it ends.
 package main
 
@@ -122,7 +122,7 @@ Options:
   --model ID     the model's id on arewearmyet.com, when the machine isn't recognised by itself
   --agent NAME   the agent running this, shown next to the run
 
-Nothing personal is sent: no serial numbers, addresses, names or files. The voice recording
+Nothing personal is sent: no serial numbers, addresses, names or files. The microphone recording
 and the camera picture of the guided test never leave this computer.
 `)
 }
