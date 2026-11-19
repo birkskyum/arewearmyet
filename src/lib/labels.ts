@@ -53,7 +53,7 @@ const STATES = {
   },
   machine: {
     team: { label: 'Omarchy team', tone: 'good', meaning: 'Someone on the Omarchy team has one and tries changes on it.' },
-    omarchy: { label: 'Omarchy community', tone: 'good', meaning: `An Omarchy user has one. They reported on an Omarchy release, sent a hardware report or its hardware IDs, or work on it in an Omarchy discussion.` },
+    omarchy: { label: 'Omarchy community', tone: 'good', meaning: `An Omarchy user has one. They ran hw-test on it, reported on an Omarchy release, sent a hardware report or its hardware IDs, or work on it in an Omarchy discussion.` },
     linux: { label: 'Linux community', tone: 'muted', meaning: `Someone in the wider Linux community has one. Its tree is in Linux or a posted patch, an owner keeps one in their own repository, or its tables are in aarch64-laptops.` },
     nobody: { label: 'Nobody yet', tone: 'wanted', meaning: `Nobody we know has one, since there's no device tree, ACPI dump or owner report for it. An owner's hardware report is the first step.` },
   },

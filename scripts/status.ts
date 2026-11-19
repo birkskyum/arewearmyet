@@ -325,8 +325,23 @@ function bootable(outcome: Outcome, channel: Channel | null, pieces: Record<'dev
 // report from its installer tool, hardware IDs sent in here or an Omarchy discussion), someone in the wider
 // Linux community (a tree in Linux, a posted patch, an owner's repository or an aarch64-laptops dump), or
 // nobody (no tree, no tables, no report)
+// The models someone has run hw-test on, from the copy of the test results the refresh keeps in
+// data/owners.json. Booting Omarchy on a machine and testing it there is being part of the
+// Omarchy community, whatever else is known about the model.
+const tested = new Set<string>(
+  (() => {
+    try {
+      const results = JSON.parse(readFileSync('data/owners.json', 'utf8')) as { models: Record<string, { machines: number }> };
+      return Object.entries(results.models).filter(([, model]) => model.machines > 0).map(([id]) => id);
+    } catch {
+      return [];
+    }
+  })(),
+);
+
 function whoHasOne(model: Model, reports: Report[], deviceTree: string, acpi: string[]) {
   if (model.team_has_one) return 'team';
+  if (tested.has(model.id)) return 'omarchy';
   // A tree borrowed from another model on the same mainboard says nothing about who has this one
   const variants: Variant[] = model.variants ?? [];
   const ownTree = deviceTree !== 'missing' && !(variants.length && variants.every((variant) => variant.borrowed));

@@ -51,10 +51,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # A source being down mustn't stop the refresh, so this one may fail
-      - name: Copy owners' results
-        if: github.event_name != 'push'
-        run: pnpm owners || echo "::warning::owners' results weren't copied"
+      # The test results as they are now, also for a build after a push: who has run hw-test on
+      # a model decides its "Who has one". A source being down mustn't stop the refresh, so this
+      # one may fail, and the last copy is used then.
+      - name: Copy the test results
+        run: pnpm owners || echo "::warning::the test results weren't copied"
 
       - run: pnpm status
 

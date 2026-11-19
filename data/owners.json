@@ -1,4 +1,456 @@
 {
- "models": {},
+ "models": {
+  "lenovo-yoga-slim-7x-14q8x9": {
+   "machines": 1,
+   "checks": {
+    "suspend": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": "slept and woke in s2idle [deep]; Wi-Fi was back 17 s after waking, the audio processor is running",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T02:04:04.163Z",
+       "run": "RUN-K978V6HK5S"
+      }
+     ],
+     "fixed": {
+      "machines": 1,
+      "from": "7.3.0-59-omarchy",
+      "to": "7.3.0-59-omarchy",
+      "since": "2026-11-19T02:04:04.163Z"
+     }
+    },
+    "external-display": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": "DP-2 (DisplayPort over USB-C), 3840x2160 at 60 Hz; it came back 8 s after plugging it in again",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T01:45:55.502Z",
+       "run": "RUN-YQ79E2W74F"
+      }
+     ]
+    },
+    "keyboard": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": "1 keys registered; the owner didn't press Esc, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, Backspace, Tab, Q, W, E, R, T, Y, U, I, O, P, A, S, D, F, G, H, J, K, L, Enter, Z, X, C, V, B, N, M, ←, ↑, ↓, →",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T01:44:45.463Z",
+       "run": "RUN-P3GQJZJWTS"
+      }
+     ]
+    },
+    "speakers": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "by the microphones at half volume: left speaker heard at -48 dB, right speaker heard at -59 dB; the left side 11 dB louder than the right at the microphones",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T01:36:18.238Z",
+       "run": "RUN-X7Z5X76FKF"
+      }
+     ]
+    },
+    "usb": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "6 plug-ins detected: 2-1 at 5 Gb/s, 2-1 at 5 Gb/s, 4-1 at 5 Gb/s, 4-1 at 5 Gb/s, 6-1 at 5 Gb/s, 6-1 at 5 Gb/s",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T01:35:02.670Z",
+       "run": "RUN-JV5HVVCT77"
+      }
+     ]
+    },
+    "camera": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "owner",
+       "note": "There is a picture, but too dark, pale or off in colour.",
+       "evidence": "a 1920x1092 frame, brightness 22 of 255, contrast 24",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T01:29:26.953Z",
+       "run": "RUN-GXHMZHZP45"
+      }
+     ]
+    },
+    "microphones": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "owner",
+       "note": "The recording plays back quiet or muffled.",
+       "evidence": "voice level 760, loudest 3296; the microphones heard the left tone for 2.5 s (level 161), the right for 2.5 s (level 40)",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "display": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "eDP-1 connected, 2944x1840",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "gpu": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adreno bound to 3d00000.gpu, render node from msm_dpu",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "wifi": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "wlan0 (ath12k_wifi7_pci) connected",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "wifi-address": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "wlan0 (ath12k_wifi7_pci): address set by the system (not from the card)",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "bluetooth": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "hci0 powered",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "adsp": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adsp running (qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn)",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "cdsp": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "cdsp running (qcom/x1e80100/LENOVO/83ED/qccdsp8380.mbn)",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "battery": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "qcom-battmgr-bat at 98%, Not charging",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "charging": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "ucsi-source-psy-pmic_glink.ucsi.02 PD, 3250 mA",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "hibernate": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "the kernel offers no hibernation",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "backlight": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "both brightness keys work: the backlight moved between 409 and 512",
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "touchpad": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": null,
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "touchscreen": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": null,
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "disk-unlock": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": null,
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "installer": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": null,
+       "kernel": "7.3.0-59-omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    }
+   }
+  }
+ },
  "unmatched": []
 }
