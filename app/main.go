@@ -203,7 +203,7 @@ func usage() {
                      `+wrapWords(guided.StepWords())+`
   hw-test manual     every test done with you, about ten minutes: keyboard, touchpad, touchscreen,
                      headphones, camera, USB ports, external screen, sleep and a few questions
-  hw-test auto       every test that needs nobody, about two minutes: sound, graphics, WebGL and
+  hw-test auto       every test that needs nobody, about four minutes: sound, graphics, WebGL and
                      WebGPU, Wi-Fi and Bluetooth, video decoding, temperatures. Without a
                      terminal it runs all but the sound, which plays tones out loud
   hw-test status     where this computer stands: the latest result of every check, nothing is run

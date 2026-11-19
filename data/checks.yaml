@@ -229,9 +229,9 @@ checks:
   - id: fans
     group: sensors
     title: Fans and temperatures
-    works: The fans respond to load and the fan speed and temperatures can be read.
-    probe: Which temperature and fan sensors exist. The temperature test keeps every core busy for 20 seconds and reads whether the sensors show the heat and a fan speeds up.
-    person: Put some load on it and say whether the fans spin up and quiet down.
+    works: The temperatures can be read and follow the load, and the fan speeds up when the computer gets hot.
+    probe: Which temperature and fan sensors exist. The temperature test keeps every core and the GPU busy for up to two minutes and reads whether the sensors show the heat. It sees a fan start by its speed, or where no sensor gives that, by the temperature falling while the processor works on at the same rate.
+    person: Press f during the temperature test the moment you hear the fan speed up, or say that the computer has none.
 
   - id: fingerprint
     group: sensors

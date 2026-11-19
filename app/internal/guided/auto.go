@@ -37,16 +37,13 @@ const linger = 3 * time.Second
 type auto struct {
 	run   *report.Run
 	test  deep.Test
-	phase string // running, shown, ask
+	phase string // running, shown
 	began time.Time
 	took  time.Duration
 	// results are what this test measured, and fault its own problem when it had one.
-	results []report.Result
-	fault   string
-	// handsOff is set when nobody may be there to answer: the one question some results lead
-	// to is then left out.
+	results  []report.Result
+	fault    string
 	handsOff bool
-	ask      choice
 	linger   time.Duration
 	over     bool
 }
@@ -63,8 +60,6 @@ func (a *auto) keys() string {
 	switch a.phase {
 	case "shown":
 		return "Goes on by itself in a moment · Enter to go on now"
-	case "ask":
-		return choiceKeys
 	}
 	return "Measuring, nothing for you to do · s to skip"
 }
@@ -84,29 +79,18 @@ func (a *auto) start() tea.Cmd {
 				msg = autoMsg{name: name, fault: fmt.Sprint(fault)}
 			}
 		}()
-		return autoMsg{name: name, results: work()}
+		return autoMsg{name: name, results: work(func(string) {})}
 	}
 	return tea.Batch(measure, a.tick())
 }
 
 // keep writes a result into the run. A check the quick check already found failing stays
 // failing unless this test found it worse: a deeper look that is content doesn't undo it.
-func (a *auto) keep(result report.Result) {
-	if had, ok := a.run.Get(result.Check); ok && severity[had.State] > severity[result.State] {
+func keep(run *report.Run, result report.Result) {
+	if had, ok := run.Get(result.Check); ok && severity[had.State] > severity[result.State] {
 		return
 	}
-	a.run.Set(result.Check, result.State, result.How, result.Evidence, result.Note)
-}
-
-// fanQuestion is the one thing the temperature test can't measure: whether a computer that
-// shows no fan speed has a fan at all.
-func (a *auto) fanQuestion() bool {
-	for _, result := range a.results {
-		if result.Check == "fans" && result.Note == deep.FanUnread {
-			return !a.handsOff
-		}
-	}
-	return false
+	run.Set(result.Check, result.State, result.How, result.Evidence, result.Note)
 }
 
 func (a *auto) goOn() tea.Cmd {
@@ -126,13 +110,7 @@ func (a *auto) update(msg tea.Msg) tea.Cmd {
 		}
 		a.results, a.fault, a.took = msg.results, msg.fault, time.Since(a.began)
 		for _, result := range a.results {
-			a.keep(result)
-		}
-		if a.fanQuestion() {
-			a.phase = "ask"
-			a.ask = choice{question: "The temperatures can be read, but this computer shows no fan speed. Does it have a fan?",
-				options: []string{"Yes, and I heard it speed up just now", "Yes, but I didn't hear it", "No, it has no fan", "I don't know"}}
-			return nil
+			keep(a.run, result)
 		}
 		a.phase = "shown"
 		return a.goOn()
@@ -150,30 +128,12 @@ func (a *auto) update(msg tea.Msg) tea.Cmd {
 			if key := msg.String(); key == "enter" || key == "space" {
 				a.over = true
 			}
-		case "ask":
-			picked := a.ask.update(msg)
-			if picked < 0 {
-				return nil
-			}
-			measured, _ := a.run.Get("fans")
-			switch picked {
-			case 0:
-				a.run.Set("fans", report.Partial, report.Owner, measured.Evidence, "The fan was heard speeding up under load. Its speed can't be read, for want of a sensor.")
-			case 1:
-				a.run.Set("fans", report.Partial, report.Owner, measured.Evidence, fmt.Sprintf("The temperatures can be read. The fan's speed can't, and the fan wasn't heard speeding up in %.0f s of load.", deep.Load.Seconds()))
-			case 2:
-				a.run.Set("fans", report.Works, report.Owner, measured.Evidence, "This computer has no fan, by its owner's word. Its temperatures can be read and answer to load.")
-			}
-			a.over = true
 		}
 	}
 	return nil
 }
 
 func (a *auto) view(width, height int) string {
-	if a.phase == "ask" {
-		return a.measured(width) + "\n\n" + a.ask.view(width)
-	}
 	if a.phase != "shown" {
 		line := fmt.Sprintf("● %s… %.0f s", a.test.Doing, time.Since(a.began).Seconds())
 		if a.test.Takes > 0 {
@@ -181,19 +141,19 @@ func (a *auto) view(width, height int) string {
 		}
 		return accent.Render(wrap(line, width)) + "\n\n" + wrap(a.test.About, width)
 	}
-	return a.measured(width)
-}
-
-// measured lists what the test found, each result with what it was read from.
-func (a *auto) measured(width int) string {
 	if a.fault != "" {
 		return close_.Render(wrap("This test ran into a problem of its own ("+a.fault+"). Nothing is reported for it.", width))
 	}
 	if len(a.results) == 0 {
 		return wrap(a.test.Nothing, width)
 	}
+	return showResults(a.results, width) + "\n\n" + fmt.Sprintf("Measured in %.0f s.", a.took.Seconds())
+}
+
+// showResults lists what a test found, each result with what it was read from.
+func showResults(results []report.Result, width int) string {
 	var lines []string
-	for _, result := range a.results {
+	for _, result := range results {
 		mark := map[string]string{report.Works: "✓ ", report.Partial: "◐ ", report.Broken: "✗ "}[result.State]
 		lines = append(lines, stateStyle(result.State).Render(mark+first(checkTitle[result.Check], result.Check)+": "+stateLabel[result.State]))
 		for _, detail := range []string{result.Evidence, result.Note} {
@@ -204,7 +164,7 @@ func (a *auto) measured(width int) string {
 			}
 		}
 	}
-	return strings.Join(lines, "\n") + "\n\n" + fmt.Sprintf("Measured in %.0f s.", a.took.Seconds())
+	return strings.Join(lines, "\n")
 }
 
 // Unattended runs the automatic tests the words name with nobody at the keyboard, for a
@@ -233,7 +193,7 @@ func Unattended(run *report.Run, tests []deep.Test, words []string, say func(str
 					say("  it ran into a problem of its own and is passed over: " + fmt.Sprint(fault))
 				}
 			}()
-			for _, result := range test.Run() {
+			for _, result := range test.Run(say) {
 				run.Set(result.Check, result.State, result.How, result.Evidence, result.Note)
 			}
 		}()

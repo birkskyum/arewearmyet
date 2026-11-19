@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"math"
 	"net"
 	"net/http"
 	"os"
@@ -17,6 +18,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"sync/atomic"
 	"time"
 
 	"github.com/birkskyum/arewearmyet/app/internal/machine"
@@ -277,14 +279,78 @@ func lastLine(text string) string {
 	return strings.TrimSpace(lines[len(lines)-1])
 }
 
-// Heat is what the temperature sensors and the fan showed across a spell of load.
+// How the temperature test runs: a warm machine cools first, then every core works until a
+// fan is seen starting or the time is up, and the sensors are watched a little longer as it
+// cools. The load ends early at a temperature well under where the hardware protects itself.
+var (
+	CoolFirst = 60 * time.Second
+	MaxLoad   = 120 * time.Second
+	CoolAfter = 15 * time.Second
+)
+
+const (
+	// warm is the temperature above which the test waits for the machine to cool before it starts.
+	warm = 50.0
+	// margin is how close a sensor may come to the temperature its own shutdown is set at
+	// before the load ends. A processor runs at 95 °C and more under full load and holds
+	// itself there, so only the nearness of a shutdown ends the test.
+	margin = 8.0
+	// ceiling stands in for a sensor that names no shutdown temperature.
+	ceiling = 105.0
+	// answering is how far the hottest sensor has to move between rest and load to count as
+	// showing the heat.
+	answering = 5.0
+	// fallen is how far the temperature has to fall under steady work to count as a fan starting.
+	fallen = 3.0
+)
+
+// Sample is one reading during the temperature test.
+type Sample struct {
+	At time.Duration
+	// Hot is the hottest sensor's reading in degrees.
+	Hot float64
+	// Rate is how much work the processor did in the second before, as a share of what it did
+	// in the first seconds of the load. Under 1 it has been slowed down to stay cool.
+	Rate float64
+	// Fan is the fan's speed, where a sensor gives it.
+	Fan int64
+}
+
+// Heat is what the temperature sensors and the fan showed across the test.
 type Heat struct {
 	Sensors int
-	// Before and After are the hottest sensor's reading in degrees, at rest and at the end of the load.
-	Before, After float64
-	// Fan is the fan sensor's name, or "" when there is none; FanBefore and FanAfter its speed.
-	Fan                 string
-	FanBefore, FanAfter int64
+	// Fan is the fan sensor's name, or "" when there is none.
+	Fan string
+	// Rest is the hottest sensor before the load, Peak its highest under load, and After its
+	// reading once the machine had cooled for a moment.
+	Rest, Peak, After float64
+	// Loaded is how long the load ran.
+	Loaded time.Duration
+	// Samples are the readings under load, one a second.
+	Samples []Sample
+	// FanRest and FanPeak are the fan's speed before the load and its highest under it.
+	FanRest, FanPeak int64
+	// Kicked is set when the temperature fell while the processor went on working at the same
+	// rate: more heat was being carried off, which is a fan starting.
+	Kicked *Kick
+	// Slowest is the lowest rate of work under load, as a share of the first seconds.
+	Slowest float64
+	// Heard is set when the owner said they heard the fan speed up, with the reading then.
+	Heard *Sample
+	// NoFan is set when the owner said the computer has no fan.
+	NoFan bool
+	// TooHot is set when the load was ended because a sensor came close to its shutdown temperature.
+	TooHot bool
+	// Graphics is set when the GPU was put to work as well as the processor.
+	Graphics bool
+	// Watts is the most the computer drew from its battery under load, or 0 on the charger.
+	Watts float64
+}
+
+// Kick is a fan seen starting by the temperature it brought down.
+type Kick struct {
+	At       time.Duration
+	From, To float64
 }
 
 func hottest(sys machine.System) (degrees float64, sensors int) {
@@ -308,59 +374,375 @@ func fanSpeed(sys machine.System) (name string, rpm int64) {
 	return "", 0
 }
 
-// Warm keeps every processor core busy for the given time and reads the sensors before and
-// after: sensors that work show the heat, and a fan that works speeds up.
-func Warm(sys machine.System, load time.Duration) Heat {
-	var heat Heat
-	heat.Before, heat.Sensors = hottest(sys)
-	heat.Fan, heat.FanBefore = fanSpeed(sys)
-	stop := make(chan struct{})
-	for i := 0; i < runtime.NumCPU(); i++ {
-		go func() {
-			x := 1.0001
-			for {
-				select {
-				case <-stop:
-					return
-				default:
-					for n := 0; n < 200000; n++ {
-						x = x*1.0000001 + 0.0000001
-					}
-				}
+// limits reads the temperature each sensor's shutdown is set at, by the sensor's folder.
+func limits(sys machine.System) map[string]float64 {
+	found := map[string]float64{}
+	for _, kind := range sys.Glob("/sys/class/thermal/thermal_zone*/trip_point_*_type") {
+		if sys.Read(kind) != "critical" {
+			continue
+		}
+		if value, ok := sys.Int(strings.TrimSuffix(kind, "_type") + "_temp"); ok && value > 0 {
+			zone := filepath.Dir(kind)
+			if degrees := float64(value) / 1000; found[zone] == 0 || degrees < found[zone] {
+				found[zone] = degrees
 			}
-		}()
+		}
 	}
-	time.Sleep(load)
-	heat.After, _ = hottest(sys)
-	_, heat.FanAfter = fanSpeed(sys)
-	close(stop)
-	return heat
+	return found
 }
 
-// Report turns what the load showed into the fans check's result.
+// near says whether any sensor is close to the temperature its shutdown is set at.
+func near(sys machine.System, limits map[string]float64) bool {
+	for _, zone := range sys.Glob("/sys/class/thermal/thermal_zone*/temp") {
+		value, ok := sys.Int(zone)
+		if !ok || value <= 0 {
+			continue
+		}
+		limit := limits[filepath.Dir(zone)]
+		if limit == 0 {
+			limit = ceiling
+		}
+		if float64(value)/1000 >= limit-margin {
+			return true
+		}
+	}
+	return false
+}
+
+// Warming is a temperature test under way. The app steps it once a second and draws what it
+// reads; Warm runs it through by itself.
+type Warming struct {
+	sys   machine.System
+	heat  Heat
+	began time.Time
+	stop  chan struct{}
+	// work counts what the cores have done, and last what they had done at the reading before.
+	work     atomic.Int64
+	last     int64
+	lastAt   time.Time
+	baseline float64
+	stopped  bool
+	// limits are the temperatures the sensors' shutdowns are set at.
+	limits map[string]float64
+	// peakAt is the place in the samples of the highest reading.
+	peakAt int
+}
+
+// Resting reads the sensors before any load. The app calls it while a warm machine cools.
+func Resting(sys machine.System) (degrees float64, cool bool) {
+	degrees, _ = hottest(sys)
+	return degrees, degrees < warm
+}
+
+// StartWarming notes the readings at rest and sets every processor core to work, and the GPU
+// too where there is a Chromium to do that with. dir is where the GPU's page is kept.
+func StartWarming(sys machine.System, dir string) *Warming {
+	w := &Warming{sys: sys, began: time.Now(), stop: make(chan struct{}), limits: limits(sys)}
+	w.heat.Rest, w.heat.Sensors = hottest(sys)
+	w.heat.Peak, w.heat.Slowest = w.heat.Rest, 1
+	w.heat.Fan, w.heat.FanRest = fanSpeed(sys)
+	w.heat.FanPeak = w.heat.FanRest
+	w.lastAt = w.began
+	for range runtime.NumCPU() {
+		go w.labour()
+	}
+	w.graphics(dir)
+	return w
+}
+
+// labour keeps one core as busy as it gets: eight streams of integer arithmetic and eight of
+// multiply-and-add side by side, with a little memory traffic, so every part of the core has
+// work in every cycle. On the Yoga Slim 7x this draws a quarter more power than hashing does.
+func (w *Warming) labour() {
+	var x [8]uint64
+	var f [8]float64
+	for i := range x {
+		x[i] = uint64(i)*0x9E3779B97F4A7C15 + 1
+		f[i] = 1 + float64(i)/10
+	}
+	table := make([]uint64, 1<<13)
+	for {
+		select {
+		case <-w.stop:
+			return
+		default:
+		}
+		for n := 0; n < 200000; n++ {
+			x[0] ^= x[0] << 13
+			x[0] ^= x[0] >> 7
+			x[0] ^= x[0] << 17
+			x[1] ^= x[1] << 13
+			x[1] ^= x[1] >> 7
+			x[1] ^= x[1] << 17
+			x[2] = x[2]*6364136223846793005 + 1442695040888963407
+			x[3] = x[3]*6364136223846793005 + 1442695040888963407
+			x[4] ^= x[4] << 13
+			x[4] ^= x[4] >> 7
+			x[4] ^= x[4] << 17
+			x[5] = x[5]*0x2545F4914F6CDD1D + x[1]>>3
+			x[6] += x[0] & x[2]
+			x[7] ^= x[3] | x[4]
+			f[0] = f[0]*1.0000001 + 0.25
+			f[1] = f[1]*0.9999999 + 0.25
+			f[2] = f[2]*1.0000001 + 0.25
+			f[3] = f[3]*0.9999999 + 0.25
+			f[4] = f[4]*1.0000001 + 0.25
+			f[5] = f[5]*0.9999999 + 0.25
+			f[6] = f[6]*1.0000001 + 0.25
+			f[7] = f[7]*0.9999999 + 0.25
+			table[x[0]&8191] += x[5]
+			if x[1]&1 == 0 {
+				table[x[2]&8191] ^= x[6]
+			}
+		}
+		if f[0] > 1e300 {
+			for i := range f {
+				f[i] = 1
+			}
+		}
+		w.work.Add(1)
+	}
+}
+
+// The page that keeps the GPU busy: a shader with a long loop over a large canvas, drawn as
+// often as the browser gets to it.
+const gpuPage = `<!doctype html><meta charset=utf-8><title>hw-test load</title><canvas id=c width=2048 height=2048></canvas><script>
+const gl=document.getElementById("c").getContext("webgl2")||document.getElementById("c").getContext("webgl");
+const vs=gl.createShader(gl.VERTEX_SHADER);gl.shaderSource(vs,"attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}");gl.compileShader(vs);
+const fs=gl.createShader(gl.FRAGMENT_SHADER);gl.shaderSource(fs,"precision highp float;uniform float t;void main(){vec2 z=gl_FragCoord.xy/1024.-1.;vec2 c=vec2(sin(t)*.4-.4,cos(t*.7)*.4);float n=0.;for(int i=0;i<300;i++){z=vec2(z.x*z.x-z.y*z.y,2.*z.x*z.y)+c;n+=exp(-dot(z,z));}gl_FragColor=vec4(fract(n*.1),fract(n*.03),fract(n*.01),1.);}");gl.compileShader(fs);
+const pr=gl.createProgram();gl.attachShader(pr,vs);gl.attachShader(pr,fs);gl.linkProgram(pr);gl.useProgram(pr);
+const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+const l=gl.getAttribLocation(pr,"p");gl.enableVertexAttribArray(l);gl.vertexAttribPointer(l,2,gl.FLOAT,false,0,0);
+const u=gl.getUniformLocation(pr,"t");let t=0;const px=new Uint8Array(4);
+function frame(){const end=performance.now()+12;do{t+=.01;gl.uniform1f(u,t);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);gl.readPixels(0,0,1,1,gl.RGBA,gl.UNSIGNED_BYTE,px);}while(performance.now()<end);setTimeout(frame,0);}
+frame();
+</script>`
+
+// graphics keeps the GPU busy as well, in a Chromium without a window and with a profile of
+// its own, until the load ends. With it the Yoga Slim 7x draws 32 W, against 22 W for the
+// processor alone. A machine without Chromium is loaded by its processor only.
+func (w *Warming) graphics(dir string) {
+	if dir == "" || !w.sys.Has("chromium") {
+		return
+	}
+	page, profile := filepath.Join(dir, "load.html"), filepath.Join(dir, "load-profile")
+	if os.WriteFile(page, []byte(gpuPage), 0o600) != nil {
+		return
+	}
+	w.heat.Graphics = true
+	go func() {
+		defer os.Remove(page)
+		defer os.RemoveAll(profile)
+		w.sys.RunUntil(w.stop, MaxLoad+30*time.Second, "chromium", "--headless=new", "--no-first-run", "--disable-extensions", "--user-data-dir="+profile, "file://"+page)
+	}()
+}
+
+// watts is what the computer draws from its battery right now, or 0 on the charger or where
+// that can't be read.
+func watts(sys machine.System) float64 {
+	// With a charger in, the battery only makes up what the charger lacks, which says nothing
+	// of what the computer draws
+	for _, online := range sys.Glob("/sys/class/power_supply/*/online") {
+		if sys.Read(online) == "1" {
+			return 0
+		}
+	}
+	for _, supply := range sys.Glob("/sys/class/power_supply/*/power_now") {
+		if sys.Read(filepath.Dir(supply)+"/status") != "Discharging" {
+			continue
+		}
+		if value, ok := sys.Int(supply); ok {
+			return math.Abs(float64(value)) / 1e6
+		}
+	}
+	return 0
+}
+
+// Step takes one reading under load and says whether the load is over: a fan was seen
+// starting, the time is up, or the machine got hot enough to stop at.
+func (w *Warming) Step() (Sample, bool) {
+	now := time.Now()
+	done := w.work.Load()
+	rate := float64(done-w.last) / max(now.Sub(w.lastAt).Seconds(), 0.001)
+	w.last, w.lastAt = done, now
+	sample := Sample{At: now.Sub(w.began), Rate: 1}
+	sample.Hot, _ = hottest(w.sys)
+	_, sample.Fan = fanSpeed(w.sys)
+	// The first seconds, before any heat, are what the processor does unhindered
+	switch count := len(w.heat.Samples); {
+	case count < 3:
+		w.baseline = max(w.baseline, rate)
+	case w.baseline > 0:
+		sample.Rate = rate / w.baseline
+	}
+	w.heat.Samples = append(w.heat.Samples, sample)
+	// One slow second is something else wanting the processor; five in a row is it being held back
+	if count := len(w.heat.Samples); count >= 8 {
+		w.heat.Slowest = min(w.heat.Slowest, mean(w.heat.Samples, count-5, count, func(s Sample) float64 { return s.Rate }))
+	}
+	w.heat.FanPeak = max(w.heat.FanPeak, sample.Fan)
+	w.heat.Watts = max(w.heat.Watts, watts(w.sys))
+	if sample.Hot > w.heat.Peak {
+		w.heat.Peak, w.peakAt = sample.Hot, len(w.heat.Samples)-1
+	}
+	w.heat.Kicked = w.kicked()
+	w.heat.TooHot = near(w.sys, w.limits)
+	over := w.heat.Kicked != nil || sample.At >= MaxLoad || w.heat.TooHot || w.fanRose() && w.heat.Peak-w.heat.Rest >= answering
+	return sample, over
+}
+
+// fanRose says whether the fan's speed, where it can be read, went clearly up under load.
+func (w *Warming) fanRose() bool {
+	return w.heat.Fan != "" && w.heat.FanPeak > w.heat.FanRest && float64(w.heat.FanPeak) >= 1.15*float64(w.heat.FanRest)
+}
+
+// mean is the average of the samples' readings from one place up to another.
+func mean(samples []Sample, from, to int, of func(Sample) float64) float64 {
+	from, to = max(from, 0), min(to, len(samples))
+	if to <= from {
+		return 0
+	}
+	total := 0.0
+	for _, sample := range samples[from:to] {
+		total += of(sample)
+	}
+	return total / float64(to-from)
+}
+
+// kicked looks for a fan starting: after the peak the temperature has stayed clearly lower
+// for a few seconds, while the processor did as much work as it did around the peak. Heat
+// was going in as before, so more of it was being carried off. A processor that was slowed
+// down instead cools the same way, and isn't counted.
+func (w *Warming) kicked() *Kick {
+	samples := w.heat.Samples
+	count := len(samples)
+	if count-w.peakAt < 4 || w.heat.Peak-w.heat.Rest < answering {
+		return nil
+	}
+	hot := func(s Sample) float64 { return s.Hot }
+	rate := func(s Sample) float64 { return s.Rate }
+	now := mean(samples, count-3, count, hot)
+	if w.heat.Peak-now < fallen {
+		return nil
+	}
+	if mean(samples, count-3, count, rate) < 0.93*mean(samples, w.peakAt-4, w.peakAt+1, rate) {
+		return nil
+	}
+	return &Kick{At: samples[w.peakAt].At, From: w.heat.Peak, To: now}
+}
+
+// Heard notes that the owner heard the fan speed up at this moment.
+func (w *Warming) Heard() {
+	if count := len(w.heat.Samples); count > 0 && w.heat.Heard == nil {
+		sample := w.heat.Samples[count-1]
+		w.heat.Heard = &sample
+	}
+}
+
+// NoFan notes that the owner says the computer has no fan.
+func (w *Warming) NoFan() { w.heat.NoFan = true }
+
+// Stop ends the load. It is safe to call more than once.
+func (w *Warming) Stop() {
+	if !w.stopped {
+		w.stopped = true
+		w.heat.Loaded = time.Since(w.began)
+		close(w.stop)
+	}
+}
+
+// Cooled takes the reading after the load, which shows the sensors following the heat down.
+func (w *Warming) Cooled() float64 {
+	w.heat.After, _ = hottest(w.sys)
+	return w.heat.After
+}
+
+// Heat is what the test has found so far.
+func (w *Warming) Heat() Heat { return w.heat }
+
+// Warm runs the whole temperature test with nobody watching, telling what it reads as it goes.
+func Warm(sys machine.System, dir string, say func(string)) Heat {
+	// A machine that is warm from what it did before cools first, so the load has room to show
+	waited := time.Now()
+	for degrees, cool := Resting(sys); !cool && time.Since(waited) < CoolFirst; degrees, cool = Resting(sys) {
+		say(fmt.Sprintf("  letting it cool first: %.0f °C", degrees))
+		time.Sleep(pace * 5)
+	}
+	w := StartWarming(sys, dir)
+	defer w.Stop()
+	for {
+		time.Sleep(pace)
+		sample, over := w.Step()
+		if count := len(w.heat.Samples); count%10 == 0 || over {
+			say(fmt.Sprintf("  %3.0f s  %.0f °C  working at %.0f%%", sample.At.Seconds(), sample.Hot, sample.Rate*100))
+		}
+		if over {
+			break
+		}
+	}
+	w.Stop()
+	time.Sleep(time.Duration(float64(CoolAfter) * float64(pace) / float64(time.Second)))
+	w.Cooled()
+	return w.Heat()
+}
+
+// pace is the time between readings, which tests shorten.
+var pace = time.Second
+
+// Report turns what the test showed into the fans check's result.
 func (h Heat) Report() []report.Result {
 	if h.Sensors == 0 {
 		return []report.Result{result("fans", report.Broken, "no temperature sensor can be read", "")}
 	}
-	evidence := fmt.Sprintf("%d temperature sensors; the hottest went from %.0f to %.0f °C under load", h.Sensors, h.Before, h.After)
-	responds := h.After-h.Before >= 2
-	switch {
-	case h.Fan != "" && h.FanAfter > h.FanBefore && responds:
-		return []report.Result{result("fans", report.Works, fmt.Sprintf("%s; the fan (%s) went from %d to %d rpm", evidence, h.Fan, h.FanBefore, h.FanAfter), "")}
-	case h.Fan != "":
-		return []report.Result{result("fans", report.Partial, fmt.Sprintf("%s; the fan (%s) stayed at %d rpm", evidence, h.Fan, h.FanAfter), "The fan's speed can be read, but it didn't rise under load.")}
-	case !responds:
-		return []report.Result{result("fans", report.Partial, evidence+"; no fan speed sensor", "The temperature sensors can be read but barely moved under load, and there is no fan speed to read.")}
+	busy := "every core busy"
+	if h.Graphics {
+		busy = "every core and the GPU busy"
 	}
-	return []report.Result{result("fans", report.Partial, evidence+"; no fan speed sensor", FanUnread)}
+	if h.Watts > 0 {
+		busy += fmt.Sprintf(", drawing up to %.0f W from the battery", h.Watts)
+	}
+	evidence := fmt.Sprintf("%d temperature sensors; the hottest went from %.0f to %.0f °C in %.0f s with %s, and back to %.0f °C after", h.Sensors, h.Rest, h.Peak, h.Loaded.Seconds(), busy, h.After)
+	if h.Slowest > 0 && h.Slowest < 0.75 {
+		evidence += fmt.Sprintf("; the processor was slowed to %.0f%% of its speed as it got hot", h.Slowest*100)
+	}
+	if h.TooHot {
+		evidence += "; the load was ended there, close to the temperature the computer shuts down at"
+	}
+	// The sensors show the heat when they rise with the load or fall once it ends
+	responds := h.Peak-h.Rest >= answering || h.Peak-h.After >= answering
+	rose := h.Fan != "" && h.FanPeak > h.FanRest && float64(h.FanPeak) >= 1.15*float64(h.FanRest)
+	unread := ""
+	switch {
+	case h.Fan != "":
+		evidence += fmt.Sprintf("; the fan (%s) went from %d to %d rpm", h.Fan, h.FanRest, h.FanPeak)
+	default:
+		evidence += "; no fan speed sensor"
+		unread = " The fan's speed can't be read, for want of a sensor."
+	}
+	if h.Kicked != nil {
+		evidence += fmt.Sprintf("; after %.0f s the temperature fell from %.0f to %.0f °C while the processor worked on at the same rate, as when a fan starts", h.Kicked.At.Seconds(), h.Kicked.From, h.Kicked.To)
+	}
+	if h.Heard != nil {
+		evidence += fmt.Sprintf("; the owner heard the fan speed up at %.0f °C, %.0f s in", h.Heard.Hot, h.Heard.At.Seconds())
+	}
+	switch {
+	case !responds:
+		return []report.Result{result("fans", report.Partial, evidence, "The temperature sensors can be read, but barely moved between rest and full load.")}
+	case rose || h.Kicked != nil:
+		return []report.Result{result("fans", report.Works, evidence, strings.TrimSpace(unread))}
+	case h.Heard != nil:
+		return []report.Result{{Check: "fans", State: report.Works, How: report.Owner, Evidence: report.Scrub(evidence, 380), Note: strings.TrimSpace(unread)}}
+	case h.NoFan:
+		return []report.Result{{Check: "fans", State: report.Works, How: report.Owner, Evidence: report.Scrub(evidence, 380), Note: "This computer has no fan, by its owner's word. Its temperatures can be read and answer to load."}}
+	case h.Fan != "":
+		return []report.Result{result("fans", report.Partial, evidence, "The fan's speed can be read, but it didn't rise under load.")}
+	}
+	return []report.Result{result("fans", report.Partial, evidence, FanUnseen)}
 }
 
-// FanUnread is the fans check's note when the temperatures answer to load and no sensor gives
-// a fan's speed. Whether the computer has a fan at all is then for its owner to say.
-const FanUnread = "The temperatures can be read and answer to load. A fan's speed can't be read: there is no sensor for it."
-
-// Load is how long the temperature test keeps the processor busy.
-const Load = 20 * time.Second
+// FanUnseen is the fans check's note when the temperatures answer to load and nothing showed
+// a fan starting. Whether the computer has a fan at all is then for its owner to say.
+const FanUnseen = "The temperatures can be read and answer to load. No fan was seen starting, and there is no sensor for its speed."
 
 // Test is one of the tests, as the app offers it: its name, what it says while it runs and
 // what it measures.
@@ -372,7 +754,8 @@ type Test struct {
 	Checks []string
 	// Takes is roughly how long it runs.
 	Takes time.Duration
-	Run   func() []report.Result
+	// Run measures, telling what it reads as it goes where that takes a while.
+	Run func(say func(string)) []report.Result
 	// Nothing is what to say when it could measure nothing.
 	Nothing string
 }
@@ -385,29 +768,29 @@ func Tests(sys machine.System, wifi, bluetooth, dir string) []Test {
 	if sys.Has("vulkaninfo") {
 		tests = append(tests, Test{Name: "Graphics", Doing: "Asking Vulkan which device it draws on", Checks: []string{"gpu"}, Takes: time.Second,
 			About:   "Programs draw through Vulkan. This reads which device they get, the GPU or a renderer that runs on the processor.",
-			Run:     func() []report.Result { return Graphics(sys) },
+			Run:     func(func(string)) []report.Result { return Graphics(sys) },
 			Nothing: "Vulkan gave no answer here, so there is nothing to report."})
 	}
 	if sys.Has("chromium") {
 		tests = append(tests, Test{Name: "Browser", Doing: "Opening a test page in Chromium, without a window", Checks: []string{"webgl", "webgpu"}, Takes: 5 * time.Second,
 			About:   "Chromium opens a page that asks for WebGL and for WebGPU, which maps and 3D pages draw with. This reads whether it gets them, and whether on the GPU. No window opens, and your own Chromium isn't touched.",
-			Run:     func() []report.Result { return Browser(sys, dir) },
+			Run:     func(func(string)) []report.Result { return Browser(sys, dir) },
 			Nothing: "Chromium didn't answer the test page, so there is nothing to report."})
 	}
 	if (wifi != "" && sys.Has("iw")) || (bluetooth != "" && sys.Has("bluetoothctl")) {
 		tests = append(tests, Test{Name: "Wireless", Doing: "Reading the Wi-Fi link and listening for Bluetooth devices", Checks: []string{"wifi", "bluetooth"}, Takes: 10 * time.Second,
 			About:   "This reads how strong the Wi-Fi link is and how fast it sends, then listens for eight seconds for Bluetooth devices nearby. Only how many it hears is kept, never which.",
-			Run:     func() []report.Result { return Wireless(sys, wifi, bluetooth) },
+			Run:     func(func(string)) []report.Result { return Wireless(sys, wifi, bluetooth) },
 			Nothing: "Wi-Fi isn't connected and no Bluetooth device was heard nearby, which says nothing either way."})
 	}
 	if sys.Has("ffmpeg") {
 		tests = append(tests, Test{Name: "Video decoding", Doing: "Decoding a two-second clip on the hardware decoder", Checks: []string{"video-decode"}, Takes: 5 * time.Second,
 			About:   "This makes a short 720p clip and decodes it on the video engine, the way a player does to keep the processor idle.",
-			Run:     func() []report.Result { return Video(sys, dir) },
+			Run:     func(func(string)) []report.Result { return Video(sys, dir) },
 			Nothing: "No clip could be made to decode, so there is nothing to report."})
 	}
-	return append(tests, Test{Name: "Temperatures", Doing: "Keeping every processor core busy and watching the sensors", Checks: []string{"fans"}, Takes: Load + time.Second,
-		About:   fmt.Sprintf("Every core works for %.0f seconds. Sensors that work show the heat, and a fan whose speed can be read is seen speeding up. The computer may get louder for a moment.", Load.Seconds()),
-		Run:     func() []report.Result { return Warm(sys, Load).Report() },
+	return append(tests, Test{Name: "Temperatures", Doing: "Keeping every processor core busy and watching the sensors", Checks: []string{"fans"}, Takes: MaxLoad + CoolAfter,
+		About:   fmt.Sprintf("Every core and the GPU work for up to %.0f seconds, until a fan is seen starting. Sensors that work show the heat, and a fan shows by its speed or by the temperature it brings down. The computer may get loud.", MaxLoad.Seconds()),
+		Run:     func(say func(string)) []report.Result { return Warm(sys, dir, say).Report() },
 		Nothing: "No sensor answered."})
 }

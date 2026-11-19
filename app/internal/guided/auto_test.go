@@ -23,7 +23,7 @@ func measured(check, state, evidence, note string) report.Result {
 func autos(run *report.Run) []step {
 	test := func(name string) deep.Test {
 		return deep.Test{Name: name, Doing: "Opening a test page in Chromium, without a window", About: "Chromium opens a page that asks for WebGL and for WebGPU, which maps and 3D pages draw with.",
-			Nothing: "Chromium didn't answer the test page, so there is nothing to report.", Run: func() []report.Result { return nil }}
+			Nothing: "Chromium didn't answer the test page, so there is nothing to report.", Run: func(func(string)) []report.Result { return nil }}
 	}
 	running := newAuto(run, test("Running"))
 	running.start()
@@ -33,16 +33,13 @@ func autos(run *report.Run) []step {
 	empty := newAuto(run, test("Empty"))
 	empty.start()
 	empty.update(autoMsg{name: "Empty"})
-	asking := newAuto(run, test("Asking"))
-	asking.start()
-	asking.update(autoMsg{name: "Asking", results: []report.Result{measured("fans", report.Partial, "59 temperature sensors; the hottest went from 52 to 71 °C under load; no fan speed sensor", deep.FanUnread)}})
-	return []step{running, shown, empty, asking}
+	return append([]step{running, shown, empty}, heats(run)...)
 }
 
 func TestAnAutomaticStepMeasuresShowsAndGoesOnByItself(t *testing.T) {
 	run := &report.Run{}
 	ran := 0
-	a := newAuto(run, deep.Test{Name: "Graphics", Doing: "Asking Vulkan which device it draws on", About: "Programs draw through Vulkan.", Run: func() []report.Result {
+	a := newAuto(run, deep.Test{Name: "Graphics", Doing: "Asking Vulkan which device it draws on", About: "Programs draw through Vulkan.", Run: func(func(string)) []report.Result {
 		ran++
 		return []report.Result{measured("gpu", report.Works, "Vulkan draws on Adreno X1-85 (turnip Mesa driver)", "")}
 	}})
@@ -92,7 +89,7 @@ func TestAnAutomaticStepKeepsAFailureTheQuickCheckFound(t *testing.T) {
 
 func TestAnAutomaticStepThatFallsOverReportsNothing(t *testing.T) {
 	run := &report.Run{}
-	a := newAuto(run, deep.Test{Name: "Video decoding", Run: func() []report.Result { panic("no such device") }})
+	a := newAuto(run, deep.Test{Name: "Video decoding", Run: func(func(string)) []report.Result { panic("no such device") }})
 	cmd := a.start()
 	// The measuring half of the step's command, run as the program would
 	batch, ok := cmd().(tea.BatchMsg)
@@ -106,49 +103,6 @@ func TestAnAutomaticStepThatFallsOverReportsNothing(t *testing.T) {
 	a.update(msg)
 	if a.phase != "shown" || len(run.Results) != 0 || !strings.Contains(a.view(90, 30), "problem of its own") {
 		t.Errorf("phase %q, results %+v:\n%s", a.phase, run.Results, a.view(90, 30))
-	}
-}
-
-func TestTheFanQuestionIsAskedOnlyWithSomeoneThere(t *testing.T) {
-	heat := []report.Result{measured("fans", report.Partial, "59 temperature sensors; the hottest went from 52 to 71 °C under load; no fan speed sensor", deep.FanUnread)}
-	answer := func(key rune) report.Result {
-		run := &report.Run{}
-		a := newAuto(run, deep.Test{Name: "Temperatures"})
-		a.start()
-		if a.update(autoMsg{name: "Temperatures", results: heat}); a.phase != "ask" || !strings.Contains(a.view(90, 30), "Does it have a fan?") {
-			t.Fatalf("phase %q:\n%s", a.phase, a.view(90, 30))
-		}
-		a.update(press(key))
-		if !a.done() {
-			t.Fatal("it didn't end on the answer")
-		}
-		result, _ := run.Get("fans")
-		return result
-	}
-	if heard := answer('1'); heard.State != report.Partial || heard.How != report.Owner || !strings.Contains(heard.Note, "heard speeding up") || !strings.Contains(heard.Evidence, "59 temperature sensors") {
-		t.Errorf("heard: %+v", heard)
-	}
-	// A computer without a fan has nothing left to read
-	if fanless := answer('3'); fanless.State != report.Works || !strings.Contains(fanless.Note, "no fan") {
-		t.Errorf("no fan: %+v", fanless)
-	}
-	if unknown := answer('4'); unknown.State != report.Partial || unknown.How != report.Measured || unknown.Note != deep.FanUnread {
-		t.Errorf("don't know: %+v", unknown)
-	}
-
-	// In the automatic round nobody may be there, so nothing is asked
-	run := &report.Run{}
-	a := newAuto(run, deep.Test{Name: "Temperatures"})
-	a.alone(true)
-	a.start()
-	if a.update(autoMsg{name: "Temperatures", results: heat}); a.phase != "shown" {
-		t.Errorf("it asks with nobody there: %q", a.phase)
-	}
-	// A fan whose speed was read leaves nothing to ask
-	a = newAuto(run, deep.Test{Name: "Temperatures"})
-	a.start()
-	if a.update(autoMsg{name: "Temperatures", results: []report.Result{measured("fans", report.Works, "the fan went from 0 to 3200 rpm", "")}}); a.phase != "shown" {
-		t.Errorf("it asks about a fan it measured: %q", a.phase)
 	}
 }
 
@@ -206,11 +160,14 @@ func TestWithoutATerminalTheAutomaticTestsReportOnlyThemselves(t *testing.T) {
 	run.Set("display", report.Works, report.Measured, "eDP-1 connected", "")
 	var said []string
 	tests := []deep.Test{
-		{Name: "Graphics", Doing: "Asking Vulkan", Run: func() []report.Result {
+		{Name: "Graphics", Doing: "Asking Vulkan", Run: func(func(string)) []report.Result {
 			return []report.Result{measured("gpu", report.Works, "Vulkan draws on Adreno X1-85", "")}
 		}},
-		{Name: "Browser", Doing: "Opening a test page", Run: func() []report.Result { panic("chromium fell over") }},
-		{Name: "Temperatures", Doing: "Keeping every core busy", Run: func() []report.Result { return []report.Result{measured("fans", report.Works, "the fan sped up", "")} }},
+		{Name: "Browser", Doing: "Opening a test page", Run: func(func(string)) []report.Result { panic("chromium fell over") }},
+		{Name: "Temperatures", Doing: "Keeping every core busy", Run: func(say func(string)) []report.Result {
+			say("   60 s  66 °C  working at 100%")
+			return []report.Result{measured("fans", report.Works, "the fan sped up", "")}
+		}},
 	}
 	Unattended(run, tests, []string{"graphics"}, func(line string) { said = append(said, line) })
 	if len(run.Results) != 1 || run.State("gpu") != report.Works {
@@ -220,9 +177,14 @@ func TestWithoutATerminalTheAutomaticTestsReportOnlyThemselves(t *testing.T) {
 	if text := strings.Join(said, "\n"); !strings.Contains(text, "Asking Vulkan") || !strings.Contains(text, "chromium fell over") || strings.Contains(text, "every core") {
 		t.Errorf("said:\n%s", text)
 	}
-	Unattended(run, tests, []string{"auto"}, func(string) {})
+	said = nil
+	Unattended(run, tests, []string{"auto"}, func(line string) { said = append(said, line) })
 	if len(run.Results) != 2 || run.State("fans") != report.Works {
 		t.Errorf("auto: %+v", run.Results)
+	}
+	// A test that takes a while tells what it reads as it goes
+	if !strings.Contains(strings.Join(said, "\n"), "66 °C") {
+		t.Errorf("the readings aren't said: %q", said)
 	}
 }
 

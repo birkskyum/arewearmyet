@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -308,37 +309,259 @@ func TestTheLoadShowsOnTheSensorsAndTheFan(t *testing.T) {
 	if fans := one(t, Heat{}.Report(), "fans"); fans.State != report.Broken {
 		t.Errorf("no sensors: %+v", fans)
 	}
-	fans := one(t, Heat{Sensors: 59, Before: 52, After: 71}.Report(), "fans")
-	if fans.State != report.Partial || fans.Note != FanUnread || !strings.Contains(fans.Evidence, "59 temperature sensors; the hottest went from 52 to 71 °C") {
-		t.Errorf("no fan sensor: %+v", fans)
+	hot := Heat{Sensors: 59, Rest: 38, Peak: 68, After: 47, Loaded: 95 * time.Second, Slowest: 1}
+
+	// Nothing showed a fan: the sensors work, and whether there is a fan is still open
+	fans := one(t, hot.Report(), "fans")
+	if fans.State != report.Partial || fans.Note != FanUnseen || !strings.Contains(fans.Evidence, "59 temperature sensors; the hottest went from 38 to 68 °C in 95 s with every core busy, and back to 47 °C") || !strings.Contains(fans.Evidence, "back to 47 °C") {
+		t.Errorf("no fan seen: %+v", fans)
 	}
-	if fans = one(t, Heat{Sensors: 59, Before: 52, After: 52.5}.Report(), "fans"); fans.State != report.Partial || fans.Note == FanUnread || !strings.Contains(fans.Note, "barely moved") {
+	// The temperature fell under steady work: a fan started, measured with no sensor for its speed
+	kicked := hot
+	kicked.Kicked = &Kick{At: 90 * time.Second, From: 68, To: 62}
+	if fans = one(t, kicked.Report(), "fans"); fans.State != report.Works || fans.How != report.Measured || !strings.Contains(fans.Evidence, "fell from 68 to 62 °C while the processor worked on at the same rate") || !strings.Contains(fans.Note, "speed can't be read") {
+		t.Errorf("a fan seen by its cooling: %+v", fans)
+	}
+	// The owner heard it
+	heard := hot
+	heard.Heard = &Sample{At: 88 * time.Second, Hot: 67}
+	if fans = one(t, heard.Report(), "fans"); fans.State != report.Works || fans.How != report.Owner || !strings.Contains(fans.Evidence, "heard the fan speed up at 67 °C, 88 s in") {
+		t.Errorf("a fan heard: %+v", fans)
+	}
+	// No fan to wait for
+	fanless := hot
+	fanless.NoFan = true
+	if fans = one(t, fanless.Report(), "fans"); fans.State != report.Works || fans.How != report.Owner || !strings.Contains(fans.Note, "no fan") {
+		t.Errorf("no fan: %+v", fans)
+	}
+	// Sensors that stay where they were, whatever the owner heard
+	still := Heat{Sensors: 59, Rest: 52, Peak: 53, After: 52.5, Loaded: 2 * time.Minute, Heard: &Sample{Hot: 53}}
+	if fans = one(t, still.Report(), "fans"); fans.State != report.Partial || !strings.Contains(fans.Note, "barely moved") {
 		t.Errorf("sensors that don't move: %+v", fans)
 	}
-	if fans = one(t, Heat{Sensors: 8, Before: 45, After: 68, Fan: "thinkpad", FanBefore: 0, FanAfter: 3200}.Report(), "fans"); fans.State != report.Works || !strings.Contains(fans.Evidence, "from 0 to 3200 rpm") {
+	// A machine that was already warm rises little, and shows the heat by cooling after
+	warm := Heat{Sensors: 59, Rest: 66, Peak: 69, After: 52, Loaded: 40 * time.Second, Kicked: &Kick{From: 69, To: 65}}
+	if fans = one(t, warm.Report(), "fans"); fans.State != report.Works {
+		t.Errorf("already warm: %+v", fans)
+	}
+	// A fan whose speed can be read
+	read := Heat{Sensors: 8, Rest: 45, Peak: 68, After: 50, Fan: "thinkpad", FanRest: 0, FanPeak: 3200}
+	if fans = one(t, read.Report(), "fans"); fans.State != report.Works || fans.Note != "" || !strings.Contains(fans.Evidence, "from 0 to 3200 rpm") {
 		t.Errorf("a fan that speeds up: %+v", fans)
 	}
-	if fans = one(t, Heat{Sensors: 8, Before: 45, After: 68, Fan: "thinkpad", FanBefore: 2100, FanAfter: 2100}.Report(), "fans"); fans.State != report.Partial || !strings.Contains(fans.Note, "didn't rise") {
+	read.FanRest, read.FanPeak = 2100, 2150
+	if fans = one(t, read.Report(), "fans"); fans.State != report.Partial || !strings.Contains(fans.Note, "didn't rise") {
 		t.Errorf("a fan that stays: %+v", fans)
+	}
+	// What did the heating is said, with what it drew where the battery tells
+	loaded := hot
+	loaded.Graphics, loaded.Watts = true, 31.8
+	if fans = one(t, loaded.Report(), "fans"); !strings.Contains(fans.Evidence, "with every core and the GPU busy, drawing up to 32 W from the battery") {
+		t.Errorf("the load: %+v", fans)
+	}
+	// A processor slowed down to stay cool is said, as it is what the owner feels
+	slowed := hot
+	slowed.Slowest = 0.6
+	if fans = one(t, slowed.Report(), "fans"); !strings.Contains(fans.Evidence, "slowed to 60% of its speed") {
+		t.Errorf("slowed: %+v", fans)
 	}
 }
 
-func TestWarmReadsTheSensorsAroundTheLoad(t *testing.T) {
+// readings is a load whose samples are given, as if it had run.
+func readings(rest float64, samples ...Sample) *Warming {
+	w := &Warming{}
+	w.heat.Rest, w.heat.Peak = rest, rest
+	for at, sample := range samples {
+		sample.At = time.Duration(at+1) * time.Second
+		w.heat.Samples = append(w.heat.Samples, sample)
+		if sample.Hot > w.heat.Peak {
+			w.heat.Peak, w.peakAt = sample.Hot, at
+		}
+	}
+	return w
+}
+
+func TestAFanIsSeenByTheTemperatureItBringsDownUnderSteadyWork(t *testing.T) {
+	climb := []Sample{{Hot: 50, Rate: 1}, {Hot: 56, Rate: 1}, {Hot: 60, Rate: 1}, {Hot: 63, Rate: 1}, {Hot: 65, Rate: 1}, {Hot: 67, Rate: 1}, {Hot: 68, Rate: 1}}
+	with := func(rate float64, hot ...float64) *Warming {
+		samples := append([]Sample(nil), climb...)
+		for _, degrees := range hot {
+			samples = append(samples, Sample{Hot: degrees, Rate: rate})
+		}
+		return readings(38, samples...)
+	}
+	// Still climbing, or level: no fan yet
+	if kick := readings(38, climb...).kicked(); kick != nil {
+		t.Errorf("a fan seen while it climbs: %+v", kick)
+	}
+	if kick := with(1, 67.5, 67.8, 67.6, 67.9).kicked(); kick != nil {
+		t.Errorf("a fan seen in a level temperature: %+v", kick)
+	}
+	// It falls and stays down while the work goes on as before: the fan
+	kick := with(1, 66, 63, 62, 62.4).kicked()
+	if kick == nil || kick.From != 68 || kick.To > 63 || kick.At != 7*time.Second {
+		t.Fatalf("the fan wasn't seen: %+v", kick)
+	}
+	// It falls because the processor was slowed down: that is throttling, not a fan
+	if kick := with(0.6, 66, 63, 62, 62.4).kicked(); kick != nil {
+		t.Errorf("throttling taken for a fan: %+v", kick)
+	}
+	// One low reading isn't a fall
+	if kick := with(1, 63).kicked(); kick != nil {
+		t.Errorf("one reading taken for a fan: %+v", kick)
+	}
+	// A machine that never got warm has nothing to cool
+	if kick := readings(38, Sample{Hot: 41, Rate: 1}, Sample{Hot: 42, Rate: 1}, Sample{Hot: 38, Rate: 1}, Sample{Hot: 38, Rate: 1}, Sample{Hot: 38, Rate: 1}, Sample{Hot: 38, Rate: 1}).kicked(); kick != nil {
+		t.Errorf("a fan seen on a cool machine: %+v", kick)
+	}
+}
+
+// thermal is a machine with two sensors, one of which can't be read, and a way to set the other.
+func thermal(t *testing.T, degrees int) (machine.System, func(int)) {
 	root := t.TempDir()
 	set := func(path, text string) {
 		os.MkdirAll(filepath.Dir(filepath.Join(root, path)), 0o755)
 		os.WriteFile(filepath.Join(root, path), []byte(text), 0o644)
 	}
-	set("sys/class/thermal/thermal_zone0/temp", "41000\n")
-	set("sys/class/thermal/thermal_zone1/temp", "52500\n")
+	set("sys/class/thermal/thermal_zone0/temp", "31000\n")
 	// A sensor that can't be read, as on a tree that names one the hardware lacks
 	set("sys/class/thermal/thermal_zone2/temp", "-274000\n")
-	set("sys/class/hwmon/hwmon3/name", "pwmfan\n")
-	set("sys/class/hwmon/hwmon3/fan1_input", "1800\n")
-	heat := Warm(machine.Fixture(root), 20*time.Millisecond)
-	if heat.Sensors != 2 || heat.Before != 52.5 || heat.After != 52.5 || heat.Fan != "pwmfan" || heat.FanBefore != 1800 {
-		t.Errorf("read %+v", heat)
+	heat := func(degrees int) { set("sys/class/thermal/thermal_zone1/temp", strconv.Itoa(degrees*1000)+"\n") }
+	heat(degrees)
+	return machine.Fixture(root), heat
+}
+
+func TestTheTemperatureTestRunsThroughByItself(t *testing.T) {
+	beforePace, beforeLoad, beforeCool := pace, MaxLoad, CoolFirst
+	pace, MaxLoad, CoolFirst = 5*time.Millisecond, 60*time.Millisecond, 40*time.Millisecond
+	defer func() { pace, MaxLoad, CoolFirst = beforePace, beforeLoad, beforeCool }()
+
+	sys, heat := thermal(t, 41)
+	var said []string
+	found := Warm(sys, "", func(line string) { said = append(said, line) })
+	if found.Sensors != 2 || found.Rest != 41 || found.Peak != 41 || found.Fan != "" || len(found.Samples) < 2 || found.Loaded < MaxLoad {
+		t.Errorf("found %+v", found)
 	}
+	if len(said) == 0 || !strings.Contains(said[len(said)-1], "41 °C") {
+		t.Errorf("said %q", said)
+	}
+	// A machine that is warm already is given time to cool, and the test starts all the same
+	heat(72)
+	said = nil
+	began := time.Now()
+	if found = Warm(sys, "", func(line string) { said = append(said, line) }); found.Rest != 72 || time.Since(began) < CoolFirst {
+		t.Errorf("warm at the start: %+v after %s", found, time.Since(began))
+	}
+	if !strings.Contains(strings.Join(said, "\n"), "letting it cool first: 72 °C") {
+		t.Errorf("said %q", said)
+	}
+	if degrees, cool := Resting(sys); degrees != 72 || cool {
+		t.Errorf("resting %v, %v", degrees, cool)
+	}
+
+	// The owner's word is kept with the reading it came at, and the load ends when told to
+	w := StartWarming(sys, "")
+	w.Step()
+	w.Heard()
+	w.Heard()
+	w.Stop()
+	w.Stop()
+	if found = w.Heat(); found.Heard == nil || found.Heard.Hot != 72 || found.Loaded <= 0 {
+		t.Errorf("heard: %+v", found)
+	}
+
+	// A processor at 96 °C is at work, not in danger: the load goes on. It ends only when a
+	// sensor comes close to the temperature its own shutdown is set at
+	file := func(root, path, text string) {
+		os.MkdirAll(filepath.Dir(filepath.Join(root, path)), 0o755)
+		os.WriteFile(filepath.Join(root, path), []byte(text), 0o644)
+	}
+	root := t.TempDir()
+	file(root, "sys/class/thermal/thermal_zone0/temp", "96000\n")
+	file(root, "sys/class/thermal/thermal_zone0/trip_point_0_type", "critical\n")
+	file(root, "sys/class/thermal/thermal_zone0/trip_point_0_temp", "115000\n")
+	// A cooler part of the machine with a lower limit of its own
+	file(root, "sys/class/thermal/thermal_zone1/temp", "48000\n")
+	file(root, "sys/class/thermal/thermal_zone1/trip_point_0_type", "passive\n")
+	file(root, "sys/class/thermal/thermal_zone1/trip_point_0_temp", "50000\n")
+	file(root, "sys/class/thermal/thermal_zone1/trip_point_1_type", "critical\n")
+	file(root, "sys/class/thermal/thermal_zone1/trip_point_1_temp", "70000\n")
+	hotMachine := machine.Fixture(root)
+	w = StartWarming(hotMachine, "")
+	if _, over := w.Step(); over || w.Heat().TooHot {
+		t.Errorf("the load ended at 96 °C with the shutdown at 115: %+v", w.Heat())
+	}
+	file(root, "sys/class/thermal/thermal_zone0/temp", "108000\n")
+	if _, over := w.Step(); !over || !w.Heat().TooHot {
+		t.Errorf("the load went on at 108 °C with the shutdown at 115")
+	}
+	w.Stop()
+	file(root, "sys/class/thermal/thermal_zone0/temp", "96000\n")
+	file(root, "sys/class/thermal/thermal_zone1/temp", "63000\n")
+	w = StartWarming(hotMachine, "")
+	if _, over := w.Step(); !over {
+		t.Errorf("the load went on with a cooler part at 63 °C and its shutdown at 70")
+	}
+	w.Stop()
+	if fans := one(t, w.Heat().Report(), "fans"); !strings.Contains(fans.Evidence, "close to the temperature the computer shuts down at") {
+		t.Errorf("why it ended isn't said: %+v", fans)
+	}
+
+	// What the battery gives is what the computer draws only with no charger in
+	power := func(status, online string) float64 {
+		root := t.TempDir()
+		for path, text := range map[string]string{"sys/class/power_supply/bat/power_now": "-31793000\n", "sys/class/power_supply/bat/status": status + "\n", "sys/class/power_supply/usb/online": online + "\n"} {
+			os.MkdirAll(filepath.Dir(filepath.Join(root, path)), 0o755)
+			os.WriteFile(filepath.Join(root, path), []byte(text), 0o644)
+		}
+		return watts(machine.Fixture(root))
+	}
+	if got := power("Discharging", "0"); got < 31.7 || got > 31.9 {
+		t.Errorf("on battery: %v W", got)
+	}
+	if got := power("Discharging", "1"); got != 0 {
+		t.Errorf("with a weak charger in: %v W", got)
+	}
+	if got := power("Charging", "1"); got != 0 {
+		t.Errorf("charging: %v W", got)
+	}
+
+	// Where there is a Chromium, the GPU works too, in a profile of its own, and nothing of
+	// it is left behind when the load ends
+	dir := t.TempDir()
+	started := make(chan []string, 1)
+	sys.Command = func(name string, args ...string) (string, error) {
+		if name == "which" && args[0] == "chromium" {
+			return "/usr/bin/chromium", nil
+		}
+		if name == "chromium" {
+			// The page is there for as long as the browser runs
+			page, _ := os.ReadFile(strings.TrimPrefix(args[len(args)-1], "file://"))
+			started <- append(args, string(page))
+		}
+		return "", os.ErrNotExist
+	}
+	w = StartWarming(sys, dir)
+	select {
+	case args := <-started:
+		joined := strings.Join(args, " ")
+		if !strings.Contains(joined, "drawArrays") || !strings.Contains(joined, "--user-data-dir="+dir) || !strings.Contains(joined, "--headless=new") {
+			t.Errorf("the GPU's load: %s", joined)
+		}
+	case <-time.After(2 * time.Second):
+		t.Fatal("the GPU wasn't put to work")
+	}
+	w.Stop()
+	if !w.Heat().Graphics {
+		t.Error("the GPU's part isn't noted")
+	}
+	for range 100 {
+		if left, _ := os.ReadDir(dir); len(left) == 0 {
+			return
+		}
+		time.Sleep(10 * time.Millisecond)
+	}
+	t.Error("the GPU's page was left behind")
 }
 
 func TestOnlyTheTestsThisMachineCanRunAreOffered(t *testing.T) {

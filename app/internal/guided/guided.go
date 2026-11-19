@@ -190,6 +190,11 @@ func build(run *report.Run, facts probe.Facts, dir string) []step {
 	steps = append(steps, newQuestions(run, facts, covered))
 	// Last, what needs nobody: by then the owner can walk away and come back to the results
 	for _, test := range deep.Tests(sys, facts.Wifi, facts.Bluetooth, dir) {
+		if test.Name == "Temperatures" {
+			// The one test that shows what it reads as it goes, and that an owner can help
+			steps = append(steps, newHeat(run, sys, dir))
+			continue
+		}
 		steps = append(steps, newAuto(run, test))
 	}
 	return steps
@@ -431,6 +436,10 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.skipped = map[string]bool{}
 				}
 				m.skipped[m.steps[m.at].name()] = true
+				// What the step had going ends with it: a load on the processor, an open window
+				if open, ok := m.steps[m.at].(cleaner); ok {
+					open.cleanup()
+				}
 			}
 			msg = tea.KeyPressMsg{}
 		}
@@ -609,7 +618,7 @@ type menuEntry struct {
 
 // The menu, in two groups: what measures itself, then what takes someone at the computer.
 var menu = []menuEntry{
-	{word: "auto", label: "All of these in one go", auto: true, about: "two minutes, plays test tones"},
+	{word: "auto", label: "All of these in one go", auto: true, about: "about four minutes, plays test tones"},
 	{word: "speakers", label: "Speakers and microphones", checks: []string{"speakers", "microphones"}, auto: true},
 	{word: "graphics", label: "Graphics: Vulkan, WebGL and WebGPU", checks: []string{"gpu", "webgl", "webgpu"}, auto: true},
 	{word: "wireless", label: "Wi-Fi signal and Bluetooth range", checks: []string{"wifi", "bluetooth"}, auto: true},
@@ -698,7 +707,7 @@ type modelMsg struct {
 }
 
 func (w *welcome) question() choice {
-	options, sides := []string{"Everything"}, []side{{text: "about twelve minutes", style: soft}}
+	options, sides := []string{"Everything"}, []side{{text: "about fifteen minutes", style: soft}}
 	heads := map[int]string{}
 	for at, part := range w.parts {
 		// The two groups, each under its own line

@@ -288,7 +288,7 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 	run := &report.Run{}
 	run.Set("wifi", report.Works, report.Measured, "wlan0 connected", "")
 	dir := t.TempDir()
-	video := newAuto(run, deep.Test{Name: "Video decoding", Checks: []string{"video-decode"}, Run: func() []report.Result { return nil }})
+	video := newAuto(run, deep.Test{Name: "Video decoding", Checks: []string{"video-decode"}, Run: func(func(string)) []report.Result { return nil }})
 	steps := []step{newKeyboard(run), &effects{run: run}, newSpeakers(run, dir), newHeadphones(run, dir), newCamera(run, dir), newQuestions(run, probe.Facts{}, nil), video}
 	last := &summary{run: run, options: Options{Send: false}}
 	// What this machine found the last time each thing was tested
@@ -319,7 +319,7 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 	// Only what this machine has is offered
 	m, start := open()
 	drawn := m.View().Content
-	for _, text := range []string{"Everything", "about twelve minutes", "Keyboard, volume and brightness keys", "Speakers and microphones", "Headphones", "Camera", "hw-test camera", "Video decoding"} {
+	for _, text := range []string{"Everything", "about fifteen minutes", "Keyboard, volume and brightness keys", "Speakers and microphones", "Headphones", "Camera", "hw-test camera", "Video decoding"} {
 		if !strings.Contains(drawn, text) {
 			t.Errorf("the menu lacks %q:\n%s", text, drawn)
 		}
