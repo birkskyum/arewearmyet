@@ -21,6 +21,7 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/machine"
 	"github.com/birkskyum/arewearmyet/app/internal/probe"
 	"github.com/birkskyum/arewearmyet/app/internal/report"
+	"github.com/birkskyum/arewearmyet/app/internal/tools"
 )
 
 // version is set when a release is built.
@@ -67,7 +68,7 @@ func main() {
 	case "help", "--help", "-h":
 		usage()
 		return
-	case "quick", "check", "guided":
+	case "quick", "check", "guided", "facts":
 		if command == "check" {
 			command = "quick"
 		}
@@ -94,6 +95,17 @@ func main() {
 
 	if *jsonOnly {
 		fmt.Println(string(run.JSON()))
+		return
+	}
+	// What the test found to work with, for when a step doesn't behave as it should
+	if command == "facts" {
+		fmt.Printf("%+v\n", facts)
+		for _, line := range guided.Describe(machine.Real(), facts.TouchscreenDevice) {
+			fmt.Println(line)
+		}
+		for _, tool := range []string{"pw-play", "pw-record", "cam", "wpctl", "hyprctl", "systemd-analyze", "xdg-open"} {
+			fmt.Printf("%-16s %v\n", tool, tools.Have(tool))
+		}
 		return
 	}
 	// The guided test needs someone at the keyboard; without a terminal it is the quick check
@@ -151,6 +163,7 @@ func usage() {
   hw-test quick      the quick check alone: read-only, a few seconds, no questions
   hw-test STEP...    one part of the guided test alone, reporting only that part:
                      `+strings.Join(guided.StepWords(), ", ")+`
+  hw-test facts      what the test found on this computer to work with (nothing is sent)
   hw-test version
 
 Options:

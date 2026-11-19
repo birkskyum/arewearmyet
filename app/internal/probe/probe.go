@@ -23,14 +23,16 @@ type Facts struct {
 	Keyboard    string // the built-in keyboard's device name
 	Touchpad    string
 	Touchscreen string
-	Lid         string
-	Backlight   string // its folder under /sys/class/backlight
-	Wifi        string // the interface, like wlan0
-	Bluetooth   string // the controller, like hci0
-	SoundCard   string
-	Camera      string
-	Fingerprint string // USB vendor:product of a known reader
-	Encrypted   bool   // the root disk asks for a password at startup
+	// TouchscreenDevice is the touchscreen's input device under /sys, to find its interrupt by.
+	TouchscreenDevice string
+	Lid               string
+	Backlight         string // its folder under /sys/class/backlight
+	Wifi              string // the interface, like wlan0
+	Bluetooth         string // the controller, like hci0
+	SoundCard         string
+	Camera            string
+	Fingerprint       string // USB vendor:product of a known reader
+	Encrypted         bool   // the root disk asks for a password at startup
 }
 
 var packages = []string{"linux-omarchy", "linux-firmware", "linux-firmware-qcom", "mesa", "systemd", "omarchy", "hyprland", "pipewire", "alsa-ucm-conf", "bluez", "libcamera"}
@@ -227,7 +229,7 @@ func input(sys machine.System, facts *Facts, measured set) {
 			facts.Touchpad = name
 		}
 		if has("ID_INPUT_TOUCHSCREEN=1") {
-			facts.Touchscreen = name
+			facts.Touchscreen, facts.TouchscreenDevice = name, event
 		}
 		// Bit 0 of the switch capabilities is the lid
 		words := strings.Fields(sys.Read(event + "/device/capabilities/sw"))

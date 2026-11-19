@@ -88,14 +88,19 @@ func resultsTable(results []report.Result, width int) string {
 		if name == "" {
 			name = result.Check
 		}
-		line := lipgloss.NewStyle().Width(30).Render(name) + stateStyle(result.State).Width(18).Render(stateLabel[result.State])
+		// The name's column gives way first in a narrow window
+		nameWidth := max(10, min(30, width-19))
+		if lipgloss.Width(name) >= nameWidth {
+			name = string([]rune(name)[:nameWidth-2]) + "…"
+		}
+		line := lipgloss.NewStyle().Width(nameWidth).Render(name) + stateStyle(result.State).Width(18).Render(stateLabel[result.State])
 		detail := result.Note
 		if detail == "" {
 			detail = result.Evidence
 		}
 		if room := width - 50; room > 20 && detail != "" {
-			if lipgloss.Width(detail) > room {
-				detail = detail[:room-1] + "…"
+			if letters := []rune(detail); len(letters) > room {
+				detail = string(letters[:room-1]) + "…"
 			}
 			line += soft.Render(detail)
 		}

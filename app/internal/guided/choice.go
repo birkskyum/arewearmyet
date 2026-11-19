@@ -42,7 +42,12 @@ func (c *choice) view(width int) string {
 		if i == c.cursor {
 			marker, style = accent.Render("› "), bold
 		}
-		fmt.Fprintf(&out, "%s%s %s\n", marker, soft.Render(fmt.Sprint(i+1)), style.Render(option))
+		// A long answer wraps under its own first word, not under the number
+		lines := strings.Split(wrap(option, width-4), "\n")
+		fmt.Fprintf(&out, "%s%s %s\n", marker, soft.Render(fmt.Sprint(i+1)), style.Render(lines[0]))
+		for _, more := range lines[1:] {
+			fmt.Fprintf(&out, "    %s\n", style.Render(more))
+		}
 	}
 	return strings.TrimRight(out.String(), "\n")
 }

@@ -118,10 +118,17 @@ func (t *touchpad) view(width, height int) string {
 		return t.nothing.view(width)
 	}
 	item := func(ok bool, label string) string {
+		// A long item wraps under its own text, not under the mark
+		lines := strings.Split(wrap(label, width-4), "\n")
+		mark, style := "  ○ ", soft
 		if ok {
-			return good.Render("  ✓ " + label)
+			mark, style = "  ✓ ", good
 		}
-		return "  ○ " + label
+		text := style.Render(mark + lines[0])
+		for _, more := range lines[1:] {
+			text += "\n" + style.Render("    "+more)
+		}
+		return text
 	}
 	scroll := "Scroll with two fingers, one way and then the other"
 	if t.scrolled() == 1 {

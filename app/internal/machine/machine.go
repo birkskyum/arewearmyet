@@ -40,6 +40,27 @@ const readLimit = 2 * time.Second
 // ReadAll returns a small file's text with NUL bytes turned into newlines, as the device
 // tree's string lists need, or "" when it can't be read or the read hangs.
 func (s System) ReadAll(p string) string {
+	return strings.TrimRight(strings.ReplaceAll(string(s.Bytes(p)), "\x00", "\n"), "\n")
+}
+
+// Resolve follows the links in a path and returns where it really is, or "" when it isn't there.
+func (s System) Resolve(p string) string {
+	real, err := filepath.EvalSymlinks(s.path(p))
+	if err != nil {
+		return ""
+	}
+	root := s.Root
+	if root != "" {
+		if resolved, err := filepath.EvalSymlinks(root); err == nil {
+			root = resolved
+		}
+	}
+	return strings.TrimPrefix(real, filepath.Clean(root))
+}
+
+// Bytes returns a small file as it is, as a device tree's numbers need, or nothing when it
+// can't be read or the read hangs.
+func (s System) Bytes(p string) []byte {
 	type answer struct {
 		data []byte
 		err  error
@@ -53,17 +74,17 @@ func (s System) ReadAll(p string) string {
 	select {
 	case got := <-done:
 		if got.err != nil {
-			return ""
+			return nil
 		}
 		data = got.data
 	case <-time.After(readLimit):
 		// The read stays stuck in its own goroutine; the check goes on without the value
-		return ""
+		return nil
 	}
 	if len(data) > 64*1024 {
 		data = data[:64*1024]
 	}
-	return strings.TrimRight(strings.ReplaceAll(string(data), "\x00", "\n"), "\n")
+	return data
 }
 
 // Int returns a file's number, and whether it held one.

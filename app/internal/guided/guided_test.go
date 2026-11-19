@@ -5,8 +5,10 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
 
 	"github.com/birkskyum/arewearmyet/app/internal/machine"
 	"github.com/birkskyum/arewearmyet/app/internal/probe"
@@ -282,7 +284,7 @@ func TestTheTestIsSavedAsEachStepBegins(t *testing.T) {
 	var saved []string
 	last := &summary{run: run}
 	m := &model{run: run, summary: last, failed: map[string]string{}, save: func(step string) { saved = append(saved, step) }}
-	m.steps = []step{&welcome{run: run}, newTouchscreen(run, "screen"), newQuestions(run, probe.Facts{}, map[string]bool{"usb": true, "external-display": true}), last}
+	m.steps = []step{&welcome{run: run}, newTouchscreen(run, machine.Fixture(t.TempDir()), "screen", ""), newQuestions(run, probe.Facts{}, map[string]bool{"usb": true, "external-display": true}), last}
 	m.Update(press(tea.KeyEnter))
 	m.Update(press('s'))
 	if got := strings.Join(saved, ", "); got != "Touchscreen, Questions" {
@@ -516,24 +518,94 @@ func TestTouchpadIsMeasuredFromThePointerInTheTerminal(t *testing.T) {
 	}
 }
 
-func TestTouchscreenCountsTapsInDifferentPlaces(t *testing.T) {
+func TestTouchscreenCountsTouchesByItsInterrupt(t *testing.T) {
+	// A touchscreen on I2C as the device tree describes it: pin 51 of the GPIO controller
+	root := t.TempDir()
+	set := func(path string, data []byte) {
+		os.MkdirAll(filepath.Dir(filepath.Join(root, path)), 0o755)
+		os.WriteFile(filepath.Join(root, path), data, 0o644)
+	}
+	device := "sys/devices/platform/soc/a80000.i2c/i2c-0/0-0014"
+	set(device+"/of_node/interrupts-extended", []byte{0, 0, 0, 0x61, 0, 0, 0, 0x33, 0, 0, 0, 8})
+	set(device+"/0018:27C6:0123.0001/input/input5/event5/dev", []byte("13:69\n"))
+	os.MkdirAll(filepath.Join(root, "sys/class/input"), 0o755)
+	os.Symlink(filepath.Join(root, device, "0018:27C6:0123.0001/input/input5/event5"), filepath.Join(root, "sys/class/input/event5"))
+	os.Symlink("..", filepath.Join(root, device, "0018:27C6:0123.0001/input/input5/event5/device"))
+	// Three lines share the driver's name; another controller has a pin 51 too
+	for irq, line := range map[string][3]string{"138": {"51", "hid-over-i2c", "653,0,0"}, "141": {"3", "hid-over-i2c", "14377,0,0"}, "77": {"51", "", "0,0,0"}} {
+		set("sys/kernel/irq/"+irq+"/hwirq", []byte(line[0]+"\n"))
+		set("sys/kernel/irq/"+irq+"/actions", []byte(line[1]+"\n"))
+		set("sys/kernel/irq/"+irq+"/per_cpu_count", []byte(line[2]+"\n"))
+	}
+	sys := machine.Fixture(root)
 	run := &report.Run{}
-	screen := newTouchscreen(run, "hid-over-i2c 27C6:0123")
+	screen := newTouchscreen(run, sys, "hid-over-i2c 27C6:0123", "/sys/class/input/event5")
+	if screen.line != "/sys/kernel/irq/138" || screen.wantsMouse() {
+		t.Fatalf("interrupt line %q", screen.line)
+	}
+	now := time.Unix(1000, 0)
+	screen.clock = func() time.Time { return now }
+	screen.start()
+	count := int64(653)
+	// A touch: the line fires for a moment, then goes quiet
+	touch := func() {
+		for i := 0; i < 5; i++ {
+			count += 7
+			now = now.Add(100 * time.Millisecond)
+			screen.update(touchMsg{count})
+		}
+		for i := 0; i < 5; i++ {
+			now = now.Add(100 * time.Millisecond)
+			screen.update(touchMsg{count})
+		}
+	}
+	touch()
+	touch()
+	if screen.touches != 2 || screen.ask != nil {
+		t.Fatalf("after two touches: %d counted", screen.touches)
+	}
+	touch()
+	if screen.ask == nil || !strings.Contains(screen.ask.question, "registered 3 touches") {
+		t.Fatalf("after three touches: %d counted, no question", screen.touches)
+	}
+	screen.update(press('1'))
+	result, _ := run.Get("touchscreen")
+	if !screen.done() || result.State != report.Works || result.How != report.Measured || !strings.Contains(result.Evidence, "3 touches, its interrupt fired 105 times") {
+		t.Errorf("result %+v", result)
+	}
+
+	// Touching does nothing on the desktop, though the line fires
+	run = &report.Run{}
+	screen = newTouchscreen(run, sys, "screen", "/sys/class/input/event5")
+	screen.clock = func() time.Time { return now }
+	screen.start()
+	screen.update(touchMsg{count + 9})
+	screen.update(press('n'))
+	if result, _ := run.Get("touchscreen"); result.State != report.Partial {
+		t.Errorf("fires without effect: %+v", result)
+	}
+}
+
+func TestTouchscreenFallsBackToClicksWithoutAnInterrupt(t *testing.T) {
+	run := &report.Run{}
+	screen := newTouchscreen(run, machine.Fixture(t.TempDir()), "a USB touchscreen", "")
+	if !screen.wantsMouse() {
+		t.Fatal("it doesn't ask for the pointer")
+	}
 	screen.update(tea.MouseClickMsg{Button: tea.MouseLeft, X: 4, Y: 4})
 	screen.update(tea.MouseClickMsg{Button: tea.MouseLeft, X: 4, Y: 4}) // the same place twice counts once
 	screen.update(tea.MouseClickMsg{Button: tea.MouseLeft, X: 30, Y: 9})
-	screen.update(press(tea.KeyEnter))
-	if screen.done() {
-		t.Fatal("done after two places")
+	if screen.ask != nil {
+		t.Fatal("asked after two places")
 	}
 	screen.update(tea.MouseClickMsg{Button: tea.MouseLeft, X: 60, Y: 2})
-	screen.update(press(tea.KeyEnter))
-	if result, _ := run.Get("touchscreen"); !screen.done() || result.State != report.Works || result.How != report.Measured {
+	screen.update(press('2'))
+	if result, _ := run.Get("touchscreen"); !screen.done() || result.State != report.Partial {
 		t.Errorf("result %+v", result)
 	}
 
 	run = &report.Run{}
-	screen = newTouchscreen(run, "x")
+	screen = newTouchscreen(run, machine.Fixture(t.TempDir()), "x", "")
 	screen.update(press('a'))
 	if run.State("touchscreen") != report.Absent {
 		t.Error("no touchscreen wasn't recorded")
@@ -571,7 +643,7 @@ func TestNothingIsDrawnInAFaintColour(t *testing.T) {
 	sys := machine.Fixture(dir)
 	back := &resumed{run: run, pending: report.Pending{Step: "Camera"}, restarted: true}
 	back.ask = back.question()
-	steps := []step{&welcome{run: run}, back, newKeyboard(run), &effects{run: run, items: []effect{{label: "Volume up"}}}, newTouchpad(run, "pad"), newTouchscreen(run, "screen"),
+	steps := []step{&welcome{run: run}, back, newKeyboard(run), &effects{run: run, items: []effect{{label: "Volume up"}}}, newTouchpad(run, "pad"), newTouchscreen(run, machine.Fixture(dir), "screen", ""),
 		newSpeakers(run, dir), newMicrophones(run, dir), newHeadphones(run, dir), newCamera(run, dir), newUSB(run, sys), newScreen(run, sys), newSleep(run, probe.Facts{}),
 		newQuestions(run, probe.Facts{Laptop: true}, nil), last}
 	for at, s := range steps {
@@ -580,6 +652,32 @@ func TestNothingIsDrawnInAFaintColour(t *testing.T) {
 		for _, code := range []string{"\x1b[90m", "\x1b[2m", ";90m", "\x1b[97m"} {
 			if strings.Contains(drawn, code) {
 				t.Errorf("%s is drawn with %q", s.name(), code)
+			}
+		}
+	}
+}
+
+// Nothing may run past the window's edge, where it would be cut off: every step is drawn in
+// a narrow window and each line measured. Only the picture of the keyboard has a width of its own.
+func TestNoLineIsCutOffInANarrowWindow(t *testing.T) {
+	run := &report.Run{Hardware: map[string]string{"maker": "LENOVO", "product": "83ED"}}
+	run.Set("wifi", report.Works, report.Measured, "wlan0 (ath12k_wifi7_pci) connected, with a long line of evidence that goes on and on", "")
+	dir := t.TempDir()
+	sys := machine.Fixture(dir)
+	last := &summary{run: run, options: Options{Send: true}}
+	last.start()
+	back := &resumed{run: run, pending: report.Pending{Step: "External screen"}, restarted: true}
+	back.ask = back.question()
+	steps := []step{&welcome{run: run}, back, &effects{run: run, backlight: "x", items: []effect{{label: "Mute again, to turn the sound back on"}}}, newTouchpad(run, "pad"),
+		newTouchscreen(run, sys, "screen", ""), newSpeakers(run, dir), newMicrophones(run, dir), newHeadphones(run, dir), newCamera(run, dir), newUSB(run, sys),
+		newScreen(run, sys), newSleep(run, probe.Facts{}), newQuestions(run, probe.Facts{Laptop: true, Encrypted: true}, nil), last}
+	for _, width := range []int{72, 50} {
+		for at, s := range steps {
+			m := &model{run: run, summary: last, failed: map[string]string{}, steps: steps, at: at, width: width, height: 40}
+			for _, line := range strings.Split(m.View().Content, "\n") {
+				if got := lipgloss.Width(line); got > width {
+					t.Errorf("%s at %d columns has a line of %d: %q", s.name(), width, got, strings.TrimSpace(line))
+				}
 			}
 		}
 	}

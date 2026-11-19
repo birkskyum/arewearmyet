@@ -137,7 +137,7 @@ func build(run *report.Run, facts probe.Facts, dir string) []step {
 		add("touchpad", newTouchpad(run, facts.Touchpad))
 	}
 	if facts.Touchscreen != "" {
-		add("touchscreen", newTouchscreen(run, facts.Touchscreen))
+		add("touchscreen", newTouchscreen(run, sys, facts.Touchscreen, facts.TouchscreenDevice))
 	}
 	if facts.SoundCard != "" && tools.Have("pw-play", "pw-record") {
 		speakers, microphones := newSpeakers(run, dir), newMicrophones(run, dir)
@@ -328,7 +328,7 @@ func (m *model) View() tea.View {
 		"",
 		body,
 		"",
-		hint+" · Ctrl+C to stop",
+		wrapHint(hint+" · Ctrl+C to stop", width-4),
 	)
 	view := tea.NewView(lipgloss.NewStyle().Padding(1, 2).Render(content))
 	view.AltScreen = true
@@ -352,6 +352,25 @@ func (m *model) draw(s step, width, height int) (body, hint string) {
 		}
 	}()
 	return s.view(width, height), s.keys()
+}
+
+// wrapHint breaks the line of key hints between hints, so none is cut off at the window's
+// edge, and a single hint longer than the window wraps like any text.
+func wrapHint(hint string, width int) string {
+	var lines []string
+	line := ""
+	for _, item := range strings.Split(hint, " · ") {
+		switch {
+		case line == "":
+			line = item
+		case lipgloss.Width(line)+3+lipgloss.Width(item) <= width:
+			line += " · " + item
+		default:
+			lines = append(lines, line)
+			line = item
+		}
+	}
+	return wrap(strings.Join(append(lines, line), "\n"), width)
 }
 
 // wrapProgress lays the step names out on as many lines as the width needs.
