@@ -89,16 +89,62 @@ type Page struct {
 	WebGPUWhy    string `json:"webgpuWhy"`
 }
 
-// The switches that turn WebGPU on in Chromium where it isn't on by itself.
+// Engine is the browser the checks run in.
+type Engine struct {
+	Name    string
+	Command string
+	// Instead names the owner's default browser when this test can't drive it and another
+	// browser stood in for it.
+	Instead string
+}
+
+// The browsers this test can drive: the Chromium family, which all take the same switches.
+// entry is the name of the desktop entry, without ".desktop".
+var engines = []struct{ entry, name, command string }{
+	{"google-chrome", "Chrome", "google-chrome-stable"},
+	{"com.google.chrome", "Chrome", "google-chrome-stable"},
+	{"chromium", "Chromium", "chromium"},
+	{"brave-browser", "Brave", "brave"},
+	{"vivaldi-stable", "Vivaldi", "vivaldi-stable"},
+	{"microsoft-edge", "Edge", "microsoft-edge-stable"},
+}
+
+// Which picks the browser to test: the one the desktop opens for a link, since that is where
+// the owner meets WebGL and WebGPU. Each browser reads its own switches (chrome-flags.conf,
+// chromium-flags.conf), so one can have WebGPU while the other has not. When the default is not
+// of the Chromium family, Chromium stands in where it is installed, and the result says so.
+func Which(sys machine.System) (Engine, bool) {
+	entry, err := sys.RunFor(3*time.Second, "omarchy-cmd-default-browser")
+	if err != nil || strings.TrimSpace(entry) == "" {
+		entry, _ = sys.RunFor(5*time.Second, "xdg-settings", "get", "default-web-browser")
+	}
+	entry = strings.TrimSuffix(strings.ToLower(strings.TrimSpace(entry)), ".desktop")
+	for _, known := range engines {
+		if known.entry == entry && sys.Has(known.command) {
+			return Engine{Name: known.name, Command: known.command}, true
+		}
+	}
+	for _, known := range engines[2:] {
+		if sys.Has(known.command) {
+			return Engine{Name: known.name, Command: known.command, Instead: entry}, true
+		}
+	}
+	if sys.Has(engines[0].command) {
+		return Engine{Name: engines[0].name, Command: engines[0].command, Instead: entry}, true
+	}
+	return Engine{}, false
+}
+
+// The switches that turn WebGPU on in a Chromium browser where it isn't on by itself.
 var webgpuFlags = []string{"--enable-unsafe-webgpu", "--enable-features=Vulkan,WebGPU"}
 
 // answerWait is how long the browser gets to open the page and answer.
 var answerWait = 40 * time.Second
 
-// ask serves the test page on this computer alone, opens it in Chromium without a window and
+// ask serves the test page on this computer alone, opens it in the browser without a window and
 // waits for the page's answer, which doesn't depend on how long the GPU takes to come up. The
-// browser runs in a profile of its own, so the owner's Chromium and its profile aren't touched.
-func ask(sys machine.System, dir string, extra ...string) (Page, bool) {
+// browser runs in a profile of its own, so the owner's browser and its profile aren't touched.
+func ask(sys machine.System, command, dir string, extra ...string) (Page, bool) {
 	listener, err := net.Listen("tcp", "127.0.0.1:0")
 	if err != nil {
 		return Page{}, false
@@ -130,7 +176,7 @@ func ask(sys machine.System, dir string, extra ...string) (Page, bool) {
 	args := append([]string{"--headless=new", "--no-first-run", "--disable-extensions", "--user-data-dir=" + profile}, extra...)
 	stop, gone := make(chan struct{}), make(chan struct{})
 	go func() {
-		sys.RunUntil(stop, answerWait+10*time.Second, "chromium", append(args, "http://"+listener.Addr().String()+"/")...)
+		sys.RunUntil(stop, answerWait+10*time.Second, command, append(args, "http://"+listener.Addr().String()+"/")...)
 		close(gone)
 	}()
 	var page Page
@@ -152,41 +198,49 @@ func ask(sys machine.System, dir string, extra ...string) (Page, bool) {
 	return page, ok
 }
 
-// Browser opens the test page in Chromium without a window and reports whether WebGL and
+// Browser opens the test page in the browser without a window and reports whether WebGL and
 // WebGPU work, and on which renderer. WebGPU is tried as the browser comes, and again with
 // the switches that turn it on, to tell "works" from "works only when switched on by hand".
-func Browser(sys machine.System, dir string) []report.Result {
-	plain, ok := ask(sys, dir)
+// Every result names the browser it is about.
+func Browser(sys machine.System, engine Engine, dir string) []report.Result {
+	plain, ok := ask(sys, engine.Command, dir)
 	if !ok {
 		return nil
 	}
+	name := engine.Name
+	// Said with each result when another browser stood in for the owner's default
+	stood := ""
+	if engine.Instead != "" {
+		stood = "The default browser here (" + engine.Instead + ") is not one this test can drive, so this is " + name + "'s answer."
+	}
+	noted := func(note string) string { return strings.TrimSpace(note + " " + stood) }
 	var results []report.Result
 	switch {
 	case plain.WebGL == "":
-		results = append(results, result("webgl", report.Broken, "Chromium gave no WebGL context: "+plain.WebGLWhy, ""))
+		results = append(results, result("webgl", report.Broken, name+" gave no WebGL context: "+plain.WebGLWhy, noted("")))
 	case software(plain.WebGL):
-		results = append(results, result("webgl", report.Partial, plain.WebGL+", "+plain.WebGLVersion, "WebGL runs on the processor, not the GPU."))
+		results = append(results, result("webgl", report.Partial, name+": "+plain.WebGL+", "+plain.WebGLVersion, noted("WebGL runs on the processor, not the GPU.")))
 	default:
-		results = append(results, result("webgl", report.Works, plain.WebGL+", "+plain.WebGLVersion, ""))
+		results = append(results, result("webgl", report.Works, name+": "+plain.WebGL+", "+plain.WebGLVersion, noted("")))
 	}
 
 	// An adapter that runs on the processor isn't the GPU doing WebGPU, whatever it calls itself
 	onProcessor := func(page Page) bool { return page.WebGPU != "" && (page.Fallback || software(page.WebGPU)) }
 	usable := func(page Page) bool { return page.WebGPU != "" && page.Device && !onProcessor(page) }
 	if usable(plain) {
-		return append(results, result("webgpu", report.Works, "Chromium offers WebGPU on "+plain.WebGPU, ""))
+		return append(results, result("webgpu", report.Works, name+" offers WebGPU on "+plain.WebGPU, noted("")))
 	}
 	switches := strings.Join(webgpuFlags, " ")
-	switched, ok := ask(sys, dir, webgpuFlags...)
+	switched, ok := ask(sys, engine.Command, dir, webgpuFlags...)
 	if ok && usable(switched) {
-		return append(results, result("webgpu", report.Partial, "WebGPU on "+switched.WebGPU+" with "+switches+"; without them: "+first(plain.WebGPUWhy, "only "+plain.WebGPU),
-			"Chromium doesn't offer WebGPU by itself here. It works when started with "+switches+"."))
+		return append(results, result("webgpu", report.Partial, name+": WebGPU on "+switched.WebGPU+" with "+switches+"; without them: "+first(plain.WebGPUWhy, "only "+plain.WebGPU),
+			noted(name+" doesn't offer WebGPU by itself here. It works when started with "+switches+".")))
 	}
 	why := first(switched.WebGPUWhy, plain.WebGPUWhy, "no answer")
 	if onProcessor(plain) || onProcessor(switched) {
 		why = "only an adapter that runs on the processor (" + first(switched.WebGPU, plain.WebGPU) + ")"
 	}
-	return append(results, result("webgpu", report.Broken, "Chromium offers no WebGPU, also with "+switches+": "+why, ""))
+	return append(results, result("webgpu", report.Broken, name+" offers no WebGPU, also with "+switches+": "+why, noted("")))
 }
 
 func first(values ...string) string {
@@ -518,11 +572,12 @@ function frame(){const end=performance.now()+12;do{t+=.01;gl.uniform1f(u,t);gl.d
 frame();
 </script>`
 
-// graphics keeps the GPU busy as well, in a Chromium without a window and with a profile of
+// graphics keeps the GPU busy as well, in a browser without a window and with a profile of
 // its own, until the load ends. With it the Yoga Slim 7x draws 32 W, against 22 W for the
-// processor alone. A machine without Chromium is loaded by its processor only.
+// processor alone. A machine without a browser this can drive is loaded by its processor only.
 func (w *Warming) graphics(dir string) {
-	if dir == "" || !w.sys.Has("chromium") {
+	engine, found := Which(w.sys)
+	if dir == "" || !found {
 		return
 	}
 	page, profile := filepath.Join(dir, "load.html"), filepath.Join(dir, "load-profile")
@@ -533,7 +588,7 @@ func (w *Warming) graphics(dir string) {
 	go func() {
 		defer os.Remove(page)
 		defer os.RemoveAll(profile)
-		w.sys.RunUntil(w.stop, MaxLoad+30*time.Second, "chromium", "--headless=new", "--no-first-run", "--disable-extensions", "--user-data-dir="+profile, "file://"+page)
+		w.sys.RunUntil(w.stop, MaxLoad+30*time.Second, engine.Command, "--headless=new", "--no-first-run", "--disable-extensions", "--user-data-dir="+profile, "file://"+page)
 	}()
 }
 
@@ -771,11 +826,11 @@ func Tests(sys machine.System, wifi, bluetooth, dir string) []Test {
 			Run:     func(func(string)) []report.Result { return Graphics(sys) },
 			Nothing: "Vulkan gave no answer here, so there is nothing to report."})
 	}
-	if sys.Has("chromium") {
-		tests = append(tests, Test{Name: "Browser", Doing: "Opening a test page in Chromium, without a window", Checks: []string{"webgl", "webgpu"}, Takes: 5 * time.Second,
-			About:   "Chromium opens a page that asks for WebGL and for WebGPU, which maps and 3D pages draw with. This reads whether it gets them, and whether on the GPU. No window opens, and your own Chromium isn't touched.",
-			Run:     func(func(string)) []report.Result { return Browser(sys, dir) },
-			Nothing: "Chromium didn't answer the test page, so there is nothing to report."})
+	if engine, found := Which(sys); found {
+		tests = append(tests, Test{Name: "Browser", Doing: "Opening a test page in " + engine.Name + ", without a window", Checks: []string{"webgl", "webgpu"}, Takes: 5 * time.Second,
+			About:   engine.Name + " opens a page that asks for WebGL and for WebGPU, which maps and 3D pages draw with. This reads whether it gets them, and whether on the GPU. No window opens, and your own browser profile is not touched.",
+			Run:     func(func(string)) []report.Result { return Browser(sys, engine, dir) },
+			Nothing: engine.Name + " didn't answer the test page, so there is nothing to report."})
 	}
 	if (wifi != "" && sys.Has("iw")) || (bluetooth != "" && sys.Has("bluetoothctl")) {
 		tests = append(tests, Test{Name: "Wireless", Doing: "Reading the Wi-Fi link and listening for Bluetooth devices", Checks: []string{"wifi", "bluetooth"}, Takes: 10 * time.Second,

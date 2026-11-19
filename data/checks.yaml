@@ -64,16 +64,16 @@ checks:
   - id: webgl
     group: display
     title: WebGL in the browser
-    works: Chromium gives pages WebGL on the GPU, not on a renderer that runs on the processor.
-    probe: The graphics test opens a page in Chromium without a window and reads the renderer its WebGL context reports.
-    debug: "Chromium on Omarchy starts with the switches in `~/.config/chromium-flags.conf`. Its `chrome://gpu` page says what it uses and why a feature is off. WebGL on SwiftShader means Chromium found no usable GPU, so fix the `gpu` check first."
+    works: The default browser gives pages WebGL on the GPU, not on a renderer that runs on the processor.
+    probe: The graphics test opens a page in the default browser without a window and reads the renderer its WebGL context reports. The result names the browser. Chromium stands in when the default is not Chrome, Chromium or one built on it.
+    debug: "Each browser on Omarchy starts with switches of its own: Chrome with `~/.config/chrome-flags.conf`, Chromium with `~/.config/chromium-flags.conf`. The result names the browser that was tested, so change that one's file. Its `chrome://gpu` page says what it uses and why a feature is off. WebGL on SwiftShader means the browser found no usable GPU, so fix the `gpu` check first."
 
   - id: webgpu
     group: display
     title: WebGPU in the browser
-    works: Chromium gives pages WebGPU on the GPU without being started in a special way.
-    probe: The graphics test asks Chromium for a WebGPU adapter and device, as it comes and again with the switches that turn WebGPU on. Working only with the switches counts as partly.
-    debug: "Chromium on Linux doesn't turn WebGPU on by itself on most ARM GPUs. Vulkan has to work first, which `vulkaninfo --summary` shows by naming the GPU and not llvmpipe. The test's first run starts Chromium with the owner's `~/.config/chromium-flags.conf`, so switches set there count as working. To try it on this machine, keep a copy of that file, then `omarchy-chromium-add-feature Vulkan` and `omarchy-chromium-add-feature WebGPU` (they add to the `--enable-features` line that is there, where a second such line would replace it), and put `--enable-unsafe-webgpu` on a line of its own. A fix for everyone is a per-user setting in omacom/omarchy (the guide's table says where). Whether Omarchy wants that switch on by default is the team's call, so say in the pull request that it is a proposal."
+    works: The default browser gives pages WebGPU on the GPU without being started in a special way.
+    probe: The graphics test asks the default browser for a WebGPU adapter and device, as it comes and again with the switches that turn WebGPU on. Working only with the switches counts as partly. The result names the browser.
+    debug: "Chrome and Chromium on Linux don't turn WebGPU on by themselves on most ARM GPUs. Vulkan has to work first, which `vulkaninfo --summary` shows by naming the GPU and not llvmpipe. The result names the browser that was tested, and each reads its own file: Chrome `~/.config/chrome-flags.conf`, Chromium `~/.config/chromium-flags.conf`. The test's first run starts the browser with that file, so switches set there count as working. A switch set for one browser does nothing for the other. To try it for Chromium on this machine, keep a copy of its file, then `omarchy-chromium-add-feature Vulkan` and `omarchy-chromium-add-feature WebGPU` (they add to the `--enable-features` line that is there, where a second such line would replace it), and put `--enable-unsafe-webgpu` on a line of its own. A fix for everyone is a per-user setting in omacom/omarchy (the guide's table says where). Whether Omarchy wants that switch on by default is the team's call, so say in the pull request that it is a proposal."
 
   - id: backlight
     group: display

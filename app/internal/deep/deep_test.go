@@ -139,13 +139,78 @@ func browser(t *testing.T, plain, switched string) machine.System {
 	return sys
 }
 
+// chromium is the browser most of these tests drive.
+var chromium = Engine{Name: "Chromium", Command: "chromium"}
+
+// The browser that is tested is the one the desktop opens for a link, since each browser reads
+// switches of its own: on Omarchy Chrome is the default, and testing Chromium there sent an
+// agent to fix the wrong browser. A default this test can't drive is stood in for, by name.
+func TestTheDefaultBrowserIsTheOneTested(t *testing.T) {
+	desktop := func(entry string, installed ...string) machine.System {
+		sys := machine.Fixture(t.TempDir())
+		sys.Command = func(name string, args ...string) (string, error) {
+			switch {
+			case name == "omarchy-cmd-default-browser" && entry != "":
+				return entry + "\n", nil
+			case name == "which":
+				for _, have := range installed {
+					if have == args[0] {
+						return "/usr/bin/" + have, nil
+					}
+				}
+			}
+			return "", os.ErrNotExist
+		}
+		return sys
+	}
+	for _, c := range []struct {
+		entry     string
+		installed []string
+		want      Engine
+		found     bool
+	}{
+		{"google-chrome.desktop", []string{"google-chrome-stable", "chromium"}, Engine{Name: "Chrome", Command: "google-chrome-stable"}, true},
+		{"chromium.desktop", []string{"google-chrome-stable", "chromium"}, Engine{Name: "Chromium", Command: "chromium"}, true},
+		// Firefox can't be driven: Chromium stands in, and the result will say so
+		{"firefox.desktop", []string{"firefox", "chromium"}, Engine{Name: "Chromium", Command: "chromium", Instead: "firefox"}, true},
+		// The default's entry is there but its program is gone
+		{"google-chrome.desktop", []string{"chromium"}, Engine{Name: "Chromium", Command: "chromium", Instead: "google-chrome"}, true},
+		// Nothing says what the default is: whichever can be driven
+		{"", []string{"google-chrome-stable"}, Engine{Name: "Chrome", Command: "google-chrome-stable"}, true},
+		{"firefox.desktop", []string{"firefox"}, Engine{}, false},
+	} {
+		if got, found := Which(desktop(c.entry, c.installed...)); got != c.want || found != c.found {
+			t.Errorf("default %q with %v: %+v, %v", c.entry, c.installed, got, found)
+		}
+	}
+
+	// Every result names the browser it is about, and says when another stood in
+	onGPU := `{"webgl":"ANGLE (Qualcomm, Adreno X1-85, OpenGL ES 3.2)","webglVersion":"WebGL 2.0","webgpu":"qualcomm adreno-7xx","device":true}`
+	chrome := browser(t, onGPU, onGPU)
+	inner := chrome.Command
+	chrome.Command = func(name string, args ...string) (string, error) {
+		if name == "google-chrome-stable" {
+			return inner("chromium", args...)
+		}
+		return "", os.ErrNotExist
+	}
+	results := Browser(chrome, Engine{Name: "Chrome", Command: "google-chrome-stable"}, t.TempDir())
+	if webgpu := one(t, results, "webgpu"); webgpu.State != report.Works || webgpu.Evidence != "Chrome offers WebGPU on qualcomm adreno-7xx" || webgpu.Note != "" {
+		t.Errorf("webgpu in Chrome: %+v", webgpu)
+	}
+	results = Browser(browser(t, onGPU, onGPU), Engine{Name: "Chromium", Command: "chromium", Instead: "firefox"}, t.TempDir())
+	if webgl := one(t, results, "webgl"); !strings.HasPrefix(webgl.Evidence, "Chromium: ANGLE") || !strings.Contains(webgl.Note, "default browser here (firefox)") {
+		t.Errorf("webgl with Chromium standing in: %+v", webgl)
+	}
+}
+
 func TestTheBrowserReportsWebGLAndWhetherWebGPUNeedsSwitchingOn(t *testing.T) {
 	onGPU := `"webgl":"ANGLE (Qualcomm, Adreno X1-85, OpenGL ES 3.2)","webglVersion":"WebGL 2.0 (OpenGL ES 3.0 Chromium)"`
 	adapter := `"webgpu":"qualcomm adreno-7xx","device":true`
 	dir := t.TempDir()
 
 	// As on the Yoga: WebGL on the GPU, WebGPU only with the switches
-	results := Browser(browser(t, `{`+onGPU+`,"webgpuWhy":"no adapter"}`, `{`+onGPU+`,`+adapter+`}`), dir)
+	results := Browser(browser(t, `{`+onGPU+`,"webgpuWhy":"no adapter"}`, `{`+onGPU+`,`+adapter+`}`), chromium, dir)
 	webgl, webgpu := one(t, results, "webgl"), one(t, results, "webgpu")
 	if webgl.State != report.Works || !strings.Contains(webgl.Evidence, "Adreno X1-85") {
 		t.Errorf("webgl: %+v", webgl)
@@ -155,7 +220,7 @@ func TestTheBrowserReportsWebGLAndWhetherWebGPUNeedsSwitchingOn(t *testing.T) {
 	}
 
 	// WebGPU as the browser comes
-	if webgpu = one(t, Browser(browser(t, `{`+onGPU+`,`+adapter+`}`, `{}`), dir), "webgpu"); webgpu.State != report.Works || !strings.Contains(webgpu.Evidence, "qualcomm adreno-7xx") {
+	if webgpu = one(t, Browser(browser(t, `{`+onGPU+`,`+adapter+`}`, `{}`), chromium, dir), "webgpu"); webgpu.State != report.Works || !strings.Contains(webgpu.Evidence, "qualcomm adreno-7xx") {
 		t.Errorf("webgpu by itself: %+v", webgpu)
 	}
 
@@ -163,7 +228,7 @@ func TestTheBrowserReportsWebGLAndWhetherWebGPUNeedsSwitchingOn(t *testing.T) {
 	// WebGPU working, whether or not it calls itself a fallback
 	for _, fallback := range []string{"true", "false"} {
 		software := `{"webgl":"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0)), SwiftShader driver)","webglVersion":"WebGL 2.0","webgpu":"google swiftshader","fallback":` + fallback + `,"device":true}`
-		results = Browser(browser(t, software, software), dir)
+		results = Browser(browser(t, software, software), chromium, dir)
 		if webgl = one(t, results, "webgl"); webgl.State != report.Partial || !strings.Contains(webgl.Note, "processor") {
 			t.Errorf("webgl on the processor: %+v", webgl)
 		}
@@ -174,7 +239,7 @@ func TestTheBrowserReportsWebGLAndWhetherWebGPUNeedsSwitchingOn(t *testing.T) {
 
 	// No WebGL at all
 	none := `{"webgl":"","webgpuWhy":"navigator.gpu is missing"}`
-	results = Browser(browser(t, none, none), dir)
+	results = Browser(browser(t, none, none), chromium, dir)
 	if webgl = one(t, results, "webgl"); webgl.State != report.Broken {
 		t.Errorf("no webgl: %+v", webgl)
 	}
@@ -185,7 +250,7 @@ func TestTheBrowserReportsWebGLAndWhetherWebGPUNeedsSwitchingOn(t *testing.T) {
 	// A browser that goes away without answering reports nothing, at once, and nothing of the
 	// test is left behind
 	began := time.Now()
-	if results := Browser(browser(t, "", ""), dir); results != nil {
+	if results := Browser(browser(t, "", ""), chromium, dir); results != nil {
 		t.Errorf("no answer: %+v", results)
 	}
 	if waited := time.Since(began); waited > 5*time.Second {
@@ -207,7 +272,7 @@ func TestABrowserThatHangsIsGivenUpOn(t *testing.T) {
 		return "", nil
 	}
 	done := make(chan []report.Result, 1)
-	go func() { done <- Browser(sys, t.TempDir()) }()
+	go func() { done <- Browser(sys, chromium, t.TempDir()) }()
 	time.Sleep(400 * time.Millisecond)
 	// The wait is over by now; the program itself is ended by the limit on a real machine
 	close(release)
