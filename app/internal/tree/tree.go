@@ -521,15 +521,46 @@ ukify build --config /dev/null --linux "/usr/lib/modules/$kernel/vmlinuz" --init
   --cmdline ` + quote(strings.TrimSpace(cmdline)) + ` --devicetree "$dtb" --uname "$kernel" --output "$work/` + Entry + `.efi"
 
 echo "Adding the entry to the boot menu..."
+touch "$work/before"
 limine-entry-tool --add-uki ` + quote(Entry) + ` "$work/` + Entry + `.efi" --comment "hw-test: a changed device tree to try"
 
+` + onceScript + `
 echo
-echo "Done. Restart, and in the boot menu pick ` + Entry + ` (it is listed under Omarchy, after the usual kernel)."
-echo "The usual entry is untouched and still the default. If the test entry doesn't start,"
-echo "hold the power button until the computer is off, start it again and let the usual entry run."
+if once; then
+  echo "Done. Restart: the test entry starts by itself, this one time. Nothing has to be picked."
+  echo "The start after that is the usual one again, also if the test entry doesn't come up:"
+  echo "then hold the power button until the computer is off, and start it again."
+else
+  echo "Done. Restart, and in the boot menu pick ` + Entry + ` (it is listed under Omarchy, after the usual kernel)."
+  echo "The usual entry is untouched and still the default. If the test entry doesn't start,"
+  echo "hold the power button until the computer is off, start it again and let the usual entry run."
+fi
 echo "After the restart, hw-test tree status says which one is running. To take the test entry away: hw-test tree remove"
 `
 }
+
+// Once is the name of the firmware's entry for starting the test image one time.
+const Once = "hw-test once"
+
+// onceScript tells the computer's firmware to start the test image at the next restart, one
+// time, so nobody has to be there to pick it from the boot menu. The firmware forgets it
+// after that start, whether or not the image came up, and the usual order is never changed.
+const onceScript = `once() {
+  command -v efibootmgr >/dev/null || return 1
+  local image part number disk id
+  image=$(find /boot -type f -iname '*hwtest*.efi' -newer "$work/before" 2>/dev/null | head -1)
+  [ -n "$image" ] || image=$(find /boot -type f -iname '*hwtest*.efi' 2>/dev/null | head -1)
+  [ -n "$image" ] || return 1
+  part=$(findmnt -no SOURCE /boot) || return 1
+  number=$(cat "/sys/class/block/$(basename "$part")/partition") || return 1
+  disk=/dev/$(lsblk -no PKNAME "$part") || return 1
+  for id in $(efibootmgr | sed -n 's/^Boot\([0-9A-Fa-f]\{4\}\)\*\{0,1\} ` + Once + `.*/\1/p'); do
+    efibootmgr -q -b "$id" -B || true
+  done
+  efibootmgr -q --create-only --disk "$disk" --part "$number" --label '` + Once + `' --loader "$(printf '%s' "${image#/boot}" | tr / '\\')" || return 1
+  id=$(efibootmgr | sed -n 's/^Boot\([0-9A-Fa-f]\{4\}\)\*\{0,1\} ` + Once + `.*/\1/p' | head -1)
+  [ -n "$id" ] && efibootmgr -q --bootnext "$id"
+}`
 
 // RemoveScript takes the test entry and its image away again.
 func RemoveScript() string {
@@ -537,6 +568,13 @@ func RemoveScript() string {
 # Written by hw-test tree remove. Takes the test entry "` + Entry + `" and its boot image away.
 set -euo pipefail
 limine-entry-tool --remove-uki '` + Entry + `'
+# The firmware's entry for starting it once goes too, and its word to start it next
+if command -v efibootmgr >/dev/null; then
+  for id in $(efibootmgr | sed -n 's/^Boot\([0-9A-Fa-f]\{4\}\)\*\{0,1\} ` + Once + `.*/\1/p'); do
+    if efibootmgr | grep -qi "^BootNext: $id"; then efibootmgr -q --delete-bootnext || true; fi
+    efibootmgr -q -b "$id" -B || true
+  done
+fi
 echo "The test entry is gone. The boot menu is as it was before."
 `
 }

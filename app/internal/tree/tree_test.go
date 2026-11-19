@@ -403,3 +403,33 @@ func TestTheChangeIsWrittenAsOnePatchForThePackage(t *testing.T) {
 		t.Error("a patch was written without sources")
 	}
 }
+
+func TestTheTestEntryStartsOnceByItselfAndTheUsualOrderIsLeftAlone(t *testing.T) {
+	script := System{Kernel: "7.3.0-72-omarchy"}.Script("/home/owner/hw-bringup/x1e80100-lenovo-yoga-slim7x.dtb", "root=/dev/mapper/root rw")
+	for _, part := range []string{
+		// The firmware is told to start the test image next, one time, from an entry of its own
+		`efibootmgr -q --create-only --disk "$disk" --part "$number" --label 'hw-test once'`, `efibootmgr -q --bootnext "$id"`,
+		// An entry left from an earlier try goes first, and the image is the one just added
+		`efibootmgr -q -b "$id" -B || true`, `-newer "$work/before"`,
+		"Restart: the test entry starts by itself, this one time. Nothing has to be picked.",
+		// Where the firmware can't be told, the boot menu is still the way
+		"in the boot menu pick linux-omarchy-hwtest",
+	} {
+		if !strings.Contains(script, part) {
+			t.Errorf("the boot script lacks %q", part)
+		}
+	}
+	// The order the computer starts in is never written: only the one-time word is
+	for _, never := range []string{"--bootorder", " -o ", "efibootmgr -q --create "} {
+		if strings.Contains(script, never) {
+			t.Errorf("the boot script changes the usual order: %q", never)
+		}
+	}
+	// Taking the test entry away takes the firmware's entry and its one-time word too
+	removal := RemoveScript()
+	for _, part := range []string{"limine-entry-tool --remove-uki 'linux-omarchy-hwtest'", "--delete-bootnext", `efibootmgr -q -b "$id" -B`} {
+		if !strings.Contains(removal, part) {
+			t.Errorf("the remove script lacks %q", part)
+		}
+	}
+}

@@ -428,6 +428,28 @@ func deviceTree(words []string, body string) int {
 			return fail(err)
 		}
 		if !guided.Interactive() {
+			// No terminal here to ask for the password in, as with an agent: the step is opened
+			// for the owner in a window of their own, and waited for
+			self, _ := os.Executable()
+			quote := func(text string) string { return "'" + strings.ReplaceAll(text, "'", `'\''`) + "'" }
+			answered := filepath.Join(dir, "."+file+".done")
+			os.Remove(answered)
+			line := fmt.Sprintf("cd %s && %s tree %s; echo $? > %s; echo; read -n1 -rsp 'Press a key to close this window.'", quote(dir), quote(self), step, quote(answered))
+			if err := tools.Terminal("bash", "-c", line); err == nil {
+				fmt.Fprintf(os.Stderr, "This %s. It needs the owner's password, so it is open for them in a window of its own. Waiting until they are through, fifteen minutes at most.\n", what)
+				for waited := time.Duration(0); waited < 15*time.Minute; waited += 500 * time.Millisecond {
+					if data, err := os.ReadFile(answered); err == nil && len(strings.TrimSpace(string(data))) > 0 {
+						os.Remove(answered)
+						if code := strings.TrimSpace(string(data)); code != "0" {
+							return fail(fmt.Errorf("it didn't go through in the owner's window (it ended with %s)", code))
+						}
+						fmt.Fprintln(os.Stderr, "Done in the owner's window.")
+						return 0
+					}
+					time.Sleep(500 * time.Millisecond)
+				}
+				return fail(fmt.Errorf("the owner didn't get to it"))
+			}
 			fmt.Fprintf(os.Stderr, "This step needs the owner's password, and there is no terminal here to ask for it.\nAsk the owner to run this in their own terminal:\n\n  cd %s && hw-test tree %s\n\nIt %s. What it runs is in %s.\n", dir, step, what, path)
 			return 3
 		}
