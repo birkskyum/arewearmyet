@@ -7,6 +7,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -242,4 +243,35 @@ func Match(api string, run *Run) (Model, error) {
 		return Model{}, err
 	}
 	return model, nil
+}
+
+// Check is what the site says about one check: what working means, and where to look when it doesn't.
+type Check struct {
+	ID     string `json:"id"`
+	Title  string `json:"title"`
+	Works  string `json:"works"`
+	Probe  string `json:"probe"`
+	Person string `json:"person"`
+	Debug  string `json:"debug"`
+}
+
+// Checks asks the site for its list of checks, by id.
+func Checks(api string) (map[string]Check, error) {
+	client := http.Client{Timeout: 5 * time.Second}
+	response, err := client.Get(api + "/api/checks")
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+	var listed struct {
+		Checks []Check `json:"checks"`
+	}
+	if err := json.NewDecoder(io.LimitReader(response.Body, 1<<20)).Decode(&listed); err != nil {
+		return nil, err
+	}
+	checks := map[string]Check{}
+	for _, check := range listed.Checks {
+		checks[check.ID] = check
+	}
+	return checks, nil
 }

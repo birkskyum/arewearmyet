@@ -8,7 +8,7 @@ import status from '../data/status.json';
 import type { Model } from './labels';
 
 export type CheckState = 'works' | 'partial' | 'broken' | 'untested' | 'absent';
-export type Check = { id: string; group: string; title: string; works: string; probe?: string; person?: string; optional?: boolean };
+export type Check = { id: string; group: string; title: string; works: string; probe?: string; person?: string; debug?: string; optional?: boolean };
 export type Group = { id: string; title: string };
 export type Finding = { state: CheckState; note?: string; version?: string; checked?: string; source?: string };
 type FindingsFile = {

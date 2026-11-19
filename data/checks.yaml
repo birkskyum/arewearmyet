@@ -36,6 +36,7 @@ checks:
     title: USB stick and installer
     works: The install image starts from a USB stick by itself and reaches the installer, with keyboard and touchpad working.
     person: Boot the current install image from a USB stick with Secure Boot off, and say whether the installer appeared and whether the keyboard and touchpad worked in it.
+    debug: "The installer image picks the device tree by the machine's hardware IDs. A black screen right after the boot menu usually means no tree matched. Compare `systemd-analyze chid` with the IDs on the model's page. A keyboard or touchpad that is dead only in the installer means the tree lacks it or its driver isn't in the image. Fixed in `linux-omarchy-dtbs` (tree and hardware IDs)."
 
   - id: disk-unlock
     group: start
@@ -43,6 +44,7 @@ checks:
     works: The disk password prompt shows on the built-in screen at startup and the built-in keyboard types into it.
     probe: Whether the root file system is on an encrypted disk.
     person: Restart and say whether the password prompt was visible and whether the built-in keyboard worked in it.
+    debug: "The prompt runs from the initramfs, before most drivers load. A prompt that can't be typed into means part of the keyboard's driver chain isn't in the initramfs (i2c-hid-of, the I2C controller, pin control, regulators, or the USB controller for a USB keyboard). No visible prompt means the display's chain isn't. Compare `lsinitcpio` on the image with `lsmod` on the running system."
 
   - id: display
     group: display
@@ -50,24 +52,28 @@ checks:
     works: The built-in screen shows the desktop at its native resolution.
     probe: The built-in panel's connector, its state and its preferred mode.
     person: Say whether the desktop fills the screen sharply, and whether anything flickers.
+    debug: "The built-in panel hangs off the eDP controller (`mdss_dp3` on Snapdragon X), with the panel under its `aux-bus`. Read `journalctl -k -b | grep -iE 'msm|dpu|edp|panel'` and `cat /sys/class/drm/card*-eDP-1/{status,modes}`. A panel the kernel doesn't know gets cautious timings from `panel-edp` and a warning that names its EDID id. A wrong resolution or a black screen after the boot logo points at the tree's panel node, its supply or its enable GPIO."
 
   - id: gpu
     group: display
     title: Graphics acceleration
     works: The desktop runs on the GPU, not on software rendering.
     probe: Whether a render node from the msm driver exists and the GPU's firmware loaded. The graphics test asks Vulkan which device programs draw on.
+    debug: "The GPU needs the msm kernel driver, Mesa, and three firmware files: SQE and GMU firmware from linux-firmware, and a zap shader signed by the computer's maker, named by `firmware-name` under the tree's `gpu` node. `journalctl -k -b | grep -iE 'adreno|a7xx|a8xx|gmu|zap'` shows which is missing. Without the zap shader the desktop runs on software rendering, and `vulkaninfo --summary` shows llvmpipe."
 
   - id: webgl
     group: display
     title: WebGL in the browser
     works: Chromium gives pages WebGL on the GPU, not on a renderer that runs on the processor.
     probe: The graphics test opens a page in Chromium without a window and reads the renderer its WebGL context reports.
+    debug: "Chromium on Omarchy starts with the switches in `~/.config/chromium-flags.conf`. Its `chrome://gpu` page says what it uses and why a feature is off. WebGL on SwiftShader means Chromium found no usable GPU, so fix the `gpu` check first."
 
   - id: webgpu
     group: display
     title: WebGPU in the browser
     works: Chromium gives pages WebGPU on the GPU without being started in a special way.
     probe: The graphics test asks Chromium for a WebGPU adapter and device, as it comes and again with the switches that turn WebGPU on. Working only with the switches counts as partly.
+    debug: "Chromium on Linux doesn't turn WebGPU on by itself on most ARM GPUs. `--enable-unsafe-webgpu --enable-features=Vulkan,WebGPU` turns it on where Vulkan works, which `vulkaninfo --summary` shows by naming the GPU and not llvmpipe. A second `--enable-features` replaces the one in `~/.config/chromium-flags.conf`, so merge them into one line."
 
   - id: backlight
     group: display
@@ -75,6 +81,7 @@ checks:
     works: The brightness keys change the screen's brightness over its whole range.
     probe: Whether a backlight device exists, and its range.
     person: Press the brightness keys and say whether the screen gets darker and brighter.
+    debug: "`ls /sys/class/backlight` should list one device. OLED panels and some LCDs are dimmed over the eDP link, where `panel-edp` registers the backlight. Others take a PWM from the PMIC (`pwm-backlight` with an enable GPIO). Brightness that reads back but changes nothing usually means the wrong PWM channel or a missing enable GPIO in the tree."
 
   - id: keyboard
     group: display
@@ -82,6 +89,7 @@ checks:
     works: Every key types, including the function row.
     probe: Whether a built-in keyboard device exists.
     person: Type on it and try the function row (volume, brightness, mute).
+    debug: "Most of these keyboards are HID over I2C: a node under one of the tree's I2C buses with `compatible = \"hid-over-i2c\"`, the descriptor address, an interrupt GPIO and its supply. `cat /sys/bus/i2c/devices/*/name` and `journalctl -k -b | grep -i i2c_hid` show whether it was found. Bus, address and interrupt come from the device's `_CRS` in the ACPI DSDT. Some models put the keyboard on an internal USB port or behind the embedded controller instead."
 
   - id: touchpad
     group: display
@@ -89,6 +97,7 @@ checks:
     works: Pointer, tap or click, two-finger scrolling and gestures work.
     probe: Whether a built-in touchpad device exists.
     person: Move, click, scroll with two fingers and try a three-finger swipe.
+    debug: "As for the keyboard: usually HID over I2C, described in the tree with bus, address, interrupt GPIO and supply taken from the DSDT. A touchpad that is found but doesn't move the pointer often has the wrong interrupt pin or polarity. Its line in `/proc/interrupts` should count up while a finger moves."
 
   - id: touchscreen
     group: display
@@ -97,6 +106,7 @@ checks:
     probe: Whether a touchscreen device exists.
     person: Tap and drag on the screen, and try the pen if it came with one.
     optional: true
+    debug: "HID over I2C again, often with a reset GPIO and a power-on delay (`post-power-on-delay-ms`). `libinput list-devices` shows whether the desktop sees it. `hw-test facts` prints the interrupt it found for it. Touches that land in the wrong place are a rotation matter in the desktop, not the driver."
 
   - id: wifi
     group: network
@@ -104,12 +114,14 @@ checks:
     works: Wi-Fi connects and stays connected at full speed, also after sleep.
     probe: The Wi-Fi interface, its driver and whether it's connected. The wireless test reads the link's signal and speed.
     person: Say whether it stays connected through a day of use and after waking from sleep.
+    debug: "The card is a WCN7850 (ath12k) or WCN6855 (ath11k) on PCIe. `journalctl -k -b | grep -iE 'ath1[12]k|pci'` tells how far it gets. No PCI device means the tree's PCIe port, its PHY or the card's power sequencer is wrong. 'failed to fetch board data' means linux-firmware's `board-2.bin` has no entry for this machine, and the line names the board ID that is missing. `rfkill list` rules out a soft block."
 
   - id: wifi-address
     group: network
     title: Fixed Wi-Fi address
     works: The Wi-Fi card keeps the same address on every boot, so networks and routers recognise the laptop.
     probe: Whether the kernel calls the interface's address permanent or randomly made.
+    debug: "`cat /sys/class/net/wlan0/addr_assign_type` reads 1 for a made-up address. See whether the address changes over restarts. NetworkManager and iwd can also randomise the address by setting, which isn't a hardware fault. Never report the address itself."
 
   - id: bluetooth
     group: network
@@ -117,6 +129,7 @@ checks:
     works: Bluetooth turns on, finds devices and keeps headphones and mice connected.
     probe: Whether a Bluetooth controller exists and is powered. The wireless test listens for eight seconds and counts the devices it hears.
     person: Pair a pair of headphones or a mouse and use it for a few minutes.
+    debug: "The Bluetooth half of the Wi-Fi chip sits on a UART: a `bluetooth` node under one of the tree's serial ports with its supplies. `journalctl -k -b | grep -iE 'bluetooth|hci|qca'` shows its firmware loading from `qca/`, and some machines need an NVM file of their own. A controller without an address shows as unconfigured in `btmgmt info`. `rfkill list` rules out a soft block."
 
   - id: speakers
     group: sound
@@ -124,6 +137,7 @@ checks:
     works: Every built-in speaker plays, at a normal volume, without crackling.
     probe: Whether a sound card with a playback device exists, besides HDMI and USB ones.
     person: Play music and say whether both sides (and the tweeters, if it has them) play cleanly.
+    debug: "Sound runs through the audio DSP. In order: the ADSP must be running (see the `adsp` check), the sound card must exist (`cat /proc/asound/cards`), the topology file the card asks for must be under `/lib/firmware/qcom/` (the journal names it when it's missing), and alsa-ucm-conf needs a profile for the card (`alsaucm listcards`, `wpctl status`). The speaker amplifiers (WSA883x or WSA884x on SoundWire) need their reset GPIOs and supplies in the tree. One silent side is usually one amplifier's GPIO or the channel mapping. `hw-test speakers` measures each side with the microphones."
 
   - id: microphones
     group: sound
@@ -131,6 +145,7 @@ checks:
     works: The built-in microphones record clearly.
     probe: Whether a capture device exists on the built-in sound card.
     person: Record a few seconds and play it back.
+    debug: "The built-in microphones are digital and need their supply and pins in the tree and a UCM profile that routes them. `wpctl status` should list an internal microphone source. Silence from a source that exists is usually the microphone supply or the wrong microphone pair in the profile. `hw-test speakers` records known tones and reports the level per pitch."
 
   - id: headphones
     group: sound
@@ -138,18 +153,21 @@ checks:
     works: Headphones play when plugged in, and the speakers go quiet.
     person: Plug in wired headphones and play something.
     optional: true
+    debug: "The jack runs through a WCD938x or WCD939x codec on SoundWire, which also detects the plug. The UCM profile switches the output when a plug is seen, and `wpctl status` then shows the headphones port as available. No switch means jack detection (the codec's interrupt or its settings in the tree). Sound that doesn't come after a switch means the codec's supplies or the profile's routing."
 
   - id: adsp
     group: sound
     title: Audio and battery processor
     works: The audio DSP starts, which sound, the battery readings and USB-C power need.
     probe: The state of the adsp remote processor and the firmware it loaded.
+    debug: "`cat /sys/class/remoteproc/remoteproc*/{name,state,firmware}` shows whether it runs and which file it wants. The file is signed by the computer's maker and comes from the computer's own Windows partition or from its firmware package in omarchy-pkgs. Battery readings, charging, USB-C and sound all depend on this processor."
 
   - id: battery
     group: power
     title: Battery readings
     works: The battery's charge, state and time left show correctly.
     probe: Whether a battery reports its charge and state.
+    debug: "Battery readings come from the ADSP (`qcom_battmgr` over pmic_glink). No battery under `/sys/class/power_supply` means the ADSP isn't running (see the `adsp` check) or the tree lacks the `pmic-glink` node."
 
   - id: charging
     group: power
@@ -157,6 +175,7 @@ checks:
     works: The laptop charges at full power from its own charger, not only at 5 V.
     probe: The voltage and online state the USB-C power supply reports.
     person: Plug in the laptop's own charger and say whether the charge rises at the usual speed.
+    debug: "USB-C charging is negotiated by the ADSP's firmware and reported through UCSI. Read `cat /sys/class/power_supply/*/{status,online}` and `journalctl -k -b | grep -iE 'ucsi|pmic_glink|battmgr'`. Charging that works with the computer off and not under Linux points at the ADSP not running."
 
   - id: suspend
     group: power
@@ -164,12 +183,14 @@ checks:
     works: Closing the lid sleeps, opening it wakes to the lock screen, every time.
     probe: The sleep mode the kernel uses and how many sleeps succeeded or failed since boot.
     person: Close the lid for a few minutes, five times in a row, and say whether it woke each time.
+    debug: "`cat /sys/power/mem_sleep` shows the sleep mode in brackets, s2idle or deep. After a sleep, `journalctl -k -b | grep -E 'PM:|suspend'` shows which device refused, and the files under `/sys/power/suspend_stats/` count failures and name the last failing device. A restart in place of a wake leaves no line after 'suspend entry' at the end of `journalctl -k -b -1`. Try the other sleep mode to tell a firmware problem from a driver's. `hw-test sleep` measures a lid-close sleep with the owner."
 
   - id: suspend-drain
     group: power
     title: Battery use while asleep
     works: A night asleep costs only a few percent of the battery.
     person: Note the charge before closing the lid for the night and after opening it.
+    debug: "Compare `cat /sys/class/power_supply/*/energy_now` before and after an hour asleep. High drain in s2idle means the chip never reached its lowest state, and a device kept awake is the usual cause."
 
   - id: hibernate
     group: power
@@ -177,12 +198,14 @@ checks:
     works: The laptop hibernates and resumes where it was.
     probe: Whether the kernel offers hibernation and has swap to hold it.
     person: Hibernate from the menu and start it again.
+    debug: "`cat /sys/power/state` must list `disk`, and swap must be at least the size of memory. Where `disk` is missing the kernel offers no hibernation on this chip, which is a kernel matter that no tree or package changes."
 
   - id: lid
     group: sensors
     title: Lid switch
     works: Closing and opening the lid is noticed, and nothing wakes it by itself.
     probe: Whether an input device reports the lid switch.
+    debug: "The lid is a `gpio-keys` switch in the tree with `linux,code = <SW_LID>` on the hall sensor's GPIO, marked `wakeup-source`. `journalctl -b -u systemd-logind | grep Lid` shows its history. No switch at all means the node is missing. A switch that reads the wrong way round has the wrong GPIO polarity. `hw-test lid` watches it close and open."
 
   - id: usb
     group: ports
@@ -190,6 +213,7 @@ checks:
     works: Every USB-A and USB-C port takes devices at full speed, in both plug orientations.
     probe: Which USB controllers exist and the fastest speed each offers.
     person: Plug a USB stick into each port, both ways round on USB-C.
+    debug: "Each USB-C port is a controller, a combo PHY and a connector under `pmic-glink` in the tree. USB-A ports hang off the multiport controller or a USB 2 controller, often behind a supply that has to be switched on. `lsusb -t` shows the speeds and `journalctl -k -b | grep -iE 'dwc3|xhci|typec|ucsi'` the errors. Full speed in only one orientation of the plug means the port's orientation switch or retimer isn't described. `hw-test usb` reads the speed per port as things are plugged in."
 
   - id: external-display
     group: ports
@@ -197,6 +221,7 @@ checks:
     works: A screen on USB-C (or HDMI, if it has one) shows a picture and can be plugged in and out.
     probe: The external display connectors and whether any is connected.
     person: Plug in a screen through USB-C, unplug it and plug it in again.
+    debug: "DisplayPort over USB-C needs the port's DP controller, the combo PHY, the orientation switch and on many machines a retimer (Parade PS883x) in the tree. `cat /sys/class/drm/card*-DP-*/status` and `journalctl -k -b | grep -iE 'typec|altmode|ps883|msm_dp'` show how far it gets. An HDMI port is a DisplayPort output behind a converter chip with a node and supplies of its own. `hw-test screen` reads the connection and mode when a screen is plugged in."
 
   - id: usb4
     group: ports
@@ -205,6 +230,7 @@ checks:
     probe: Whether the kernel created a USB4 domain.
     person: Plug in a USB4 or Thunderbolt dock or drive and say what speed it runs at.
     optional: true
+    debug: "USB4 and Thunderbolt tunnelling don't work on these chips in Omarchy's kernel yet. Docks work as far as USB 3 and DisplayPort over USB-C carry them, and an empty `/sys/bus/thunderbolt/devices` is expected."
 
   - id: camera
     group: media
@@ -212,6 +238,7 @@ checks:
     works: The webcam gives a picture in the browser and in video calls.
     probe: Whether a camera device from the camera subsystem or USB exists.
     person: Open a video call test page in Chromium and say whether the picture looks right.
+    debug: "The webcam is a MIPI sensor: a sensor node on a camera I2C bus with its clock, reset GPIO and supplies, linked to the camera subsystem in the tree. `cam -l` from libcamera should list it, and `journalctl -k -b | grep -iE 'camss|cci|ov0|imx|hi5'` shows a sensor that didn't answer. A picture that is too dark, green or noisy comes from libcamera's processing for that sensor, not from the driver. `hw-test camera` takes one frame and measures its brightness."
 
   - id: video-decode
     group: media
@@ -219,12 +246,14 @@ checks:
     works: Videos decode on the video engine, not on the processor.
     probe: Whether the iris or venus video decoder exists. The video test decodes a two-second H.264 clip on it and counts the frames.
     person: Play a 1080p or 4K video in mpv or Chromium and say whether the processor stays mostly idle.
+    debug: "The decoder is the `iris` driver (venus on older chips), with firmware from `qcom/vpu/` or the file the tree's `firmware-name` asks for. `journalctl -k -b | grep -iE 'iris|venus|vpu'` shows a missing file and `v4l2-ctl --list-devices` the decoder. `hw-test video` decodes a clip on it and counts the frames."
 
   - id: cdsp
     group: media
     title: Compute DSP (NPU)
     works: The compute DSP starts with its firmware.
     probe: The state of the cdsp remote processor and the firmware it loaded.
+    debug: "As for the `adsp` check: `cat /sys/class/remoteproc/remoteproc*/{name,state,firmware}` shows its state and the maker-signed file it wants. Nothing else depends on it yet."
 
   - id: fans
     group: sensors
@@ -232,6 +261,7 @@ checks:
     works: The temperatures can be read and follow the load, and the fan speeds up when the computer gets hot.
     probe: Which temperature and fan sensors exist. The temperature test keeps every core and the GPU busy for up to two minutes and reads whether the sensors show the heat. It sees a fan start by its speed, or where no sensor gives that, by the temperature falling while the processor works on at the same rate.
     person: Press f during the temperature test the moment you hear the fan speed up, or say that the computer has none.
+    debug: "Temperatures come from the chip's own sensors and need nothing per model. Fans are run by the embedded controller by itself, and their speed can be read only where the kernel has a driver for that model's controller (`ls /sys/class/hwmon/*/fan*_input`). A missing fan speed is a missing driver, not a broken fan. `hw-test temperatures` heats the computer and reports how the sensors follow."
 
   - id: fingerprint
     group: sensors
@@ -240,6 +270,7 @@ checks:
     probe: Whether a known fingerprint reader is on USB.
     person: Enroll a finger with fprintd and try it.
     optional: true
+    debug: "Readers are USB devices, supported or not by libfprint: `lsusb` gives the ID to look up in libfprint's list of supported devices. A reader missing from `lsusb` sits on an internal USB port whose supply or controller isn't enabled in the tree."
 
   - id: modem
     group: sensors
@@ -247,3 +278,4 @@ checks:
     works: The 4G or 5G modem registers on a network.
     probe: Whether a modem processor or modem device exists.
     optional: true
+    debug: "The modem is a PCIe or USB module (`lspci`, `lsusb`, `mmcli -L`). It needs its port and power enabled in the tree, and ModemManager."

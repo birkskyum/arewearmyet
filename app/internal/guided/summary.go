@@ -34,6 +34,22 @@ type summary struct {
 	dir string
 	// recorded is set when the round had a step that uses the microphones or the camera.
 	recorded bool
+	// handed is how handing what failed to an agent went.
+	handed string
+}
+
+// The last screen's offer to hand what failed in this round to the owner's agent.
+const askAgent = "Let an agent look into what doesn't work"
+
+// failed lists the checks this round found partly working or broken.
+func (s *summary) failing() []string {
+	var failing []string
+	for _, result := range s.run.Results {
+		if severity[result.State] > 1 {
+			failing = append(failing, result.Check)
+		}
+	}
+	return failing
 }
 
 func (s *summary) name() string { return "Send" }
@@ -74,6 +90,9 @@ func (s *summary) end(question string) {
 		}
 		options = append(options, open)
 	}
+	if len(s.failing()) > 0 {
+		options = append(options, askAgent)
+	}
 	s.ask = choice{question: question, options: append(options, "Quit")}
 }
 
@@ -97,6 +116,8 @@ func (s *summary) page() string {
 
 func (s *summary) update(msg tea.Msg) tea.Cmd {
 	switch msg := msg.(type) {
+	case handedMsg:
+		s.handed = msg.handed.Said
 	case sentMsg:
 		s.sent, s.err = msg.sent, msg.err
 		if s.err != nil {
@@ -132,6 +153,10 @@ func (s *summary) update(msg tea.Msg) tea.Cmd {
 				s.again, s.over = true, true
 			case "Quit":
 				s.over = true
+			case askAgent:
+				// The choice stays up: the agent works in a window of its own
+				s.handed = "Writing the brief and opening your agent…"
+				return handOver(s.run, s.options, report.Model{ID: s.sent.Model, Page: s.sent.Page}, s.failing())
 			default:
 				// The page opens in the browser, and the choice stays up for what comes after
 				tools.Open(s.page())
@@ -163,7 +188,11 @@ func (s *summary) view(width, height int) string {
 			text += "\n"
 		}
 	}
-	return text + s.ask.view(width)
+	text += s.ask.view(width)
+	if s.handed != "" {
+		text += "\n\n" + accent.Render(wrap(s.handed, width))
+	}
+	return text
 }
 
 // farewell is what's left in the terminal after the test closes.

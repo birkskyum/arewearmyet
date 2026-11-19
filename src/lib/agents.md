@@ -9,7 +9,7 @@ In this guide a **model** always means a computer model, like the Lenovo Yoga Sl
 ## Rules
 
 1. **Send reports to this site freely.** You don't need to ask before sending results to arewearmyet.com.
-2. **Don't break the machine.** Don't flash firmware, change the BIOS or partitions, write to `/sys` or `/dev` beyond what a step here says, or dump hardware registers (regmap dumps can hang Qualcomm machines). Undo any setting you change for a test.
+2. **Don't break the machine.** Don't flash firmware, change the BIOS or partitions, write to `/sys` or `/dev` beyond what a step here says, or dump hardware registers (regmap dumps can hang Qualcomm machines). Undo any setting you change for a test. Never replace what boots: try a changed kernel, device tree or boot image as an extra boot entry beside the working one, tell the owner before every restart, and remove the entry when you're done.
 3. **Measured, owner or agent, never mixed up.** Every result you send says how it was found:
    - `measured`: a command's output shows it (the probe, or a command you ran and can quote).
    - `owner`: the owner saw or heard it, and told you. Ask them; don't assume.
@@ -17,7 +17,8 @@ In this guide a **model** always means a computer model, like the Lenovo Yoga Sl
    Never mark something `works` because it should work, because another model works, or because a driver loaded. Sound, camera pictures, touch feel and wake from sleep need the owner.
 4. **No personal data.** No serial numbers, MAC addresses, user or host names, Wi-Fi names, IP addresses or file contents from the home folder, in reports or in fixes. The `MSDM` ACPI table holds the Windows product key: never share it.
 5. **No firmware files in public.** Qualcomm firmware is signed by the laptop's maker and can't be redistributed without the maker's OK. Never attach firmware files to issues or pull requests. The Omarchy Arm Installer's opt-in drop is the one place for them.
-6. **Fixes go to Omarchy, nowhere else.** Propose them as pull requests on Omarchy's own repositories (step 5). Don't send patches, merge requests, mails or issues to Linux, linux-firmware, Mesa, systemd or other projects; the Omarchy team takes what's needed from there.
+6. **Ask the owner before you change their machine or speak in their name.** That is anything that needs sudo, changes packages or boot files, or opens a pull request or an issue from their account. Reading, measuring and reporting to this site need no asking.
+7. **Fixes go to Omarchy, nowhere else.** Propose them as pull requests on Omarchy's own repositories (step 5). Don't send patches, merge requests, mails or issues to Linux, linux-firmware, Mesa, systemd or other projects; the Omarchy team takes what's needed from there.
 
 ## 1. Find the computer model
 
@@ -59,7 +60,32 @@ This gives:
 
 ## 3. Check it
 
-Run the probe on the machine. The quick check only reads, needs no root and takes a few seconds:
+### On Omarchy: hw-test
+
+`hw-test` is the hardware test for these machines. It measures what it can by itself and tests the rest with the owner. Run it as `hw-test` where it is installed, or through mise:
+
+```sh
+mise x github:birkskyum/arewearmyet -- hw-test quick --json
+```
+
+| Command | What it does |
+| --- | --- |
+| `hw-test status` | The latest result of every check on this machine. Nothing is run |
+| `hw-test quick --json` | The quick check: read-only, a few seconds, printed as JSON. Nothing is sent |
+| `hw-test facts` | The devices the test found to work with |
+| `hw-test auto --no-send` | Every test that needs nobody: graphics, WebGL and WebGPU, Wi-Fi and Bluetooth, video decoding, temperatures. About four minutes, and it heats the machine. Runs without a terminal |
+| `hw-test graphics`, `wireless`, `video`, `temperatures` | One of those alone |
+| `hw-test keyboard`, `touchpad`, `touchscreen`, `speakers`, `headphones`, `camera`, `usb`, `screen`, `lid`, `sleep` | Tests done with the owner at the machine, in a terminal. You can't run these: ask the owner to, and to tell you what it said |
+| `hw-test brief [check...]` | A brief of what fails on this machine: what was measured, where to look, how to measure again and where a fix goes |
+| `hw-test fix [check...]` | Writes that brief and opens the owner's agent on it. This is how an owner hands you a failing part |
+
+Add `--no-send` to look without reporting. Without it, a run is sent to the model's page, which needs no asking (rule 1). Measure before a change and after it.
+
+When a check fails, `GET /api/checks` has a `debug` text for it: which driver and firmware it hangs on, which read-only commands show how far it gets, and what in the device tree is usually wrong.
+
+### On other distros: the probe
+
+The probe is a script with the same quick check. It only reads, needs no root and takes a few seconds:
 
 ```sh
 curl -fsSL https://arewearmyet.com/probe.sh -o probe.sh
@@ -135,12 +161,15 @@ Fixes go to Omarchy as pull requests on GitHub, and nowhere else:
 
 | What's wrong | Where it's fixed |
 | --- | --- |
-| A device missing or misconfigured (keyboard, speakers, camera, USB-C, a GPIO), or the machine not recognised at boot | The model's device tree and hardware IDs, in [omarchy-pkgs](https://github.com/omacom/omarchy-pkgs) `pkgbuilds/linux-omarchy-dtbs` |
-| A kernel driver bug (Wi-Fi, sound, display, sleep) | Omarchy's kernel, omarchy-pkgs `pkgbuilds/linux-omarchy-aarch64` |
-| Sound profiles (UCM), speaker tuning, a model's firmware package | Its package in omarchy-pkgs `pkgbuilds/` |
-| Settings Omarchy applies per machine (a kernel option, an environment variable, a service) | [Omarchy](https://github.com/omacom/omarchy), `install/hardware/` |
+| A device missing or misconfigured (keyboard, speakers, camera, USB-C, a GPIO), or the machine not recognised at boot | The model's device tree and hardware IDs, in [omarchy-pkgs](https://github.com/omacom/omarchy-pkgs) `pkgbuilds/linux-omarchy-dtbs`: numbered patches on top of the kernel's own trees |
+| A kernel driver bug (Wi-Fi, sound, display, sleep) | Omarchy's kernel, omarchy-pkgs `pkgbuilds/linux-omarchy`: a numbered patch series |
+| A firmware file the machine needs | The model's own package, omarchy-pkgs `pkgbuilds/<maker>-<model>-firmware`. It says where the files come from and never carries files that may not be passed on (rule 5) |
+| A sound profile (UCM) | omarchy-pkgs `pkgbuilds/alsa-ucm-conf` |
+| Settings Omarchy applies per machine (a kernel option, an environment variable, a service) | [Omarchy](https://github.com/omacom/omarchy) (branch `quattro`), `install/hardware/` |
 
-Read the repository's `AGENTS.md` or contribution notes first. Test every change on the machine before proposing it, tell the owner what you changed and how to undo it, and say in the pull request what you tested, on which machine and kernel.
+Read the repository's `AGENTS.md` first: it says how packages are numbered, built and tested there. Test every change on the machine before proposing it, with `hw-test` before and after, and tell the owner what you changed and how to undo it.
+
+A pull request is opened from the owner's GitHub account, so ask them first (rule 6). Open it as a draft. Say in it which model and kernel it was tested on and what was measured before and after. One fix per pull request.
 
 ### Telling the site about a fix
 
@@ -159,7 +188,7 @@ When something is written up for good, a pull request on [arewearmyet's findings
 
 | Method and path | What it does |
 | --- | --- |
-| `GET /api/checks` | Every check: what works means, what the probe measures, what the owner does |
+| `GET /api/checks` | Every check: what works means, what is measured, what the owner does, and where to look when it fails (`debug`) |
 | `GET /api/models` | Every computer model (laptop, tablet or desktop) with its id, page and API link |
 | `GET /api/models/<id>` | One computer model: booting, findings, owners' results, fixes, wanted checks |
 | `GET /api/match?chid=&compatible=&product=&sku=&family=&vendor=` | Which computer model a machine is |

@@ -4,6 +4,7 @@
 //	hw-test quick      the quick check alone: read-only, a few seconds, no questions
 //	hw-test sound      one part of the guided test alone, reporting only that part
 //	hw-test manual     the tests done with you: keyboard, touchpad, camera, ports, sleep
+//	hw-test fix        hand what doesn't work to the owner's agent, with a brief of what was measured
 //	hw-test auto       the tests that need nobody: graphics, browser, wireless, video, temperatures, sound
 //
 // Both show the results and send them to the model's page. What's sent: the maker, model, SKU,
@@ -43,11 +44,14 @@ func main() {
 	// The words before the options: a command, or the steps to run alone
 	args := os.Args[1:]
 	command := "guided"
-	var only []string
+	var only, topics []string
 	for len(args) > 0 && !strings.HasPrefix(args[0], "-") {
 		word := args[0]
 		args = args[1:]
 		switch {
+		case command == "brief" || command == "fix":
+			// What follows these two names what to hand over: checks, or parts of the test
+			topics = append(topics, word)
 		case guided.KnownStep(word):
 			only = append(only, word)
 		case len(only) == 0 && command == "guided":
@@ -76,7 +80,7 @@ func main() {
 		// The latest result of every check on this machine, without running anything
 		fmt.Println(guided.Status(report.Local()))
 		return
-	case "quick", "check", "guided", "facts":
+	case "quick", "check", "guided", "facts", "brief", "fix":
 		if command == "check" {
 			command = "quick"
 		}
@@ -102,6 +106,35 @@ func main() {
 		os.Exit(1)
 	}
 	run.Model, run.Agent = *model, *agent
+
+	// The brief for an agent: printed, or written down and handed to the owner's agent
+	if command == "brief" || command == "fix" {
+		checks, unknown := guided.ChecksFor(topics)
+		if len(unknown) > 0 {
+			fmt.Fprintf(os.Stderr, "hw-test: %s is neither a check nor a part of the test. hw-test status lists the checks.\n", strings.Join(unknown, ", "))
+			os.Exit(2)
+		}
+		// Results from before stand; what was never tested here is as the quick check found it now
+		kept := report.Local()
+		for _, result := range run.Results {
+			if _, had := kept[result.Check]; !had {
+				kept[result.Check] = report.Kept{Result: result, Kernel: run.Kernel, When: time.Now()}
+			}
+		}
+		known, _ := report.Checks(*api)
+		matched, _ := report.Match(*api, run)
+		briefing := guided.Briefing{Version: version, Run: run, Kept: kept, Model: matched, Checks: known, Only: checks, When: time.Now()}
+		if command == "brief" {
+			fmt.Print(guided.Brief(briefing))
+			return
+		}
+		handed := guided.HandOver(briefing, guided.Workspace(), tools.Agent)
+		fmt.Fprintln(os.Stderr, handed.Said)
+		if !handed.Opened {
+			os.Exit(1)
+		}
+		return
+	}
 
 	if unattended {
 		dir, err := os.MkdirTemp("", "hw-test-")
@@ -133,7 +166,7 @@ func main() {
 	if command == "guided" && guided.Interactive() {
 		// The quick results are kept aside: if the guided test can't run here, they are still sent
 		measured := append([]report.Result(nil), run.Results...)
-		err := guided.Run(run, facts, guided.Options{API: *api, Send: !*noSend, Only: only})
+		err := guided.Run(run, facts, guided.Options{API: *api, Send: !*noSend, Only: only, Version: version})
 		if err == nil {
 			return
 		}
@@ -206,6 +239,11 @@ func usage() {
   hw-test auto       every test that needs nobody, about four minutes: sound, graphics, WebGL and
                      WebGPU, Wi-Fi and Bluetooth, video decoding, temperatures. Without a
                      terminal it runs all but the sound, which plays tones out loud
+  hw-test fix [WHAT...]    hand what doesn't work to your agent: writes a brief with what was
+                     measured, where to look and where a fix goes, and opens Omarchy's
+                     agent on it. WHAT is a check or a part, like speakers. Without it,
+                     everything that fails
+  hw-test brief [WHAT...]  print that brief, to give to any agent yourself
   hw-test status     where this computer stands: the latest result of every check, nothing is run
   hw-test facts      what the test found on this computer to work with (nothing is sent)
   hw-test version

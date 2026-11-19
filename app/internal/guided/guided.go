@@ -30,6 +30,10 @@ type Options struct {
 	Send bool
 	// Only names the steps to run, as given on the command line. Empty runs them all.
 	Only []string
+	// Version is the app's, for the brief an agent is given.
+	Version string
+	// launch opens the agent, which tests replace.
+	launch func(dir, prompt string) error
 }
 
 // Interactive says whether someone is at a terminal to answer.
@@ -87,10 +91,11 @@ var stepWords = []struct {
 	{"camera", []string{"Camera"}},
 	{"usb", []string{"USB ports"}},
 	{"screen", []string{"External screen"}},
+	{"lid", []string{"Lid"}},
 	{"sleep", []string{"Sleep"}},
 	{"questions", []string{"Questions"}},
 	{"auto", []string{"Sound", "Graphics", "Browser", "Wireless", "Video decoding", "Temperatures"}},
-	{"manual", []string{"Keyboard", "Volume and brightness keys", "Touchpad", "Touchscreen", "Headphones", "Camera", "USB ports", "External screen", "Sleep", "Questions"}},
+	{"manual", []string{"Keyboard", "Volume and brightness keys", "Touchpad", "Touchscreen", "Headphones", "Camera", "USB ports", "External screen", "Lid", "Sleep", "Questions"}},
 	{"graphics", []string{"Graphics", "Browser"}},
 	{"vulkan", []string{"Graphics"}},
 	{"browser", []string{"Browser"}},
@@ -112,7 +117,7 @@ var automaticWords = []string{"auto", "graphics", "vulkan", "browser", "webgl", 
 var stepCheck = map[string]string{
 	"Keyboard": "keyboard", "Volume and brightness keys": "keyboard", "Touchpad": "touchpad", "Touchscreen": "touchscreen",
 	"Sound": "speakers", "Voice": "microphones", "Headphones": "headphones", "Camera": "camera",
-	"USB ports": "usb", "External screen": "external-display", "Sleep": "suspend",
+	"USB ports": "usb", "External screen": "external-display", "Lid": "lid", "Sleep": "suspend",
 	"Graphics": "gpu", "Browser": "webgl", "Video decoding": "video-decode", "Temperatures": "fans",
 }
 
@@ -184,7 +189,7 @@ func build(run *report.Run, facts probe.Facts, dir string) []step {
 	add("usb", newUSB(run, sys))
 	add("external-display", newScreen(run, sys))
 	if facts.Laptop && facts.Lid != "" {
-		add("suspend", newSleep(run, facts))
+		add("lid suspend", newLid(run, sys), newSleep(run, facts))
 	}
 	// What has no step of its own on this machine is asked about instead
 	steps = append(steps, newQuestions(run, facts, covered))
@@ -328,7 +333,7 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 		m.steps = append(append([]step{start}, chosen...), last)
 	}
 	start.ask = start.question()
-	start.api = options.API
+	start.api, start.options = options.API, options
 
 	// A test found on disk stopped before its end: the computer went down, or the test did.
 	// It stays on disk until the owner has gone on from it, so opening the test and leaving
@@ -632,6 +637,7 @@ var menu = []menuEntry{
 	{word: "camera", label: "Camera", checks: []string{"camera"}},
 	{word: "usb", label: "USB ports", checks: []string{"usb"}},
 	{word: "screen", label: "External screen", checks: []string{"external-display"}},
+	{word: "lid", label: "Lid switch", checks: []string{"lid"}},
 	{word: "sleep", label: "Sleep", checks: []string{"suspend"}},
 }
 
@@ -698,6 +704,9 @@ type welcome struct {
 	part string
 	// quit is set when the owner chose to leave from the menu.
 	quit bool
+	// options are the test's, for handing a failing part to an agent, and handed how that went.
+	options Options
+	handed  string
 }
 
 // modelMsg is the site's answer to which model this computer is.
@@ -774,10 +783,33 @@ func (w *welcome) done() bool      { return w.started || w.only }
 func (w *welcome) isOpening() bool { return true }
 
 func (w *welcome) keys() string {
-	if w.model.Page != "" {
-		return menuKeys + " · o to open this computer's page"
+	keys := menuKeys
+	if len(w.failing()) > 0 {
+		keys += " · a to let an agent look into what fails"
 	}
-	return menuKeys
+	if w.model.Page != "" {
+		keys += " · o to open this computer's page"
+	}
+	return keys
+}
+
+// failing lists what an agent would be handed from where the cursor is: the failing checks
+// of the part under it, or on any other line everything that fails on this computer.
+func (w *welcome) failing() []string {
+	all := Failing(w.kept)
+	at := w.ask.cursor - 1
+	if at < 0 || at >= len(w.parts) || len(w.parts[at].checks) == 0 {
+		return all
+	}
+	var part []string
+	for _, check := range all {
+		for _, tested := range w.parts[at].checks {
+			if tested == check {
+				part = append(part, check)
+			}
+		}
+	}
+	return part
 }
 
 func (w *welcome) start() tea.Cmd {
@@ -799,6 +831,10 @@ func (w *welcome) update(msg tea.Msg) tea.Cmd {
 		}
 		return nil
 	}
+	if answer, ok := msg.(handedMsg); ok {
+		w.handed = answer.handed.Said
+		return nil
+	}
 	press, ok := msg.(tea.KeyPressMsg)
 	if !ok {
 		return nil
@@ -806,6 +842,10 @@ func (w *welcome) update(msg tea.Msg) tea.Cmd {
 	if press.String() == "o" && w.model.Page != "" {
 		tools.Open(w.model.Page)
 		return nil
+	}
+	if failing := w.failing(); press.String() == "a" && len(failing) > 0 {
+		w.handed = "Writing the brief and opening your agent…"
+		return handOver(w.run, w.options, w.model, failing)
 	}
 	if len(w.ask.options) == 0 {
 		w.ask = w.question()
@@ -846,6 +886,9 @@ func (w *welcome) view(width, height int) string {
 		if status := w.parts[at].status(w.kept); status.mark == "◐" || status.mark == "✗" {
 			tip = status.style.Render(wrap(status.mark+" "+status.text, width)) + "\n" + tip
 		}
+	}
+	if w.handed != "" {
+		tip = accent.Render(wrap(w.handed, width))
 	}
 	private := wrap("Only results are sent. A picture or recording the test makes never leaves this computer.", width)
 

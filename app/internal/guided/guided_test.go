@@ -865,6 +865,7 @@ func TestNothingIsDrawnInAFaintColour(t *testing.T) {
 		newSpeakers(run, dir), newMicrophones(run, dir), newHeadphones(run, dir), newCamera(run, dir), newUSB(run, sys), newScreen(run, sys), newSleep(run, probe.Facts{}),
 		newQuestions(run, probe.Facts{Laptop: true}, nil), last}
 	steps = append(steps, autos(run)...)
+	steps = append(steps, lids(run)...)
 	for at, s := range steps {
 		m := &model{run: run, summary: last, failed: map[string]string{}, steps: steps, at: at, width: 100, height: 40}
 		drawn := m.View().Content
@@ -891,6 +892,7 @@ func TestNoLineIsCutOffInANarrowWindow(t *testing.T) {
 		newTouchscreen(run, sys, "screen", ""), newSpeakers(run, dir), newMicrophones(run, dir), newHeadphones(run, dir), newCamera(run, dir), newUSB(run, sys),
 		newScreen(run, sys), newSleep(run, probe.Facts{}), newQuestions(run, probe.Facts{Laptop: true, Encrypted: true}, nil), last}
 	steps = append(steps, autos(run)...)
+	steps = append(steps, lids(run)...)
 	for _, width := range []int{72, 50} {
 		for at, s := range steps {
 			m := &model{run: run, summary: last, failed: map[string]string{}, steps: steps, at: at, width: width, height: 40}

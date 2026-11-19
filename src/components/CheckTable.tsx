@@ -6,7 +6,7 @@ import { PILL, TONE } from '../lib/tones';
 
 type State = 'works' | 'partial' | 'broken' | 'untested' | 'absent';
 type Finding = { state: State; note?: string; version?: string; checked?: string; source?: string };
-type Row = { id: string; group: string; title: string; works: string; probe?: string; person?: string; optional?: boolean; finding: Finding | null; from: 'model' | 'family' | null; familySource: string | null };
+type Row = { id: string; group: string; title: string; works: string; probe?: string; person?: string; debug?: string; optional?: boolean; finding: Finding | null; from: 'model' | 'family' | null; familySource: string | null };
 type Change = { machines: number; from: string | null; to: string | null; since: string };
 type Owner = { machines: number; states: Record<string, number>; how: Record<string, number>; regressed?: Change; fixed?: Change; latest: { state: State; how: string; note: string | null; evidence: string | null; kernel: string | null; created: string; run: string }[] };
 type Live = { owners: { machines: number; checks: Record<string, Owner> }; fixes: { id: string; check: string | null; url: string; note: string | null; created: string }[] };
@@ -121,6 +121,7 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                       <p><span class="text-zinc-300">Works means:</span> {row.works}</p>
                       <Show when={row.probe}><p><span class="text-zinc-300">The probe measures:</span> {row.probe}</p></Show>
                       <Show when={row.person}><p><span class="text-zinc-300">The person testing checks:</span> {row.person}</p></Show>
+                      <Show when={row.debug}><p><span class="text-zinc-300">When it fails, look at:</span> {row.debug}</p></Show>
                       <Show when={row.finding}>
                         {(f) => (
                           <p class="text-xs text-zinc-500">

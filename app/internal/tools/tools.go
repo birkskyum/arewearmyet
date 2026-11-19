@@ -6,6 +6,7 @@ package tools
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -206,4 +207,30 @@ func Open(url string) {
 	if command.Start() == nil {
 		go command.Wait()
 	}
+}
+
+// ErrNoAgent says Omarchy has no agent chosen to launch.
+var ErrNoAgent = errors.New("no default agent is chosen")
+
+// ErrNotOmarchy says there is no Omarchy agent launcher on this system.
+var ErrNotOmarchy = errors.New("this system has no omarchy-agent")
+
+// Agent opens the owner's chosen coding agent in a window of its own, in the given folder
+// and with the given first message, the way Omarchy's own menu does.
+func Agent(dir, prompt string) error {
+	if !Have("omarchy-agent", "omarchy-default-agent") {
+		return ErrNotOmarchy
+	}
+	chosen, _ := exec.Command("omarchy-default-agent").Output()
+	if strings.TrimSpace(string(chosen)) == "" {
+		return ErrNoAgent
+	}
+	command := exec.Command("omarchy-agent", "--prompt", prompt)
+	command.Dir = dir
+	command.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
+	if err := command.Start(); err != nil {
+		return err
+	}
+	go command.Wait()
+	return nil
 }
