@@ -285,9 +285,18 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 	dir := t.TempDir()
 	steps := []step{newKeyboard(run), &effects{run: run}, newSpeakers(run, dir), newHeadphones(run, dir), newCamera(run, dir), newQuestions(run, probe.Facts{}, nil)}
 	last := &summary{run: run, options: Options{Send: false}}
+	// What this machine found the last time each thing was tested
+	tested := time.Date(2026, 11, 19, 2, 0, 0, 0, time.UTC)
+	kept := map[string]report.Kept{
+		"speakers":    {Result: report.Result{Check: "speakers", State: report.Partial, How: report.Owner, Note: "Both speakers play, but the left is louder than the right."}, When: tested},
+		"microphones": {Result: report.Result{Check: "microphones", State: report.Works, How: report.Measured}, When: tested},
+		"camera":      {Result: report.Result{Check: "camera", State: report.Works, How: report.Owner}, When: tested},
+		"wifi":        {Result: report.Result{Check: "wifi", State: report.Works, How: report.Measured}, When: tested},
+		"hibernate":   {Result: report.Result{Check: "hibernate", State: report.Broken, How: report.Measured, Evidence: "the kernel offers no hibernation"}, When: tested},
+	}
 	open := func() (*model, *welcome) {
 		m := &model{run: run, summary: last, failed: map[string]string{}, width: 100, height: 50}
-		start := &welcome{run: run}
+		start := &welcome{run: run, kept: kept}
 		for _, entry := range menu {
 			if len(choose(steps, []string{entry.word})) > 0 {
 				start.parts = append(start.parts, entry)
@@ -311,6 +320,14 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 	}
 	if strings.Contains(drawn, "Touchscreen") || strings.Contains(drawn, "Sleep") {
 		t.Errorf("the menu offers what the machine doesn't have:\n%s", drawn)
+	}
+	// Each part shows how it stood the last time it was tested here, and the screen says where
+	// the machine stands overall and what fails that no part of the menu covers
+	for _, text := range []string{"◐ partly (Speakers, 19 Nov): Both speakers play, but the left is louder", "✓ works, tested 19 Nov", "○ not tested here yet",
+		"3 working", "1 partly", "1 broken", "25 not tested", "✗ Hibernation: the kernel offers no hibernation"} {
+		if !strings.Contains(drawn, text) {
+			t.Errorf("the status lacks %q:\n%s", text, drawn)
+		}
 	}
 	// The menu is the list of what there is: no second list of steps above it, and nothing to skip
 	if strings.Contains(drawn, "○ Send") || strings.Contains(drawn, "Ctrl+N") {
@@ -1089,5 +1106,36 @@ func TestSleepWaitsForWifiAndRecordsHowLongItTook(t *testing.T) {
 	s.update(press('1'))
 	if result, _ := run.Get("suspend"); result.State != report.Partial || !strings.Contains(result.Evidence, "Wi-Fi hadn't reconnected 60 s after waking") {
 		t.Errorf("never back: %+v", result)
+	}
+}
+
+func TestStatusListsEveryCheckWithWhatFailsFirst(t *testing.T) {
+	when := time.Date(2026, 11, 19, 2, 0, 0, 0, time.UTC)
+	listed := Status(map[string]report.Kept{
+		"wifi":      {Result: report.Result{Check: "wifi", State: report.Works}, Kernel: "7.3.0-59-omarchy", When: when},
+		"hibernate": {Result: report.Result{Check: "hibernate", State: report.Broken, Evidence: "the kernel offers no hibernation"}, Kernel: "7.3.0-59-omarchy", When: when},
+		"suspend":   {Result: report.Result{Check: "suspend", State: report.Partial, Note: "One sleep ended in a restart."}, Kernel: "7.3.0-59-omarchy", When: when},
+	})
+	if !strings.HasPrefix(listed, "1 working, 1 partly, 1 broken, 27 not tested") {
+		t.Errorf("the head:\n%s", listed)
+	}
+	broken, partly, works, untested := strings.Index(listed, "✗ Hibernation"), strings.Index(listed, "◐ Sleep and wake"), strings.Index(listed, "✓ Wi-Fi"), strings.Index(listed, "○ ")
+	if broken < 0 || !(broken < partly && partly < works && works < untested) {
+		t.Errorf("the order is off:\n%s", listed)
+	}
+	for _, text := range []string{"the kernel offers no hibernation", "One sleep ended in a restart.", "2026-11-19", "7.3.0-59-omarchy"} {
+		if !strings.Contains(listed, text) {
+			t.Errorf("the list lacks %q", text)
+		}
+	}
+	// One line for each of the thirty checks, and the reasons on lines of their own
+	checks := 0
+	for _, line := range strings.Split(listed, "\n") {
+		if strings.HasPrefix(line, "  ") && !strings.HasPrefix(line, "   ") {
+			checks++
+		}
+	}
+	if checks != 30 {
+		t.Errorf("it lists %d checks", checks)
 	}
 }

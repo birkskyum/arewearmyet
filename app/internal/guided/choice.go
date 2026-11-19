@@ -12,7 +12,9 @@ import (
 type choice struct {
 	question string
 	options  []string
-	cursor   int
+	// notes, when set, are shown after each answer, already styled: a part's status in the menu.
+	notes  []string
+	cursor int
 }
 
 // update moves the cursor, and returns the picked answer's place in the list, or -1.
@@ -47,6 +49,9 @@ func (c *choice) view(width int) string {
 		fmt.Fprintf(&out, "%s%s %s\n", marker, soft.Render(fmt.Sprint(i+1)), style.Render(lines[0]))
 		for _, more := range lines[1:] {
 			fmt.Fprintf(&out, "    %s\n", style.Render(more))
+		}
+		if i < len(c.notes) && c.notes[i] != "" {
+			fmt.Fprintf(&out, "    %s\n", c.notes[i])
 		}
 	}
 	return strings.TrimRight(out.String(), "\n")

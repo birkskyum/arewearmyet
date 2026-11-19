@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/birkskyum/arewearmyet/app/internal/guided"
 	"github.com/birkskyum/arewearmyet/app/internal/machine"
@@ -67,6 +68,10 @@ func main() {
 		return
 	case "help", "--help", "-h":
 		usage()
+		return
+	case "status":
+		// The latest result of every check on this machine, without running anything
+		fmt.Println(guided.Status(report.Local()))
 		return
 	case "quick", "check", "guided", "facts":
 		if command == "check" {
@@ -124,6 +129,8 @@ func main() {
 		run.Mode, run.Results = "quick", measured
 	}
 
+	// Kept on this machine as its latest results, whether or not they are sent
+	_ = report.Remember(run, time.Now())
 	printResults(run)
 	if *noSend {
 		fmt.Fprintln(os.Stderr, "Not sent.")
@@ -163,6 +170,7 @@ func usage() {
   hw-test quick      the quick check alone: read-only, a few seconds, no questions
   hw-test STEP...    one part of the guided test alone, reporting only that part:
                      `+strings.Join(guided.StepWords(), ", ")+`
+  hw-test status     where this computer stands: the latest result of every check, nothing is run
   hw-test facts      what the test found on this computer to work with (nothing is sent)
   hw-test version
 

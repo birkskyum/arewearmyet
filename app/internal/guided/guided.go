@@ -10,7 +10,9 @@ package guided
 import (
 	"fmt"
 	"os"
+	"sort"
 	"strings"
+	"time"
 
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
@@ -203,6 +205,7 @@ func Run(run *report.Run, facts probe.Facts, options Options) error {
 	run.Mode = "guided"
 	// What the quick check measured, put back before each round: a part alone reports only itself
 	measured := append([]report.Result(nil), run.Results...)
+	_ = report.Remember(run, time.Now())
 	var said []string
 	for round := 0; ; round++ {
 		run.Results = append([]report.Result(nil), measured...)
@@ -251,7 +254,9 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 	m.save = func(step string) { _ = report.SavePending(step, sleepMode, run) }
 
 	// Run without a step named, the test opens on a menu: all of it, or one part alone
-	start := &welcome{run: run, only: len(options.Only) > 0}
+	// What the round found is kept on the machine as its latest, whether or not it is sent
+	defer func() { _ = report.Remember(run, time.Now()) }()
+	start := &welcome{run: run, only: len(options.Only) > 0, kept: report.Local()}
 	for _, entry := range menu {
 		if len(choose(steps, []string{entry.word})) > 0 {
 			start.parts = append(start.parts, entry)
@@ -536,16 +541,61 @@ func (s *skippable) cleanup() {
 	}
 }
 
-// The parts the opening menu offers, by the word that runs each alone.
-var menu = []struct{ word, label string }{
-	{"keyboard", "Keyboard, with the volume and brightness keys"},
-	{"touchpad", "Touchpad"},
-	{"touchscreen", "Touchscreen"},
-	{"sound", "Sound: speakers, microphone and headphones"},
-	{"camera", "Camera"},
-	{"usb", "USB ports"},
-	{"screen", "External screen"},
-	{"sleep", "Sleep"},
+// menuEntry is a part the opening menu offers: the word that runs it alone, and the checks it
+// tests, whose latest results on this machine are the part's status.
+type menuEntry struct {
+	word, label string
+	checks      []string
+}
+
+var menu = []menuEntry{
+	{"keyboard", "Keyboard, with the volume and brightness keys", []string{"keyboard", "backlight"}},
+	{"touchpad", "Touchpad", []string{"touchpad"}},
+	{"touchscreen", "Touchscreen", []string{"touchscreen"}},
+	{"sound", "Sound: speakers, microphone and headphones", []string{"speakers", "microphones", "headphones"}},
+	{"camera", "Camera", []string{"camera"}},
+	{"usb", "USB ports", []string{"usb"}},
+	{"screen", "External screen", []string{"external-display"}},
+	{"sleep", "Sleep", []string{"suspend"}},
+}
+
+// severity orders states from fine to failing, for a part's or the machine's worst.
+var severity = map[string]int{report.Works: 1, report.Absent: 1, report.Partial: 2, report.Broken: 3}
+
+// status is a menu part's standing from the machine's latest results: its worst check, said
+// in a line and coloured, or that it hasn't been tested here.
+func (e menuEntry) status(kept map[string]report.Kept, width int) string {
+	var worst report.Kept
+	tested := 0
+	for _, check := range e.checks {
+		if result, ok := kept[check]; ok {
+			tested++
+			if severity[result.State] > severity[worst.State] {
+				worst = result
+			}
+		}
+	}
+	if tested == 0 {
+		return "○ not tested here yet"
+	}
+	when := worst.When.Format("2 Jan")
+	switch worst.State {
+	case report.Partial, report.Broken:
+		why := first(worst.Note, worst.Evidence)
+		line := map[string]string{report.Partial: "◐ partly", report.Broken: "✗ broken"}[worst.State] + " (" + checkTitle[worst.Check] + ", " + when + ")"
+		if why != "" {
+			line += ": " + why
+		}
+		if letters := []rune(line); len(letters) > width-6 && width > 20 {
+			line = string(letters[:width-7]) + "…"
+		}
+		return stateStyle(worst.State).Render(line)
+	}
+	line := "✓ works, tested " + when
+	if tested < len(e.checks) {
+		line = fmt.Sprintf("✓ works so far (%d of %d parts tested, %s)", tested, len(e.checks), when)
+	}
+	return good.Render(line)
 }
 
 // welcome is the opening screen: what the test does, and a menu of all of it or one part.
@@ -554,7 +604,9 @@ type welcome struct {
 	// only is set when the steps were named on the command line, which need no menu.
 	only bool
 	// parts are the menu's entries for what this machine has.
-	parts []struct{ word, label string }
+	parts []menuEntry
+	// kept is the machine's latest result for each check, which the menu shows as its status.
+	kept map[string]report.Kept
 	// pick narrows the test to one part.
 	pick func(word string)
 	ask  choice
@@ -577,11 +629,58 @@ type modelMsg struct {
 }
 
 func (w *welcome) question() choice {
-	options := []string{"Everything, about ten minutes"}
+	options, notes := []string{"Everything, about ten minutes"}, []string{""}
 	for _, part := range w.parts {
 		options = append(options, part.label)
+		notes = append(notes, part.status(w.kept, 100))
 	}
-	return choice{question: "What would you like to test?", options: append(options, "Quit")}
+	return choice{question: "What would you like to test?", options: append(options, "Quit"), notes: notes}
+}
+
+// standing is where the machine stands over all checks: how many work, and what doesn't that
+// no part of the menu covers, like something only measured.
+func (w *welcome) standing(width int) string {
+	counts := map[string]int{}
+	var failing []string
+	inMenu := map[string]bool{}
+	for _, part := range w.parts {
+		for _, check := range part.checks {
+			inMenu[check] = true
+		}
+	}
+	for check := range checkTitle {
+		result, ok := w.kept[check]
+		if !ok {
+			counts["untested"]++
+			continue
+		}
+		switch severity[result.State] {
+		case 1:
+			counts["works"]++
+		case 2:
+			counts["partly"]++
+		case 3:
+			counts["broken"]++
+		}
+		if severity[result.State] > 1 && !inMenu[check] {
+			mark := map[int]string{2: "◐ ", 3: "✗ "}[severity[result.State]]
+			line := mark + checkTitle[check] + ": " + first(result.Note, result.Evidence, stateLabel[result.State])
+			if letters := []rune(line); len(letters) > width-2 && width > 20 {
+				line = string(letters[:width-3]) + "…"
+			}
+			failing = append(failing, stateStyle(result.State).Render(line))
+		}
+	}
+	sort.Strings(failing)
+	line := fmt.Sprintf("This computer so far: %s, %s, %s, %d not tested.",
+		good.Render(fmt.Sprintf("%d working", counts["works"])), close_.Render(fmt.Sprintf("%d partly", counts["partly"])), bad.Render(fmt.Sprintf("%d broken", counts["broken"])), counts["untested"])
+	if counts["partly"]+counts["broken"]+counts["untested"] == 0 {
+		line = good.Render("Everything works on this computer: all green.")
+	}
+	if len(failing) > 5 {
+		failing = append(failing[:5], fmt.Sprintf("and %d more: hw-test status lists everything", len(failing)-5))
+	}
+	return strings.Join(append([]string{line}, failing...), "\n")
 }
 
 func (w *welcome) name() string    { return "Start" }
@@ -644,14 +743,8 @@ func (w *welcome) view(width, height int) string {
 	if len(w.ask.options) == 0 {
 		w.ask = w.question()
 	}
-	working := 0
-	for _, result := range w.run.Results {
-		if result.State == report.Works {
-			working++
-		}
-	}
-	intro := "This checks what works on this computer and puts it on its page on arewearmyet.com, so the next owner knows and the people fixing things see what's left. " +
-		fmt.Sprintf("It has already measured %d things by itself, %d of them working. The rest it tests with you, and measures wherever it can. Any step can be skipped.", len(w.run.Results), working)
+	intro := "This checks what works on this computer and puts it on its page on arewearmyet.com, so the next owner knows and the people fixing things see what's left. It measures what it can by itself and tests the rest with you."
+	intro += "\n\n" + w.standing(width)
 	// Where this computer's results are, once the site has said which model it is
 	page := ""
 	switch {
@@ -724,4 +817,45 @@ func (r *resumed) view(width, height int) string {
 		text += "\n\n" + wrap("A crash during a step is recorded as what that step found, and the test goes on with the next step.", width)
 	}
 	return text
+}
+
+// Status lists the machine's latest result for every check, for `hw-test status`: what works
+// here, what doesn't and why, and what hasn't been tested, without running anything.
+func Status(kept map[string]report.Kept) string {
+	var checks []string
+	for check := range checkTitle {
+		checks = append(checks, check)
+	}
+	// What fails first, then what works, then what is untested; by name within each
+	rank := func(check string) int {
+		result, ok := kept[check]
+		if !ok {
+			return 0
+		}
+		return severity[result.State]
+	}
+	sort.Slice(checks, func(a, b int) bool {
+		if rank(checks[a]) != rank(checks[b]) {
+			return rank(checks[a]) > rank(checks[b])
+		}
+		return checkTitle[checks[a]] < checkTitle[checks[b]]
+	})
+	var lines []string
+	counts := map[int]int{}
+	for _, check := range checks {
+		result, ok := kept[check]
+		counts[rank(check)]++
+		if !ok {
+			lines = append(lines, fmt.Sprintf("  ○ %-30s not tested", checkTitle[check]))
+			continue
+		}
+		mark := map[int]string{1: "✓", 2: "◐", 3: "✗"}[severity[result.State]]
+		line := fmt.Sprintf("  %s %-30s %-18s %s  %s", mark, checkTitle[check], stateLabel[result.State], result.When.Format("2006-01-02"), result.Kernel)
+		if why := first(result.Note, result.Evidence); why != "" && severity[result.State] > 1 {
+			line += "\n      " + why
+		}
+		lines = append(lines, line)
+	}
+	head := fmt.Sprintf("%d working, %d partly, %d broken, %d not tested", counts[1], counts[2], counts[3], counts[0])
+	return head + "\n\n" + strings.Join(lines, "\n")
 }
