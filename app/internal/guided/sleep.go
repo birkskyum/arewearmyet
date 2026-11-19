@@ -84,6 +84,9 @@ func (s *sleep) update(msg tea.Msg) tea.Cmd {
 		if s.phase != "waiting" {
 			return nil
 		}
+		if msg.failed > s.failed || msg.ok > s.ok {
+			report.ClearPending()
+		}
 		switch {
 		case msg.failed > s.failed:
 			s.run.Set("suspend", report.Broken, report.Measured, fmt.Sprintf("closing the lid started a sleep that failed (the kernel's count of failed sleeps went from %d to %d)", s.failed, msg.failed), "")
@@ -117,9 +120,13 @@ func (s *sleep) update(msg tea.Msg) tea.Cmd {
 					s.ok, s.failed = s.counts()
 					s.wifiWas = s.wifi != "" && s.sys.Read("/sys/class/net/"+s.wifi+"/operstate") == "up"
 					s.phase = "waiting"
+					// Kept on disk while the lid is closed: if the computer restarts instead of
+					// waking, the next run finds this and records the restart
+					_ = report.SavePending("Sleep", s.sys.Read("/sys/power/mem_sleep"), s.run)
 					return s.poll()
 				}
 			case "s":
+				report.ClearPending()
 				s.over = true
 			}
 		case "ask":
@@ -151,7 +158,8 @@ func (s *sleep) update(msg tea.Msg) tea.Cmd {
 func (s *sleep) view(width, height int) string {
 	switch s.phase {
 	case "intro":
-		return wrap("Now sleep. When you press Enter, close the lid, wait about twenty seconds, open it and unlock. This screen will be here when you're back, and it then checks that Wi-Fi and sound came back too.", width)
+		return wrap("Now sleep. When you press Enter, close the lid, wait about twenty seconds, open it and unlock. This screen will be here when you're back, and it then checks that Wi-Fi and sound came back too.", width) + "\n\n" +
+			dim.Render(wrap("If the computer restarts instead of waking up, just run the test again: it knows what happened and keeps your answers.", width))
 	case "waiting":
 		return accent.Render("● Close the lid now, wait twenty seconds, then open it and unlock")
 	case "settling":

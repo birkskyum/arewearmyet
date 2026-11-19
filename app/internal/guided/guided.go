@@ -70,7 +70,23 @@ func Run(run *report.Run, facts probe.Facts, options Options) error {
 	run.Mode = "guided"
 	last := &summary{run: run, options: options}
 	m := &model{run: run, summary: last, width: 100, height: 30}
-	m.steps = append(m.steps, &welcome{run: run})
+
+	// A test saved before the lid was closed, found in another boot: the computer restarted
+	// instead of waking. That is the sleep result, and the test goes on from after it.
+	restarted := false
+	if pending, found := report.LoadPending(); found {
+		if restarted = pending.Restarted(report.BootID()); restarted {
+			pending.Restore(run)
+		}
+		report.ClearPending()
+	}
+	defer report.ClearPending()
+
+	m.steps = append(m.steps, &welcome{run: run, restarted: restarted})
+	if restarted {
+		m.steps = append(m.steps, newQuestions(run, facts), last)
+		return m.show()
+	}
 	if facts.Keyboard != "" {
 		m.steps = append(m.steps, newKeyboard(run), newEffects(run, facts))
 	}
@@ -86,7 +102,11 @@ func Run(run *report.Run, facts probe.Facts, options Options) error {
 		m.steps = append(m.steps, newSleep(run, facts))
 	}
 	m.steps = append(m.steps, newQuestions(run, facts), last)
+	return m.show()
+}
 
+// show runs the test in the terminal and says how it ended.
+func (m *model) show() error {
 	final, err := tea.NewProgram(m).Run()
 	if err != nil {
 		return err
@@ -95,7 +115,7 @@ func Run(run *report.Run, facts probe.Facts, options Options) error {
 		fmt.Println("Stopped. Nothing was sent.")
 		return nil
 	}
-	fmt.Println(last.farewell())
+	fmt.Println(m.summary.farewell())
 	return nil
 }
 
@@ -194,14 +214,21 @@ func first(values ...string) string {
 
 // welcome shows what the quick check measured and what the guided test will do.
 type welcome struct {
-	run     *report.Run
-	started bool
+	run *report.Run
+	// restarted is set when the last test ended in a restart during its sleep step.
+	restarted bool
+	started   bool
 }
 
 func (w *welcome) name() string   { return "Start" }
 func (w *welcome) start() tea.Cmd { return nil }
 func (w *welcome) done() bool     { return w.started }
-func (w *welcome) keys() string   { return "Enter to start" }
+func (w *welcome) keys() string {
+	if w.restarted {
+		return "Enter to go on"
+	}
+	return "Enter to start"
+}
 
 func (w *welcome) update(msg tea.Msg) tea.Cmd {
 	if key, ok := msg.(tea.KeyPressMsg); ok && (key.String() == "enter" || key.String() == "space") {
@@ -211,6 +238,10 @@ func (w *welcome) update(msg tea.Msg) tea.Cmd {
 }
 
 func (w *welcome) view(width, height int) string {
+	if w.restarted {
+		text := "Welcome back. The last test was waiting for this computer to wake up when it restarted instead. That is now recorded as a sleep failure, and what you'd answered before the restart is kept. A few questions are left, and then the results are sent."
+		return wrap(text, width) + "\n\n" + bold.Render("So far") + "\n" + resultsTable(w.run.Results, width)
+	}
 	intro := "This checks what works on this computer and puts it on its page on arewearmyet.com, so the next owner knows and the people fixing things see what's left. " +
 		"It takes about five minutes. It has already measured what it can, and now tests the keyboard, speakers, microphones, camera and sleep with you."
 	measured := resultsTable(w.run.Results, width)

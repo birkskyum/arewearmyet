@@ -2,6 +2,7 @@ package guided
 
 import (
 	"fmt"
+	"time"
 
 	tea "charm.land/bubbletea/v2"
 
@@ -15,11 +16,15 @@ type frameMsg struct {
 	err   error
 }
 
+// countMsg is one second of the countdown before the picture.
+type countMsg struct{}
+
 // camera takes a frame, draws it in the terminal and asks whether it looks right.
 type camera struct {
 	run   *report.Run
 	dir   string
-	phase string // capturing, ask
+	phase string // intro, countdown, capturing, ask
+	count int
 	frame picture.Frame
 	err   error
 	ask   choice
@@ -27,17 +32,28 @@ type camera struct {
 }
 
 func newCamera(run *report.Run, dir string) *camera {
-	return &camera{run: run, dir: dir, phase: "capturing"}
+	return &camera{run: run, dir: dir, phase: "intro"}
 }
 
 func (c *camera) name() string { return "Camera" }
 func (c *camera) done() bool   { return c.over }
 
 func (c *camera) keys() string {
-	if c.phase == "capturing" {
-		return "Taking a picture…"
+	switch c.phase {
+	case "intro":
+		return "Enter when you're ready · s to skip"
+	case "countdown":
+		return "s to skip"
+	case "capturing":
+		return "Taking the picture…"
 	}
 	return choiceKeys
+}
+
+// countdown gives a few seconds' warning before the picture is taken.
+func (c *camera) countdown(from int) tea.Cmd {
+	c.phase, c.count = "countdown", from
+	return tea.Tick(time.Second, func(time.Time) tea.Msg { return countMsg{} })
 }
 
 func (c *camera) capture() tea.Cmd {
@@ -53,7 +69,7 @@ func (c *camera) capture() tea.Cmd {
 	}
 }
 
-func (c *camera) start() tea.Cmd { return c.capture() }
+func (c *camera) start() tea.Cmd { return nil }
 
 func (c *camera) evidence() string {
 	if c.err != nil {
@@ -65,6 +81,15 @@ func (c *camera) evidence() string {
 
 func (c *camera) update(msg tea.Msg) tea.Cmd {
 	switch msg := msg.(type) {
+	case countMsg:
+		if c.phase != "countdown" || c.over {
+			return nil
+		}
+		c.count--
+		if c.count <= 0 {
+			return c.capture()
+		}
+		return tea.Tick(time.Second, func(time.Time) tea.Msg { return countMsg{} })
 	case frameMsg:
 		c.frame, c.err, c.phase = msg.frame, msg.err, "ask"
 		switch {
@@ -79,7 +104,21 @@ func (c *camera) update(msg tea.Msg) tea.Cmd {
 				options: []string{"Yes, and the colours look right", "Yes, but it's too dark, pale or off in colour", "No, it's black, frozen or garbage", "Take another", "Skip"}}
 		}
 	case tea.KeyPressMsg:
-		if c.phase != "ask" {
+		switch c.phase {
+		case "intro":
+			switch msg.String() {
+			case "enter", "space":
+				return c.countdown(5)
+			case "s":
+				c.over = true
+			}
+			return nil
+		case "countdown":
+			if msg.String() == "s" {
+				c.over = true
+			}
+			return nil
+		case "capturing":
 			return nil
 		}
 		set := func(state, how, note string) {
@@ -98,14 +137,14 @@ func (c *camera) update(msg tea.Msg) tea.Cmd {
 			case 1:
 				set(report.Broken, report.Owner, "")
 			case 2:
-				return c.capture()
+				return c.countdown(3)
 			default:
 				c.over = true
 			}
 		case c.frame.Blank():
 			switch picked {
 			case 0:
-				return c.capture()
+				return c.countdown(3)
 			case 1:
 				set(report.Broken, report.Measured, "The frame is black or blank with nothing covering the camera.")
 			default:
@@ -120,7 +159,7 @@ func (c *camera) update(msg tea.Msg) tea.Cmd {
 			case 2:
 				set(report.Broken, report.Owner, "The picture is black, frozen or garbage.")
 			case 3:
-				return c.capture()
+				return c.countdown(3)
 			default:
 				c.over = true
 			}
@@ -130,6 +169,12 @@ func (c *camera) update(msg tea.Msg) tea.Cmd {
 }
 
 func (c *camera) view(width, height int) string {
+	switch c.phase {
+	case "intro":
+		return wrap("Now the camera. It takes one picture and draws it here, so you can see whether the camera works. Nothing is taken until you press Enter, and then it counts down from five.", width) + "\n\n" + private(width)
+	case "countdown":
+		return accent.Render(fmt.Sprintf("Taking a picture in  %d", c.count)) + "\n\n" + dim.Render("Look at the camera, or cover it if you'd rather not be in it: a picture of anything shows it works.") + "\n\n" + private(width)
+	}
 	if c.phase == "capturing" {
 		return accent.Render("● Taking a picture with the camera") + "\n\n" + dim.Render("Its light may come on for a moment.") + "\n\n" + private(width)
 	}

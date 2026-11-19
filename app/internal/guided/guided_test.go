@@ -198,3 +198,48 @@ func TestTheTestSkipsStepsWithNothingToDoAndDrawsAtAnySize(t *testing.T) {
 		t.Errorf("farewell %q", last.farewell())
 	}
 }
+
+func TestCameraCountsDownBeforeItTakesAPicture(t *testing.T) {
+	c := newCamera(&report.Run{}, t.TempDir())
+	if c.start() != nil || c.phase != "intro" {
+		t.Fatalf("it started at %q", c.phase)
+	}
+	if !strings.Contains(c.view(80, 30), "Nothing is taken until you press Enter") || !strings.Contains(c.view(80, 30), "never leaves this computer") {
+		t.Errorf("the intro doesn't say what will happen:\n%s", c.view(80, 30))
+	}
+	c.update(press(tea.KeyEnter))
+	for want := 5; want >= 1; want-- {
+		if c.phase != "countdown" || c.count != want || !strings.Contains(c.view(80, 30), "Taking a picture in") {
+			t.Fatalf("at %d: phase %q, count %d", want, c.phase, c.count)
+		}
+		c.update(countMsg{})
+	}
+	if c.phase != "capturing" {
+		t.Errorf("after the countdown it is %q", c.phase)
+	}
+
+	// Skipping during the countdown takes no picture
+	c = newCamera(&report.Run{}, t.TempDir())
+	c.update(press(tea.KeyEnter))
+	c.update(press('s'))
+	if !c.done() || c.update(countMsg{}) != nil {
+		t.Error("skipping didn't stop the countdown")
+	}
+}
+
+func TestSleepSavesTheTestBeforeTheLidCloses(t *testing.T) {
+	t.Setenv("XDG_STATE_HOME", t.TempDir())
+	run := &report.Run{}
+	run.Set("speakers", report.Works, report.Owner, "", "")
+	s := newSleep(run, probe.Facts{})
+	s.update(press(tea.KeyEnter))
+	pending, found := report.LoadPending()
+	if !found || pending.Step != "Sleep" || len(pending.Results) != 1 {
+		t.Fatalf("saved: %v %+v", found, pending)
+	}
+	// Waking clears it, so only a restart leaves it behind
+	s.update(sleepMsg{ok: s.ok + 1, failed: s.failed})
+	if _, found := report.LoadPending(); found {
+		t.Error("it was still saved after waking")
+	}
+}
