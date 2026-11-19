@@ -12,6 +12,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -27,6 +28,44 @@ func Have(names ...string) bool {
 		}
 	}
 	return true
+}
+
+// HeadphoneOutput says whether the sound server offers a headphone output on a sound card that is
+// part of the computer. known is false where that can't be asked. A laptop with only USB-C ports
+// has none, and the kernel's own "Headphone Jack" control says nothing: the Yoga Slim 7x has that
+// control and no socket. USB and Bluetooth sound cards don't count, since an adapter or a pair
+// of USB-C headphones is a sound card of its own.
+func HeadphoneOutput() (offered, known bool) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, "pactl", "list", "cards")
+	command.Env = append(os.Environ(), "LC_ALL=C")
+	out, err := command.Output()
+	if err != nil || !strings.Contains(string(out), "Card #") {
+		return false, false
+	}
+	return headphonePort(string(out)), true
+}
+
+var outputPort = regexp.MustCompile(`(?m)^\s*\[Out\] ([^:]+):.*\(type: (\w+)`)
+
+// headphonePort reads pactl's list of cards for a headphone output on a built-in card.
+func headphonePort(cards string) bool {
+	for _, card := range strings.Split(cards, "Card #")[1:] {
+		name := ""
+		if at := strings.Index(card, "Name: "); at >= 0 {
+			name = strings.Fields(card[at+len("Name: "):])[0]
+		}
+		if strings.Contains(name, ".usb-") || strings.HasPrefix(name, "bluez") {
+			continue
+		}
+		for _, port := range outputPort.FindAllStringSubmatch(card, -1) {
+			if port[2] == "Headphones" || port[2] == "Headset" || strings.Contains(strings.ToLower(port[1]), "headphone") {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // Play plays a sound file and returns when it ends, or after limit.

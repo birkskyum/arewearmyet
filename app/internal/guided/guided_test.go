@@ -1017,6 +1017,46 @@ func TestTouchscreenFallsBackToClicksWithoutAnInterrupt(t *testing.T) {
 	}
 }
 
+// The tests don't ask this machine's sound server what it offers.
+func init() { headphoneOutput = func() (bool, bool) { return false, false } }
+
+// Where the sound server offers no headphone output, the step asks first whether there is a
+// socket at all. On the Yoga Slim 7x, which has only USB-C ports, the owner's answer about USB-C
+// headphones was recorded as a broken jack, and an agent then looked for a fault that isn't one.
+func TestHeadphonesAskForTheSocketWhereNoOutputIsOffered(t *testing.T) {
+	headphoneOutput = func() (bool, bool) { return false, true }
+	defer func() { headphoneOutput = func() (bool, bool) { return false, false } }()
+
+	run := &report.Run{}
+	jack := newHeadphones(run, t.TempDir())
+	if jack.phase != "socket" || !strings.Contains(jack.view(80, 24), "offers no headphone output") || !strings.Contains(jack.view(80, 24), "USB-C headphones and adapters") {
+		t.Fatalf("it didn't ask for the socket first: %q", jack.view(80, 24))
+	}
+	jack.update(press('1'))
+	if result, _ := run.Get("headphones"); !jack.done() || result.State != report.Absent || result.Evidence != noOutput {
+		t.Errorf("no socket: %+v", result)
+	}
+
+	// A socket that is there with no output behind it is a fault, and the result says why
+	run = &report.Run{}
+	jack = newHeadphones(run, t.TempDir())
+	jack.update(press('2'))
+	if jack.done() || jack.phase != "intro" {
+		t.Fatalf("with a socket the tone test should follow, at %q", jack.phase)
+	}
+	jack.update(playedMsg{})
+	jack.update(press('3'))
+	if result, _ := run.Get("headphones"); result.State != report.Broken || result.Evidence != noOutput {
+		t.Errorf("a socket without an output: %+v", result)
+	}
+
+	// Where an output is offered, nothing is asked first
+	headphoneOutput = func() (bool, bool) { return true, true }
+	if jack = newHeadphones(&report.Run{}, t.TempDir()); jack.phase != "intro" || jack.none {
+		t.Errorf("with an output offered it started at %q", jack.phase)
+	}
+}
+
 func TestHeadphonesAskOnlyAfterPlaying(t *testing.T) {
 	run := &report.Run{}
 	jack := newHeadphones(run, t.TempDir())

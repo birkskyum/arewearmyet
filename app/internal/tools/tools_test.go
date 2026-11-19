@@ -437,3 +437,37 @@ func TestAWindowForTheOwnerDoesNotInheritAnAgentsBareSettings(t *testing.T) {
 		t.Errorf("the window saw %q", seen)
 	}
 }
+
+// The sound server's list of cards says whether a built-in card offers a headphone output. The
+// first card is the Yoga Slim 7x's own, which has only USB-C ports.
+func TestAHeadphoneOutputIsReadFromTheBuiltInCards(t *testing.T) {
+	yoga := `Card #77
+	Name: alsa_card.platform-sound
+	Properties:
+		device.form_factor = "internal"
+	Ports:
+		[Out] Speaker: Speaker playback (type: Speaker, priority: 100, latency offset: 0 usec, availability unknown)
+			Part of profile(s): HiFi
+		[In] Mic: Internal microphones (type: Mic, priority: 100, latency offset: 0 usec, availability unknown)
+`
+	if headphonePort(yoga) {
+		t.Error("a headphone output was found on a card with only a speaker")
+	}
+	jack := strings.Replace(yoga, "		[In] Mic", "		[Out] Headphones: Headphones playback (type: Headphones, priority: 200, latency offset: 0 usec, not available)\n		[In] Mic", 1)
+	if !headphonePort(jack) {
+		t.Error("the headphone output of a built-in card wasn't found")
+	}
+	// A USB-C adapter or a Bluetooth headset is a sound card of its own, not the computer's socket
+	adapter := yoga + `Card #91
+	Name: alsa_card.usb-Generic_USB-C_Audio_Adapter-00
+	Ports:
+		[Out] analog-output-headphones: Headphones (type: Headphones, priority: 9900, latency offset: 0 usec, available)
+Card #95
+	Name: bluez_card.AA_BB_CC_DD_EE_FF
+	Ports:
+		[Out] headset-output: Headset (type: Headset, priority: 0, latency offset: 0 usec, available)
+`
+	if headphonePort(adapter) {
+		t.Error("a USB adapter or a Bluetooth headset counted as the computer's own headphone output")
+	}
+}
