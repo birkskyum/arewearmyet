@@ -97,7 +97,7 @@ const pictureID = 77
 
 // space is how many columns and rows the picture may take, beside the question.
 func (c *camera) space(width, height int) (int, int) {
-	return min(width, 96), max(4, min(30, height-len(c.ask.options)-9))
+	return min(width, 96), max(4, min(30, height-len(c.ask.options)-11))
 }
 
 // hand gives the picture to the terminal to draw, in the cells the step has room for.
@@ -279,6 +279,8 @@ func (c *camera) view(width, height int) string {
 	if c.columns > 0 && c.columns <= width {
 		drawn = picture.Cells(pictureID, c.columns, c.rows)
 	}
-	return drawn + "\n\n" + c.ask.view(width) + "\n\n" +
-		wrap("Measured: "+c.evidence()+". Only these numbers are sent, never the picture.", width)
+	// Seeing themselves is when people wonder where the picture goes, so it says so right under it
+	stays := good.Render("🔒 ") + wrap("This picture stays on this computer. It is not sent anywhere, and it is gone when you answer.", width-3)
+	return drawn + "\n" + stays + "\n\n" + c.ask.view(width) + "\n\n" +
+		wrap("Measured: "+c.evidence()+". Only these numbers are sent.", width)
 }

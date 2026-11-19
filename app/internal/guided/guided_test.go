@@ -314,6 +314,11 @@ func TestCameraTakesItsPictureOnlyWhenToldAndShowsItInTheTerminal(t *testing.T) 
 	}
 	// The picture is drawn here with the question. No window opens and nothing is written
 	c.update(frameMsg{frame: scene(), took: 8 * time.Second, settled: true})
+	// Under the picture, before the question, it says the picture goes nowhere
+	if view := c.view(80, 40); !strings.Contains(view, "This picture stays on this computer. It is not sent anywhere") ||
+		strings.Index(view, "This picture stays") > strings.Index(view, "Is that a real picture") || strings.Index(view, "This picture stays") < strings.LastIndex(view, "▀") {
+		t.Errorf("where the picture goes isn't said under it:\n%s", view)
+	}
 	if c.phase != "ask" || opened != "" || !strings.Contains(c.view(80, 40), "▀") || !strings.Contains(c.view(80, 40), "Is that a real picture") {
 		t.Fatalf("phase %q, opened %q:\n%s", c.phase, opened, c.view(80, 40))
 	}
