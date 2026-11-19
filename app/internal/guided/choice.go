@@ -13,14 +13,21 @@ import (
 type choice struct {
 	question string
 	options  []string
-	// beside, when set, are a few words shown after each answer, already styled: a part's
-	// status in the menu. notes are a line under it, for what takes a sentence.
-	beside []string
-	notes  []string
+	// sides, when set, turn the list into a menu: each answer has a mark in front of it and a
+	// few words in a column after it, and no number to press. A menu is picked from with the
+	// arrow keys alone.
+	sides []side
 	// heads are lines set above the answer at a place in the list, to name a group of answers.
 	// An empty one is a blank line.
 	heads  map[int]string
 	cursor int
+}
+
+// side is what a menu shows around one answer: a mark in front and a few words after it, both
+// in the given style.
+type side struct {
+	mark, text string
+	style      lipgloss.Style
 }
 
 // update moves the cursor, and returns the picked answer's place in the list, or -1.
@@ -33,7 +40,7 @@ func (c *choice) update(msg tea.KeyPressMsg) int {
 	case "enter", "space":
 		return c.cursor
 	default:
-		if len(key) == 1 && key[0] >= '1' && int(key[0]-'1') < len(c.options) {
+		if len(c.sides) == 0 && len(key) == 1 && key[0] >= '1' && int(key[0]-'1') < len(c.options) {
 			c.cursor = int(key[0] - '1')
 			return c.cursor
 		}
@@ -41,58 +48,71 @@ func (c *choice) update(msg tea.KeyPressMsg) int {
 	return -1
 }
 
-// blocks draws each answer with what belongs to it: the group's line above it, the words
-// beside it and the note under it.
+// blocks draws each answer with what belongs to it: the group's line above it, and in a menu
+// its mark and the words after it.
 func (c *choice) blocks(width int) []string {
-	// The words beside the answers start in one column, where the window has room for that
-	column, room := 0, 0
-	for i, option := range c.options {
-		column = max(column, lipgloss.Width(option))
-		if i < len(c.beside) {
-			room = max(room, lipgloss.Width(c.beside[i]))
-		}
+	if len(c.sides) > 0 {
+		return c.menu(width)
 	}
-	inline := room > 0 && column+2+room <= width-4
 	var blocks []string
 	for i, option := range c.options {
-		var out strings.Builder
+		marker, style := "  ", soft
+		if i == c.cursor {
+			marker, style = accent.Render("› "), bold
+		}
+		// A long answer wraps under its own first word, not under the number
+		lines := strings.Split(wrap(option, width-4), "\n")
+		block := fmt.Sprintf("%s%s %s", marker, soft.Render(fmt.Sprint(i+1)), style.Render(lines[0]))
+		for _, more := range lines[1:] {
+			block += "\n    " + style.Render(more)
+		}
+		blocks = append(blocks, block)
+	}
+	return blocks
+}
+
+// menu draws the answers as a menu: the cursor, the mark, the answer, and in one column
+// after the longest answer the words that go with each, cut to what the window has room for.
+func (c *choice) menu(width int) []string {
+	column := 0
+	for _, option := range c.options {
+		column = max(column, lipgloss.Width(option))
+	}
+	// Cursor and mark take two cells each; three more keep the words clear of the answers
+	room := width - (4 + column + 3)
+	var blocks []string
+	for i, option := range c.options {
+		block := ""
 		if head, ok := c.heads[i]; ok {
-			out.WriteString("\n")
+			block = "\n"
 			if head != "" {
-				out.WriteString("  " + bold.Render(head) + "\n")
+				block += "  " + bold.Render(head) + "\n"
 			}
 		}
 		marker, style := "  ", soft
 		if i == c.cursor {
 			marker, style = accent.Render("› "), bold
 		}
-		// Only the first nine answers have a number to press
-		number := " "
-		if i < 9 {
-			number = fmt.Sprint(i + 1)
+		var around side
+		if i < len(c.sides) {
+			around = c.sides[i]
 		}
-		// A long answer wraps under its own first word, not under the number
+		mark := "  "
+		if around.mark != "" {
+			mark = around.style.Render(around.mark) + " "
+		}
 		lines := strings.Split(wrap(option, width-4), "\n")
-		status := ""
-		if i < len(c.beside) {
-			status = c.beside[i]
-		}
-		if inline && status != "" && len(lines) == 1 {
-			fmt.Fprintf(&out, "%s%s %s%s%s\n", marker, soft.Render(number), style.Render(lines[0]), strings.Repeat(" ", column+2-lipgloss.Width(lines[0])), status)
-			status = ""
-		} else {
-			fmt.Fprintf(&out, "%s%s %s\n", marker, soft.Render(number), style.Render(lines[0]))
+		block += marker + mark + style.Render(lines[0])
+		if text := []rune(around.text); len(text) > 0 && room >= 12 && len(lines) == 1 {
+			if len(text) > room {
+				text = append(text[:room-1], '…')
+			}
+			block += strings.Repeat(" ", column+3-lipgloss.Width(lines[0])) + around.style.Render(string(text))
 		}
 		for _, more := range lines[1:] {
-			fmt.Fprintf(&out, "    %s\n", style.Render(more))
+			block += "\n    " + style.Render(more)
 		}
-		if status != "" {
-			fmt.Fprintf(&out, "    %s\n", status)
-		}
-		if i < len(c.notes) && c.notes[i] != "" {
-			fmt.Fprintf(&out, "    %s\n", c.notes[i])
-		}
-		blocks = append(blocks, strings.TrimRight(out.String(), "\n"))
+		blocks = append(blocks, block)
 	}
 	return blocks
 }
@@ -137,6 +157,9 @@ func (c *choice) viewIn(width, rows int) string {
 }
 
 const choiceKeys = "↑ ↓ to move · Enter to choose · or press its number"
+
+// menuKeys is the hint under a menu, which has no numbers.
+const menuKeys = "↑ ↓ to move · Enter to choose"
 
 // line is one line of typed text, for saying what's wrong.
 type line struct {

@@ -32,6 +32,8 @@ type summary struct {
 	failed map[string]string
 	// dir holds the test's recordings and pictures, which are deleted before anything is sent.
 	dir string
+	// recorded is set when the round had a step that uses the microphones or the camera.
+	recorded bool
 }
 
 func (s *summary) name() string { return "Send" }
@@ -153,8 +155,12 @@ func (s *summary) view(width, height int) string {
 		}
 		if s.options.Send && s.phase == "review" {
 			// What goes and what doesn't, said where the decision is made
-			text += wrap("Those lines are everything that is sent, with this computer's model and its software versions.", width) + "\n" +
-				good.Render("🔒 ") + wrap("No picture and no recording is sent. They were only for you to check, and are already deleted.", width-3) + "\n\n"
+			text += wrap("Those lines are everything that is sent, with this computer's model and its software versions.", width) + "\n"
+			// Said only after a round that made a picture or a recording
+			if s.recorded {
+				text += good.Render("🔒 ") + wrap("No picture and no recording is sent. They were only for you to check, and are already deleted.", width-3) + "\n"
+			}
+			text += "\n"
 		}
 	}
 	return text + s.ask.view(width)

@@ -4,6 +4,7 @@ import (
 	"math"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 	"time"
@@ -19,6 +20,9 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 	"github.com/birkskyum/arewearmyet/app/internal/tools"
 )
+
+// ansi matches the colour and style codes, to read a drawn screen as its text.
+var ansi = regexp.MustCompile(`\x1b\[[0-9;]*m`)
 
 func press(code rune) tea.KeyPressMsg {
 	text := ""
@@ -315,7 +319,7 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 	// Only what this machine has is offered
 	m, start := open()
 	drawn := m.View().Content
-	for _, text := range []string{"Everything, about twelve minutes", "Keyboard, with the volume", "Speakers and microphones", "Headphones", "Camera", "hw-test camera", "Video decoding"} {
+	for _, text := range []string{"Everything", "about twelve minutes", "Keyboard, volume and brightness keys", "Speakers and microphones", "Headphones", "Camera", "hw-test camera", "Video decoding"} {
 		if !strings.Contains(drawn, text) {
 			t.Errorf("the menu lacks %q:\n%s", text, drawn)
 		}
@@ -325,16 +329,33 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 	}
 	// What runs by itself is listed apart from what is done with the owner, and comes first
 	alone, with := strings.Index(drawn, "Runs by itself"), strings.Index(drawn, "Done with you")
-	if alone < 0 || !(alone < strings.Index(drawn, "All of these in one go") && strings.Index(drawn, "Video decoding") < with && with < strings.Index(drawn, "Keyboard, with")) {
+	if alone < 0 || !(alone < strings.Index(drawn, "All of these in one go") && strings.Index(drawn, "Video decoding") < with && with < strings.Index(drawn, "Keyboard, volume")) {
 		t.Errorf("the two groups are off:\n%s", drawn)
 	}
 	// Each part shows how it stood the last time it was tested here, and the screen says where
 	// the machine stands overall and what fails that no part of the menu covers
-	for _, text := range []string{"◐ partly, 19 Nov", "Speakers: Both speakers play, but the left is louder", "✓ works, 19 Nov", "○ not tested",
+	plain := ansi.ReplaceAllString(drawn, "")
+	for _, text := range []string{"◐ Speakers and microphones", "19 Nov · Speakers: Both speakers play", "✓ Camera", "○ Headphones", "○ Video decoding",
 		"3 working", "1 partly", "1 broken", "27 not tested", "✗ Hibernation: the kernel offers no hibernation"} {
-		if !strings.Contains(drawn, text) {
-			t.Errorf("the status lacks %q:\n%s", text, drawn)
+		if !strings.Contains(plain, text) {
+			t.Errorf("the status lacks %q:\n%s", text, plain)
 		}
+	}
+	// Nothing in the menu has a number, and every part is one line
+	if regexp.MustCompile(`(?m)^\s*[›]?\s*\d+ (Everything|Camera|Quit)`).MatchString(plain) || strings.Contains(m.steps[0].keys(), "number") {
+		t.Errorf("the menu is numbered:\n%s", plain)
+	}
+	// With the cursor on a part that fails, the reason is said in full under the menu, with
+	// the command that goes straight to the part
+	for range 2 {
+		m.Update(press(tea.KeyDown))
+	}
+	under := strings.Join(strings.Fields(ansi.ReplaceAllString(m.View().Content, "")), " ")
+	if !strings.Contains(under, "◐ 19 Nov · Speakers: Both speakers play, but the left is louder than the right.") || !strings.Contains(under, "hw-test speakers goes straight to this part.") {
+		t.Errorf("under the menu:\n%s", under)
+	}
+	for range 2 {
+		m.Update(press(tea.KeyUp))
 	}
 	// The menu is the list of what there is: no second list of steps above it, and nothing to skip
 	if strings.Contains(drawn, "○ Send") || strings.Contains(drawn, "Ctrl+N") {
@@ -389,7 +410,7 @@ func TestTheSendScreenSaysWhatGoesAndThatNoPictureDoes(t *testing.T) {
 	os.WriteFile(filepath.Join(dir, "voice.wav"), []byte("a recording"), 0o600)
 	run := &report.Run{}
 	run.Set("camera", report.Works, report.Owner, "a 1920x1092 frame, brightness 41 of 255, contrast 18", "")
-	s := &summary{run: run, options: Options{Send: true}, dir: dir}
+	s := &summary{run: run, options: Options{Send: true}, dir: dir, recorded: true}
 	s.start()
 	if left, _ := os.ReadDir(dir); len(left) != 0 {
 		t.Errorf("%d files are still there when the send screen comes up", len(left))
@@ -400,6 +421,19 @@ func TestTheSendScreenSaysWhatGoesAndThatNoPictureDoes(t *testing.T) {
 		if !strings.Contains(drawn, text) {
 			t.Errorf("the send screen lacks %q:\n%s", text, drawn)
 		}
+	}
+
+	// A round that made no picture and no recording doesn't speak of them
+	video := &report.Run{}
+	video.Set("video-decode", report.Works, report.Measured, "60 frames of 720p H.264 decoded on the hardware decoder in 0.2 s", "")
+	s = &summary{run: video, options: Options{Send: true}}
+	s.start()
+	if drawn = strings.Join(strings.Fields(s.view(90, 30)), " "); !strings.Contains(drawn, "everything that is sent") || strings.Contains(drawn, "picture") || strings.Contains(drawn, "recording") {
+		t.Errorf("the send screen of a video round:\n%s", drawn)
+	}
+	camera, decoding := newCamera(run, dir), newAuto(run, deep.Test{Name: "Video decoding"})
+	if !records([]step{decoding, camera}) || records([]step{decoding, newHeadphones(run, dir), newUSB(run, machine.Fixture(dir))}) {
+		t.Error("which rounds record is off")
 	}
 }
 

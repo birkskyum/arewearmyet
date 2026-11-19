@@ -194,6 +194,18 @@ func build(run *report.Run, facts probe.Facts, dir string) []step {
 	return steps
 }
 
+// records says whether any of the steps uses the microphones or the camera, so a round that
+// made no recording and no picture doesn't speak of them.
+func records(steps []step) bool {
+	for _, s := range steps {
+		switch s.name() {
+		case "Sound", "Voice", "Camera":
+			return true
+		}
+	}
+	return false
+}
+
 // handsOff tells the steps whether the round is the automatic tests alone, which may run
 // with nobody there: they then start by themselves and ask nothing they can do without.
 func handsOff(steps []step, words []string) {
@@ -286,7 +298,7 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 	}
 	handsOff(steps, options.Only)
 
-	last := &summary{run: run, options: options, dir: dir}
+	last := &summary{run: run, options: options, dir: dir, recorded: records(steps)}
 	m := &model{run: run, summary: last, width: 100, height: 30, failed: map[string]string{}}
 	last.failed = m.failed
 	sleepMode := machine.Real().Read("/sys/power/mem_sleep")
@@ -305,7 +317,9 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 		// One part alone reports that part only
 		run.Results = nil
 		handsOff(steps, []string{word})
-		m.steps = append(append([]step{start}, choose(steps, []string{word})...), last)
+		chosen := choose(steps, []string{word})
+		last.recorded = records(chosen)
+		m.steps = append(append([]step{start}, chosen...), last)
 	}
 	start.ask = start.question()
 	start.api = options.API
@@ -588,34 +602,36 @@ type menuEntry struct {
 	// auto is set for what runs by itself, which the menu lists apart from what is done with
 	// the owner.
 	auto bool
+	// about is said after an entry that has no status of its own.
+	about string
 }
 
 // The menu, in two groups: what measures itself, then what takes someone at the computer.
 var menu = []menuEntry{
-	{"auto", "All of these in one go, about two minutes", nil, true},
-	{"speakers", "Speakers and microphones (plays test tones)", []string{"speakers", "microphones"}, true},
-	{"graphics", "Graphics: Vulkan, WebGL and WebGPU", []string{"gpu", "webgl", "webgpu"}, true},
-	{"wireless", "Wi-Fi signal and Bluetooth range", []string{"wifi", "bluetooth"}, true},
-	{"video", "Video decoding", []string{"video-decode"}, true},
-	{"temperatures", "Temperatures and fans", []string{"fans"}, true},
-	{"keyboard", "Keyboard, with the volume and brightness keys", []string{"keyboard", "backlight"}, false},
-	{"touchpad", "Touchpad", []string{"touchpad"}, false},
-	{"touchscreen", "Touchscreen", []string{"touchscreen"}, false},
-	{"headphones", "Headphones", []string{"headphones"}, false},
-	{"camera", "Camera", []string{"camera"}, false},
-	{"usb", "USB ports", []string{"usb"}, false},
-	{"screen", "External screen", []string{"external-display"}, false},
-	{"sleep", "Sleep", []string{"suspend"}, false},
+	{word: "auto", label: "All of these in one go", auto: true, about: "two minutes, plays test tones"},
+	{word: "speakers", label: "Speakers and microphones", checks: []string{"speakers", "microphones"}, auto: true},
+	{word: "graphics", label: "Graphics: Vulkan, WebGL and WebGPU", checks: []string{"gpu", "webgl", "webgpu"}, auto: true},
+	{word: "wireless", label: "Wi-Fi signal and Bluetooth range", checks: []string{"wifi", "bluetooth"}, auto: true},
+	{word: "video", label: "Video decoding", checks: []string{"video-decode"}, auto: true},
+	{word: "temperatures", label: "Temperatures and fans", checks: []string{"fans"}, auto: true},
+	{word: "keyboard", label: "Keyboard, volume and brightness keys", checks: []string{"keyboard", "backlight"}},
+	{word: "touchpad", label: "Touchpad", checks: []string{"touchpad"}},
+	{word: "touchscreen", label: "Touchscreen", checks: []string{"touchscreen"}},
+	{word: "headphones", label: "Headphones", checks: []string{"headphones"}},
+	{word: "camera", label: "Camera", checks: []string{"camera"}},
+	{word: "usb", label: "USB ports", checks: []string{"usb"}},
+	{word: "screen", label: "External screen", checks: []string{"external-display"}},
+	{word: "sleep", label: "Sleep", checks: []string{"suspend"}},
 }
 
 // severity orders states from fine to failing, for a part's or the machine's worst.
 var severity = map[string]int{report.Works: 1, report.Absent: 1, report.Partial: 2, report.Broken: 3}
 
-// status is a menu part's standing from the machine's latest results, in a few words to put
-// beside it, and for a part that fails, its worst check and why to put under it.
-func (e menuEntry) status(kept map[string]report.Kept, width int) (beside, under string) {
+// status is a menu part's standing from the machine's latest results: a mark for how its
+// worst check stands, and after it when it was tested, and for a part that fails, why.
+func (e menuEntry) status(kept map[string]report.Kept) side {
 	if len(e.checks) == 0 {
-		return "", ""
+		return side{text: e.about, style: soft}
 	}
 	var worst report.Kept
 	tested := 0
@@ -628,25 +644,25 @@ func (e menuEntry) status(kept map[string]report.Kept, width int) (beside, under
 		}
 	}
 	if tested == 0 {
-		return "○ not tested", ""
+		return side{mark: "○", style: soft}
 	}
 	when := worst.When.Format("2 Jan")
 	switch worst.State {
 	case report.Partial, report.Broken:
-		beside = stateStyle(worst.State).Render(map[string]string{report.Partial: "◐ partly", report.Broken: "✗ broken"}[worst.State] + ", " + when)
-		line := checkTitle[worst.Check]
+		text := when
 		if why := first(worst.Note, worst.Evidence); why != "" {
-			line += ": " + why
+			// Which of a part's checks it is, where the part has more than one
+			if len(e.checks) > 1 {
+				why = checkTitle[worst.Check] + ": " + why
+			}
+			text += " · " + why
 		}
-		if letters := []rune(line); len(letters) > width-6 && width > 20 {
-			line = string(letters[:width-7]) + "…"
-		}
-		return beside, stateStyle(worst.State).Render(line)
+		return side{mark: map[string]string{report.Partial: "◐", report.Broken: "✗"}[worst.State], text: text, style: stateStyle(worst.State)}
 	}
 	if tested < len(e.checks) {
-		return good.Render(fmt.Sprintf("✓ works, %d of %d tested", tested, len(e.checks))), ""
+		return side{mark: "✓", text: fmt.Sprintf("%s · %d of %d tested", when, tested, len(e.checks)), style: good}
 	}
-	return good.Render("✓ works, " + when), ""
+	return side{mark: "✓", text: when, style: good}
 }
 
 // welcome is the opening screen: what the test does, and a menu of all of it or one part.
@@ -680,21 +696,20 @@ type modelMsg struct {
 }
 
 func (w *welcome) question() choice {
-	options, beside, notes := []string{"Everything, about twelve minutes"}, []string{""}, []string{""}
+	options, sides := []string{"Everything"}, []side{{text: "about twelve minutes", style: soft}}
 	heads := map[int]string{}
 	for at, part := range w.parts {
 		// The two groups, each under its own line
 		switch {
 		case part.auto && (at == 0 || !w.parts[at-1].auto):
-			heads[len(options)] = "Runs by itself, with nothing for you to do"
+			heads[len(options)] = "Runs by itself"
 		case !part.auto && (at == 0 || w.parts[at-1].auto):
-			heads[len(options)] = "Done with you at the computer"
+			heads[len(options)] = "Done with you"
 		}
-		short, why := part.status(w.kept, 100)
-		options, beside, notes = append(options, part.label), append(beside, short), append(notes, why)
+		options, sides = append(options, part.label), append(sides, part.status(w.kept))
 	}
 	heads[len(options)] = ""
-	return choice{question: "What would you like to test?", options: append(options, "Quit"), beside: beside, notes: notes, heads: heads}
+	return choice{question: "What would you like to test?", options: append(options, "Quit"), sides: append(sides, side{}), heads: heads}
 }
 
 // standing is where the machine stands over all checks: how many work, and what doesn't that
@@ -732,7 +747,7 @@ func (w *welcome) standing(width int) string {
 		}
 	}
 	sort.Strings(failing)
-	line := fmt.Sprintf("This computer so far: %s, %s, %s, %d not tested.",
+	line := fmt.Sprintf("%s · %s · %s · %d not tested",
 		good.Render(fmt.Sprintf("%d working", counts["works"])), close_.Render(fmt.Sprintf("%d partly", counts["partly"])), bad.Render(fmt.Sprintf("%d broken", counts["broken"])), counts["untested"])
 	if counts["partly"]+counts["broken"]+counts["untested"] == 0 {
 		line = good.Render("Everything works on this computer: all green.")
@@ -749,9 +764,9 @@ func (w *welcome) isOpening() bool { return true }
 
 func (w *welcome) keys() string {
 	if w.model.Page != "" {
-		return choiceKeys + " · o to open this computer's page"
+		return menuKeys + " · o to open this computer's page"
 	}
-	return choiceKeys
+	return menuKeys
 }
 
 func (w *welcome) start() tea.Cmd {
@@ -803,19 +818,25 @@ func (w *welcome) view(width, height int) string {
 	if len(w.ask.options) == 0 {
 		w.ask = w.question()
 	}
-	intro := wrap("This checks what works on this computer and puts it on its page on arewearmyet.com, so the next owner knows and the people fixing things see what's left. It measures what it can by itself and tests the rest with you.", width)
-	standing := wrap(w.standing(width), width)
-	// Where this computer's results are, once the site has said which model it is
-	page := ""
+	// What this is, and where this computer's results are once the site has said which model it is
+	intro := wrap("Checks what works on this computer and puts it on its page on arewearmyet.com.", width)
 	switch {
 	case w.model.Page != "":
-		page = wrap("This computer's page, with what's known and tested so far:", width) + "\n" + accent.Hyperlink(w.model.Page).Render(w.model.Page)
+		intro += "\n" + accent.Hyperlink(w.model.Page).Render(w.model.Page)
 	case w.looked && w.model.ID == "" && w.api != "":
-		page = wrap("The board doesn't have this computer yet. Sending a test adds what it finds, with a form to put the model on the board.", width)
+		intro += "\n" + wrap("The board doesn't have this computer yet. Sending a test adds what it finds, with a form to put the model on the board.", width)
 	}
-	tip := wrap("To go straight to one part next time, add its name to the command, like hw-test camera or hw-test auto.", width)
-	private := wrap("Only results are sent, with the model and software versions. No serial numbers, addresses or names.", width) + "\n" +
-		good.Render("🔒 ") + wrap("A picture or recording the test makes never leaves this computer and is deleted when the test ends.", width-3)
+	standing := wrap(w.standing(width), width)
+	// The command that goes straight to the part the cursor is on
+	tip := wrap("Add a part's name to the command to go straight to it, like hw-test camera.", width)
+	if at := w.ask.cursor - 1; at >= 0 && at < len(w.parts) {
+		tip = wrap("hw-test "+w.parts[at].word+" goes straight to this part.", width)
+		// Why the part under the cursor fails, in full: beside it there is only room for the start
+		if status := w.parts[at].status(w.kept); status.mark == "◐" || status.mark == "✗" {
+			tip = status.style.Render(wrap(status.mark+" "+status.text, width)) + "\n" + tip
+		}
+	}
+	private := wrap("Only results are sent. A picture or recording the test makes never leaves this computer.", width)
 
 	// In a window too short for all of it, the menu comes first: what is only said around it
 	// gives way, and a menu that still doesn't fit scrolls with the cursor
@@ -829,20 +850,20 @@ func (w *welcome) view(width, height int) string {
 		return total
 	}
 	menu := w.ask.view(width)
-	around := []*string{&tip, &intro, &private, &page}
-	for _, text := range around {
-		if lines(intro, standing, page, menu, tip, private) <= height+1 {
+	foot := func() string { return strings.TrimSpace(tip + "\n" + private) }
+	for _, text := range []*string{&tip, &private, &intro} {
+		if lines(intro, standing, menu, foot()) <= height+1 {
 			break
 		}
 		*text = ""
 	}
-	if over := lines(intro, standing, page, menu, tip, private) - (height + 1); over > 0 {
+	if over := lines(intro, standing, menu, foot()) - (height + 1); over > 0 {
 		// Only the line of counts is left of where the machine stands
 		standing, _, _ = strings.Cut(standing, "\n")
-		menu = w.ask.viewIn(width, max(6, height+1-lines(intro, standing, page, tip, private)-1))
+		menu = w.ask.viewIn(width, max(6, height+1-lines(intro, standing, foot())-1))
 	}
 	var shown []string
-	for _, text := range []string{intro, standing, page, menu, tip, private} {
+	for _, text := range []string{intro, standing, menu, foot()} {
 		if text != "" {
 			shown = append(shown, text)
 		}

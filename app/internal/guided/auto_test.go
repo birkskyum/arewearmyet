@@ -230,11 +230,18 @@ func TestAMenuTooTallForTheWindowScrollsWithTheCursor(t *testing.T) {
 	c := choice{question: "What would you like to test?", heads: map[int]string{1: "Runs by itself", 4: "Done with you"}}
 	for _, name := range []string{"Everything", "Sound", "Graphics", "Video", "Keyboard", "Touchpad", "Camera", "USB ports", "Sleep", "Quit"} {
 		c.options = append(c.options, name)
-		c.beside = append(c.beside, "○ not tested")
+		c.sides = append(c.sides, side{mark: "◐", text: "19 Nov · There is a picture, but too dark, pale or off in colour.", style: close_})
 	}
-	whole := c.view(80)
-	if !strings.Contains(whole, "Sleep") || !strings.Contains(whole, "Runs by itself") || !strings.Contains(whole, "Graphics   ○ not tested") && !strings.Contains(whole, "○ not tested") {
-		t.Fatalf("the whole menu:\n%s", whole)
+	whole := ansi.ReplaceAllString(c.view(80), "")
+	// The mark in front, the words after in one column, and no numbers
+	for _, text := range []string{"› ◐ Everything   19 Nov · There is a picture", "  ◐ USB ports    19 Nov", "Runs by itself", "Done with you"} {
+		if !strings.Contains(whole, text) {
+			t.Fatalf("the whole menu lacks %q:\n%s", text, whole)
+		}
+	}
+	// A number picks nothing in a menu, where the parts have none to show
+	if c.update(press('3')) != -1 || c.cursor != 0 {
+		t.Errorf("a number moved the cursor to %d", c.cursor)
 	}
 	for cursor := range c.options {
 		c.cursor = cursor
@@ -252,10 +259,17 @@ func TestAMenuTooTallForTheWindowScrollsWithTheCursor(t *testing.T) {
 	if drawn := c.viewIn(80, 9); !strings.Contains(drawn, "↑ more") || strings.Contains(drawn, "↓ more") {
 		t.Errorf("at the bottom:\n%s", drawn)
 	}
-	// In a narrow window the status goes under its answer, not past the edge
-	for _, line := range strings.Split(c.view(24), "\n") {
-		if lipgloss.Width(line) > 24 {
-			t.Errorf("a line of %d in 24 columns: %q", lipgloss.Width(line), line)
+	// The words after a part are cut to the window, and left out where there is no room for
+	// them: every part stays on one line, with nothing past the edge
+	for _, width := range []int{60, 40, 24} {
+		drawn := c.view(width)
+		for _, line := range strings.Split(drawn, "\n") {
+			if lipgloss.Width(line) > width {
+				t.Errorf("a line of %d in %d columns: %q", lipgloss.Width(line), width, line)
+			}
+		}
+		if rows := strings.Count(drawn, "◐"); rows != len(c.options) {
+			t.Errorf("at %d columns the parts take %d rows:\n%s", width, rows, drawn)
 		}
 	}
 }
