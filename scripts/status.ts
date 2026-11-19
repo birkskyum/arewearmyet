@@ -572,10 +572,21 @@ const findings = parse(readFileSync('data/findings.yaml', 'utf8'));
 const checkIds = new Set<string>(checkList.checks.map((c: { id: string }) => c.id));
 const modelIds = new Set(rows.map((row) => row.id));
 const STATES_ALLOWED = ['works', 'partial', 'broken', 'untested', 'absent'];
-for (const [family, entry] of Object.entries<{ checks?: Record<string, { state: string }> }>(findings.families ?? {})) {
+// What a finding rests on. One that names a public page carries the words of the page it rests
+// on, which scripts/quotes.ts looks for in the page itself, and says where it was seen: on
+// Omarchy, on another distro, or by a device tree's author. So nothing gets onto the site on a
+// link alone. A finding without a link is the team's own note and is shown as that.
+function backed(where: string, f: { state: string }, inherited?: string) {
+  const { basis, quote, source } = f as { basis?: string; quote?: string; source?: string };
+  if (basis !== undefined && !['omarchy', 'other-distro', 'tree-author', 'maker-spec'].includes(basis)) throw new Error(`data/findings.yaml: ${where}: unknown basis ${basis}`);
+  if (basis !== undefined && basis !== 'maker-spec' && (!quote || !(source ?? inherited))) throw new Error(`data/findings.yaml: ${where}: a finding with a basis needs its source and the quote it rests on`);
+  if (source !== undefined && (basis === undefined || !quote)) throw new Error(`data/findings.yaml: ${where}: a finding with a source needs its basis and the quote of the source it rests on. Check it with: node scripts/quotes.ts`);
+}
+for (const [family, entry] of Object.entries<{ source?: string; checks?: Record<string, { state: string }> }>(findings.families ?? {})) {
   for (const [check, f] of Object.entries(entry.checks ?? {})) {
     if (!checkIds.has(check)) throw new Error(`data/findings.yaml: family ${family} names unknown check ${check}`);
     if (!STATES_ALLOWED.includes(f.state)) throw new Error(`data/findings.yaml: family ${family}, ${check}: unknown state ${f.state}`);
+    backed(`family ${family}, ${check}`, f, entry.source);
   }
 }
 for (const [id, entry] of Object.entries<{ checks?: Record<string, { state: string }> }>(findings.models ?? {})) {
@@ -583,11 +594,7 @@ for (const [id, entry] of Object.entries<{ checks?: Record<string, { state: stri
   for (const [check, f] of Object.entries(entry.checks ?? {})) {
     if (!checkIds.has(check)) throw new Error(`data/findings.yaml: ${id} names unknown check ${check}`);
     if (!STATES_ALLOWED.includes(f.state)) throw new Error(`data/findings.yaml: ${id}, ${check}: unknown state ${f.state}`);
-    // What a finding rests on. One that was collected from a public page carries the words of the
-    // page it rests on, which scripts/quotes.ts looks for in the page itself.
-    const { basis, quote, source } = f as { basis?: string; quote?: string; source?: string };
-    if (basis !== undefined && !['omarchy', 'other-distro', 'tree-author', 'maker-spec'].includes(basis)) throw new Error(`data/findings.yaml: ${id}, ${check}: unknown basis ${basis}`);
-    if (basis !== undefined && basis !== 'maker-spec' && (!quote || !source)) throw new Error(`data/findings.yaml: ${id}, ${check}: a finding with a basis needs its source and the quote it rests on`);
+    backed(`${id}, ${check}`, f);
   }
 }
 // Which models each hardware ID (CHID) belongs to, from every ID file the board knows: systemd's, Ubuntu's

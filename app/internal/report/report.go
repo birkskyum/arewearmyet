@@ -252,6 +252,8 @@ type Finding struct {
 	Basis string `json:"basis"`
 	Where string `json:"where"`
 	Quote string `json:"quote"`
+	// Under is the line that leads the quote's list in, when the quote is an item of one.
+	Under string `json:"under"`
 }
 
 // OnOmarchy says whether a finding is about how the model does under Omarchy. One from

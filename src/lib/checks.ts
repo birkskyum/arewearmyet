@@ -15,7 +15,7 @@ export type Group = { id: string; title: string };
  * another distro, or from the device tree's author, is a hint that it can work, and is shown as that.
  */
 export type Basis = 'omarchy' | 'other-distro' | 'tree-author' | 'maker-spec';
-export type Finding = { state: CheckState; note?: string; version?: string; checked?: string; source?: string; basis?: Basis; where?: string; quote?: string };
+export type Finding = { state: CheckState; note?: string; version?: string; checked?: string; source?: string; basis?: Basis; where?: string; quote?: string; under?: string };
 
 /** A finding with no basis named was written by hand from Omarchy's own threads. */
 export const basisOf = (finding: Finding): Basis => finding.basis ?? 'omarchy';

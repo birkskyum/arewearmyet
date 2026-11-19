@@ -5,7 +5,7 @@ import { createSignal, For, onMount, Show } from 'solid-js';
 import { PILL, TONE } from '../lib/tones';
 
 type State = 'works' | 'partial' | 'broken' | 'untested' | 'absent';
-type Finding = { state: State; note?: string; version?: string; checked?: string; source?: string; basis?: string; where?: string; quote?: string };
+type Finding = { state: State; note?: string; version?: string; checked?: string; source?: string; basis?: string; where?: string; quote?: string; under?: string };
 // A finding from another distro or from the device tree's author is a hint, not this model's status on Omarchy
 const elsewhere = (f: Finding) => f.basis === 'other-distro' || f.basis === 'tree-author';
 const FROM: Record<string, string> = { 'other-distro': 'on another distro', 'tree-author': "by the device tree's author" };
@@ -137,7 +137,7 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                                 </span>
                               }
                             >
-                              <Pill state={f().state} dim={row.from === 'family'} prefix="Notes" tip="Reported on Omarchy and checked against its source. Not measured on this page." />
+                              <Pill state={f().state} dim={row.from === 'family'} prefix="Notes" tip={f().quote ? 'Reported on Omarchy, and the passage it rests on was checked against its source. Not measured on this page.' : f().basis === 'maker-spec' ? "From the maker's description of the model." : "The Omarchy ARM team's own note, without a public source to check it against."} />
                             </Show>
                           )}
                         </Show>
@@ -168,11 +168,11 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                           <>
                             <Show when={f().quote}>
                               <blockquote class="border-l-2 border-zinc-700 pl-3 text-zinc-400">
-                                <span class="text-xs text-zinc-500">The source says: </span>“{f().quote}”
+                                <span class="text-xs text-zinc-500">The source says{f().under ? `, under “${f().under}”` : ''}: </span>“{f().quote}”
                               </blockquote>
                             </Show>
                             <p class="text-xs text-zinc-500">
-                              {elsewhere(f()) ? `Reported ${FROM[f().basis!]}` : 'Reported on Omarchy'}
+                              {elsewhere(f()) ? `Reported ${FROM[f().basis!]}` : f().basis === 'maker-spec' ? "From the maker's description" : f().source || row.familySource ? 'Reported on Omarchy' : "The Omarchy ARM team's own note, with no public source"}
                               {[f().where ? `, ${f().where}` : f().version ? `, on ${f().version}` : null, f().checked ? `, in ${f().checked}` : null].filter(Boolean).join('')}
                               <Show when={f().source ?? row.familySource}>{(href) => <>{' · '}<a class={LINK} href={href()}>source</a></>}</Show>
                             </p>
