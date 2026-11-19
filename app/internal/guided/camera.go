@@ -280,7 +280,7 @@ func (c *camera) view(width, height int) string {
 		drawn = picture.Cells(pictureID, c.columns, c.rows)
 	}
 	// Seeing themselves is when people wonder where the picture goes, so it says so right under it
-	stays := good.Render("🔒 ") + wrap("This picture stays on this computer. It is not sent anywhere, and it is gone when you answer.", width-3)
+	stays := good.Render("🔒 ") + wrap("This picture stays on this computer. It is not sent anywhere, and it's deleted after this step.", width-3)
 	return drawn + "\n" + stays + "\n\n" + c.ask.view(width) + "\n\n" +
 		wrap("Measured: "+c.evidence()+". Only these numbers are sent.", width)
 }
