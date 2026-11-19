@@ -9,7 +9,7 @@ In this guide a **model** always means a computer model, like the Lenovo Yoga Sl
 ## Rules
 
 1. **Send reports to this site freely.** You don't need to ask before sending results to arewearmyet.com.
-2. **Don't break the machine.** Don't flash firmware, change the BIOS or partitions, write to `/sys` or `/dev` beyond what a step here says, or dump hardware registers (regmap dumps can hang Qualcomm machines). Undo any setting you change for a test. Never replace what boots: a changed kernel, device tree or boot image goes in as an extra entry in the boot menu, beside the one that works (step 5 says how).
+2. **The owner's data is the line.** Never touch their files, the disk's partitions or its encryption, and don't flash firmware or change the BIOS. Don't dump hardware registers (regmap dumps can hang Qualcomm machines). Everything short of that is yours to work with, the boot menu included: test kernels, test device trees, new entries, a changed default, restarts (step 5 says how to do it so the machine always comes back).
 3. **Measured, owner or agent, never mixed up.** Every result you send says how it was found:
    - `measured`: a command's output shows it (the probe, or a command you ran and can quote).
    - `owner`: the owner saw or heard it, and told you. Ask them; don't assume.
@@ -17,7 +17,7 @@ In this guide a **model** always means a computer model, like the Lenovo Yoga Sl
    Never mark something `works` because it should work, because another model works, or because a driver loaded. Sound, camera pictures, touch feel and wake from sleep need the owner.
 4. **No personal data.** No serial numbers, MAC addresses, user or host names, Wi-Fi names, IP addresses or file contents from the home folder, in reports or in fixes. The `MSDM` ACPI table holds the Windows product key: never share it.
 5. **No firmware files in public.** Qualcomm firmware is signed by the laptop's maker and can't be redistributed without the maker's OK. Never attach firmware files to issues or pull requests. The Omarchy Arm Installer's opt-in drop is the one place for them.
-6. **Ask the owner before you change what they rely on.** That is installed packages, system settings, and the entry the machine boots from by default. These need no asking: reading, measuring, reporting to this site, a test entry in the boot menu beside the working one, and a pull request or an issue on Omarchy's repositories. Tell the owner when you open one of those, since it goes out under their GitHub account, and before every restart. Ask before posting anywhere else.
+6. **Ask before what can't be undone or reaches their data, and before posting outside Omarchy.** These need no asking: reading, measuring, reporting to this site, test packages installed beside the stock ones, changes to the boot menu, opening yourself again after a restart, and a pull request or an issue on Omarchy's repositories. Tell the owner when you open one of those, since it goes out under their GitHub account. Tell them before a restart too, since it closes what they have open, unless they've said to restart as you need.
 7. **Fixes go to Omarchy, nowhere else.** Propose them as pull requests on Omarchy's own repositories (step 5). Don't send patches, merge requests, mails or issues to Linux, linux-firmware, Mesa, systemd or other projects; the Omarchy team takes what's needed from there.
 
 ## 1. Find the computer model
@@ -82,6 +82,7 @@ Without installing, `mise x github:birkskyum/arewearmyet -- hw-test quick --json
 | `hw-test brief [check...]` | A brief of what fails on this machine: what was measured, where to look, how to measure again and where a fix goes |
 | `hw-test fix [check...]` | Writes that brief and opens the owner's agent on it. This is how an owner hands you a failing part |
 | `hw-test verify before`, `hw-test verify after --pr <address>` | Measures what a change did, check by check, for the pull request (step 5) |
+| `hw-test resume "<what to go on with>"` | Before a restart: opens the agent again at the owner's next login, once (step 5) |
 | `hw-test note ...` | Writes down what fits no check, with logs, where other agents read it (step 6) |
 
 Add `--no-send` to look without reporting. Without it, a run is sent to the model's page, which needs no asking (rule 1). Measure before a change and after it.
@@ -194,16 +195,27 @@ Lenovo Yoga Slim 7x (83ED), linux-omarchy 7.3-72.
 The right speaker was silent: hw-test speakers heard only the left one. With this change both are heard.
 ```
 
-### Trying a change without risking the machine
+### Trying a change, and coming back after the restart
 
-A change to the kernel or the device tree is tried from an entry of its own in the boot menu. The working entry stays as it is, so a test that doesn't start costs one restart: pick the usual entry and the machine is back. Making a test entry needs no asking. Four things keep it safe:
+Getting hardware fully working means restarting into changed kernels and device trees, often several times. The boot menu (Limine on Omarchy) is yours to work in: add entries, change which one starts, restart into them. Three things make sure the machine always comes back, which is what keeps the owner's data within reach:
 
-1. **Leave the working entry and the default alone.** Don't edit or rebuild the boot image the machine starts from, and don't change which entry starts by default. `omarchy kernel get` shows the default.
+1. **Keep one entry that is known to boot, untouched.** That is the stock kernel's image. Don't edit or rebuild it, and don't remove it. Whatever a test entry does, picking this one in the menu brings the machine back.
 2. **Check the boot partition has room first**, with `df -h /boot`. A boot image is 100 to 250 MB. A full boot partition is what breaks a machine later, when an ordinary update can't write its new image.
-3. **One test entry at a time**, and remove it and its image when you're done, so the menu and the partition are as you found them.
-4. **Tell the owner before every restart** which entry to pick, and that the usual one is still there.
+3. **Clean up when you're done.** Remove the test entries, their images and test packages, and put the default back, so the menu and the partition are as you found them. `omarchy kernel get` shows the default and `omarchy kernel set` puts it back.
 
 On Omarchy every installed kernel package gets a boot image and a menu entry of its own. So a test kernel built as a package under its own name (for example `pkgbase=linux-omarchy-test` in a copy of `pkgbuilds/linux-omarchy`) shows up beside the stock one when it's installed, and `omarchy kernel list` lists both. For a device tree change alone, build a boot image of your own from the stock kernel with the changed tree, and add a menu entry for it. Read the repository's `AGENTS.md` for how the images are put together there.
+
+A restart ends your session, so leave word for yourself first:
+
+```sh
+# 1. Write down where you are: what you changed, which entry to boot, what to check next, how to undo it.
+$EDITOR PROGRESS.md
+# 2. Have yourself opened again after the restart.
+hw-test resume "Booted linux-omarchy-test with the speaker GPIO changed. Run hw-test speakers and compare."
+# 3. Restart.
+```
+
+At the owner's next login, their agent opens again in the same folder, once, and is told to read `BRIEF.md` and `PROGRESS.md` and what you left. Set it again before each restart. `hw-test resume --show` says what is left, and `hw-test resume --cancel` takes it back. Word that is more than a day old is dropped.
 
 ### Showing what a fix changed
 

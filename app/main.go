@@ -31,6 +31,7 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/machine"
 	"github.com/birkskyum/arewearmyet/app/internal/probe"
 	"github.com/birkskyum/arewearmyet/app/internal/report"
+	"github.com/birkskyum/arewearmyet/app/internal/resume"
 	"github.com/birkskyum/arewearmyet/app/internal/tools"
 )
 
@@ -54,7 +55,7 @@ func main() {
 		word := args[0]
 		args = args[1:]
 		switch {
-		case command == "brief" || command == "fix" || command == "verify":
+		case command == "brief" || command == "fix" || command == "verify" || command == "resume":
 			// What follows these two names what to hand over: checks, or parts of the test
 			topics = append(topics, word)
 		case guided.KnownStep(word):
@@ -83,6 +84,10 @@ func main() {
 	flags.Var(&logs, "log", "a log to attach, cleaned first: kernel, previous (the kernel's log of the boot before) or a file; may be given more than once")
 	flags.Var(&links, "link", "a link to where the work is; may be given more than once")
 	pr := flags.String("pr", "", "for hw-test verify after: the pull request the change is in")
+	// For hw-test resume
+	cancel := flags.Bool("cancel", false, "for hw-test resume: take back what was left for after the restart")
+	show := flags.Bool("show", false, "for hw-test resume: show what is left for after the restart")
+	atLogin := flags.Bool("run", false, "for hw-test resume: what the login service calls")
 	flags.Usage = usage
 	flags.Parse(args)
 
@@ -95,6 +100,8 @@ func main() {
 		return
 	case "update":
 		os.Exit(update())
+	case "resume":
+		os.Exit(comeBack(strings.Join(topics, " "), *cancel, *show, *atLogin))
 	case "status":
 		// The latest result of every check on this machine, without running anything
 		announce()
@@ -257,6 +264,59 @@ func announce() {
 	if newer := report.Newer(version, time.Now()); newer != "" {
 		fmt.Fprintf(os.Stderr, "hw-test %s is out, and this is %s. Update with: hw-test update\n\n", newer, version)
 	}
+}
+
+// comeBack leaves word for after a restart, or at login acts on a word that was left.
+func comeBack(prompt string, cancel, show, atLogin bool) int {
+	places := resume.Home()
+	word, found := places.Left()
+	switch {
+	case cancel:
+		places.Clear()
+		fmt.Fprintln(os.Stderr, "Nothing will open after the next restart.")
+		return 0
+	case show:
+		if !found {
+			fmt.Fprintln(os.Stderr, "Nothing is left for after a restart.")
+			return 0
+		}
+		fmt.Fprintf(os.Stderr, "After the next restart and login, the agent opens in %s and is told:\n\n%s\n\nLeft at %s. hw-test resume --cancel takes it back.\n", word.Dir, resume.Said(word), word.Set.Format("2 Jan 15:04"))
+		return 0
+	case atLogin:
+		// Called by the service at login. Whatever happens here, a login is never held up or failed
+		defer func() { _ = recover() }()
+		switch resume.At(word, found, report.BootID(), time.Now()) {
+		case resume.Open:
+			// Used up before the agent opens, so nothing can make it open twice
+			places.Clear()
+			if tools.Have("notify-send") {
+				_ = exec.Command("notify-send", "-a", "hw-test", "Your agent is back", "It goes on with the hardware work from before the restart. hw-test resume left this.").Run()
+			}
+			if err := tools.Agent(word.Dir, resume.Said(word)); err != nil {
+				fmt.Fprintln(os.Stderr, "hw-test: the agent couldn't be opened:", err)
+			}
+		case resume.Stale:
+			places.Clear()
+		}
+		return 0
+	}
+	dir, err := os.Getwd()
+	if err != nil {
+		dir = guided.Workspace()
+	}
+	// The command the owner types, when it is installed, so the service outlives an update
+	program, _ := os.Executable()
+	if home, err := os.UserHomeDir(); err == nil {
+		if installed := filepath.Join(home, ".local", "bin", "hw-test"); tools.Have(installed) {
+			program = installed
+		}
+	}
+	if err := places.Leave(resume.Word{Dir: dir, Prompt: prompt, Boot: report.BootID(), Set: time.Now()}, program); err != nil {
+		fmt.Fprintln(os.Stderr, "hw-test: it couldn't be left for after the restart:", err)
+		return 1
+	}
+	fmt.Fprintf(os.Stderr, "Left for after the restart. At the owner's next login, the agent opens again in %s, once, and is told to read BRIEF.md and PROGRESS.md there.\nWrite PROGRESS.md before you restart. hw-test resume --cancel takes this back.\n", dir)
+	return 0
 }
 
 // tool is how mise names the app.
@@ -545,6 +605,9 @@ func usage() {
                      block for the pull request, and recorded with the pull request on the
                      model's page. --title says in a line what the change is
   hw-test status     where this computer stands: the latest result of every check, nothing is run
+  hw-test resume [WHAT]    for an agent, before it restarts the computer: at the owner's next
+                     login the agent opens again in this folder, once, and is told WHAT.
+                     --show says what is left, --cancel takes it back
   hw-test update     get the newest release. hw-test says at its start when there is one
   hw-test facts      what the test found on this computer to work with (nothing is sent)
   hw-test version

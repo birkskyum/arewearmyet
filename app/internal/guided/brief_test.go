@@ -53,8 +53,8 @@ func TestTheBriefSaysWhatFailsHowToMeasureItAndWhereAFixGoes(t *testing.T) {
 		// Where the rest stands
 		"- works: wifi", "- not tested:",
 		// How to measure, the rules, and where a fix belongs
-		"`hw-test status`", "hw-test auto --no-send", "The parts that take the owner at the computer:", "Never replace what boots", "Making one needs no asking", "check with `df -h /boot` that the boot partition has room first", "Tell the owner before every restart which entry to pick",
-		"Ask the owner before you change what they rely on", "a test entry in the boot menu, and a pull request or an issue on Omarchy's repositories need no asking",
+		"`hw-test status`", "hw-test auto --no-send", "The parts that take the owner at the computer:", "The owner's data is the line", "The boot menu is yours to work in", "Keep one entry that is known to boot untouched", "check with `df -h /boot` that the boot partition has room first",
+		"run `hw-test resume", "a pull request or an issue on Omarchy's repositories need no asking",
 		"pkgbuilds/linux-omarchy-dtbs", "pkgbuilds/linux-omarchy`", "https://github.com/omacom/omarchy ", "Pull requests on Omarchy's repositories are welcome", "starts with a line that says only `arm-dragon-msft`", `"model": "lenovo-yoga-slim-7x-14q8x9"`,
 	} {
 		if !strings.Contains(brief, text) {

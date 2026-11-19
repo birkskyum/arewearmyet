@@ -218,6 +218,18 @@ var ErrNotOmarchy = errors.New("this system has no omarchy-agent")
 // Agent opens the owner's chosen coding agent in a window of its own, in the given folder
 // and with the given first message, the way Omarchy's own menu does.
 func Agent(dir, prompt string) error {
+	// Another way of opening an agent than Omarchy's, for other distros: a command line that
+	// gets the first message as its last argument, like HW_TEST_AGENT="foot -e claude"
+	if line := strings.Fields(os.Getenv("HW_TEST_AGENT")); len(line) > 0 {
+		command := exec.Command(line[0], append(line[1:], prompt)...)
+		command.Dir = dir
+		command.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
+		if err := command.Start(); err != nil {
+			return err
+		}
+		go command.Wait()
+		return nil
+	}
 	if !Have("omarchy-agent", "omarchy-default-agent") {
 		return ErrNotOmarchy
 	}
