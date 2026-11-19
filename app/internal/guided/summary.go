@@ -1,9 +1,12 @@
 package guided
 
 import (
+	"errors"
 	"fmt"
+	"net"
 	"os"
 	"path/filepath"
+	"time"
 
 	tea "charm.land/bubbletea/v2"
 
@@ -14,6 +17,23 @@ import (
 type sentMsg struct {
 	sent report.Sent
 	err  error
+}
+
+// slowMsg comes a few seconds into a send that hasn't finished, and retryMsg when it is time
+// to try again after the network wasn't there.
+type (
+	slowMsg  struct{}
+	retryMsg struct{}
+)
+
+// networkWait is how long sending keeps trying while the network is away. After the lid or
+// sleep test, Wi-Fi takes some seconds to come back.
+const networkWait = time.Minute
+
+// offline says whether sending failed for want of a network, not because the site said no.
+func offline(err error) bool {
+	var network net.Error
+	return errors.As(err, &network)
 }
 
 // summary shows every result, sends them and offers to open the model's page.
@@ -28,6 +48,10 @@ type summary struct {
 	over    bool
 	// again is set when the owner chose to go back to the start after this round.
 	again bool
+	// began is when this try at sending started, and waiting is set once it is taking long
+	// or the network was found to be away.
+	began   time.Time
+	waiting bool
 	// failed holds the steps that hit a fault of the test's own, by name.
 	failed map[string]string
 	// dir holds the test's recordings and pictures, which are deleted before anything is sent.
@@ -97,7 +121,11 @@ func (s *summary) end(question string) {
 }
 
 func (s *summary) send() tea.Cmd {
-	s.phase = "sending"
+	s.phase, s.began, s.waiting = "sending", time.Now(), false
+	return tea.Batch(s.attempt(), tea.Tick(3*time.Second, func(time.Time) tea.Msg { return slowMsg{} }))
+}
+
+func (s *summary) attempt() tea.Cmd {
 	run, api := s.run, s.options.API
 	return func() tea.Msg {
 		sent, err := report.Send(api, run)
@@ -118,7 +146,20 @@ func (s *summary) update(msg tea.Msg) tea.Cmd {
 	switch msg := msg.(type) {
 	case handedMsg:
 		s.handed = msg.handed.Said
+	case slowMsg:
+		if s.phase == "sending" {
+			s.waiting = true
+		}
+	case retryMsg:
+		if s.phase == "sending" {
+			return s.attempt()
+		}
 	case sentMsg:
+		// Without a network it keeps trying for a while and says so, as Wi-Fi comes back by itself
+		if s.phase == "sending" && offline(msg.err) && time.Since(s.began) < networkWait {
+			s.waiting = true
+			return tea.Tick(2*time.Second, func(time.Time) tea.Msg { return retryMsg{} })
+		}
 		s.sent, s.err = msg.sent, msg.err
 		if s.err != nil {
 			s.phase = "failed"
@@ -168,6 +209,10 @@ func (s *summary) update(msg tea.Msg) tea.Cmd {
 
 func (s *summary) view(width, height int) string {
 	if s.phase == "sending" {
+		if s.waiting {
+			return accent.Render("● Sending to arewearmyet.com") + "\n\n" +
+				wrap("Waiting for the network. After sleep or a closed lid, Wi-Fi takes a few seconds to come back. It keeps trying for a minute.", width)
+		}
 		return accent.Render("● Sending to arewearmyet.com")
 	}
 	text := ""

@@ -3,6 +3,8 @@ package guided
 import (
 	"fmt"
 	"math"
+	"net"
+	"net/url"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -411,6 +413,61 @@ func TestCameraTakesItsPictureOnlyWhenToldAndShowsItInTheTerminal(t *testing.T) 
 	}
 	if c.update(press('1')) == nil || c.phase != "capturing" || len(busy.Results) != 0 {
 		t.Errorf("trying again: phase %q, results %v", c.phase, busy.Results)
+	}
+}
+
+func TestTheFanTestIsDoneWithTheOwnerWhereOnlyTheirEarsCanTell(t *testing.T) {
+	dir := t.TempDir()
+	run := &report.Run{}
+	names := func(steps []step) string {
+		var out []string
+		for _, s := range steps {
+			out = append(out, s.name())
+		}
+		return strings.Join(out, ", ")
+	}
+	// No fan speed sensor: the step is one of those done with the owner, and asks for their ear
+	ear := newHeat(run, machine.Fixture(dir), dir)
+	ear.byEar = true
+	all := []step{newKeyboard(run), ear, newQuestions(run, probe.Facts{}, nil), newAuto(run, deep.Test{Name: "Video decoding"})}
+	if got := names(choose(all, []string{"manual"})); got != "Keyboard, Temperatures and fan, Questions" {
+		t.Errorf("done with the owner: %s", got)
+	}
+	if got := names(choose(all, []string{"auto"})); got != "Video decoding" {
+		t.Errorf("runs by itself: %s", got)
+	}
+	if got := names(choose(all, []string{"fans"})); got != "Temperatures and fan" {
+		t.Errorf("asked for by name: %s", got)
+	}
+	handsOff(all, []string{"temperatures"})
+	if ear.handsOff || stepCheck[ear.name()] != "fans" {
+		t.Errorf("by ear: hands off %v, check %q", ear.handsOff, stepCheck[ear.name()])
+	}
+	// With a sensor it measures by itself, and asks nothing even when run alone
+	read := newHeat(run, machine.Fixture(dir), dir)
+	read.sensor = true
+	all = []step{newKeyboard(run), newQuestions(run, probe.Facts{}, nil), read}
+	if got := names(choose(all, []string{"auto"})) + " / " + names(choose(all, []string{"manual"})); got != "Temperatures / Keyboard, Questions" {
+		t.Errorf("with a sensor: %s", got)
+	}
+	handsOff(all, []string{"temperatures"})
+	if !read.handsOff || strings.Contains(read.keys(), "hear the fan") {
+		t.Errorf("with a sensor it still asks: %v", read.handsOff)
+	}
+	// The menu lists each under its own group
+	entry := func(step string) menuEntry {
+		for _, e := range menu {
+			if e.step == step {
+				return e
+			}
+		}
+		return menuEntry{}
+	}
+	if e := entry(heatByEar); e.auto || e.word != "temperatures" || e.label != "Temperatures, and the fan by ear" {
+		t.Errorf("the by-ear entry: %+v", e)
+	}
+	if e := entry(heatAlone); !e.auto {
+		t.Errorf("the sensor entry: %+v", e)
 	}
 }
 
@@ -1345,6 +1402,45 @@ func TestARoundEndsOnGoingBackToTheStartByDefault(t *testing.T) {
 	s.update(press(tea.KeyEnter))
 	if !s.done() || !s.again {
 		t.Errorf("Enter: done %v, again %v", s.done(), s.again)
+	}
+
+	// Without a network, as after the lid test, it waits and tries again by itself, and says so
+	s = &summary{run: run, options: Options{Send: true}}
+	s.start()
+	if s.update(press(tea.KeyEnter)) == nil || s.phase != "sending" || strings.Contains(s.view(80, 30), "Waiting for the network") {
+		t.Fatalf("after Send: phase %q\n%s", s.phase, s.view(80, 30))
+	}
+	away := &url.Error{Op: "Post", URL: "https://arewearmyet.com/api/runs", Err: &net.DNSError{Err: "no such host", Name: "arewearmyet.com", IsNotFound: true}}
+	if s.update(sentMsg{err: away}) == nil || s.phase != "sending" || !strings.Contains(s.view(80, 30), "Waiting for the network") {
+		t.Fatalf("with the network away: phase %q\n%s", s.phase, s.view(80, 30))
+	}
+	if s.update(retryMsg{}) == nil {
+		t.Error("it didn't try again")
+	}
+	s.update(sentMsg{sent: report.Sent{Run: "RUN-BBBBBBBBBB", Page: "https://arewearmyet.com/models/x"}})
+	if s.phase != "end" || !strings.Contains(s.ask.question, "Sent as RUN-BBBBBBBBBB") {
+		t.Errorf("once the network was back: phase %q, %s", s.phase, s.ask.question)
+	}
+	// A send that is only slow says the same after a few seconds
+	s = &summary{run: run, options: Options{Send: true}}
+	s.start()
+	s.update(press(tea.KeyEnter))
+	s.update(slowMsg{})
+	if !strings.Contains(s.view(80, 30), "Waiting for the network") {
+		t.Error("a slow send says nothing")
+	}
+	// After a minute without a network it gives up and asks, and a no from the site is said at once
+	s.began = time.Now().Add(-2 * time.Minute)
+	s.update(sentMsg{err: away})
+	if s.phase != "failed" || !strings.Contains(s.ask.question, "Sending failed") {
+		t.Errorf("after a minute: phase %q", s.phase)
+	}
+	s = &summary{run: run, options: Options{Send: true}}
+	s.start()
+	s.update(press(tea.KeyEnter))
+	s.update(sentMsg{err: fmt.Errorf("reports are closed")})
+	if s.phase != "failed" || !strings.Contains(s.ask.question, "reports are closed") {
+		t.Errorf("a no from the site: phase %q", s.phase)
 	}
 
 	// Quit leaves, and doesn't come back

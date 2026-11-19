@@ -41,7 +41,11 @@ type heat struct {
 	waited   int
 	results  []report.Result
 	handsOff bool
-	ask      choice
+	// byEar is set on a computer with no fan speed sensor, where only the owner can say when
+	// the fan starts. The step is then one of those done with the owner, under its own name.
+	// sensor is set where the fan's speed can be read, and nothing is asked.
+	byEar, sensor bool
+	ask           choice
 	// second is the time between readings and linger how long the result stays up.
 	second, linger time.Duration
 	over           bool
@@ -53,9 +57,20 @@ func newHeat(run *report.Run, sys machine.System, dir string) *heat {
 		begin:   func() warmer { return deep.StartWarming(sys, dir) }}
 }
 
-func (h *heat) name() string        { return "Temperatures" }
+// The step's two names: measured alone, or with the owner listening for the fan.
+const (
+	heatAlone = "Temperatures"
+	heatByEar = "Temperatures and fan"
+)
+
+func (h *heat) name() string {
+	if h.byEar {
+		return heatByEar
+	}
+	return heatAlone
+}
 func (h *heat) done() bool          { return h.over }
-func (h *heat) alone(handsOff bool) { h.handsOff = handsOff }
+func (h *heat) alone(handsOff bool) { h.handsOff = handsOff || h.sensor }
 
 // cleanup ends the load when the test is left in the middle of it.
 func (h *heat) cleanup() {
@@ -119,7 +134,8 @@ func (h *heat) conclude() tea.Cmd {
 		keep(h.run, result)
 	}
 	h.phase = "shown"
-	return tea.Tick(h.linger, func(time.Time) tea.Msg { return goOnMsg{"Temperatures"} })
+	name := h.name()
+	return tea.Tick(h.linger, func(time.Time) tea.Msg { return goOnMsg{name} })
 }
 
 func (h *heat) update(msg tea.Msg) tea.Cmd {
@@ -159,7 +175,7 @@ func (h *heat) update(msg tea.Msg) tea.Cmd {
 		}
 		return h.tick()
 	case goOnMsg:
-		if msg.name == "Temperatures" && h.phase == "shown" {
+		if msg.name == h.name() && h.phase == "shown" {
 			h.over = true
 		}
 	case tea.KeyPressMsg:

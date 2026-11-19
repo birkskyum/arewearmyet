@@ -95,7 +95,7 @@ var stepWords = []struct {
 	{"sleep", []string{"Sleep"}},
 	{"questions", []string{"Questions"}},
 	{"auto", []string{"Sound", "Graphics", "Browser", "Wireless", "Video decoding", "Temperatures"}},
-	{"manual", []string{"Keyboard", "Volume and brightness keys", "Touchpad", "Touchscreen", "Headphones", "Camera", "USB ports", "External screen", "Lid", "Sleep", "Questions"}},
+	{"manual", []string{"Keyboard", "Volume and brightness keys", "Touchpad", "Touchscreen", "Headphones", "Camera", "USB ports", "External screen", "Lid", "Sleep", heatByEar, "Questions"}},
 	{"graphics", []string{"Graphics", "Browser"}},
 	{"vulkan", []string{"Graphics"}},
 	{"browser", []string{"Browser"}},
@@ -105,8 +105,8 @@ var stepWords = []struct {
 	{"wifi", []string{"Wireless"}},
 	{"bluetooth", []string{"Wireless"}},
 	{"video", []string{"Video decoding"}},
-	{"temperatures", []string{"Temperatures"}},
-	{"fans", []string{"Temperatures"}},
+	{"temperatures", []string{heatAlone, heatByEar}},
+	{"fans", []string{heatAlone, heatByEar}},
 }
 
 // The words whose tests need nobody at the keyboard and make no sound, so they can run in a
@@ -118,7 +118,7 @@ var stepCheck = map[string]string{
 	"Keyboard": "keyboard", "Volume and brightness keys": "keyboard", "Touchpad": "touchpad", "Touchscreen": "touchscreen",
 	"Sound": "speakers", "Voice": "microphones", "Headphones": "headphones", "Camera": "camera",
 	"USB ports": "usb", "External screen": "external-display", "Lid": "lid", "Sleep": "suspend",
-	"Graphics": "gpu", "Browser": "webgl", "Video decoding": "video-decode", "Temperatures": "fans",
+	"Graphics": "gpu", "Browser": "webgl", "Video decoding": "video-decode", heatAlone: "fans", heatByEar: "fans",
 }
 
 // StepWords lists the words a single step can be asked for by.
@@ -191,13 +191,23 @@ func build(run *report.Run, facts probe.Facts, dir string) []step {
 	if facts.Laptop && facts.Lid != "" {
 		add("lid suspend", newLid(run, sys), newSleep(run, facts))
 	}
+	// Where the fan's speed can't be read, only the owner can say when it starts. The
+	// temperature test is then done with them, before the part they can walk away from
+	warm := newHeat(run, sys, dir)
+	warm.sensor = len(sys.Glob("/sys/class/hwmon/hwmon*/fan*_input")) > 0
+	warm.byEar, warm.handsOff = !warm.sensor, warm.sensor
+	if warm.byEar {
+		steps = append(steps, warm)
+	}
 	// What has no step of its own on this machine is asked about instead
 	steps = append(steps, newQuestions(run, facts, covered))
 	// Last, what needs nobody: by then the owner can walk away and come back to the results
 	for _, test := range deep.Tests(sys, facts.Wifi, facts.Bluetooth, dir) {
 		if test.Name == "Temperatures" {
-			// The one test that shows what it reads as it goes, and that an owner can help
-			steps = append(steps, newHeat(run, sys, dir))
+			// The one test that shows what it reads as it goes
+			if !warm.byEar {
+				steps = append(steps, warm)
+			}
 			continue
 		}
 		steps = append(steps, newAuto(run, test))
@@ -320,7 +330,8 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 	defer func() { _ = report.Remember(run, time.Now()) }()
 	start := &welcome{run: run, only: len(options.Only) > 0, kept: report.Local()}
 	for _, entry := range menu {
-		if len(choose(steps, []string{entry.word})) > 0 {
+		offered := choose(steps, []string{entry.word})
+		if len(offered) > 0 && (entry.step == "" || offered[0].name() == entry.step) {
 			start.parts = append(start.parts, entry)
 		}
 	}
@@ -619,6 +630,9 @@ type menuEntry struct {
 	auto bool
 	// about is said after an entry that has no status of its own.
 	about string
+	// step, when set, is the one step the entry stands for: it is offered only when the
+	// machine has that step.
+	step string
 }
 
 // The menu, in two groups: what measures itself, then what takes someone at the computer.
@@ -628,7 +642,7 @@ var menu = []menuEntry{
 	{word: "graphics", label: "Graphics: Vulkan, WebGL and WebGPU", checks: []string{"gpu", "webgl", "webgpu"}, auto: true},
 	{word: "wireless", label: "Wi-Fi signal and Bluetooth range", checks: []string{"wifi", "bluetooth"}, auto: true},
 	{word: "video", label: "Video decoding", checks: []string{"video-decode"}, auto: true},
-	{word: "temperatures", label: "Temperatures and fans", checks: []string{"fans"}, auto: true},
+	{word: "temperatures", label: "Temperatures and fans", checks: []string{"fans"}, auto: true, step: heatAlone},
 	{word: "manual", label: "All of these in one go", about: "about ten minutes"},
 	{word: "keyboard", label: "Keyboard, volume and brightness keys", checks: []string{"keyboard", "backlight"}},
 	{word: "touchpad", label: "Touchpad", checks: []string{"touchpad"}},
@@ -639,6 +653,7 @@ var menu = []menuEntry{
 	{word: "screen", label: "External screen", checks: []string{"external-display"}},
 	{word: "lid", label: "Lid switch", checks: []string{"lid"}},
 	{word: "sleep", label: "Sleep", checks: []string{"suspend"}},
+	{word: "temperatures", label: "Temperatures, and the fan by ear", checks: []string{"fans"}, step: heatByEar},
 }
 
 // severity orders states from fine to failing, for a part's or the machine's worst.
