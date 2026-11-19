@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+/* A table whose address names a view, a filter or an order stays out of sight until it has applied
+   them, so a reload doesn't show the first view for a moment (see ViewState.astro) */
+[data-views][data-pending] [data-table] {
+  visibility: hidden;
+}

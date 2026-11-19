@@ -1,0 +1,30 @@
+---
+// First child of a table's wrapper (the element marked data-views). The pages are built once, so
+// the table is drawn in its first view and only learns the view, filters and order in the address
+// once its script has loaded. Without this a reload showed the first view for a moment and then
+// jumped. The script runs as the page is read, before anything below it is painted: it sets the
+// view the address names, so the right legend and bars show at once, and keeps the table out of
+// sight until the table has applied the address itself.
+
+interface Props {
+  // The table's address prefix, and the ids of its views
+  prefix?: string;
+  views: string[];
+}
+
+const { prefix = '', views } = Astro.props;
+---
+
+<script is:inline data-prefix={prefix} data-known={views.join(' ')}>
+  (() => {
+    const { prefix, known } = document.currentScript.dataset;
+    const wrapper = document.currentScript.parentElement;
+    const params = new URLSearchParams(location.search);
+    if (params.size === 0) return;
+    const view = params.get(prefix + 'view');
+    if (view && known.split(' ').includes(view)) wrapper.dataset.view = view;
+    wrapper.dataset.pending = '';
+    // Should the table's script never load, the table still shows
+    setTimeout(() => wrapper.removeAttribute('data-pending'), 4000);
+  })();
+</script>

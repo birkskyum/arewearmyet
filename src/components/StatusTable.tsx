@@ -221,6 +221,10 @@ export default function StatusTable(props: Props) {
   let root!: HTMLDivElement;
   onMount(() => createEffect(() => root.closest('[data-views]')?.setAttribute('data-view', viewId())));
 
+  // The wrapper keeps the table out of sight while the address still has to be applied (ViewState.astro).
+  // This runs after the address was read below, since effects registered on mount run in order
+  const reveal = () => root.closest('[data-views]')?.removeAttribute('data-pending');
+
   // An open menu stays under its filter button when the page scrolls or resizes, or the columns
   // change width after filtering; it closes once the button is off screen
   const follow = () => {
@@ -249,7 +253,7 @@ export default function StatusTable(props: Props) {
 
   // Read the view from the address once, then keep this table's part of the address in step
   onMount(() => {
-    if (props.urlPrefix === undefined) return;
+    if (props.urlPrefix === undefined) return reveal();
     const prefix = props.urlPrefix;
     const ids = [...fixedHeaders, ...allColumns.map(headerFor)].map((header) => header.filterColumn).filter(Boolean) as string[];
     const params = new URLSearchParams(location.search);
@@ -272,10 +276,11 @@ export default function StatusTable(props: Props) {
       const search = next.toString().replace(/%2C/g, ',');
       history.replaceState(null, '', `${location.pathname}${search ? `?${search}` : ''}${location.hash}`);
     });
+    reveal();
   });
 
   return (
-    <div ref={root}>
+    <div ref={root} data-table>
       {/* relative, so below the lg width the model number pop-up opens from the toolbar's left edge and stays on the screen */}
       <div class="relative flex flex-wrap items-center gap-3">
         <Show when={views.length > 1}>
