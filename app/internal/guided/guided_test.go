@@ -304,13 +304,22 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 	// Only what this machine has is offered
 	m, start := open()
 	drawn := m.View().Content
-	for _, text := range []string{"The whole test", "Only: Keyboard", "Only: Sound", "Only: Camera"} {
+	for _, text := range []string{"Everything, about ten minutes", "Keyboard, with the volume", "Sound: speakers", "Camera", "hw-test camera"} {
 		if !strings.Contains(drawn, text) {
 			t.Errorf("the menu lacks %q:\n%s", text, drawn)
 		}
 	}
 	if strings.Contains(drawn, "Touchscreen") || strings.Contains(drawn, "Sleep") {
 		t.Errorf("the menu offers what the machine doesn't have:\n%s", drawn)
+	}
+	// The menu is the list of what there is: no second list of steps above it, and nothing to skip
+	if strings.Contains(drawn, "○ Send") || strings.Contains(drawn, "Ctrl+N") {
+		t.Errorf("the start screen repeats the steps:\n%s", drawn)
+	}
+	// Once the site has said which model this is, its page is shown, and o opens it
+	start.update(modelMsg{model: report.Model{ID: "lenovo-yoga-slim-7x-14q8x9", Page: "https://arewearmyet.com/models/lenovo-yoga-slim-7x-14q8x9"}})
+	if drawn = m.View().Content; !strings.Contains(drawn, "arewearmyet.com/models/lenovo-yoga-slim-7x-14q8x9") || !strings.Contains(drawn, "o to open this computer's page") {
+		t.Errorf("the model's page isn't shown:\n%s", drawn)
 	}
 	// Enter on the first entry runs it all
 	m.Update(press(tea.KeyEnter))
@@ -981,13 +990,14 @@ func TestCtrlNPassesAnyStepOver(t *testing.T) {
 	// The keyboard step takes every key for itself, and the keys step wants six presses
 	m.steps = []step{&welcome{run: run}, newKeyboard(run), &effects{run: run, items: []effect{{label: "Volume up"}, {label: "Mute"}}}, newSpeakers(run, dir), newCamera(run, dir),
 		newQuestions(run, probe.Facts{}, nil), last}
-	if !strings.Contains(m.View().Content, "Ctrl+N for the next step") {
-		t.Error("the key isn't shown")
-	}
 	for want := 1; want <= 6; want++ {
 		m.Update(next)
 		if m.at != want {
 			t.Fatalf("after %d presses it is at step %d", want, m.at)
+		}
+		// Every step of the test shows the key; the last one, which sends, doesn't
+		if shown := strings.Contains(m.View().Content, "Ctrl+N for the next step"); shown != (want < 6) {
+			t.Errorf("at step %d the key is shown: %v", want, shown)
 		}
 	}
 	// Nothing was reported for what was passed over, and the keyboard didn't take the n as a key

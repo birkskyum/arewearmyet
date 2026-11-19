@@ -207,3 +207,39 @@ func first(values ...string) string {
 	}
 	return ""
 }
+
+// Model is what the board knows a machine as.
+type Model struct {
+	ID   string `json:"model"`
+	Name string `json:"name"`
+	Page string `json:"page"`
+}
+
+// Match asks the site which model a machine is, by its hardware IDs, its device tree's name
+// and its product strings. It gives up after a few seconds: the answer is only for showing
+// the owner their model's page, and nothing depends on it.
+func Match(api string, run *Run) (Model, error) {
+	query := url.Values{}
+	for _, chid := range run.Chids {
+		query.Add("chid", chid)
+	}
+	if run.Compatible != "" {
+		query.Set("compatible", run.Compatible)
+	}
+	for field, key := range map[string]string{"product": "product", "sku": "sku", "family": "family", "vendor": "maker"} {
+		if value := run.Hardware[key]; value != "" {
+			query.Set(field, value)
+		}
+	}
+	client := http.Client{Timeout: 4 * time.Second}
+	response, err := client.Get(api + "/api/match?" + query.Encode())
+	if err != nil {
+		return Model{}, err
+	}
+	defer response.Body.Close()
+	var model Model
+	if err := json.NewDecoder(response.Body).Decode(&model); err != nil {
+		return Model{}, err
+	}
+	return model, nil
+}

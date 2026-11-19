@@ -59,6 +59,10 @@ type allKeys interface{ wantsAllKeys() bool }
 // pointer is implemented by a step that needs the pointer's movement, clicks and scrolling.
 type pointer interface{ wantsMouse() bool }
 
+// opening is implemented by the screens before the test proper, which show no list of steps:
+// the menu on them is the list.
+type opening interface{ isOpening() bool }
+
 // cleaner is implemented by a step that has something open to close when the test ends early,
 // like the camera's picture window.
 type cleaner interface{ cleanup() }
@@ -225,6 +229,7 @@ func Run(run *report.Run, facts probe.Facts, options Options) error {
 		m.steps = append(append([]step{start}, choose(steps, []string{word})...), last)
 	}
 	start.ask = start.question()
+	start.api = options.API
 
 	// A test found on disk stopped before its end: the computer went down, or the test did
 	var opening step = start
@@ -367,14 +372,16 @@ func (m *model) View() tea.View {
 	}
 	machineName := strings.TrimSpace(m.run.Hardware["maker"] + " " + first(m.run.Hardware["family"], m.run.Hardware["product"]))
 	body, hint := m.draw(current, width-4, m.height-8)
-	content := lipgloss.JoinVertical(lipgloss.Left,
-		title.Render("Are we ARM yet?")+"  "+machineName,
-		wrapProgress(progress, width-4),
-		"",
-		body,
-		"",
-		wrapHint(hint+m.skipHint()+" · Ctrl+C to stop", width-4),
-	)
+	lines := []string{title.Render("Are we ARM yet?") + "  " + machineName}
+	skip := m.skipHint()
+	if start, ok := current.(opening); ok && start.isOpening() {
+		// The start screen's menu is the list of what there is; a second list above it only repeats it
+		skip = ""
+	} else {
+		lines = append(lines, wrapProgress(progress, width-4))
+	}
+	lines = append(lines, "", body, "", wrapHint(hint+skip+" · Ctrl+C to stop", width-4))
+	content := lipgloss.JoinVertical(lipgloss.Left, lines...)
 	view := tea.NewView(lipgloss.NewStyle().Padding(1, 2).Render(content))
 	view.AltScreen = true
 	if step, ok := current.(allKeys); ok && step.wantsAllKeys() {
@@ -504,27 +511,66 @@ type welcome struct {
 	// parts are the menu's entries for what this machine has.
 	parts []struct{ word, label string }
 	// pick narrows the test to one part.
-	pick    func(word string)
-	ask     choice
+	pick func(word string)
+	ask  choice
+	// api is the site, asked which model this computer is so its page can be shown.
+	api string
+	// model is the site's answer, and looked whether it has answered.
+	model   report.Model
+	looked  bool
 	started bool
 }
 
+// modelMsg is the site's answer to which model this computer is.
+type modelMsg struct {
+	model report.Model
+	err   error
+}
+
 func (w *welcome) question() choice {
-	options := []string{"The whole test, about ten minutes"}
+	options := []string{"Everything, about ten minutes"}
 	for _, part := range w.parts {
-		options = append(options, "Only: "+part.label)
+		options = append(options, part.label)
 	}
 	return choice{question: "What would you like to test?", options: options}
 }
 
-func (w *welcome) name() string   { return "Start" }
-func (w *welcome) start() tea.Cmd { return nil }
-func (w *welcome) done() bool     { return w.started || w.only }
-func (w *welcome) keys() string   { return choiceKeys }
+func (w *welcome) name() string    { return "Start" }
+func (w *welcome) done() bool      { return w.started || w.only }
+func (w *welcome) isOpening() bool { return true }
+
+func (w *welcome) keys() string {
+	if w.model.Page != "" {
+		return choiceKeys + " · o to open this computer's page"
+	}
+	return choiceKeys
+}
+
+func (w *welcome) start() tea.Cmd {
+	if w.only || w.api == "" {
+		return nil
+	}
+	api, run := w.api, w.run
+	return func() tea.Msg {
+		model, err := report.Match(api, run)
+		return modelMsg{model, err}
+	}
+}
 
 func (w *welcome) update(msg tea.Msg) tea.Cmd {
+	if answer, ok := msg.(modelMsg); ok {
+		w.looked = true
+		if answer.err == nil {
+			w.model = answer.model
+		}
+		return nil
+	}
 	press, ok := msg.(tea.KeyPressMsg)
 	if !ok {
+		return nil
+	}
+	if press.String() == "o" && w.model.Page != "" {
+		tools.Open(w.model.Page)
 		return nil
 	}
 	if len(w.ask.options) == 0 {
@@ -553,7 +599,16 @@ func (w *welcome) view(width, height int) string {
 	}
 	intro := "This checks what works on this computer and puts it on its page on arewearmyet.com, so the next owner knows and the people fixing things see what's left. " +
 		fmt.Sprintf("It has already measured %d things by itself, %d of them working. The rest it tests with you, and measures wherever it can. Any step can be skipped.", len(w.run.Results), working)
-	return wrap(intro, width) + "\n\n" + w.ask.view(width) + "\n\n" +
+	// Where this computer's results are, once the site has said which model it is
+	page := ""
+	switch {
+	case w.model.Page != "":
+		page = "\n\n" + wrap("This computer's page, with what's known and tested so far:", width) + "\n" + accent.Hyperlink(w.model.Page).Render(w.model.Page)
+	case w.looked && w.model.ID == "" && w.api != "":
+		page = "\n\n" + wrap("The board doesn't have this computer yet. Sending a test adds what it finds, with a form to put the model on the board.", width)
+	}
+	return wrap(intro, width) + page + "\n\n" + w.ask.view(width) + "\n\n" +
+		wrap("To go straight to one part next time, add its name to the command, like hw-test camera or hw-test sound.", width) + "\n\n" +
 		wrap("Only results are sent, with the model and software versions. No serial numbers, addresses or names.", width) + "\n" +
 		good.Render("🔒 ") + wrap("A picture or recording the test makes never leaves this computer and is deleted when the test ends.", width-3)
 }
@@ -581,10 +636,11 @@ func (r *resumed) question() choice {
 		options: []string{"Try the " + step + " step again", "Skip the " + step + " step"}}
 }
 
-func (r *resumed) name() string   { return "Welcome back" }
-func (r *resumed) start() tea.Cmd { return nil }
-func (r *resumed) done() bool     { return r.over }
-func (r *resumed) keys() string   { return choiceKeys }
+func (r *resumed) name() string    { return "Welcome back" }
+func (r *resumed) isOpening() bool { return true }
+func (r *resumed) start() tea.Cmd  { return nil }
+func (r *resumed) done() bool      { return r.over }
+func (r *resumed) keys() string    { return choiceKeys }
 
 func (r *resumed) update(msg tea.Msg) tea.Cmd {
 	press, ok := msg.(tea.KeyPressMsg)
