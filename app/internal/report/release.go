@@ -60,7 +60,13 @@ func After(version, than string) bool {
 // Newer returns the newest release when it is newer than the running version, and "" when it
 // isn't or can't be told. It asks at most twice a day and waits two seconds at most, so a
 // machine without a network starts as fast as one with. Nothing about the machine is sent.
-func Newer(current string, now time.Time) string {
+func Newer(current string, now time.Time) (newer string) {
+	// Knowing about a release is a nicety. Whatever goes wrong in finding out, the app starts.
+	defer func() {
+		if recover() != nil {
+			newer = ""
+		}
+	}()
 	if _, ok := parts(current); !ok {
 		return ""
 	}

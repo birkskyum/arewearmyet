@@ -3,6 +3,8 @@ package report
 import (
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"testing"
 	"time"
 )
@@ -83,5 +85,88 @@ func TestAMachineWithoutANetworkIsNotHeldUp(t *testing.T) {
 	}
 	if waited := time.Since(began); waited > 3*time.Second {
 		t.Errorf("the start was held up for %s", waited)
+	}
+}
+
+func TestNothingAboutTheReleaseCheckCanStopTheStart(t *testing.T) {
+	now := time.Date(2026, 11, 19, 7, 0, 0, 0, time.UTC)
+	before := Releases
+	defer func() { Releases = before }()
+	answer := func(handler http.HandlerFunc) func() {
+		server := httptest.NewServer(handler)
+		Releases = server.URL
+		return server.Close
+	}
+
+	// A server that takes the connection and never answers: the start waits two seconds, no more
+	t.Setenv("XDG_STATE_HOME", t.TempDir())
+	release := make(chan struct{})
+	stop := answer(func(w http.ResponseWriter, r *http.Request) { <-release })
+	began := time.Now()
+	if got := Newer("0.12.0", now); got != "" {
+		t.Errorf("a hanging server gave %q", got)
+	}
+	if waited := time.Since(began); waited > 4*time.Second {
+		t.Errorf("the start hung for %s", waited)
+	}
+	close(release)
+	stop()
+
+	// A login page in place of an answer, as a hotel's or a train's network gives
+	t.Setenv("XDG_STATE_HOME", t.TempDir())
+	stop = answer(func(w http.ResponseWriter, r *http.Request) {
+		_, _ = w.Write([]byte("<html><body>Sign in to the network</body></html>"))
+	})
+	if got := Newer("0.12.0", now); got != "" {
+		t.Errorf("a login page gave %q", got)
+	}
+	stop()
+
+	// Answers that are JSON and still not a version
+	for _, body := range []string{`{}`, `{"tag_name": 12}`, `{"tag_name": "nightly"}`, `{"tag_name": "v1.2"}`, `[]`, `null`, ``} {
+		t.Setenv("XDG_STATE_HOME", t.TempDir())
+		stop = answer(func(w http.ResponseWriter, r *http.Request) { _, _ = w.Write([]byte(body)) })
+		if got := Newer("0.12.0", now); got != "" {
+			t.Errorf("%q gave %q", body, got)
+		}
+		stop()
+	}
+
+	// What was kept from before is damaged, or isn't what it should be
+	stop = answer(func(w http.ResponseWriter, r *http.Request) { _, _ = w.Write([]byte(`{"tag_name": "v0.12.1"}`)) })
+	defer stop()
+	for _, kept := range []string{"{not json", `{"latest": 5, "checked": "yesterday"}`, `{"latest": "banana", "checked": "2026-11-19T06:00:00Z"}`, "\x00\x00\x00"} {
+		dir := t.TempDir()
+		t.Setenv("XDG_STATE_HOME", dir)
+		if err := os.MkdirAll(stateDir(), 0o700); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(releaseFile(), []byte(kept), 0o600); err != nil {
+			t.Fatal(err)
+		}
+		// It may or may not ask again, but it answers with a real version or nothing
+		if got := Newer("0.12.0", now); got != "" && got != "0.12.1" {
+			t.Errorf("a damaged file %q gave %q", kept, got)
+		}
+	}
+
+	// A state folder that can't be written to: the answer still comes, it just isn't kept
+	locked := t.TempDir()
+	if err := os.Chmod(locked, 0o500); err != nil {
+		t.Fatal(err)
+	}
+	defer os.Chmod(locked, 0o700)
+	t.Setenv("XDG_STATE_HOME", locked)
+	if got := Newer("0.12.0", now); got != "0.12.1" {
+		t.Errorf("with nowhere to keep it: %q", got)
+	}
+	// And one where the place for the file is taken by something that isn't a folder
+	blocked := t.TempDir()
+	t.Setenv("XDG_STATE_HOME", blocked)
+	if err := os.WriteFile(filepath.Join(blocked, "arewearmyet"), []byte("a file where the folder should be"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if got := Newer("0.12.0", now); got != "0.12.1" {
+		t.Errorf("with a file in the folder's place: %q", got)
 	}
 }

@@ -62,7 +62,7 @@ This gives:
 
 ### On Omarchy: hw-test
 
-`hw-test` is the hardware test for these machines. It measures what it can by itself and tests the rest with the owner. Install it once, the way Omarchy installs its other tools. `omarchy update` brings it up to date with everything else, and `MISE_MINIMUM_RELEASE_AGE=0 mise upgrade github:birkskyum/arewearmyet` does so for it alone:
+`hw-test` is the hardware test for these machines. It measures what it can by itself and tests the rest with the owner. Install it once, the way Omarchy installs its other tools. It says at its start when a newer release is out, and `hw-test update` gets it. `omarchy update` also brings it up to date, with everything else:
 
 ```sh
 omarchy-mise-install github:birkskyum/arewearmyet hw-test
