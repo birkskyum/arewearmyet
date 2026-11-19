@@ -724,7 +724,7 @@ function clean(text: string, max: number): string {
 // driver writes into logs. Only addresses in private ranges, those named as a packet's source or
 // destination and those with a port go, so version numbers with four parts stay readable.
 // A kernel log also names the disk, the install and the devices around it: disk, partition and
-// file system IDs, the machine ID, network names made from a hardware address, and what the owner
+// file system IDs, a drive's serial number in its by-id name, the machine ID, network names made from a hardware address, and what the owner
 // called a Bluetooth device. Those go too.
 function cleanLong(text: string, max: number, log = false): string {
   const cleaned = clean(text, text.length)
@@ -732,6 +732,7 @@ function cleanLong(text: string, max: number, log = false): string {
     .replace(/\b(?:10\.\d{1,3}|192\.168|172\.(?:1[6-9]|2\d|3[01])|100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7]))\.\d{1,3}\.\d{1,3}\b/g, 'x.x.x.x')
     .replace(/\b\d{1,3}(?:\.\d{1,3}){3}(:\d{2,5})\b/g, 'x.x.x.x$1')
     .replace(/\[[0-9a-f:]*:[0-9a-f:]*:[0-9a-f:]*\](:\d{2,5})\b/gi, '[removed]$1')
+    .replace(/\bby(-|\\x2d)(uuid|partuuid|id)(\/|-)\S+/g, 'by$1$2$3[removed]')
     .replace(/\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b/gi, 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx')
     .replace(/\b(PARTUUID=)[0-9a-f]{8}-[0-9a-f]{2}\b/gi, '$1xxxxxxxx-xx')
     .replace(/\b[0-9a-f]{32}\b/gi, 'x'.repeat(32))

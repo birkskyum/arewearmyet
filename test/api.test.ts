@@ -292,6 +292,7 @@ test('takes a note with logs, answers to it and a solved mark, and cleans what n
   const log = ['[  812.4] PM: suspend entry (deep)', '[  815.1] ath12k_pci 0004:01:00.0: failed to resume', '[UFW BLOCK] IN=wlan0 SRC=192.168.1.20 DST=224.0.0.251 MAC=aa:bb:cc:dd:ee:ff', 'usb 1-1: SerialNumber: 0123456789AB', 'Chromium 153.0.8010.36 on /home/alice/.cache',
     'Kernel command line: cryptdevice=PARTUUID=3069aaaa-1111-2222-3333-444455556666:root root=/dev/mapper/root rw', 'BTRFS info (device dm-0): first mount of filesystem a504bbbb-1111-2222-3333-444455556666',
     'Kernel command line: root=PARTUUID=9f8e7d6c-02 rw', 'systemd-journald[775]: File /var/log/journal/6703a82ab8ad4e0a975e10b2a27fa6e1/system.journal corrupted or uncleanly shut down',
+    'systemd[1]: Expecting device /dev/disk/by-uuid/1AEE-4C7F...', 'systemd[1]: Found device /dev/disk/by-id/nvme-SAMSUNG_MZVL21T0_S676NX0T123456-part2 then by-label/EFI', 'systemd[1]: dev-disk-by\\x2duuid-1AEE\\x2d4C7F.device: Job timed out',
     'r8152 2-1:1.0 enx00e04c680001: renamed from eth0', 'input: Margrethes Tastatur as /devices/virtual/misc/uhid/0005:004C:0267.0008/input/input25',
     "input: Alice's AirPods (AVRCP) as /devices/virtual/input/input23", 'apple 0005:05AC:0267.0008: input,hidraw5: BLUETOOTH HID v0.67 Keyboard [Kontorets tastatur] on xx',
     "usb 3-1: Product: Alice's iPhone", 'wireguard: wg0: Handshake for peer 3 (203.0.113.5:51820) did not complete', 'wireguard: wg0: Sending keepalive to peer 4 ([2001:db8::7]:51820)',
@@ -322,9 +323,9 @@ test('takes a note with logs, answers to it and a solved mark, and cleans what n
   for (const personal of ['192.168.1.20', '224.0.0.251', 'aa:bb:cc:dd:ee:ff', '0123456789AB', 'alice']) assert.ok(!text.includes(personal), personal);
   assert.match(text, /Chromium 153\.0\.8010\.36 on \/home\/user/);
   // Nor what names the disk, the install, a network adapter, a Bluetooth device or a VPN's other end
-  for (const personal of ['3069aaaa', 'a504bbbb', '9f8e7d6c', '6703a82a', '00e04c680001', 'Margrethes', 'Alice', 'Kontorets', '203.0.113.5', '2001:db8']) assert.ok(!text.includes(personal), personal);
+  for (const personal of ['3069aaaa', 'a504bbbb', '9f8e7d6c', '6703a82a', '00e04c680001', '1AEE', 'S676NX0T123456', 'Margrethes', 'Alice', 'Kontorets', '203.0.113.5', '2001:db8']) assert.ok(!text.includes(personal), personal);
   // The lines stay readable, and what tells one device or version from another is kept
-  for (const kept of ['cryptdevice=PARTUUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx:root root=/dev/mapper/root rw', 'root=PARTUUID=xxxxxxxx-xx rw', 'enxxxxxxxxxxxxx: renamed from eth0', 'input: [name removed] as /devices/virtual/misc/uhid/',
+  for (const kept of ['cryptdevice=PARTUUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx:root root=/dev/mapper/root rw', 'root=PARTUUID=xxxxxxxx-xx rw', 'enxxxxxxxxxxxxx: renamed from eth0', 'Expecting device /dev/disk/by-uuid/[removed]', 'Found device /dev/disk/by-id/[removed] then by-label/EFI', 'dev-disk-by\\x2duuid-[removed]', 'input: [name removed] as /devices/virtual/misc/uhid/',
     'input: [name removed] (AVRCP) as', 'Keyboard [name removed] on xx', "Product: Someone's iPhone", 'peer 3 (x.x.x.x:51820)', 'peer 4 ([removed]:51820)', 'input: hid-over-i2c 048D:8987 Keyboard as /devices/platform', '[mem 0x7a300000-0x7a3fffff]: assigned, firmware 172.4.0.2 kept'])
     assert.ok(text.includes(kept), `${kept}\n${text}`);
 

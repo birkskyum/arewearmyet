@@ -130,24 +130,68 @@ var (
 	serial  = regexp.MustCompile(`(?i)\b(serial|serialnumber|s/n|uuid)[\s:=]+\S+`)
 	packet  = regexp.MustCompile(`\b(SRC|DST)=\S+`)
 	private = regexp.MustCompile(`\b(?:10\.\d{1,3}|192\.168|172\.(?:1[6-9]|2\d|3[01])|100\.(?:6[4-9]|[7-9]\d|1[01]\d|12[0-7]))\.\d{1,3}\.\d{1,3}\b`)
+	// An address with a port is another computer's, like a VPN's other end. A version number has no port.
+	endpoint  = regexp.MustCompile(`\b\d{1,3}(?:\.\d{1,3}){3}(:\d{2,5})\b`)
+	endpoint6 = regexp.MustCompile(`(?i)\[[0-9a-f:]*:[0-9a-f:]*:[0-9a-f:]*\](:\d{2,5})\b`)
+	// Disk, partition and file system IDs, and the machine ID in the journal's path
+	uuid      = regexp.MustCompile(`(?i)\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b`)
+	partition = regexp.MustCompile(`(?i)\b(PARTUUID=)[0-9a-f]{8}-[0-9a-f]{2}\b`)
+	machineID = regexp.MustCompile(`(?i)\b[0-9a-f]{32}\b`)
+	// A disk by its ID, which for by-id holds the drive's serial number, as a path or in a unit's name
+	byID = regexp.MustCompile(`\bby(-|\\x2d)(uuid|partuuid|id)(/|-)\S+`)
+	// A USB network adapter is named after its hardware address
+	adapter = regexp.MustCompile(`(?i)\b(enx|wlx)[0-9a-f]{12}\b`)
+	// What the owner called a Bluetooth device, which often holds their name
+	inputName  = regexp.MustCompile(`\b(input: ).+?( \(AVRCP\) as | as \S*(?:/uhid/|/bluetooth/|/0005:))`)
+	hidName    = regexp.MustCompile(`(?i)\b(0005:[0-9a-f]{4}:[0-9a-f]{4}\.[0-9a-f]{4}: [^\[\n]*\[)[^\]\n]*\]`)
+	possessive = regexp.MustCompile(`\b[A-Z][\w-]*['’]s\b`)
 )
 
-// ScrubLog takes out of a log what names the owner, their computer or their network:
+// Removed says in a line what ScrubLog takes out, for the owner before a log is sent.
+const Removed = "hardware and network addresses, serial numbers, disk and install IDs, and the names of this computer, its user and its Bluetooth devices"
+
+// ScrubText takes out of a note's own text what names the owner's computer, disk or network:
 // hardware addresses, serial numbers, the addresses in a firewall's lines, private network
-// addresses, home folders, and the host and user names given. Lines stay lines, and of a long
-// log the end is kept.
-func ScrubLog(text, host, user string) string {
+// addresses and those with a port, disk and install IDs, home folders, and the host and user
+// names given. Lines stay lines.
+func ScrubText(text, host, user string, names ...string) string {
 	text = address.ReplaceAllString(text, "xx:xx:xx:xx:xx:xx")
 	text = home.ReplaceAllString(text, "/home/user")
 	text = serial.ReplaceAllString(text, "$1 [removed]")
 	text = packet.ReplaceAllString(text, "$1=[removed]")
 	text = private.ReplaceAllString(text, "x.x.x.x")
-	for name, stand := range map[string]string{host: "this-computer", user: "user"} {
+	text = endpoint.ReplaceAllString(text, "x.x.x.x$1")
+	text = endpoint6.ReplaceAllString(text, "[removed]$1")
+	text = byID.ReplaceAllString(text, "by$1$2$3[removed]")
+	text = uuid.ReplaceAllString(text, "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
+	text = partition.ReplaceAllString(text, "${1}xxxxxxxx-xx")
+	text = machineID.ReplaceAllString(text, strings.Repeat("x", 32))
+	text = adapter.ReplaceAllString(text, "${1}xxxxxxxxxxxx")
+	stands := map[string]string{host: "this-computer", user: "user"}
+	for _, name := range names {
+		if _, known := stands[name]; !known {
+			stands[name] = "user"
+		}
+	}
+	for name, stand := range stands {
 		// A short or everyday name would take ordinary words with it
-		if len(name) >= 4 && name != "user" && name != "root" && name != "linux" && name != "omarchy" {
+		if len(name) >= 4 && !everyday[strings.ToLower(name)] {
 			text = regexp.MustCompile(`\b`+regexp.QuoteMeta(name)+`\b`).ReplaceAllString(text, stand)
 		}
 	}
+	return strings.TrimSpace(text)
+}
+
+// everyday are names a computer or an account has by default, which are also words in a log.
+var everyday = map[string]bool{"user": true, "root": true, "linux": true, "omarchy": true, "arch": true, "admin": true, "kernel": true, "system": true}
+
+// ScrubLog cleans a log as ScrubText does, and also of what the owner called a Bluetooth
+// device. Of a long log the end is kept.
+func ScrubLog(text, host, user string, names ...string) string {
+	text = inputName.ReplaceAllString(text, "${1}[name removed]$2")
+	text = hidName.ReplaceAllString(text, "${1}name removed]")
+	text = possessive.ReplaceAllString(text, "Someone's")
+	text = ScrubText(text, host, user, names...)
 	if len(text) > LogSize {
 		text = text[len(text)-LogSize:]
 		if cut := strings.IndexByte(text, '\n'); cut >= 0 {

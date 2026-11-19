@@ -15,12 +15,14 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"flag"
 	"fmt"
 	"io"
 	"os"
 	"os/exec"
+	"os/user"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -671,8 +673,7 @@ type noteArgs struct {
 // boot or the one before, or a file.
 func attach(name string) (report.Log, error) {
 	sys := machine.Real()
-	host, _ := os.Hostname()
-	user := os.Getenv("USER")
+	host, account, names := owner()
 	var text string
 	var err error
 	logName := name + ".log"
@@ -700,11 +701,47 @@ func attach(name string) (report.Log, error) {
 	if err != nil && strings.TrimSpace(text) == "" {
 		return report.Log{}, fmt.Errorf("%s: %w", name, err)
 	}
-	clean := report.ScrubLog(text, host, user)
+	clean := report.ScrubLog(text, host, account, names...)
 	if clean == "" {
 		return report.Log{}, fmt.Errorf("%s is empty", name)
 	}
 	return report.Log{Name: logName, Text: clean}, nil
+}
+
+// owner gives the names a log could hold of its owner: the computer's, the account's, and the
+// words of their full name.
+func owner() (host, account string, names []string) {
+	host, _ = os.Hostname()
+	account = os.Getenv("USER")
+	if current, err := user.Current(); err == nil {
+		if account == "" {
+			account = current.Username
+		}
+		names = strings.Fields(strings.Split(current.Name, ",")[0])
+	}
+	return host, account, names
+}
+
+// attached says which logs go with a note, what was taken out of them and who can read them.
+func attached(logs []report.Log) string {
+	var listed []string
+	for _, log := range logs {
+		lines := strings.Count(log.Text, "\n") + 1
+		listed = append(listed, fmt.Sprintf("%s (%d line%s)", log.Name, lines, map[bool]string{true: "", false: "s"}[lines == 1]))
+	}
+	return "With the note: " + strings.Join(listed, ", ") + ".\nTaken out first: " + report.Removed + ".\n" +
+		"The note and its logs are public on the model's page. The same command with --json prints all of it and sends nothing.\n"
+}
+
+// agreed asks whether to send. Enter or anything but a no is a yes, and no answer at all is a no.
+func agreed(in io.Reader, out io.Writer) bool {
+	fmt.Fprint(out, "Send it? [Y/n] ")
+	answer, err := bufio.NewReader(in).ReadString('\n')
+	if err != nil && answer == "" {
+		return false
+	}
+	answer = strings.ToLower(strings.TrimSpace(answer))
+	return answer != "n" && answer != "no"
 }
 
 // writeNote sends a note, an answer or a solved mark, and returns the exit code.
@@ -739,8 +776,8 @@ func writeNote(run *report.Run, args noteArgs) int {
 	if args.reply == "" && args.title == "" {
 		return fail("a note needs --title, the note in a line")
 	}
-	host, _ := os.Hostname()
-	note := report.Note{Body: report.ScrubLog(text, host, os.Getenv("USER")), Links: args.links, Kernel: run.Kernel, OS: run.OS, Packages: run.Packages, Agent: run.Agent}
+	host, account, names := owner()
+	note := report.Note{Body: report.ScrubText(text, host, account, names...), Links: args.links, Kernel: run.Kernel, OS: run.OS, Packages: run.Packages, Agent: run.Agent}
 	if args.reply == "" {
 		note.Kind, note.Title, note.Check, note.Model = args.kind, args.title, args.check, run.Model
 		if note.Model == "" {
@@ -765,6 +802,14 @@ func writeNote(run *report.Run, args noteArgs) int {
 		fmt.Println(string(data))
 		fmt.Fprintln(os.Stderr, "Not sent.")
 		return 0
+	}
+	if len(note.Logs) > 0 {
+		// A log holds more than its owner remembers, so they are told what goes and where before it does
+		fmt.Fprint(os.Stderr, attached(note.Logs))
+		if guided.Interactive() && !agreed(os.Stdin, os.Stderr) {
+			fmt.Fprintln(os.Stderr, "Not sent.")
+			return 0
+		}
 	}
 	sent, err := report.SendNote(args.api, note, args.reply)
 	if err != nil {
@@ -813,8 +858,9 @@ func usage() {
                        hw-test note --kind problem --check suspend --log previous \
                          --title "Restarts when woken with a dock plugged in" --body-file what-happens.md
                      --kind problem|workaround|upstream|note   --check ID   --link URL...
-                     --log kernel|previous|boot-N|FILE...  attaches a log, cleaned of addresses
-                     and names; boot-3 is the third boot before this one
+                     --log kernel|previous|boot-N|FILE...  attaches a log, cleaned of addresses,
+                     serial numbers, disk IDs and names; boot-3 is the third boot before this
+                     one. A note and its logs are public: --json prints what would go
                      --reply NOTE-ID answers a note, --solved NOTE-ID closes your own problem
                      --no-send shows what would be sent, logs included, and sends nothing
   hw-test verify before    take a snapshot of where this computer stands, before a change.
