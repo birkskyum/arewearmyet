@@ -234,6 +234,45 @@ type Model struct {
 	Page string `json:"page"`
 	// Family is the line a pull request for the machine opens with, like arm-dragon-msft.
 	Family string `json:"family"`
+	// Kernels is the linux-omarchy version on each of Omarchy's channels, as the site last saw them.
+	Kernels map[string]string `json:"kernels"`
+}
+
+// Finding is what is written up on the site about one check on a model, by hand, from
+// discussions and reports.
+type Finding struct {
+	State   string `json:"state"`
+	Note    string `json:"note"`
+	Version string `json:"version"`
+	Checked string `json:"checked"`
+	Source  string `json:"source"`
+}
+
+// Findings asks the site what is written up about a model, by check. Only what is the
+// model's own or holds across its chip family is there.
+func Findings(api, model string) (map[string]Finding, error) {
+	client := http.Client{Timeout: 6 * time.Second}
+	response, err := client.Get(api + "/api/models/" + url.PathEscape(model))
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+	var answer struct {
+		Checks []struct {
+			ID      string   `json:"id"`
+			Finding *Finding `json:"finding"`
+		} `json:"checks"`
+	}
+	if err := json.NewDecoder(io.LimitReader(response.Body, 4<<20)).Decode(&answer); err != nil {
+		return nil, err
+	}
+	found := map[string]Finding{}
+	for _, check := range answer.Checks {
+		if check.Finding != nil {
+			found[check.ID] = *check.Finding
+		}
+	}
+	return found, nil
 }
 
 // Match asks the site which model a machine is, by its hardware IDs, its device tree's name

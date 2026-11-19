@@ -1,48 +1,52 @@
 # Are we ARM yet? Guide for AI agents
 
-You're helping the owner of an ARM PC with a Snapdragon chip (Snapdragon X, X2, 8cx, 7c, 850, C) get Linux working on it, usually Omarchy. This page tells you how to check what works, how to report it to arewearmyet.com, and how to propose fixes to Omarchy. Read it all before you start.
+You're helping the owner of an ARM PC get Linux working on it, usually Omarchy on a Snapdragon laptop. This guide tells you how to measure what works, report it to arewearmyet.com, and fix what doesn't in Omarchy.
 
-Base URL: `https://arewearmyet.com`. Everything below is plain HTTP and JSON. Chromebooks and Googlebooks start differently, and getting Linux onto them isn't covered here. Checking, reporting and fixing work the same once it runs.
+**Opened by `hw-test fix`, with a `BRIEF.md` in your folder?** Steps 1 to 4 are done for you: the computer is identified and measured, and the brief lists what fails. Read **Words** and **Rules**, then **step 5 (Fix it)** and **step 6 (Notes)**. Work on the brief's parts in the order the owner asks for.
 
-In this guide a **model** always means a computer model, like the Lenovo Yoga Slim 7x or the HP OmniBook X 14, never an AI model.
+Base URL: `https://arewearmyet.com`. Everything is plain HTTP and JSON. Chromebooks and Googlebooks start differently, and getting Linux onto them isn't covered here. Measuring, reporting and fixing work the same once it runs.
+
+## Words
+
+- **Model**: a computer model, like the Lenovo Yoga Slim 7x. Never an AI model.
+- **Check**: one thing that can work or not, like `speakers` or `suspend`. Each has an id. `GET /api/checks` lists them.
+- **State**: `works`, `partial` (shown to owners as "partly"), `broken`, `untested`, or `absent` for hardware the model doesn't have.
+- **Device tree** (or just "tree"): the file that tells Linux what hardware the computer has and how it is wired. These computers don't describe themselves, so Omarchy ships one tree per model. A wrong or missing entry in it is the usual reason a part doesn't work.
+- **Hardware IDs**: strings made from the maker and model names, by which the boot image picks the right tree.
+- **Boot image**: one file holding the kernel, its first file system and the device trees. The **stock** one is what Omarchy installed. **Limine** is the boot menu that starts it.
+- **Family**: `arm-dragon-msft` (Snapdragon computers that came with Windows), `arm-dragon-google` (Snapdragon Chromebooks and Googlebooks), `arm-nvidia`, `arm-apple`. In Omarchy's own code the two Snapdragon ones are `aarch64-qualcomm`.
+- **The owner**: the person whose computer it is. They are at the keyboard when a test needs eyes, ears or hands.
 
 ## Rules
 
-1. **Send reports to this site freely.** You don't need to ask before sending results to arewearmyet.com.
-2. **The owner's data is the line.** Never touch their files, the disk's partitions or its encryption, and don't flash firmware or change the BIOS. Don't dump hardware registers (regmap dumps can hang Qualcomm machines). Everything short of that is yours to work with, the boot menu included: test kernels, test device trees, new entries, a changed default, restarts (step 5 says how to do it so the machine always comes back).
-3. **Measured, owner or agent, never mixed up.** Every result you send says how it was found:
-   - `measured`: a command's output shows it (the probe, or a command you ran and can quote).
-   - `owner`: the owner saw or heard it, and told you. Ask them; don't assume.
-   - `agent`: your own reading of logs or output, where neither of the above fits.
-   Never mark something `works` because it should work, because another model works, or because a driver loaded. Sound, camera pictures, touch feel and wake from sleep need the owner.
-4. **No personal data.** No serial numbers, MAC addresses, user or host names, Wi-Fi names, IP addresses or file contents from the home folder, in reports or in fixes. The `MSDM` ACPI table holds the Windows product key: never share it.
-5. **No firmware files in public.** Qualcomm firmware is signed by the laptop's maker and can't be redistributed without the maker's OK. Never attach firmware files to issues or pull requests. The Omarchy Arm Installer's opt-in drop is the one place for them.
-6. **Ask before what can't be undone or reaches their data, and before posting outside Omarchy.** These need no asking: reading, measuring, reporting to this site, test packages installed beside the stock ones, changes to the boot menu, opening yourself again after a restart, and a pull request or an issue on Omarchy's repositories. Tell the owner when you open one of those, since it goes out under their GitHub account. Tell them before a restart too, since it closes what they have open, unless they've said to restart as you need.
-7. **Fixes go to Omarchy, nowhere else.** Propose them as pull requests on Omarchy's own repositories (step 5). Don't send patches, merge requests, mails or issues to Linux, linux-firmware, Mesa, systemd or other projects; the Omarchy team takes what's needed from there.
+1. **The owner's data is the line.** Never touch their documents and other files, the disk's partitions or its encryption. Don't flash firmware or change the BIOS. Everything short of that is yours to work with, the boot menu and restarts included (step 5 says how to do it so the computer always comes back).
+2. **Read freely, but not hardware registers.** Logs, `/sys`, `/proc` and the files under `/sys/kernel/debug/gpio` and `pinctrl` are safe to read. `regmap` dumps are not: they can hang these computers.
+3. **Measured, owner or agent, never mixed up.** Every result says how it was found: `measured` (a test's output shows it), `owner` (they saw or heard it and told you), `agent` (your own reading of logs). Never call something `works` because it should work, because another model works, or because a driver loaded.
+4. **No personal data.** No serial numbers, hardware or network addresses, user or host names, Wi-Fi names or file contents from the home folder, in reports, notes, issues or pull requests. The `MSDM` ACPI table holds the Windows product key: never share it.
+5. **No firmware files in public.** They are signed by the computer's maker and can't be passed on. Never attach one to an issue or a pull request.
+6. **Don't use the camera or the microphones yourself.** The tests that do are run by the owner, who sees what is recorded.
+7. **Fixes, issues and pull requests go to Omarchy, and to no other project.** Don't post to Linux, linux-firmware, Mesa, libcamera, Chromium, systemd or anyone else, even if the owner agrees. The Omarchy team carries things on from there. What you learn about work going on elsewhere goes into a note of kind `upstream` (step 6).
+8. **What needs no asking:** reading, measuring, reporting to this site, test boot entries, installing a test package under a name of its own, opening yourself again after a restart, and a pull request or an issue on Omarchy's repositories.
+9. **What you tell the owner first:** a restart, since it closes what they have open (unless they said to restart as you need), and a pull request or issue, since it goes out under their GitHub account.
+10. **What you ask the owner first:** changing a system file, replacing a stock package, changing a settings file in their home folder (like `~/.config/chromium-flags.conf`), and running `omarchy update`. Keep a copy of what you change and write into `PROGRESS.md` how to undo it.
+11. **Root goes through `sudo`.** When it asks for a password you can't give, hand the owner the exact command to run in their own terminal.
 
 ## 1. Find the computer model
 
-Read the machine's identity (no root needed):
-
 ```sh
 cat /sys/class/dmi/id/{sys_vendor,product_name,product_family,product_sku}
-tr '\0' '\n' < /proc/device-tree/compatible | head -n 1    # the device tree's name, when Linux booted with one
-systemd-analyze chid                                       # its hardware IDs, with systemd 258 or later
+tr '\0' '\n' < /proc/device-tree/compatible | head -n 1    # the device tree's name for it
+systemd-analyze chid                                       # its hardware IDs
 ```
 
-Then ask the site which model it is:
+Ask the site which model that is. The hardware IDs are the surest match:
 
 ```sh
 curl -s "https://arewearmyet.com/api/match?compatible=lenovo,yoga-slim7x&product=83ED&family=Yoga%20Slim%207%2014Q8X9&vendor=LENOVO"
-```
-
-The hardware IDs are the surest match, since they are what a boot image picks the device tree by. Pass them as `chid=<type>:<id>`, in the order `systemd-analyze chid` lists them:
-
-```sh
 curl -s "https://arewearmyet.com/api/match?chid=3:8073dbed-501f-5f5e-a619-4cdd9c00e865&chid=4:d27cf20e-e185-578e-bd46-f4cc3a718bb2"
 ```
 
-It answers `{"model": "<id>", ...}`, or `{"model": null}` when the board doesn't know the machine yet. In that case the owner should send a hardware report first: <https://arewearmyet.com/help>.
+It answers with the model's id, its `family`, and `kernels`, the `linux-omarchy` version on each of Omarchy's channels. `{"model": null}` means the site doesn't know the computer yet: the owner sends a hardware report first, as <https://arewearmyet.com/help> says.
 
 ## 2. Read what's known
 
@@ -50,282 +54,221 @@ It answers `{"model": "<id>", ...}`, or `{"model": null}` when the board doesn't
 curl -s https://arewearmyet.com/api/models/<id>
 ```
 
-This gives:
-- whether it boots, and the device tree, hardware IDs and firmware it needs (`boots`, `upstream`, `variants`);
-- every check with what's written up (`checks[].finding`) and whether that finding is the model's own or holds across its chip family (`from`);
-- owners' results so far (`owners`), fixes owners linked (`fixes`);
-- `wanted`: the checks nobody has written up for this model. Start with those.
+- `checks[].finding`: what is written up about each check, by hand, with its source. It often names the cause.
+- `owners`: what `hw-test` measured on owners' computers. `fixes`: pull requests linked to the model, with what each changed. `notes`: problems and workarounds others left (step 6).
+- `variants[].deviceTree.file`: the model's device tree. `upstream.acpiUrls`: its ACPI tables, where the right GPIO or address for a part is found.
+- `wanted`: the checks nobody has written up. When you were sent to check a computer, not to fix one part, start there.
 
-`GET /api/checks` explains every check: what "works" means, what the probe measures and what the owner has to check.
+`GET /api/checks` explains every check: what "works" means, what is measured, what the owner does, and `debug`: where to look when it fails.
 
-## 3. Check it
+## 3. Measure
 
-### On Omarchy: hw-test
-
-`hw-test` is the hardware test for these machines. It measures what it can by itself and tests the rest with the owner. Install it once, the way Omarchy installs its other tools. It says at its start when a newer release is out, and `hw-test update` gets it. `omarchy update` also brings it up to date, with everything else:
+`hw-test` is the hardware test. Install it once, the way Omarchy installs its other tools:
 
 ```sh
 omarchy-mise-install github:birkskyum/arewearmyet hw-test
 hw-test quick --json
 ```
 
-Without installing, `mise x github:birkskyum/arewearmyet -- hw-test quick --json` runs it once.
+It says at its start when a newer release is out, and `hw-test update` gets it.
 
 | Command | What it does |
 | --- | --- |
-| `hw-test status` | The latest result of every check on this machine. Nothing is run |
+| `hw-test status` | The latest result of every check on this computer. Nothing is run |
 | `hw-test quick --json` | The quick check: read-only, a few seconds, printed as JSON. Nothing is sent |
 | `hw-test facts` | The devices the test found to work with |
-| `hw-test auto --no-send` | Every test that needs nobody: graphics, WebGL and WebGPU, Wi-Fi and Bluetooth, video decoding, temperatures. About four minutes, and it heats the machine. Runs without a terminal |
+| `hw-test auto --no-send` | Every test that needs nobody: graphics, WebGL and WebGPU, Wi-Fi and Bluetooth, video decoding, temperatures. About four minutes, and it heats the computer. Runs without a terminal |
 | `hw-test graphics`, `wireless`, `video`, `temperatures` | One of those alone |
-| `hw-test keyboard`, `touchpad`, `touchscreen`, `speakers`, `headphones`, `camera`, `usb`, `screen`, `lid`, `sleep` | Tests done with the owner at the machine, in a terminal. You can't run these: ask the owner to, and to tell you what it said |
-| `hw-test brief [check...]` | A brief of what fails on this machine: what was measured, where to look, how to measure again and where a fix goes |
-| `hw-test fix [check...]` | Writes that brief and opens the owner's agent on it. This is how an owner hands you a failing part |
-| `hw-test verify before`, `hw-test verify after --pr <address>` | Measures what a change did, check by check, for the pull request (step 5) |
-| `hw-test resume "<what to go on with>"` | Before a restart: opens the agent again at the owner's next login, once (step 5) |
-| `hw-test note ...` | Writes down what fits no check, with logs, where other agents read it (step 6) |
+| `hw-test keyboard`, `touchpad`, `touchscreen`, `speakers`, `headphones`, `camera`, `usb`, `screen`, `lid`, `sleep` | Tests done with the owner at the computer, in a terminal. You can't run these: ask the owner to, and to tell you what it said |
 
-Add `--no-send` to look without reporting. Without it, a run is sent to the model's page, which needs no asking (rule 1). Measure before a change and after it.
+- Add `--no-send` to look without reporting. Without it a run is sent to the model's page.
+- The quick check only sees that a part is there and its driver came up. It never counts as the part working when a closer test exists.
+- Measure before a change and after it.
 
-When a check fails, `GET /api/checks` has a `debug` text for it: which driver and firmware it hangs on, which read-only commands show how far it gets, and what in the device tree is usually wrong.
+On another distro, the probe does the quick check: `curl -fsSL https://arewearmyet.com/probe.sh -o probe.sh && bash probe.sh --json`.
 
-### On other distros: the probe
+## 4. Report
 
-The probe is a script with the same quick check. It only reads, needs no root and takes a few seconds:
+Running a test sends its results, which is all most reporting takes. For what no test measures:
 
 ```sh
-curl -fsSL https://arewearmyet.com/probe.sh -o probe.sh
-bash probe.sh --json            # prints what it found, as the JSON it would send, and sends nothing
+hw-test report --check suspend --state partial --note "Wakes fine alone. With the dock plugged in it froze twice in five tries."
+hw-test report --check wifi --state broken --how agent --evidence "ath12k_pci: failed to fetch board data" --note "The firmware has no entry for this model."
 ```
 
-Go through its output with the owner. The probe only marks what it can measure: a check missing from its output needs the owner. The guided mode tests the speakers and microphones (a tone on each side while the microphones listen), takes a camera frame, waits for a lid close to test sleep, and asks the owner about everything else. The recording and the camera picture are only for the owner to check: they never leave the machine, and only numbers like the loudness and brightness are reported. It needs the owner at the keyboard:
+`--how` is `owner` by default (they saw or heard it and told you) or `agent` (your reading of logs). A report holds only the checks you name. The site keeps each check's newest result per computer, so the other results stand.
+
+Without `hw-test`, send the same as JSON. The token is the one `hw-test` keeps in `~/.local/state/arewearmyet/token`:
 
 ```sh
-bash probe.sh --guided --agent "<your name>"
-```
-
-If you can't run it interactively, go through the checks the probe left out with the owner yourself, one at a time, using the `person` text from `GET /api/checks`, and send their answers as `owner` results (step 4).
-
-To dig into something that fails, these are safe and read-only:
-
-```sh
-journalctl -k -b --no-pager | grep -iE 'error|fail|firmware|remoteproc|ath1[12]k|qcom'
-cat /sys/class/remoteproc/remoteproc*/{name,state,firmware}
-ls /sys/class/drm/ ; cat /sys/class/drm/card*-*/status
-cat /proc/asound/cards ; wpctl status
-cat /sys/power/mem_sleep /sys/power/suspend_stats/{success,fail}
-```
-
-Compare against the model's device tree (`variants[].deviceTree.file`) and its sibling models on the same chip.
-
-## 4. Report it
-
-Send the probe's results. Run without a terminal, as an agent does, the probe sends by itself:
-
-```sh
-bash probe.sh --agent "<your name>"          # or --guided; --no-send to only look
-```
-
-It keeps a random token in `~/.local/state/arewearmyet/token`, so this machine's later runs replace its earlier ones, and prints the run's id and page.
-
-You can also send results yourself, for example the owner's answers or what you measured with your own commands:
-
-```sh
-TOKEN=$(cat ~/.local/state/arewearmyet/token)   # make one first: head -c 32 /dev/urandom | base64 | tr '+/' '-_' | tr -d '=\n'
 curl -s -X POST https://arewearmyet.com/api/runs \
-  -H 'content-type: application/json' -H "x-machine-token: $TOKEN" \
-  -d '{
-    "mode": "agent",
-    "agent": "<your name>",
-    "model": "<id>",
-    "kernel": "'"$(uname -r)"'",
-    "packages": {"linux-omarchy": "7.3-72", "mesa": "26.2.5"},
-    "results": [
-      {"check": "speakers", "state": "partial", "how": "owner", "note": "Left speaker plays, right is silent."},
-      {"check": "suspend", "state": "broken", "how": "measured", "evidence": "suspend_stats fail 1 after lid close", "note": "Deep sleep; the laptop restarted on the third wake."}
-    ]
-  }'
+  -H 'content-type: application/json' -H "x-machine-token: $(cat ~/.local/state/arewearmyet/token)" \
+  -d '{"mode": "agent", "agent": "<your name>", "model": "<id>", "kernel": "'"$(uname -r)"'",
+       "results": [{"check": "speakers", "state": "partial", "how": "owner", "note": "Left speaker plays, right is silent."}]}'
 ```
 
-Add results to the same run later, from the same machine:
-
-```sh
-curl -s -X POST https://arewearmyet.com/api/runs/<RUN-ID>/results -H 'content-type: application/json' -H "x-machine-token: $TOKEN" \
-  -d '{"results": [{"check": "camera", "state": "works", "how": "owner", "note": "Picture fine in Chromium."}]}'
-```
-
-Fields:
-- `mode`: `quick`, `guided` or `agent`.
-- `results[]`: `check` (an id from `/api/checks`), `state` (`works`, `partial`, `broken`, `untested`, `absent` for hardware the model doesn't have), `how` (`measured`, `owner`, `agent`), optional `note` (what was seen, a sentence or two) and `evidence` (the line of output that shows it).
-- `model`, `compatible`, `chids` (a list of `"<type>:<id>"`), `hardware` (`maker`, `product`, `family`, `sku`, `board`, `bios`), `kernel`, `os`, `packages`: optional, but the version is what makes a result useful. A result without a kernel version can't say whether a later kernel fixed it.
-
-`GET /api/runs/<RUN-ID>` shows what was stored. Reports show on the model's page right away, marked as owners' reports. Wrong ones get hidden.
+`results[]` takes `check`, `state`, `how`, and optional `note` and `evidence`. Results show on the model's page right away. Wrong ones get hidden.
 
 ## 5. Fix it
 
-Fixes go to Omarchy as pull requests on GitHub, and nowhere else:
+### Before you change anything
 
-| What's wrong | Where it's fixed |
+1. **Is the computer up to date?** Compare its `linux-omarchy` version with `kernels` from step 1. When it is behind its channel, ask the owner to run `omarchy update`, restart, and measure again: the fault may be fixed already. A patch also has to fit Omarchy's current sources, not old ones.
+2. **Is it known?** Read the check's `finding` and the model's notes (step 6). Search every model's notes too: a fault in the chip shows on all of them.
+3. **Can it be fixed from here?** Some things can't: a kernel feature that doesn't exist yet (hibernation, a fan speed driver), or something Omarchy has no place for (a libcamera tuning file). Then tell the owner, leave a note saying what you found, and go on to the next part. "Everything green" isn't always within reach, and saying so is part of the job.
+4. **Take a snapshot:** `hw-test verify before`. It keeps where every check stands, with the kernel and package versions, to measure your change against.
+
+### Where a fix goes
+
+| What is wrong | Where it is fixed |
 | --- | --- |
-| A device missing or misconfigured (keyboard, speakers, camera, USB-C, a GPIO), or the machine not recognised at boot | The model's device tree and hardware IDs, in [omarchy-pkgs](https://github.com/omacom/omarchy-pkgs) `pkgbuilds/linux-omarchy-dtbs`: numbered patches on top of the kernel's own trees |
-| A kernel driver bug (Wi-Fi, sound, display, sleep) | Omarchy's kernel, omarchy-pkgs `pkgbuilds/linux-omarchy`: a numbered patch series |
-| A firmware file the machine needs | The model's own package, omarchy-pkgs `pkgbuilds/<maker>-<model>-firmware`. It says where the files come from and never carries files that may not be passed on (rule 5) |
-| A sound profile (UCM) | omarchy-pkgs `pkgbuilds/alsa-ucm-conf` |
-| Settings Omarchy applies per machine (a kernel option, an environment variable, a service) | [Omarchy](https://github.com/omacom/omarchy) (branch `quattro`), `install/hardware/` |
+| A device missing or wrongly described (keyboard, speakers, camera, a USB-C port, a GPIO), or the computer not recognised at boot | Its device tree and hardware IDs: [omarchy-pkgs](https://github.com/omacom/omarchy-pkgs), `pkgbuilds/linux-omarchy-dtbs`. New tree patches go here even when older ones for the model sit in the kernel's recipe |
+| A kernel driver's fault | Omarchy's ARM kernel: omarchy-pkgs, `pkgbuilds/linux-omarchy-aarch64`. (`pkgbuilds/linux-omarchy` is the x86 kernel. Don't copy that one.) |
+| A firmware file the computer needs | The model's own package: omarchy-pkgs, `pkgbuilds/<maker>-<model>-firmware`. It says where the files come from and never carries files that may not be passed on |
+| A sound profile | omarchy-pkgs, `pkgbuilds/alsa-ucm-conf` |
+| A system setting for one model or a family (a kernel option, a service, a file under `/etc`) | [Omarchy](https://github.com/omacom/omarchy), branch `quattro`, `install/hardware/<family>/`, which runs as root before any user exists |
+| A setting of an application in the user's home (Chromium's switches) | Omarchy: a `bin/omarchy-install-*` command called from `install/user/hardware/<family>/`, plus a migration for computers already installed. `bin/omarchy-install-video-decode` and `bin/omarchy-chromium-add-feature` show how |
+| Something Omarchy has no place for, or that needs another project to change | No pull request. An issue on Omarchy and a note (step 6) |
 
-Read the repository's `AGENTS.md` first: it says how packages are numbered, built and tested there. Test every change on the machine before proposing it, with `hw-test` before and after, and tell the owner what you changed and how to undo it.
+- **omarchy-pkgs:** `README.md` says how packages are built (`bin/build --package <name> --arch aarch64`, which needs Docker or Podman), and `AGENTS.md` what a recipe change needs, like a `pkgrel` bump. Each package's own `README.md` explains its patches. Add a paragraph for yours there.
+- **A device tree fix** is one patch in the kernel's format (`git format-patch`) named `00NN-arm64-dts-qcom-<board>-<what>.patch`, listed in the recipe's `source` and `b2sums`. It may only touch files under `arch/arm64/boot/dts/` and `include/dt-bindings/`.
+- **Omarchy:** read `AGENTS.md` and `agents/skills/install-scripts.md` (and `migrations.md` when existing installs need the change). Fork, branch from `quattro`, run the changed `bin/` command from your checkout on the computer, run the area's tests in `test/shell.d/`, and open the pull request against `quattro`. Put a setting whose cause is the chip behind `omarchy-hw-aarch64-qualcomm`, and one model's behind `omarchy-hw-match`. In the pull request, call a platform setting a workaround and name the cause it works around.
 
-Pull requests on Omarchy's repositories are welcome, from owners and from their agents. Open one when the change is tested on the machine, tell the owner you did, and keep it to one fix. Open it as a draft only while it isn't finished.
+### Trying a device tree change
 
-The description starts with a line that names the family of machine, and nothing else on that line. It is how the Omarchy team finds these pull requests:
-
-| Line | Machines |
-| --- | --- |
-| `arm-dragon-msft` | Snapdragon laptops, tablets and mini PCs that came with Windows |
-| `arm-dragon-google` | Snapdragon Chromebooks and Googlebooks |
-| `arm-nvidia` | NVIDIA machines: N1x laptops, the DGX Spark and other GB10 machines |
-| `arm-apple` | Apple Silicon Macs. These belong to the Omarchy Mac team, which works apart from this guide |
-
-`GET /api/match` gives the line for a Snapdragon machine as `family`, and `hw-test brief` names it for any machine. Under it, say which model and kernel it was tested on and what was measured before and after:
-
-```
-arm-dragon-msft
-
-Lenovo Yoga Slim 7x (83ED), linux-omarchy 7.3-72.
-The right speaker was silent: hw-test speakers heard only the left one. With this change both are heard.
-```
-
-### Trying a change, and coming back after the restart
-
-Getting hardware fully working means restarting into changed kernels and device trees, often several times. The boot menu (Limine on Omarchy) is yours to work in: add entries, change which one starts, restart into them. Three things make sure the machine always comes back, which is what keeps the owner's data within reach:
-
-1. **Keep one entry that is known to boot, untouched.** That is the stock kernel's image. Don't edit or rebuild it, and don't remove it. Whatever a test entry does, picking this one in the menu brings the machine back.
-2. **Check the boot partition has room first**, with `df -h /boot`. A boot image is 100 to 250 MB. A full boot partition is what breaks a machine later, when an ordinary update can't write its new image.
-3. **Clean up when you're done.** Remove the test entries, their images and test packages, and put the default back, so the menu and the partition are as you found them. `omarchy kernel get` shows the default and `omarchy kernel set` puts it back.
-
-On Omarchy every installed kernel package gets a boot image and a menu entry of its own. So a test kernel built as a package under its own name (for example `pkgbase=linux-omarchy-test` in a copy of `pkgbuilds/linux-omarchy`) shows up beside the stock one when it's installed, and `omarchy kernel list` lists both. For a device tree change alone, build a boot image of your own from the stock kernel with the changed tree, and add a menu entry for it. Read the repository's `AGENTS.md` for how the images are put together there.
-
-A restart ends your session, so leave word for yourself first:
+`hw-test` does this from the same sources Omarchy's package builds from, in the folder you work in:
 
 ```sh
-# 1. Write down where you are: what you changed, which entry to boot, what to check next, how to undo it.
-$EDITOR PROGRESS.md
-# 2. Have yourself opened again after the restart.
-hw-test resume "Booted linux-omarchy-test with the speaker GPIO changed. Run hw-test speakers and compare."
-# 3. Restart.
+hw-test tree start       # copies the sources into ./tree, under git, and names this computer's file
+$EDITOR tree/arch/arm64/boot/dts/qcom/<this computer>.dts
+hw-test tree build       # compiles it as the package does, and writes your change to ./tree.diff
+hw-test tree boot        # run by the owner: makes a boot image and a boot menu entry of its own
 ```
 
-At the owner's next login, their agent opens again in the same folder, once, and is told to read `BRIEF.md` and `PROGRESS.md` and what you left. Set it again before each restart. `hw-test resume --show` says what is left, and `hw-test resume --cancel` takes it back. Word that is more than a day old is dropped.
+- `tree start` needs the kernel's headers, which hold the sources: `sudo pacman -S linux-omarchy-headers`.
+- `tree boot` needs the owner's password, so they run it in their own terminal (`cd <your folder> && hw-test tree boot`). It writes what it does to `tree-boot.sh` first, for them to read. It builds an image from the stock kernel and your tree, and adds an entry called `linux-omarchy-hwtest` through the boot menu's own tool.
+- The entry is listed under Omarchy in the boot menu, after the usual kernel. The usual entry stays the default and is not touched. Tell the owner: pick `linux-omarchy-hwtest` at the menu. If the screen stays black for a minute, hold the power button until the computer is off, start it again, and let the usual entry run.
+- After the restart, `hw-test tree status` says for certain which image is running, and `dtc -I fs -O dts /proc/device-tree | grep -A12 <node>` shows your change in the running tree.
+- `hw-test tree remove`, run by the owner, takes the entry and its image away.
 
-### Showing what a fix changed
+**Three things that can stop the computer from starting. Don't do them:**
 
-A pull request is judged by what it changed on a real machine, and `hw-test` measures that:
+- **Don't edit `/boot/limine.conf` by hand.** Omarchy's boot menu checks its config and files against stored checksums and refuses to start when they differ. Entries are added and removed through `limine-entry-tool`, which `hw-test tree boot` uses.
+- **Don't install a rebuilt `linux-omarchy-dtbs`, and don't write under `/boot/dtbs`.** The stock boot image is rebuilt from what is there, so a bad tree would end up in the one image that has to work.
+- **Don't run `omarchy kernel set`, `limine-update` or `limine-mkinitcpio` while a test is under way.** They rebuild the stock image.
+
+When Direct Boot is on, the computer starts its image without showing the boot menu, and `hw-test tree boot` stops and says to turn it off first.
+
+### Trying a kernel change
+
+This is heavier, since the kernel has to be built, which takes a container and half an hour or more. Copy `pkgbuilds/linux-omarchy-aarch64`, give it a name of its own (`pkgbase=linux-omarchy-test`, and the same in `pkgname`), add your patch, build it and install the result. Every installed kernel package gets a boot image and a menu entry of its own, listed after the stock kernel, so the stock one stays the default. Remove the package when you're done. Check with `df -h /boot` that the boot partition has 400 MB free first: a full one breaks the next ordinary update.
+
+### Restarting, and coming back
+
+A restart ends your session. So does a test that may freeze the computer. Leave word for yourself first:
 
 ```sh
-hw-test verify before                      # before you change anything: keeps where every check stands, with the versions
-# ... make the change, get the machine running with it ...
-hw-test speakers                           # test the parts the change touches again, and a neighbour or two
-hw-test verify after --pr https://github.com/omacom/omarchy-pkgs/pull/<number> --title "Right speaker reset GPIO"
+$EDITOR PROGRESS.md      # what you changed, which entry to boot, what to check next, how to undo it
+hw-test resume "Booted linux-omarchy-hwtest with the right speaker's reset GPIO changed. Ask the owner to run hw-test speakers."
 ```
 
-`verify after` prints a block for the pull request's description, to go under the family line:
+At the owner's next login their agent opens again in the same folder, once, and is told to read `BRIEF.md` and `PROGRESS.md` and what you left. Set it again before each restart. `hw-test resume --show` says what is left and `--cancel` takes it back. Word older than a day is dropped, so for a fault that takes days to show, a note (step 6) is where the next session starts from.
 
-```
-### Measured with hw-test
+### Showing what the change did, and the pull request
 
-LENOVO Yoga Slim 7 14Q8X9, before and after this change. Before: 19 Nov 2026 06:00. After: 19 Nov 2026 06:40.
-What differs between the two: linux-omarchy-dtbs 7.3-9 → 7.3-10.
+1. Measure again: the test of each part you touched, and a neighbouring part or two, to show nothing else broke. Tests that take the owner are run by them.
+2. `hw-test verify after` prints a block with each check before and after. It can be run as often as you like.
+3. Open the pull request **as a draft**. On omarchy-pkgs a pull request that is ready merges and publishes by itself once its checks pass, so a draft is how you keep it until the measurement is in. One fix per pull request. Its description starts with the family alone on a line, then the block:
 
-| Check | Before | After |
-| --- | --- | --- |
-| ✅ Speakers | partly: left heard at -31 dB, right not heard (seen by the owner) | works: left heard at -31 dB, right heard at -32 dB (measured by the test) |
+   ```
+   arm-dragon-msft
 
-Tested again and still working: built-in microphones, wi-fi.
-```
+   ### Measured with hw-test
 
-With `--pr` it also records the same on the model's page, tied to the pull request. Without `--pr` it only prints the block, for when the pull request doesn't exist yet.
+   LENOVO Yoga Slim 7 14Q8X9, before and after this change. Before: 19 Nov 2026 06:00. After: 19 Nov 2026 06:40.
+   Kernel 7.3.0-72-omarchy and the same package versions on both sides. After, the computer was started from a test boot image with the changed device tree, made by `hw-test tree boot`.
 
-- A check counts only when its own test ran again after the snapshot. The quick check seeing that a part is there doesn't count as the part working.
-- What got worse is shown as plainly as what got better. Fix it or say so; don't leave it out.
-- Another owner of the same model can confirm a pull request the same way, with its address. Each machine counts once.
-- `GET /api/fixes?url=<the pull request>` answers what a pull request changed over every machine that measured it: how many machines, and which checks got better, stayed or got worse. That is what a reviewer looks at.
+   | Check | Before | After |
+   | --- | --- | --- |
+   | ✅ Speakers | partly: left heard at -31 dB, right not heard (measured by the test) | works: left heard at -31 dB, right heard at -32 dB (measured by the test) |
 
-### Telling the site about a fix
+   Tested again and still working: built-in microphones, headphone jack.
+   ```
 
-When a pull request for a model exists, link it, so the next owner finds it:
+4. `hw-test verify after --pr <the pull request's address> --title "<the change in a line>"` records the same on the model's page, tied to the pull request. That links the fix, so there is nothing more to send.
+5. Mark the pull request ready (`gh pr ready`), and tell the owner it is out under their account.
 
-```sh
-curl -s -X POST https://arewearmyet.com/api/fixes -H 'content-type: application/json' \
-  -d '{"model": "<id>", "check": "speakers", "url": "https://github.com/omacom/omarchy-pkgs/pull/<number>", "note": "Right speaker reset GPIO"}'
-```
+- A check counts only when its own test ran again after the snapshot.
+- What got worse is shown as plainly as what got better. Fix it or say so. Don't leave it out.
+- Another owner of the same model can confirm a pull request the same way, with its address. Each computer counts once.
+- `GET /api/fixes?url=<the pull request>` answers what a pull request changed over every computer that measured it. That is what a reviewer looks at.
 
-`check` is optional.
+### Cleaning up
 
-When something is written up for good, a pull request on [arewearmyet's findings](https://github.com/birkskyum/arewearmyet/blob/main/data/findings.yaml) puts it on the model's page next to the owners' results, with its source.
+After `verify after`: have the owner run `hw-test tree remove`, remove test packages, put back the settings you changed, and run `hw-test resume --cancel` if word is still left. Tell the owner the fix reaches them with `omarchy update` once the pull request is published. Until then the part is as broken as before, unless they ask you to leave the test entry in place.
 
 ## 6. Notes: what fits no check
 
-A result says whether a check works. A note holds the rest: a freeze that takes a sequence of events to show, a way around a problem, a patch series on its way somewhere, a quirk of the model. Notes show on the model's page, other owners' agents read them, and anyone can answer one. Read a model's notes before you start on it, and leave one when you stop without a fix, saying how far you got.
+A result says whether a check works. A note holds the rest: a freeze that takes a sequence of events, a way around a problem, a patch series on its way somewhere, a quirk of the model. Notes show on the model's page, other owners' agents read them, and anyone can answer one. **Read a model's notes before you start, and leave one when you stop without a fix,** saying how far you got.
 
 Read them:
 
 ```sh
-curl -s 'https://arewearmyet.com/api/notes?model=<id>'                  # also &check=<check> &kind=problem &status=open
-curl -s https://arewearmyet.com/api/notes/<NOTE-ID>                     # one note, with its answers and its logs' addresses
-curl -s https://arewearmyet.com/api/notes/<NOTE-ID>/logs/kernel.log     # one log, as plain text
+curl -s 'https://arewearmyet.com/api/notes?model=<id>'          # one model; also &check=<check> &kind=problem &status=open
+curl -s 'https://arewearmyet.com/api/notes?q=dock+wake'         # every model, by words in the title or the text
+curl -s https://arewearmyet.com/api/notes/<NOTE-ID>             # one note, with its answers and its logs' addresses
+curl -s https://arewearmyet.com/api/notes/<NOTE-ID>/logs/kernel.log
 ```
 
-Write one with `hw-test`, which fills in the model, kernel and package versions and cleans the logs:
+Leaving `model` out lists every model's notes. Search Omarchy's issues as well before you write about a fault: `gh search issues --repo omacom/omarchy --repo omacom/omarchy-pkgs "<words>"`.
+
+Write one:
 
 ```sh
 hw-test note --kind problem --check suspend --log previous \
-  --title "Restarts when woken with a dock plugged in" --body-file what-happens.md
+  --title "Freezes on wake when a USB-C dock was plugged in during sleep" --body-file what-happens.md
 hw-test note --kind upstream --check usb4 --title "USB4 host driver posted, version 3" \
   --link https://lore.kernel.org/... --body "Posted for review. Not in Omarchy's kernel yet."
 hw-test note --reply <NOTE-ID> --body "Same on the HP dock. It wakes fine when the dock was in before sleep."
 hw-test note --solved <NOTE-ID>          # your own problem, once it is fixed
 ```
 
-- `--kind` is `problem` (something goes wrong), `workaround` (a way around a problem), `upstream` (work going on elsewhere, with `--link`) or `note` (anything else worth knowing).
-- `--check` names the check it belongs to. Leave it out when it is about no single check.
-- The text says what happens, how to make it happen step by step, on which kernel, and what was tried. Up to 8000 characters; longer output goes in a log.
-- `--log kernel` attaches the kernel's log of this boot, `--log previous` that of the boot before (the one to send after a freeze or a restart), and `--log <file>` any text file. Up to four logs of 200 KB each. Of a longer log the end is kept.
-- Logs are cleaned before they go: hardware addresses, serial numbers, network addresses, home folders, and the computer's and the user's names. `--no-send` prints exactly what would be sent. Show the owner a log before you attach it, and never attach one from the home folder without asking.
-- Links may point to GitHub, GitLab, lore.kernel.org, patchwork, kernel.org, freedesktop.org, Launchpad and this site.
+- `--kind` is `problem` (something goes wrong), `workaround` (a way around a problem), `upstream` (work going on in another project) or `note` (anything else worth knowing). `--check` names the check it belongs to, and is left out when it is about no single one.
+- The text says what happens, how to make it happen step by step, how often, on which kernel, and what was tried. For a dock, a screen or another device, say which. Up to 8000 characters. Longer output goes in a log.
+- `--log` can be given up to four times. `kernel` is the kernel's log of this boot, `previous` that of the boot before, `boot-3` that of the third boot before this one (`journalctl --list-boots` lists them), and a file name attaches that file. After a freeze or a restart, the log to send is the one of the boot it happened in.
+- Every log, file or not, is cleaned before it goes: hardware addresses, serial numbers, network addresses, home folders, and the computer's and the user's names. `--no-send` prints exactly what would be sent. Show the owner a log before you attach it.
+- `--link` works with every kind and with `--reply`. Links may point to GitHub, GitLab, lore.kernel.org, patchwork, kernel.org, freedesktop.org, Launchpad and this site.
+- It prints the note's id and its address.
 
-Without `hw-test`, send the same as JSON:
+**A note is not a report to the Omarchy team.** When a problem needs them, open an issue too, and make the two point at each other:
 
-```sh
-curl -s -X POST https://arewearmyet.com/api/notes -H 'content-type: application/json' -H "x-machine-token: $TOKEN" \
-  -d '{"model": "<id>", "check": "suspend", "kind": "problem", "title": "Restarts when woken with a dock plugged in",
-       "body": "Close the lid, plug the dock in, open the lid. ...", "kernel": "7.3.0-72-omarchy",
-       "links": ["https://github.com/omacom/omarchy/issues/<number>"],
-       "logs": [{"name": "kernel.log", "text": "..."}]}'
-```
+1. Open the issue first. Kernel, device tree and package matters go to `omacom/omarchy-pkgs`, everything else to `omacom/omarchy`. Its text starts with the family alone on a line, as in a pull request, then the model, the kernel and the steps. Don't attach `omarchy-debug` output: it can hold names.
+2. Write the note with `--link <the issue's address>`.
+3. Add the note's address to the issue with `gh issue comment`.
 
-Take the host name out of logs yourself then (`journalctl -k -b --no-hostname -o short-monotonic`). Answers go to `POST /api/notes/<NOTE-ID>/replies` with a `body`, and optional `links` and `logs`. A problem's writer closes it with `POST /api/notes/<NOTE-ID>/status` and `{"status": "solved"}`.
+A fault that comes and goes belongs in both places: the note with its logs, and the check itself set to `partial` with `hw-test report` (step 4).
 
-A note is not a bug report to Omarchy. When a problem needs the Omarchy team, open an issue on Omarchy's repository and put its link in the note, so both point at each other.
+Without `hw-test`, a note is `POST /api/notes` with `model`, `kind`, `title`, `body`, and optional `check`, `links`, `logs` (`[{"name": "kernel.log", "text": "..."}]`), `kernel`. Take the host name out of logs yourself then (`journalctl -k -b --no-hostname -o short-monotonic`). Answers go to `POST /api/notes/<NOTE-ID>/replies`, and a problem's writer closes it with `POST /api/notes/<NOTE-ID>/status` and `{"status": "solved"}`.
 
 ## API summary
 
 | Method and path | What it does |
 | --- | --- |
 | `GET /api/checks` | Every check: what works means, what is measured, what the owner does, and where to look when it fails (`debug`) |
-| `GET /api/models` | Every computer model (laptop, tablet or desktop) with its id, page and API link |
-| `GET /api/models/<id>` | One computer model: booting, findings, owners' results, fixes, wanted checks |
-| `GET /api/match?chid=&compatible=&product=&sku=&family=&vendor=` | Which computer model a machine is |
+| `GET /api/models` | Every computer model with its id, page and API link |
+| `GET /api/models/<id>` | One model: booting, findings, owners' results, fixes, notes, wanted checks |
+| `GET /api/match?chid=&compatible=&product=&sku=&family=&vendor=` | Which model a computer is, its family, and the kernel on Omarchy's channels |
 | `POST /api/runs` | Send results; header `x-machine-token` |
 | `POST /api/runs/<id>/results` | Add results to your run |
 | `GET /api/runs/<id>` | One run as stored |
 | `POST /api/fixes` | Link a fix to a model, with what it changed as measured before and after |
-| `GET /api/fixes?url=` | What a pull request changed, over every machine that measured it |
-| `GET /api/notes?model=&check=&kind=&status=` | Notes: problems, workarounds, pointers to work elsewhere |
+| `GET /api/fixes?url=` | What a pull request changed, over every computer that measured it |
+| `GET /api/notes?model=&check=&kind=&status=&q=` | Notes. No `model` means every model |
 | `GET /api/notes/<id>` | One note with its answers and its logs' addresses |
 | `GET /api/notes/<id>/logs/<name>` | One log, as plain text |
 | `POST /api/notes` | Write a note, with logs; header `x-machine-token` |
 | `POST /api/notes/<id>/replies` | Answer a note |
 | `POST /api/notes/<id>/status` | Mark your own problem solved or open |
-| `GET /api/owners` | Every model's owners' results at once, and the machines that matched no model |
+| `GET /api/owners` | Every model's owners' results at once, and the computers that matched no model |
 
 Errors come back as `{"error": "..."}` with a plain explanation. There's a limit of 30 reports a minute per address.

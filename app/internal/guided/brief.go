@@ -15,6 +15,7 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/probe"
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 	"github.com/birkskyum/arewearmyet/app/internal/tools"
+	"github.com/birkskyum/arewearmyet/app/internal/tree"
 )
 
 // Guide is where an agent reads how to work on these machines.
@@ -33,11 +34,29 @@ type Briefing struct {
 	Checks map[string]report.Check
 	// Family is the family the machine names itself as, for where the site doesn't know it.
 	Family string
+	// TreeSource is the name of this machine's device tree source, when it is installed.
+	TreeSource string
+	// Findings are what is written up on the site about this model, by check.
+	Findings map[string]report.Finding
 	// Notes are what other owners and their agents wrote down about this model.
 	Notes []report.Listed
 	// Only names the checks to work on. Empty means everything that fails.
 	Only []string
 	When time.Time
+}
+
+// Fill adds what the machine and the site know beyond the results: the family, the device
+// tree's source, what is written up about the model and the notes left on it. Whatever can't
+// be had is left out.
+func (b *Briefing) Fill(api string) {
+	b.Family = probe.Family(machine.Real())
+	if source, err := tree.Real().Machine(); err == nil {
+		b.TreeSource = source
+	}
+	if b.Model.ID != "" {
+		b.Notes, _ = report.Notes(api, b.Model.ID)
+		b.Findings, _ = report.Findings(api, b.Model.ID)
+	}
 }
 
 // ChecksFor turns words into checks: a check's own id, or a part of the test, which stands
@@ -103,7 +122,8 @@ func Failing(kept map[string]report.Kept) []string {
 var howSaid = map[string]string{report.Measured: "measured by the test", report.Owner: "seen by the owner", "agent": "read by an agent"}
 
 // Brief writes what an agent needs to pick a failing part up: the computer, what was
-// measured and how to measure it again, where to look, and where a fix belongs. It names no
+// measured and what is already known of each part, and the order to go about it in. The
+// guide has the rules and the how-to in full, so the brief only names them. It holds no
 // serial number, address, user or host.
 func Brief(b Briefing) string {
 	var out strings.Builder
@@ -114,34 +134,42 @@ func Brief(b Briefing) string {
 	if len(work) == 0 {
 		work = Failing(b.Kept)
 	}
+	family := first(b.Model.Family, b.Family)
 
 	say("# Hardware brief: %s", name)
 	say("")
 	say("Written by hw-test %s on %s. The owner of this computer asked for help getting the parts below to work under Omarchy.", b.Version, b.When.Format("2 January 2006"))
 	say("")
-	say("**Read %s before you do anything.** It has the rules (what you may not touch, what counts as measured, where fixes go) and the site's API. The end of this file repeats the ones that matter most.", Guide)
+	say("The guide for this work is %s. Its steps 1 to 4 are done for you: the computer is identified and measured. **Read its Words and Rules, then step 5 (Fix it) and step 6 (Notes), before you change anything.** This file has what is particular to this computer.", Guide)
 	say("")
 	say("## This computer")
 	say("")
 	model := strings.TrimSpace(hardware["maker"] + " " + hardware["product"])
-	if family := hardware["family"]; family != "" {
-		model += " (" + family + ")"
+	if text := hardware["family"]; text != "" {
+		model += " (" + text + ")"
 	}
 	say("- Model: %s", model)
-	for _, field := range [][2]string{{"sku", "SKU"}, {"board", "Board"}, {"bios", "BIOS"}} {
+	for _, field := range [][2]string{{"sku", "SKU"}, {"board", "Mainboard"}, {"bios", "BIOS"}} {
 		if value := hardware[field[0]]; value != "" {
 			say("- %s: %s", field[1], value)
 		}
 	}
 	switch {
 	case b.Model.ID != "":
-		say("- On the board as `%s`: %s", b.Model.ID, first(b.Model.Page, report.Site+"/models/"+b.Model.ID))
-		say("- What is known about this model, with its device tree and firmware: `curl -s %s/api/models/%s`", report.Site, b.Model.ID)
+		say("- On arewearmyet.com as `%s`: %s", b.Model.ID, first(b.Model.Page, report.Site+"/models/"+b.Model.ID))
+		say("- Everything known about this model, with its device tree and firmware: `curl -s %s/api/models/%s`", report.Site, b.Model.ID)
 	default:
-		say("- The board at %s doesn't know this computer yet. `hw-test` offers a form to add it after sending a result.", report.Site)
+		say("- arewearmyet.com doesn't know this computer yet. `hw-test` offers a form to add it after sending a result.")
+	}
+	if family != "" {
+		say("- Family, which is the first line of a pull request or an issue for it: `%s`", family)
 	}
 	if b.Run.Compatible != "" {
-		say("- Device tree in use: `%s`", b.Run.Compatible)
+		line := fmt.Sprintf("- Device tree in use: `%s`", b.Run.Compatible)
+		if b.TreeSource != "" {
+			line += fmt.Sprintf(", built from `arch/arm64/boot/dts/qcom/%s.dts`", b.TreeSource)
+		}
+		say("%s", line)
 	}
 	say("- Kernel: %s, on %s", b.Run.Kernel, b.Run.OS)
 	var packages []string
@@ -151,6 +179,16 @@ func Brief(b Briefing) string {
 	sort.Strings(packages)
 	if len(packages) > 0 {
 		say("- Packages: %s", strings.Join(packages, ", "))
+	}
+	// Whether the computer is up to date decides whether a fault is still worth chasing
+	if len(b.Model.Kernels) > 0 {
+		var channels []string
+		for _, channel := range []string{"stable", "rc", "edge"} {
+			if version := b.Model.Kernels[channel]; version != "" {
+				channels = append(channels, channel+" "+version)
+			}
+		}
+		say("- Omarchy's channels have linux-omarchy at: %s. This computer has %s. If it is behind its channel, ask the owner to run `omarchy update`, restart and run `hw-test fix` again before you debug: the fault may be fixed already.", strings.Join(channels, ", "), first(b.Run.Packages["linux-omarchy"], "an unknown version"))
 	}
 
 	say("")
@@ -170,13 +208,25 @@ func Brief(b Briefing) string {
 		say("### %s (check `%s`): %s", first(checkTitle[check], known.Title, check), check, state)
 		say("")
 		if tested {
-			say("- Found on %s with kernel %s, %s.", result.When.Format("2 January 2006"), first(result.Kernel, "unknown"), first(howSaid[result.How], result.How))
+			say("- Measured on %s with kernel %s, %s.", result.When.Format("2 January 2006"), first(result.Kernel, "unknown"), first(howSaid[result.How], result.How))
 			if result.Evidence != "" {
 				say("- What the test found: %s", result.Evidence)
 			}
 			if result.Note != "" {
 				say("- Noted: %s", result.Note)
 			}
+		}
+		// What is written up on the site about this part, which often names the cause
+		if finding, ok := b.Findings[check]; ok && finding.Note != "" {
+			line := fmt.Sprintf("- Already known on the site (%s", stateLabel[finding.State])
+			if finding.Checked != "" {
+				line += ", " + finding.Checked
+			}
+			line += "): " + finding.Note
+			if finding.Source != "" {
+				line += " Source: " + finding.Source
+			}
+			say("%s", line)
 		}
 		if known.Works != "" {
 			say("- Working means: %s", known.Works)
@@ -186,7 +236,7 @@ func Brief(b Briefing) string {
 		}
 		command, owner := remeasure(check)
 		if owner {
-			say("- Measure again: `%s`, which needs the owner at the computer in a terminal. Ask them to run it; you can't.", command)
+			say("- Measure again: `%s`, run by the owner in their own terminal, since it needs them at the computer. Ask them to run it and tell you what it said.", command)
 		} else {
 			say("- Measure again: `%s --no-send`, which runs by itself, also without a terminal.", strings.TrimSuffix(command, " --json"))
 		}
@@ -218,52 +268,15 @@ func Brief(b Briefing) string {
 		}
 	}
 	say("")
-	say("Several parts hang on one: sound, the battery, charging and USB-C all need the audio processor (`adsp`) running, and WebGL and WebGPU need the GPU.")
-
-	var alone, withOwner []string
-	for _, entry := range menu {
-		switch {
-		case len(entry.checks) == 0:
-		case entry.auto && entry.word != "speakers":
-			alone = append(alone, entry.word)
-		default:
-			withOwner = append(withOwner, entry.word)
-		}
-	}
-	say("")
-	say("## Measuring with hw-test")
-	say("")
-	say("`hw-test` is the tool that made this brief. Run it as `hw-test`. Where that isn't on the path, `omarchy-mise-install github:birkskyum/arewearmyet hw-test` puts it there, and `mise x github:birkskyum/arewearmyet -- hw-test` runs it without installing.")
-	say("")
-	say("- `hw-test status`: the latest result of every check on this computer. Nothing is run.")
-	say("- `hw-test quick --json`: the quick check, read-only, a few seconds, printed as JSON. Nothing is sent.")
-	say("- `hw-test facts`: the devices the test found to work with.")
-	say("- `hw-test <part> --no-send` for the parts that run by themselves, also without a terminal: %s. `hw-test auto --no-send` runs them all, takes about four minutes and heats the computer.", strings.Join(alone, ", "))
-	say("- The parts that take the owner at the computer: %s. You can't run these. Ask the owner to run `hw-test <part>` in their own terminal and tell you what it said.", strings.Join(withOwner, ", "))
-	say("- Measure before a change and after it. Leave out `--no-send` once a change made a difference, so the model's page shows it. Sending to arewearmyet.com needs no permission.")
+	say("Several parts hang on one: sound, the battery, charging and USB-C all need the audio processor (`adsp`) running, and WebGL and WebGPU need the GPU. `hw-test status` shows all of it at any time.")
 
 	say("")
-	say("## Showing that a change did what it should")
-	say("")
-	say("A pull request is judged by what it changed on a real machine. `hw-test` measures that for you:")
-	say("")
-	say("1. Before you change anything: `hw-test verify before`. It keeps where every check stands now, with the kernel and package versions.")
-	say("2. Make the change and get the computer running with it.")
-	say("3. Test the parts the change touches again: the commands under \"Measure again\" above. Test a neighbouring part or two as well, to show nothing else broke.")
-	say("4. `hw-test verify after --pr <the pull request's address> --title \"<the change in a line>\"`. It prints a block with each check before and after, to put in the pull request's description under the family line, and records the same on the model's page with the pull request.")
-	say("")
-	say("Without `--pr` it only prints the block, for when the pull request doesn't exist yet. A check counts only when its own test ran again after the snapshot. The quick check seeing that a part is there doesn't count as the part working.")
-	say("")
-	say("## Notes: reading what others found, and leaving what you find")
-	say("")
-	say("Results say whether a check works. A note holds what doesn't fit one: a freeze that takes a sequence of events, a way around a problem, a patch series that is on its way. Other owners' agents read them, and can answer.")
+	say("## Notes on this model")
 	say("")
 	if len(b.Notes) > 0 {
-		say("On this model so far:")
-		say("")
 		for at, note := range b.Notes {
 			if at == 12 {
-				say("- and %d more: `curl -s %s/api/notes?model=%s`", len(b.Notes)-at, report.Site, b.Model.ID)
+				say("- and %d more: `curl -s '%s/api/notes?model=%s'`", len(b.Notes)-at, report.Site, b.Model.ID)
 				break
 			}
 			about := note.Kind
@@ -282,43 +295,25 @@ func Brief(b Briefing) string {
 		say("")
 		say("Read the ones that touch your work before you start: someone may have been here.")
 	} else {
-		say("Nobody has left a note on this model yet.")
+		say("Nobody has left a note on this model yet. That means nobody wrote one, not that nothing is known: see \"Already known on the site\" above, and search every model's notes with `curl -s '%s/api/notes?q=<words>'`.", report.Site)
 	}
+
 	say("")
-	say("- Read: `curl -s '%s/api/notes?model=%s'` lists them (add `&check=<check>`, `&kind=problem`, `&status=open`). A note's `url` gives all of it with its answers, and each log has a `url` of its own.", report.Site, first(b.Model.ID, "<model id>"))
-	say("- Write: `hw-test note --kind problem --check <check> --title \"<the note in a line>\" --body-file <file> --log kernel`. Kinds are `problem`, `workaround`, `upstream` (work going on elsewhere, with `--link`) and `note`. `--check` is left out when it is about no single check.")
-	say("- Say in the text what happens, how to make it happen step by step, and what you tried. `--log kernel` attaches the kernel's log of this boot and `--log previous` that of the boot before, which is the one to send after a freeze or a restart. Logs are cleaned of addresses, serial numbers and names before they go.")
-	say("- `--no-send` prints what would be sent. Show the owner a log before you attach it.")
-	say("- Answer someone's note with `hw-test note --reply <NOTE-ID> --body \"...\"`, and close a problem you wrote with `hw-test note --solved <NOTE-ID>`.")
-	say("- When you stop without a fix, leave a note saying how far you got. The next agent starts from it.")
+	say("## How to go about it")
 	say("")
-	say("## The rules that matter most")
+	say("Each step is explained in the guide's step 5 and 6. In short:")
 	say("")
-	say("1. The owner's data is the line. Never touch their files, the disk's partitions or its encryption, and don't flash firmware or change the BIOS. Don't dump hardware registers: regmap dumps can hang these machines.")
-	say("2. The boot menu is yours to work in: test kernels, test device trees, new entries, a changed default, restarts. Keep one entry that is known to boot untouched (the stock kernel's image), check with `df -h /boot` that the boot partition has room first, and clean up when you're done.")
-	say("3. Before a restart, write where you are into PROGRESS.md and run `hw-test resume \"<what to go on with>\"`. At the owner's next login you are opened again in this folder, once. Tell the owner before a restart, since it closes what they have open, unless they've said to restart as you need.")
-	say("4. Say only what was measured or what the owner saw. A driver that loaded is not a part that works.")
-	say("5. Reporting to arewearmyet.com and a pull request or an issue on Omarchy's repositories need no asking. Ask before posting anywhere else.")
-	say("6. No serial numbers, addresses, user or host names anywhere, and no firmware files in public: they are signed by the computer's maker and can't be passed on.")
+	say("1. **Check it is worth chasing.** Up to date (above)? Already known, with a cause? Some parts can't be fixed from here: a missing kernel feature, or something Omarchy has no place for. Then say so to the owner, leave a note (step 8) and go on to the next part.")
+	say("2. **Snapshot.** `hw-test verify before`, before you change anything.")
+	say("3. **Look.** The commands under \"Where to look\" only read. `dtc -I fs -O dts /proc/device-tree` shows the device tree the computer is running.")
+	say("4. **Change.** A setting: try it on this computer, keeping a copy of what you change. The device tree: `hw-test tree start`, edit, `hw-test tree build`, then the owner runs `hw-test tree boot`, which makes a boot entry of its own. Never install a rebuilt `linux-omarchy-dtbs`, write under `/boot/dtbs` or edit `/boot/limine.conf` by hand: each can stop the computer from starting.")
+	say("5. **Before a restart, or a test that may freeze the computer:** write where you are into `PROGRESS.md`, then `hw-test resume \"<what to go on with>\"`. You are opened again at the owner's next login.")
+	say("6. **Measure again.** The \"Measure again\" command of each part you touched, and a neighbouring part. Then `hw-test verify after`, which prints a before-and-after block.")
+	say("7. **Pull request.** Open it as a draft. Its description starts with a line that says only %s, then the block. Then `hw-test verify after --pr <its address> --title \"<the change in a line>\"`, which records it on the model's page, and mark it ready. Tell the owner.", familyLine(family))
+	say("8. **Not fixed?** Leave it for the next agent: `hw-test note --kind problem --check <check> --title \"...\" --body-file <file> --log kernel`. What the owner told you about a part goes in with `hw-test report --check <check> --state partial --note \"...\"`.")
+	say("9. **Clean up.** `hw-test tree remove` (run by the owner), restore the settings you changed, and say what is left.")
 	say("")
-	say("## Where a fix goes")
-	say("")
-	say("Fixes go to Omarchy as pull requests on GitHub, and nowhere else: not to Linux, linux-firmware, Mesa or systemd.")
-	say("")
-	say("| What is wrong | Where it is fixed |")
-	say("| --- | --- |")
-	say("| A device missing or wrongly described (keyboard, speakers, camera, a USB-C port, a GPIO), or the computer not recognised at boot | Its device tree and hardware IDs: https://github.com/omacom/omarchy-pkgs, `pkgbuilds/linux-omarchy-dtbs` (numbered patches on the kernel's trees) |")
-	say("| A kernel driver's fault | Omarchy's kernel: omarchy-pkgs, `pkgbuilds/linux-omarchy` (a numbered patch series) |")
-	say("| A firmware file the computer needs | The model's own package: omarchy-pkgs, `pkgbuilds/<maker>-<model>-firmware`. It says where the files come from, and never carries files that may not be passed on |")
-	say("| A sound profile | omarchy-pkgs, `pkgbuilds/alsa-ucm-conf` |")
-	say("| A setting Omarchy applies per machine (a kernel option, an environment variable, a service) | https://github.com/omacom/omarchy (branch `quattro`), `install/hardware/` |")
-	say("")
-	say("Read the repository's `AGENTS.md` first. Pull requests on Omarchy's repositories are welcome. Open one when the change is tested on this computer, and tell the owner you did, since it goes out under their GitHub account. Its description starts with a line that says only %s, which is how the Omarchy team finds the pull requests for this family of machines. Under that line, say which model and kernel it was tested on and what `hw-test` measured before and after. Then link it to the model, so the next owner finds it:", familyLine(first(b.Model.Family, b.Family)))
-	say("")
-	say("```sh")
-	say("curl -s -X POST %s/api/fixes -H 'content-type: application/json' \\", report.Site)
-	say("  -d '{\"model\": \"%s\", \"check\": \"<check>\", \"url\": \"<the pull request>\", \"note\": \"<what it fixes>\"}'", first(b.Model.ID, "<model id>"))
-	say("```")
+	say("The owner's data is the line: never their files, the disk's partitions or its encryption, and no firmware flashing or BIOS changes. Commands that need root go through `sudo`. When it asks for a password you can't give, hand the owner the exact command to run.")
 	return out.String()
 }
 
@@ -327,7 +322,7 @@ func Brief(b Briefing) string {
 func familyLine(family string) string {
 	switch family {
 	case "":
-		return "the machine's family (`" + probe.DragonMsft + "` for a Snapdragon machine that came with Windows, `" + probe.DragonGoogle + "` for a Chromebook or Googlebook, `" + probe.Nvidia + "` or `" + probe.Apple + "`)"
+		return "the computer's family (`" + probe.DragonMsft + "` for a Snapdragon machine that came with Windows, `" + probe.DragonGoogle + "` for a Chromebook or Googlebook, `" + probe.Nvidia + "` or `" + probe.Apple + "`)"
 	case probe.Apple:
 		return "`" + probe.Apple + "` (Apple Silicon Macs belong to the Omarchy Mac team, so ask the owner where that team takes changes before opening anything)"
 	}
@@ -410,10 +405,8 @@ func handOver(run *report.Run, options Options, model report.Model, only []strin
 		if launch == nil {
 			launch = tools.Agent
 		}
-		var notes []report.Listed
-		if model.ID != "" {
-			notes, _ = report.Notes(options.API, model.ID)
-		}
-		return handedMsg{HandOver(Briefing{Version: options.Version, Run: run, Kept: report.Local(), Model: model, Family: probe.Family(machine.Real()), Checks: checks, Notes: notes, Only: only, When: time.Now()}, Workspace(), launch)}
+		briefing := Briefing{Version: options.Version, Run: run, Kept: report.Local(), Model: model, Checks: checks, Only: only, When: time.Now()}
+		briefing.Fill(options.API)
+		return handedMsg{HandOver(briefing, Workspace(), launch)}
 	}
 }

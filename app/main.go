@@ -33,6 +33,7 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 	"github.com/birkskyum/arewearmyet/app/internal/resume"
 	"github.com/birkskyum/arewearmyet/app/internal/tools"
+	"github.com/birkskyum/arewearmyet/app/internal/tree"
 )
 
 // version is set when a release is built.
@@ -55,7 +56,7 @@ func main() {
 		word := args[0]
 		args = args[1:]
 		switch {
-		case command == "brief" || command == "fix" || command == "verify" || command == "resume":
+		case command == "brief" || command == "fix" || command == "verify" || command == "resume" || command == "tree":
 			// What follows these two names what to hand over: checks, or parts of the test
 			topics = append(topics, word)
 		case guided.KnownStep(word):
@@ -88,6 +89,11 @@ func main() {
 	cancel := flags.Bool("cancel", false, "for hw-test resume: take back what was left for after the restart")
 	show := flags.Bool("show", false, "for hw-test resume: show what is left for after the restart")
 	atLogin := flags.Bool("run", false, "for hw-test resume: what the login service calls")
+	// For hw-test report
+	state := flags.String("state", "", "for hw-test report: works, partial or broken")
+	how := flags.String("how", "owner", "for hw-test report: owner (they saw or heard it) or agent (your reading of logs)")
+	noteText := flags.String("note", "", "for hw-test report: what was seen, in a sentence or two")
+	evidence := flags.String("evidence", "", "for hw-test report: the line of output that shows it")
 	flags.Usage = usage
 	flags.Parse(args)
 
@@ -102,12 +108,14 @@ func main() {
 		os.Exit(update())
 	case "resume":
 		os.Exit(comeBack(strings.Join(topics, " "), *cancel, *show, *atLogin))
+	case "tree":
+		os.Exit(deviceTree(topics))
 	case "status":
 		// The latest result of every check on this machine, without running anything
 		announce()
 		fmt.Println(guided.Status(report.Local()))
 		return
-	case "quick", "check", "guided", "facts", "brief", "fix", "note", "verify":
+	case "quick", "check", "guided", "facts", "brief", "fix", "note", "verify", "report":
 		if command == "check" {
 			command = "quick"
 		}
@@ -139,6 +147,11 @@ func main() {
 	}
 	run.Model, run.Agent = *model, *agent
 
+	// One result the owner told the agent, or the agent read from logs
+	if command == "report" {
+		os.Exit(tell(run, *api, *check, *state, *how, *noteText, *evidence, !*noSend && !*jsonOnly))
+	}
+
 	// Before and after a change: what a pull request changed on this machine, as measured
 	if command == "verify" {
 		os.Exit(verify(run, topics, *api, *pr, *title, !*noSend && !*jsonOnly))
@@ -166,10 +179,8 @@ func main() {
 		}
 		known, _ := report.Checks(*api)
 		matched, _ := report.Match(*api, run)
-		briefing := guided.Briefing{Version: version, Run: run, Kept: kept, Model: matched, Family: probe.Family(machine.Real()), Checks: known, Only: checks, When: time.Now()}
-		if matched.ID != "" {
-			briefing.Notes, _ = report.Notes(*api, matched.ID)
-		}
+		briefing := guided.Briefing{Version: version, Run: run, Kept: kept, Model: matched, Checks: known, Only: checks, When: time.Now()}
+		briefing.Fill(*api)
 		if command == "brief" {
 			fmt.Print(guided.Brief(briefing))
 			return
@@ -264,6 +275,155 @@ func announce() {
 	if newer := report.Newer(version, time.Now()); newer != "" {
 		fmt.Fprintf(os.Stderr, "hw-test %s is out, and this is %s. Update with: hw-test update\n\n", newer, version)
 	}
+}
+
+// tell sends one result that no test measured: what the owner saw, or what the agent read.
+func tell(run *report.Run, api, check, state, how, note, evidence string, send bool) int {
+	fail := func(text string) int {
+		fmt.Fprintln(os.Stderr, "hw-test: "+text)
+		return 2
+	}
+	if checks, unknown := guided.ChecksFor([]string{check}); check == "" || len(unknown) > 0 || len(checks) != 1 || checks[0] != check {
+		return fail("report needs --check with a check's id, like suspend. hw-test status lists them.")
+	}
+	if state != report.Works && state != report.Partial && state != report.Broken {
+		return fail("report needs --state works, partial or broken.")
+	}
+	if how != report.Owner && how != "agent" {
+		return fail("--how is owner (they saw or heard it and told you) or agent (your own reading of logs). What a test measured is sent by running the test.")
+	}
+	if strings.TrimSpace(note) == "" {
+		return fail("report needs --note: what was seen, in a sentence or two.")
+	}
+	if run.Model == "" {
+		if matched, err := report.Match(api, run); err == nil {
+			run.Model = matched.ID
+		}
+	}
+	// This result alone: the site keeps each check's newest result per machine, so the
+	// others this machine has sent stand as they are
+	run.Mode = "agent"
+	run.Results = nil
+	run.Quick = nil
+	run.Set(check, state, how, evidence, note)
+	_ = report.Remember(run, time.Now())
+	if !send {
+		fmt.Println(string(run.JSON()))
+		fmt.Fprintln(os.Stderr, "Not sent.")
+		return 0
+	}
+	sent, err := report.Send(api, run)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "hw-test: the site didn't take it:", err)
+		return 1
+	}
+	fmt.Fprintf(os.Stderr, "Sent as %s. %s\n", sent.Run, first(sent.Page, "The board doesn't know this computer yet."))
+	return 0
+}
+
+// deviceTree is the way to try a changed device tree: the sources, a build, a boot entry of
+// its own, and taking it away again.
+func deviceTree(words []string) int {
+	system := tree.Real()
+	dir, err := os.Getwd()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "hw-test:", err)
+		return 1
+	}
+	step := ""
+	if len(words) > 0 {
+		step = words[0]
+	}
+	fail := func(err error) int {
+		fmt.Fprintln(os.Stderr, "hw-test:", err)
+		return 1
+	}
+	// A step that needs the owner's password: written out as a script to read, and run with
+	// sudo where there is a terminal to ask in
+	asRoot := func(file, script, what string) int {
+		path := filepath.Join(dir, file)
+		if err := os.WriteFile(path, []byte(script), 0o755); err != nil {
+			return fail(err)
+		}
+		if !guided.Interactive() {
+			fmt.Fprintf(os.Stderr, "This step needs the owner's password, and there is no terminal here to ask for it.\nAsk the owner to run this in their own terminal:\n\n  cd %s && hw-test tree %s\n\nIt %s. What it runs is in %s.\n", dir, step, what, path)
+			return 3
+		}
+		fmt.Fprintf(os.Stderr, "This %s. It needs your password. What it runs is in %s.\n\n", what, path)
+		command := exec.Command("sudo", "bash", path)
+		command.Stdin, command.Stdout, command.Stderr = os.Stdin, os.Stderr, os.Stderr
+		if err := command.Run(); err != nil {
+			return fail(fmt.Errorf("it didn't go through: %v", err))
+		}
+		return 0
+	}
+	switch step {
+	case "start":
+		root, err := system.Start(dir)
+		if err != nil {
+			return fail(err)
+		}
+		fmt.Fprintf(os.Stderr, "The device tree sources of linux-omarchy %s are in %s, under git.\n", system.Kernel, root)
+		if machine, err := system.Machine(); err == nil {
+			fmt.Fprintf(os.Stderr, "This computer's tree is arch/arm64/boot/dts/qcom/%s.dts, with the files it includes.\n", machine)
+		}
+		fmt.Fprintln(os.Stderr, "Change it, then: hw-test tree build")
+		return 0
+	case "build":
+		machine := ""
+		if len(words) > 1 {
+			machine = strings.TrimSuffix(words[1], ".dts")
+		} else if machine, err = system.Machine(); err != nil {
+			return fail(err)
+		}
+		built, err := system.Build(dir, machine)
+		if err != nil {
+			return fail(err)
+		}
+		fmt.Fprintf(os.Stderr, "Built %s\n", built.DTB)
+		if len(built.Changed) == 0 {
+			fmt.Fprintln(os.Stderr, "Nothing differs from Omarchy's sources yet, so this is the stock tree.")
+		} else {
+			fmt.Fprintf(os.Stderr, "Changed against Omarchy's sources: %s\nThe change as a diff: %s\n", strings.Join(built.Changed, ", "), built.Diff)
+		}
+		fmt.Fprintln(os.Stderr, "To try it from a boot entry of its own, the owner runs: hw-test tree boot")
+		return 0
+	case "boot":
+		machine := ""
+		if len(words) > 1 {
+			machine = strings.TrimSuffix(words[1], ".dts")
+		} else if machine, err = system.Machine(); err != nil {
+			return fail(err)
+		}
+		dtb := filepath.Join(dir, machine+".dtb")
+		if _, err := os.Stat(dtb); err != nil {
+			return fail(fmt.Errorf("there is no %s yet. Build it first: hw-test tree build", dtb))
+		}
+		started, err := os.ReadFile("/proc/cmdline")
+		if err != nil {
+			return fail(err)
+		}
+		// The mark of an earlier test image doesn't go in twice
+		var cmdline []string
+		for _, word := range strings.Fields(string(started)) {
+			if word != tree.Mark {
+				cmdline = append(cmdline, word)
+			}
+		}
+		return asRoot("tree-boot.sh", system.Script(dtb, strings.Join(cmdline, " ")), "puts the changed device tree into a boot image and a boot menu entry of its own, "+tree.Entry+". The usual entry is not touched")
+	case "remove":
+		return asRoot("tree-remove.sh", tree.RemoveScript(), "takes the test entry "+tree.Entry+" and its boot image away")
+	case "status":
+		started, _ := os.ReadFile("/proc/cmdline")
+		if tree.Running(string(started)) {
+			fmt.Println("This computer was started from the test boot image, with the changed device tree.")
+		} else {
+			fmt.Println("This computer was started from its usual boot image, with Omarchy's own device tree.")
+		}
+		return 0
+	}
+	fmt.Fprintln(os.Stderr, "hw-test: tree takes start, build, boot, remove or status. Start with: hw-test tree start")
+	return 2
 }
 
 // comeBack leaves word for after a restart, or at login acts on a word that was left.
@@ -408,7 +568,8 @@ func verify(run *report.Run, words []string, api, pr, what string, send bool) in
 		if matched, err := report.Match(api, run); err == nil && matched.ID != "" {
 			model = matched
 		}
-		fmt.Println(guided.VerifyBlock(run, model, snapshot, changes))
+		started, _ := os.ReadFile("/proc/cmdline")
+		fmt.Println(guided.VerifyBlock(run, model, snapshot, changes, tree.Running(string(started))))
 		if pr == "" {
 			fmt.Fprintln(os.Stderr, "That is the block for the pull request's description. To record it on the model's page too, give the pull request: hw-test verify after --pr <its address>")
 			return 0
@@ -464,11 +625,15 @@ func attach(name string) (report.Log, error) {
 	var text string
 	var err error
 	logName := name + ".log"
-	switch name {
-	case "kernel":
+	// boot-3 is the kernel's log of the third boot before this one, for a fault that isn't the last one's
+	back := regexp.MustCompile(`^boot-(\d{1,3})$`).FindStringSubmatch(name)
+	switch {
+	case name == "kernel":
 		text, err = sys.RunFor(20*time.Second, "journalctl", "-k", "-b", "--no-hostname", "-o", "short-monotonic", "--no-pager")
-	case "previous":
+	case name == "previous":
 		text, err = sys.RunFor(20*time.Second, "journalctl", "-k", "-b", "-1", "--no-hostname", "-o", "short-monotonic", "--no-pager")
+	case back != nil:
+		text, err = sys.RunFor(20*time.Second, "journalctl", "-k", "-b", "-"+back[1], "--no-hostname", "-o", "short-monotonic", "--no-pager")
 	default:
 		var data []byte
 		if data, err = os.ReadFile(name); err == nil && len(data) > 8<<20 {
@@ -597,7 +762,8 @@ func usage() {
                        hw-test note --kind problem --check suspend --log previous \
                          --title "Restarts when woken with a dock plugged in" --body-file what-happens.md
                      --kind problem|workaround|upstream|note   --check ID   --link URL...
-                     --log kernel|previous|FILE...  attaches a log, cleaned of addresses and names
+                     --log kernel|previous|boot-N|FILE...  attaches a log, cleaned of addresses
+                     and names; boot-3 is the third boot before this one
                      --reply NOTE-ID answers a note, --solved NOTE-ID closes your own problem
                      --no-send shows what would be sent, logs included, and sends nothing
   hw-test verify before    take a snapshot of where this computer stands, before a change
@@ -605,6 +771,12 @@ func usage() {
                      block for the pull request, and recorded with the pull request on the
                      model's page. --title says in a line what the change is
   hw-test status     where this computer stands: the latest result of every check, nothing is run
+  hw-test tree start|build|boot|remove|status   try a changed device tree from a boot entry of
+                     its own: the sources Omarchy builds from, a build, and (run by the
+                     owner, with their password) a test entry in the boot menu
+  hw-test report --check ID --state works|partial|broken --note TEXT   send one result
+                     that no test measured: what the owner saw (--how owner, the default)
+                     or what was read from logs (--how agent)
   hw-test resume [WHAT]    for an agent, before it restarts the computer: at the owner's next
                      login the agent opens again in this folder, once, and is told WHAT.
                      --show says what is left, --cancel takes it back

@@ -22,7 +22,7 @@ func TestTheBlockForAPullRequestShowsEachCheckBeforeAndAfter(t *testing.T) {
 		{Check: "microphones", From: report.Result{State: report.Untested}, To: side(report.Works, report.Measured, "1000 Hz at -35 dB")},
 		{Check: "wifi", From: side(report.Works, report.Measured, "connected"), To: side(report.Works, report.Measured, "connected")},
 	}
-	block := VerifyBlock(run, report.Model{ID: "lenovo-yoga-slim-7x-14q8x9", Page: "https://arewearmyet.com/models/lenovo-yoga-slim-7x-14q8x9"}, snapshot, changes)
+	block := VerifyBlock(run, report.Model{ID: "lenovo-yoga-slim-7x-14q8x9", Page: "https://arewearmyet.com/models/lenovo-yoga-slim-7x-14q8x9"}, snapshot, changes, false)
 	for _, text := range []string{
 		"### Measured with hw-test", "LENOVO Yoga Slim 7 14Q8X9, before and after this change",
 		// Only what differs between the two sides is listed, which is what was changed
@@ -44,7 +44,11 @@ func TestTheBlockForAPullRequestShowsEachCheckBeforeAndAfter(t *testing.T) {
 	}
 	// A change tried outside the packages says so, since the versions alone would show nothing
 	snapshot.Versions.Packages["linux-omarchy-dtbs"] = "7.3-10"
-	if block = VerifyBlock(run, report.Model{}, snapshot, changes); !strings.Contains(block, "the same package versions on both sides, so the change was tried outside the packages") {
+	if block = VerifyBlock(run, report.Model{}, snapshot, changes, false); !strings.Contains(block, "the same package versions on both sides, so the change was tried outside the packages") {
 		t.Errorf("unchanged versions aren't said:\n%s", block)
+	}
+	// Started from the test image, it says so: that is the change no package version shows
+	if block = VerifyBlock(run, report.Model{}, snapshot, changes, true); !strings.Contains(block, "started from a test boot image with the changed device tree, made by `hw-test tree boot`") {
+		t.Errorf("the test image isn't said:\n%s", block)
 	}
 }

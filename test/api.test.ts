@@ -63,6 +63,8 @@ test('finds a machine by its device tree, then by its model number', async () =>
   assert.equal((await call('GET', '/api/match?product=Unheard%20Of')).body.model, null);
   // The family a pull request for the machine names: Chromebooks and Googlebooks are Google's, the rest came with Windows
   assert.equal(byNumber.body.family, 'arm-dragon-msft');
+  // The kernel on each of Omarchy's channels comes with the match, to tell a machine that is behind
+  assert.match(byNumber.body.kernels.edge, /^\d+\.\d+/);
   const chromebook = await call('GET', '/api/match?compatible=google,lazor-rev1');
   assert.equal(chromebook.body.model, 'acer-chromebook-spin-513-cp513-1h');
   assert.equal(chromebook.body.family, 'arm-dragon-google');
@@ -326,6 +328,12 @@ test('takes a note with logs, answers to it and a solved mark, and cleans what n
   assert.equal(model.body.notes[0].page, `https://arewearmyet.com/note?id=${id}`);
   assert.equal((await call('GET', '/api/notes?model=' + YOGA + '&check=suspend&kind=problem&status=open')).body.notes.length, 1);
   assert.equal((await call('GET', '/api/notes?check=camera')).body.notes.length, 0);
+  // Without a model it searches every model's notes, by words in the title or the text
+  assert.equal((await call('GET', '/api/notes?q=dock')).body.notes.length, 1);
+  assert.equal((await call('GET', '/api/notes?q=DOCK%20lid')).body.notes.length, 1);
+  assert.equal((await call('GET', '/api/notes?q=dock%20keyboard')).body.notes.length, 0);
+  assert.equal((await call('GET', '/api/notes?q=100%25')).body.notes.length, 0);
+  assert.equal((await call('GET', '/api/notes')).body.notes.length, 1);
   assert.equal((await call('GET', '/api/notes?kind=gossip')).status, 400);
   const thread = await call('GET', `/api/notes/${id}`);
   assert.equal(thread.body.replies.length, 1);

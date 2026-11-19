@@ -73,7 +73,7 @@ checks:
     title: WebGPU in the browser
     works: Chromium gives pages WebGPU on the GPU without being started in a special way.
     probe: The graphics test asks Chromium for a WebGPU adapter and device, as it comes and again with the switches that turn WebGPU on. Working only with the switches counts as partly.
-    debug: "Chromium on Linux doesn't turn WebGPU on by itself on most ARM GPUs. `--enable-unsafe-webgpu --enable-features=Vulkan,WebGPU` turns it on where Vulkan works, which `vulkaninfo --summary` shows by naming the GPU and not llvmpipe. A second `--enable-features` replaces the one in `~/.config/chromium-flags.conf`, so merge them into one line."
+    debug: "Chromium on Linux doesn't turn WebGPU on by itself on most ARM GPUs. Vulkan has to work first, which `vulkaninfo --summary` shows by naming the GPU and not llvmpipe. The test's first run starts Chromium with the owner's `~/.config/chromium-flags.conf`, so switches set there count as working. To try it on this machine, keep a copy of that file, then `omarchy-chromium-add-feature Vulkan` and `omarchy-chromium-add-feature WebGPU` (they add to the `--enable-features` line that is there, where a second such line would replace it), and put `--enable-unsafe-webgpu` on a line of its own. A fix for everyone is a per-user setting in omacom/omarchy (the guide's table says where). Whether Omarchy wants that switch on by default is the team's call, so say in the pull request that it is a proposal."
 
   - id: backlight
     group: display
@@ -137,7 +137,7 @@ checks:
     works: Every built-in speaker plays, at a normal volume, without crackling.
     probe: Whether a sound card with a playback device exists, besides HDMI and USB ones.
     person: Play music and say whether both sides (and the tweeters, if it has them) play cleanly.
-    debug: "Sound runs through the audio DSP. In order: the ADSP must be running (see the `adsp` check), the sound card must exist (`cat /proc/asound/cards`), the topology file the card asks for must be under `/lib/firmware/qcom/` (the journal names it when it's missing), and alsa-ucm-conf needs a profile for the card (`alsaucm listcards`, `wpctl status`). The speaker amplifiers (WSA883x or WSA884x on SoundWire) need their reset GPIOs and supplies in the tree. One silent side is usually one amplifier's GPIO or the channel mapping. `hw-test speakers` measures each side with the microphones."
+    debug: "Sound runs through the audio DSP. In order: the ADSP must be running (see the `adsp` check), the sound card must exist (`cat /proc/asound/cards`), the topology file the card asks for must be under `/lib/firmware/qcom/` (the journal names it when it's missing), and alsa-ucm-conf needs a profile for the card (`alsaucm listcards`, `wpctl status`). The speaker amplifiers (WSA883x or WSA884x on SoundWire) need their reset GPIOs and supplies in the tree. One silent side is usually one amplifier's GPIO or the channel mapping. `hw-test speakers` measures each side with the microphones. `ls /sys/bus/soundwire/devices/` shows whether every amplifier is there. `dtc -I fs -O dts /proc/device-tree | grep -B4 -A14 wsa88` shows the amplifiers' reset GPIOs in the running tree, and the right values are in the DSDT (the model's `upstream.acpiUrls`)."
 
   - id: microphones
     group: sound
@@ -183,7 +183,7 @@ checks:
     works: Closing the lid sleeps, opening it wakes to the lock screen, every time.
     probe: The sleep mode the kernel uses and how many sleeps succeeded or failed since boot.
     person: Close the lid for a few minutes, five times in a row, and say whether it woke each time.
-    debug: "`cat /sys/power/mem_sleep` shows the sleep mode in brackets, s2idle or deep. After a sleep, `journalctl -k -b | grep -E 'PM:|suspend'` shows which device refused, and the files under `/sys/power/suspend_stats/` count failures and name the last failing device. A restart in place of a wake leaves no line after 'suspend entry' at the end of `journalctl -k -b -1`. Try the other sleep mode to tell a firmware problem from a driver's. `hw-test sleep` measures a lid-close sleep with the owner."
+    debug: "`cat /sys/power/mem_sleep` shows the sleep mode in brackets, s2idle or deep. After a sleep, `journalctl -k -b | grep -E 'PM:|suspend'` shows which device refused, and the files under `/sys/power/suspend_stats/` count failures and name the last failing device. A restart in place of a wake leaves no line after 'suspend entry' at the end of `journalctl -k -b -1`. Try the other sleep mode to tell a firmware problem from a driver's. `hw-test sleep` measures a lid-close sleep with the owner. For a freeze on wake, check before the long press on power whether the Caps Lock light still toggles and whether the computer answers a ping from another machine: that tells a frozen desktop from a frozen kernel. Record `lsusb -t` and `cat /sys/class/drm/card*-*/status` with the same things plugged in. `journalctl --list-boots` lists the boots, and `hw-test note --log boot-N` attaches the kernel's log of the one that froze."
 
   - id: suspend-drain
     group: power
@@ -198,7 +198,7 @@ checks:
     works: The laptop hibernates and resumes where it was.
     probe: Whether the kernel offers hibernation and has swap to hold it.
     person: Hibernate from the menu and start it again.
-    debug: "`cat /sys/power/state` must list `disk`, and swap must be at least the size of memory. Where `disk` is missing the kernel offers no hibernation on this chip, which is a kernel matter that no tree or package changes."
+    debug: "`cat /sys/power/state` must list `disk`, and swap must be at least the size of memory. Where `disk` is missing the kernel offers no hibernation on this chip. That can't be fixed from the machine: tell the owner and go on to the next part."
 
   - id: lid
     group: sensors
@@ -238,7 +238,7 @@ checks:
     works: The webcam gives a picture in the browser and in video calls.
     probe: Whether a camera device from the camera subsystem or USB exists.
     person: Open a video call test page in Chromium and say whether the picture looks right.
-    debug: "The webcam is a MIPI sensor: a sensor node on a camera I2C bus with its clock, reset GPIO and supplies, linked to the camera subsystem in the tree. `cam -l` from libcamera should list it, and `journalctl -k -b | grep -iE 'camss|cci|ov0|imx|hi5'` shows a sensor that didn't answer. A picture that is too dark, green or noisy comes from libcamera's processing for that sensor, not from the driver. `hw-test camera` takes one frame and measures its brightness."
+    debug: "The webcam is a MIPI sensor: a sensor node on a camera I2C bus with its clock, reset GPIO and supplies, linked to the camera subsystem in the tree. `cam -l` from libcamera names the sensor, and `journalctl -k -b | grep -iE 'camss|cci|ov0|imx|hi5'` shows one that didn't answer. `hw-test camera`, run by the owner, takes one frame, and the check works when they answer that the picture is real and its colours look right. A picture that is too dark, pale, green or noisy comes from libcamera's processing for that sensor (its tuning file), not from the driver. Omarchy has no place for a tuning fix yet, so don't open a pull request for one: write a `workaround` note with what you changed, and open an issue on omacom/omarchy."
 
   - id: video-decode
     group: media
@@ -261,7 +261,7 @@ checks:
     works: The temperatures can be read and follow the load, and the fan speeds up when the computer gets hot.
     probe: Which temperature and fan sensors exist. The temperature test keeps every core and the GPU busy for up to two minutes and reads whether the sensors show the heat. It sees a fan start by its speed, or where no sensor gives that, by the temperature falling while the processor works on at the same rate.
     person: Press f during the temperature test the moment you hear the fan speed up, or say that the computer has none.
-    debug: "Temperatures come from the chip's own sensors and need nothing per model. Fans are run by the embedded controller by itself, and their speed can be read only where the kernel has a driver for that model's controller (`ls /sys/class/hwmon/*/fan*_input`). A missing fan speed is a missing driver, not a broken fan. `hw-test temperatures` heats the computer and reports how the sensors follow."
+    debug: "Temperatures come from the chip's own sensors and need nothing per model. Fans are run by the embedded controller by itself, and their speed can be read only where the kernel has a driver for that model's controller (`ls /sys/class/hwmon/*/fan*_input`). A missing fan speed is a missing kernel driver, not a broken fan, and writing that driver is beyond a fix from the machine: tell the owner. `hw-test temperatures` heats the computer and reports how the sensors follow. With the owner there, they press f when they hear the fan, which is what turns this check to works on a machine without a speed sensor."
 
   - id: fingerprint
     group: sensors

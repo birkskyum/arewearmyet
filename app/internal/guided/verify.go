@@ -46,7 +46,7 @@ func versionsChanged(before, after report.Versions) []string {
 
 // VerifyBlock is what goes into a pull request to show what it changed: the machine, the
 // versions on both sides, and each check tested before and after, in Markdown.
-func VerifyBlock(run *report.Run, model report.Model, snapshot report.Snapshot, changes []report.Change) string {
+func VerifyBlock(run *report.Run, model report.Model, snapshot report.Snapshot, changes []report.Change, testImage bool) string {
 	var out strings.Builder
 	say := func(format string, args ...any) { fmt.Fprintf(&out, format+"\n", args...) }
 	machine := strings.TrimSpace(run.Hardware["maker"] + " " + first(run.Hardware["family"], run.Hardware["product"]))
@@ -54,9 +54,15 @@ func VerifyBlock(run *report.Run, model report.Model, snapshot report.Snapshot, 
 	say("")
 	say("%s, before and after this change. Before: %s. After: %s.", machine, snapshot.When.Format("2 Jan 2006 15:04"), time.Now().Format("2 Jan 2006 15:04"))
 	after := report.Versions{Kernel: run.Kernel, Packages: run.Packages}
-	if moved := versionsChanged(snapshot.Versions, after); len(moved) > 0 {
+	moved := versionsChanged(snapshot.Versions, after)
+	switch {
+	case testImage && len(moved) == 0:
+		say("Kernel %s and the same package versions on both sides. After, the computer was started from a test boot image with the changed device tree, made by `hw-test tree boot`.", first(run.Kernel, "unknown"))
+	case testImage:
+		say("What differs between the two: %s. After, the computer was started from a test boot image with the changed device tree.", strings.Join(moved, ", "))
+	case len(moved) > 0:
 		say("What differs between the two: %s.", strings.Join(moved, ", "))
-	} else {
+	default:
 		say("Kernel %s and the same package versions on both sides, so the change was tried outside the packages (a boot entry or a file of its own).", first(run.Kernel, "unknown"))
 	}
 	say("")

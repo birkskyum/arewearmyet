@@ -38,51 +38,72 @@ func yoga() Briefing {
 	}
 }
 
-func TestTheBriefSaysWhatFailsHowToMeasureItAndWhereAFixGoes(t *testing.T) {
-	brief := Brief(yoga())
+func TestTheBriefSaysWhatFailsWhatIsKnownAndHowToGoAboutIt(t *testing.T) {
+	b := yoga()
+	b.TreeSource = "x1e80100-lenovo-yoga-slim7x"
+	b.Model.Kernels = map[string]string{"stable": "7.3-3.1", "edge": "7.3-71"}
+	b.Findings = map[string]report.Finding{
+		"hibernate": {State: report.Broken, Note: "Waking from hibernation restarts the laptop.", Checked: "2026-10", Source: "https://github.com/omacom/omarchy/discussions/11823"},
+		"wifi":      {State: report.Works, Note: "Fine."},
+	}
+	brief := Brief(b)
 	for _, text := range []string{
-		"# Hardware brief: LENOVO Yoga Slim 7 14Q8X9", "Read https://arewearmyet.com/agents.md before you do anything",
-		"Model: LENOVO 83ED (Yoga Slim 7 14Q8X9)", "`lenovo-yoga-slim-7x-14q8x9`", "/api/models/lenovo-yoga-slim-7x-14q8x9", "Device tree in use: `lenovo,yoga-slim7x`",
+		"# Hardware brief: LENOVO Yoga Slim 7 14Q8X9",
+		// The guide is named once, with which parts of it to read
+		"The guide for this work is https://arewearmyet.com/agents.md", "Read its Words and Rules, then step 5 (Fix it) and step 6 (Notes)",
+		"Model: LENOVO 83ED (Yoga Slim 7 14Q8X9)", "On arewearmyet.com as `lenovo-yoga-slim-7x-14q8x9`", "/api/models/lenovo-yoga-slim-7x-14q8x9",
+		"Family, which is the first line of a pull request or an issue for it: `arm-dragon-msft`",
+		"Device tree in use: `lenovo,yoga-slim7x`, built from `arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts`",
 		"Kernel: 7.3.0-59-omarchy, on Omarchy", "linux-omarchy 7.3-59, mesa 26.2.3",
+		// Whether it is up to date, which decides whether a fault is worth chasing
+		"Omarchy's channels have linux-omarchy at: stable 7.3-3.1, edge 7.3-71. This computer has 7.3-59.", "ask the owner to run `omarchy update`",
 		// What fails, worst first, each with what was found and how
-		"### Speakers (check `speakers`): partly", "Found on 19 November 2026 with kernel 7.3.0-59-omarchy, seen by the owner", "left speaker heard at -31 dB", "the left is louder than the right",
+		"### Speakers (check `speakers`): partly", "Measured on 19 November 2026 with kernel 7.3.0-59-omarchy, seen by the owner", "left speaker heard at -31 dB", "the left is louder than the right",
 		"Working means: Both speakers play at a usable volume.", "Where to look: Sound runs through the audio DSP.",
+		// What the site has written up goes beside what was measured, with its source
+		"### Hibernation (check `hibernate`): broken", "Already known on the site (broken, 2026-10): Waking from hibernation restarts the laptop. Source: https://github.com/omacom/omarchy/discussions/11823",
 		// A part that takes the owner is said to, and one that runs by itself has its command
-		"Measure again: `hw-test speakers`, which needs the owner at the computer", "Measure again: `hw-test graphics --no-send`, which runs by itself",
-		"### Hibernation (check `hibernate`): broken", "Measure again: `hw-test quick --no-send`",
-		// Where the rest stands
+		"Measure again: `hw-test speakers`, run by the owner in their own terminal", "Measure again: `hw-test graphics --no-send`, which runs by itself", "Measure again: `hw-test quick --no-send`",
 		"- works: wifi", "- not tested:",
-		// How to measure, the rules, and where a fix belongs
-		"`hw-test status`", "hw-test auto --no-send", "The parts that take the owner at the computer:", "The owner's data is the line", "The boot menu is yours to work in", "Keep one entry that is known to boot untouched", "check with `df -h /boot` that the boot partition has room first",
-		"run `hw-test resume", "a pull request or an issue on Omarchy's repositories need no asking",
-		"pkgbuilds/linux-omarchy-dtbs", "pkgbuilds/linux-omarchy`", "https://github.com/omacom/omarchy ", "Pull requests on Omarchy's repositories are welcome", "starts with a line that says only `arm-dragon-msft`", `"model": "lenovo-yoga-slim-7x-14q8x9"`,
+		// No notes yet isn't the same as nothing known
+		"Nobody has left a note on this model yet. That means nobody wrote one, not that nothing is known", "api/notes?q=<words>",
+		// One way to go about it, in order, with the commands
+		"## How to go about it", "1. **Check it is worth chasing.**", "`hw-test verify before`", "`hw-test tree start`, edit, `hw-test tree build`, then the owner runs `hw-test tree boot`",
+		"Never install a rebuilt `linux-omarchy-dtbs`, write under `/boot/dtbs` or edit `/boot/limine.conf` by hand", "`hw-test resume", "Open it as a draft.",
+		"starts with a line that says only `arm-dragon-msft`, then the block", "`hw-test verify after --pr <its address>", "mark it ready",
+		"`hw-test note --kind problem --check <check>", "`hw-test report --check <check> --state partial", "`hw-test tree remove`",
+		"The owner's data is the line", "hand the owner the exact command to run",
 	} {
 		if !strings.Contains(brief, text) {
 			t.Errorf("the brief lacks %q", text)
 		}
 	}
-	// How to leave what was found for the next agent, and that nobody has yet
-	for _, text := range []string{"Nobody has left a note on this model yet.", "hw-test note --kind problem --check <check>", "--log previous", "api/notes?model=lenovo-yoga-slim-7x-14q8x9", "leave a note saying how far you got"} {
-		if !strings.Contains(brief, text) {
-			t.Errorf("the brief lacks %q", text)
+	if broken, partly := strings.Index(brief, "### Hibernation"), strings.Index(brief, "### Speakers"); broken > partly {
+		t.Error("what is broken doesn't come before what partly works")
+	}
+	// What works isn't something to work on, and its finding isn't quoted
+	if strings.Contains(brief, "### Wi-Fi") || strings.Contains(brief, "Fine.") {
+		t.Error("a part that works is listed as work")
+	}
+	// The how-to lives in the guide: the brief doesn't repeat its tables and rule lists
+	for _, repeated := range []string{"| What is wrong |", "## Measuring with hw-test", "## The rules that matter most", "curl -s -X POST"} {
+		if strings.Contains(brief, repeated) {
+			t.Errorf("the brief repeats the guide's %q", repeated)
 		}
 	}
+	if words := len(strings.Fields(brief)); words > 1300 {
+		t.Errorf("the brief has grown to %d words", words)
+	}
+
 	// What others wrote down about this model is listed, to read before starting
 	noted := yoga()
 	noted.Notes = []report.Listed{{ID: "NOTE-AAAAAAAAAA", Check: "suspend", Kind: "problem", Status: "open", Title: "Freezes on wake with a dock", Replies: 2, URL: "https://arewearmyet.com/api/notes/NOTE-AAAAAAAAAA"}}
 	if with := Brief(noted); !strings.Contains(with, "- Freezes on wake with a dock (problem, open, suspend): `curl -s https://arewearmyet.com/api/notes/NOTE-AAAAAAAAAA`, 2 answers") || strings.Contains(with, "Nobody has left a note") {
 		t.Errorf("the notes on the model aren't listed:\n%s", with)
 	}
-	if broken, partly := strings.Index(brief, "### Hibernation"), strings.Index(brief, "### Speakers"); broken > partly {
-		t.Error("what is broken doesn't come before what partly works")
-	}
-	// What works isn't something to work on
-	if strings.Contains(brief, "### Wi-Fi") {
-		t.Error("a part that works is listed as work")
-	}
 
 	// Asked for one check, the brief is about that one, also when it was never tested here
-	b := yoga()
+	b = yoga()
 	b.Only = []string{"camera"}
 	if brief = Brief(b); !strings.Contains(brief, "### Webcam (check `camera`): not tested yet") || strings.Contains(brief, "### Speakers") || !strings.Contains(brief, "- partly: speakers, webgpu") {
 		t.Errorf("a brief for the camera alone:\n%s", brief)
@@ -93,10 +114,10 @@ func TestTheBriefSaysWhatFailsHowToMeasureItAndWhereAFixGoes(t *testing.T) {
 	if brief = Brief(b); !strings.Contains(brief, "says only `arm-dragon-google`") || strings.Contains(brief, "arm-dragon-msft") {
 		t.Error("a Chromebook's brief doesn't name Google's family")
 	}
-	// A machine the board doesn't know is named by what it says of itself
+	// A machine the site doesn't know is named by what it says of itself
 	b = yoga()
 	b.Model, b.Family = report.Model{}, "arm-nvidia"
-	if brief = Brief(b); !strings.Contains(brief, "says only `arm-nvidia`") {
+	if brief = Brief(b); !strings.Contains(brief, "says only `arm-nvidia`") || !strings.Contains(brief, "doesn't know this computer yet") {
 		t.Error("an NVIDIA machine's brief doesn't name its family")
 	}
 	// A Mac's brief says whose it is
@@ -106,14 +127,14 @@ func TestTheBriefSaysWhatFailsHowToMeasureItAndWhereAFixGoes(t *testing.T) {
 	}
 	// And where nothing tells, the brief gives the choice
 	b.Family = ""
-	if brief = Brief(b); !strings.Contains(brief, "says only the machine's family (`arm-dragon-msft` for a Snapdragon machine that came with Windows, `arm-dragon-google`") {
+	if brief = Brief(b); !strings.Contains(brief, "says only the computer's family (`arm-dragon-msft` for a Snapdragon machine that came with Windows, `arm-dragon-google`") {
 		t.Error("an unknown machine's brief doesn't list the families")
 	}
-	// A computer the board doesn't know, with nothing failing
+	// With nothing failing there is nothing to work on, and it says so
 	b = yoga()
-	b.Model, b.Kept = report.Model{}, map[string]report.Kept{}
-	if brief = Brief(b); !strings.Contains(brief, "doesn't know this computer yet") || !strings.Contains(brief, "Nothing fails in this computer's latest results") || !strings.Contains(brief, `"model": "<model id>"`) {
-		t.Errorf("an unknown computer:\n%s", brief)
+	b.Kept = map[string]report.Kept{}
+	if brief = Brief(b); !strings.Contains(brief, "Nothing fails in this computer's latest results") {
+		t.Errorf("nothing failing:\n%s", brief)
 	}
 }
 

@@ -20,7 +20,7 @@
  *   POST /api/runs/<id>/results       more results for a run, from the same machine
  *   POST /api/fixes                   a link to a fix (pull request, patch) for a model, with what it changed as measured
  *   GET  /api/fixes?url=              what a pull request changed, over every machine that measured it
- *   GET  /api/notes?model=&check=&kind=&status=   notes: problems, workarounds, pointers to work elsewhere
+ *   GET  /api/notes?model=&check=&kind=&status=&q=   notes: problems, workarounds, pointers to work elsewhere; no model means every model
  *   GET  /api/notes/<id>              one note with its answers and the names of its logs
  *   GET  /api/notes/<id>/logs/<name>  one of its logs, as plain text
  *   POST /api/notes                   write a note, with logs if it helps
@@ -31,7 +31,7 @@
 
 import index from './models.json' with { type: 'json' };
 
-type Index = { checks: string[]; chids: Record<string, number[]>; models: { id: string; vendor: string; name: string; generation: string; boot: string; compatibles: string[]; modelNumbers: string[] }[] };
+type Index = { checks: string[]; kernels?: Record<string, string>; chids: Record<string, number[]>; models: { id: string; vendor: string; name: string; generation: string; boot: string; compatibles: string[]; modelNumbers: string[] }[] };
 const INDEX = index as Index;
 const CHECKS = new Set(INDEX.checks);
 const MODELS = new Map(INDEX.models.map((m) => [m.id, m]));
@@ -288,6 +288,8 @@ function match(params: URLSearchParams) {
     model: model.id, by, vendor: model.vendor, name: model.name, generation: model.generation, boot: model.boot,
     family: model.boot === 'depthcharge' || model.boot === 'android' ? 'arm-dragon-google' : 'arm-dragon-msft',
     page: `${SITE}/models/${model.id}`,
+    // The linux-omarchy version on each of Omarchy's channels as of the site's last build, to compare the machine's with
+    kernels: INDEX.kernels ?? {},
   });
 
   const byIds = matchChids(params.getAll('chid').flatMap((value) => value.split(',')));
@@ -342,7 +344,7 @@ type RunBody = {
 /** Stores a run and its results; the machine is created on its first run. */
 async function postRun(request: Request, env: Env, url: URL): Promise<Response> {
   const token = request.headers.get('x-machine-token') ?? '';
-  if (!TOKEN.test(token)) return json({ error: 'Send X-Machine-Token: a random string of 32 to 128 letters, digits, - or _, kept on the machine (probe.sh keeps one in ~/.local/state/arewearmyet/token).' }, 400);
+  if (!TOKEN.test(token)) return json({ error: 'Send X-Machine-Token: a random string of 32 to 128 letters, digits, - or _, kept on the machine (hw-test keeps one in ~/.local/state/arewearmyet/token).' }, 400);
   const body = (await readJson(request, 256 * 1024)) as RunBody | null;
   if (!body || typeof body !== 'object') return json({ error: 'Send the run as JSON. See https://arewearmyet.com/agents.md' }, 400);
 
@@ -505,6 +507,15 @@ async function listNotes(env: Env, url: URL): Promise<Response> {
   const check = url.searchParams.get('check');
   const kind = url.searchParams.get('kind');
   const status = url.searchParams.get('status');
+  const words = (url.searchParams.get('q') ?? '').trim().slice(0, 80);
+  if (words) {
+    // Every word has to be in the title or the text
+    for (const word of words.split(/\s+/).slice(0, 6)) {
+      where.push("(n.title LIKE ? ESCAPE '\\' OR n.body LIKE ? ESCAPE '\\')");
+      const like = `%${word.replace(/[\\%_]/g, (c) => `\\${c}`)}%`;
+      binds.push(like, like);
+    }
+  }
   if (model) {
     if (!MODELS.has(model)) return json({ error: 'model must be an id from GET /api/models.' }, 400);
     where.push('n.model = ?');
