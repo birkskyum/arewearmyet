@@ -95,6 +95,19 @@ func (s *speakers) balance() string {
 	return fmt.Sprintf("at the microphones the %s tone was %.1f times as loud as the %s", louder, ratio, quieter)
 }
 
+// heardTone says whether the microphones clearly picked up a tone, which shows they work.
+func (s *speakers) heardTone() bool {
+	return s.heard[audio.Left].Clearly() || s.heard[audio.Right].Clearly()
+}
+
+// microphonesHeard records the microphones as working when they heard the tone: that is a
+// measurement, and leaves nothing to ask the owner about them.
+func (s *speakers) microphonesHeard() {
+	if s.heardTone() {
+		s.run.Set("microphones", report.Works, report.Measured, s.evidence(), "")
+	}
+}
+
 // evidence is what the microphones made of the two tones.
 func (s *speakers) evidence() string {
 	part := func(h audio.Heard) string {
@@ -132,6 +145,7 @@ func (s *speakers) update(msg tea.Msg) tea.Cmd {
 		case "ask":
 			set := func(state, note string) {
 				s.run.Set("speakers", state, report.Owner, s.evidence(), note)
+				s.microphonesHeard()
 				s.over = true
 			}
 			switch s.ask.update(msg) {
@@ -158,6 +172,7 @@ func (s *speakers) update(msg tea.Msg) tea.Cmd {
 		case "note":
 			if s.note.update(msg) {
 				s.run.Set("speakers", report.Partial, report.Owner, s.evidence(), s.note.value())
+				s.microphonesHeard()
 				s.over = true
 			}
 		}
@@ -289,10 +304,6 @@ func (m *microphones) update(msg tea.Msg) tea.Cmd {
 			case "enter", "space":
 				return m.record()
 			case "s":
-				// Skipped, but the tones the microphones picked up still say they work
-				if m.speakers != nil && (m.speakers.heard[0].Clearly() || m.speakers.heard[1].Clearly()) {
-					m.run.Set("microphones", report.Works, report.Measured, m.speakers.evidence(), "")
-				}
 				m.over = true
 			}
 		case "ask":
@@ -340,7 +351,11 @@ func meter(level, width int) string {
 func (m *microphones) view(width, height int) string {
 	switch m.phase {
 	case "intro":
-		return wrap("Now the microphone. Press Enter, then say a few words. It records four seconds and plays them back, so you can hear whether the microphone works.", width) + "\n\n" + private(width)
+		text := "Now the microphone. Press Enter, then say a few words. It records four seconds and plays them back, so you can hear whether the microphone works."
+		if m.speakers != nil && m.speakers.phase != "intro" {
+			text = "The microphones didn't pick up the tones, so they get a test of their own. Press Enter, then say a few words. It records four seconds and plays them back."
+		}
+		return wrap(text, width) + "\n\n" + private(width)
 	case "recording":
 		left := recordFor - time.Since(m.began)
 		return accent.Render(fmt.Sprintf("● Recording, speak now  (%.0f s left)", math.Max(0, left.Seconds()))) + "\n\n" + meter(m.level, min(width, 60)) + "\n\n" + soft.Render("Only on this computer. Not sent.")

@@ -726,3 +726,38 @@ func TestSpeakersCanBeReportedAsUnevenAndInTheOwnersWords(t *testing.T) {
 		t.Errorf("balance with one side unheard: %q", s.balance())
 	}
 }
+
+func TestMicrophonesThatHeardTheTonesAreMeasuredAndNotAskedAbout(t *testing.T) {
+	run := &report.Run{}
+	dir := t.TempDir()
+	speakers, microphones := newSpeakers(run, dir), newMicrophones(run, dir)
+	microphones.speakers = speakers
+	step := &skippable{step: microphones, skip: speakers.heardTone}
+	if step.done() {
+		t.Fatal("the microphone step is skipped before anything played")
+	}
+	speakers.heard = [2]audio.Heard{{Windows: 9, Best: 93, Level: 240}, {Windows: 8, Best: 90, Level: 104}}
+	speakers.phase = "ask"
+	speakers.update(press('1'))
+	result, _ := run.Get("microphones")
+	if result.State != report.Works || result.How != report.Measured || !strings.Contains(result.Evidence, "heard the left tone for") {
+		t.Errorf("microphones: %+v", result)
+	}
+	if !step.done() || step.start() != nil {
+		t.Error("the microphone step still runs")
+	}
+
+	// Tones the microphones didn't hear leave them to their own test
+	run = &report.Run{}
+	speakers, microphones = newSpeakers(run, dir), newMicrophones(run, dir)
+	microphones.speakers = speakers
+	step = &skippable{step: microphones, skip: speakers.heardTone}
+	speakers.phase = "ask"
+	speakers.update(press('1'))
+	if run.State("microphones") != "" || step.done() {
+		t.Errorf("unheard tones: microphones %q, step done %v", run.State("microphones"), step.done())
+	}
+	if !strings.Contains(microphones.view(90, 30), "didn't pick up the tones") {
+		t.Errorf("the step doesn't say why it is there:\n%s", microphones.view(90, 30))
+	}
+}

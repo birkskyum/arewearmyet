@@ -142,7 +142,8 @@ func build(run *report.Run, facts probe.Facts, dir string) []step {
 	if facts.SoundCard != "" && tools.Have("pw-play", "pw-record") {
 		speakers, microphones := newSpeakers(run, dir), newMicrophones(run, dir)
 		microphones.speakers = speakers
-		add("speakers microphones headphones", speakers, microphones, newHeadphones(run, dir))
+		// Microphones that heard the speakers' tones are measured as working, and aren't tested again
+		add("speakers microphones headphones", speakers, &skippable{step: microphones, skip: speakers.heardTone}, newHeadphones(run, dir))
 	}
 	if facts.Camera != "" && tools.Have("cam") {
 		add("camera", newCamera(run, dir))
