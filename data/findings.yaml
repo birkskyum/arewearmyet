@@ -72,7 +72,7 @@ models:
       touchpad: { state: works, version: "7.3", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/10426" }
       wifi: { state: works, note: "Some warnings after waking from sleep. Since linux-omarchy 7.2.8-23 Wi-Fi no longer stalls when the router changes its channel width.", version: "7.2.8-23", checked: 2026-10, source: "https://github.com/omacom/omarchy-pkgs/pull/1388" }
       bluetooth: { state: works, version: "7.2.8", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/10426" }
-      speakers: { state: works, note: "Need a kernel setting for the speaker reset.", version: "7.2.8", checked: 2026-10, source: "https://github.com/archlinuxarm/PKGBUILDs/pull/2217" }
+      speakers: { state: works, note: "Both play. The two amplifiers share a reset line, which needs the kernel's reset-gpio driver (CONFIG_RESET_GPIO). Omarchy's kernel has it.", version: "7.2.8", checked: 2026-10, source: "https://github.com/archlinuxarm/PKGBUILDs/pull/2217" }
       microphones: { state: works, note: "Record since linux-omarchy 7.2.8-20.", version: "7.2.8-20", checked: 2026-10, source: "https://github.com/omacom/omarchy-pkgs/pull/1276" }
       adsp: { state: works, note: "Starts from the firmware Linux ships.", version: "7.2.8", checked: 2026-10 }
       battery: { state: works, version: "7.2.8", checked: 2026-10 }
