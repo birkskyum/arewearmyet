@@ -53,8 +53,8 @@ func TestTheBriefSaysWhatFailsHowToMeasureItAndWhereAFixGoes(t *testing.T) {
 		// Where the rest stands
 		"- works: wifi", "- not tested:",
 		// How to measure, the rules, and where a fix belongs
-		"`hw-test status`", "hw-test auto --no-send", "The parts that take the owner at the computer:", "Never replace what boots", "Ask the owner before anything that needs sudo",
-		"pkgbuilds/linux-omarchy-dtbs", "pkgbuilds/linux-omarchy`", "https://github.com/omacom/omarchy ", "open it as a draft", "starts with a line that says only `arm-dragon-msft`", `"model": "lenovo-yoga-slim-7x-14q8x9"`,
+		"`hw-test status`", "hw-test auto --no-send", "The parts that take the owner at the computer:", "Never replace what boots", "Ask the owner before anything that needs sudo or changes packages or boot files", "opening a pull request or an issue on Omarchy's repositories need no asking",
+		"pkgbuilds/linux-omarchy-dtbs", "pkgbuilds/linux-omarchy`", "https://github.com/omacom/omarchy ", "Pull requests on Omarchy's repositories are welcome", "starts with a line that says only `arm-dragon-msft`", `"model": "lenovo-yoga-slim-7x-14q8x9"`,
 	} {
 		if !strings.Contains(brief, text) {
 			t.Errorf("the brief lacks %q", text)
