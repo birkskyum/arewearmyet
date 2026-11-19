@@ -118,6 +118,27 @@ func lastLine(text string) string {
 // Volume is the default speakers' volume, 0 to 1 and above, and whether they are muted.
 func Volume() (level float64, muted, ok bool) { return volume("@DEFAULT_AUDIO_SINK@") }
 
+// AtHalfVolume sets the speakers to half volume, unmuted, and returns what puts them back as
+// they were. A sound test at a known volume gives numbers that can be compared between
+// machines and from one kernel to the next. Without a volume control it does nothing.
+func AtHalfVolume() (restore func()) {
+	level, muted, ok := Volume()
+	if !ok {
+		return func() {}
+	}
+	set := func(level float64, muted bool) {
+		for _, args := range [][]string{{"set-volume", "@DEFAULT_AUDIO_SINK@", strconv.FormatFloat(level, 'f', 2, 64)}, {"set-mute", "@DEFAULT_AUDIO_SINK@", map[bool]string{true: "1", false: "0"}[muted]}} {
+			ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+			command := exec.CommandContext(ctx, "wpctl", args...)
+			command.WaitDelay = time.Second
+			_ = command.Run()
+			cancel()
+		}
+	}
+	set(0.5, false)
+	return func() { set(level, muted) }
+}
+
 // InputVolume is the default microphone's input volume, and whether it is muted.
 func InputVolume() (level float64, muted, ok bool) { return volume("@DEFAULT_AUDIO_SOURCE@") }
 

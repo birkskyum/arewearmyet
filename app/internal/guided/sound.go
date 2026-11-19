@@ -15,37 +15,73 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/tools"
 )
 
-// toneMsg says a tone finished playing, and how well the microphones heard it.
-type toneMsg struct {
-	side  int
+// part is one sound the test plays while the microphones record: a tone on one speaker, or a
+// pitch on both.
+type part struct {
+	label string
+	pitch float64
+	// side is audio.Left or audio.Right, or -1 for both speakers.
+	side    int
+	seconds float64
+}
+
+// The test tone on each side shows that speaker works; three pitches on both show what the
+// microphones pick up from low to high.
+var parts = []part{
+	{"the left speaker", audio.Pitch, audio.Left, 1.5},
+	{"the right speaker", audio.Pitch, audio.Right, 1.5},
+	{"a low tone", 300, -1, 1},
+	{"a middle tone", 1000, -1, 1},
+	{"a high tone", 3000, -1, 1},
+}
+
+// partMsg says a part finished playing, and what the microphones recorded of it.
+type partMsg struct {
+	at    int
 	heard audio.Heard
+	// noise is the recording's level with nothing playing, before the sound began.
+	noise int
 	err   error
 }
 
-// playTone plays the test tone on one speaker while the microphones record, and listens for
-// it in the recording.
-func playTone(dir string, side int) tea.Cmd {
+// playPart plays one part at half volume while the microphones record, and looks for its
+// pitch in the recording.
+func playPart(dir string, at int) tea.Cmd {
 	return func() tea.Msg {
-		recording, err := tools.Record(filepath.Join(dir, fmt.Sprintf("heard-%d.wav", side)))
+		p := parts[at]
+		restore := tools.AtHalfVolume()
+		defer restore()
+		recording, err := tools.Record(filepath.Join(dir, fmt.Sprintf("heard-%d.wav", at)))
 		if err != nil {
-			return toneMsg{side: side, err: err}
+			return partMsg{at: at, err: err}
 		}
-		time.Sleep(400 * time.Millisecond)
-		tone := filepath.Join(dir, "tone.wav")
-		if err = os.WriteFile(tone, audio.Tone(side, 2.5), 0o600); err == nil {
-			err = tools.Play(tone, 6*time.Second)
+		time.Sleep(500 * time.Millisecond)
+		sound := audio.Both(p.pitch, p.seconds)
+		if p.side >= 0 {
+			sound = audio.Tone(p.side, p.seconds)
+		}
+		file := filepath.Join(dir, "tone.wav")
+		if err = os.WriteFile(file, sound, 0o600); err == nil {
+			err = tools.Play(file, 6*time.Second)
 		}
 		time.Sleep(300 * time.Millisecond)
-		return toneMsg{side: side, heard: audio.Hear(audio.Samples(recording.Stop())), err: err}
+		samples := audio.Samples(recording.Stop())
+		return partMsg{at: at, heard: audio.HearAt(samples, p.pitch), noise: audio.Quietest(samples), err: err}
 	}
 }
 
-// speakers plays a tone on the left, then on the right, and asks what was heard.
+// speakers is the sound test. The speakers play known tones and the microphones record them
+// at the same moment: a tone found in the recording shows that the speaker made it and that
+// the microphone picked it up, so both are measured with nobody listening. The owner is asked
+// only when the recording holds none of the tones, which can be either end's doing.
 type speakers struct {
 	run   *report.Run
 	dir   string
-	phase string // intro, left, right, ask, note
-	heard [2]audio.Heard
+	phase string // intro, playing, result, silent, problem, note
+	at    int
+	heard []audio.Heard
+	// noise is the quietest the microphones were with nothing playing.
+	noise int
 	err   error
 	ask   choice
 	// note takes the owner's own words when none of the answers fits.
@@ -54,125 +90,209 @@ type speakers struct {
 }
 
 func newSpeakers(run *report.Run, dir string) *speakers {
-	return &speakers{run: run, dir: dir, phase: "intro", ask: choice{
-		question: "What did you hear?",
-		options: []string{"A tone on the left, then on the right, both clean and equally loud", "Both, but the left is louder than the right", "Both, but the right is louder than the left",
-			"Only on the left", "Only on the right", "Both, but distorted or crackling", "Nothing", "Something else", "Play them again"},
-	}, note: line{prompt: "What did you hear? (Enter when done)"}}
+	return &speakers{run: run, dir: dir, phase: "intro", heard: make([]audio.Heard, len(parts)), note: line{prompt: "What did you hear? (Enter when done)"}}
 }
 
-func (s *speakers) name() string   { return "Speakers" }
+func (s *speakers) name() string   { return "Sound" }
 func (s *speakers) start() tea.Cmd { return nil }
 func (s *speakers) done() bool     { return s.over }
 
 func (s *speakers) keys() string {
 	switch s.phase {
 	case "intro":
-		return "Enter to play the tones · s to skip"
-	case "ask":
-		return choiceKeys
+		return "Enter to start · s to skip"
+	case "playing":
+		return "Playing and listening…"
+	case "result":
+		return "Enter to go on · p if something sounded wrong to you · r to play them again"
 	case "note":
 		return "Type, then Enter"
 	}
-	return "Listening…"
+	return choiceKeys
 }
 
-// balance says how the two tones compared at the microphones, when both were heard: "the
-// left tone was 2.3 times as loud as the right". The microphones sit closer to one speaker on
-// some machines, so this backs up what the owner hears and doesn't replace it.
+func (s *speakers) left() audio.Heard  { return s.heard[0] }
+func (s *speakers) right() audio.Heard { return s.heard[1] }
+
+// heardTone says whether the microphones clearly picked up any of the sounds, which shows
+// they work.
+func (s *speakers) heardTone() bool {
+	for _, heard := range s.heard {
+		if heard.Clearly() {
+			return true
+		}
+	}
+	return false
+}
+
+// balance says how the two sides compared at the microphones, when both were heard. The
+// microphones sit closer to one speaker on some machines, so a difference here is something
+// to look into, not a verdict.
 func (s *speakers) balance() string {
-	left, right := s.heard[audio.Left], s.heard[audio.Right]
+	left, right := s.left(), s.right()
 	if !left.Clearly() || !right.Clearly() || left.Level == 0 || right.Level == 0 {
 		return ""
 	}
-	louder, quieter, ratio := "left", "right", float64(left.Level)/float64(right.Level)
-	if ratio < 1 {
-		louder, quieter, ratio = "right", "left", 1/ratio
+	difference := audio.Decibels(left.Level) - audio.Decibels(right.Level)
+	louder, quieter := "left", "right"
+	if difference < 0 {
+		louder, quieter, difference = "right", "left", -difference
 	}
-	if ratio < 1.5 {
-		return "at the microphones the two tones were about equally loud"
+	if difference < 3 {
+		return "both sides about equally loud at the microphones"
 	}
-	return fmt.Sprintf("at the microphones the %s tone was %.1f times as loud as the %s", louder, ratio, quieter)
+	return fmt.Sprintf("the %s side %.0f dB louder than the %s at the microphones", louder, difference, quieter)
 }
 
-// heardTone says whether the microphones clearly picked up a tone, which shows they work.
-func (s *speakers) heardTone() bool {
-	return s.heard[audio.Left].Clearly() || s.heard[audio.Right].Clearly()
-}
-
-// microphonesHeard records the microphones as working when they heard the tone: that is a
-// measurement, and leaves nothing to ask the owner about them.
-func (s *speakers) microphonesHeard() {
-	if s.heardTone() {
-		s.run.Set("microphones", report.Works, report.Measured, s.evidence(), "")
-	}
-}
-
-// evidence is what the microphones made of the two tones.
+// evidence is what the microphones made of the two speakers.
 func (s *speakers) evidence() string {
-	part := func(h audio.Heard) string {
-		if h.Windows == 0 {
-			return "not at all"
+	side := func(h audio.Heard) string {
+		if !h.Clearly() {
+			return "not heard"
 		}
-		return fmt.Sprintf("for %.1f s (level %d)", float64(h.Windows)/4, h.Level)
+		return fmt.Sprintf("heard at %.0f dB", audio.Decibels(h.Level))
 	}
-	text := "the microphones heard the left tone " + part(s.heard[audio.Left]) + ", the right " + part(s.heard[audio.Right])
+	text := "by the microphones at half volume: left speaker " + side(s.left()) + ", right speaker " + side(s.right())
 	if balance := s.balance(); balance != "" {
 		text += "; " + balance
 	}
 	return text
 }
 
+// pickup is what the microphones recorded of each pitch, and their noise.
+func (s *speakers) pickup() string {
+	var tones []string
+	for at, p := range parts {
+		if p.side >= 0 {
+			continue
+		}
+		name := fmt.Sprintf("%.0f Hz", p.pitch)
+		if s.heard[at].Clearly() {
+			tones = append(tones, fmt.Sprintf("%s at %.0f dB", name, audio.Decibels(s.heard[at].Level)))
+		} else {
+			tones = append(tones, name+" not picked up")
+		}
+	}
+	text := "the speakers at half volume recorded as " + strings.Join(tones, ", ") + fmt.Sprintf("; noise with nothing playing %.0f dB", audio.Decibels(s.noise))
+	if volume, muted, ok := tools.InputVolume(); ok {
+		text += fmt.Sprintf("; input volume %d%%", int(volume*100+0.5))
+		if muted {
+			text += ", muted"
+		}
+	}
+	return text
+}
+
+// measure writes what the recording shows as results: each speaker that was heard works, and
+// microphones that heard anything work.
+func (s *speakers) measure() {
+	switch left, right := s.left().Clearly(), s.right().Clearly(); {
+	case left && right:
+		s.run.Set("speakers", report.Works, report.Measured, s.evidence(), "")
+	case left:
+		s.run.Set("speakers", report.Partial, report.Measured, s.evidence(), "Only the left speaker was heard by the microphones.")
+	case right:
+		s.run.Set("speakers", report.Partial, report.Measured, s.evidence(), "Only the right speaker was heard by the microphones.")
+	}
+	if s.heardTone() {
+		s.run.Set("microphones", report.Works, report.Measured, s.pickup(), "")
+	}
+}
+
+func (s *speakers) play() tea.Cmd {
+	s.phase, s.at, s.noise = "playing", 0, -1
+	s.heard = make([]audio.Heard, len(parts))
+	return playPart(s.dir, 0)
+}
+
 func (s *speakers) update(msg tea.Msg) tea.Cmd {
 	switch msg := msg.(type) {
-	case toneMsg:
-		s.heard[msg.side], s.err = msg.heard, msg.err
-		if msg.side == audio.Left && msg.err == nil {
-			s.phase = "right"
-			return playTone(s.dir, audio.Right)
+	case partMsg:
+		if s.phase != "playing" || msg.at != s.at {
+			return nil
 		}
-		s.phase = "ask"
+		s.heard[msg.at], s.err = msg.heard, msg.err
+		if s.noise < 0 || msg.noise < s.noise {
+			s.noise = msg.noise
+		}
+		if s.at++; s.at < len(parts) && msg.err == nil {
+			return playPart(s.dir, s.at)
+		}
+		if s.heardTone() {
+			s.measure()
+			s.phase = "result"
+			return nil
+		}
+		// Nothing of it in the recording: the speakers were silent, or the microphones deaf
+		s.phase = "silent"
+		s.ask = choice{question: "The microphones recorded none of the tones, so this can't be measured. Did you hear them?",
+			options: []string{"Yes, on the left and on the right", "Only on the left", "Only on the right", "No, nothing", "Play them again"}}
 	case tea.KeyPressMsg:
 		switch s.phase {
 		case "intro":
 			switch msg.String() {
 			case "enter", "space":
-				s.phase = "left"
-				return playTone(s.dir, audio.Left)
+				return s.play()
 			case "s":
 				s.over = true
 			}
-		case "ask":
-			set := func(state, note string) {
-				s.run.Set("speakers", state, report.Owner, s.evidence(), note)
-				s.microphonesHeard()
+		case "result":
+			switch msg.String() {
+			case "enter", "space":
+				s.over = true
+			case "r":
+				return s.play()
+			case "p":
+				s.phase = "problem"
+				s.ask = choice{question: "What sounded wrong?",
+					options: []string{"The left is louder than the right", "The right is louder than the left", "Distorted or crackling", "Much too quiet", "Something else", "Nothing after all"}}
+			}
+		case "silent":
+			// The owner heard the speakers, so the silence in the recording is the microphones'
+			deaf := func() {
+				s.run.Set("microphones", report.Broken, report.Measured, "the speakers played at half volume and the owner heard them, but the recording holds none of it", "")
+			}
+			switch s.ask.update(msg) {
+			case 0:
+				s.run.Set("speakers", report.Works, report.Owner, "the microphones recorded nothing, so the speakers couldn't be measured", "")
+				deaf()
+				s.over = true
+			case 1:
+				s.run.Set("speakers", report.Partial, report.Owner, "the microphones recorded nothing, so the speakers couldn't be measured", "Only the left speaker plays.")
+				deaf()
+				s.over = true
+			case 2:
+				s.run.Set("speakers", report.Partial, report.Owner, "the microphones recorded nothing, so the speakers couldn't be measured", "Only the right speaker plays.")
+				deaf()
+				s.over = true
+			case 3:
+				s.run.Set("speakers", report.Broken, report.Owner, "the microphones recorded nothing, so the speakers couldn't be measured", "No sound from the speakers.")
+				s.over = true
+			case 4:
+				return s.play()
+			}
+		case "problem":
+			heard := func(note string) {
+				s.run.Set("speakers", report.Partial, report.Owner, s.evidence(), note)
 				s.over = true
 			}
 			switch s.ask.update(msg) {
 			case 0:
-				set(report.Works, "")
+				heard("Both speakers play, but the left is louder than the right.")
 			case 1:
-				set(report.Partial, "Both speakers play, but the left is louder than the right.")
+				heard("Both speakers play, but the right is louder than the left.")
 			case 2:
-				set(report.Partial, "Both speakers play, but the right is louder than the left.")
+				heard("The speakers sound distorted or crackle.")
 			case 3:
-				set(report.Partial, "Only the left speaker plays.")
+				heard("The speakers are much too quiet at half volume.")
 			case 4:
-				set(report.Partial, "Only the right speaker plays.")
-			case 5:
-				set(report.Partial, "Both speakers play, but distorted or crackling.")
-			case 6:
-				set(report.Broken, "No sound from the speakers.")
-			case 7:
 				s.phase = "note"
-			case 8:
-				s.phase = "left"
-				return playTone(s.dir, audio.Left)
+			case 5:
+				s.phase = "result"
 			}
 		case "note":
 			if s.note.update(msg) {
 				s.run.Set("speakers", report.Partial, report.Owner, s.evidence(), s.note.value())
-				s.microphonesHeard()
 				s.over = true
 			}
 		}
@@ -181,26 +301,43 @@ func (s *speakers) update(msg tea.Msg) tea.Cmd {
 }
 
 func (s *speakers) view(width, height int) string {
+	mark := func(heard audio.Heard, label string) string {
+		if heard.Clearly() {
+			return good.Render("  ✓ ") + fmt.Sprintf("%-18s heard at %.0f dB", label, audio.Decibels(heard.Level))
+		}
+		return bad.Render("  ✗ ") + fmt.Sprintf("%-18s not heard", label)
+	}
 	switch s.phase {
 	case "intro":
-		text := "Two tones play for a couple of seconds each, first on the left speaker, then on the right, while the microphones listen for them. Only how loud the tone was is kept."
-		if volume, muted, ok := tools.Volume(); ok && (muted || volume < 0.25) {
-			text += "\n\n" + close_.Render(fmt.Sprintf("The sound is %s. Turn it up to about half first, or you won't hear them.", map[bool]string{true: "muted", false: fmt.Sprintf("at %d%%", int(volume*100+0.5))}[muted]))
+		return wrap("Now the sound. The speakers play a few tones, first on the left, then on the right, then low, middle and high on both, while the microphones record. The test finds the tones in the recording, which checks the speakers and the microphones at once: there is nothing for you to do. The volume is set to half for it and put back after.", width) + "\n\n" + private(width)
+	case "playing":
+		lines := []string{accent.Render("♪ Playing " + parts[s.at].label), ""}
+		for at := 0; at < s.at; at++ {
+			lines = append(lines, mark(s.heard[at], parts[at].label))
 		}
-		return wrap(text, width) + "\n\n" + private(width)
-	case "left":
-		return accent.Render("◀ ◀ ◀  Playing on the LEFT speaker")
-	case "right":
-		return accent.Render("Playing on the RIGHT speaker  ▶ ▶ ▶")
-	}
-	if s.phase == "note" {
+		return strings.Join(lines, "\n")
+	case "silent", "problem":
+		return s.ask.view(width)
+	case "note":
 		return s.note.view(width)
 	}
-	text := s.ask.view(width) + "\n\n" + soft.Render(wrap("Measured: "+s.evidence()+".", width))
-	if s.err != nil {
-		text += "\n" + bad.Render(wrap("The player reported: "+s.err.Error(), width))
+	lines := []string{bold.Render("Speakers")}
+	lines = append(lines, mark(s.left(), "Left"), mark(s.right(), "Right"))
+	if balance := s.balance(); balance != "" {
+		lines = append(lines, "    "+wrap(balance, width-4))
 	}
-	return text
+	lines = append(lines, "", bold.Render("Microphone"))
+	for at, p := range parts {
+		if p.side < 0 {
+			lines = append(lines, mark(s.heard[at], fmt.Sprintf("%.0f Hz", p.pitch)))
+		}
+	}
+	lines = append(lines, fmt.Sprintf("    noise with nothing playing: %.0f dB", audio.Decibels(s.noise)), "",
+		wrap("Measured from the recording alone. Only these numbers are sent.", width))
+	if s.err != nil {
+		lines = append(lines, bad.Render(wrap("The player reported: "+s.err.Error(), width)))
+	}
+	return strings.Join(lines, "\n")
 }
 
 // meterMsg is how loud the microphones are right now, during a recording.
@@ -248,7 +385,7 @@ func newMicrophones(run *report.Run, dir string) *microphones {
 	return &microphones{run: run, dir: dir, phase: "intro", note: line{prompt: "What was it like? (Enter when done)"}}
 }
 
-func (m *microphones) name() string   { return "Microphone" }
+func (m *microphones) name() string   { return "Voice" }
 func (m *microphones) start() tea.Cmd { return nil }
 func (m *microphones) done() bool     { return m.over }
 
@@ -399,9 +536,9 @@ func meter(level, width int) string {
 func (m *microphones) view(width, height int) string {
 	switch m.phase {
 	case "intro":
-		text := "Now the microphone. Press Enter, then say a few words in your normal voice. It records four seconds, measures how loud the recording is, and plays it back."
-		if m.speakers != nil && m.speakers.heardTone() {
-			text = "The microphones heard the tones, so they work. This checks how well. Press Enter, then say a few words in your normal voice. It records four seconds, measures how loud the recording is, and plays it back."
+		text := "Your own voice through the microphone. Press Enter, then say a few words in your normal voice. It records four seconds, measures how loud the recording is, and plays it back, so you can hear how clear it is."
+		if m.speakers != nil && m.speakers.phase != "intro" && !m.speakers.heardTone() {
+			text = "The microphones recorded none of the tones, so here is another way to test them. Press Enter, then say a few words. The bar moves if the microphone hears you."
 		}
 		return wrap(text, width) + "\n\n" + private(width)
 	case "recording":

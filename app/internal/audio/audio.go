@@ -108,12 +108,44 @@ type Heard struct {
 // Clearly says whether the tone was there for at least three quarters of a second.
 func (h Heard) Clearly() bool { return h.Windows >= 3 }
 
-// Hear looks for the test tone in a mono recording, a quarter second at a time. Short windows,
-// because the speakers' and the microphones' clocks differ a little, which smears the tone out
-// of a long measurement; and the tone has to be most of the sound in a window, so room noise
-// and the click of the microphones starting don't count.
-func Hear(samples []int16) Heard {
-	coefficient := 2 * math.Cos(2*math.Pi*Pitch/Rate)
+// Hear looks for the test tone in a mono recording.
+func Hear(samples []int16) Heard { return HearAt(samples, Pitch) }
+
+// Both makes a WAV file with a tone of the given pitch on both speakers, fading in and out.
+func Both(pitch, seconds float64) []byte {
+	frames := int(seconds * Rate)
+	fade := Rate / 50
+	samples := make([]int16, frames*2)
+	for i := 0; i < frames; i++ {
+		gain := 1.0
+		if i < fade {
+			gain = float64(i) / float64(fade)
+		} else if frames-i < fade {
+			gain = float64(frames-i) / float64(fade)
+		}
+		value := int16(gain * 12000 * math.Sin(2*math.Pi*pitch*float64(i)/Rate))
+		samples[i*2], samples[i*2+1] = value, value
+	}
+	return WAV(samples, 2)
+}
+
+// Quietest is the level of a recording's quietest quarter second: its noise with nothing playing.
+func Quietest(samples []int16) int {
+	quietest := -1
+	for at := 0; at+window <= len(samples); at += window {
+		if level := Level(samples[at : at+window]); quietest < 0 || level < quietest {
+			quietest = level
+		}
+	}
+	return max(quietest, 0)
+}
+
+// HearAt looks for a tone of the given pitch in a mono recording, a quarter second at a time.
+// Short windows, because the speakers' and the microphones' clocks differ a little, which
+// smears the tone out of a long measurement; and the tone has to be most of the sound in a
+// window, so room noise and the click of the microphones starting don't count.
+func HearAt(samples []int16, pitch float64) Heard {
+	coefficient := 2 * math.Cos(2*math.Pi*pitch/Rate)
 	var heard Heard
 	var level float64
 	for at := 0; at+window <= len(samples); at += window {

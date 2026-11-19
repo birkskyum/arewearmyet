@@ -68,9 +68,10 @@ var stepWords = []struct {
 	{"keys", []string{"Volume and brightness keys"}},
 	{"touchpad", []string{"Touchpad"}},
 	{"touchscreen", []string{"Touchscreen"}},
-	{"sound", []string{"Speakers", "Microphone", "Headphones"}},
-	{"speakers", []string{"Speakers"}},
-	{"microphone", []string{"Microphone"}},
+	{"sound", []string{"Sound", "Headphones"}},
+	{"speakers", []string{"Sound"}},
+	{"microphone", []string{"Sound"}},
+	{"voice", []string{"Voice"}},
 	{"headphones", []string{"Headphones"}},
 	{"camera", []string{"Camera"}},
 	{"usb", []string{"USB ports"}},
@@ -82,7 +83,7 @@ var stepWords = []struct {
 // The check a crash during a step is recorded for.
 var stepCheck = map[string]string{
 	"Keyboard": "keyboard", "Volume and brightness keys": "keyboard", "Touchpad": "touchpad", "Touchscreen": "touchscreen",
-	"Speakers": "speakers", "Microphone": "microphones", "Headphones": "headphones", "Camera": "camera",
+	"Sound": "speakers", "Voice": "microphones", "Headphones": "headphones", "Camera": "camera",
 	"USB ports": "usb", "External screen": "external-display", "Sleep": "suspend",
 }
 
@@ -142,9 +143,9 @@ func build(run *report.Run, facts probe.Facts, dir string) []step {
 	if facts.SoundCard != "" && tools.Have("pw-play", "pw-record") {
 		speakers, microphones := newSpeakers(run, dir), newMicrophones(run, dir)
 		microphones.speakers = speakers
-		// Microphones that heard the tones are already measured as working by then; their own
-		// step goes on to how well they record, and skipping it keeps that measurement
-		add("speakers microphones headphones", speakers, microphones, newHeadphones(run, dir))
+		// The sound step measures the speakers and the microphones together. The voice step,
+		// with the owner speaking, is only for microphones that step couldn't hear anything with
+		add("speakers microphones headphones", speakers, &skippable{step: microphones, skip: speakers.heardTone}, newHeadphones(run, dir))
 	}
 	if facts.Camera != "" && tools.Have("cam") {
 		add("camera", newCamera(run, dir))

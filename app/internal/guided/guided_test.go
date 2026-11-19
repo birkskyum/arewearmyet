@@ -344,11 +344,14 @@ func TestChosenStepsRunAlone(t *testing.T) {
 		}
 		return strings.Join(out, ", ")
 	}
-	if got := names(choose(all, []string{"sound"})); got != "Speakers, Microphone, Headphones" {
+	if got := names(choose(all, []string{"sound"})); got != "Sound, Headphones" {
 		t.Errorf("sound: %s", got)
 	}
 	if got := names(choose(all, []string{"camera", "keyboard"})); got != "Keyboard, Volume and brightness keys, Camera" {
 		t.Errorf("camera and keyboard: %s", got)
+	}
+	if got := names(choose(all, []string{"voice"})); got != "Voice" {
+		t.Errorf("voice: %s", got)
 	}
 	if len(choose(all, []string{"usb"})) != 0 || !KnownStep("usb") || KnownStep("nonsense") {
 		t.Error("step words are off")
@@ -685,64 +688,114 @@ func TestNoLineIsCutOffInANarrowWindow(t *testing.T) {
 	}
 }
 
-func TestSpeakersCanBeReportedAsUnevenAndInTheOwnersWords(t *testing.T) {
-	heard := func(s *speakers) {
-		s.update(toneMsg{side: audio.Left, heard: audio.Heard{Windows: 9, Best: 93, Level: 240}})
-		s.phase = "ask" // the right tone, without playing it
-		s.heard[audio.Right] = audio.Heard{Windows: 8, Best: 90, Level: 104}
+// played feeds the sound step what the microphones recorded of each part, as if it had played.
+func played(s *speakers, levels ...int) {
+	s.update(press(tea.KeyEnter))
+	for at, level := range levels {
+		heard := audio.Heard{}
+		if level > 0 {
+			heard = audio.Heard{Windows: 5, Best: 92, Level: level}
+		}
+		s.update(partMsg{at: at, heard: heard, noise: 9})
 	}
+}
+
+func TestSoundIsMeasuredFromTheRecordingWithNobodyListening(t *testing.T) {
 	run := &report.Run{}
 	s := newSpeakers(run, t.TempDir())
-	heard(s)
-	if !strings.Contains(s.view(90, 30), "the left tone was 2.3 times as loud as the right") {
-		t.Errorf("the measured balance isn't shown:\n%s", s.view(90, 30))
+	played(s, 240, 104, 60, 300, 180)
+	if s.phase != "result" {
+		t.Fatalf("phase %q", s.phase)
 	}
-	s.update(press('2'))
+	speakers, _ := run.Get("speakers")
+	microphones, _ := run.Get("microphones")
+	if speakers.State != report.Works || speakers.How != report.Measured || !strings.Contains(speakers.Evidence, "left speaker heard at -43 dB, right speaker heard at -50 dB; the left side 7 dB louder than the right") {
+		t.Errorf("speakers: %+v", speakers)
+	}
+	if microphones.State != report.Works || microphones.How != report.Measured || !strings.Contains(microphones.Evidence, "300 Hz at -55 dB, 1000 Hz at -41 dB, 3000 Hz at -45 dB; noise with nothing playing -71 dB") {
+		t.Errorf("microphones: %+v", microphones)
+	}
+	drawn := s.view(90, 40)
+	for _, text := range []string{"Left", "heard at -43 dB", "the left side 7 dB louder", "3000 Hz", "noise with nothing playing: -71 dB"} {
+		if !strings.Contains(drawn, text) {
+			t.Errorf("the result doesn't show %q:\n%s", text, drawn)
+		}
+	}
+	// Enter takes the measurement as it is: nothing was asked
+	s.update(press(tea.KeyEnter))
+	if !s.done() {
+		t.Error("not done after Enter")
+	}
+}
+
+func TestSoundWithOneSpeakerSilentIsPartlyWorking(t *testing.T) {
+	run := &report.Run{}
+	s := newSpeakers(run, t.TempDir())
+	played(s, 240, 0, 60, 300, 180)
+	speakers, _ := run.Get("speakers")
+	if speakers.State != report.Partial || speakers.Note != "Only the left speaker was heard by the microphones." || run.State("microphones") != report.Works {
+		t.Errorf("speakers %+v, microphones %q", speakers, run.State("microphones"))
+	}
+}
+
+func TestSoundAsksOnlyWhenTheRecordingHoldsNothing(t *testing.T) {
+	// The owner heard both sides, so the microphones are what failed
+	run := &report.Run{}
+	s := newSpeakers(run, t.TempDir())
+	played(s, 0, 0, 0, 0, 0)
+	if s.phase != "silent" || len(run.Results) != 0 {
+		t.Fatalf("phase %q, results %+v", s.phase, run.Results)
+	}
+	s.update(press('1'))
+	speakers, _ := run.Get("speakers")
+	microphones, _ := run.Get("microphones")
+	if speakers.State != report.Works || speakers.How != report.Owner || microphones.State != report.Broken || microphones.How != report.Measured {
+		t.Errorf("speakers %+v, microphones %+v", speakers, microphones)
+	}
+
+	// The owner heard nothing either: the speakers failed, and the microphones are left to the voice step
+	run = &report.Run{}
+	s = newSpeakers(run, t.TempDir())
+	played(s, 0, 0, 0, 0, 0)
+	s.update(press('4'))
+	if run.State("speakers") != report.Broken || run.State("microphones") != "" {
+		t.Errorf("speakers %q, microphones %q", run.State("speakers"), run.State("microphones"))
+	}
+	voice := &skippable{step: newMicrophones(run, t.TempDir()), skip: s.heardTone}
+	if voice.done() {
+		t.Error("the voice step is skipped though the microphones heard nothing")
+	}
+}
+
+func TestTheOwnerCanStillSayTheSoundWasWrong(t *testing.T) {
+	run := &report.Run{}
+	s := newSpeakers(run, t.TempDir())
+	played(s, 240, 104, 60, 300, 180)
+	s.update(press('p'))
+	s.update(press('1'))
 	result, _ := run.Get("speakers")
-	if !s.done() || result.State != report.Partial || result.Note != "Both speakers play, but the left is louder than the right." || !strings.Contains(result.Evidence, "2.3 times as loud") {
+	if !s.done() || result.State != report.Partial || result.How != report.Owner || result.Note != "Both speakers play, but the left is louder than the right." || !strings.Contains(result.Evidence, "7 dB louder") {
 		t.Errorf("result %+v", result)
 	}
 
-	// None of the answers fits
+	// In their own words
 	run = &report.Run{}
 	s = newSpeakers(run, t.TempDir())
-	heard(s)
-	s.update(press('8'))
+	played(s, 240, 230, 60, 300, 180)
+	s.update(press('p'))
+	s.update(press('5'))
 	for _, c := range "a hum under the tone" {
 		s.update(press(c))
 	}
 	s.update(press(tea.KeyEnter))
-	if result, _ := run.Get("speakers"); !s.done() || result.State != report.Partial || result.Note != "a hum under the tone" {
+	if result, _ := run.Get("speakers"); result.Note != "a hum under the tone" || !strings.Contains(result.Evidence, "about equally loud") {
 		t.Errorf("in the owner's words: %+v", result)
 	}
 
-	// Tones about equally loud say so, and one side unheard says nothing about balance
-	s = newSpeakers(&report.Run{}, t.TempDir())
-	s.heard = [2]audio.Heard{{Windows: 9, Level: 200}, {Windows: 9, Level: 180}}
-	if s.balance() != "at the microphones the two tones were about equally loud" {
-		t.Errorf("balance: %q", s.balance())
-	}
-	s.heard[audio.Right] = audio.Heard{}
-	if s.balance() != "" {
-		t.Errorf("balance with one side unheard: %q", s.balance())
-	}
-}
-
-func TestMicrophonesThatHeardTheTonesAreMeasuredEvenWhenTheirStepIsSkipped(t *testing.T) {
-	run := &report.Run{}
-	dir := t.TempDir()
-	speakers, microphones := newSpeakers(run, dir), newMicrophones(run, dir)
-	microphones.speakers = speakers
-	speakers.heard = [2]audio.Heard{{Windows: 9, Best: 93, Level: 240}, {Windows: 8, Best: 90, Level: 104}}
-	speakers.phase = "ask"
-	speakers.update(press('1'))
-	if !strings.Contains(microphones.view(90, 30), "heard the tones, so they work. This checks how well") {
-		t.Errorf("the step doesn't say what it adds:\n%s", microphones.view(90, 30))
-	}
-	microphones.update(press('s'))
-	result, _ := run.Get("microphones")
-	if !microphones.done() || result.State != report.Works || result.How != report.Measured || !strings.Contains(result.Evidence, "heard the left tone for") {
-		t.Errorf("microphones: %+v", result)
+	// The voice step is passed over once the microphones heard the tones
+	voice := &skippable{step: newMicrophones(run, t.TempDir()), skip: s.heardTone}
+	if !voice.done() {
+		t.Error("the voice step still runs")
 	}
 }
 
