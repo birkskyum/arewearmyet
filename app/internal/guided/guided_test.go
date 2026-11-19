@@ -332,6 +332,10 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 	if alone < 0 || !(alone < strings.Index(drawn, "All of these in one go") && strings.Index(drawn, "Video decoding") < with && with < strings.Index(drawn, "Keyboard, volume")) {
 		t.Errorf("the two groups are off:\n%s", drawn)
 	}
+	// Each group opens with a way to run all of it
+	if both := strings.LastIndex(drawn, "All of these in one go"); strings.Count(drawn, "All of these in one go") != 2 || !(with < both && both < strings.Index(drawn, "Keyboard, volume")) || !strings.Contains(drawn, "about ten minutes") {
+		t.Errorf("the group done with the owner has no way to run all of it:\n%s", drawn)
+	}
 	// Each part shows how it stood the last time it was tested here, and the screen says where
 	// the machine stands overall and what fails that no part of the menu covers
 	plain := ansi.ReplaceAllString(drawn, "")
@@ -550,6 +554,14 @@ func TestChosenStepsRunAlone(t *testing.T) {
 	}
 	if got := names(choose(all, []string{"camera", "keyboard"})); got != "Keyboard, Volume and brightness keys, Camera" {
 		t.Errorf("camera and keyboard: %s", got)
+	}
+	// Everything done with the owner in one go: not the sound, which measures itself, nor the
+	// voice step that only stands in for it
+	if got := names(choose(all, []string{"manual"})); got != "Keyboard, Volume and brightness keys, Headphones, Camera, Questions" {
+		t.Errorf("manual: %s", got)
+	}
+	if Automatic([]string{"manual"}) {
+		t.Error("the tests done with the owner count as needing nobody")
 	}
 	if got := names(choose(all, []string{"voice"})); got != "Voice" {
 		t.Errorf("voice: %s", got)

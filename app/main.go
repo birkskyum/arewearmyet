@@ -3,6 +3,7 @@
 //	hw-test            the guided test: the quick check, then keyboard, sound, camera and sleep with you
 //	hw-test quick      the quick check alone: read-only, a few seconds, no questions
 //	hw-test sound      one part of the guided test alone, reporting only that part
+//	hw-test manual     the tests done with you: keyboard, touchpad, camera, ports, sleep
 //	hw-test auto       the tests that need nobody: graphics, browser, wireless, video, temperatures, sound
 //
 // Both show the results and send them to the model's page. What's sent: the maker, model, SKU,
@@ -200,6 +201,8 @@ func usage() {
   hw-test quick      the quick check alone: read-only, a few seconds, no questions
   hw-test STEP...    one part alone, reporting only that part:
                      `+wrapWords(guided.StepWords())+`
+  hw-test manual     every test done with you, about ten minutes: keyboard, touchpad, touchscreen,
+                     headphones, camera, USB ports, external screen, sleep and a few questions
   hw-test auto       every test that needs nobody, about two minutes: sound, graphics, WebGL and
                      WebGPU, Wi-Fi and Bluetooth, video decoding, temperatures. Without a
                      terminal it runs all but the sound, which plays tones out loud
