@@ -27,7 +27,7 @@ const STEPS_NAV = [
   { id: 'before', title: 'Before you start', text: 'Your model, your files, the firmware' },
   { id: 'stick', title: 'Make the stick', text: 'From Windows, or from any computer' },
   { id: 'install', title: 'Install', text: 'Start from the stick and choose a disk' },
-  { id: 'trouble', title: 'When it goes wrong', text: 'A black password screen, and more' },
+  { id: 'trouble', title: 'If something goes wrong', text: 'The known snags and their fixes' },
 ];
 
 // The models Omarchy has a fix for, read from install/hardware on its quattro branch
@@ -42,7 +42,7 @@ const UNLOCK_FIXED = [
 ];
 ---
 
-<Layout title="Install Omarchy on an ARM PC · Are we ARM yet?" description="How to install Omarchy on a Snapdragon laptop or another ARM PC: which image your model needs, making the USB stick, and what to do when the disk password screen stays black.">
+<Layout title="Install Omarchy on an ARM PC · Are we ARM yet?" description="How to install Omarchy on a Snapdragon laptop or another ARM PC: which image your model needs, making the USB stick, installing, and the fixes for the known snags.">
   <main class="mx-auto max-w-4xl px-4 py-10 text-zinc-400 sm:px-6">
     <div class="flex items-center justify-between gap-4">
       <a href="/" class="flex items-center gap-3 text-zinc-300 hover:text-zinc-100">
@@ -57,7 +57,7 @@ const UNLOCK_FIXED = [
 
     <h1 class="mt-8 text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">Install Omarchy on an ARM PC</h1>
     <p class="mt-4 text-lg">
-      Omarchy builds one install image for every ARM PC it supports. This page takes a Snapdragon laptop from Windows to the Omarchy desktop, and says what to do when the start doesn't go as it should.
+      Omarchy builds one install image for every ARM PC it supports. This page takes a Snapdragon laptop from Windows to the Omarchy desktop.
     </p>
     <p class="mt-3">
       <span class="text-zinc-200">Snapdragon laptops are supported from Omarchy 4.6.</span> Until 4.6 is released, that means the <span class={`${PILL} ${TONE.good}`}>Edge</span> image, which is built every night. The 4.5 release image is too old for them.
@@ -140,7 +140,7 @@ echo "$(jq -r .sha256 &lt;&lt;&lt;"$latest")  $&#123;url##*/&#125;" | sha256sum 
           <span class="text-zinc-200">Answer the installer's questions and choose where Omarchy goes.</span> The whole disk, another drive, or free space next to Windows. Omarchy's manual covers <a class={LINK} href="https://omarchy.org/manual/getting-started/">the install step by step</a> and <a class={LINK} href="https://omarchy.org/manual/dual-boot-install/">installing next to Windows</a>.
         </li>
         <li>
-          <span class="text-zinc-200">Decide on disk encryption.</span> With it, you type a disk password at every start, before the desktop. On a model whose password screen isn't fixed yet <a class={LINK} href="#black-password">that screen is black</a> and you type blind. The manual says how to install without encryption, which has no such screen but leaves the disk readable to anyone who takes it.
+          <span class="text-zinc-200">Decide on disk encryption.</span> With it, you type a disk password at every start, before the desktop. Omarchy's manual says how to install without it.
         </li>
         <li>
           <span class="text-zinc-200">After the first start, update and restart.</span>
@@ -157,7 +157,7 @@ hw-test</code></pre>
     </section>
 
     <section id="trouble" class={`mt-6 ${CARD}`}>
-      <h2 class="text-xl font-semibold text-zinc-100">When it goes wrong</h2>
+      <h2 class="text-xl font-semibold text-zinc-100">If something goes wrong</h2>
 
       <h3 id="back-to-windows" class={`${H3} scroll-mt-6`}>The laptop goes back to Windows, or the screen flashes and stays black</h3>
       <ul class={BULLETS}>
@@ -169,7 +169,7 @@ hw-test</code></pre>
 
       <h3 id="black-password" class={`${H3} scroll-mt-6`}>The disk password screen is black</h3>
       <p class="mt-2">
-        After the boot menu the screen goes dark where the password prompt should be. The laptop hasn't hung. The prompt is there and waiting, but the screen isn't lit yet.
+        The password prompt should show as on any other computer. On a model Omarchy doesn't have the fix for yet, the screen stays dark there instead. The laptop hasn't hung. The prompt is there and waiting, but the screen isn't lit yet.
       </p>
       <p class="mt-4 font-medium text-zinc-200">To get in now</p>
       <ol class={STEPS}>

@@ -7,7 +7,7 @@ export function GET() {
 Agents helping an owner check their machine, report what works or propose fixes to Omarchy: read the guide first.
 
 - [Guide for AI agents](https://arewearmyet.com/agents.md): the rules, how to measure a computer with hw-test, report results, try a fix from a boot entry of its own, show what it changed and open a pull request on Omarchy
-- [Installing Omarchy on an ARM PC](https://arewearmyet.com/install): for owners. Snapdragon laptops take the edge image until Omarchy 4.6 is released. Making the stick, installing, and what to do when the disk password screen stays black
+- [Installing Omarchy on an ARM PC](https://arewearmyet.com/install): for owners. Snapdragon laptops take the edge image until Omarchy 4.6 is released. Making the stick, installing, and the fixes for known snags at the first start
 - [Checks](https://arewearmyet.com/api/checks): what each check means, how it's measured and where to look when it fails
 - [Notes](https://arewearmyet.com/api/notes): problems, workarounds and pointers owners and their agents left, with logs. Add ?model=<id> or ?q=<words>
 - [Probe script](https://arewearmyet.com/probe.sh): the read-only quick check for distros other than Omarchy
