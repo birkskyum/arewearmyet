@@ -1,7 +1,7 @@
 name: Release the app
 
-# A tag like v0.1.0 builds away for Linux on ARM and x86 and publishes it as a release, which
-# mise installs from: mise x github:birkskyum/arewearmyet -- away
+# A tag like v0.1.0 builds hw-test for Linux on ARM and x86 and publishes it as a release, which
+# mise installs from: mise x github:birkskyum/arewearmyet -- hw-test
 
 on:
   push:
@@ -29,16 +29,16 @@ jobs:
         run: |
           version="${GITHUB_REF_NAME#v}"
           for arch in arm64 amd64; do
-            GOOS=linux GOARCH=$arch CGO_ENABLED=0 go build -trimpath -ldflags "-s -w -X main.version=$version" -o "build/$arch/away" .
-            tar -czf "away-$version-linux-$arch.tar.gz" -C "build/$arch" away
+            GOOS=linux GOARCH=$arch CGO_ENABLED=0 go build -trimpath -ldflags "-s -w -X main.version=$version" -o "build/$arch/hw-test" .
+            tar -czf "hw-test-$version-linux-$arch.tar.gz" -C "build/$arch" hw-test
           done
-          sha256sum away-*.tar.gz > checksums.txt
+          sha256sum hw-test-*.tar.gz > checksums.txt
 
       - name: Publish
         working-directory: app
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "$GITHUB_REF_NAME" away-*.tar.gz checksums.txt \
-            --title "away ${GITHUB_REF_NAME#v}" \
-            --notes "The hardware check for Snapdragon PCs on Omarchy. Run it with \`mise x github:birkskyum/arewearmyet -- away\`."
+          gh release create "$GITHUB_REF_NAME" hw-test-*.tar.gz checksums.txt \
+            --title "hw-test ${GITHUB_REF_NAME#v}" \
+            --notes "The hardware check for Snapdragon PCs on Omarchy. Run it with \`mise x github:birkskyum/arewearmyet -- hw-test\`."

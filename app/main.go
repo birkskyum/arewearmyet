@@ -1,7 +1,7 @@
-// away checks what works on a Snapdragon PC under Omarchy and reports it to arewearmyet.com.
+// hw-test checks what works on a Snapdragon PC under Omarchy and reports it to arewearmyet.com.
 //
-//	away            the guided test: the quick check, then keyboard, sound, camera and sleep with you
-//	away check      the quick check alone: read-only, a few seconds, no questions
+//	hw-test            the guided test: the quick check, then keyboard, sound, camera and sleep with you
+//	hw-test quick      the quick check alone: read-only, a few seconds, no questions
 //
 // Both show the results and send them to the model's page. What's sent: the maker, model, SKU,
 // board and BIOS version, the hardware IDs made from those, the kernel, OS and a few package
@@ -31,7 +31,7 @@ func main() {
 	if len(args) > 0 && !strings.HasPrefix(args[0], "-") {
 		command, args = args[0], args[1:]
 	}
-	flags := flag.NewFlagSet("away "+command, flag.ExitOnError)
+	flags := flag.NewFlagSet("hw-test "+command, flag.ExitOnError)
 	jsonOnly := flags.Bool("json", false, "print what would be sent, and send nothing")
 	noSend := flags.Bool("no-send", false, "show the results without sending them")
 	model := flags.String("model", "", "the model's id on arewearmyet.com, when the machine isn't recognised by itself")
@@ -42,21 +42,24 @@ func main() {
 
 	switch command {
 	case "version", "--version":
-		fmt.Println("away", version)
+		fmt.Println("hw-test", version)
 		return
 	case "help", "--help", "-h":
 		usage()
 		return
-	case "check", "guided":
+	case "quick", "check", "guided":
+		if command == "check" {
+			command = "quick"
+		}
 	default:
-		fmt.Fprintf(os.Stderr, "away: no command %q\n\n", command)
+		fmt.Fprintf(os.Stderr, "hw-test: no command %q\n\n", command)
 		usage()
 		os.Exit(2)
 	}
 
 	run, facts, err := probe.Quick(machine.Real())
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "away:", err)
+		fmt.Fprintln(os.Stderr, "hw-test:", err)
 		os.Exit(1)
 	}
 	run.Model, run.Agent = *model, *agent
@@ -68,7 +71,7 @@ func main() {
 	// The guided test needs someone at the keyboard; without a terminal it is the quick check
 	if command == "guided" && guided.Interactive() {
 		if err := guided.Run(run, facts, guided.Options{API: *api, Send: !*noSend}); err != nil {
-			fmt.Fprintln(os.Stderr, "away:", err)
+			fmt.Fprintln(os.Stderr, "hw-test:", err)
 			os.Exit(1)
 		}
 		return
@@ -107,11 +110,11 @@ func printResults(run *report.Run) {
 }
 
 func usage() {
-	fmt.Fprint(os.Stderr, `away checks what works on a Snapdragon PC and reports it to arewearmyet.com.
+	fmt.Fprint(os.Stderr, `hw-test checks what works on a Snapdragon PC and reports it to arewearmyet.com.
 
-  away            the guided test: the quick check, then keyboard, sound, camera and sleep with you
-  away check      the quick check alone: read-only, a few seconds, no questions
-  away version
+  hw-test            the guided test: the quick check, then keyboard, sound, camera and sleep with you
+  hw-test quick      the quick check alone: read-only, a few seconds, no questions
+  hw-test version
 
 Options:
   --no-send      show the results without sending them
