@@ -16780,7 +16780,14 @@
       "notes": "Its device trees are Val Packett's posted series from Maximilian Luz's linux-surface work, with the two fixes Haipeng Lin's test found, and its firmware comes from the bundles Microsoft publishes on Windows Update. The SQ2 with cellular shares the SQ1's SKU, so it boots the SQ1's tree at the SQ1's top clock. Its sensor DSP needs linux-omarchy 7.3-65 (omacom/omarchy-pkgs#2860). Nobody has booted Omarchy on it yet.",
       "outcome": "should",
       "bootable": "edge",
-      "reports": [],
+      "reports": [
+        {
+          "state": "workaround",
+          "variant": "SQ1",
+          "note": "Monkey1911 reached the desktop on the edge image of 17 November (linux-omarchy 7.3-72) and ran the hardware test there. The install image needed two things done by hand: the display clock driver kept from loading, or the screen goes black, and the older USB driver added, or the image doesn't find its own stick. The installed system hangs in the Limine boot menu and starts from a firmware boot entry that goes to the kernel image directly. Keyboard, touchpad, Wi-Fi, Bluetooth, the battery and sleep work. The screen runs without the graphics chip, and sound, the camera, the touchscreen and the pen don't work yet.",
+          "checked": "2026-11"
+        }
+      ],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
@@ -16851,8 +16858,15 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "should",
-          "reports": []
+          "outcome": "workaround",
+          "reports": [
+            {
+              "state": "workaround",
+              "variant": "SQ1",
+              "note": "Monkey1911 reached the desktop on the edge image of 17 November (linux-omarchy 7.3-72) and ran the hardware test there. The install image needed two things done by hand: the display clock driver kept from loading, or the screen goes black, and the older USB driver added, or the image doesn't find its own stick. The installed system hangs in the Limine boot menu and starts from a firmware boot entry that goes to the kernel image directly. Keyboard, touchpad, Wi-Fi, Bluetooth, the battery and sleep work. The screen runs without the graphics chip, and sound, the camera, the touchscreen and the pen don't work yet.",
+              "checked": "2026-11"
+            }
+          ]
         },
         {
           "model": "SQ2",
