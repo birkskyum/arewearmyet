@@ -38,6 +38,7 @@ for n in /sys/class/net/*; do
   dir "$n/wireless"; copy "$n/operstate" "$n/addr_assign_type"; driver "$n/device/driver"
 done
 dir /sys/class/bluetooth/hci*
+copy /sys/class/rfkill/rfkill*/{type,soft,hard}
 copy /sys/class/remoteproc/remoteproc*/{name,state,firmware}
 copy /sys/class/power_supply/*/{type,capacity,status,energy_now,energy_full,charge_now,charge_full,online,usb_type,voltage_now,current_now}
 copy /sys/power/{mem_sleep,state} /sys/power/suspend_stats/{success,fail}

@@ -215,7 +215,10 @@ if [ -z "$bt" ]; then add bluetooth broken measured "no Bluetooth controller"
 elif command -v bluetoothctl >/dev/null 2>&1; then
   pw="$(timeout -k 2 5 bluetoothctl show 2>/dev/null | sed -n 's/^[[:space:]]*Powered: //p' | head -n 1)"
   [ "$pw" = yes ] && add bluetooth works measured "$bt powered"
-  [ "$pw" = no ] && add bluetooth partial measured "$bt present, not powered (turned off, or it failed to start)"
+  # Switched off by the owner, as in airplane mode, says nothing about the hardware
+  bt_off=""
+  for rf in $R/sys/class/rfkill/rfkill*; do [ "$(read1 "$rf/type")" = bluetooth ] && [ "$(read1 "$rf/soft")" = 1 ] && bt_off=1; done
+  [ "$pw" = no ] && [ -z "$bt_off" ] && add bluetooth partial measured "$bt present, but it doesn't power on"
 fi
 
 # Remote processors: the audio DSP (sound, battery, USB-C power) and the compute DSP
