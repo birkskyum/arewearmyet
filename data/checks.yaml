@@ -55,7 +55,19 @@ checks:
     group: display
     title: Graphics acceleration
     works: The desktop runs on the GPU, not on software rendering.
-    probe: Whether a render node from the msm driver exists and the GPU's firmware loaded.
+    probe: Whether a render node from the msm driver exists and the GPU's firmware loaded. The graphics test asks Vulkan which device programs draw on.
+
+  - id: webgl
+    group: display
+    title: WebGL in the browser
+    works: Chromium gives pages WebGL on the GPU, not on a renderer that runs on the processor.
+    probe: The graphics test opens a page in Chromium without a window and reads the renderer its WebGL context reports.
+
+  - id: webgpu
+    group: display
+    title: WebGPU in the browser
+    works: Chromium gives pages WebGPU on the GPU without being started in a special way.
+    probe: The graphics test asks Chromium for a WebGPU adapter and device, as it comes and again with the switches that turn WebGPU on. Working only with the switches counts as partly.
 
   - id: backlight
     group: display
@@ -90,7 +102,7 @@ checks:
     group: network
     title: Wi-Fi
     works: Wi-Fi connects and stays connected at full speed, also after sleep.
-    probe: The Wi-Fi interface, its driver and whether it's connected.
+    probe: The Wi-Fi interface, its driver and whether it's connected. The wireless test reads the link's signal and speed.
     person: Say whether it stays connected through a day of use and after waking from sleep.
 
   - id: wifi-address
@@ -103,7 +115,7 @@ checks:
     group: network
     title: Bluetooth
     works: Bluetooth turns on, finds devices and keeps headphones and mice connected.
-    probe: Whether a Bluetooth controller exists and is powered.
+    probe: Whether a Bluetooth controller exists and is powered. The wireless test listens for eight seconds and counts the devices it hears.
     person: Pair a pair of headphones or a mouse and use it for a few minutes.
 
   - id: speakers
@@ -205,7 +217,7 @@ checks:
     group: media
     title: Hardware video decoding
     works: Videos decode on the video engine, not on the processor.
-    probe: Whether the iris or venus video decoder exists.
+    probe: Whether the iris or venus video decoder exists. The video test decodes a two-second H.264 clip on it and counts the frames.
     person: Play a 1080p or 4K video in mpv or Chromium and say whether the processor stays mostly idle.
 
   - id: cdsp
@@ -218,7 +230,7 @@ checks:
     group: sensors
     title: Fans and temperatures
     works: The fans respond to load and the fan speed and temperatures can be read.
-    probe: Which temperature and fan sensors exist.
+    probe: Which temperature and fan sensors exist. The temperature test keeps every core busy for 20 seconds and reads whether the sensors show the heat and a fan speeds up.
     person: Put some load on it and say whether the fans spin up and quiet down.
 
   - id: fingerprint
