@@ -1650,7 +1650,7 @@
     ]
   },
   "summary": {
-    "models": 87,
+    "models": 88,
     "nvidia": 22,
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
@@ -1658,19 +1658,19 @@
     "should": 68,
     "workaround": 5,
     "problems": 2,
-    "notYet": 7,
+    "notYet": 8,
     "deviceTree": 83,
     "ids": 60,
     "firmware": 73,
     "googlebooks": 2,
     "chromebooks": 10,
     "acpi": 49,
-    "acpiWanted": 3,
+    "acpiWanted": 4,
     "machine": {
       "team": 7,
       "omarchy": 23,
       "linux": 52,
-      "nobody": 5
+      "nobody": 6
     },
     "byPiece": {
       "deviceTree": {
@@ -14694,6 +14694,83 @@
         "acpiUrls": [
           "https://github.com/turbineBMW/omarchy-hardware-reports/pull/54"
         ]
+      },
+      "variants": [
+        {
+          "computed": "none",
+          "treeChannel": null,
+          "idsChannel": null,
+          "bootChannel": null,
+          "treePull": null,
+          "idsPull": null,
+          "deviceTree": null,
+          "firmwareNeeded": [],
+          "ids": [],
+          "stubble": [],
+          "outcome": "none",
+          "reports": []
+        }
+      ],
+      "boot": "uefi",
+      "bootloader": null,
+      "linuxImage": null,
+      "discussion": null
+    },
+    {
+      "id": "samsung-galaxy-book6-edge-5g",
+      "vendor": "Samsung",
+      "name": "Galaxy Book6 Edge 5G",
+      "generation": "x2",
+      "form": "laptop",
+      "released": null,
+      "modelNumbers": [
+        "NP755XSB"
+      ],
+      "chips": [],
+      "status": null,
+      "sources": [
+        "https://www.samsung.com/uk/support/model/NP755XSB-KG1UK/",
+        "https://www.samsung.com/uk/business/computers/galaxy-book/galaxy-book6-edge-x2-elite-16gb-512gb-np960xrd-kb1uk/"
+      ],
+      "notes": "Samsung's UK site lists it as a 15.6 inch model with a Snapdragon X2 Plus and a 5G modem, under the model code NP755XSB-KG1UK. Its support page has no manual or driver pack yet. Nobody has sent a hardware report for it, so its exact chip, hardware IDs and ACPI tables aren't known.",
+      "outcome": "none",
+      "bootable": "needs-deviceTree",
+      "reports": [],
+      "machine": "nobody",
+      "omarchy": {
+        "deviceTree": null,
+        "deviceTreePull": null,
+        "ids": null,
+        "idsPull": null,
+        "firmware": "windows",
+        "firmwareChannel": null,
+        "firmwarePackages": [],
+        "firmwarePull": null
+      },
+      "pieces": {
+        "deviceTree": "none",
+        "ids": "none",
+        "firmware": "none"
+      },
+      "upstream": {
+        "deviceTree": "missing",
+        "firstRelease": null,
+        "devicetreePosted": null,
+        "devicetreeOutOfTree": null,
+        "devicetreeArchive": null,
+        "ids": "missing",
+        "idsCollected": null,
+        "idsStubble": null,
+        "firmware": "windows",
+        "firmwareMissing": [],
+        "firmwareAudioOnly": false,
+        "firmwareDownload": null,
+        "firmwarePosted": null,
+        "firmwareUpstream": "missing",
+        "firmwareUpstreamMissing": [],
+        "firmwareFolders": [],
+        "acpi": "missing",
+        "acpiUrls": []
       },
       "variants": [
         {

@@ -1918,6 +1918,16 @@ models:
       - https://news.samsung.com/us/galaxy-book6-edge-available-next-generation-ai-performance-premium-portability
       - https://browser.geekbench.com/v6/cpu/18993073
 
+  - id: samsung-galaxy-book6-edge-5g
+    vendor: "Samsung"
+    name: "Galaxy Book6 Edge 5G"
+    generation: x2
+    model_numbers: ["NP755XSB"]
+    notes: "Samsung's UK site lists it as a 15.6 inch model with a Snapdragon X2 Plus and a 5G modem, under the model code NP755XSB-KG1UK. Its support page has no manual or driver pack yet. Nobody has sent a hardware report for it, so its exact chip, hardware IDs and ACPI tables aren't known."
+    sources:
+      - https://www.samsung.com/uk/support/model/NP755XSB-KG1UK/
+      - https://www.samsung.com/uk/business/computers/galaxy-book/galaxy-book6-edge-x2-elite-16gb-512gb-np960xrd-kb1uk/
+
 
   # Snapdragon 8cx Gen 3, the generation before
   - id: huawei-matebook-e-go
