@@ -405,7 +405,7 @@ models:
     model_numbers: ["S3407QA"]
     variants:
       - { chip: "X1-26-100", compatible: "asus,vivobook-s14-s3407qa" }
-    acpi: ["arewearmyet/asus-vivobook-s14-s3407qa"]
+    acpi: ["arewearmyet/asus-vivobook-s14-s3407qa", "hardware-reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa"]
     devicetree_out_of_tree: "https://github.com/omacom/omarchy-pkgs/pull/2315"
     devicetree_files:
       - "data/device-trees/asus-vivobook-s14-s3407qa/x1p42100-asus-vivobook-s14.dts"
@@ -888,6 +888,7 @@ models:
     devicetree_files:
       - "data/device-trees/hp-omnibook-3-14-hz0/x1p42100-hp-omnibook-3-oled.dts"
       - "data/device-trees/hp-omnibook-3-14-hz0/x1-hp-omnibook-3.dtsi"
+    acpi: ["hardware-reports/hp/hp-omnibook-3-laptop-14-hz0xxx"]
     sources:
       - https://www.hp.com/au-en/shop/hp-omnibook-3-laptop-next-gen-ai-14-hz0062qu-dz4m3pa.html
       - https://www.energystar.gov/productfinder/product/certified-computers/details/4520692
@@ -972,7 +973,7 @@ models:
       - { model: "14-fe0", chip: "X1E-78-100", compatible: "hp,omnibook-x14" }
       - { model: "14-fe1", chip: "X1P-42-100", compatible: "hp,omnibook-x14-fe1" }
     firmware: ["qcom/x1e80100/hp/omnibook-x14"]
-    acpi: ["hp-omnibook-x14-fe0xxx"]
+    acpi: ["hp-omnibook-x14-fe0xxx", "hardware-reports/hp/hp-omnibook-x-laptop-14-fe0xxx"]
     firmware_posted: "https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/1333"
     sources:
       - https://www.hp.com/au-en/shop/hp-omnibook-x-laptop-14-fe0000qu-a42h8par.html
@@ -1134,6 +1135,7 @@ models:
     variants:
       - { compatible: "hp,omnibook-x16-cp1", borrowed: true, ids: ["mahua-hp-omnibook-x16.json"] }
     notes: "HP builds it on the OmniBook X 16's mainboard (board 8F46, driver pack sp172895), so the X2P-64-100 and X2E-80-100 units take that tree and firmware. The X 16's hardware IDs include the one HP's own bundles use, made from the family and the board alone (103C_5335M8 HP OmniBook X, 8F46), which the X 14 shares, so systemd-stub picks the X 16 tree on it too. Inferred from the shared board, not from an X 14's own report. Nobody has tried it yet. The X2P-42-100 units have the 6-core Kalambo chip and need a tree on kalambo.dtsi. The 2025 14-kr0 is a Snapdragon X model on board 8F45, listed on its own."
+    acpi: ["hardware-reports/hp/hp-omnibook-x-laptop-14-kr1xxx"]
     sources:
       - https://www.hp.com/au-en/shop/laptops-tablets/personal-laptops/omnibook-x-laptops/hp-omnibook-x-laptop-next-gen-ai-14-kr1000qu-d8qf4pa.html
       - https://www.harveynorman.co.nz/computers/laptops/hp-omnibook-x-14-laptop-snapdragon-x2-plus-16gb-ram-512gb-ssd-copilot-pc-meteor-silver-14-kr1002qu.html
@@ -1908,7 +1910,9 @@ models:
     released: "2026-05"
     chips: ["X2E-88-100"]
     model_numbers: ["NP960XRD", "NT960XRD"]
-    notes: "Its Geekbench results name it Galaxy Book6 Edge - PALF from the maker Samsung, where earlier Galaxy Books report SAMSUNG ELECTRONICS CO., LTD., with boards NP960XRD-KB2FR and NT960XRD-KC01B. Windows Update has no bundle for any CHID those strings give, and Samsung's download pages have no driver pack for it yet, so neither its hardware IDs nor its firmware can be confirmed without an owner."
+    notes: "An owner's hardware report gives its strings, hardware IDs and ACPI tables. It calls itself Galaxy Book6 Edge - PALF from the maker Samsung (earlier Galaxy Books report SAMSUNG ELECTRONICS CO., LTD.), SKU PALF-960XRD-GLYM-0, board NP960XRD-KB1DE, with the panel the Galaxy Book4 Edge 16 has. Nobody has written a device tree for it yet. Samsung offers no driver pack for it and Windows Update has no bundle for its hardware IDs, so its firmware comes from the laptop's own Windows. Its audio DSP, GPU and video images are Samsung's own builds, and its compute DSP image is the one the other X2 laptops have."
+    acpi: ["hardware-reports/samsung/galaxy-book6-edge-palf"]
+    ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/53"
     sources:
       - https://www.samsung.com/ca/computers/galaxy-book/galaxy-book6-edge-x2-elite-16gb-512gb-np960xrd-kb1ca/
       - https://news.samsung.com/us/galaxy-book6-edge-available-next-generation-ai-performance-premium-portability
@@ -2212,7 +2216,8 @@ models:
       - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/12ed0f96/pkgbuilds/linux-omarchy-dtbs/0038-arm64-dts-qcom-sc8180x-Add-Microsoft-Surface-Pro-X.patch#sc8180x-microsoft-caspar.dts"
       - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/12ed0f96/pkgbuilds/linux-omarchy-dtbs/0038-arm64-dts-qcom-sc8180x-Add-Microsoft-Surface-Pro-X.patch#sc8180x-microsoft-surface-pro-x.dtsi"
     notes: "Its device trees are Val Packett's posted series from Maximilian Luz's linux-surface work, with the two fixes Haipeng Lin's test found, and its firmware comes from the bundles Microsoft publishes on Windows Update. The SQ2 with cellular shares the SQ1's SKU, so it boots the SQ1's tree at the SQ1's top clock. Its sensor DSP needs linux-omarchy 7.3-65 (omacom/omarchy-pkgs#2860). Nobody has booted Omarchy on it yet."
-    acpi: ["microsoft-surface-prox", "linux-surface/surface_pro_x_sq1", "linux-surface/surface_pro_x_sq2"]
+    acpi: ["microsoft-surface-prox", "linux-surface/surface_pro_x_sq1", "linux-surface/surface_pro_x_sq2", "hardware-reports/microsoft-corporation/surface-pro-x"]
+    ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/47"
     sources:
       - https://github.com/aarch64-laptops/build/tree/master/misc/microsoft-surface-prox
       - https://github.com/linux-surface/acpidumps/tree/master/surface_pro_x_sq1

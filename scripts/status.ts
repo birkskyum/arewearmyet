@@ -2,6 +2,7 @@
 // (data/sources.json) and writes src/data/status.json for the site.
 // Run with `pnpm status`.
 
+import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { parse } from 'yaml';
 
@@ -622,12 +623,30 @@ rows.forEach((row, index) => {
 // The Omarchy Arm Installer's hardware reports hold each machine's own IDs, copied to reports/ by
 // scripts/archive.ts. A model that names a report folder (acpi: hardware-reports/...) gets those too,
 // which covers models nobody has sent to systemd or stubble yet.
+// A hardware ID as systemd makes it: a version 5 UUID of the fields joined by "&", in UTF-16
+const chidOf = (...fields: string[]): string => {
+  const hash = createHash('sha1').update(Buffer.from('70ffd8124c7f4c7d0000000000000000', 'hex')).update(Buffer.from(fields.join('&'), 'utf16le')).digest().subarray(0, 16);
+  hash[6] = (hash[6] & 0x0f) | 0x50;
+  hash[8] = (hash[8] & 0x3f) | 0x80;
+  const hex = hash.toString('hex');
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+};
+// The three IDs that name the panel are made here from the report's own strings. systemd-stub
+// spells a panel as LGD077b, with the product code in lower-case hex, and the installer up to
+// 1.3.0 wrote LGD077B, which gives IDs no machine has at startup.
 const reportIds = (folder: string): string[] => {
   const dir = `reports/${folder}`;
   if (!existsSync(dir)) return [];
+  type Kept = { identity?: { manufacturer?: string; family?: string; productName?: string; sku?: string }; panel?: string | null; chids?: { type: string; value: string }[] };
   return (readdirSync(dir, { recursive: true }) as string[])
-    .filter((file) => file.endsWith('hwids.json'))
-    .flatMap((file) => (JSON.parse(readFileSync(`${dir}/${file}`, 'utf8')).hwids as string[] | undefined) ?? []);
+    .filter((file) => file.endsWith('report.json'))
+    .flatMap((file) => {
+      const report = JSON.parse(readFileSync(`${dir}/${file}`, 'utf8')) as Kept;
+      const id = report.identity ?? {};
+      const panel = report.panel ? report.panel.slice(0, 3) + report.panel.slice(3).toLowerCase() : null;
+      const named: Record<string, string[]> = { ext0: [id.manufacturer ?? '', id.family ?? '', id.productName ?? ''], ext1: [id.manufacturer ?? '', id.family ?? ''], ext2: [id.manufacturer ?? '', id.sku ?? ''] };
+      return (report.chids ?? []).map((chid) => (panel && named[chid.type] ? chidOf(...named[chid.type], panel) : chid.value));
+    });
 };
 rows.forEach((row, index) => {
   const model = models.find((m) => m.id === row.id)!;

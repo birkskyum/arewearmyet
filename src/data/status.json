@@ -1660,17 +1660,17 @@
     "problems": 2,
     "notYet": 7,
     "deviceTree": 83,
-    "ids": 59,
+    "ids": 60,
     "firmware": 73,
     "googlebooks": 2,
     "chromebooks": 10,
-    "acpi": 46,
-    "acpiWanted": 4,
+    "acpi": 49,
+    "acpiWanted": 3,
     "machine": {
       "team": 7,
-      "omarchy": 20,
-      "linux": 54,
-      "nobody": 6
+      "omarchy": 23,
+      "linux": 52,
+      "nobody": 5
     },
     "byPiece": {
       "deviceTree": {
@@ -1783,7 +1783,7 @@
         "fromUpstream": 28,
         "added": 52,
         "pull": 0,
-        "available": 0,
+        "available": 1,
         "upstream": 28,
         "channels": {
           "stable": 28,
@@ -1876,7 +1876,9 @@
             "samsung-galaxy-book5-edge-5g"
           ],
           "pull": [],
-          "available": []
+          "available": [
+            "samsung-galaxy-book6-edge-16"
+          ]
         }
       },
       "firmware": {
@@ -4983,7 +4985,8 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/asus-vivobook-s14-s3407qa"
+          "https://github.com/birkskyum/arewearmyet/tree/main/acpi/asus-vivobook-s14-s3407qa",
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/52"
         ]
       },
       "variants": [
@@ -8016,7 +8019,7 @@
       "outcome": "should",
       "bootable": "edge",
       "reports": [],
-      "machine": "linux",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -8051,8 +8054,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/44"
+        ]
       },
       "variants": [
         {
@@ -8523,7 +8528,7 @@
       "outcome": "should",
       "bootable": "stable",
       "reports": [],
-      "machine": "linux",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -8562,7 +8567,8 @@
         ],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-omnibook-x14-fe0xxx"
+          "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-omnibook-x14-fe0xxx",
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/56"
         ]
       },
       "variants": [
@@ -9535,8 +9541,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/46"
+        ]
       },
       "variants": [
         {
@@ -14645,11 +14653,11 @@
         "https://news.samsung.com/us/galaxy-book6-edge-available-next-generation-ai-performance-premium-portability",
         "https://browser.geekbench.com/v6/cpu/18993073"
       ],
-      "notes": "Its Geekbench results name it Galaxy Book6 Edge - PALF from the maker Samsung, where earlier Galaxy Books report SAMSUNG ELECTRONICS CO., LTD., with boards NP960XRD-KB2FR and NT960XRD-KC01B. Windows Update has no bundle for any CHID those strings give, and Samsung's download pages have no driver pack for it yet, so neither its hardware IDs nor its firmware can be confirmed without an owner.",
+      "notes": "An owner's hardware report gives its strings, hardware IDs and ACPI tables. It calls itself Galaxy Book6 Edge - PALF from the maker Samsung (earlier Galaxy Books report SAMSUNG ELECTRONICS CO., LTD.), SKU PALF-960XRD-GLYM-0, board NP960XRD-KB1DE, with the panel the Galaxy Book4 Edge 16 has. Nobody has written a device tree for it yet. Samsung offers no driver pack for it and Windows Update has no bundle for its hardware IDs, so its firmware comes from the laptop's own Windows. Its audio DSP, GPU and video images are Samsung's own builds, and its compute DSP image is the one the other X2 laptops have.",
       "outcome": "none",
       "bootable": "needs-deviceTree",
       "reports": [],
-      "machine": "nobody",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": null,
         "deviceTreePull": null,
@@ -14662,7 +14670,7 @@
       },
       "pieces": {
         "deviceTree": "none",
-        "ids": "none",
+        "ids": "elsewhere",
         "firmware": "none"
       },
       "upstream": {
@@ -14671,8 +14679,8 @@
         "devicetreePosted": null,
         "devicetreeOutOfTree": null,
         "devicetreeArchive": null,
-        "ids": "missing",
-        "idsCollected": null,
+        "ids": "collected",
+        "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/53",
         "idsStubble": null,
         "firmware": "windows",
         "firmwareMissing": [],
@@ -14682,8 +14690,10 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "missing",
-        "acpiUrls": []
+        "acpi": "collected",
+        "acpiUrls": [
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/54"
+        ]
       },
       "variants": [
         {
@@ -16686,7 +16696,7 @@
       "outcome": "should",
       "bootable": "edge",
       "reports": [],
-      "machine": "linux",
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -16710,8 +16720,8 @@
         "devicetreePosted": "https://patchwork.kernel.org/project/linux-arm-msm/patch/20261104070441.74127-3-val@packett.cool/",
         "devicetreeOutOfTree": "https://github.com/omacom/omarchy-pkgs/pull/2859",
         "devicetreeArchive": "https://github.com/birkskyum/arewearmyet/tree/main/device-trees/microsoft-surface-pro-x",
-        "ids": "missing",
-        "idsCollected": null,
+        "ids": "collected",
+        "idsCollected": "https://github.com/turbineBMW/omarchy-hardware-reports/issues/47",
         "idsStubble": null,
         "firmware": "download",
         "firmwareMissing": [],
@@ -16725,7 +16735,8 @@
         "acpiUrls": [
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-prox",
           "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_x_sq1",
-          "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_x_sq2"
+          "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_x_sq2",
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/48"
         ]
       },
       "variants": [
@@ -17957,13 +17968,6 @@
     "firmware": [
       "qcom/x1e80100/ASUSTeK/vivobook-16"
     ],
-    "acpi": [
-      "hardware-reports/hp/hp-omnibook-x-laptop-14-fe0xxx",
-      "hardware-reports/samsung/galaxy-book6-edge-palf",
-      "hardware-reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa",
-      "hardware-reports/microsoft-corporation/surface-pro-x",
-      "hardware-reports/hp/hp-omnibook-x-laptop-14-kr1xxx",
-      "hardware-reports/hp/hp-omnibook-3-laptop-14-hz0xxx"
-    ]
+    "acpi": []
   }
 }
