@@ -433,7 +433,7 @@ func Brief(b Briefing) string {
 	say("")
 	say("## One part at a time")
 	say("")
-	say("This brief is for what is under \"What to work on\" and nothing else. When it works, or you find that it can't be fixed from here, tell the owner what you found and stop. A part that needs work in the kernel or elsewhere is a finding too: write it down as a note (step 6) and say so.")
+	say("This brief is for what is under \"What to work on\" and nothing else. Stay on it until it works. When the first thing you try isn't the fix, the fix lives somewhere else: a setting, a kernel patch that exists elsewhere, or a driver nobody has written yet. The guide's \"Keep going\" has the order to try them in and the few reasons to hand the part back. A part you hand back comes with what you tried at each step and the next thing worth trying.")
 	if len(others) > 0 {
 		say("")
 		say("Also failing or worth a look on this computer: %s. They are for later. `hw-test brief <check>` prints the brief for one of them from the results already here, without testing anything again, and the owner can hand you one with `hw-test fix`.", strings.Join(others, ", "))
@@ -472,7 +472,7 @@ func Brief(b Briefing) string {
 	say("")
 	say("Each step is explained in the guide's step 5 and 6. In short:")
 	say("")
-	say("1. **Check it is worth chasing.** Up to date (above)? Already known, with a cause? Some parts can't be fixed from here: a missing kernel feature, or something Omarchy has no place for. Then say so to the owner, leave a note (item 8 of this list) and go on to the next part.")
+	say("1. **Find where the fix lives.** Up to date (above)? Already known, with a cause? Then the device tree, a setting, the kernel or another Omarchy package: the guide's table says which holds what. Very little is out of reach, like firmware only the maker can sign.")
 	// One part's work is measured against a snapshot of its own, named after it, so that it
 	// isn't compared with where the computer stood before some other part's change
 	before, after := "hw-test verify before <part>", "hw-test verify after <part>"
@@ -492,7 +492,7 @@ func Brief(b Briefing) string {
 	say("5. **Before a restart, or a test that may freeze the computer:** write where you are into `PROGRESS.md`, then `hw-test resume \"<what to go on with>\"`. You are opened again at the owner's next login.")
 	say("6. **Measure again.** The \"Measure again\" command of each part you touched, and a neighbouring part. Then `" + after + "`, which prints a before-and-after block (`--check <check>` gives a row to a part that works on both sides but measures better).")
 	say("7. **Pull request.** Open it as a draft. Its description starts with a line that says only %s, then the block. Then `"+after+" --pr <its address> --title \"<the change in a line>\"`, which records it on the model's page, and mark it ready. Tell the owner.", familyLine(family))
-	say("8. **Not fixed?** Leave it for the next agent: `hw-test note --kind problem --check <check> --title \"...\" --body-file <file> --log kernel`. What the owner told you about a part goes in with `hw-test report --check <check> --state partial --note \"...\"`.")
+	say("8. **Not fixed yet?** Go to the next step of the guide's \"Keep going\": a setting, a patch from elsewhere, a driver of your own. Only when that list is done, or one of its reasons to hand back holds, leave it for the next agent: `hw-test note --kind problem --check <check> --title \"...\" --body-file <file> --log kernel`. What the owner told you about a part goes in with `hw-test report --check <check> --state partial --note \"...\"`.")
 	if acpi {
 		say("9. **Clean up.** Restore the settings you changed, remove test packages, and say what is left.")
 	} else {

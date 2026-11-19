@@ -4,7 +4,7 @@ You're helping the owner of an ARM PC get Linux working on it, usually Omarchy o
 
 **Opened by `hw-test fix`, with a `BRIEF.md` in your folder?** Steps 1 to 4 are done for you: the computer is identified and measured, and the brief names the one part the owner picked. Read **Words** and **Rules**, then **step 5 (Fix it)** and **step 6 (Notes)**. A copy of this guide is in `GUIDE.md` beside the brief, and the brief gives the path of `hw-test` in case its name isn't found where you run.
 
-**One part at a time.** Work on the brief's part and nothing else. When it works, or you find it can't be fixed from here, tell the owner what you found and stop: a part that needs work in the kernel is a finding, to be written as a note, and must not hold up the rest. The brief lists what else fails or is worth a look. `hw-test brief <check>` prints the brief for one of those from the results already on the computer, without testing anything again, and the owner hands you one with `hw-test fix`, which asks them which.
+**One part at a time, and stay on it.** Work on the brief's part and nothing else, until it works. When the device tree can't fix it, the fix lives somewhere else: a setting, a kernel patch that exists elsewhere, or a driver nobody has written yet. Step 5 has the order to try them in, under "Keep going". Hand the part back only for the reasons listed there, and then with what you tried and what the next step is. The brief lists what else fails or is worth a look. `hw-test brief <check>` prints the brief for one of those from the results already on the computer, without testing anything again, and the owner hands you one with `hw-test fix`, which asks them which.
 
 Base URL: `https://arewearmyet.com`. Everything is plain HTTP and JSON. Chromebooks and Googlebooks start differently, and getting Linux onto them isn't covered here. Measuring, reporting and fixing work the same once it runs.
 
@@ -127,7 +127,7 @@ An NVIDIA N1x or GB10 machine (family `arm-nvidia`) describes its own hardware t
 
 1. **Is the computer up to date?** Compare its `linux-omarchy` version with `kernels` from step 1. When it is behind its channel, ask the owner whether to update. On their yes, run `hw-test ask update`: it opens Omarchy's update in a window for them, where they confirm it, and prints how it ended as JSON (`finished`, `moved`, `restart`, the log's last lines), so they relay nothing. It refuses and gives the reasons in `why` where an update would do harm: a test boot entry stands, the running kernel is not Omarchy's own, or a kernel, device tree or firmware package was built on the computer. Tell the owner the reason then, and leave the decision with them. Never run the update any other way. Leave word with `hw-test resume "Updated. Measure the failing parts again."` before the restart, and measure again after it: the fault may be fixed already. A patch also has to fit Omarchy's current sources, not old ones.
 2. **Is it known?** Read the check's `finding` and the model's notes (step 6). Search every model's notes too: a fault in the chip shows on all of them.
-3. **Can it be fixed from here?** Some things can't: a kernel feature that doesn't exist yet (hibernation, a fan speed driver), or something Omarchy has no place for (a libcamera tuning file). Then tell the owner, leave a note saying what you found, and go on to the next part. "Everything green" isn't always within reach, and saying so is part of the job.
+3. **Where does the fix live?** Almost always somewhere you can reach: the device tree, a setting, the kernel, or another of Omarchy's packages (the table below). "Keep going" says how to move from one to the next. Very little is out of reach, like firmware only the maker can sign.
 4. **Take a snapshot:** `hw-test verify before <part>`, as in `hw-test verify before speakers`. It keeps where every check stands, with the kernel and package versions, to measure your change against. The name gives the part a snapshot of its own, so your work is not measured against the snapshot another agent took for another part. Use the same name with `verify after`. Take it once per change. A snapshot that is still in use is not replaced, so after a restart you go on from `PROGRESS.md` and don't take another. `--new` replaces it when you start on another change.
 5. **Does the owner hear or see it differently than the test says?** Then record that first, since the snapshot holds what is recorded: `hw-test report --check speakers --state partial --note "The right side is clearly quieter."`
 
@@ -154,6 +154,27 @@ A device tree switches power, so a wrong one can do more than fail. Three rules.
 - **omarchy-pkgs:** `README.md` says how packages are built (`bin/build --package <name> --arch aarch64`, which needs Docker or Podman), and `AGENTS.md` what a recipe change needs, like a `pkgrel` bump. Each package's own `README.md` explains its patches. Add a paragraph for yours there.
 - **A device tree fix** is one patch in the kernel's format, named `00NN-arm64-dts-qcom-<board>-<what>.patch`, listed in the recipe's `source` and `b2sums`. It may only touch files under `arch/arm64/boot/dts/` and `include/dt-bindings/`. `hw-test tree patch` writes it for you (below).
 - **Omarchy:** read `AGENTS.md` and `agents/skills/install-scripts.md` (and `migrations.md` when existing installs need the change). Fork, branch from `quattro`, run the changed `bin/` command from your checkout on the computer, run the area's tests in `test/shell.d/`, and open the pull request against `quattro`. Put a setting whose cause is the chip behind `omarchy-hw-aarch64-qualcomm`, and one model's behind `omarchy-hw-match`. In the pull request, call a platform setting a workaround and name the cause it works around.
+
+### Keep going
+
+The first thing you try often isn't the fix. That is no reason to stop. Go down this list, and write into `PROGRESS.md` what each step showed, so a later agent goes on from where you are.
+
+1. **The device tree.** A node that is missing or wrong (next section).
+2. **A setting.** A sound profile, a udev rule, a module option or a kernel option. Try a kernel option on the test boot entry, never on the usual one.
+3. **A fix that exists elsewhere.** Search for the chip and the part on lore.kernel.org and in linux-next, in the kernels other distros carry for these computers (Ubuntu's, linux-surface, aarch64-laptops, postmarketOS), and in the maker's own kernel for Android or ChromeOS where there is one. Take the patch, keep its author and its link, and try it ("Trying a kernel change").
+4. **A driver or an entry nobody has written.** Write it. The model's hardware report on this site has its ACPI tables, and often the Windows drivers' INF files and device list, which say which chip sits on which bus with which pins. A sibling chip's driver is the pattern. Start with the small ones: a panel's entry, a device ID a driver doesn't know yet, a quirk.
+5. **Something in how the computer starts, or in another Omarchy package.** Find the smallest case that shows it, then fix it in that package's repository.
+
+Tell the owner in a line when you move to the next step. Don't wait for an answer unless the rules say to ask.
+
+Hand the part back only when one of these holds:
+
+- A rule under "What can harm the computer" stands in the way.
+- The next step needs the owner and they aren't there. Do everything that doesn't need them first.
+- It needs something only the maker can give, like signed firmware.
+- You went through the whole list. Then say for each step what you tried and what stopped it, and name the next thing worth trying.
+
+Whatever the outcome, leave it as a note (step 6), with a link to your branch or pull request, the unfinished ones too.
 
 ### Trying a device tree change
 
@@ -189,7 +210,32 @@ It writes the whole change as one patch, with the next free number, under the ow
 
 ### Trying a kernel change
 
-This is heavier, since the kernel has to be built, which takes a container and half an hour or more. Copy `pkgbuilds/linux-omarchy-aarch64`, give it a name of its own (`pkgbase=linux-omarchy-test`, and the same in `pkgname`), add your patch, build it and install the result. Every installed kernel package gets a boot image and a menu entry of its own, listed after the stock kernel, so the stock one stays the default. Remove the package when you're done. Check with `df -h /boot` that the boot partition has 400 MB free first: a full one breaks the next ordinary update.
+**One driver, the quick way.** Most fixes touch one driver, and a driver that is a module builds alone, in seconds, against the kernel that is running. Get the kernel's source as Omarchy builds it, with its patches:
+
+```sh
+git clone --filter=blob:none --sparse https://github.com/omacom/omarchy-pkgs && cd omarchy-pkgs
+git sparse-checkout set pkgbuilds/linux-omarchy-aarch64
+rel=$(pacman -Q linux-omarchy | awk '{print $2}')   # like 7.3-72
+P=pkgbuilds/linux-omarchy-aarch64/PKGBUILD
+# the recipe as it was for the kernel that is running
+for c in $(git log --format=%H origin/master -- $P); do
+  git show $c:$P | grep -q "^pkgrel=${rel##*-}\$" && git show $c:$P | grep -q "^pkgver=${rel%-*}\$" && git checkout -q $c && break
+done
+cd pkgbuilds/linux-omarchy-aarch64 && makepkg -o --skippgpcheck --nodeps   # fetches and patches, builds nothing
+```
+
+That takes a minute or two and 2 GB. Then change the driver under `src/linux-*/` and build its folder:
+
+```sh
+cd src/linux-*/
+make -C /usr/lib/modules/$(uname -r)/build M=$PWD/drivers/phy/qualcomm modules
+```
+
+The modules that come out carry the running kernel's version, so they load into it: `sudo rmmod <module>; sudo insmod ./<module>.ko` (the owner types the password, rule 11). That lasts until the next restart and changes nothing on disk. Measure with `hw-test`, and go on.
+
+**A whole kernel, when the quick way doesn't reach.** A driver that is in use can't be taken out while it runs (the disk's, the screen's), one that loads in early boot sits in the boot image, and some changes are outside any module. Then build a test kernel, which takes a container and half an hour or more. Copy `pkgbuilds/linux-omarchy-aarch64`, give it a name of its own (`pkgbase=linux-omarchy-test`, and the same in `pkgname`), add your patch, build it and install the result. Every installed kernel package gets a boot image and a menu entry of its own, listed after the stock kernel, so the stock one stays the default. Remove the package when you're done. Check with `df -h /boot` that the boot partition has 400 MB free first: a full one breaks the next ordinary update.
+
+**When it works**, the change goes into `pkgbuilds/linux-omarchy-aarch64` as a numbered patch. The recipe's README says how they are numbered and listed. A patch taken from elsewhere keeps its author and the link to where it came from.
 
 ### Restarting, and coming back
 

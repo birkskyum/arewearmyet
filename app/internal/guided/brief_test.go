@@ -69,7 +69,7 @@ func TestTheBriefSaysWhatFailsWhatIsKnownAndHowToGoAboutIt(t *testing.T) {
 		// No notes yet isn't the same as nothing known
 		"Nobody has left a note on this model yet. That means nobody wrote one, not that nothing is known", "api/notes?q=<words>",
 		// One way to go about it, in order, with the commands
-		"## How to go about it", "1. **Check it is worth chasing.**", "`hw-test verify before <part>`", "`hw-test tree start`, edit, `hw-test tree build`, then the owner runs `hw-test tree boot`",
+		"## How to go about it", "1. **Find where the fix lives.**", "`hw-test verify before <part>`", "`hw-test tree start`, edit, `hw-test tree build`, then the owner runs `hw-test tree boot`",
 		"Never install a rebuilt `linux-omarchy-dtbs`, write under `/boot/dtbs` or edit `/boot/limine.conf` by hand", "`hw-test resume", "Open it as a draft.",
 		"starts with a line that says only `arm-dragon-msft`, then the block", "`hw-test verify after <part> --pr <its address>", "mark it ready",
 		"`hw-test note --kind problem --check <check>", "`hw-test report --check <check> --state partial", "`hw-test tree remove`",
@@ -235,7 +235,7 @@ func TestWhatFailsIsHandedToTheOwnersAgentWithTheBrief(t *testing.T) {
 	}
 	for _, text := range []string{
 		"A copy of the guide is in GUIDE.md beside this file", "hw-test 0.9.0 is at `/home/owner/.local/share/mise/installs/hw/0.16.0/hw-test`. If plain `hw-test` doesn't start",
-		"## One part at a time", "tell the owner what you found and stop", "Also failing or worth a look on this computer: `hibernate`, `webgpu`, `camera`.", "`hw-test brief <check>` prints the brief for one of them from the results already here, without testing anything again",
+		"## One part at a time", "Stay on it until it works", "Also failing or worth a look on this computer: `hibernate`, `webgpu`, `camera`.", "`hw-test brief <check>` prints the brief for one of them from the results already here, without testing anything again",
 	} {
 		if !strings.Contains(string(written), text) {
 			t.Errorf("the brief for one part lacks %q:\n%s", text, written)
