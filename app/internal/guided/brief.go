@@ -48,6 +48,9 @@ type Briefing struct {
 	// Binary is where the hw-test that wrote the brief is, for an agent whose surroundings
 	// don't find it by name.
 	Binary string
+	// ByOwner is set when the owner themselves asked for the handing over, at a terminal. It
+	// is what lets the agent run the handed parts' tests itself.
+	ByOwner bool
 	// GetGuide fetches the guide's text, to put a copy beside the brief. Nil leaves it out.
 	GetGuide func() ([]byte, error)
 	// guideCopy is set once that copy is written.
@@ -67,6 +70,9 @@ func FetchGuide() ([]byte, error) {
 	}
 	return io.ReadAll(io.LimitReader(response.Body, 1<<20))
 }
+
+// sounds are the checks the sound test measures, with tones played and listened to.
+var sounds = map[string]bool{"speakers": true, "microphones": true}
 
 // worthALook says whether a result works but measured something an agent could look into.
 func worthALook(result report.Result) bool {
@@ -317,7 +323,9 @@ func Brief(b Briefing) string {
 			say("- Where to look: %s", known.Debug)
 		}
 		command, owner := remeasure(check)
-		if owner {
+		if sounds[check] && b.ByOwner {
+			say("- Measure again: `%s --no-send`, which you run yourself, also without a terminal: the owner handed you this part, and that lets the test play its tones at half volume for about twenty seconds and listen to them with the microphones. It keeps only how loud each tone was. The owner hears it, so say a word before the first run.", command)
+		} else if owner {
 			say("- Measure again: `%s`, run by the owner in their own terminal, since it needs them at the computer. Ask them to run it and tell you what it said.", command)
 		} else {
 			say("- Measure again: `%s --no-send`, which runs by itself, also without a terminal.", strings.TrimSuffix(command, " --json"))
@@ -473,6 +481,10 @@ func HandOver(b Briefing, dir string, launch func(dir, prompt string) error) Han
 	if err := os.WriteFile(file, []byte(Brief(b)), 0o644); err != nil {
 		return Handed{Said: "The brief couldn't be written: " + err.Error()}
 	}
+	// The owner's handing a part over is what lets the agent test that part itself
+	if b.ByOwner {
+		_ = report.Hand(work, b.When)
+	}
 	var titles []string
 	for _, check := range work {
 		titles = append(titles, strings.ToLower(first(checkTitle[check], check)))
@@ -511,7 +523,7 @@ func handOver(run *report.Run, options Options, model report.Model, only []strin
 		if launch == nil {
 			launch, guide = tools.Agent, FetchGuide
 		}
-		briefing := Briefing{Version: options.Version, Run: run, Kept: report.Local(), Model: model, Checks: checks, Only: only, When: time.Now(), GetGuide: guide}
+		briefing := Briefing{Version: options.Version, Run: run, Kept: report.Local(), Model: model, Checks: checks, Only: only, When: time.Now(), GetGuide: guide, ByOwner: true}
 		briefing.Binary, _ = os.Executable()
 		briefing.Fill(options.API)
 		return handedMsg{HandOver(briefing, Workspace(), launch)}

@@ -204,6 +204,30 @@ func TestWhatFailsIsHandedToTheOwnersAgentWithTheBrief(t *testing.T) {
 	if brief := Brief(one); !strings.Contains(brief, "### Webcam (check `camera`): works, with something to look into") || !strings.Contains(brief, "- Worth a second look: The picture is 30 of 255 bright. Find out whether it is a fault") {
 		t.Errorf("a part worth a look:\n%s", brief)
 	}
+	// Handed over by the owner, the speakers are the agent's to measure: the brief says how, and
+	// the computer remembers the owner's yes for the sound test
+	t.Setenv("XDG_STATE_HOME", t.TempDir())
+	if Automatic([]string{"speakers"}) || MaySound(time.Now()) {
+		t.Error("the sound test would run for an agent before the owner handed the speakers over")
+	}
+	one.Only, one.ByOwner, one.When = []string{"speakers"}, true, time.Now()
+	HandOver(one, dir, launch)
+	written, _ = os.ReadFile(filepath.Join(dir, "BRIEF.md"))
+	if !strings.Contains(string(written), "Measure again: `hw-test speakers --no-send`, which you run yourself, also without a terminal") {
+		t.Errorf("the brief doesn't give the agent the sound test:\n%s", written)
+	}
+	if !Automatic([]string{"speakers"}) || !Automatic([]string{"microphone", "graphics"}) || Automatic([]string{"camera"}) || !WantsSound([]string{"auto"}) || WantsSound([]string{"graphics"}) {
+		t.Error("after the owner handed the speakers over, the sound test still doesn't run for the agent, or more than it does")
+	}
+	// An agent that asks for the brief itself is given no such yes
+	t.Setenv("XDG_STATE_HOME", t.TempDir())
+	one.ByOwner = false
+	HandOver(one, dir, launch)
+	written, _ = os.ReadFile(filepath.Join(dir, "BRIEF.md"))
+	if MaySound(time.Now()) || strings.Contains(string(written), "which you run yourself") {
+		t.Error("an agent gave itself the sound test")
+	}
+
 	// Without the guide to copy, the brief and the message point at the site
 	one.GetGuide = func() ([]byte, error) { return nil, fmt.Errorf("no network") }
 	os.Remove(filepath.Join(dir, "GUIDE.md"))

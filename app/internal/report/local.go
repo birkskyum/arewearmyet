@@ -90,3 +90,36 @@ func Latest() map[string]Kept {
 	}
 	return last
 }
+
+// handedFile holds which checks the owner gave to an agent, and when.
+func handedFile() string { return filepath.Join(stateDir(), "handed.json") }
+
+// HandedFor is how long the owner's handing a part to an agent stands.
+const HandedFor = 14 * 24 * time.Hour
+
+// Hand notes that the owner gave these checks to an agent. That is what lets the agent run
+// the tests of those parts itself, also one that plays tones and listens to them.
+func Hand(checks []string, when time.Time) error {
+	handed := map[string]time.Time{}
+	if data, err := os.ReadFile(handedFile()); err == nil {
+		_ = json.Unmarshal(data, &handed)
+	}
+	for _, check := range checks {
+		handed[check] = when
+	}
+	data, _ := json.MarshalIndent(handed, "", " ")
+	if err := os.MkdirAll(stateDir(), 0o700); err != nil {
+		return err
+	}
+	return os.WriteFile(handedFile(), data, 0o600)
+}
+
+// Handed says whether the owner gave a check to an agent, and not too long ago.
+func Handed(check string, now time.Time) bool {
+	handed := map[string]time.Time{}
+	if data, err := os.ReadFile(handedFile()); err == nil {
+		_ = json.Unmarshal(data, &handed)
+	}
+	when, ok := handed[check]
+	return ok && now.Sub(when) < HandedFor && !when.After(now.Add(time.Hour))
+}

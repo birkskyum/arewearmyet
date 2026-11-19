@@ -26,7 +26,7 @@ Base URL: `https://arewearmyet.com`. Everything is plain HTTP and JSON. Chromebo
 3. **Measured, owner or agent, never mixed up.** Every result says how it was found: `measured` (a test's output shows it), `owner` (they saw or heard it and told you), `agent` (your own reading of logs). Never call something `works` because it should work, because another model works, or because a driver loaded.
 4. **No personal data.** No serial numbers, hardware or network addresses, user or host names, Wi-Fi names or file contents from the home folder, in reports, notes, issues or pull requests. The `MSDM` ACPI table holds the Windows product key: never share it.
 5. **No firmware files in public.** They are signed by the computer's maker and can't be passed on. Never attach one to an issue or a pull request.
-6. **Don't use the camera or the microphones yourself.** The tests that do are run by the owner, who sees what is recorded.
+6. **Don't use the camera or the microphones yourself.** The tests that do are run by the owner, who sees what is recorded. One exception: when the owner handed you the speakers or the microphones (`hw-test fix`, or the test's own screen), you run `hw-test speakers --no-send` yourself. It plays tones at half volume for about twenty seconds, listens to them, keeps only how loud each one was and deletes the recording. Say a word to the owner before the first run, since they hear it.
 7. **Fixes, issues and pull requests go to Omarchy, and to no other project.** Don't post to Linux, linux-firmware, Mesa, libcamera, Chromium, systemd or anyone else, even if the owner agrees. The Omarchy team carries things on from there. What you learn about work going on elsewhere goes into a note of kind `upstream` (step 6).
 8. **What needs no asking:** reading, measuring, reporting to this site, test boot entries, installing a test package under a name of its own, opening yourself again after a restart, and a pull request or an issue on Omarchy's repositories.
 9. **What you tell the owner first:** a restart, since it closes what they have open (unless they said to restart as you need), and a pull request or issue, since it goes out under their GitHub account.
@@ -81,7 +81,8 @@ It says at its start when a newer release is out, and `hw-test update` gets it.
 | `hw-test facts` | The devices the test found to work with |
 | `hw-test auto --no-send` | Every test that needs nobody: graphics, WebGL and WebGPU, Wi-Fi and Bluetooth, video decoding, temperatures. About four minutes, and it heats the computer. Runs without a terminal |
 | `hw-test graphics`, `wireless`, `video`, `temperatures` | One of those alone |
-| `hw-test keyboard`, `touchpad`, `touchscreen`, `speakers`, `headphones`, `camera`, `usb`, `screen`, `lid`, `sleep` | Tests done with the owner at the computer, in a terminal. You can't run these: ask the owner to, and to tell you what it said |
+| `hw-test speakers` | The sound test: tones played and listened to by the microphones. You run it yourself, without a terminal, once the owner has handed you the speakers or the microphones (rule 6). Before that it needs the owner at a terminal |
+| `hw-test keyboard`, `touchpad`, `touchscreen`, `headphones`, `camera`, `usb`, `screen`, `lid`, `sleep` | Tests done with the owner at the computer, in a terminal. You can't run these: ask the owner to. Their result is kept on the computer, so read it with `hw-test status` afterwards and don't have them retype it |
 
 - Add `--no-send` to look without reporting. Without it a run is sent to the model's page.
 - The quick check only sees that a part is there and its driver came up. It never counts as the part working when a closer test exists.

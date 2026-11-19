@@ -149,7 +149,7 @@ func main() {
 	// The automatic tests need nobody, so they also run without a terminal, as an agent has it
 	unattended := len(only) > 0 && !guided.Interactive()
 	if unattended && !guided.Automatic(only) {
-		fmt.Fprintln(os.Stderr, "hw-test: that step is done with you at the keyboard, so it needs a terminal. Without one, these run: "+strings.Join(guided.AutomaticWords(), ", "))
+		fmt.Fprintln(os.Stderr, "hw-test: that step is done with you at the keyboard, so it needs a terminal. Without one, these run: "+strings.Join(guided.AutomaticWords(), ", ")+". The sound test (speakers, microphone) runs without one once the owner has handed the speakers or the microphones to an agent, with hw-test fix speakers.")
 		os.Exit(2)
 	}
 
@@ -233,6 +233,8 @@ func main() {
 		briefing.Binary, _ = os.Executable()
 		if command == "fix" {
 			briefing.GetGuide = guided.FetchGuide
+			// Handing over at a terminal is the owner's own doing
+			briefing.ByOwner = guided.Interactive()
 		}
 		briefing.Fill(*api)
 		if command == "brief" {
@@ -253,7 +255,13 @@ func main() {
 			fmt.Fprintln(os.Stderr, "hw-test:", err)
 			os.Exit(1)
 		}
-		guided.Unattended(run, deep.Tests(machine.Real(), facts.Wifi, facts.Bluetooth, dir), only, func(line string) { fmt.Fprintln(os.Stderr, line) })
+		say := func(line string) { fmt.Fprintln(os.Stderr, line) }
+		guided.Unattended(run, deep.Tests(machine.Real(), facts.Wifi, facts.Bluetooth, dir), only, say)
+		// The sound test plays tones out loud, so it runs here only on the owner's yes: their
+		// handing the speakers or the microphones to an agent
+		if guided.WantsSound(only) && guided.MaySound(time.Now()) && facts.SoundCard != "" && tools.Have("pw-play", "pw-record") {
+			guided.Heard(run, dir, say)
+		}
 		os.RemoveAll(dir)
 		fmt.Fprintln(os.Stderr)
 	}

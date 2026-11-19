@@ -203,11 +203,53 @@ func Unattended(run *report.Run, tests []deep.Test, words []string, say func(str
 // AutomaticWords lists the words that run without a terminal.
 func AutomaticWords() []string { return automaticWords }
 
-// Automatic says whether every word names a test that needs nobody and makes no sound.
+// soundWords run the sound test, which plays tones and listens to them.
+var soundWords = map[string]bool{"speakers": true, "microphone": true}
+
+// MaySound says whether the sound test may run with nobody at a terminal: the owner handed
+// the speakers or the microphones to an agent, which is their yes to its tones.
+func MaySound(now time.Time) bool {
+	return report.Handed("speakers", now) || report.Handed("microphones", now)
+}
+
+// WantsSound says whether the words ask for the sound test.
+func WantsSound(words []string) bool {
+	for _, word := range words {
+		if soundWords[word] || word == "auto" {
+			return true
+		}
+	}
+	return false
+}
+
+// Heard runs the sound test with nobody at a terminal: it plays the tones, listens to them
+// and writes what the microphones made of them into the run.
+func Heard(run *report.Run, dir string, say func(string)) {
+	say("Playing test tones at half volume and listening to them…")
+	s := newSpeakers(run, dir)
+	s.handsOff = true
+	for cmd := s.start(); cmd != nil && s.phase == "playing"; {
+		cmd = s.update(cmd())
+	}
+	switch {
+	case s.err != nil:
+		say("  the sound test couldn't run: " + s.err.Error())
+	case s.phase == "silent":
+		say("  the microphones recorded none of the tones, so the speakers can't be measured without the owner listening")
+	}
+}
+
+// Automatic says whether every word names a test that needs nobody and makes no sound, or
+// the sound test where the owner has agreed to it.
 func Automatic(words []string) bool {
 	quiet := map[string]bool{}
 	for _, word := range automaticWords {
 		quiet[word] = true
+	}
+	if MaySound(time.Now()) {
+		for word := range soundWords {
+			quiet[word] = true
+		}
 	}
 	for _, word := range words {
 		if !quiet[word] {

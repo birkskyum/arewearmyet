@@ -147,3 +147,21 @@ func TestAFixIsSentWithWhatItChangedAndTheVersionsOnBothSides(t *testing.T) {
 		t.Errorf("nothing to compare: %v", err)
 	}
 }
+
+func TestTheOwnersHandingAPartOverStandsForTwoWeeks(t *testing.T) {
+	t.Setenv("XDG_STATE_HOME", t.TempDir())
+	now := time.Date(2026, 11, 19, 14, 0, 0, 0, time.UTC)
+	if Handed("speakers", now) {
+		t.Fatal("handed before anything was")
+	}
+	if err := Hand([]string{"speakers", "camera"}, now); err != nil {
+		t.Fatal(err)
+	}
+	Hand([]string{"webgpu"}, now.Add(time.Hour))
+	if !Handed("speakers", now.Add(13*24*time.Hour)) || !Handed("camera", now) || !Handed("webgpu", now.Add(2*time.Hour)) || Handed("wifi", now) {
+		t.Error("what was handed over isn't remembered as it was")
+	}
+	if Handed("speakers", now.Add(15*24*time.Hour)) {
+		t.Error("the owner's yes never runs out")
+	}
+}
