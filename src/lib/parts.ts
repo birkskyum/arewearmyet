@@ -23,7 +23,10 @@ export const PARTS: Part[] = [
 
 type Level = 'omarchy' | 'elsewhere';
 type Seen = { check: string; title: string; state: Exclude<CheckState, 'untested'>; level: Level; how: string };
-type OwnerCheck = { machines: number; states: Record<string, number>; latest?: { kernel: string | null }[] };
+type Latest = { state: string; kernel: string | null; os?: string | null };
+type OwnerCheck = { machines: number; states: Record<string, number>; latest?: Latest[] };
+// A result is from Omarchy when its run says so, or, for results kept before runs said, when the kernel is Omarchy's
+const onOmarchy = (result: Latest) => (result.os ? /^omarchy/i.test(result.os) : /-omarchy/.test(result.kernel ?? ''));
 const OWNERS = (owners as { models: Record<string, { checks: Record<string, OwnerCheck> }> }).models;
 const TITLE = new Map(CHECKS.map((check) => [check.id, check.title]));
 
@@ -39,13 +42,21 @@ function seen(model: Machine): Map<string, Seen> {
   const boots = ['stable', 'rc', 'edge'].includes(model.bootable ?? '');
   for (const row of modelChecks(model)) {
     const title = TITLE.get(row.id) ?? row.id;
-    const owner = measured[row.id];
-    const states = owner ? Object.keys(owner.states).filter((s) => s !== 'untested') : [];
-    if (states.length) {
+    // Owners' results come from hw-test on Omarchy and from the probe on other distros. Only the first
+    // say how the part does on Omarchy. The others are a hint, like any finding from elsewhere
+    const latest = (measured[row.id]?.latest ?? []).filter((r) => r.state !== 'untested');
+    const here = latest.filter(onOmarchy);
+    if (here.length) {
+      const states = here.map((r) => r.state);
       const state = states.every((s) => s === 'absent') ? 'absent' : overall(states.filter((s) => s !== 'absent'));
       // The kernel says how current the result is: a fault seen on an older kernel may be fixed since
-      const kernel = owner.latest?.[0]?.kernel ? `, on ${owner.latest[0].kernel.replace(/-omarchy$/, '')}` : '';
-      out.set(row.id, { check: row.id, title, state, level: 'omarchy', how: (owner.machines === 1 ? `an owner's test` : `${owner.machines} owners' tests`) + kernel });
+      const kernel = here[0].kernel ? `, on ${here[0].kernel.replace(/-omarchy$/, '')}` : '';
+      out.set(row.id, { check: row.id, title, state, level: 'omarchy', how: (here.length === 1 ? `an owner's test` : `${here.length} owners' tests`) + kernel });
+      continue;
+    }
+    const there = latest.filter((r) => r.state !== 'absent');
+    if (there.length && !(row.finding && row.from === 'model' && countsAsStatus(row.finding))) {
+      out.set(row.id, { check: row.id, title, state: overall(there.map((r) => r.state)), level: 'elsewhere', how: `an owner's check on ${there[0].os && !/^linux$/i.test(there[0].os) ? there[0].os : 'another distro'}` });
       continue;
     }
     const finding = row.finding;

@@ -1303,6 +1303,1076 @@
      ]
     }
    }
+  },
+  "microsoft-surface-pro-11": {
+   "machines": 1,
+   "checks": {
+    "display": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "eDP-1 connected, 2880x1920",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "gpu": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adreno bound to 3d00000.gpu, render node from msm_dpu",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "wifi": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "connected at 5640 MHz, signal -36 dBm, sending at 866.7 Mb/s",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "wifi-address": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "wlP4p1s0 (ath12k_wifi7_pci): address set by the system (not from the card)",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "bluetooth": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "heard 12 Bluetooth devices nearby in 8 s",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "adsp": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adsp running (qcom/x1e80100/microsoft/Denali/qcadsp8380.mbn)",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "cdsp": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "cdsp running (qcom/x1e80100/microsoft/Denali/qccdsp8380.mbn)",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "battery": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "qcom-battmgr-bat at 100%, Not charging",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "suspend": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": "slept and woke in s2idle [deep]; Wi-Fi was back 17 s after waking, the audio processor is running",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "hibernate": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "the kernel offers no hibernation",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "video-decode": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "the hardware decoder gave no frames: Error opening output files: Invalid argument",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "fans": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "59 temperature sensors; the hottest went from 36 to 97 °C in 49 s with every core and the GPU busy, and back to 60 °C after; the fan (surface_fan) went from 0 to 1475 rpm",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "keyboard": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "78 keys registered, every letter, number and arrow among them",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "backlight": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "both brightness keys work: the backlight moved between 1229 and 2662",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "touchpad": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "Microsoft Surface 045E:09AF Touchpad: moving the pointer, clicking and two-finger scrolling both ways registered",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "touchscreen": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "IPTSD Virtual Touchscreen 045E:0C83: 3 taps reached the terminal as clicks in different places",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "speakers": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "by the microphones at half volume: left speaker heard at -62 dB, right speaker heard at -62 dB; both sides about equally loud at the microphones",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "microphones": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "the speakers at half volume recorded as 300 Hz at -64 dB, 1000 Hz at -57 dB, 3000 Hz at -48 dB; noise with nothing playing -100 dB; input volume 70%",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "headphones": {
+     "machines": 1,
+     "states": {
+      "absent": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "absent",
+       "how": "owner",
+       "note": null,
+       "evidence": null,
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "camera": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": "The frame is black or blank with nothing covering the camera.",
+       "evidence": "a 4216x3136 frame, brightness 38 of 255, contrast 0",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "usb": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "measured",
+       "note": "The same device ran at full speed in one plug-in and only at USB 2 speed in another, as a USB-C port does when only one orientation is wired for SuperSpeed.",
+       "evidence": "6 plug-ins detected: 1-1 at 480 Mb/s, 1-1.1 at 12 Mb/s, 1-1.2 at 12 Mb/s, 1-1.5 at 480 Mb/s, 2-1 at 10 Gb/s, 4-1 at 5 Gb/s",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "lid": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "the lid switch reported closed and then open again; the computer slept 15 s while it was down",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "disk-unlock": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": null,
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "charging": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": null,
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "installer": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": null,
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "webgl": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "ANGLE (angleisbroken, Adreno X1-85, OpenGL ES 3.2), WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    },
+    "webgpu": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "measured",
+       "note": "Chromium doesn't offer WebGPU by itself here. It works when started with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU.",
+       "evidence": "WebGPU on qualcomm adreno-7xx with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU; without them: no adapter",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:31:53.053Z",
+       "run": "RUN-3ZN9RAZ2HZ"
+      }
+     ]
+    }
+   }
+  },
+  "samsung-galaxy-book4-edge-16": {
+   "machines": 1,
+   "checks": {
+    "display": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "eDP-1 connected, 2880x1800",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "gpu": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adreno bound to 3d00000.gpu, render node from msm_dpu",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "wifi": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "connected at 6295 MHz, signal -67 dBm, sending at 864.6 Mb/s",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "wifi-address": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "wlP4p1s0 (ath12k_wifi7_pci): address set by the system (not from the card)",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "adsp": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adsp running (qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn)",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "cdsp": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "cdsp running (qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn)",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "speakers": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "no built-in sound card",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "microphones": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "no built-in sound card",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "battery": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "no battery reports its charge",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "hibernate": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "the kernel offers no hibernation",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "camera": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "no camera device",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "video-decode": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "the hardware decoder gave no frames: Error opening output files: Invalid argument",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "backlight": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "owner",
+       "note": null,
+       "evidence": "both brightness keys pressed, the backlight stayed at 1024",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "keyboard": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "owner",
+       "note": "No effect from: volume up, volume down, mute, mute again",
+       "evidence": null,
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "touchpad": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "hid-over-i2c 4D49:4150 Touchpad: moving the pointer, clicking and two-finger scrolling both ways registered",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "touchscreen": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "hid-over-i2c 27C6:0123: 3 touches, its interrupt fired 104 times",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "usb": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "owner",
+       "note": "2 plug-ins gave no device.",
+       "evidence": "2 plug-ins detected: 5-2 at 12 Mb/s, 5-2 at 12 Mb/s",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "external-display": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": "HDMI-A-1 (HDMI), 1920x1080 at 60 Hz; it came back 7 s after plugging it in again",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "lid": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "the lid switch reported closed and then open again",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "suspend": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": "slept and woke in s2idle [deep]; Wi-Fi was back 17 s after waking, the audio processor is running",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "fans": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "the computer restarted by itself during the test's Temperatures and fan step, before the step finished",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "disk-unlock": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "owner",
+       "note": "Limine bootloader is dark/invisible by default. Disk encryption unlock prompt is \"invisible\" due to the screen being pitch black/off. Built-in keyboard works to enter decryption password. Pressing enter after to boot into the desktop also works, but then the keyboard doesn\\t function after that. Hav",
+       "evidence": null,
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "charging": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "owner",
+       "note": "Battery percentage permanently stuck at \"0%\". Plugging in lets me use the machine \"indefinitely\", removing charger leaves the machine running on battery. Rebooting into Windows reflects real-world usage.",
+       "evidence": null,
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "installer": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": null,
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "webgl": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "ANGLE (angleisbroken, Adreno X1-85, OpenGL ES 3.2), WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    },
+    "webgpu": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "measured",
+       "note": "Chromium doesn't offer WebGPU by itself here. It works when started with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU.",
+       "evidence": "WebGPU on qualcomm adreno-7xx with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU; without them: no adapter",
+       "kernel": "7.3.0-72-omarchy",
+       "created": "2026-11-19T18:47:44.644Z",
+       "run": "RUN-M4V4RAWQQD"
+      }
+     ]
+    }
+   }
   }
  },
  "unmatched": []

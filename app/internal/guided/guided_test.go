@@ -758,6 +758,59 @@ func TestChosenStepsRunAlone(t *testing.T) {
 	}
 }
 
+// A stick that reaches the computer through a hub the owner plugged in runs at the hub's speed.
+// On a Surface Pro 11, a case with a USB 2 hub in it made the same stick look slow on one port
+// and fast on another, and the test called working ports partly broken.
+func TestAStickBehindAPluggedInHubSaysNothingOfThePort(t *testing.T) {
+	root := t.TempDir()
+	device := func(name, speed, vendor, product string) {
+		dir := filepath.Join(root, "sys/bus/usb/devices", name)
+		os.MkdirAll(dir, 0o755)
+		os.WriteFile(filepath.Join(dir, "speed"), []byte(speed+"\n"), 0o644)
+		os.WriteFile(filepath.Join(dir, "idVendor"), []byte(vendor+"\n"), 0o644)
+		os.WriteFile(filepath.Join(dir, "idProduct"), []byte(product+"\n"), 0o644)
+	}
+	device("usb1", "480", "1d6b", "0002")
+	run := &report.Run{}
+	u := newUSB(run, machine.Fixture(root))
+	u.start()
+	seen := func() { u.update(usbMsg{u.devices()}) }
+	// The case goes on: its hub, and a moment later the two devices built into it
+	device("1-1", "480", "050d", "0001")
+	seen()
+	device("1-1.1", "12", "050d", "0002")
+	device("1-1.2", "12", "050d", "0003")
+	seen()
+	// The stick in the case's port, then straight into the computer
+	device("1-1.5", "480", "0781", "5581")
+	seen()
+	device("2-1", "10000", "0781", "5581")
+	seen()
+	if u.slowed() {
+		t.Errorf("the stick behind the case's hub counted against the port: %+v", u.plugs)
+	}
+	u.update(press(tea.KeyEnter))
+	result, _ := run.Get("usb")
+	if result.State != report.Works || !strings.Contains(result.Evidence, "1-1.5 at 480 Mb/s through a hub") || !strings.Contains(result.Evidence, "2-1 at 10 Gb/s") || strings.Contains(result.Evidence, "2-1 at 10 Gb/s through") {
+		t.Errorf("result %+v", result)
+	}
+
+	// A hub that is part of the computer is no such excuse: its ports are the computer's own
+	root = t.TempDir()
+	device("usb1", "480", "1d6b", "0002")
+	device("1-1", "480", "05e3", "0610")
+	run = &report.Run{}
+	u = newUSB(run, machine.Fixture(root))
+	u.start()
+	device("1-1.2", "480", "0781", "5581")
+	seen()
+	device("2-1", "10000", "0781", "5581")
+	seen()
+	if !u.slowed() {
+		t.Errorf("a slow port on the computer's own hub went unnoticed: %+v", u.plugs)
+	}
+}
+
 func TestUSBPlugInsAreSeenWithTheirSpeed(t *testing.T) {
 	root := t.TempDir()
 	device := func(name, speed, product string) {

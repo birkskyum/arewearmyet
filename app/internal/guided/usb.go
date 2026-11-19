@@ -24,6 +24,9 @@ type plug struct {
 	// same names the device (vendor:product), only to tell here whether two plugs were the same
 	// stick. It is never sent.
 	same string
+	// hub is set for a device that reached the computer through a hub the owner plugged in, as
+	// in a case or a dock. Its speed is the hub's port's, and says nothing of the computer's own.
+	hub bool
 }
 
 type usbMsg struct{ present map[string]bool }
@@ -34,7 +37,9 @@ type usb struct {
 	run     *report.Run
 	sys     machine.System
 	present map[string]bool
-	plugs   []plug
+	// first is what was there when the step began: a hub among it is part of the computer
+	first map[string]bool
+	plugs []plug
 	// dead counts times the owner plugged something in and nothing appeared.
 	dead int
 	over bool
@@ -69,6 +74,7 @@ func (u *usb) poll() tea.Cmd {
 
 func (u *usb) start() tea.Cmd {
 	u.present = u.devices()
+	u.first = u.present
 	return u.poll()
 }
 
@@ -85,7 +91,7 @@ func (u *usb) update(msg tea.Msg) tea.Cmd {
 			}
 			dir := "/sys/bus/usb/devices/" + device
 			speed, _ := u.sys.Int(dir + "/speed")
-			u.plugs = append(u.plugs, plug{port: device, speed: speed, same: u.sys.Read(dir+"/idVendor") + ":" + u.sys.Read(dir+"/idProduct")})
+			u.plugs = append(u.plugs, plug{port: device, speed: speed, same: u.sys.Read(dir+"/idVendor") + ":" + u.sys.Read(dir+"/idProduct"), hub: u.throughHub(device)})
 		}
 		u.present = msg.present
 		return u.poll()
@@ -112,15 +118,32 @@ func speedName(speed int64) string {
 	return "an unknown speed"
 }
 
+// throughHub says whether a device sits behind a hub the owner plugged in: one that appeared
+// during the step, or that the system calls removable. A hub that was there from the start
+// and isn't removable is part of the computer, and its ports are the computer's own.
+func (u *usb) throughHub(device string) bool {
+	for at := strings.LastIndex(device, "."); at > 0; at = strings.LastIndex(device, ".") {
+		device = device[:at]
+		if !u.first[device] || u.sys.Read("/sys/bus/usb/devices/"+device+"/removable") == "removable" {
+			return true
+		}
+	}
+	return false
+}
+
 // slowed says whether the same device ran at SuperSpeed in one plug and slower in another,
-// which is what a USB-C port wired for one orientation only does.
+// which is what a USB-C port wired for one orientation only does. A device that came through a
+// plugged-in hub is left out: there the hub's port set the speed. On a Surface Pro 11 a case
+// with a USB 2 hub in it made a stick look slow on a port that was fine.
 func (u *usb) slowed() bool {
 	fastest := map[string]int64{}
 	for _, p := range u.plugs {
-		fastest[p.same] = max(fastest[p.same], p.speed)
+		if !p.hub {
+			fastest[p.same] = max(fastest[p.same], p.speed)
+		}
 	}
 	for _, p := range u.plugs {
-		if fastest[p.same] >= 5000 && p.speed < 5000 {
+		if !p.hub && fastest[p.same] >= 5000 && p.speed < 5000 {
 			return true
 		}
 	}
@@ -134,7 +157,11 @@ func (u *usb) finish() {
 	}
 	var seen []string
 	for _, p := range u.plugs {
-		seen = append(seen, p.port+" at "+speedName(p.speed))
+		through := ""
+		if p.hub {
+			through = " through a hub"
+		}
+		seen = append(seen, p.port+" at "+speedName(p.speed)+through)
 	}
 	sort.Strings(seen)
 	evidence := fmt.Sprintf("%d plug-ins detected", len(u.plugs))

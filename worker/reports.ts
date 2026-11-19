@@ -100,19 +100,21 @@ async function model(env: Env, url: URL, id: string): Promise<Response> {
   return json({ ...base, owners, fixes, notes }, 200, 'public, max-age=60');
 }
 
-type ResultRow = { model?: string; check_id: string; state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; created: string; machine: string; run: string };
+type ResultRow = { model?: string; check_id: string; state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; os: string | null; created: string; machine: string; run: string };
 type Change = { machines: number; from: string | null; to: string | null; since: string };
 type OwnerCheck = {
   machines: number;
   states: Record<string, number>;
   how: Record<string, number>;
-  latest: { state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; created: string; run: string }[];
+  // `os` says which system the result was seen on: the probe also runs on other distros, and a result from
+  // one shows a part can work, not that it does on Omarchy
+  latest: { state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; os: string | null; created: string; run: string }[];
   // Machines whose newest result turned from working to not, or the other way, with the kernels on both sides
   regressed?: Change;
   fixed?: Change;
 };
 
-const RESULT_ROWS = `SELECT runs.model, r.check_id, r.state, r.how, r.note, r.evidence, runs.kernel, runs.created, runs.machine, runs.id AS run
+const RESULT_ROWS = `SELECT runs.model, r.check_id, r.state, r.how, r.note, r.evidence, runs.kernel, runs.os, runs.created, runs.machine, runs.id AS run
        FROM results r JOIN runs ON runs.id = r.run JOIN machines m ON m.id = runs.machine
       WHERE runs.hidden = 0 AND m.hidden = 0 AND r.state != 'untested'`;
 const NEWEST_FIRST = 'ORDER BY runs.created DESC, runs.rowid DESC';
@@ -158,7 +160,7 @@ function summarize(rows: ResultRow[]) {
     entry.machines++;
     entry.states[row.state] = (entry.states[row.state] ?? 0) + 1;
     entry.how[row.how] = (entry.how[row.how] ?? 0) + 1;
-    if (entry.latest.length < 5) entry.latest.push({ state: row.state, how: row.how, note: row.note, evidence: row.evidence, kernel: row.kernel, created: row.created, run: row.run });
+    if (entry.latest.length < 5) entry.latest.push({ state: row.state, how: row.how, note: row.note, evidence: row.evidence, kernel: row.kernel, os: row.os, created: row.created, run: row.run });
 
     // Going back from that result, the first one with another state is where it turned: the
     // change counts once per machine and check, from that result's kernel to the first kernel after it
