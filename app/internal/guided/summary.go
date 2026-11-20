@@ -10,6 +10,7 @@ import (
 	"time"
 
 	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
 
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 	"github.com/birkskyum/arewearmyet/app/internal/tools"
@@ -66,6 +67,59 @@ type summary struct {
 	// once ends the test here without a screen. The steps were opened for the owner by an agent, which
 	// gets their result.
 	once bool
+}
+
+// Report draws everything that would be sent in one frame, which is the computer's model and
+// software, the results, and what else the run names. Nothing outside the frame leaves the computer.
+func Report(run *report.Run, width int) string {
+	framed := width >= 56
+	inner := width
+	if framed {
+		inner = width - 4
+	}
+	// Plain text broken into lines that fit, with a word longer than a line cut short
+	fit := func(text string) []string {
+		lines := strings.Split(wrap(text, inner), "\n")
+		for i, line := range lines {
+			if letters := []rune(line); len(letters) > inner {
+				lines[i] = string(letters[:inner-1]) + "…"
+			}
+		}
+		return lines
+	}
+	var body []string
+	name := strings.TrimSpace(run.Hardware["maker"] + " " + first(run.Hardware["family"], run.Hardware["product"]))
+	if bios := run.Hardware["bios"]; bios != "" {
+		name = strings.TrimPrefix(name+", BIOS "+bios, ", ")
+	}
+	if name != "" {
+		body = append(body, fit(name)...)
+	}
+	software := "Kernel " + run.Kernel
+	if count := len(run.Packages); count > 0 {
+		software += fmt.Sprintf(", %d package versions", count)
+	}
+	if count := len(run.Chids); count > 0 {
+		software += fmt.Sprintf(", %d hardware IDs", count)
+	}
+	body = append(body, fit(software)...)
+	body = append(body, "")
+	body = append(body, strings.Split(resultsTable(run.Results, inner), "\n")...)
+	if line := SetupLine(run.Setup); line != "" {
+		body = append(body, "")
+		body = append(body, fit(line)...)
+	}
+	if !framed {
+		// A narrow window has no room for a frame, so the report is set apart by its heading alone
+		return title.Render("Report") + "\n" + strings.Join(body, "\n")
+	}
+	var out strings.Builder
+	out.WriteString("╭─ " + title.Render("Report") + " " + strings.Repeat("─", inner-7) + "╮\n")
+	for _, line := range body {
+		out.WriteString("│ " + line + strings.Repeat(" ", max(0, inner-lipgloss.Width(line))) + " │\n")
+	}
+	out.WriteString("╰" + strings.Repeat("─", inner+2) + "╯")
+	return out.String()
 }
 
 // SetupLine says in one line what goes with the results about the computer itself, or nothing
@@ -132,7 +186,7 @@ func (s *summary) start() tea.Cmd {
 		s.skipped, s.over = true, true
 		return nil
 	}
-	s.ask = choice{question: "Send the lines above to arewearmyet.com?", options: []string{"Send", "Don't send"}}
+	s.ask = choice{question: "Send this report to arewearmyet.com?", options: []string{"Send report", "Don't send"}}
 	if !s.options.Send {
 		s.end("These are the results. Nothing is sent, as asked.")
 	}
@@ -203,9 +257,9 @@ func (s *summary) update(msg tea.Msg) tea.Cmd {
 			s.ask = choice{question: "Sending failed (" + s.err.Error() + ").", options: []string{"Try again", "Give up"}}
 			return nil
 		}
-		question := "Sent as " + s.sent.Run + ". Thank you! It's on the model's page now."
+		question := "Report sent as " + s.sent.Run + ". Thank you! It's on the model's page now."
 		if s.sent.Page == "" {
-			question = "Sent as " + s.sent.Run + ". The board doesn't know this computer yet, so the run shows on no page. A form with its name and hardware IDs filled in adds it."
+			question = "Report sent as " + s.sent.Run + ". The board doesn't know this computer yet, so the run shows on no page. A form with its name and hardware IDs filled in adds it."
 		}
 		s.end(question)
 	case tea.KeyPressMsg:
@@ -270,18 +324,19 @@ func (s *summary) view(width, height int) string {
 	text := ""
 	// The results stay in view until they have been sent
 	if s.sent.Run == "" {
-		text = resultsTable(s.run.Results, width) + "\n\n"
+		// Where the question is whether to send, everything that would go is in one frame, the report
+		if s.options.Send {
+			text = Report(s.run, width) + "\n\n"
+		} else {
+			text = resultsTable(s.run.Results, width) + "\n\n"
+		}
 		// Said plainly, so a step that was passed over isn't taken for one that found nothing
 		for name, fault := range s.failed {
 			text += close_.Render(wrap("The "+name+" step ran into a problem of the test's own and was passed over ("+fault+"). Nothing is reported for it.", width)) + "\n\n"
 		}
-		// What the results are read against, which goes with them
-		if line := SetupLine(s.run.Setup); line != "" {
-			text += soft.Render(wrap(line, width)) + "\n\n"
-		}
 		if s.options.Send && s.phase == "review" {
 			// What goes and what doesn't, said where the decision is made
-			text += wrap("Those lines are everything that is sent, with this computer's model and its software versions.", width) + "\n"
+			text += wrap("The report is everything that is sent.", width) + "\n"
 			// Said only after a round that made a picture or a recording
 			if s.recorded {
 				text += good.Render("🔒 ") + wrap("No picture and no recording is sent. They were only for you to check, and are already deleted.", width-3) + "\n"
@@ -306,5 +361,5 @@ func (s *summary) farewell() string {
 	case s.skipped || s.sent.Run == "":
 		return "Not sent."
 	}
-	return fmt.Sprintf("Sent as %s. Thank you!\n%s", s.sent.Run, s.page())
+	return fmt.Sprintf("Report sent as %s. Thank you!\n%s", s.sent.Run, s.page())
 }

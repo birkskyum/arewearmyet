@@ -374,7 +374,7 @@ func main() {
 		fmt.Fprintln(os.Stderr, "Sending failed:", err)
 		os.Exit(1)
 	}
-	fmt.Fprintf(os.Stderr, "Sent as %s.\n", sent.Run)
+	fmt.Fprintf(os.Stderr, "Report sent as %s.\n", sent.Run)
 	if sent.Page != "" {
 		fmt.Fprintln(os.Stderr, "It shows on", sent.Page)
 	} else {
@@ -450,7 +450,7 @@ func tell(run *report.Run, api, check, state, how, note, evidence string, send b
 		fmt.Fprintln(os.Stderr, "hw-test: the site didn't take it:", err)
 		return 1
 	}
-	fmt.Fprintf(os.Stderr, "Sent as %s. %s\n", sent.Run, first(sent.Page, "The board doesn't know this computer yet."))
+	fmt.Fprintf(os.Stderr, "Report sent as %s. %s\n", sent.Run, first(sent.Page, "The board doesn't know this computer yet."))
 	return 0
 }
 
@@ -1319,8 +1319,8 @@ func usageText() string {
                      the built module loaded in place of the kernel's own until the next
                      restart. hw-test kernel patch "SUBSYSTEM: WHAT" --body-file WHY writes
                      the change as a patch for the kernel's recipe
-  hw-test report --check ID --state works|partial|broken|absent --note TEXT   send one result
-                     that no test measured, either what the owner saw (--how owner, the default)
+  hw-test report --check ID --state works|partial|broken|absent --note TEXT   send a report of
+                     one result that no test measured, either what the owner saw (--how owner, the default)
                      or what was read from logs (--how agent). absent is for a part the
                      computer doesn't have
   hw-test resume [WHAT]    for an agent, before it restarts the computer. At the owner's next

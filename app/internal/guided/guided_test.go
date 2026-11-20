@@ -609,7 +609,7 @@ func TestTheSendScreenSaysWhatGoesAndThatNoPictureDoes(t *testing.T) {
 	}
 	// Wrapped lines joined again, so a sentence broken across two is still found
 	drawn := strings.Join(strings.Fields(s.view(90, 30)), " ")
-	for _, text := range []string{"Webcam", "everything that is sent", "No picture and no recording is sent", "already deleted", "Send the lines above"} {
+	for _, text := range []string{"Webcam", "The report is everything that is sent", "No picture and no recording is sent", "already deleted", "Send this report", "Send report"} {
 		if !strings.Contains(drawn, text) {
 			t.Errorf("the send screen lacks %q:\n%s", text, drawn)
 		}
@@ -1524,7 +1524,7 @@ func TestARoundEndsOnGoingBackToTheStartByDefault(t *testing.T) {
 		t.Error("it didn't try again")
 	}
 	s.update(sentMsg{sent: report.Sent{Run: "RUN-BBBBBBBBBB", Page: "https://arewearmyet.com/models/x"}})
-	if s.phase != "end" || !strings.Contains(s.ask.question, "Sent as RUN-BBBBBBBBBB") {
+	if s.phase != "end" || !strings.Contains(s.ask.question, "Report sent as RUN-BBBBBBBBBB") {
 		t.Errorf("once the network was back: phase %q, %s", s.phase, s.ask.question)
 	}
 	// A send that is only slow says the same after a few seconds
@@ -1665,9 +1665,52 @@ func TestTheSummarySaysWhatElseIsSent(t *testing.T) {
 	}
 	run.Setup = &report.Setup{Modules: []string{"omnibook_fix"}, Options: []string{"regulator_ignore_unused"}}
 	drawn := last.view(100, 40)
-	for _, text := range []string{"Also sent: kernel module omnibook_fix, kernel option regulator_ignore_unused.", "Send the lines above"} {
+	for _, text := range []string{"Also sent: kernel module omnibook_fix, kernel option regulator_ignore_unused.", "Send this report"} {
 		if !strings.Contains(drawn, text) {
 			t.Errorf("the summary lacks %q:\n%s", text, drawn)
 		}
+	}
+}
+
+// Everything that would be sent sits in one frame, as wide as the window and no wider
+func TestTheReportIsFramedWithWhatIsSent(t *testing.T) {
+	run := &report.Run{
+		Kernel:   "7.3.0-72-omarchy",
+		Hardware: map[string]string{"maker": "LENOVO", "family": "Yoga Slim 7 14Q8X9", "product": "83ED", "bios": "NHCN58WW"},
+		Packages: map[string]string{"linux-omarchy": "7.3-72", "mesa": "26.3"},
+		Chids:    []string{"a", "b", "c"},
+		Setup:    &report.Setup{Options: []string{"gpiolib_acpi.ignore_wake=VEN_0488:00@355"}},
+	}
+	run.Set("battery", report.Works, report.Measured, "87%", "")
+	run.Set("suspend", report.Partial, report.Owner, "", "Woke by itself after four seconds, twice in five tries, with the charger in.")
+	for _, width := range []int{56, 80, 140} {
+		drawn := ansi.ReplaceAllString(Report(run, width), "")
+		lines := strings.Split(drawn, "\n")
+		for _, line := range lines {
+			if lipgloss.Width(line) != width {
+				t.Fatalf("at %d wide, a line is %d wide: %q\n%s", width, lipgloss.Width(line), line, drawn)
+			}
+		}
+		if !strings.HasPrefix(lines[0], "╭─ Report ─") || !strings.HasPrefix(lines[len(lines)-1], "╰─") {
+			t.Errorf("at %d wide, the frame is open:\n%s", width, drawn)
+		}
+		for _, text := range []string{"LENOVO Yoga Slim 7 14Q8X9, BIOS NHCN58WW", "Kernel 7.3.0-72-omarchy, 2 package versions, 3", "hardware IDs", "Battery readings", "Sleep and wake", "Also sent: kernel option"} {
+			if !strings.Contains(drawn, text) {
+				t.Errorf("at %d wide, the report lacks %q:\n%s", width, text, drawn)
+			}
+		}
+	}
+	// A narrow window gets the same lines under a heading, without a frame
+	narrow := ansi.ReplaceAllString(Report(run, 40), "")
+	if strings.Contains(narrow, "│") || !strings.HasPrefix(narrow, "Report\n") {
+		t.Errorf("narrow:\n%s", narrow)
+	}
+	for _, line := range strings.Split(narrow, "\n") {
+		if lipgloss.Width(line) > 40 {
+			t.Errorf("narrow, a line is %d wide: %q", lipgloss.Width(line), line)
+		}
+	}
+	if os.Getenv("SHOW") != "" {
+		fmt.Println(ansi.ReplaceAllString(Report(run, 80), ""))
 	}
 }
