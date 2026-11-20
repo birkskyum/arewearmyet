@@ -58,7 +58,7 @@ const cells = (row: (typeof pieceRows)[number]) => {
         <div class="@container min-w-0 flex-1">
           <div class="grid h-3 grid-flow-col grid-cols-[repeat(var(--half),minmax(0,1fr))] grid-rows-2 gap-0.5 @lg:grid-flow-row @lg:grid-cols-[repeat(var(--all),minmax(0,1fr))] @lg:grid-rows-1" style={`--all: ${models.length}; --half: ${Math.ceil(models.length / 2)}`}>
             {cells(row).map((cell) => (
-              <a href={`/?${urlPrefix}q=${encodeURIComponent(cell.name)}#${anchor}`} class={`rounded-[2px] ${cell.color} transition hover:scale-y-150 hover:brightness-150`} data-tip-title={cell.name} data-tip={cell.tip} aria-label={`${cell.name}: ${cell.tip}`}></a>
+              <a href={`/?${urlPrefix}q=${encodeURIComponent(cell.name)}#${anchor}`} data-search={cell.name} data-prefix={urlPrefix} class={`rounded-[2px] ${cell.color} transition hover:scale-y-150 hover:brightness-150`} data-tip-title={cell.name} data-tip={cell.tip} aria-label={`${cell.name}: ${cell.tip}`}></a>
             ))}
           </div>
         </div>
@@ -67,3 +67,7 @@ const cells = (row: (typeof pieceRows)[number]) => {
     </div>
   ))}
 </dl>
+
+<script>
+  import '../lib/search-links';
+</script>

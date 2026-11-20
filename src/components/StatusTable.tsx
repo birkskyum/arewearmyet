@@ -22,6 +22,7 @@ import { PILL, TONE, type Tone } from '../lib/tones';
 import type { CellData, TableRow } from '../lib/rows';
 import ExportButton from './ExportButton';
 import { MODE_EVENT, readMode, setMode, type Mode } from '../lib/mode';
+import { SEARCH_EVENT, type SearchAsked } from '../lib/search';
 
 type Option = { key: string; label: string; tone?: Tone };
 type Column = { id: string; header: string; question: string; options?: Option[] };
@@ -59,9 +60,9 @@ type Row = { original: TableRow; getValue: (id: string) => unknown };
 const inSet = (row: Row, id: string, value: unknown) => !Array.isArray(value) || value.length === 0 || value.includes(row.getValue(id));
 // The search box matches a row that has every word of it, in any part of its text or as a full product number that starts with one of its series
 const bySearch = (row: Row, _id: string, value: unknown) =>
-  typeof value !== 'string' || !value || value.split(' ').every((word) => row.original.search.includes(word) || row.original.prefixes.some((prefix) => word.startsWith(prefix)));
-// The search as the filter holds it: lowercase, single spaces, none at the ends
-const normalized = (text: string) => text.trim().toLowerCase().split(/\s+/).join(' ');
+  typeof value !== 'string' || !value || value.toLowerCase().split(' ').every((word) => row.original.search.includes(word) || row.original.prefixes.some((prefix) => word.startsWith(prefix)));
+// The search as the filter holds it and the address shows it: as typed, with single spaces and none at the ends
+const normalized = (text: string) => text.trim().split(/\s+/).join(' ');
 const byRank = (a: Row, b: Row, id: string) => (a.original.cells[id]?.rank ?? Infinity) - (b.original.cells[id]?.rank ?? Infinity);
 // A status cell as the table shows it
 const cellText = (cell: CellData | undefined) => (!cell ? null : 'text' in cell ? cell.text || null : ('full' in cell && cell.full) || cell.label);
@@ -241,6 +242,18 @@ export default function StatusTable(props: Props) {
     heardMode();
     addEventListener(MODE_EVENT, heardMode);
     onCleanup(() => removeEventListener(MODE_EVENT, heardMode));
+  });
+  // A link on the page asked for a search in this table, like a model's cell in the bars above it
+  const heardSearch = (event: Event) => {
+    const asked = (event as CustomEvent<SearchAsked>).detail;
+    if (asked.prefix !== (props.urlPrefix ?? '')) return;
+    event.preventDefault();
+    setQuery(normalized(asked.query));
+    root.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  };
+  onMount(() => {
+    addEventListener(SEARCH_EVENT, heardSearch);
+    onCleanup(() => removeEventListener(SEARCH_EVENT, heardSearch));
   });
 
   // The wrapper keeps the table out of sight while the address still has to be applied (ViewState.astro).
