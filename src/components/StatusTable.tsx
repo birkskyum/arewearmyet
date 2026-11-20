@@ -366,7 +366,8 @@ export default function StatusTable(props: Props) {
         <ExportButton name={props.exportName} title={props.exportTitle} header={exportHeader()} rows={exportRows()} />
       </div>
 
-      <Show when={filtering()}>
+      {/* The bar names the column filters. The search shows in its own box, so it gets no pill here */}
+      <Show when={activeFilters().length > 0}>
         <div class="mt-3 flex flex-wrap items-center gap-2 rounded-lg bg-sky-400/10 px-3 py-2 text-sm ring-1 ring-sky-400/40" data-active-filters>
           <span class="font-medium text-sky-200">
             Showing {shown()} of {props.rows.length}, filtered by
@@ -385,15 +386,6 @@ export default function StatusTable(props: Props) {
               </span>
             )}
           </For>
-          <Show when={query()}>
-            <span class="inline-flex items-center gap-1.5 rounded-md bg-zinc-900 py-0.5 pl-2 pr-1 ring-1 ring-zinc-700">
-              <span class="text-xs text-zinc-400">Search</span>
-              <span class="text-zinc-200">{query()}</span>
-              <button type="button" aria-label="Clear the search" class="rounded px-1 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100" onClick={() => setQuery('')}>
-                ×
-              </button>
-            </span>
-          </Show>
           <button type="button" onClick={() => setFilters([])} class="ml-auto rounded-md px-2.5 py-1 text-sm text-sky-100 ring-1 ring-sky-400/50 hover:bg-sky-400/20" data-clear>
             Clear all
           </button>
