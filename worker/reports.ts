@@ -106,7 +106,7 @@ async function model(env: Env, url: URL, id: string): Promise<Response> {
   return json({ ...base, owners, fixes, notes }, 200, 'public, max-age=60');
 }
 
-type ResultRow = { model?: string; check_id: string; state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; os: string | null; created: string; machine: string; run: string; setup: string | null };
+type ResultRow = { model?: string; check_id: string; state: string; how: string; note: string | null; evidence: string | null; depth: string | null; kernel: string | null; os: string | null; created: string; machine: string; run: string; setup: string | null };
 /** What a computer ran that Omarchy didn't install, by name, plus the owner's words on what they changed. */
 type Setup = {
   kernel?: string; rebuilt?: string[]; modules?: string[]; options?: string[]; packages?: string[];
@@ -130,7 +130,9 @@ type OwnerCheck = {
   // `setup` is what that computer ran beyond what Omarchy installs, left out when there was nothing
   // `needs` is the change made on that computer that the part works because of, in the owner's or their
   // agent's words, proved when switching it off and measuring again showed it
-  latest: { state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; os: string | null; created: string; run: string; setup?: Setup; needs?: Need }[];
+  // `depth` is `look` when the result only says the part is there and its driver came up, `test` when
+  // the part was used, and left out for results from before hw-test said which
+  latest: { state: string; how: string; note: string | null; evidence: string | null; depth?: string; kernel: string | null; os: string | null; created: string; run: string; setup?: Setup; needs?: Need }[];
   // How many of the computers counted under works or partial do so with a change made on them
   changed?: number;
   // Machines whose newest result turned from working to not, or the other way, with the kernels on both sides
@@ -138,7 +140,7 @@ type OwnerCheck = {
   fixed?: Change;
 };
 
-const RESULT_ROWS = `SELECT runs.model, r.check_id, r.state, r.how, r.note, r.evidence, runs.kernel, runs.os, runs.created, runs.machine, runs.id AS run, runs.setup
+const RESULT_ROWS = `SELECT runs.model, r.check_id, r.state, r.how, r.note, r.evidence, r.depth, runs.kernel, runs.os, runs.created, runs.machine, runs.id AS run, runs.setup
        FROM results r JOIN runs ON runs.id = r.run JOIN machines m ON m.id = runs.machine
       WHERE runs.hidden = 0 AND m.hidden = 0 AND r.state != 'untested'`;
 const NEWEST_FIRST = 'ORDER BY runs.created DESC, runs.rowid DESC';
@@ -163,7 +165,7 @@ function summarize(rows: ResultRow[], needed: Map<string, Need> = new Map()) {
 
   const picked: { row: ResultRow; older: ResultRow[] }[] = [];
   for (const list of history.values()) {
-    // The newest result counts, with one exception. A later measurement that merely finds a
+    // The newest result counts, with two exceptions. A later measurement that merely finds a
     // thing working doesn't take back what the owner reported as failing. The test measures
     // "it slept once", and the owner saw the second sleep crash. The owner's result stands until
     // the owner tests that again.
@@ -171,6 +173,13 @@ function summarize(rows: ResultRow[], needed: Map<string, Need> = new Map()) {
     if (list[0].how === 'measured' && good(list[0].state)) {
       const owner = list.findIndex((row) => row.how === 'owner');
       if (owner > 0 && bad(list[owner].state)) at = owner;
+    }
+    // Nor does a look at a part replace what a test of it found. The quick check sees the GPU's
+    // driver bound, where the test saw it draw. The test's result stands, working or failing, until
+    // a test runs again. Results from before hw-test said which they were are left as they are
+    if (at === 0 && list[0].depth === 'look' && good(list[0].state)) {
+      const closer = list.findIndex((row) => row.depth !== 'look');
+      if (closer > 0 && list[closer].depth === 'test' && (good(list[closer].state) || bad(list[closer].state))) at = closer;
     }
     picked.push({ row: list[at], older: list.slice(at + 1) });
   }
@@ -187,7 +196,7 @@ function summarize(rows: ResultRow[], needed: Map<string, Need> = new Map()) {
     // A need is said of a part that works, at least partly, so it shows beside such a result only
     const need = row.state === 'works' || row.state === 'partial' ? needed.get(`${row.machine} ${row.check_id}`) : undefined;
     if (need) entry.changed = (entry.changed ?? 0) + 1;
-    if (entry.latest.length < 5) entry.latest.push({ state: row.state, how: row.how, note: row.note, evidence: row.evidence, kernel: row.kernel, os: row.os, created: row.created, run: row.run, setup: storedSetup(row.setup), needs: need });
+    if (entry.latest.length < 5) entry.latest.push({ state: row.state, how: row.how, note: row.note, evidence: row.evidence, ...(row.depth ? { depth: row.depth } : {}), kernel: row.kernel, os: row.os, created: row.created, run: row.run, setup: storedSetup(row.setup), needs: need });
 
     // Going back from that result, the first one with another state is where it turned. The
     // change counts once per machine and check, from that result's kernel to the first kernel after it
@@ -473,7 +482,7 @@ async function postRun(request: Request, env: Env, url: URL): Promise<Response> 
       chids.length ? JSON.stringify(chids) : null,
       setup ? JSON.stringify(setup) : null,
     ),
-    ...results.map((r) => env.DB.prepare('INSERT INTO results (run, check_id, state, how, note, evidence) VALUES (?, ?, ?, ?, ?, ?)').bind(run, r.check, r.state, r.how, r.note, r.evidence)),
+    ...results.map((r) => env.DB.prepare('INSERT INTO results (run, check_id, state, how, note, evidence, depth) VALUES (?, ?, ?, ?, ?, ?, ?)').bind(run, r.check, r.state, r.how, r.note, r.evidence, r.depth)),
   ];
   await env.DB.batch(statements);
   return json({
@@ -496,15 +505,15 @@ async function postResults(request: Request, env: Env, url: URL, run: string): P
   if (typeof results === 'string') return json({ error: results }, 400);
   if (results.length === 0) return json({ error: 'results must hold at least one result.' }, 400);
   await env.DB.batch(results.map((r) => env.DB.prepare(
-    'INSERT INTO results (run, check_id, state, how, note, evidence) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT(run, check_id) DO UPDATE SET state = excluded.state, how = excluded.how, note = excluded.note, evidence = COALESCE(excluded.evidence, results.evidence)',
-  ).bind(run, r.check, r.state, r.how, r.note, r.evidence)));
+    'INSERT INTO results (run, check_id, state, how, note, evidence, depth) VALUES (?, ?, ?, ?, ?, ?, ?) ON CONFLICT(run, check_id) DO UPDATE SET state = excluded.state, how = excluded.how, note = excluded.note, evidence = COALESCE(excluded.evidence, results.evidence), depth = excluded.depth',
+  ).bind(run, r.check, r.state, r.how, r.note, r.evidence, r.depth)));
   return json({ run, stored: results.length, url: `${SITE}/api/runs/${run}` });
 }
 
 async function getRun(env: Env, id: string): Promise<Response> {
   const run = await env.DB.prepare('SELECT id, model, compatible, created, mode, kernel, os, packages, hardware, agent, chids, setup, hidden FROM runs WHERE id = ?').bind(id).first<Record<string, string | number | null>>();
   if (!run || run.hidden) return json({ error: 'No such run.' }, 404);
-  const { results } = await env.DB.prepare('SELECT check_id AS "check", state, how, note, evidence FROM results WHERE run = ? ORDER BY check_id').bind(id).all();
+  const { results } = await env.DB.prepare('SELECT check_id AS "check", state, how, note, evidence, depth FROM results WHERE run = ? ORDER BY check_id').bind(id).all();
   return json({ ...run, hidden: undefined, packages: JSON.parse(String(run.packages ?? '{}')), hardware: JSON.parse(String(run.hardware ?? '{}')), chids: JSON.parse(String(run.chids ?? '[]')), setup: storedSetup(run.setup === null ? null : String(run.setup)), results });
 }
 
@@ -761,20 +770,20 @@ function admin(request: Request, env: Env): boolean {
   return Boolean(secret) && request.headers.get('authorization') === `Bearer ${secret}`;
 }
 
-type Result = { check: string; state: string; how: string; note: string | null; evidence: string | null };
+type Result = { check: string; state: string; how: string; note: string | null; evidence: string | null; depth: string | null };
 
 function parseResults(value: unknown): Result[] | string {
-  if (!Array.isArray(value) || value.length > 100) return 'results must be a list of at most 100 {check, state, how, note?, evidence?}.';
+  if (!Array.isArray(value) || value.length > 100) return 'results must be a list of at most 100 {check, state, how, note?, evidence?, depth?}.';
   const out: Result[] = [];
   const seen = new Set<string>();
   for (const item of value) {
-    const { check, state, how, note, evidence } = (item ?? {}) as Record<string, unknown>;
+    const { check, state, how, note, evidence, depth } = (item ?? {}) as Record<string, unknown>;
     if (typeof check !== 'string' || !CHECKS.has(check)) return `Unknown check ${String(check)}. GET /api/checks lists them.`;
     if (seen.has(check)) return `${check} appears twice.`;
     seen.add(check);
     if (!STATES.includes(state as never)) return `For ${check}, state must be one of ${STATES.join(', ')}.`;
     if (!HOW.includes(how as never)) return `For ${check}, how must be measured (the test saw it), owner (the owner saw or heard it) or agent (your own reading of logs or output).`;
-    out.push({ check, state: state as string, how: how as string, note: typeof note === 'string' ? clean(note, 600) : null, evidence: typeof evidence === 'string' ? clean(evidence, 400) : null });
+    out.push({ check, state: state as string, how: how as string, note: typeof note === 'string' ? clean(note, 600) : null, evidence: typeof evidence === 'string' ? clean(evidence, 400) : null, depth: depth === 'look' || depth === 'test' ? depth : null });
   }
   return out;
 }

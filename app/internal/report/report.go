@@ -140,6 +140,20 @@ func (r *Run) Shallow(result Result) bool {
 	return ok && quick == result
 }
 
+// How close a result looked, as the site takes it.
+const (
+	Look = "look" // the part is there and its driver came up
+	Test = "test" // the part was used
+)
+
+// Depth says how close a result looked.
+func (r *Run) Depth(result Result) string {
+	if r.Shallow(result) {
+		return Look
+	}
+	return Test
+}
+
 var (
 	address = regexp.MustCompile(`(?i)\b([0-9a-f]{2}[:-]){5}[0-9a-f]{2}\b`)
 	home    = regexp.MustCompile(`/home/[^/\s]+`)
@@ -210,7 +224,20 @@ func (r *Run) JSON() []byte {
 	if r.Setup.Empty() {
 		r.Setup = nil
 	}
-	data, _ := json.Marshal(r)
+	// Each result says how close it looked, so that the site doesn't let a look at a part
+	// replace what a test of it found
+	type sent struct {
+		Result
+		Depth string `json:"depth"`
+	}
+	results := make([]sent, len(r.Results))
+	for i, result := range r.Results {
+		results[i] = sent{result, r.Depth(result)}
+	}
+	data, _ := json.Marshal(struct {
+		*Run
+		Results []sent `json:"results"`
+	}{r, results})
 	return data
 }
 

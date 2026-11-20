@@ -60,6 +60,35 @@ func TestKeyboardIsMeasuredOnceEveryNeededKeyWasSeen(t *testing.T) {
 	}
 }
 
+func TestKeyboardWithFewKeysPressedLeavesWhatWasFoundBefore(t *testing.T) {
+	// One key and the owner's "it's fine" is too little to call the keyboard working
+	run := &report.Run{}
+	run.Set("keyboard", report.Works, report.Measured, "hid-over-i2c 048D:8987", "")
+	k := newKeyboard(run)
+	for i := 0; i < 3; i++ {
+		k.update(press(tea.KeyEnter))
+	}
+	if k.missing == nil {
+		t.Fatal("no question about the keys that never lit")
+	}
+	k.update(press('1')) // "The keyboard is fine"
+	if result, _ := run.Get("keyboard"); !k.done() || result.Evidence != "hid-over-i2c 048D:8987" || result.How != report.Measured {
+		t.Errorf("done=%v, result=%+v", k.done(), result)
+	}
+
+	// With most keys pressed, the owner's word covers the rest
+	run = &report.Run{}
+	k = newKeyboard(run)
+	typeAll(k, "Q 7")
+	for i := 0; i < 3; i++ {
+		k.update(press(tea.KeySpace))
+	}
+	k.update(press('1'))
+	if result, _ := run.Get("keyboard"); !k.done() || result.State != report.Works || result.How != report.Owner || !strings.Contains(result.Evidence, "the owner didn't press 7, Q") {
+		t.Errorf("done=%v, result=%+v", k.done(), result)
+	}
+}
+
 func TestKeyboardLightsKeysByPlaceWhateverTheLayout(t *testing.T) {
 	k := newKeyboard(&report.Run{})
 	// A Danish keyboard types æ where a US one has the semicolon, and the terminal says so

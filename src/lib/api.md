@@ -24,6 +24,7 @@ A token is never returned by any route. Keep it on the computer and out of logs 
 | --- | --- |
 | `state` | `works`, `partial`, `broken`, `untested`, `absent` (the computer doesn't have the part) |
 | `how` | `measured` (a test saw it), `owner` (the owner saw or heard it), `agent` (an agent's reading of logs or output) |
+| `depth` | `look` (the part is there and its driver came up), `test` (the part was used). Left out when the sender didn't say |
 | `mode` | `quick` (the read-only check), `guided` (the full test with the owner), `agent` (sent by an agent) |
 | note `kind` | `problem`, `workaround`, `upstream`, `note` |
 | note `status` | `open`, `solved`. Only problems have one |
@@ -171,7 +172,7 @@ One model, with everything its page shows. `404` names the routes that find the 
 }
 ```
 
-`latest` holds up to five results, newest first. A result from a computer that ran another kernel, a kernel module from no repository, kernel options of its own or a test device tree has `setup`, which names it, in the shape `POST /api/runs` takes. A result of a part that works because of a change made on that computer has `needs`, as `{text, how, proved?, created}` (see `POST /api/needs`), and `changed` counts those computers for the check. `fixed` and `regressed` appear when a computer's result turned from failing to working or the other way, with the kernels on both sides. One rule differs from "newest wins". A measurement that finds a part working doesn't take back a failure the owner reported. The owner's result stands until the owner tests that part again.
+`latest` holds up to five results, newest first. A result from a computer that ran another kernel, a kernel module from no repository, kernel options of its own or a test device tree has `setup`, which names it, in the shape `POST /api/runs` takes. A result of a part that works because of a change made on that computer has `needs`, as `{text, how, proved?, created}` (see `POST /api/needs`), and `changed` counts those computers for the check. `fixed` and `regressed` appear when a computer's result turned from failing to working or the other way, with the kernels on both sides. Two rules differ from "newest wins". A measurement that finds a part working doesn't take back a failure the owner reported. The owner's result stands until the owner tests that part again. And a result with `depth` `look` that finds a part working doesn't replace an earlier one with `depth` `test`, working or failing. The test's result stands until a test of that part runs again. A result that doesn't say its `depth` is replaced by the newest, as before.
 
 ### `GET /api/match`
 
@@ -238,7 +239,7 @@ One run as it is stored, for its owner to check what was sent.
   "agent": null,
   "chids": ["0:5315f3e1-1fa9-5592-bf05-75e8124d1f8a"],
   "results": [
-    { "check": "gpu", "state": "works", "how": "measured", "note": null, "evidence": "Vulkan draws on Adreno X1-85 (turnip Mesa driver)" }
+    { "check": "gpu", "state": "works", "how": "measured", "depth": "test", "note": null, "evidence": "Vulkan draws on Adreno X1-85 (turnip Mesa driver)" }
   ]
 }
 ```
@@ -358,7 +359,7 @@ curl -X POST https://arewearmyet.com/api/runs \
 | Field | |
 | --- | --- |
 | `mode` | Required. `quick`, `guided` or `agent` |
-| `results` | Required. 1 to 100 of `{check, state, how, note?, evidence?}`, each check once |
+| `results` | Required. 1 to 100 of `{check, state, how, note?, evidence?, depth?}`, each check once. `depth` is `look` for a result that only says the part is there and its driver came up, and `test` for one that used the part. hw-test sends it with every result from 0.22.7 on |
 | `model` | A model id. Left out, the computer's own strings decide, as in `GET /api/match` |
 | `chids` | Up to 40 hardware IDs with their type, like `3:8073dbed-...` |
 | `compatible` | The device tree's first compatible string |

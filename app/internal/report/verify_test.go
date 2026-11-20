@@ -99,6 +99,28 @@ func TestAChangeIsMeasuredAgainstTheSnapshotByWhatWasTestedAgain(t *testing.T) {
 	if got := Latest()["webgpu"]; got.Evidence != "Chromium offers WebGPU on qualcomm adreno-7xx" || got.Shallow {
 		t.Errorf("the quick check covered up the closer test: %+v", got)
 	}
+	// Where the machine stands keeps the closer test's "works" too, with what that test saw
+	if kept := Local()["webgpu"]; kept.Evidence != "Chromium offers WebGPU on qualcomm adreno-7xx" || kept.Shallow {
+		t.Errorf("the quick check's works replaced a closer test's works: %+v", kept)
+	}
+	// A part the quick check finds gone is news, whatever a closer test found before
+	gone := &Run{Kernel: "7.3.0-72-omarchy", Results: []Result{result("webgl", Broken, Measured, "no GPU")}}
+	gone.MarkQuick()
+	_ = Remember(&Run{Kernel: "7.3.0-72-omarchy", Results: []Result{result("webgl", Works, Measured, "WebGL 2.0 on Adreno X1-85")}}, start.Add(12*time.Minute))
+	_ = Remember(gone, start.Add(13*time.Minute))
+	if kept := Local()["webgl"]; kept.State != Broken {
+		t.Errorf("the quick check's failure didn't replace a closer test's works: %+v", kept)
+	}
+	// What is sent says of each result how close it looked
+	var sent struct {
+		Results []struct{ Check, Depth string }
+	}
+	mixed := &Run{Results: []Result{result("gpu", Works, Measured, "adreno bound")}}
+	mixed.MarkQuick()
+	mixed.Set("webgpu", Works, Measured, "Chromium offers WebGPU on qualcomm adreno-7xx", "")
+	if err := json.Unmarshal(mixed.JSON(), &sent); err != nil || len(sent.Results) != 2 || sent.Results[0].Depth != Look || sent.Results[1].Depth != Test {
+		t.Errorf("depths sent: %+v, %v", sent, err)
+	}
 	for _, change := range Changes(snapshot, Latest()) {
 		if change.Check == "webgpu" && (change.From.State != Partial || change.To.State != Works) {
 			t.Errorf("webgpu after its own test: %+v", change)

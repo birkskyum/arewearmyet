@@ -31,9 +31,9 @@ func Local() map[string]Kept {
 
 // Remember keeps a run's results as the machine's latest. A newer result replaces an older one,
 // with two exceptions. A measurement which merely finds a thing working doesn't take back a failure
-// the owner reported. That stands until the owner tests the thing again, and the site counts
-// results the same way. And the quick check's "works" doesn't take back a failure that a closer
-// test found.
+// the owner reported. That stands until the owner tests the thing again. And the quick check's
+// "works" doesn't replace what a closer test found, whether that was a failure or that the part
+// does its work. The site counts results the same way.
 func Remember(run *Run, when time.Time) error {
 	kept := Local()
 	for _, result := range run.Results {
@@ -46,10 +46,11 @@ func Remember(run *Run, when time.Time) error {
 		if ownerSawItFail && result.How == Measured && result.State == Works {
 			continue
 		}
-		// Nor does the quick check, seeing only that the part is there, take back a failure
-		// that a test which used the part found. That stands until that test runs again.
+		// Nor does the quick check, seeing only that the part is there, replace what a test
+		// which used the part found. That stands until that test runs again.
 		shallow := run.Shallow(result)
-		if failing && !before.Shallow && shallow && result.State == Works {
+		_, ranked := Rank[before.State]
+		if had && ranked && !before.Shallow && shallow && result.State == Works {
 			continue
 		}
 		kept[result.Check] = Kept{Result: result, Kernel: run.Kernel, When: when, Shallow: shallow}

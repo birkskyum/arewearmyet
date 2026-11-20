@@ -92,6 +92,19 @@ func (k *keyboard) unlit() []string {
 
 func (k *keyboard) count() int { return len(k.lit) + len(k.other) }
 
+// enough says whether at least half of the keys the test waits for were pressed.
+func (k *keyboard) enough() bool {
+	needed := 0
+	for _, row := range layout {
+		for _, key := range row {
+			if key.needed {
+				needed++
+			}
+		}
+	}
+	return 2*(needed-len(k.unlit())) >= needed
+}
+
 func (k *keyboard) update(msg tea.Msg) tea.Cmd {
 	press, ok := msg.(tea.KeyPressMsg)
 	if !ok {
@@ -100,7 +113,12 @@ func (k *keyboard) update(msg tea.Msg) tea.Cmd {
 	if k.missing != nil {
 		switch k.missing.update(press) {
 		case 0:
-			k.run.Set("keyboard", report.Works, report.Owner, fmt.Sprintf("%d keys registered, and the owner didn't press %s", k.count(), strings.Join(k.unlit(), ", ")), "")
+			// The owner's word covers the keys they left out, when the test saw most of the keyboard.
+			// With only a few keys pressed it saw too little to call the keyboard working, and
+			// whatever was found before stands
+			if k.enough() {
+				k.run.Set("keyboard", report.Works, report.Owner, fmt.Sprintf("%d keys registered, and the owner didn't press %s", k.count(), strings.Join(k.unlit(), ", ")), "")
+			}
 			k.over = true
 		case 1:
 			k.run.Set("keyboard", report.Partial, report.Owner, fmt.Sprintf("%d keys registered", k.count()), "No response from "+strings.Join(k.unlit(), ", "))

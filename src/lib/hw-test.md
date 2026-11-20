@@ -71,7 +71,9 @@ Every check ends in one of five states.
 | not tested | Nothing was measured |
 | absent | The computer doesn't have the part |
 
-A result that works but looks off (one speaker much quieter than the other) is marked as worth a look, and can be handed to an agent like a failing one. The quick check only sees that a part is there and its driver came up, so its result never replaces what a closer test found.
+A result that works but looks off (one speaker much quieter than the other) is marked as worth a look, and can be handed to an agent like a failing one. The quick check only sees that a part is there and its driver came up, so its result never replaces what a closer test found, on the computer or on the site. A part the quick check finds gone does replace it.
+
+The keyboard step lets you go on without pressing every key. When you pressed fewer than half of them, it records nothing, and what was found before stands.
 
 ## What is sent
 

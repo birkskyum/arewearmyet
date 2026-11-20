@@ -292,6 +292,50 @@ test("a later measurement that finds a thing working doesn't take back the owner
   assert.equal(fixed.fixed.to, '7.3.0-80-omarchy');
 });
 
+test("a look at a part doesn't replace what a test of it found, working or failing", async () => {
+  const token = 'machine-p-'.padEnd(40, 'p');
+  const model = 'hp-omnibook-x-14-fe';
+  const send = async (kernel: string, results: unknown[]) => {
+    await tick();
+    return call('POST', '/api/runs', { ...run(results), model, kernel }, machine(token));
+  };
+  const check = async (id: string) => (await call('GET', `/api/models/${model}`)).body.owners.checks[id];
+
+  // The test saw the GPU draw, and a quick check after an update only sees its driver bound
+  await send('7.3.0-72-omarchy', [{ check: 'gpu', state: 'works', how: 'measured', evidence: 'Vulkan draws on Adreno X1-85', depth: 'test' }]);
+  const looked = await send('7.3.0-75-omarchy', [{ check: 'gpu', state: 'works', how: 'measured', evidence: 'adreno bound to the GPU', depth: 'look' }]);
+  let gpu = await check('gpu');
+  assert.deepEqual(gpu.states, { works: 1 });
+  assert.equal(gpu.latest[0].evidence, 'Vulkan draws on Adreno X1-85');
+  assert.equal(gpu.latest[0].depth, 'test');
+  assert.equal(gpu.latest[0].kernel, '7.3.0-72-omarchy');
+  // The run itself keeps what it was sent
+  assert.equal((await call('GET', `/api/runs/${looked.body.run}`)).body.results[0].depth, 'look');
+
+  // A test that ran again replaces it, and so does a look that finds the part gone
+  await send('7.3.0-75-omarchy', [{ check: 'gpu', state: 'works', how: 'measured', evidence: 'Vulkan draws on Adreno X1-85, again', depth: 'test' }]);
+  assert.equal((await check('gpu')).latest[0].kernel, '7.3.0-75-omarchy');
+  await send('7.3.0-80-omarchy', [{ check: 'gpu', state: 'broken', how: 'measured', evidence: 'no GPU', depth: 'look' }]);
+  gpu = await check('gpu');
+  assert.deepEqual(gpu.states, { broken: 1 });
+  assert.equal(gpu.regressed.to, '7.3.0-80-omarchy');
+
+  // Nor does a look take back a failure the test found
+  await send('7.3.0-72-omarchy', [{ check: 'webgpu', state: 'partial', how: 'measured', evidence: 'only with switches', depth: 'test' }]);
+  await send('7.3.0-75-omarchy', [{ check: 'webgpu', state: 'works', how: 'measured', evidence: 'the GPU is there', depth: 'look' }]);
+  assert.deepEqual((await check('webgpu')).states, { partial: 1 });
+
+  // A result from before hw-test said which it was is replaced by the newest, as it always was
+  await send('7.3.0-72-omarchy', [{ check: 'wifi', state: 'works', how: 'measured', evidence: 'connected at 5180 MHz' }]);
+  await send('7.3.0-75-omarchy', [{ check: 'wifi', state: 'works', how: 'measured', evidence: 'wlan0 connected', depth: 'look' }]);
+  const wifi = await check('wifi');
+  assert.equal(wifi.latest[0].evidence, 'wlan0 connected');
+  assert.equal(wifi.latest[0].depth, 'look');
+  // And a depth that isn't one of the two is not kept
+  const odd = await send('7.3.0-75-omarchy', [{ check: 'usb', state: 'works', how: 'measured', depth: 'deep' }]);
+  assert.equal((await call('GET', `/api/runs/${odd.body.run}`)).body.results[0].depth, null);
+});
+
 test('takes a note with logs, answers to it and a solved mark, and cleans what names the owner', async () => {
   const run = await call('POST', '/api/runs', { mode: 'agent', model: YOGA, results: [{ check: 'suspend', state: 'broken', how: 'owner' }] }, { 'x-machine-token': TOKEN_A });
   assert.equal(run.status, 201);
