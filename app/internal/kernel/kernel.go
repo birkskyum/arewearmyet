@@ -267,13 +267,16 @@ func (s System) LoadScript(modules []string) string {
 # the kernel's own. Nothing is written to disk: after a restart the kernel's own are back.
 set -u
 marker=` + quote(s.Marker) + `
+loaded=${HW_TEST_SYS_MODULE:-/sys/module}
 mkdir -p "$(dirname "$marker")"
 swap() {
   local file=$1 name
   name=$(modinfo -F name "$file" 2>/dev/null)
   [ -n "$name" ] || name=$(basename "$file" .ko)
   name=${name//-/_}
-  if [ -d "/sys/module/$name" ]; then
+  local was=no
+  if [ -d "$loaded/$name" ]; then
+    was=yes
     if ! rmmod "$name"; then
       echo "$name is in use and can't be taken out while it runs. Nothing was changed for it. A driver like that needs a whole test kernel." >&2
       return 1
@@ -284,11 +287,14 @@ swap() {
     modprobe "$needs" 2>/dev/null || true
   done
   if ! insmod "$file"; then
-    echo "The built $name didn't load: the kernel's log says why (journalctl -k -b | tail). Putting the kernel's own back." >&2
-    modprobe "$name" || echo "The kernel's own $name didn't come back either. A restart brings it back." >&2
+    echo "The built $name didn't load: the kernel's log says why (journalctl -k -b | tail). The kernel's own is put back where it was loaded." >&2
+    if [ $was = yes ]; then
+      modprobe "$name" || echo "The kernel's own $name didn't come back either. A restart brings it back." >&2
+    fi
     return 1
   fi
-  echo "$name $file" >> "$marker"
+  # With whether the kernel's own was loaded before, so that restore leaves things as they were
+  echo "$name $was $file" >> "$marker"
   echo "Loaded the built $name."
 }
 status=0
@@ -307,15 +313,21 @@ func (s System) RestoreScript() string {
 # Written by hw-test kernel restore. Takes the test modules out and loads the kernel's own.
 set -u
 marker=` + quote(s.Marker) + `
+loaded=${HW_TEST_SYS_MODULE:-/sys/module}
 [ -s "$marker" ] || { echo "No test module is loaded."; exit 0; }
 status=0
 for name in $(tac "$marker" | cut -d' ' -f1 | awk '!seen[$0]++'); do
-  if [ -d "/sys/module/$name" ] && ! rmmod "$name"; then
+  if [ -d "$loaded/$name" ] && ! rmmod "$name"; then
     echo "$name is in use and stays until the next restart." >&2
     status=1
     continue
   fi
-  modprobe "$name" && echo "The kernel's own $name is back." || { echo "The kernel's own $name didn't load. A restart brings it back." >&2; status=1; }
+  # Loaded again only where the kernel's own was loaded before the first test module took its place
+  if [ "$(grep -m1 "^$name " "$marker" | cut -d' ' -f2)" = yes ]; then
+    modprobe "$name" && echo "The kernel's own $name is back." || { echo "The kernel's own $name didn't load. A restart brings it back." >&2; status=1; }
+  else
+    echo "The test $name is out. The kernel's own wasn't loaded before, so it stays out."
+  fi
 done
 [ $status -ne 0 ] || rm -f "$marker"
 exit $status

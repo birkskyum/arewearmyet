@@ -471,3 +471,39 @@ Card #95
 		t.Error("a USB adapter or a Bluetooth headset counted as the computer's own headphone output")
 	}
 }
+
+func TestAWindowThatNeverComesUpIsNoWindow(t *testing.T) {
+	bin := t.TempDir()
+	t.Setenv("PATH", bin+":"+os.Getenv("PATH"))
+	t.Setenv("HW_TEST_TERMINAL", "")
+	WindowWait = 400 * time.Millisecond
+	defer func() { WindowWait = 10 * time.Second }()
+	ran := filepath.Join(bin, "ran")
+	launcher := func(body string) {
+		if err := os.WriteFile(filepath.Join(bin, "omarchy-launch-tui"), []byte("#!/bin/sh\nshift\n"+body+"\n"), 0o755); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	// Over ssh, or before anyone has logged in, the launcher starts and no window follows
+	launcher("exit 0")
+	if err := Terminal("sh", "-c", ": > "+ran); err != ErrNoTerminal {
+		t.Errorf("a launcher that opens nothing: %v", err)
+	}
+	if _, err := os.Stat(ran); err == nil {
+		t.Error("the program ran without a window")
+	}
+
+	// With a desktop the program runs in the window, and that is what counts as open
+	launcher(`exec "$@"`)
+	if err := Terminal("sh", "-c", ": > "+ran); err != nil {
+		t.Errorf("a launcher that opens the window: %v", err)
+	}
+	for waited := 0; waited < 40; waited++ {
+		if _, err := os.Stat(ran); err == nil {
+			return
+		}
+		time.Sleep(25 * time.Millisecond)
+	}
+	t.Error("the program didn't run in the window")
+}

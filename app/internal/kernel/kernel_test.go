@@ -68,14 +68,38 @@ func TestABuiltModuleIsLoadedInPlaceOfTheKernelsOwnAndNoted(t *testing.T) {
 	os.Remove(system.Marker)
 	os.WriteFile(filepath.Join(dir, "fail", "insmod-"+filepath.Base(module)), nil, 0o644)
 	out, err := script(t, system.LoadScript([]string{module}))
-	if err == nil || !strings.Contains(out, "Putting the kernel's own back") {
+	if err == nil || !strings.Contains(out, "didn't load") {
 		t.Errorf("a module that won't load: %v\n%s", err, out)
 	}
-	if got := calls(t, log); !strings.HasSuffix(got, "modprobe phy_qcom_qmp_usb") {
-		t.Errorf("the kernel's own wasn't put back:\n%s", got)
+	// The kernel's own wasn't loaded before, so there is nothing to put back
+	if got := calls(t, log); strings.Contains(got, "modprobe phy_qcom_qmp_usb") {
+		t.Errorf("the kernel's own was loaded though it wasn't before:\n%s", got)
 	}
 	if loaded := system.Loaded(); len(loaded) != 0 {
 		t.Errorf("a module that didn't load is noted: %v", loaded)
+	}
+
+	// Where the kernel's own was loaded, it is taken out first and put back when the new one fails
+	sys := filepath.Join(dir, "sys")
+	os.MkdirAll(filepath.Join(sys, "phy_qcom_qmp_usb"), 0o755)
+	t.Setenv("HW_TEST_SYS_MODULE", sys)
+	script(t, system.LoadScript([]string{module}))
+	if got := calls(t, log); !strings.Contains(got, "rmmod phy_qcom_qmp_usb") || !strings.HasSuffix(got, "modprobe phy_qcom_qmp_usb") {
+		t.Errorf("the kernel's own wasn't taken out and put back:\n%s", got)
+	}
+	// And once the new one loads, the note says the kernel's own was there before
+	os.Remove(filepath.Join(dir, "fail", "insmod-"+filepath.Base(module)))
+	script(t, system.LoadScript([]string{module}))
+	if note, _ := os.ReadFile(system.Marker); !strings.HasPrefix(string(note), "phy_qcom_qmp_usb yes ") {
+		t.Errorf("the note: %q", note)
+	}
+	// A module that is in use stays, and nothing is loaded over it
+	calls(t, log)
+	os.Remove(system.Marker)
+	os.WriteFile(filepath.Join(dir, "fail", "rmmod-phy_qcom_qmp_usb"), nil, 0o644)
+	out, err = script(t, system.LoadScript([]string{module}))
+	if err == nil || !strings.Contains(out, "is in use") || strings.Contains(calls(t, log), "insmod") || len(system.Loaded()) != 0 {
+		t.Errorf("a module in use: %v\n%s", err, out)
 	}
 }
 
@@ -83,15 +107,16 @@ func TestTheKernelsOwnModulesComeBackNewestFirst(t *testing.T) {
 	dir, log := stubs(t)
 	system := System{Marker: filepath.Join(dir, "run", "test-modules")}
 	os.MkdirAll(filepath.Dir(system.Marker), 0o755)
-	os.WriteFile(system.Marker, []byte("phy_a /x/phy-a.ko\nsnd_b /x/snd-b.ko\nphy_a /x/phy-a.ko\n"), 0o644)
+	os.WriteFile(system.Marker, []byte("phy_a yes /x/phy-a.ko\nsnd_b no /x/snd-b.ko\nphy_a no /x/phy-a.ko\n"), 0o644)
 	if loaded := system.Loaded(); strings.Join(loaded, ",") != "phy_a,snd_b" {
 		t.Errorf("loaded: %v", loaded)
 	}
 	if out, err := script(t, system.RestoreScript()); err != nil {
 		t.Fatalf("restore: %v\n%s", err, out)
 	}
-	if got := calls(t, log); got != "modprobe phy_a\nmodprobe snd_b" {
-		t.Errorf("restored in this order:\n%s", got)
+	// phy_a was the kernel's own before its first test load and comes back. snd_b wasn't loaded and stays out
+	if got := calls(t, log); got != "modprobe phy_a" {
+		t.Errorf("restored:\n%s", got)
 	}
 	if _, err := os.Stat(system.Marker); err == nil {
 		t.Error("the note of loaded modules is still there")

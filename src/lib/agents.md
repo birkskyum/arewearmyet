@@ -221,7 +221,7 @@ hw-test kernel status                      # which test modules are loaded
 hw-test kernel restore                     # the kernel's own again (a restart does the same)
 ```
 
-`start` takes a few minutes and about 3 GB. `load` needs the owner's password: without a terminal it opens a window on their desktop where they type it, and waits. Tell them a window is coming. It writes nothing to disk, so a restart always brings the kernel back as Omarchy ships it. A module that is in use and can't be taken out is left as it is, and a built module that won't load gets the kernel's own put back. Measure with `hw-test` while your module is loaded, and say in the pull request that the result was measured that way.
+`start` takes a few minutes and about 3 GB. `load` needs the owner's password: without a terminal it opens a window on their desktop where they type it, and waits. Tell them a window is coming. It writes nothing to disk, so a restart always brings the kernel back as Omarchy ships it. A module that is in use and can't be taken out is left as it is, and a built module that won't load gets the kernel's own put back. The kernel marks itself as tainted in its log once a module built this way is loaded, until the next restart: say so in any note or log you send from that session. Measure with `hw-test` while your module is loaded, and say in the pull request that the result was measured that way.
 
 When it works, `hw-test kernel patch "phy: qcom-qmp-usb: WHAT" --body-file why.md` writes the change as one patch for the kernel's recipe, and says where it goes.
 

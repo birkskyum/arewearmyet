@@ -389,9 +389,11 @@ func Terminal(program string, args ...string) error { return TerminalIn("", prog
 // TerminalIn is Terminal with the folder the program starts in.
 func TerminalIn(dir, program string, args ...string) error {
 	var line []string
+	// A terminal the owner named themselves is taken at its word
+	named := false
 	switch custom := strings.Fields(os.Getenv("HW_TEST_TERMINAL")); {
 	case len(custom) > 0:
-		line = custom
+		line, named = custom, true
 	case Have("omarchy-launch-tui"):
 		line = []string{"omarchy-launch-tui", "--app-id=org.omarchy.hw-test"}
 	case Have("xdg-terminal-exec"):
@@ -399,7 +401,15 @@ func TerminalIn(dir, program string, args ...string) error {
 	default:
 		return ErrNoTerminal
 	}
-	command := exec.Command(line[0], append(append(line[1:], program), args...)...)
+	// The launcher starting says nothing about a window. Over ssh, or before anyone has logged
+	// in, there is no desktop to open one on, and the launcher still starts. So the program is
+	// wrapped to leave a mark the moment it runs, and a window that never does is no window.
+	mark := filepath.Join(os.TempDir(), fmt.Sprintf("hw-test-window-%d-%d", os.Getpid(), time.Now().UnixNano()))
+	wrapped := append([]string{"sh", "-c", `: > "$0"; exec "$@"`, mark, program}, args...)
+	if named {
+		wrapped = append([]string{program}, args...)
+	}
+	command := exec.Command(line[0], append(line[1:], wrapped...)...)
 	command.Dir = dir
 	command.Env = OwnersEnv(os.Environ())
 	command.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
@@ -407,8 +417,21 @@ func TerminalIn(dir, program string, args ...string) error {
 		return err
 	}
 	go command.Wait()
-	return nil
+	if named {
+		return nil
+	}
+	for waited := time.Duration(0); waited < WindowWait; waited += 50 * time.Millisecond {
+		if _, err := os.Stat(mark); err == nil {
+			os.Remove(mark)
+			return nil
+		}
+		time.Sleep(50 * time.Millisecond)
+	}
+	return ErrNoTerminal
 }
+
+// WindowWait is how long a window gets to come up before it counts as not opened.
+var WindowWait = 10 * time.Second
 
 // OwnersEnv is an environment for a window the owner looks at, made from one that may be an
 // agent's. Agents run their commands with colours off and paging off, which suits their

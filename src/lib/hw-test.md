@@ -193,7 +193,7 @@ The usual boot entry stays the default and is never touched.
 | `hw-test kernel restore` | Takes the test modules out and loads the kernel's own again. A restart does the same |
 | `hw-test kernel patch "SUBSYSTEM: WHAT" --body-file WHY` | Writes the change as one patch for the kernel's recipe |
 
-Nothing here is written where the computer starts from, so a restart always brings back the kernel as Omarchy ships it. A driver that Omarchy's kernel has built in, or one that is in use from the first moment of startup, can't be tried this way and needs a whole test kernel, which the [guide for agents](https://arewearmyet.com/agents.md) describes.
+Nothing here is written where the computer starts from, so a restart always brings back the kernel as Omarchy ships it. The kernel notes in its log that a module of its own making was loaded, which lasts until that restart. With Secure Boot's lockdown on, the kernel takes no unsigned module, and `load` then leaves the kernel's own in place. A driver that Omarchy's kernel has built in, or one that is in use from the first moment of startup, can't be tried this way and needs a whole test kernel, which the [guide for agents](https://arewearmyet.com/agents.md) describes.
 
 ### Coming back after a restart
 
