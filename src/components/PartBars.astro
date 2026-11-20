@@ -29,9 +29,14 @@ const rows = PARTS.map((part, i) => {
     .filter((model) => model.parts[i].state !== 'absent')
     .map((model) => ({ name: model.name, kind: kindOf(model.parts[i].key), tip: model.parts[i].title }))
     .sort((a, b) => KINDS.indexOf(a.kind) - KINDS.indexOf(b.kind) || a.name.localeCompare(b.name));
-  const seen = cells.filter((cell) => cell.kind.key.startsWith('omarchy')).length;
-  const works = cells.filter((cell) => cell.kind.key === 'omarchy-works').length;
-  return { part, cells, seen, works };
+  const count = (key: string) => cells.filter((cell) => cell.kind.key === key).length;
+  const works = count('omarchy-works');
+  const partly = count('omarchy-partial');
+  const broken = count('omarchy-broken');
+  // The counter is the bar in numbers: the models where the part works, of those that have it
+  const tested = works + partly + broken;
+  const tip = tested ? `Tested on Omarchy on ${tested} so far. It works on ${works}, partly on ${partly} and is broken on ${broken}.` : 'Nobody has tested it on Omarchy yet.';
+  return { part, cells, works, tip };
 });
 ---
 
@@ -53,7 +58,7 @@ const rows = PARTS.map((part, i) => {
             ))}
           </div>
         </div>
-        <span class="w-28 shrink-0 whitespace-nowrap tabular-nums text-zinc-300" data-tip-title={`${row.part.title}, seen on Omarchy on ${row.seen} of ${row.cells.length}`} data-tip={`It works on ${row.works} of them. ${row.part.question}`}>{row.works}<span class="text-zinc-500"> works, {row.seen} seen</span></span>
+        <span class="w-28 shrink-0 whitespace-nowrap tabular-nums text-zinc-300" data-tip-title={`${row.part.title} works on ${row.works} of the ${row.cells.length} models that have it`} data-tip={`${row.tip} ${row.part.question}`}>{row.works} <span class="text-zinc-500">/ {row.cells.length}</span></span>
       </dd>
     </div>
   ))}
