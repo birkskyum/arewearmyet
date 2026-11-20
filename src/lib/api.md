@@ -102,7 +102,7 @@ What every check means. Read it before reporting, since a result names a check b
 
 ### `GET /api/models`
 
-Every computer model with a page: the Snapdragon PCs that start through UEFI, the Chromebooks and Googlebooks, and the NVIDIA machines. An NVIDIA machine has no `chips` or `compatibles`. A Chromebook or Googlebook has the same fields as a Snapdragon PC. Omarchy's install image doesn't start on one, so its `bootable` is `works`, `workaround`, `problems`, `untested` (a Linux image starts, nobody tried Omarchy) or `notyet`.
+Every computer model with a page. Those are the Snapdragon PCs that start through UEFI, the Chromebooks and Googlebooks, and the NVIDIA machines. An NVIDIA machine has no `chips` or `compatibles`. A Chromebook or Googlebook has the same fields as a Snapdragon PC. Omarchy's install image doesn't start on one, so its `bootable` is `works`, `workaround`, `problems`, `untested` (a Linux image starts, nobody tried Omarchy) or `notyet`.
 
 ```json
 {
@@ -137,7 +137,7 @@ One model, with everything its page shows. `404` names the routes that find the 
 | `boots` | Whether Omarchy starts on it. `bootable` and `outcome` as in the list, `pieces` with the channel that has the device tree, the hardware IDs and the firmware, and `omarchy` with the pull requests they came in |
 | `upstream` | Where the same three pieces stand in Linux, systemd and linux-firmware |
 | `variants` | One entry per chip or board variant, with its `compatible`, its device tree file and the firmware files it needs |
-| `checks` | Every check with what the team wrote up, as `finding`. A finding has a `state`, a `note`, the `source` it comes from, `basis` (whose result it is: `omarchy`, or `other-distro` and `tree-author`, which the pages show as leads only and never as the model's status) and often `where`, `version`, `checked` and a `quote`. A finding with `basis: maker-spec` comes from the maker's specification. With `state: absent` it says the model doesn't have the part, and with `state: untested` that the maker lists the part and nobody has tested it on Omarchy |
+| `checks` | Every check with what the team wrote up, as `finding`. A finding has a `state`, a `note`, the `source` it comes from, `basis` (whose result it is, either `omarchy`, or `other-distro` and `tree-author`, which the pages show as leads only and never as the model's status) and often `where`, `version`, `checked` and a `quote`. A finding with `basis: maker-spec` comes from the maker's specification. With `state: absent` it says the model doesn't have the part, and with `state: untested` that the maker lists the part and nobody has tested it on Omarchy |
 | `wanted` | The checks with no finding for Omarchy on this model yet, for the parts the model has. Start there |
 | `owners` | What owners' computers reported, see below |
 | `fixes` | Fixes linked to the model, as `GET /api/fixes` returns them |
