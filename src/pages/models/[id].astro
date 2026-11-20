@@ -103,7 +103,7 @@ import { SHELL } from '../../lib/shell';
             </>
           ))}
         </dl>
-        <p class="mt-4 text-xs text-zinc-500">{cover.known} of {cover.total} checks are written up for this model on Omarchy, {cover.works} of them working.{cover.elsewhere > 0 && ` ${cover.elsewhere} more are reported from another distro or by the device tree's author, which shows they can work, not that they do on Omarchy.`}</p>
+        <p class="mt-4 text-xs text-zinc-500">{cover.known} of {cover.total} checks are written up for this model on Omarchy, {cover.works} of them working.</p>
       </div>
     </section>
 
@@ -132,7 +132,6 @@ import { SHELL } from '../../lib/shell';
       </div>
       <div class="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm text-zinc-400">
         <p><span class="text-zinc-200">Notes</span> are what people reported on Omarchy, each checked against its source. They can be old.</p>
-        <p><span class="text-zinc-200">Elsewhere</span> is what was reported on another distro or by the device tree's author. It shows a part can work, not that it does on Omarchy.</p>
         <p><span class="text-zinc-200">Tested</span> is what <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs">hw-test</code> found on people's machines, with the date.</p>
       </div>
       <div class="mt-4">
@@ -151,7 +150,6 @@ import { SHELL } from '../../lib/shell';
       <pre class={CODE}><code>omarchy-mise-install github:birkskyum/arewearmyet hw-test
 hw-test</code></pre>
       <p class="mt-3 text-sm text-zinc-300">Something doesn't work? <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs">hw-test fix</code> hands it to your AI agent, with what was measured, where to look and where a fix goes. Any agent can also start from <a class={LINK} href="/docs/agents">arewearmyet.com/agents</a>.</p>
-      <p class="mt-3 text-sm text-zinc-400">On another distro, the probe does the quick check, read-only and in a few seconds: <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs">curl -fsSL https://arewearmyet.com/probe.sh | bash</code></p>
     </section>
 
     <section class="mt-10 grid gap-6 md:grid-cols-2 [&>div]:min-w-0 [&_code]:break-all">

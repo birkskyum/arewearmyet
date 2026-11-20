@@ -13,7 +13,7 @@ const listed = (f: Finding) => f.basis === 'maker-spec' && f.state === 'untested
 const FROM: Record<string, string> = { 'other-distro': 'on another distro', 'tree-author': "by the device tree's author" };
 type Row = { id: string; group: string; title: string; works: string; probe?: string; person?: string; debug?: string; optional?: boolean; finding: Finding | null; from: 'model' | 'family' | null; familySource: string | null; expected?: boolean };
 type Change = { machines: number; from: string | null; to: string | null; since: string };
-type Owner = { machines: number; states: Record<string, number>; how: Record<string, number>; regressed?: Change; fixed?: Change; latest: { state: State; how: string; note: string | null; evidence: string | null; kernel: string | null; created: string; run: string }[] };
+type Owner = { machines: number; states: Record<string, number>; how: Record<string, number>; regressed?: Change; fixed?: Change; latest: { state: State; how: string; note: string | null; evidence: string | null; kernel: string | null; os?: string | null; created: string; run: string }[] };
 type Note = { id: string; check: string | null; kind: string; title: string; status?: string; created: string; replies: number; logs: { name: string }[]; kernel: string | null };
 type Live = { owners: { machines: number; checks: Record<string, Owner> }; fixes: { id: string; check: string | null; url: string; note: string | null; created: string; changes?: { check: string; from: { state: State }; to: { state: State } }[] }[]; notes?: Note[] };
 const KIND: Record<string, string> = { problem: 'Problem', workaround: 'Workaround', upstream: 'Work elsewhere', note: 'Note' };
@@ -61,7 +61,22 @@ export default function CheckTable(props: { model: string; groups: { id: string;
     setLive(data);
     setState(data ? 'done' : 'failed');
   });
-  const owner = (id: string) => live()?.owners.checks[id];
+  // A result counts here when it was measured on Omarchy. The probe also runs on other distros,
+  // and what it finds there says little about this model on Omarchy
+  const onOmarchy = (r: { os?: string | null; kernel: string | null }) => (r.os ? /^omarchy/i.test(r.os) : /-omarchy/.test(r.kernel ?? ''));
+  const owner = (id: string): Owner | undefined => {
+    const all = live()?.owners.checks[id];
+    if (!all) return undefined;
+    const latest = all.latest.filter(onOmarchy);
+    if (latest.length === all.latest.length) return all;
+    if (latest.length === 0) return undefined;
+    const states: Record<string, number> = {};
+    for (const result of latest) states[result.state] = (states[result.state] ?? 0) + 1;
+    return { ...all, latest, states, machines: latest.length };
+  };
+  // What is written up about the model on Omarchy. A report from another distro or from the device
+  // tree's author is a lead for whoever fixes the part, and shows only in the check's details
+  const status = (row: Row) => (row.finding && !elsewhere(row.finding) ? row.finding : null);
   // A fix belongs to a check when it names it, or when it measured a change on it
   const fixesFor = (id: string) => live()?.fixes.filter((fix) => fix.check === id || fix.changes?.some((change) => change.check === id)) ?? [];
   const measured = (fix: Live['fixes'][number], id: string) => {
@@ -112,7 +127,7 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                       <span class="font-medium text-zinc-100">{row.title}</span>
                       <span class="col-span-2 row-start-2 text-sm text-zinc-400 sm:col-span-1 sm:row-start-auto">
                         {/* The two sources, each named: what someone wrote down, and what hw-test found */}
-                        <Show when={row.finding}>
+                        <Show when={status(row)}>
                           {(f) => (
                             <span class="block">
                               <span class="text-zinc-500">
@@ -131,12 +146,12 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                             </span>
                           )}
                         </Show>
-                        <Show when={!row.finding && !owner(row.id)}>
+                        <Show when={!status(row) && !owner(row.id)}>
                           <span class="text-zinc-500">Not tested yet, and no notes.</span>
                         </Show>
                       </span>
                       <span class="col-start-2 row-start-1 flex flex-wrap justify-end gap-1.5 sm:col-start-3">
-                        <Show when={row.finding} fallback={<Show when={!owner(row.id)}><Pill state="untested" /></Show>}>
+                        <Show when={status(row)} fallback={<Show when={!owner(row.id)}><Pill state="untested" /></Show>}>
                           {(f) => (
                             <Show
                               when={!elsewhere(f())}
@@ -180,6 +195,9 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                       <Show when={row.finding}>
                         {(f) => (
                           <>
+                            <Show when={elsewhere(f())}>
+                              <p><span class="text-zinc-300">A lead, not a result on Omarchy:</span> {f().note ?? LABEL[f().state] + '.'}</p>
+                            </Show>
                             <Show when={f().quote}>
                               <blockquote class="border-l-2 border-zinc-700 pl-3 text-zinc-400">
                                 <span class="text-xs text-zinc-500">The source says{f().under ? `, under “${f().under}”` : ''}: </span>“{f().quote}”
