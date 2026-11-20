@@ -492,3 +492,47 @@ test('keeps what a computer ran that Omarchy did not install, by name, and shows
   assert.equal(plain.status, 201);
   assert.equal((await call('GET', `/api/runs/${plain.body.run}`)).body.setup, undefined);
 });
+
+test('keeps which change made on a computer a part works because of, under that computer\'s result, until it is taken back', async () => {
+  const token = machine('machine-needs-'.padEnd(40, 'w'));
+  const need = { check: 'suspend', text: 'The kernel option gpiolib_acpi.ignore_wake, which keeps the lid sensor from waking it. MAC aa:bb:cc:dd:ee:ff', how: 'agent', proved: true, kernel: '7.3.0-73-omarchy' };
+  // A computer that has sent nothing can't say it, and neither can anyone without its token
+  assert.equal((await call('POST', '/api/needs', need, token)).status, 404);
+  assert.equal((await call('POST', '/api/needs', need)).status, 400);
+
+  const sent = await call('POST', '/api/runs', run([{ check: 'suspend', state: 'works', how: 'measured' }, { check: 'battery', state: 'works', how: 'measured' }], { model: 'hp-omnibook-x-14-fe' }), token);
+  assert.equal(sent.status, 201);
+  assert.equal((await call('POST', '/api/needs', { ...need, check: 'no-such-check' }, token)).status, 400);
+  assert.equal((await call('POST', '/api/needs', { ...need, how: 'measured' }, token)).status, 400);
+  const said = await call('POST', '/api/needs', need, token);
+  assert.equal(said.status, 201);
+  assert.equal(said.body.text, 'The kernel option gpiolib_acpi.ignore_wake, which keeps the lid sensor from waking it. MAC xx:xx:xx:xx:xx:xx');
+
+  const latest = async (check: string) => {
+    const page = await call('GET', '/api/models/hp-omnibook-x-14-fe');
+    return { check: page.body.owners.checks[check], result: page.body.owners.checks[check].latest.find((r: { run: string }) => r.run === sent.body.run) };
+  };
+  let suspend = await latest('suspend');
+  assert.equal(suspend.result.needs.text, said.body.text);
+  assert.equal(suspend.result.needs.how, 'agent');
+  assert.equal(suspend.result.needs.proved, true);
+  assert.equal(suspend.check.changed, 1);
+  // Only the part it was said of
+  assert.equal((await latest('battery')).result.needs, undefined);
+  assert.equal((await latest('battery')).check.changed, undefined);
+
+  // Said again, it replaces what was said, and an empty text takes it back
+  assert.equal((await call('POST', '/api/needs', { check: 'suspend', text: 'The owner added a kernel option.', how: 'owner' }, token)).status, 201);
+  suspend = await latest('suspend');
+  assert.deepEqual([suspend.result.needs.text, suspend.result.needs.how, suspend.result.needs.proved], ['The owner added a kernel option.', 'owner', undefined]);
+  const back = await call('POST', '/api/needs', { check: 'suspend', text: '' }, token);
+  assert.deepEqual([back.status, back.body.removed], [200, true]);
+  assert.equal((await latest('suspend')).result.needs, undefined);
+
+  // A part that stopped working no longer works because of anything
+  assert.equal((await call('POST', '/api/needs', need, token)).status, 201);
+  await tick();
+  assert.equal((await call('POST', '/api/runs', run([{ check: 'suspend', state: 'broken', how: 'owner', note: 'It no longer wakes.' }], { model: 'hp-omnibook-x-14-fe' }), token)).status, 201);
+  const page = await call('GET', '/api/models/hp-omnibook-x-14-fe');
+  assert.equal(page.body.owners.checks.suspend.latest.some((r: { needs?: unknown }) => r.needs), false);
+});

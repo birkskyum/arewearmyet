@@ -20,6 +20,7 @@ export const ROUTES = [
   ['POST', '/api/runs', 'Send a run of results from one computer'],
   ['POST', '/api/runs/<id>/results', 'Add results to a run, from the same computer'],
   ['POST', '/api/fixes', 'Link a fix to a model, with what it changed as measured before and after'],
+  ['POST', '/api/needs', 'Say that a part works on a computer because of a change made on it'],
   ['POST', '/api/notes', 'Write a note, with logs'],
   ['POST', '/api/notes/<id>/replies', 'Answer a note'],
   ['POST', '/api/notes/<id>/status', 'Mark your own problem solved, or open again'],

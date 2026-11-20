@@ -30,6 +30,7 @@ It opens on a menu of what it can test on your computer, with where each part st
 | `hw-test STEP...` | One part alone, or a few, like `hw-test camera` or `hw-test wifi bluetooth`. Only those parts are reported |
 | `hw-test status` | The latest result of every check on this computer. Nothing is run |
 | `hw-test facts` | The devices the test found to work with. Nothing is sent |
+| `hw-test changes` | What was changed on this computer for its hardware, as far as files show it. That is your own settings files for kernel modules, device rules and sound, firmware and sound profile files that no package holds, and changed files of hardware packages. It is for an agent to judge. Nothing is sent. `--json` prints it as data |
 
 ### Steps
 
@@ -76,11 +77,9 @@ A result that works but looks off (one speaker much quieter than the other) is m
 
 A test sends its results to your model's page when it ends. With the results it sends the computer's model, BIOS version and hardware IDs, the kernel version and the versions of about fifteen system packages. It sends no serial number, address, name or file, and it needs no account. The computer is told apart by a random token kept in `~/.local/state/arewearmyet/token`, of which the site stores only a hash.
 
-Nearly every computer that gets tested has something on it that Omarchy didn't install, which is often how its owner got a part working. The test finds that by itself and asks you nothing about it. It sends, by name, a kernel module, a kernel option, a kernel package or a package of firmware, kernel modules or sound profiles that isn't Omarchy's. A kernel option whose value names a disk or an address is sent without the value.
+A few things about the computer itself go along, by name, because they change what the hardware does and are never ordinary use. Those are another kernel than Omarchy's, a kernel module from no repository, a kernel option beyond the ones Omarchy sets, and a test device tree. A kernel option whose value names a disk or an address is sent without the value. The summary says them in one line before you send.
 
-It also reads the settings files you wrote yourself, which are the ones in no package that Omarchy's own scripts don't name. A file's name and most of what is in it can say what you own, so neither is sent. What is sent is what the file does, in the kernel's own words. That is the option it gives a kernel module, the module it loads or keeps from loading, the kind of device a rule is for and what the rule sets (as in "a device rule for usb that sets power/control=on"), and the names of the sound settings it sets. The devices a rule picks out and the program it runs stay on the computer. A firmware, sound profile or camera file that no package holds is sent by its path, and a hardware package whose files were changed after the install by its name.
-
-All of it shows in the summary before you send, and under your results on the model's page, where it tells the next owner what a part needed to work. The test can't see a device tree that was changed by hand.
+Your settings files are not sent, neither their names nor what is in them. Whether a part works because of something you changed takes reading those files, and that is your agent's job on your computer, when you have one. `hw-test changes` lists for it what was changed for the hardware, as far as files show it. The agent then records, for a part that works because of a change, one sentence saying which. That sentence shows under the part's result on the model's page as "works with a change made on this computer". With no agent, nothing more happens.
 
 | Option | What it does |
 | --- | --- |
@@ -151,6 +150,7 @@ These commands let an agent run the test without the owner passing results back 
 | `hw-test ask STEP...` | Opens a step that takes the owner in a window on their desktop, waits up to half an hour, and prints the result as JSON |
 | `hw-test ask update` | Opens Omarchy's update in a window for the owner, who confirms it there, and prints how it ended as JSON, with whether it finished, which packages moved, whether a restart is due, and the last lines of its log. It refuses, with the reasons, where an update would do harm. That is while a test boot entry stands, when the running kernel is not Omarchy's own, or when a kernel, device tree or firmware package was built on the computer |
 | `hw-test report --check ID --state works\|partial\|broken\|absent --note TEXT` | Sends one result that no test measured. `absent` is for a part the computer turns out not to have. `--how owner` (the default) is what the owner saw, `--how agent` a reading of logs. `--evidence` holds the line of output that shows it |
+| `hw-test report --check ID --needs TEXT` | Says that the part works on this computer because of a change made on it, in one sentence, like "The kernel option gpiolib_acpi.ignore_wake, which keeps the lid sensor from waking it." It shows under that computer's result and stays until taken back with `--needs none`. `--proved` says that switching the change off and measuring the part again showed it. `--how` is as above |
 
 `hw-test status --json` gives an object with one entry per check.
 

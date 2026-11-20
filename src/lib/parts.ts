@@ -23,7 +23,7 @@ export const PARTS: Part[] = [
 
 type Level = 'omarchy' | 'elsewhere';
 type Seen = { check: string; title: string; state: Exclude<CheckState, 'untested'>; level: Level; how: string };
-type Latest = { state: string; kernel: string | null; os?: string | null };
+type Latest = { state: string; kernel: string | null; os?: string | null; needs?: { text: string } };
 type OwnerCheck = { machines: number; states: Record<string, number>; latest?: Latest[] };
 // A result is from Omarchy when its run says so, or, for results kept before runs said, when the kernel is Omarchy's
 const onOmarchy = (result: Latest) => (result.os ? /^omarchy/i.test(result.os) : /-omarchy/.test(result.kernel ?? ''));
@@ -46,11 +46,14 @@ function seen(model: Machine): Map<string, Seen> {
     const latest = (measured[row.id]?.latest ?? []).filter((r) => r.state !== 'untested');
     const here = latest.filter(onOmarchy);
     if (here.length) {
-      const states = here.map((r) => r.state);
+      // A part that works because of a change made on that computer doesn't work on Omarchy as it
+      // ships, so it counts as partly there
+      const changed = here.some((r) => r.needs && r.state === 'works');
+      const states = here.map((r) => (r.needs && r.state === 'works' ? 'partial' : r.state));
       const state = states.every((s) => s === 'absent') ? 'absent' : overall(states.filter((s) => s !== 'absent'));
       // The kernel says how current the result is, as a fault seen on an older kernel may be fixed since
       const kernel = here[0].kernel ? `, on ${here[0].kernel.replace(/-omarchy$/, '')}` : '';
-      out.set(row.id, { check: row.id, title, state, level: 'omarchy', how: (here.length === 1 ? `an owner's test` : `${here.length} owners' tests`) + kernel });
+      out.set(row.id, { check: row.id, title, state, level: 'omarchy', how: (here.length === 1 ? `an owner's test` : `${here.length} owners' tests`) + kernel + (changed ? ', with a change made on the computer' : '') });
       continue;
     }
     const finding = row.finding;

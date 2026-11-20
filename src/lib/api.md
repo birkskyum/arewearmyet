@@ -171,7 +171,7 @@ One model, with everything its page shows. `404` names the routes that find the 
 }
 ```
 
-`latest` holds up to five results, newest first. A result from a computer that ran something Omarchy didn't install has `setup`, which names it, in the shape `POST /api/runs` takes. `fixed` and `regressed` appear when a computer's result turned from failing to working or the other way, with the kernels on both sides. One rule differs from "newest wins". A measurement that finds a part working doesn't take back a failure the owner reported. The owner's result stands until the owner tests that part again.
+`latest` holds up to five results, newest first. A result from a computer that ran another kernel, a kernel module from no repository, kernel options of its own or a test device tree has `setup`, which names it, in the shape `POST /api/runs` takes. A result of a part that works because of a change made on that computer has `needs`, as `{text, how, proved?, created}` (see `POST /api/needs`), and `changed` counts those computers for the check. `fixed` and `regressed` appear when a computer's result turned from failing to working or the other way, with the kernels on both sides. One rule differs from "newest wins". A measurement that finds a part working doesn't take back a failure the owner reported. The owner's result stands until the owner tests that part again.
 
 ### `GET /api/match`
 
@@ -243,7 +243,7 @@ One run as it is stored, for its owner to check what was sent.
 }
 ```
 
-A computer that ran something Omarchy didn't install also has `setup`, like `{ "modules": ["omnibook_fix"], "options": ["regulator_ignore_unused"] }`, in the shape `POST /api/runs` takes. The kernel options Omarchy sets by itself are left out of it.
+A computer that ran another kernel, a kernel module from no repository, kernel options of its own or a test device tree also has `setup`, like `{ "modules": ["omnibook_fix"], "options": ["regulator_ignore_unused"] }`, in the shape `POST /api/runs` takes. The kernel options Omarchy sets by itself are left out of it.
 
 ### `GET /api/fixes`
 
@@ -364,7 +364,7 @@ curl -X POST https://arewearmyet.com/api/runs \
 | `compatible` | The device tree's first compatible string |
 | `hardware` | `maker`, `product`, `family`, `sku`, `board`, `bios`, from the firmware. Never a serial number |
 | `kernel`, `os`, `agent` | What ran, and which agent sent it |
-| `setup` | What the computer runs that Omarchy didn't install, by name. `kernel` is another kernel package, `rebuilt` are packages with Omarchy's names built by someone else, `modules` are kernel modules, `options` are kernel options beyond Omarchy's own (an option whose value names a disk or an address is sent as `name=…`), `packages` are packages from no repository that hold firmware, kernel modules or sound profiles, `testTree` is `true` on a test device tree. Six more come from the settings files the owner wrote, read by hw-test without sending a file's name. `moduleOptions` are options given to a kernel module (`"snd_soc_x1e80100 i2s_mode=1"`), `blocked` are modules kept from loading, `loaded` are modules loaded at start, `rules` say what a device rule does to a kind of device (`"usb sets power/control=on"`, `"input runs"`, `"input env LIBINPUT_IGNORE_DEVICE"`, `"any permissions"`), and `sound` are the names of sound settings. `files` are firmware, sound profile and camera files that no package holds, by their path under `/usr/lib` or `/usr/share`, and `altered` are hardware packages with files changed after the install. `note`, the owner's words on what they changed, is still taken from hw-test 0.22.2, which asked for it. Up to 20 names a list, 24 options. Left out when there is nothing |
+| `setup` | The few things a computer runs that change what its hardware does and are never ordinary use, by name. `kernel` is another kernel package, `rebuilt` are packages with Omarchy's names built by someone else, `modules` are kernel modules from no repository, `options` are kernel options beyond Omarchy's own (an option whose value names a disk or an address is sent as `name=…`), and `testTree` is `true` on a test device tree. Up to 20 names a list, 24 options. Left out when there is nothing. hw-test 0.22.2 and 0.22.3 sent more (`packages`, `note`, and what the owner's settings files do, as `moduleOptions`, `blocked`, `loaded`, `rules`, `files`, `altered`, `sound`), which is still taken and shown |
 | `packages` | Versions of `linux-omarchy`, `linux-omarchy-dtbs`, `linux`, `linux-firmware`, `linux-firmware-qcom`, `mesa`, `systemd`, `omarchy`, `hyprland`, `pipewire`, `alsa-ucm-conf`, `bluez`, `libcamera`, `hw-test`, and on NVIDIA machines `linux-omarchy-nvidia-open`, `nvidia-utils`, `libva-nvidia-driver`. Other names are dropped |
 
 Answers `201`.
@@ -401,6 +401,20 @@ A link to where a fix is reviewed, for a model, with what it changed.
 | `before`, `after` | `{kernel, packages}` on each side. Kept only with `changes` |
 
 Answers `201` with `{"fix", "url", "page"}`. A computer that measures the same pull request again replaces what it said before. Without `changes` the fix is a plain link on the model's page, and no token is needed.
+
+### `POST /api/needs`
+
+That a part works on this computer because of a change made on it, like a kernel option, a kernel module or a settings file of the owner's. It is the owner's word or their agent's reading of the computer, in one sentence. It shows under that computer's result for the check, as long as the result is `works` or `partial`, and stays until it is taken back. Needs `X-Machine-Token`, from a computer that has sent a run.
+
+| Field | |
+| --- | --- |
+| `check` | Required. A check id |
+| `text` | The change, in a sentence of up to 300 characters, like `"The kernel option gpiolib_acpi.ignore_wake, which keeps the lid sensor from waking it."` Names and IDs are taken out as in a note. Empty takes back what this computer said for the check |
+| `how` | `agent` (the default, your reading of the files) or `owner` (they said so) |
+| `proved` | `true` when switching the change off and measuring the part again showed that it is needed |
+| `kernel` | The kernel it was seen on |
+
+Answers `201` with `{"check", "text", "how", "proved", "page"}`, `200` with `{"check", "removed", "page"}` when taken back, or `404` when the computer has sent no run yet. `hw-test report --check ID --needs TEXT` sends it.
 
 ### `POST /api/notes`
 

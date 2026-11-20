@@ -139,15 +139,18 @@ func TestSetupNamesWhatOmarchyDidNotInstall(t *testing.T) {
 		t.Fatal(err)
 	}
 	want := &report.Setup{
-		Options:  []string{"regulator_ignore_unused"},
-		Modules:  []string{"omnibook_fix", "cam_fix"},
-		Packages: []string{"cam-fix-dkms", "my-ucm"},
+		Options: []string{"regulator_ignore_unused"},
+		Modules: []string{"omnibook_fix", "cam_fix"},
 	}
 	if !reflect.DeepEqual(run.Setup, want) {
 		t.Fatalf("got %+v\nwant %+v", run.Setup, want)
 	}
+	// The packages that hold hardware files are for the owner's agent to read, and none is sent
+	if found := FindChanges(sys, run); !reflect.DeepEqual(found.Packages, []string{"cam-fix-dkms", "my-ucm"}) {
+		t.Errorf("packages %v", found.Packages)
+	}
 	sent := string(run.JSON())
-	for _, private := range []string{"slack", "/home/owner", "11111111", "linux-other"} {
+	for _, private := range []string{"slack", "/home/owner", "11111111", "linux-other", "cam-fix-dkms", "my-ucm"} {
 		if strings.Contains(sent, private) {
 			t.Errorf("the run sends %q, which is the owner's own business", private)
 		}

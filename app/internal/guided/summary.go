@@ -68,8 +68,15 @@ type summary struct {
 	once bool
 }
 
-// SetupHeading stands over what the computer runs that Omarchy didn't install.
-const SetupHeading = "Also on this computer, and not from Omarchy"
+// SetupLine says in one line what goes with the results about the computer itself, or nothing
+// on a computer that runs Omarchy's own kernel with Omarchy's own options.
+func SetupLine(setup *report.Setup) string {
+	lines := setup.Lines()
+	if len(lines) == 0 {
+		return ""
+	}
+	return "Also sent: " + strings.Join(lines, ", ") + "."
+}
 
 // failing lists the checks this round found partly working or broken, or working with something
 // worth a second look, which is what an agent can be asked to look into.
@@ -269,12 +276,8 @@ func (s *summary) view(width, height int) string {
 			text += close_.Render(wrap("The "+name+" step ran into a problem of the test's own and was passed over ("+fault+"). Nothing is reported for it.", width)) + "\n\n"
 		}
 		// What the results are read against, which goes with them
-		if lines := s.run.Setup.Lines(); len(lines) > 0 {
-			text += soft.Render(SetupHeading) + "\n"
-			for _, line := range lines {
-				text += wrap("  "+line, width) + "\n"
-			}
-			text += "\n"
+		if line := SetupLine(s.run.Setup); line != "" {
+			text += soft.Render(wrap(line, width)) + "\n\n"
 		}
 		if s.options.Send && s.phase == "review" {
 			// What goes and what doesn't, said where the decision is made

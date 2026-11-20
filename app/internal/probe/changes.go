@@ -12,12 +12,40 @@ import (
 )
 
 // An owner gets a part working with a settings file as often as with a kernel option, and nobody
-// remembers every file they wrote. So the test reads them itself. A file counts as the owner's
+// remembers every file they wrote. Whether a part works because of one takes reading the file, so
+// that is left to the owner's agent. Changes finds the files for it. A file counts as the owner's
 // when no package holds it and none of Omarchy's own scripts name it.
 //
-// A file's name and most of what is in it can say what the owner owns, so neither is sent. What
-// is sent is the part of the file that is the kernel's or the sound system's own vocabulary, like
-// a module's name, an option's name or the kind of device a rule is for.
+// None of this is sent. A file's name and what is in it can say what the owner owns, and an
+// ordinary setting for a keyboard or a speaker looks the same here as a fix for the laptop.
+
+// Changes is what the owner changed on the computer for its hardware, as far as its files show.
+type Changes struct {
+	// Sent is what a run names, the only part of this that leaves the computer
+	Sent *report.Setup `json:"sent,omitempty"`
+	// Settings are the settings files that are in no package and that Omarchy's scripts don't name
+	Settings []SettingsFile `json:"settings,omitempty"`
+	// Placed are firmware, sound profile and camera files that no package holds and Omarchy's
+	// firmware copy didn't place
+	Placed []string `json:"placed,omitempty"`
+	// Altered are files of hardware packages changed since the package was installed, or the
+	// package's name where pacman doesn't say which files
+	Altered []string `json:"altered,omitempty"`
+	// Packages come from no repository and hold kernel modules for the running kernel, firmware
+	// or sound profiles
+	Packages []string `json:"packages,omitempty"`
+}
+
+// SettingsFile is one settings file of the owner's, with what it does as far as the test reads it.
+type SettingsFile struct {
+	Path string   `json:"path"`
+	Does []string `json:"does,omitempty"`
+}
+
+// Empty says whether nothing was found.
+func (c Changes) Empty() bool {
+	return c.Sent.Empty() && len(c.Settings) == 0 && len(c.Placed) == 0 && len(c.Altered) == 0 && len(c.Packages) == 0
+}
 
 // ownFiles are settings files Omarchy wrote in earlier versions, which its scripts no longer
 // name, as data/kernel-options.yaml lists them.
@@ -49,7 +77,6 @@ const (
 )
 
 var (
-	plainPath    = regexp.MustCompile(`^[A-Za-z0-9_.+@/\-]{1,120}$`)
 	imageModules = regexp.MustCompile(`(?m)^\s*MODULES\+?=\(([^)]*)\)`)
 	ruleToken    = regexp.MustCompile(`([A-Z_]+)(?:\{([^}]*)\})?\s*(==|!=|\+=|-=|:=|=)\s*"((?:[^"\\]|\\.)*)"`)
 	deviceKind   = regexp.MustCompile(`^[a-z0-9_\-]{1,30}$`)
@@ -59,11 +86,14 @@ var (
 	// A sound setting that picks a device out says which devices the owner has
 	soundMatch = regexp.MustCompile(`(^|\.)(name|nick|description|class|bus|serial|id|path|address|vendor|product|profile)$|\.(name|id)\.`)
 	altered    = regexp.MustCompile(`(?m)^(\S+): \d+ [^,\n]*, ([1-9]\d*) `)
+	// "warning: alsa-ucm-conf: /usr/share/alsa/ucm2/x.conf (Modification time mismatch)"
+	alteredFile = regexp.MustCompile(`(?m)^\S+ (\S+): (/\S+) \(`)
 )
 
-// settings adds what the owner's own settings files, hand-placed hardware files and changed
-// package files say. It finds nothing where it can't ask which package a file belongs to.
-func settings(sys machine.System, found *report.Setup) {
+// FindChanges reads what the owner changed for the hardware. It finds only what a run names where
+// it can't ask which package a file belongs to.
+func FindChanges(sys machine.System, run *report.Run) Changes {
+	found := Changes{Sent: run.Setup, Packages: hardwarePackages(sys, foreignPackages(sys), run.Kernel)}
 	var folders []string
 	for _, folder := range settingsFolders {
 		folders = append(folders, folder.dir)
@@ -76,13 +106,13 @@ func settings(sys machine.System, found *report.Setup) {
 		}
 	}
 	if len(there) == 0 {
-		return
+		return found
 	}
 	// Every package with a file in one of the folders, and then every file of those packages
 	answer, _ := sys.RunFor(10*time.Second, "pacman", append([]string{"-Qqo"}, there...)...)
 	holders := names(answer, 80)
 	if len(holders) == 0 {
-		return
+		return found
 	}
 	held := map[string]bool{}
 	answer, _ = sys.RunFor(20*time.Second, "pacman", append([]string{"-Qql"}, holders...)...)
@@ -92,14 +122,19 @@ func settings(sys machine.System, found *report.Setup) {
 		}
 	}
 	if len(held) == 0 {
-		return
+		return found
 	}
 
-	found.Files = placedFiles(sys, held)
+	found.Placed = placedFiles(sys, held)
 	answer, _ = sys.RunFor(30*time.Second, "pacman", append([]string{"-Qkk"}, alterable...)...)
+	named := map[string]bool{}
+	for _, match := range alteredFile.FindAllStringSubmatch(answer, -1) {
+		named[match[1]] = true
+		found.Altered = add(found.Altered, match[2], nil, 40)
+	}
 	for _, match := range altered.FindAllStringSubmatch(answer, -1) {
-		if simpleName.MatchString(match[1]) {
-			found.Altered = append(found.Altered, match[1])
+		if !named[match[1]] {
+			found.Altered = add(found.Altered, match[1], simpleName, 40)
 		}
 	}
 
@@ -130,7 +165,7 @@ func settings(sys machine.System, found *report.Setup) {
 		}
 	}
 	if len(loose) == 0 {
-		return
+		return found
 	}
 	paths := make([]string, 0, len(loose))
 	for _, f := range loose {
@@ -139,36 +174,83 @@ func settings(sys machine.System, found *report.Setup) {
 	fromOmarchy, known := omarchys(sys, paths)
 	if !known {
 		// Without Omarchy's scripts to look in, its own files can't be told from the owner's
-		return
+		return found
 	}
 	for _, f := range loose {
-		if fromOmarchy[base(f.path)] {
+		if fromOmarchy[base(f.path)] || len(found.Settings) >= 60 {
 			continue
 		}
 		text := sys.ReadAll(f.path)
+		var does []string
 		switch f.holds {
 		case "options":
-			moduleSettings(text, found)
+			does = moduleSettings(text)
 		case "modules":
 			for _, line := range lines(text) {
-				found.Loaded = add(found.Loaded, strings.Fields(line)[0], simpleName, 20)
+				does = add(does, "loads kernel module "+strings.Fields(line)[0]+" at start", nil, 20)
 			}
 		case "image":
 			for _, match := range imageModules.FindAllStringSubmatch(text, -1) {
 				for _, name := range strings.Fields(match[1]) {
-					found.Loaded = add(found.Loaded, strings.TrimSuffix(name, "?"), simpleName, 20)
+					does = add(does, "puts kernel module "+strings.TrimSuffix(name, "?")+" into the boot image", nil, 20)
 				}
 			}
 		case "rules":
 			for _, rule := range Rules(text) {
-				found.Rules = add(found.Rules, rule, nil, 12)
+				does = add(does, ruleWords(rule), nil, 20)
 			}
 		case "sound":
 			for _, key := range SoundSettings(text) {
-				found.Sound = add(found.Sound, key, nil, 12)
+				does = add(does, "sets the sound setting "+key, nil, 20)
 			}
 		}
+		found.Settings = append(found.Settings, SettingsFile{Path: f.path, Does: does})
 	}
+	return found
+}
+
+// Lines says what was found in the words the test shows, a file a line.
+func (c Changes) Lines() []string {
+	var out []string
+	for _, line := range c.Sent.Lines() {
+		out = append(out, line+" (named in a run)")
+	}
+	for _, name := range c.Packages {
+		out = append(out, "package "+name+", from no repository")
+	}
+	for _, file := range c.Settings {
+		line := file.Path
+		if len(file.Does) > 0 {
+			line += ", which " + strings.Join(file.Does, ", ")
+		}
+		out = append(out, line)
+	}
+	for _, path := range c.Placed {
+		out = append(out, path+", which no package holds")
+	}
+	for _, what := range c.Altered {
+		out = append(out, what+", changed since its package was installed")
+	}
+	return out
+}
+
+// ruleWords puts one of Rules into words, like "has a device rule for usb that sets power/control=on".
+func ruleWords(rule string) string {
+	kind, does, _ := strings.Cut(rule, " ")
+	text := "has a device rule for " + kind
+	if kind == "any" {
+		text = "has a device rule"
+	}
+	verb, what, _ := strings.Cut(does, " ")
+	switch verb {
+	case "sets", "env":
+		return text + " that sets " + what
+	case "runs":
+		return text + " that runs a program"
+	case "permissions":
+		return text + " that changes who may use it"
+	}
+	return text
 }
 
 // placedFiles are the firmware, sound profile and camera files that no package holds and that
@@ -187,11 +269,7 @@ func placedFiles(sys machine.System, held map[string]bool) []string {
 			if under, ok := strings.CutPrefix(path, "/usr/lib/firmware/updates/"); ok && (copied[under] || copied[base(path)]) {
 				continue
 			}
-			short := strings.TrimPrefix(strings.TrimPrefix(path, "/usr/lib/"), "/usr/share/")
-			if identity.MatchString(short) {
-				continue
-			}
-			placed = add(placed, short, plainPath, 20)
+			placed = add(placed, path, nil, 60)
 		}
 	}
 	return placed
@@ -234,17 +312,16 @@ func omarchys(sys machine.System, paths []string) (map[string]bool, bool) {
 
 // moduleSettings reads a file of module settings for the options it gives and the modules it
 // keeps from loading.
-func moduleSettings(text string, found *report.Setup) {
+func moduleSettings(text string) []string {
+	var does []string
 	for _, line := range lines(text) {
 		fields := strings.Fields(line)
 		if len(fields) < 2 || !simpleName.MatchString(fields[1]) {
 			continue
 		}
 		switch {
-		case fields[0] == "blacklist":
-			found.Blocked = add(found.Blocked, fields[1], nil, 20)
-		case fields[0] == "install" && len(fields) == 3 && (base(fields[2]) == "false" || base(fields[2]) == "true"):
-			found.Blocked = add(found.Blocked, fields[1], nil, 20)
+		case fields[0] == "blacklist", fields[0] == "install" && len(fields) == 3 && (base(fields[2]) == "false" || base(fields[2]) == "true"):
+			does = add(does, "keeps kernel module "+fields[1]+" from loading", nil, 20)
 		case fields[0] == "options":
 			for _, option := range fields[2:] {
 				key, value, valued := strings.Cut(option, "=")
@@ -254,10 +331,11 @@ func moduleSettings(text string, found *report.Setup) {
 				if valued && (!optionValue.MatchString(value) || identity.MatchString(value)) {
 					option = key + "=…"
 				}
-				found.ModuleOptions = add(found.ModuleOptions, fields[1]+" "+option, nil, 20)
+				does = add(does, "gives kernel module "+fields[1]+" the option "+option, nil, 20)
 			}
 		}
 	}
+	return does
 }
 
 // Rules says what a file of device rules does, one line for each thing a rule does to a kind of

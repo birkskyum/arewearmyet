@@ -1654,18 +1654,18 @@ func TestAComputerWithoutALidIsPutToSleepByTheTest(t *testing.T) {
 	}
 }
 
-// What the computer runs that Omarchy didn't install is shown before anything is sent, since it goes along
-func TestTheSummaryShowsWhatIsNotFromOmarchy(t *testing.T) {
+// What goes with the results about the computer itself is said in one line before anything is sent
+func TestTheSummarySaysWhatElseIsSent(t *testing.T) {
 	run := &report.Run{}
 	run.Set("battery", report.Works, report.Measured, "87%", "")
 	last := &summary{run: run, options: Options{Send: true}}
 	last.start()
-	if drawn := last.view(100, 40); strings.Contains(drawn, SetupHeading) {
-		t.Errorf("a computer with nothing of its own is told it has something:\n%s", drawn)
+	if drawn := last.view(100, 40); strings.Contains(drawn, "Also sent") {
+		t.Errorf("a computer with nothing of its own is told something more is sent:\n%s", drawn)
 	}
-	run.Setup = &report.Setup{Modules: []string{"omnibook_fix"}, Options: []string{"regulator_ignore_unused"}, Rules: []string{"usb sets power/control=on"}}
+	run.Setup = &report.Setup{Modules: []string{"omnibook_fix"}, Options: []string{"regulator_ignore_unused"}}
 	drawn := last.view(100, 40)
-	for _, text := range []string{SetupHeading, "kernel module omnibook_fix", "kernel option regulator_ignore_unused", "a device rule for usb that sets power/control=on", "Send the lines above"} {
+	for _, text := range []string{"Also sent: kernel module omnibook_fix, kernel option regulator_ignore_unused.", "Send the lines above"} {
 		if !strings.Contains(drawn, text) {
 			t.Errorf("the summary lacks %q:\n%s", text, drawn)
 		}

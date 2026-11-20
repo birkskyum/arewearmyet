@@ -13,7 +13,9 @@ const listed = (f: Finding) => f.basis === 'maker-spec' && f.state === 'untested
 const FROM: Record<string, string> = { 'other-distro': 'on another distro', 'tree-author': "by the device tree's author" };
 type Row = { id: string; group: string; title: string; works: string; probe?: string; person?: string; debug?: string; optional?: boolean; finding: Finding | null; from: 'model' | 'family' | null; familySource: string | null; expected?: boolean };
 type Change = { machines: number; from: string | null; to: string | null; since: string };
-type Owner = { machines: number; states: Record<string, number>; how: Record<string, number>; regressed?: Change; fixed?: Change; latest: { state: State; how: string; note: string | null; evidence: string | null; kernel: string | null; os?: string | null; created: string; run: string; setup?: Setup }[] };
+type Owner = { machines: number; states: Record<string, number>; how: Record<string, number>; regressed?: Change; fixed?: Change; latest: { state: State; how: string; note: string | null; evidence: string | null; kernel: string | null; os?: string | null; created: string; run: string; setup?: Setup; needs?: Need }[]; changed?: number };
+// The change made on a computer that a part works because of, as its owner or their agent said it
+type Need = { text: string; how: string; proved?: boolean; created: string };
 // What a computer ran that Omarchy didn't install, which its results are read against
 type Setup = {
   kernel?: string; rebuilt?: string[]; modules?: string[]; options?: string[]; packages?: string[];
@@ -68,6 +70,12 @@ function setupText(setup?: Setup): string | undefined {
   ].filter(Boolean).join(' ') || undefined;
 }
 
+// "Works with a change made on this computer. The kernel option … (shown by switching it off and measuring again, 2026-11-20)"
+function needsText(need: Need): string {
+  const by = need.proved ? 'shown by switching it off and measuring again' : need.how === 'owner' ? "the owner's word" : "their agent's reading";
+  return `Works with a change made on this computer. ${need.text} (${by}, ${need.created.slice(0, 10)})`;
+}
+
 // "Worked on 7.3.0-67, broken since 7.3.0-72 (2026-11-17), on 2 machines"
 function changeText(change: Change, kind: 'regressed' | 'fixed'): string {
   const on = change.machines === 1 ? 'on one machine' : `on ${change.machines} machines`;
@@ -116,8 +124,12 @@ export default function CheckTable(props: { model: string; groups: { id: string;
     if (latest.length === 0) return undefined;
     const states: Record<string, number> = {};
     for (const result of latest) states[result.state] = (states[result.state] ?? 0) + 1;
-    return { ...all, latest, states, machines: latest.length };
+    return { ...all, latest, states, machines: latest.length, changed: latest.filter((r) => r.needs).length || undefined };
   };
+  // Every computer where the part works does so with a change made on it, so it isn't Omarchy as it ships that works
+  const onlyChanged = (o: Owner) => !!o.changed && o.changed >= (o.states.works ?? 0) + (o.states.partial ?? 0);
+  // What a computer ran that isn't Omarchy's is a lead once computers disagree on a part, and noise before
+  const disagree = (o: Owner) => new Set(o.latest.map((r) => r.state)).size > 1;
   // What is written up about the model on Omarchy. A report from another distro or from the device
   // tree's author is a lead for whoever fixes the part, and shows only in the check's details
   const status = (row: Row) => (row.finding && !elsewhere(row.finding) ? row.finding : null);
@@ -155,7 +167,7 @@ export default function CheckTable(props: { model: string; groups: { id: string;
           {(data) => (
             <span>
               {data().owners.machines === 0 ? 'Nobody has run hw-test on this model yet.' : `Tested with hw-test on ${data().owners.machines} machine${data().owners.machines === 1 ? '' : 's'}, newest result per machine.`}
-              {Object.values(data().owners.checks).some((check) => check.latest.some((r) => setupText(r.setup))) ? ' Where a computer ran something Omarchy didn\'t install, it is named under its result.' : ''}
+              {Object.values(data().owners.checks).some((check) => check.changed) ? ' A part that works because of a change made on that computer says so under its result.' : ''}
             </span>
           )}
         </Show>
@@ -217,8 +229,9 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                         </Show>
                         <Show when={owner(row.id)}>
                           {(o) => (
-                            <span class={`${PILL} ${TONE[TONES[ORDER.reduce((a, b) => ((o().states[b] ?? 0) > (o().states[a] ?? 0) ? b : a))]]}`} data-tip={`Found by hw-test on ${o().machines} machine${o().machines === 1 ? '' : 's'}, newest result per machine.`}>
+                            <span class={`${PILL} ${TONE[onlyChanged(o()) ? 'close' : TONES[ORDER.reduce((a, b) => ((o().states[b] ?? 0) > (o().states[a] ?? 0) ? b : a))]]}`} data-tip={`Found by hw-test on ${o().machines} machine${o().machines === 1 ? '' : 's'}, newest result per machine.${o().changed ? ' A local change is one made on that computer, which Omarchy doesn\'t install.' : ''}`}>
                               Tested: {ORDER.filter((s) => o().states[s]).map((s) => `${o().states[s]} ${LABEL[s].toLowerCase()}`).join(', ')}
+                              {o().changed ? ` · ${o().changed} with a local change` : ''}
                             </span>
                           )}
                         </Show>
@@ -268,7 +281,8 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                                   <span class="text-xs text-zinc-500">{HOW[r.how] ?? r.how}{r.kernel ? ` · ${r.kernel}` : ''} · {r.created.slice(0, 10)}</span>
                                   <Show when={r.note}><span>{r.note}</span></Show>
                                   <Show when={r.evidence}><code class="rounded bg-zinc-800 px-1 py-0.5 text-xs text-zinc-300">{r.evidence}</code></Show>
-                                  <Show when={setupText(r.setup)}>{(text) => <p class="basis-full text-xs text-zinc-500" data-setup>{text()}</p>}</Show>
+                                  <Show when={r.needs}>{(need) => <p class="basis-full text-xs text-amber-200/90" data-needs>{needsText(need())}</p>}</Show>
+                                  <Show when={disagree(o()) && setupText(r.setup)}>{(text) => <p class="basis-full text-xs text-zinc-500" data-setup>{text()}</p>}</Show>
                                 </li>
                               )}
                             </For>

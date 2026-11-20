@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/birkskyum/arewearmyet/app/internal/machine"
-	"github.com/birkskyum/arewearmyet/app/internal/report"
 )
 
 // packaged answers pacman and grep the way a computer does where the given files belong to
@@ -58,7 +57,7 @@ func TestRulesSayWhatTheyDoAndNotToWhat(t *testing.T) {
 	if !reflect.DeepEqual(got, want) {
 		t.Fatalf("got %q\nwant %q", got, want)
 	}
-	if said := report.Rule(got[0]) + ", " + report.Rule(got[1]) + ", " + report.Rule(got[4]); said != "a device rule for usb that sets power/control=on, a device rule for usb that runs a program, a device rule that changes who may use it" {
+	if said := ruleWords(got[0]) + ", " + ruleWords(got[1]) + ", " + ruleWords(got[4]); said != "has a device rule for usb that sets power/control=on, has a device rule for usb that runs a program, has a device rule that changes who may use it" {
 		t.Errorf("in words: %s", said)
 	}
 }
@@ -98,31 +97,43 @@ func ownersComputer(t *testing.T) (string, []string) {
 	return root, []string{"/etc/modprobe.d/omarchy-usb-autosuspend.conf", "/usr/lib/firmware/qcom/a660_sqe.fw.zst"}
 }
 
-func TestSetupReadsTheOwnersSettingsFiles(t *testing.T) {
+// What the owner's files change is found for their agent to read, with the files' paths, and
+// none of it goes into what a run sends
+func TestChangesAreFoundForTheAgentAndNotSent(t *testing.T) {
 	root, held := ownersComputer(t)
-	check := "warning: alsa-ucm-conf: /usr/share/alsa/ucm2/x.conf (Modification time mismatch)\nalsa-ucm-conf: 1223 total files, 1 altered file\nwireplumber: 327 total files, 0 altered files\nerror: package 'libcamera' was not found\n"
+	check := "warning: alsa-ucm-conf: /usr/share/alsa/ucm2/x.conf (Modification time mismatch)\nalsa-ucm-conf: 1223 total files, 1 altered file\nwireplumber: 327 total files, 0 altered files\npipewire: 249 total files, 2 altered files\nerror: package 'libcamera' was not found\n"
 	sys := packaged(machine.Fixture(root), held, []string{"qualcomm-adsp-nofw.conf", "qcom-firmware.conf"}, check)
 	run, _, err := Quick(sys)
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := &report.Setup{
-		ModuleOptions: []string{"snd_soc_x1e80100 i2s_mode=1", "snd_soc_x1e80100 serial=…"},
-		Blocked:       []string{"qcom_spmi_temp_alarm", "pcspkr"},
-		Loaded:        []string{"scmi-cpufreq", "panel_edp", "msm"},
-		Rules:         []string{"usb sets power/control=on", "usb runs", "input env LIBINPUT_IGNORE_DEVICE", "input permissions", "any permissions", "any sets serial"},
-		Files:         []string{"firmware/qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn", "alsa/ucm2/Qualcomm/x1e80100/mine.conf"},
-		Altered:       []string{"alsa-ucm-conf"},
-		Sound:         []string{"api.alsa.headroom", "session.suspend-timeout-seconds"},
+	if run.Setup != nil {
+		t.Fatalf("settings files went into what a run sends: %+v", run.Setup)
 	}
-	if !reflect.DeepEqual(run.Setup, want) {
-		t.Fatalf("got  %+v\nwant %+v", run.Setup, want)
+	found := FindChanges(sys, run)
+	want := Changes{
+		Settings: []SettingsFile{
+			{"/etc/modprobe.d/my-fix.conf", []string{"gives kernel module snd_soc_x1e80100 the option i2s_mode=1", "gives kernel module snd_soc_x1e80100 the option serial=…", "keeps kernel module qcom_spmi_temp_alarm from loading", "keeps kernel module pcspkr from loading"}},
+			{"/etc/modules-load.d/kef-speakers.conf", []string{"loads kernel module scmi-cpufreq at start"}},
+			{"/etc/mkinitcpio.conf.d/mine.conf", []string{"puts kernel module panel_edp into the boot image", "puts kernel module msm into the boot image"}},
+			{"/etc/udev/rules.d/99-yubikey.rules", []string{"has a device rule for usb that sets power/control=on", "has a device rule for usb that runs a program", "has a device rule for input that sets LIBINPUT_IGNORE_DEVICE", "has a device rule for input that changes who may use it", "has a device rule that changes who may use it", "has a device rule that sets serial"}},
+			{"/etc/wireplumber/wireplumber.conf.d/kef-lsx-no-suspend.conf", []string{"sets the sound setting api.alsa.headroom", "sets the sound setting session.suspend-timeout-seconds"}},
+		},
+		Placed:  []string{"/usr/lib/firmware/qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn", "/usr/share/alsa/ucm2/Qualcomm/x1e80100/mine.conf"},
+		Altered: []string{"/usr/share/alsa/ucm2/x.conf", "pipewire"},
 	}
-	// A file's name, the devices a rule picks out and the program it runs say what the owner owns
-	sent := strings.ToLower(string(run.JSON()))
-	for _, private := range []string{"kef", "yubikey", "1050", "0407", "/home/owner", "0123456789abcdef", "my-fix", "hid_apple", "qcom_q6v5_pas", "qcdxkmsuc8380"} {
-		if strings.Contains(sent, private) {
-			t.Errorf("the run sends %q", private)
+	if !reflect.DeepEqual(found, want) {
+		t.Fatalf("got  %+v\nwant %+v", found, want)
+	}
+	if lines := found.Lines(); len(lines) != 9 || lines[1] != "/etc/modules-load.d/kef-speakers.conf, which loads kernel module scmi-cpufreq at start" {
+		t.Errorf("in words: %q", lines)
+	}
+	// Omarchy's own files, and the copy kept beside one of the owner's, are not among them
+	for _, line := range found.Lines() {
+		for _, omarchys := range []string{"hid_apple", "qualcomm-adsp-nofw", "qcom-firmware.conf", "omarchy-usb-autosuspend", ".bak", "qcdxkmsuc8380", "a660_sqe"} {
+			if strings.Contains(line, omarchys) {
+				t.Errorf("%q is taken for the owner's: %s", omarchys, line)
+			}
 		}
 	}
 }
@@ -134,24 +145,26 @@ func TestSettingsFilesAreLeftAloneWithoutOmarchysScripts(t *testing.T) {
 	if err := os.RemoveAll(root + "/usr/share/omarchy"); err != nil {
 		t.Fatal(err)
 	}
-	run, _, err := Quick(packaged(machine.Fixture(root), held, nil, ""))
+	sys := packaged(machine.Fixture(root), held, nil, "")
+	run, _, err := Quick(sys)
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := &report.Setup{Files: []string{"firmware/qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn", "alsa/ucm2/Qualcomm/x1e80100/mine.conf"}}
-	if !reflect.DeepEqual(run.Setup, want) {
-		t.Fatalf("got  %+v\nwant %+v", run.Setup, want)
+	want := Changes{Placed: []string{"/usr/lib/firmware/qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn", "/usr/share/alsa/ucm2/Qualcomm/x1e80100/mine.conf"}}
+	if found := FindChanges(sys, run); !reflect.DeepEqual(found, want) {
+		t.Fatalf("got  %+v\nwant %+v", found, want)
 	}
 }
 
 // A computer where pacman can't say which package a file belongs to is given nothing
 func TestNothingIsReadWherePackagesCantBeAsked(t *testing.T) {
 	root, _ := ownersComputer(t)
-	run, _, err := Quick(machine.Fixture(root))
+	sys := machine.Fixture(root)
+	run, _, err := Quick(sys)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if run.Setup != nil {
-		t.Fatalf("got %+v", run.Setup)
+	if found := FindChanges(sys, run); !found.Empty() {
+		t.Fatalf("got %+v", found)
 	}
 }

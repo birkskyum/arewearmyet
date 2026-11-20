@@ -9,12 +9,12 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 )
 
-// Nearly every computer that runs the test has something on it that Omarchy didn't install, which
-// is how its owner got a part working. So a run doesn't say whether the computer is stock. It
-// names what differs, where the machine itself can tell, and a result is read against that.
+// A run names the few things a computer runs that are never ordinary use and that change what its
+// hardware does. Those are another kernel, a kernel module from no repository, kernel options
+// beyond Omarchy's and a test device tree. A result is read against them.
 //
-// Nothing of it is asked of the owner. settings.go reads the settings files they wrote. What stays
-// unseen is a device tree changed by hand, which only root can compare with the packaged one.
+// Whether a part works because of something the owner changed takes judgement, which is the
+// owner's agent's to give. changes.go finds what it has to judge, and none of that is sent.
 
 // ownKeys and ownOptions are the kernel options Omarchy sets by itself, as
 // data/kernel-options.yaml in the repository lists them. An option in ownKeys is Omarchy's
@@ -80,8 +80,6 @@ func setup(sys machine.System, run *report.Run) *report.Setup {
 		}
 	}
 
-	found.Packages = hardwarePackages(sys, foreign, run.Kernel)
-	settings(sys, found)
 	if found.Empty() {
 		return nil
 	}

@@ -495,9 +495,9 @@ func Brief(b Briefing) string {
 	say("7. **Pull request.** Open it as a draft. Its description starts with a line that says only %s, then the block. Then `"+after+" --pr <its address> --title \"<the change in a line>\"`, which records it on the model's page, and mark it ready. Tell the owner.", familyLine(family))
 	say("8. **Not fixed yet?** Go to the next step of the guide's \"Keep going\", which is a setting, then a patch from elsewhere, then a driver of your own. Only when that list is done, or one of its reasons to hand back holds, leave it for the next agent with `hw-test note --kind problem --check <check> --title \"...\" --body-file <file> --log kernel`. What the owner told you about a part goes in with `hw-test report --check <check> --state partial --note \"...\"`.")
 	if acpi {
-		say("9. **Clean up.** Restore the settings you changed, remove test packages, and say what is left.")
+		say("9. **Clean up.** Restore the settings you changed, remove test packages, and say what is left. A change you leave on the computer because the part works only with it is recorded with `hw-test report --check <check> --how agent --needs \"<the change and what it does for the part, in a sentence>\"`, so the model's page says the part works with a change made on this computer.")
 	} else {
-		say("9. **Clean up.** `hw-test tree remove` (run by the owner), restore the settings you changed, and say what is left.")
+		say("9. **Clean up.** `hw-test tree remove` (run by the owner), restore the settings you changed, and say what is left. A change you leave on the computer because the part works only with it is recorded with `hw-test report --check <check> --how agent --needs \"<the change and what it does for the part, in a sentence>\"`, so the model's page says the part works with a change made on this computer.")
 	}
 	say("")
 	say("The owner's data is the line. Never touch their files, the disk's partitions or its encryption, and do no firmware flashing or BIOS changes. Commands that need root go through `sudo`. When it asks for a password you can't give, hand the owner the exact command to run.")

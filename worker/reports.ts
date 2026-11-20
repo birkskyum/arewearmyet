@@ -83,6 +83,7 @@ export async function reports(request: Request, env: Env, url: URL): Promise<Res
   if (path === 'runs') return postRun(request, env, url);
   if (parts[0] === 'runs' && parts.length === 3 && RUN_ID.test(parts[1]) && parts[2] === 'results') return postResults(request, env, url, parts[1]);
   if (path === 'fixes') return postFix(request, env);
+  if (path === 'needs') return postNeed(request, env);
   if (path === 'notes') return postNote(request, env, null);
   if (parts[0] === 'notes' && parts.length === 3 && NOTE_ID.test(parts[1]) && parts[2] === 'replies') return postNote(request, env, parts[1]);
   if (parts[0] === 'notes' && parts.length === 3 && NOTE_ID.test(parts[1]) && parts[2] === 'status') return postStatus(request, env, parts[1]);
@@ -113,6 +114,13 @@ type Setup = {
   testTree?: true; note?: string;
 };
 type Change = { machines: number; from: string | null; to: string | null; since: string };
+type Need = { text: string; how: string; proved?: true; created: string };
+type NeedRow = { machine: string; check_id: string; text: string; how: string; proved: number; created: string };
+/** Every computer's needs, by computer and check. The table is small, so it is read whole. */
+async function needs(env: Env): Promise<Map<string, Need>> {
+  const { results } = await env.DB.prepare('SELECT n.machine, n.check_id, n.text, n.how, n.proved, n.created FROM needs n JOIN machines m ON m.id = n.machine WHERE m.hidden = 0 LIMIT 20000').all<NeedRow>();
+  return new Map(results.map((row) => [`${row.machine} ${row.check_id}`, { text: row.text, how: row.how, ...(row.proved ? { proved: true as const } : {}), created: row.created }]));
+}
 type OwnerCheck = {
   machines: number;
   states: Record<string, number>;
@@ -120,7 +128,11 @@ type OwnerCheck = {
   // `os` says which system the result was seen on. hw-test also runs on other distros, and a result from
   // one shows a part can work, not that it does on Omarchy
   // `setup` is what that computer ran beyond what Omarchy installs, left out when there was nothing
-  latest: { state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; os: string | null; created: string; run: string; setup?: Setup }[];
+  // `needs` is the change made on that computer that the part works because of, in the owner's or their
+  // agent's words, proved when switching it off and measuring again showed it
+  latest: { state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; os: string | null; created: string; run: string; setup?: Setup; needs?: Need }[];
+  // How many of the computers counted under works or partial do so with a change made on them
+  changed?: number;
   // Machines whose newest result turned from working to not, or the other way, with the kernels on both sides
   regressed?: Change;
   fixed?: Change;
@@ -137,7 +149,7 @@ const NEWEST_FIRST = 'ORDER BY runs.created DESC, runs.rowid DESC';
  * The older results still say when something changed. A machine that reported a check
  * working and now reports it broken is a regression, with the kernels on both sides.
  */
-function summarize(rows: ResultRow[]) {
+function summarize(rows: ResultRow[], needed: Map<string, Need> = new Map()) {
   const good = (state: string) => state === 'works';
   const bad = (state: string) => state === 'broken' || state === 'partial';
   // Every machine's results for a check, newest first
@@ -172,7 +184,10 @@ function summarize(rows: ResultRow[]) {
     entry.machines++;
     entry.states[row.state] = (entry.states[row.state] ?? 0) + 1;
     entry.how[row.how] = (entry.how[row.how] ?? 0) + 1;
-    if (entry.latest.length < 5) entry.latest.push({ state: row.state, how: row.how, note: row.note, evidence: row.evidence, kernel: row.kernel, os: row.os, created: row.created, run: row.run, setup: storedSetup(row.setup) });
+    // A need is said of a part that works, at least partly, so it shows beside such a result only
+    const need = row.state === 'works' || row.state === 'partial' ? needed.get(`${row.machine} ${row.check_id}`) : undefined;
+    if (need) entry.changed = (entry.changed ?? 0) + 1;
+    if (entry.latest.length < 5) entry.latest.push({ state: row.state, how: row.how, note: row.note, evidence: row.evidence, kernel: row.kernel, os: row.os, created: row.created, run: row.run, setup: storedSetup(row.setup), needs: need });
 
     // Going back from that result, the first one with another state is where it turned. The
     // change counts once per machine and check, from that result's kernel to the first kernel after it
@@ -194,8 +209,8 @@ function summarize(rows: ResultRow[]) {
 }
 
 async function ownerResults(env: Env, id: string) {
-  const { results } = await env.DB.prepare(`${RESULT_ROWS} AND runs.model = ? ${NEWEST_FIRST} LIMIT 5000`).bind(id).all<ResultRow>();
-  return summarize(results);
+  const [{ results }, needed] = await Promise.all([env.DB.prepare(`${RESULT_ROWS} AND runs.model = ? ${NEWEST_FIRST} LIMIT 5000`).bind(id).all<ResultRow>(), needs(env)]);
+  return summarize(results, needed);
 }
 
 /**
@@ -203,12 +218,13 @@ async function ownerResults(env: Env, id: string) {
  * nightly digest (scripts/digest.ts). All of it is what the model pages already show.
  */
 async function allOwners(env: Env): Promise<Response> {
-  const [{ results }, unmatched] = await Promise.all([
+  const [{ results }, unmatched, needed] = await Promise.all([
     env.DB.prepare(`${RESULT_ROWS} AND runs.model IS NOT NULL ${NEWEST_FIRST} LIMIT 50000`).all<ResultRow>(),
     env.DB.prepare(`SELECT runs.hardware, runs.compatible, MAX(runs.chids) AS chids, COUNT(DISTINCT runs.machine) AS machines, COUNT(*) AS runs, MAX(runs.created) AS latest
                       FROM runs JOIN machines m ON m.id = runs.machine
                      WHERE runs.model IS NULL AND runs.hidden = 0 AND m.hidden = 0
                      GROUP BY runs.hardware, runs.compatible ORDER BY latest DESC LIMIT 200`).all<{ hardware: string | null; compatible: string | null; chids: string | null; machines: number; runs: number; latest: string }>(),
+    needs(env),
   ]);
   const byModel = new Map<string, ResultRow[]>();
   for (const row of results) {
@@ -217,7 +233,7 @@ async function allOwners(env: Env): Promise<Response> {
     else byModel.set(row.model!, [row]);
   }
   return json({
-    models: Object.fromEntries([...byModel].map(([id, rows]) => [id, summarize(rows)])),
+    models: Object.fromEntries([...byModel].map(([id, rows]) => [id, summarize(rows, needed)])),
     unmatched: unmatched.results.map((row) => ({ ...row, hardware: JSON.parse(row.hardware ?? '{}'), chids: JSON.parse(row.chids ?? '[]') })),
   }, 200, 'public, max-age=300');
 }
@@ -385,6 +401,32 @@ function storedSetup(text: string | null): Setup | undefined {
   if (options.length) setup.options = options;
   else delete setup.options;
   return Object.keys(setup).length ? setup : undefined;
+}
+
+/**
+ * Records that a part works on this computer because of a change made on it, in one sentence, or takes
+ * that back when the text is empty. The computer is the one whose token it is, and it has sent a run before.
+ */
+async function postNeed(request: Request, env: Env): Promise<Response> {
+  const token = request.headers.get('x-machine-token') ?? '';
+  if (!TOKEN.test(token)) return json({ error: 'Send X-Machine-Token, the token this computer sends its runs with.' }, 400);
+  const body = (await readJson(request, 16 * 1024)) as { check?: unknown; text?: unknown; how?: unknown; proved?: unknown; kernel?: unknown } | null;
+  if (!body || typeof body !== 'object') return json({ error: 'Send {check, text, how, proved?} as JSON.' }, 400);
+  if (typeof body.check !== 'string' || !CHECKS.has(body.check)) return json({ error: `Unknown check ${String(body.check)}. GET /api/checks lists them.` }, 400);
+  const how = body.how === undefined ? 'agent' : body.how;
+  if (how !== 'owner' && how !== 'agent') return json({ error: 'how must be owner (the owner said so) or agent (your reading of the files).' }, 400);
+  const machine = await sha256(token);
+  const known = await env.DB.prepare('SELECT model FROM machines WHERE id = ?').bind(machine).first<{ model: string | null }>();
+  if (!known) return json({ error: 'This computer has sent no run yet. Send its results first, with POST /api/runs.' }, 404);
+  const page = known.model ? `${SITE}/models/${known.model}` : null;
+  const text = typeof body.text === 'string' ? clean(body.text, 300) : '';
+  if (!text) {
+    await env.DB.prepare('DELETE FROM needs WHERE machine = ? AND check_id = ?').bind(machine, body.check).run();
+    return json({ check: body.check, removed: true, page });
+  }
+  await env.DB.prepare('INSERT INTO needs (machine, check_id, text, how, proved, kernel, created) VALUES (?, ?, ?, ?, ?, ?, ?) ON CONFLICT(machine, check_id) DO UPDATE SET text = excluded.text, how = excluded.how, proved = excluded.proved, kernel = excluded.kernel, created = excluded.created')
+    .bind(machine, body.check, text, how, body.proved === true ? 1 : 0, typeof body.kernel === 'string' ? clean(body.kernel, 80) : null, new Date().toISOString()).run();
+  return json({ check: body.check, text, how, proved: body.proved === true, page }, 201);
 }
 
 /** Stores a run and its results. The machine is created on its first run. */

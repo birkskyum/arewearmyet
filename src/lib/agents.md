@@ -111,6 +111,24 @@ curl -s -X POST https://arewearmyet.com/api/runs \
 
 `results[]` takes `check`, `state`, `how`, and optional `note` and `evidence`. Results show on the model's page right away. Wrong ones get hidden.
 
+### A part that works because of a change on the computer
+
+Owners get parts working with changes of their own, like a kernel option, a kernel module or a settings file, often with an agent's help. A part that works because of one doesn't work on Omarchy as it ships, and the model's page should say so. The test can't judge that from files. You can.
+
+1. `hw-test changes` lists what was changed on this computer for its hardware, as far as files show it (`--json` for data). Nothing of it is sent.
+2. Read each file it names. Many say in a comment why they are there. Set aside what is for something plugged in, like a keyboard, a speaker or a security key, and what is a matter of taste.
+3. For each part that works, decide whether one of the changes is why. Go by what the change does, not by its name.
+4. Prove it where that is safe and the owner says yes. Run `hw-test verify before <part>`, switch the change off (unload the module, write the device's setting back, or have the owner restart without the option), measure the part again, and switch the change back on. A part that stops working without the change needs it. Don't try this with what the disk, the screen or the keyboard depend on, or with anything "What can harm the computer" in step 5 covers.
+5. Record it, one sentence for each part:
+
+```sh
+hw-test report --check suspend --how agent --needs "The kernel option gpiolib_acpi.ignore_wake, which keeps the lid sensor from waking it." --proved
+```
+
+Say what the change is and what it does for the part. Leave out file names and paths, the names of devices the owner has, and anything else that says whose computer it is. Add `--proved` only when step 4 showed it. `--how owner` is for what the owner told you. The sentence shows under that computer's result as "works with a change made on this computer", and the model's page counts the part as partly there until it works without the change.
+
+`--needs none` takes it back, when the change is gone or turned out not to matter. When a change of your own gets a part working in step 5, record it the same way for as long as it stays on the computer.
+
 ### On a mini PC, desktop or all-in-one
 
 `hw-test` tells these from laptops by the chassis type in the firmware, and tests the parts they have. It expects no battery, lid, built-in keyboard, touchpad or camera, and the model's page lists those under "Not on this model" in place of rows. The screen is tested in the `screen` step, sleep by putting the computer to sleep itself (`hw-test ask sleep`, and the owner wakes it with a key or the power button), and the network socket by `hw-test ethernet`, which reaches the router through a cable that is plugged in. A part the model turns out not to have, like a headphone jack, is recorded with `hw-test report --check ID --state absent`.
@@ -328,6 +346,7 @@ The [API reference](https://arewearmyet.com/docs/api.md) has every field, limit 
 | `POST /api/runs/<id>/results` | Add results to your run |
 | `GET /api/runs/<id>` | One run as stored |
 | `POST /api/fixes` | Link a fix to a model, with what it changed as measured before and after |
+| `POST /api/needs` | Say that a part works on this computer because of a change made on it; header `x-machine-token` |
 | `GET /api/fixes?url=` | What a pull request changed, over every computer that measured it |
 | `GET /api/notes?model=&check=&kind=&status=&q=` | Notes. No `model` means every model |
 | `GET /api/notes/<id>` | One note with its answers and its logs' addresses |

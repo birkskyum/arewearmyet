@@ -106,6 +106,8 @@ func main() {
 	how := flags.String("how", "owner", "for hw-test report, owner (they saw or heard it) or agent (your reading of logs)")
 	noteText := flags.String("note", "", "for hw-test report, what was seen, in a sentence or two")
 	evidence := flags.String("evidence", "", "for hw-test report, the line of output that shows it")
+	needs := flags.String("needs", "", "for hw-test report, the change made on this computer that the part works because of, in a sentence. none takes it back")
+	proved := flags.Bool("proved", false, "with --needs, when switching the change off and measuring the part again showed it")
 	flags.Usage = usage
 	flags.Parse(args)
 
@@ -158,7 +160,7 @@ func main() {
 		return
 	case "ask":
 		os.Exit(ask(topics))
-	case "quick", "check", "guided", "facts", "brief", "fix", "note", "verify", "report":
+	case "quick", "check", "guided", "facts", "brief", "fix", "note", "verify", "report", "changes":
 		if command == "check" {
 			command = "quick"
 		}
@@ -200,8 +202,32 @@ func main() {
 		run.Packages["hw-test"] = version
 	}
 
+	// What the owner changed for the hardware, as far as files show it, for their agent to judge.
+	// It is printed and never sent
+	if command == "changes" {
+		found := probe.FindChanges(machine.Real(), run)
+		if *jsonOnly {
+			data, _ := json.MarshalIndent(found, "", "  ")
+			fmt.Println(string(data))
+			return
+		}
+		if found.Empty() {
+			fmt.Println("Nothing here changes the hardware that Omarchy didn't install, as far as files show it.")
+			return
+		}
+		fmt.Println("On this computer, and not from Omarchy:")
+		for _, line := range found.Lines() {
+			fmt.Println("  " + line)
+		}
+		fmt.Println("\nThis list stays on the computer. hw-test report --check ID --needs TEXT records which part works because of one of them.")
+		return
+	}
+
 	// One result the owner told the agent, or the agent read from logs
 	if command == "report" {
+		if *needs != "" {
+			os.Exit(need(run, *api, *check, *needs, *how, *proved, !*noSend && !*jsonOnly))
+		}
 		os.Exit(tell(run, *api, *check, *state, *how, *noteText, *evidence, !*noSend && !*jsonOnly))
 	}
 
@@ -369,12 +395,8 @@ func printResults(run *report.Run) {
 	}
 	fmt.Fprintln(os.Stderr)
 	// What a result is read against, sent along by name
-	if lines := run.Setup.Lines(); len(lines) > 0 {
-		fmt.Fprintln(os.Stderr, guided.SetupHeading)
-		for _, line := range lines {
-			fmt.Fprintln(os.Stderr, "  "+line)
-		}
-		fmt.Fprintln(os.Stderr)
+	if line := guided.SetupLine(run.Setup); line != "" {
+		fmt.Fprintln(os.Stderr, line)
 	}
 }
 
@@ -429,6 +451,46 @@ func tell(run *report.Run, api, check, state, how, note, evidence string, send b
 		return 1
 	}
 	fmt.Fprintf(os.Stderr, "Sent as %s. %s\n", sent.Run, first(sent.Page, "The board doesn't know this computer yet."))
+	return 0
+}
+
+// need records that a part works on this computer because of a change made on it, which is the
+// owner's word or their agent's reading, and proved when switching the change off showed it.
+func need(run *report.Run, api, check, text, how string, proved, send bool) int {
+	fail := func(text string) int {
+		fmt.Fprintln(os.Stderr, "hw-test: "+text)
+		return 2
+	}
+	if checks, unknown := guided.ChecksFor([]string{check}); check == "" || len(unknown) > 0 || len(checks) != 1 || checks[0] != check {
+		return fail("report needs --check with a check's id, like suspend. hw-test status lists them.")
+	}
+	if how != report.Owner && how != "agent" {
+		return fail("--how is owner (they told you) or agent (your own reading of the files).")
+	}
+	text = report.Scrub(strings.TrimSpace(text), 300)
+	if text == "none" {
+		text = ""
+	}
+	if text == "" && proved {
+		return fail("--proved goes with a sentence in --needs.")
+	}
+	record := report.Need{Check: check, Text: text, How: how, Proved: proved, Kernel: run.Kernel}
+	if !send {
+		data, _ := json.MarshalIndent(record, "", "  ")
+		fmt.Println(string(data))
+		fmt.Fprintln(os.Stderr, "Not sent.")
+		return 0
+	}
+	sent, err := report.SendNeed(api, record)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "hw-test: the site didn't take it:", err)
+		return 1
+	}
+	if text == "" {
+		fmt.Fprintf(os.Stderr, "Taken back. %s\n", sent.Page)
+		return 0
+	}
+	fmt.Fprintf(os.Stderr, "Recorded beside this computer's %s result. %s\n", check, sent.Page)
 	return 0
 }
 
@@ -1265,6 +1327,11 @@ func usageText() string {
                      login the agent opens again in this folder, once, and is told WHAT.
                      --show says what is left, --cancel takes it back
   hw-test update     get the newest release. hw-test says at its start when there is one
+  hw-test report --check ID --needs TEXT [--proved]   say that the part works because of a
+                     change made on this computer, in a sentence. --proved when switching the
+                     change off and measuring again showed it. --needs none takes it back
+  hw-test changes    what was changed on this computer for its hardware, as far as files show
+                     it, for an agent to judge (nothing is sent)
   hw-test facts      what the test found on this computer to work with (nothing is sent)
   hw-test version
 
@@ -1275,9 +1342,8 @@ Options:
   --agent NAME   the agent running this, shown next to the run
 
 Nothing personal is sent, which means no serial numbers, addresses, names or files. The microphone recording
-and the camera picture of the guided test never leave this computer. What this computer runs that Omarchy
-didn't install for the hardware (a kernel module, a kernel option, a firmware package) is sent by name,
-and so is what your own settings files do for it, without the files' names. hw-test finds that by itself.
+and the camera picture of the guided test never leave this computer. Another kernel than Omarchy's, a kernel
+module from no repository and a kernel option beyond Omarchy's are sent by name. Your settings files are not.
 
 Every command with its options is at https://arewearmyet.com/docs/hw-test
 `

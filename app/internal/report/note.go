@@ -69,6 +69,26 @@ func SendNote(api string, note Note, reply string) (NoteSent, error) {
 	return post(api+path, token, note)
 }
 
+// Need says that a part's result on this computer depends on a change made on it, like a kernel
+// option or a settings file of the owner's. It is the owner's or their agent's judgement, and
+// Proved says it was shown by switching the change off and measuring the part again.
+type Need struct {
+	Check  string `json:"check"`
+	Text   string `json:"text"`
+	How    string `json:"how"`
+	Proved bool   `json:"proved,omitempty"`
+	Kernel string `json:"kernel,omitempty"`
+}
+
+// SendNeed records a need on the site, or takes it back when its text is empty.
+func SendNeed(api string, need Need) (NoteSent, error) {
+	token, err := Token()
+	if err != nil {
+		return NoteSent{}, err
+	}
+	return post(api+"/api/needs", token, need)
+}
+
 // Solve marks a problem written from this machine as solved, or open again.
 func Solve(api, id string, solved bool) (NoteSent, error) {
 	token, err := Token()
