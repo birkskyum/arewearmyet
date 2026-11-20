@@ -8,18 +8,18 @@ const FORM = `${REPO}/issues/new?template=model.yml`;
 const INSTALLER = 'https://github.com/turbineBMW/omarchy-arm-installer/releases/latest';
 const REPORTS = 'https://github.com/turbineBMW/omarchy-hardware-reports';
 const CASES = [
-  { id: 'windows', title: 'Still on Windows', text: 'Share a hardware report' },
-  { id: 'linux', title: 'Running Linux on it', text: 'Save the device tree it boots with' },
-  { id: 'test', title: 'Ready to test', text: 'Try it and tell us how far it got' },
-  { id: 'check', title: 'It boots', text: 'Run the hardware test' },
-  { id: 'probe', title: 'Not on Omarchy', text: 'Run the quick check on another distro' },
+  { id: 'windows', when: 'It still has Windows.', what: 'Share a hardware report' },
+  { id: 'linux', when: 'It already runs Linux.', what: 'Save the device tree it boots with' },
+  { id: 'test', when: 'The board says it should boot.', what: 'Try it and tell us how far it got' },
+  { id: 'check', when: 'It boots Omarchy.', what: 'Run the hardware test' },
+  { id: 'probe', when: 'It runs another distro.', what: 'Run the quick check' },
 ];
 // The page's sections, for the list beside it
 const SECTIONS = [
   { id: 'windows', text: 'Still on Windows' },
   { id: 'linux', text: 'Already on Linux' },
   { id: 'test', text: 'Ready to test' },
-  { id: 'check', text: 'It boots: check what works' },
+  { id: 'check', text: 'Check what works once it boots' },
   { id: 'probe', text: 'Not on Omarchy' },
   { id: 'not-wanted', text: "Please don't send" },
   { id: 'next', text: 'What happens next' },
@@ -37,7 +37,7 @@ const SECTIONS = [
     </p>
     <ul>
       {CASES.map((c) => (
-        <li><a href={`#${c.id}`}>{c.title}</a>: {c.text.charAt(0).toLowerCase() + c.text.slice(1)}</li>
+        <li>{c.when} <a href={`#${c.id}`}>{c.what}</a>.</li>
       ))}
     </ul>
 
@@ -95,7 +95,7 @@ sed -i '/serial-number/d' tree.dts</code></pre>
     </section>
 
     <section>
-      <h2 id="check">It boots: check what works<a class="anchor" aria-label="Link to this section" href="#check">#</a></h2>
+      <h2 id="check">Check what works once it boots<a class="anchor" aria-label="Link to this section" href="#check">#</a></h2>
       <p>
         On Omarchy, install the hardware test once and run it. It tests the screen, keyboard, sound, camera, Wi-Fi, sleep and the rest, some of it by itself and some of it with you, and puts the results on your model's page.
       </p>

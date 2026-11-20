@@ -21,6 +21,6 @@ const sections = headings.filter((h) => h.depth === 2 || h.depth === 3).map((h) 
     <slot />
   </article>
   <p class="mt-10 text-xs text-zinc-500">
-    Plain text for agents: <a class={LINK} href={plain}>{plain}</a> · <a class={LINK} href="/llms.txt">/llms.txt</a>
+    Agents read this page as plain text at <a class={LINK} href={plain}>{plain}</a>, and the list of all pages at <a class={LINK} href="/llms.txt">/llms.txt</a>.
   </p>
 </DocsLayout>

@@ -4,7 +4,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { DOC_GROUPS } from '../../lib/docs';
 ---
 
-<DocsLayout title="Docs · Are we ARM yet?" description="Documentation for arewearmyet.com: installing Omarchy on an ARM PC, the hw-test hardware test, the guide for AI agents and the API.">
+<DocsLayout title="Docs · Are we ARM yet?" description="Documentation for arewearmyet.com, from installing Omarchy on an ARM PC to the hw-test hardware test, the guide for AI agents and the API.">
   <h1 class="text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">Docs</h1>
   {DOC_GROUPS.map((group) => (
     <section class="mt-8">
@@ -22,6 +22,6 @@ import { DOC_GROUPS } from '../../lib/docs';
     </section>
   ))}
   <p class="mt-10 text-xs text-zinc-500">
-    Plain text for agents: <a class="underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100" href="/llms.txt">/llms.txt</a>
+    Agents read the list of these pages as plain text at <a class="underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100" href="/llms.txt">/llms.txt</a>.
   </p>
 </DocsLayout>

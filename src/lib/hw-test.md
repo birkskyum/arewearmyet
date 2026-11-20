@@ -13,9 +13,9 @@ hw-test
 
 It opens on a menu of what it can test on your computer, with where each part stands. A full round takes about a quarter of an hour.
 
-- **What runs by itself**: speakers and microphones (it plays test tones and listens to them), graphics, Wi-Fi and Bluetooth, the network cable, video decoding, and temperatures under load.
-- **What is done with you**: keyboard, touchpad, touchscreen, headphones, camera, USB ports, an external screen, the lid and sleep.
-- **What happens with the results**: it shows them, and sends them to the model's page unless you say no. A recording or a camera picture is only for you to check. It never leaves the computer and is deleted when its step ends.
+- **By itself** it tests the speakers and microphones (it plays test tones and listens to them), graphics, Wi-Fi and Bluetooth, the network cable, video decoding, and temperatures under load.
+- **With you** it tests the keyboard, touchpad, touchscreen, headphones, camera, USB ports, an external screen, the lid and sleep.
+- **The results** are shown to you, and sent to the model's page unless you say no. A recording or a camera picture is only for you to check. It never leaves the computer and is deleted when its step ends.
 
 `hw-test` says at its start when a newer release is out, and `hw-test update` gets it. `hw-test version` prints the one you have. Releases are on [GitHub](https://github.com/birkskyum/arewearmyet/releases), built for Linux on ARM and on x86.
 
@@ -27,8 +27,8 @@ On a distro other than Omarchy, [the probe](https://arewearmyet.com/docs/help#pr
 | --- | --- |
 | `hw-test` | The guided test. It opens with where the computer stands, runs the quick check, then goes through the parts with you |
 | `hw-test quick` | The quick check alone. It reads what the system says about each part, takes a few seconds, asks nothing and changes nothing |
-| `hw-test auto` | Every test that needs nobody: sound, graphics, WebGL and WebGPU, Wi-Fi and Bluetooth, the network cable, video decoding, temperatures. It heats the computer for a few minutes |
-| `hw-test manual` | Every test done with you: keyboard, touchpad, touchscreen, headphones, camera, USB ports, external screen, lid, sleep and a few questions |
+| `hw-test auto` | Every test that needs nobody, which is sound, graphics, WebGL and WebGPU, Wi-Fi and Bluetooth, the network cable, video decoding and temperatures. It heats the computer for a few minutes |
+| `hw-test manual` | Every test done with you, which is the keyboard, touchpad, touchscreen, headphones, camera, USB ports, an external screen, the lid, sleep and a few questions |
 | `hw-test STEP...` | One part alone, or a few, like `hw-test camera` or `hw-test wifi bluetooth`. Only those parts are reported |
 | `hw-test status` | The latest result of every check on this computer. Nothing is run |
 | `hw-test facts` | The devices the test found to work with. Nothing is sent |
@@ -145,7 +145,7 @@ These commands let an agent run the test without the owner passing results back 
 | `hw-test auto --no-send` | The tests that need nobody. Runs without a terminal, without the sound test |
 | `hw-test speakers --no-send --play` | The sound test without a terminal. `--play` says the owner agreed to the tones |
 | `hw-test ask STEP...` | Opens a step that takes the owner in a window on their desktop, waits up to half an hour, and prints the result as JSON |
-| `hw-test ask update` | Opens Omarchy's update in a window for the owner, who confirms it there, and prints how it ended as JSON: whether it finished, which packages moved, whether a restart is due, and the last lines of its log. It refuses, with the reasons, where an update would do harm: while a test boot entry stands, when the running kernel is not Omarchy's own, or when a kernel, device tree or firmware package was built on the computer |
+| `hw-test ask update` | Opens Omarchy's update in a window for the owner, who confirms it there, and prints how it ended as JSON, with whether it finished, which packages moved, whether a restart is due, and the last lines of its log. It refuses, with the reasons, where an update would do harm. That is while a test boot entry stands, when the running kernel is not Omarchy's own, or when a kernel, device tree or firmware package was built on the computer |
 | `hw-test report --check ID --state works\|partial\|broken\|absent --note TEXT` | Sends one result that no test measured. `absent` is for a part the computer turns out not to have. `--how owner` (the default) is what the owner saw, `--how agent` a reading of logs. `--evidence` holds the line of output that shows it |
 
 `hw-test status --json` gives an object with one entry per check.
