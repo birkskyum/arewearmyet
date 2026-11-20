@@ -60,7 +60,8 @@ TABLE_URL = "https://arewearmyet.com/firmware-sources.json"
 WUDRIVERS_URL = "https://github.com/birkskyum/wudrivers"
 SCRIPT_URL = "https://github.com/birkskyum/arewearmyet/blob/main/scripts/snapdragon-firmware-recipes.py"
 
-# Recipe name -> the machines it is for, and the firmware folders their device trees load from.
+# Recipe name -> the machines it is for, and the firmware folders their device trees load from,
+# plus an ath11k or ath12k folder for a Wi-Fi card whose board data linux-firmware doesn't list.
 # Left out are glymur/ASUSTeK/UX3607OA, which asus-zenbook-a16-firmware ships, and
 # x1e80100/LENOVO/21N1, whose ThinkPad T14s Gen 6 set linux-firmware already ships.
 RECIPES = {
@@ -125,7 +126,7 @@ RECIPES = {
     "lenovo-thinkbook-16-g7-qoy-firmware": ("Lenovo ThinkBook 16 G7 QOY", ["qcom/x1p42100/LENOVO/21NH"]),
     "lenovo-thinkpad-t14s-gen7-firmware": ("Lenovo ThinkPad T14s Gen 7", ["qcom/glymur/LENOVO/22A8"]),
     "medion-sprchrgd-14-s1-firmware": ("Medion SPRCHRGD 14 S1", ["qcom/x1e80100/Medion/sprchrgd-14-s1"]),
-    "microsoft-surface-laptop-7-firmware": ("Microsoft Surface Laptop 7", ["qcom/x1e80100/microsoft/Romulus", "qcom/x1e80100/microsoft"]),
+    "microsoft-surface-laptop-7-firmware": ("Microsoft Surface Laptop 7", ["qcom/x1e80100/microsoft/Romulus", "qcom/x1e80100/microsoft", "ath12k/WCN7850/hw2.0"]),
     "microsoft-surface-laptop-13-firmware": ("Microsoft Surface Laptop 13-inch", ["qcom/x1p42100/Microsoft/SurfaceLaptop13"]),
     "microsoft-surface-laptop-13-2nd-edition-firmware": ("Microsoft Surface Laptop 13-inch 2nd Edition", ["qcom/kalambo/Microsoft/SurfaceLaptop13"]),
     "microsoft-surface-laptop-8-firmware": ("Microsoft Surface Laptop 8", ["qcom/glymur/microsoft/mahua"]),
@@ -169,7 +170,7 @@ PATTERNS = {
     "size": r"[0-9]+",
     "sha256": r"[0-9a-f]{64}",
     "fetched": r"[0-9]{4}-[0-9]{2}-[0-9]{2}",
-    "path": r"qcom(/[A-Za-z0-9._-]+)+",
+    "path": r"(qcom|ath11k|ath12k)(/[A-Za-z0-9._-]+)+",
     "name": r"[A-Za-z0-9._-]+",
     # Members only reach the recipe single-quoted, and Lenovo's installers name folders like
     # code$GetExtractPath$, so anything printable but quotes and backslashes
@@ -268,6 +269,17 @@ def contents(dests):
     return human_list(parts)
 
 
+def is_board(dest):
+    return re.match(r"ath1[12]k/", dest) is not None and os.path.basename(dest) == "board.bin"
+
+
+# What the package holds, as its description starts: "Audio DSP and GPU firmware", plus "and Wi-Fi
+# board data" when it installs a board.bin.
+def title(dests):
+    what = contents([d for d in dests if not is_board(d)])
+    return what[0].upper() + what[1:] + " firmware" + (" and Wi-Fi board data" if any(is_board(d) for d in dests) else "")
+
+
 def comment(text):
     return ["# " + line for line in textwrap.wrap(text, 96, break_on_hyphens=False)]
 
@@ -282,7 +294,7 @@ def readme(name, who, paths, what, makers, chosen, wanted, provided):
     wu = all(windows_update(packages[p]) for p in chosen)
     origin = f"the driver bundle {by} publishes for it on Windows Update" if wu else f"{by}'s own Windows driver download"
     L = [f"# {name}", "",
-         f"{what[0].upper() + what[1:]} firmware for the {who}, from {origin}.", "",
+         f"{what} for the {who}, from {origin}.", "",
          f"The firmware only runs if {by} signed it for this board, so linux-firmware cannot carry it until {by} "
          "submits it. The package holds no firmware itself. Its recipe downloads the driver "
          + ("cabinets below" if len(chosen) > 1 else "package below") + " when the "
@@ -316,7 +328,7 @@ def readme(name, who, paths, what, makers, chosen, wanted, provided):
         L += ["", "The board's own firmware starts the SoC control processor before Linux, so its images are not "
               "installed, and the package's provided.d list tells qcom-firmware-extract not to look for them."]
     L += ["", "## How Omarchy installs it", "",
-          "The package provides " + human_list([f"`{provide(path)}`" for path in paths]) + ". Omarchy's "
+          "The package provides " + human_list([f"`{provide(path)}`" for path in paths if path.startswith("qcom/")]) + ". Omarchy's "
           "`install/hardware/qualcomm/oem-firmware.sh` takes the folders the machine's device tree loads firmware "
           "from, as `qcom-firmware-extract --list-missing` prints them, and installs the package that provides each "
           "folder's name, so the machine needs no step of its own.", "",
@@ -390,18 +402,24 @@ def recipe(name, who, paths):
     page = (next((packages[p].get("page") for p in signers if packages[p].get("page")), None)
             or (WUDRIVERS_URL if windows_update(packages[signers[0]]) else packages[signers[0]]["url"].split("?")[0]))
 
-    what = contents([w["dest"] for w in wanted])
+    what = title([w["dest"] for w in wanted])
     L = []
     shipped_in = ("in the driver bundle it publishes for the machine on Windows Update, whose cabinets this recipe fetches "
                   "with wudrivers and unpacks without running anything" if all(windows_update(packages[p]) for p in chosen)
                   else "in its Windows driver download, which this recipe unpacks without running")
     L += comment(
-        f"{what[0].upper() + what[1:]} firmware for the {who}. The firmware only runs if it is signed for this "
+        f"{what} for the {who}. The firmware only runs if it is signed for this "
         f"board by {human_list(makers)}, so linux-firmware cannot carry it until the OEM submits it. The OEM ships it "
         f"{shipped_in}. Each file is checked against the "
         "SHA-256 it was matched to and installed under the name the device tree requests, compressed with xz. The "
         "kernel tries a plain name, then .zst, then .xz, so once linux-firmware ships the same file, its copy is the "
         "one loaded, and the two packages never install the same path.")
+    if any(is_board(w["dest"]) for w in wanted):
+        L += ["#"] + comment(
+            "The Wi-Fi board data is the file the OEM's Windows Wi-Fi driver loads for this laptop's card, "
+            "which linux-firmware's board-2.bin doesn't list. The driver looks the card up in board-2.bin first "
+            "and loads board.bin only when no record matches, so a record added to linux-firmware takes over, "
+            "and ath12k-board-fallback leaves the card to this file.")
     if provided:
         L += ["#"] + comment(
             "The board's own firmware starts the SoC control processor before Linux, so its images are not "
@@ -411,11 +429,11 @@ def recipe(name, who, paths):
         f"pkgname={name}",
         f"pkgver={version}",
         "pkgrel=@PKGREL@",
-        f"pkgdesc={q(what[0].upper() + what[1:] + ' firmware for the ' + who)}",
+        f"pkgdesc={q(what + ' for the ' + who)}",
         "arch=('aarch64')",
         f"url={q(page)}",
         "license=('LicenseRef-proprietary')",
-        "provides=(" + " ".join([q(provide(p)) for p in paths]
+        "provides=(" + " ".join([q(provide(p)) for p in paths if p.startswith("qcom/")]
                                 + [q(old) for old in RENAMED.get(name, [])]) + ")",
     ]
     conflicts = CONFLICTS.get(name, []) + RENAMED.get(name, [])
