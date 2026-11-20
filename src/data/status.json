@@ -1,11 +1,11 @@
 {
-  "collected": "2026-11-19T21:28:56.515Z",
+  "collected": "2026-11-20T00:36:41.680Z",
   "stale": [],
   "linuxNext": "20261119",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-72",
+    "kernel": "7.3-73",
     "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
@@ -397,7 +397,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-72",
+        "kernel": "7.3-73",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -412,6 +412,7 @@
           "glymur-lenovo-yoga-slim7x.dts",
           "glymur-microsoft-surface-laptop8.dts",
           "glymur-microsoft-surface-laptop8-15.dts",
+          "glymur-samsung-galaxy-book6-edge.dts",
           "hamoa-iot-evk.dts",
           "hamoa-lenovo-ideacentre-mini-01q8x10.dts",
           "kalambo-hp-omnibook-5-14-he1xxx.dts",
@@ -588,6 +589,7 @@
           "glymur-hp-omnibook-ultra-kg0xxx.json",
           "glymur-microsoft-surface-laptop8-15.json",
           "glymur-microsoft-surface-laptop8.json",
+          "glymur-samsung-galaxy-book6-edge.json",
           "kalambo-hp-omnibook-5-14-he1xxx.json",
           "kalambo-hp-omnibook-x14-kr1xxx.json",
           "kalambo-lenovo-ideapad-5x-2in1-14q8y11.json",
@@ -1655,10 +1657,10 @@
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
     "works": 5,
-    "should": 68,
+    "should": 69,
     "workaround": 5,
     "problems": 2,
-    "notYet": 8,
+    "notYet": 7,
     "deviceTree": 84,
     "ids": 60,
     "firmware": 73,
@@ -1674,16 +1676,16 @@
     },
     "byPiece": {
       "deviceTree": {
-        "omarchy": 82,
+        "omarchy": 83,
         "fromUpstream": 19,
-        "added": 63,
+        "added": 64,
         "pull": 0,
-        "available": 2,
+        "available": 1,
         "upstream": 19,
         "channels": {
           "stable": 19,
           "rc": 19,
-          "edge": 82
+          "edge": 83
         },
         "models": {
           "fromUpstream": [
@@ -1770,26 +1772,26 @@
             "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14",
-            "samsung-galaxy-book5-edge-5g"
+            "samsung-galaxy-book5-edge-5g",
+            "samsung-galaxy-book6-edge-16"
           ],
           "pull": [],
           "available": [
-            "humain-horizon",
-            "samsung-galaxy-book6-edge-16"
+            "humain-horizon"
           ]
         }
       },
       "ids": {
-        "omarchy": 80,
+        "omarchy": 81,
         "fromUpstream": 28,
-        "added": 52,
+        "added": 53,
         "pull": 0,
-        "available": 1,
+        "available": 0,
         "upstream": 28,
         "channels": {
           "stable": 28,
           "rc": 28,
-          "edge": 80
+          "edge": 81
         },
         "models": {
           "fromUpstream": [
@@ -1874,12 +1876,11 @@
             "samsung-galaxy-book4-edge-15",
             "samsung-galaxy-book4-edge-16",
             "samsung-galaxy-book4-edge-14",
-            "samsung-galaxy-book5-edge-5g"
+            "samsung-galaxy-book5-edge-5g",
+            "samsung-galaxy-book6-edge-16"
           ],
           "pull": [],
-          "available": [
-            "samsung-galaxy-book6-edge-16"
-          ]
+          "available": []
         }
       },
       "firmware": {
@@ -14731,15 +14732,15 @@
         "https://news.samsung.com/us/galaxy-book6-edge-available-next-generation-ai-performance-premium-portability",
         "https://browser.geekbench.com/v6/cpu/18993073"
       ],
-      "notes": "An owner's hardware report gives its strings, hardware IDs and ACPI tables. It calls itself Galaxy Book6 Edge - PALF from the maker Samsung (earlier Galaxy Books report SAMSUNG ELECTRONICS CO., LTD.), SKU PALF-960XRD-GLYM-0, board NP960XRD-KB1DE, with the panel the Galaxy Book4 Edge 16 has. A device tree written from that report is in review and nobody has booted it yet. Its only drive is UFS, which Omarchy's kernel can't reach on this chip until the same change lands, and its speakers and battery reading have no Linux driver. Samsung offers no driver pack for it and Windows Update has no bundle for its hardware IDs, so its firmware comes from the laptop's own Windows. Its audio DSP, GPU and video images are Samsung's own builds, and its compute DSP image is the one the other X2 laptops have.",
-      "outcome": "none",
-      "bootable": "carry",
+      "notes": "An owner's hardware report gives its strings, hardware IDs and ACPI tables. It calls itself Galaxy Book6 Edge - PALF from the maker Samsung (earlier Galaxy Books report SAMSUNG ELECTRONICS CO., LTD.), SKU PALF-960XRD-GLYM-0, board NP960XRD-KB1DE, with the panel the Galaxy Book4 Edge 16 has. A device tree written from that report is on Omarchy's edge channel since 2026-11-20, and nobody has booted it yet. Its only drive is UFS, which Omarchy's kernel reaches on this chip from 7.3-73 on, the build that brought the tree. Its speakers and battery reading have no Linux driver. Samsung offers no driver pack for it and Windows Update has no bundle for its hardware IDs, so its firmware comes from the laptop's own Windows. Its audio DSP, GPU and video images are Samsung's own builds, and its compute DSP image is the one the other X2 laptops have.",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
-        "deviceTree": null,
+        "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
+        "ids": "edge",
         "idsPull": null,
         "firmware": "windows",
         "firmwareChannel": null,
@@ -14747,8 +14748,8 @@
         "firmwarePull": null
       },
       "pieces": {
-        "deviceTree": "elsewhere",
-        "ids": "elsewhere",
+        "deviceTree": "edge",
+        "ids": "edge",
         "firmware": "none"
       },
       "upstream": {
@@ -14782,17 +14783,28 @@
         {
           "chip": "X2E-88-100",
           "compatible": "samsung,galaxy-book6-edge-16",
-          "computed": "none",
-          "treeChannel": null,
-          "idsChannel": null,
-          "bootChannel": null,
+          "computed": "should",
+          "treeChannel": "edge",
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
           "idsPull": null,
-          "deviceTree": null,
-          "firmwareNeeded": [],
+          "deviceTree": {
+            "file": "glymur-samsung-galaxy-book6-edge.dts",
+            "firstRelease": null,
+            "inNext": false,
+            "upstream": false,
+            "patch": "linux-omarchy-dtbs/0061-arm64-dts-qcom-Add-the-Samsung-Galaxy-Book6-Edge.patch"
+          },
+          "firmwareNeeded": [
+            "qcom/glymur/SAMSUNG/galaxy-book6-edge/qcadsp8480.mbn",
+            "qcom/glymur/SAMSUNG/galaxy-book6-edge/adsp_dtbs.elf",
+            "qcom/glymur/SAMSUNG/galaxy-book6-edge/qccdsp8480.mbn",
+            "qcom/glymur/SAMSUNG/galaxy-book6-edge/cdsp_dtbs.elf"
+          ],
           "ids": [],
           "stubble": [],
-          "outcome": "none",
+          "outcome": "should",
           "reports": []
         }
       ],
