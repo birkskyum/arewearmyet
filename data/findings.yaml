@@ -5918,7 +5918,7 @@ models:
         state: absent
         note: It is a one-litre desktop without a built-in screen. Screens connect to HDMI and DisplayPort.
         checked: 2026-09
-        source: https://psref.lenovo.com/Product/ThinkCentre/ThinkCentre_neo_50q_QC
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkCentre/ThinkCentre_neo_50q_QC/ThinkCentre_neo_50q_QC_Spec.pdf
         basis: maker-spec
         where: Lenovo PSREF specification, updated 2026-11-18
         quote: Supports up to 3 independent displays via (onboard DP, onboard HDMI
@@ -5926,7 +5926,7 @@ models:
         state: absent
         note: It is a one-litre desktop without a built-in screen, so there is no brightness to set.
         checked: 2026-09
-        source: https://psref.lenovo.com/Product/ThinkCentre/ThinkCentre_neo_50q_QC
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkCentre/ThinkCentre_neo_50q_QC/ThinkCentre_neo_50q_QC_Spec.pdf
         basis: maker-spec
         where: Lenovo PSREF specification, updated 2026-11-18
         quote: Supports up to 3 independent displays via (onboard DP, onboard HDMI
@@ -5934,7 +5934,7 @@ models:
         state: absent
         note: It is a one-litre desktop that takes a USB or wireless keyboard.
         checked: 2026-09
-        source: https://psref.lenovo.com/Product/ThinkCentre/ThinkCentre_neo_50q_QC
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkCentre/ThinkCentre_neo_50q_QC/ThinkCentre_neo_50q_QC_Spec.pdf
         basis: maker-spec
         where: Lenovo PSREF specification, updated 2026-11-18
         quote: Calliope Keyboard (USB connector), black
@@ -5942,7 +5942,7 @@ models:
         state: absent
         note: It is a one-litre desktop that takes a USB or wireless mouse.
         checked: 2026-09
-        source: https://psref.lenovo.com/Product/ThinkCentre/ThinkCentre_neo_50q_QC
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkCentre/ThinkCentre_neo_50q_QC/ThinkCentre_neo_50q_QC_Spec.pdf
         basis: maker-spec
         where: Lenovo PSREF specification, updated 2026-11-18
         quote: Calliope Mouse (USB connector), black
@@ -5950,7 +5950,7 @@ models:
         state: absent
         note: It is a one-litre desktop that runs from its 65 W or 90 W power adapter and has no battery.
         checked: 2026-09
-        source: https://psref.lenovo.com/Product/ThinkCentre/ThinkCentre_neo_50q_QC
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkCentre/ThinkCentre_neo_50q_QC/ThinkCentre_neo_50q_QC_Spec.pdf
         basis: maker-spec
         where: Lenovo PSREF specification, updated 2026-11-18
         quote: When work with TIO monitor, an appropriate power adapter is needed.
@@ -5958,7 +5958,7 @@ models:
         state: absent
         note: It is a one-litre desktop without a lid.
         checked: 2026-09
-        source: https://psref.lenovo.com/Product/ThinkCentre/ThinkCentre_neo_50q_QC
+        source: https://psref.lenovo.com/syspool/Sys/PDF/ThinkCentre/ThinkCentre_neo_50q_QC/ThinkCentre_neo_50q_QC_Spec.pdf
         basis: maker-spec
         where: Lenovo PSREF specification, updated 2026-11-18
         quote: Tiny only (without rubber feet)

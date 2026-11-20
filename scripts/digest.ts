@@ -1,6 +1,10 @@
 // Compares owners' reports (GET /api/owners) with what's written up in data/findings.yaml and
-// writes a work list of regressions, findings owners contradict, checks with enough agreeing reports
-// to write up, first reports and machines the board doesn't know. Run with `pnpm digest`.
+// writes a work list of regressions, findings owners contradict, parts that work elsewhere and not
+// on Omarchy, checks with enough agreeing reports to write up, first reports and machines the board
+// doesn't know. Run with `pnpm digest`.
+//
+// Only Omarchy counts on both sides, as on the board. An owner's result from another distro is left
+// out, and a finding from another distro or from a device tree's author is a lead, never a status.
 //
 // `pnpm digest --issue` keeps one GitHub issue (label "digest") up to date with it, and comments
 // on that issue only when something new turned up, so it notifies when there's news and not nightly.
@@ -13,12 +17,12 @@ const SITE = 'https://arewearmyet.com';
 const REPO = 'birkskyum/arewearmyet';
 
 type Change = { machines: number; from: string | null; to: string | null; since: string };
-type OwnerCheck = { machines: number; states: Record<string, number>; how: Record<string, number>; latest: { state: string; note: string | null; kernel: string | null }[]; regressed?: Change; fixed?: Change };
+type OwnerCheck = { machines: number; states: Record<string, number>; how: Record<string, number>; latest: { state: string; note: string | null; kernel: string | null; os?: string | null }[]; regressed?: Change; fixed?: Change };
 export type Owners = {
   models: Record<string, { machines: number; checks: Record<string, OwnerCheck> }>;
   unmatched: { hardware: Record<string, string>; compatible: string | null; chids?: string[]; machines: number; runs: number; latest: string }[];
 };
-type Finding = { state: string; note?: string };
+type Finding = { state: string; note?: string; basis?: string; where?: string };
 export type Findings = { families?: Record<string, { checks?: Record<string, Finding> }>; models?: Record<string, { checks?: Record<string, Finding> }> };
 export type Known = { checks: { id: string; title: string }[]; models: { id: string; vendor: string; name: string; generation: string }[] };
 
@@ -28,6 +32,7 @@ export type Digest = {
   regressions: string[];
   contradictions: string[];
   fixed: string[];
+  elsewhere: string[];
   ready: string[];
   first: string[];
   unmatched: string[];
@@ -35,43 +40,55 @@ export type Digest = {
 
 const bad = (states: Record<string, number>) => (states.broken ?? 0) + (states.partial ?? 0);
 const counts = (states: Record<string, number>) => Object.entries(states).map(([state, n]) => `${n} ${state}`).join(', ');
+// A result is from Omarchy when its run says so, or, for results kept before runs said, when the kernel is Omarchy's
+const onOmarchy = (result: { os?: string | null; kernel: string | null }) => (result.os ? /^omarchy/i.test(result.os) : /-omarchy/.test(result.kernel ?? ''));
+// A finding that says how the part does on Omarchy. One that only says the maker lists the part doesn't
+const status = (finding?: Finding) => (finding && (!finding.basis || finding.basis === 'omarchy' || finding.basis === 'maker-spec') && finding.state !== 'untested' ? finding : undefined);
+// A finding from another distro or from the device tree's author
+const lead = (finding?: Finding) => (finding && (finding.basis === 'other-distro' || finding.basis === 'tree-author') ? finding : undefined);
 const kernels = (change: Change) => `${change.from ?? 'an earlier kernel'} to ${change.to ?? 'a newer kernel'}`;
 
 export function digest(owners: Owners, findings: Findings, known: Known): Digest {
   const title = new Map(known.checks.map((check) => [check.id, check.title]));
-  const out: Digest = { machines: 0, models: 0, regressions: [], contradictions: [], fixed: [], ready: [], first: [], unmatched: [] };
+  const out: Digest = { machines: 0, models: 0, regressions: [], contradictions: [], fixed: [], elsewhere: [], ready: [], first: [], unmatched: [] };
 
   for (const model of known.models) {
     const reported = owners.models[model.id];
-    if (!reported) continue;
-    out.machines += reported.machines;
+    // A model whose only results are from another distro has nothing to compare
+    const tested = Math.max(0, ...Object.values(reported?.checks ?? {}).map((check) => check.latest.filter(onOmarchy).length));
+    if (!reported || !tested) continue;
+    out.machines += tested;
     out.models++;
     const name = `[${model.vendor} ${model.name}](${SITE}/models/${model.id})`;
     const own = findings.models?.[model.id]?.checks ?? {};
-    const family = findings.families?.[model.generation]?.checks ?? {};
     const firsts: string[] = [];
 
     for (const [id, check] of Object.entries(reported.checks)) {
       const what = title.get(id) ?? id;
-      const finding = own[id] ?? family[id];
-      const where = own[id] ? 'its finding' : 'its chip family\'s finding';
-      const works = check.states.works ?? 0;
+      // What the machines saw on Omarchy, one result a machine
+      const here = check.latest.filter((result) => onOmarchy(result) && result.state !== 'untested');
+      if (!here.length) continue;
+      const states: Record<string, number> = {};
+      for (const result of here) states[result.state] = (states[result.state] ?? 0) + 1;
+      const finding = status(own[id]);
+      const hint = lead(own[id]);
 
       if (check.regressed) out.regressions.push(`- ${name}, **${what}** stopped working from ${kernels(check.regressed)} on ${check.regressed.machines} machine${check.regressed.machines === 1 ? '' : 's'} (${check.regressed.since.slice(0, 10)})`);
-      if (check.fixed && finding && finding.state !== 'works') out.fixed.push(`- ${name}, **${what}** works since ${check.fixed.to ?? 'a newer kernel'} on ${check.fixed.machines} machine${check.fixed.machines === 1 ? '' : 's'}, but ${where} still says ${finding.state}`);
+      if (check.fixed && finding && finding.state !== 'works') out.fixed.push(`- ${name}, **${what}** works since ${check.fixed.to ?? 'a newer kernel'} on ${check.fixed.machines} machine${check.fixed.machines === 1 ? '' : 's'}, but its finding still says ${finding.state}`);
 
       if (finding) {
         // A finding and the owners disagree. It says works and someone has it broken, or it says broken and it works for them
-        if (finding.state === 'works' && bad(check.states) > 0) out.contradictions.push(`- ${name}, **${what}** is written up as working, owners report ${counts(check.states)}${check.latest[0]?.note ? ` ("${check.latest[0].note}")` : ''}`);
-        else if (finding.state === 'broken' && works > 0 && !check.fixed) out.contradictions.push(`- ${name}, **${what}** is written up as broken in ${where}, owners report ${counts(check.states)}`);
-        if (own[id]) continue;
+        if (finding.state === 'works' && bad(states) > 0) out.contradictions.push(`- ${name}, **${what}** is written up as working, owners report ${counts(states)}${here[0]?.note ? ` ("${here[0].note}")` : ''}`);
+        else if (finding.state === 'broken' && (states.works ?? 0) > 0 && !check.fixed) out.contradictions.push(`- ${name}, **${what}** is written up as broken, owners report ${counts(states)}`);
+        continue;
       }
-      // Nothing written up for the model itself yet
-      const states = Object.keys(check.states);
-      if (check.machines >= 2 && states.length === 1) out.ready.push(`- ${name}, **${what}** ${states[0]} on ${check.machines} machines. \`${id}: { state: ${states[0]}, checked: ${new Date().toISOString().slice(0, 7)} }\``);
-      else firsts.push(`${what.toLowerCase()} (${counts(check.states)})`);
+      // Working somewhere else and not here is where a fix to bring over may be
+      if (hint?.state === 'works' && bad(states) > 0) out.elsewhere.push(`- ${name}, **${what}** works elsewhere (${hint.where ?? (hint.basis === 'tree-author' ? "the device tree author's machine" : 'another distro')}), and owners on Omarchy report ${counts(states)}`);
+      // Nothing written up for the model on Omarchy yet
+      if (here.length >= 2 && Object.keys(states).length === 1) out.ready.push(`- ${name}, **${what}** ${here[0].state} on ${here.length} machines. \`${id}: { state: ${here[0].state}, checked: ${new Date().toISOString().slice(0, 7)} }\``);
+      else firsts.push(`${what.toLowerCase()} (${counts(states)})`);
     }
-    if (firsts.length) out.first.push(`- ${name} (${reported.machines} machine${reported.machines === 1 ? '' : 's'}) with ${firsts.join(', ')}`);
+    if (firsts.length) out.first.push(`- ${name} (${tested} machine${tested === 1 ? '' : 's'}) with ${firsts.join(', ')}`);
   }
 
   for (const machine of owners.unmatched) {
@@ -85,8 +102,9 @@ const SECTIONS: [keyof Digest, string, string][] = [
   ['regressions', 'Regressions', 'A machine reported the check working, then not working on a newer kernel.'],
   ['contradictions', 'Findings owners contradict', 'What `data/findings.yaml` says and what owners report disagree.'],
   ['fixed', 'Fixed, but still written up as broken', 'Owners report it working again, so the finding wants an update.'],
-  ['ready', 'Ready to write up', 'Two or more machines agree and the model has no finding of its own for the check. The line is ready for `data/findings.yaml`.'],
-  ['first', 'First reports', 'One machine so far, or machines that disagree, for checks the model has no finding for.'],
+  ['elsewhere', 'Working elsewhere, not on Omarchy', "Someone has it working on another distro or on the device tree author's machine, and owners on Omarchy don't. A fix may exist to bring over."],
+  ['ready', 'Ready to write up', 'Two or more machines agree and the model has no finding from Omarchy for the check. The line is ready for `data/findings.yaml`.'],
+  ['first', 'First reports', 'One machine so far, or machines that disagree, for checks the model has no finding from Omarchy for.'],
   ['unmatched', "Machines the board doesn't know", 'Runs that matched no model. They need a model entry, a model number or a hardware report.'],
 ];
 
