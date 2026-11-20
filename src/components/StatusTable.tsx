@@ -485,8 +485,17 @@ export default function StatusTable(props: Props) {
             <For each={table.getRowModel().rows}>
               {(row) => {
                 const model = row.original;
+                // The whole row opens the model's page, as its name does. A link or button inside the row
+                // keeps its own target, and selecting text opens nothing
+                const page = model.href?.startsWith('/') ? model.href : null;
+                const openPage = (event: MouseEvent) => {
+                  if (!page || event.defaultPrevented || (event.target as Element).closest('a, button')) return;
+                  if (event.type === 'auxclick' ? event.button !== 1 : getSelection()?.toString()) return;
+                  if (event.type === 'auxclick' || event.metaKey || event.ctrlKey) open(page, '_blank');
+                  else location.assign(page);
+                };
                 return (
-                  <tr class="align-top hover:bg-zinc-900/60 max-xl:grid max-xl:grid-cols-2 max-xl:gap-x-4 max-xl:gap-y-3 max-xl:px-4 max-xl:py-4 sm:max-xl:grid-cols-3 md:max-xl:grid-cols-4 lg:max-xl:grid-cols-6" data-row data-chip={model.generation} data-outcome={model.outcome}>
+                  <tr onClick={openPage} onAuxClick={openPage} classList={{ 'cursor-pointer': Boolean(page) }} class="align-top hover:bg-zinc-900/60 max-xl:grid max-xl:grid-cols-2 max-xl:gap-x-4 max-xl:gap-y-3 max-xl:px-4 max-xl:py-4 sm:max-xl:grid-cols-3 md:max-xl:grid-cols-4 lg:max-xl:grid-cols-6" data-row data-chip={model.generation} data-outcome={model.outcome}>
                     <td class="whitespace-nowrap px-4 py-3 text-zinc-300 max-xl:col-span-full max-xl:-mb-2.5 max-xl:p-0 max-xl:text-xs max-xl:uppercase max-xl:tracking-wide max-xl:text-zinc-500">{model.vendor}</td>
                     <td class="px-3 py-3 max-xl:col-span-full max-xl:p-0">
                       <div class="font-medium text-zinc-100">
