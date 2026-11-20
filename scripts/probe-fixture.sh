@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Copies what probe.sh reads from this machine into a folder, as a fixture for test/probe.test.ts:
-# small files from /sys, /proc and /etc, and the output of the few commands the probe runs.
+# Copies what hw-test's quick check reads from this machine into a folder, as a fixture for the
+# app's tests (test/probe/fixtures). It takes small files from /sys, /proc and /etc, and the output
+# of the few commands the check runs.
 # No serial numbers or addresses are among them. Usage: bash scripts/probe-fixture.sh <folder>
 set -u
 out="${1:?usage: probe-fixture.sh <folder>}"

@@ -86,13 +86,13 @@ jobs:
             [ -n "$pushed" ]
           fi
 
-      # A change that breaks the reports API or the probe doesn't get deployed
+      # A change that breaks the reports API or hw-test doesn't get deployed
       - run: pnpm typecheck
       - run: pnpm test
       - name: Test the app
         working-directory: app
         run: go vet ./... && go test ./...
-      - run: shellcheck -S warning public/probe.sh scripts/probe-fixture.sh test/probe/bin/*
+      - run: shellcheck -S warning public/probe.sh scripts/probe-fixture.sh
 
       - run: pnpm build
 

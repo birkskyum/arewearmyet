@@ -12,7 +12,6 @@ const CASES = [
   { id: 'linux', when: 'It already runs Linux.', what: 'Save the device tree it boots with' },
   { id: 'test', when: 'The board says it should boot.', what: 'Try it and tell us how far it got' },
   { id: 'check', when: 'It boots Omarchy.', what: 'Run the hardware test' },
-  { id: 'probe', when: 'It runs another distro.', what: 'Run the quick check' },
 ];
 // The page's sections, for the list beside it
 const SECTIONS = [
@@ -20,7 +19,6 @@ const SECTIONS = [
   { id: 'linux', text: 'Already on Linux' },
   { id: 'test', text: 'Ready to test' },
   { id: 'check', text: 'Check what works once it boots' },
-  { id: 'probe', text: 'Not on Omarchy' },
   { id: 'not-wanted', text: "Please don't send" },
   { id: 'next', text: 'What happens next' },
 ];
@@ -103,17 +101,6 @@ sed -i '/serial-number/d' tree.dts</code></pre>
 hw-test</code></pre>
       <p>
         <a href="/docs/hw-test">The hardware test</a> says what it tests, what it sends, and how to hand a part that doesn't work to your AI agent.
-      </p>
-    </section>
-
-    <section>
-      <h2 id="probe">Not on Omarchy<a class="anchor" aria-label="Link to this section" href="#probe">#</a></h2>
-      <p>
-        On another distro, the probe does the quick check. It only reads, needs no root, takes a few seconds, and shows you the results before it sends them.
-      </p>
-      <pre><code>curl -fsSL https://arewearmyet.com/probe.sh | bash</code></pre>
-      <p>
-        It says whether each part is there and its driver came up. The model's page shows what a part does on Omarchy, so a result from another distro isn't shown there. It is kept as a lead for whoever fixes that part.
       </p>
     </section>
 

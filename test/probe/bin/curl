@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-# Test stand-in for the probe's one request: keeps what was sent and answers as the site would
-# for a machine it doesn't know
-printf '%s\n' "$@" >"$PROBE_ROOT/curl-args"
-for arg; do case "$arg" in @*) cp "${arg#@}" "$PROBE_ROOT/curl-body" ;; esac; done
-printf '{"run":"RUN-TESTTESTAA","model":null,"stored":10,"url":"https://arewearmyet.com/api/runs/RUN-TESTTESTAA","page":null}'

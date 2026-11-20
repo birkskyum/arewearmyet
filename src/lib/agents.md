@@ -89,8 +89,6 @@ It says at its start when a newer release is out, and `hw-test update` gets it. 
 - The quick check only sees that a part is there and its driver came up. It never counts as the part working when a closer test exists.
 - Measure before a change and after it.
 
-On another distro, the probe does the quick check with `curl -fsSL https://arewearmyet.com/probe.sh -o probe.sh && bash probe.sh --json`.
-
 ## 4. Report
 
 Running a test sends its results, which is all most reporting takes. For what no test measures:

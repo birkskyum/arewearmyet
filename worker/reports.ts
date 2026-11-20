@@ -1,12 +1,12 @@
 /**
- * Owners' reports on what works on their machine, from probe.sh or an agent working
+ * Owners' reports on what works on their machine, from hw-test or an agent working
  * with the owner, kept in D1 and shown on the model pages next to the findings kept
  * by hand in data/findings.yaml.
  *
  * Nothing needs an account. A machine sends a random token it keeps (X-Machine-Token)
  * and is stored by that token's SHA-256, so its later runs replace its earlier ones in
  * the counts and only it can add to its own runs. Every result says how it was found:
- * measured by the probe, confirmed by the owner, or the agent's own reading. The pages
+ * measured by the test, confirmed by the owner, or the agent's own reading. The pages
  * show the three apart, so an agent's guess never reads as a measurement.
  *
  * The routes are listed in worker/routes.ts and described for people at /docs/api.
@@ -106,7 +106,7 @@ type OwnerCheck = {
   machines: number;
   states: Record<string, number>;
   how: Record<string, number>;
-  // `os` says which system the result was seen on: the probe also runs on other distros, and a result from
+  // `os` says which system the result was seen on. hw-test also runs on other distros, and a result from
   // one shows a part can work, not that it does on Omarchy
   latest: { state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; os: string | null; created: string; run: string }[];
   // Machines whose newest result turned from working to not, or the other way, with the kernels on both sides
@@ -121,7 +121,7 @@ const NEWEST_FIRST = 'ORDER BY runs.created DESC, runs.rowid DESC';
 
 /**
  * Each machine's newest result per check, counted per check. A newer run replaces
- * the same machine's older one, so one owner running the probe ten times counts once.
+ * the same machine's older one, so one owner running the test ten times counts once.
  * The older results still say when something changed: a machine that reported a check
  * working and now reports it broken is a regression, with the kernels on both sides.
  */
@@ -140,8 +140,8 @@ function summarize(rows: ResultRow[]) {
   const picked: { row: ResultRow; older: ResultRow[] }[] = [];
   for (const list of history.values()) {
     // The newest result counts, with one exception: a later measurement that merely finds a
-    // thing working doesn't take back what the owner reported as failing. The probe measures
-    // "it slept once"; the owner saw the second sleep crash. The owner's result stands until
+    // thing working doesn't take back what the owner reported as failing. The test measures
+    // "it slept once", and the owner saw the second sleep crash. The owner's result stands until
     // the owner tests that again.
     let at = 0;
     if (list[0].how === 'measured' && good(list[0].state)) {
@@ -670,7 +670,7 @@ function parseResults(value: unknown): Result[] | string {
     if (seen.has(check)) return `${check} appears twice.`;
     seen.add(check);
     if (!STATES.includes(state as never)) return `${check}: state must be one of ${STATES.join(', ')}.`;
-    if (!HOW.includes(how as never)) return `${check}: how must be measured (the probe saw it), owner (the owner saw or heard it) or agent (your own reading of logs or output).`;
+    if (!HOW.includes(how as never)) return `${check}: how must be measured (the test saw it), owner (the owner saw or heard it) or agent (your own reading of logs or output).`;
     out.push({ check, state: state as string, how: how as string, note: typeof note === 'string' ? clean(note, 600) : null, evidence: typeof evidence === 'string' ? clean(evidence, 400) : null });
   }
   return out;

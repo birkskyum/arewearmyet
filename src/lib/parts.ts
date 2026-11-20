@@ -41,8 +41,8 @@ function seen(model: Machine): Map<string, Seen> {
   const boots = ['stable', 'rc', 'edge'].includes(model.bootable ?? '');
   for (const row of modelChecks(model)) {
     const title = row.title;
-    // Owners' results come from hw-test on Omarchy and from the probe on other distros. Only the first
-    // say how the part does on Omarchy. The others are a hint, like any finding from elsewhere
+    // Owners' results come from hw-test, on Omarchy and now and then on another distro. Only those from
+    // Omarchy say how the part does there. The others are a hint, like any finding from elsewhere
     const latest = (measured[row.id]?.latest ?? []).filter((r) => r.state !== 'untested');
     const here = latest.filter(onOmarchy);
     if (here.length) {

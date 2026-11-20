@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# Test stand-in for `bluetoothctl show`
-cat "$PROBE_ROOT/cmd/bluetoothctl-show" 2>/dev/null

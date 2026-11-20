@@ -19,8 +19,6 @@ It opens on a menu of what it can test on your computer, with where each part st
 
 `hw-test` says at its start when a newer release is out, and `hw-test update` gets it. `hw-test version` prints the one you have. Releases are on [GitHub](https://github.com/birkskyum/arewearmyet/releases), built for Linux on ARM and on x86.
 
-On a distro other than Omarchy, [the probe](https://arewearmyet.com/docs/help#probe) does the quick check.
-
 ## Commands
 
 | Command | What it does |

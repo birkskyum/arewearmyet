@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# Test stand-in for `systemd-analyze chid`: the fixture's hardware IDs
-[ "${1:-}" = chid ] && cat "$PROBE_ROOT/cmd/chids" 2>/dev/null

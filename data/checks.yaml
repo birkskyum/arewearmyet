@@ -1,10 +1,10 @@
 # What "supported" means past booting, as one list of checks for every Snapdragon PC.
 #
-#   id        stable key, used by the probe script, the API and data/findings.yaml
+#   id        stable key, used by hw-test, the API and data/findings.yaml
 #   group     the heading it sits under on a model page
 #   title     what's checked, as a short label
 #   works     what has to be true for it to count as working
-#   probe     what probe.sh measures for it, when it can measure anything. A probe
+#   probe     what hw-test measures for it by itself, when it can measure anything. That
 #             alone never marks a check as working where a person has to see or hear it
 #   person    what the owner does to check it, for the parts no command can see
 #   optional  true when not every model has the hardware (touchscreen, modem, ...)

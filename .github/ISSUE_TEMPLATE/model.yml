@@ -64,10 +64,10 @@ body:
       placeholder: Omarchy RC, Ubuntu 26.10, Fedora 44
 
   - type: input
-    id: probe
+    id: run
     attributes:
-      label: Test run (Linux)
-      description: If Linux boots on it, run the test instead of listing what works by hand, and give the run it prints. On Omarchy that is `omarchy-mise-install github:birkskyum/arewearmyet hw-test` and then `hw-test`. On another distro it is `curl -fsSL https://arewearmyet.com/probe.sh | bash`. It checks the screen, GPU, Wi-Fi, sound, battery, sleep and more, and shows on the model's page.
+      label: Test run (Omarchy)
+      description: If Omarchy boots on it, run the test instead of listing what works by hand, and give the run it prints. That is `omarchy-mise-install github:birkskyum/arewearmyet hw-test` and then `hw-test`. It checks the screen, GPU, Wi-Fi, sound, battery, sleep and more, and shows on the model's page.
       placeholder: RUN-K7Q2M9XH4P
 
   - type: dropdown

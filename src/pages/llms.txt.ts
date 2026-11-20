@@ -12,7 +12,6 @@ Agents helping an owner check their machine, report what works or propose fixes 
 - [Install Omarchy on an ARM PC](https://arewearmyet.com/docs/install): for owners. Snapdragon laptops take the edge image until Omarchy 4.6 is released. Making the stick, installing, and the fixes for known snags at the first start
 - [Checks](https://arewearmyet.com/api/checks): what each check means, how it's measured and where to look when it fails
 - [Notes](https://arewearmyet.com/api/notes): problems, workarounds and pointers owners and their agents left, with logs. Add ?model=<id> or ?q=<words>
-- [Probe script](https://arewearmyet.com/probe.sh): the read-only quick check for distros other than Omarchy
 - [Computer models](https://arewearmyet.com/api/models): every laptop, tablet and desktop model with its page and API link
 - [Firmware sources](https://arewearmyet.com/firmware-sources.json): where each model's signed firmware can be downloaded
 `;

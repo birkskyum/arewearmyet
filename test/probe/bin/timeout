@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-# Test stand-in: runs the command without the time limit, past timeout's own options
-while [ $# -gt 0 ]; do
-  case "$1" in -s|-k) shift 2 ;; -*) shift ;; *) break ;; esac
-done
-shift
-exec "$@"

@@ -1,4 +1,4 @@
-// data/checks.yaml as JSON, served as GET /api/checks: what each check means, what the probe measures and what the owner does.
+// data/checks.yaml as JSON, served as GET /api/checks: what each check means, what the test measures and what the owner does.
 import { CHECKS, GROUPS } from '../../lib/checks';
 
 export function GET() {

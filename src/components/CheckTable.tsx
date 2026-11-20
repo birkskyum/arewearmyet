@@ -61,7 +61,7 @@ export default function CheckTable(props: { model: string; groups: { id: string;
     setLive(data);
     setState(data ? 'done' : 'failed');
   });
-  // A result counts here when it was measured on Omarchy. The probe also runs on other distros,
+  // A result counts here when it was measured on Omarchy. hw-test also runs on other distros,
   // and what it finds there says little about this model on Omarchy
   const onOmarchy = (r: { os?: string | null; kernel: string | null }) => (r.os ? /^omarchy/i.test(r.os) : /-omarchy/.test(r.kernel ?? ''));
   const owner = (id: string): Owner | undefined => {

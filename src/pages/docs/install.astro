@@ -14,16 +14,6 @@ const OMARCHY = 'https://github.com/omacom/omarchy';
 const models = pageModels();
 const starts = models.filter(edgeStarts).length;
 
-// The models Omarchy has a fix for, read from install/hardware on its quattro branch
-const UNLOCK_FIXED = [
-  'ASUS Vivobook S 15 (S5507QA) and S 16 (S3607QA)',
-  'ASUS Zenbook 14 (UX3480QA), Zenbook A14 (UX3407QA, UX3407RA) and Zenbook A16 (UX3607OA)',
-  'Acer Aspire 16 AI (A16-11M)',
-  'HP OmniBook X 14 (14-fe0)',
-  'Lenovo IdeaCentre Mini (01Q8X10) and IdeaPad Slim 5x',
-  'Microsoft Surface Pro 11, Surface Laptop 7 15-inch and Surface Laptop 8',
-  'Every Snapdragon X2 machine (Glymur, Mahua and Kalambo chips)',
-];
 // The page's sections, for the list beside it
 const SECTIONS = [
   { id: 'before', text: 'Before you start', depth: 2 },
@@ -157,14 +147,10 @@ hw-test</code></pre>
         <li>
           <strong>Update and restart.</strong> Omarchy fixes this model by model, and the update applies the fix to a computer that is already installed.
           <pre><code>omarchy update</code></pre>
-          On 19 November 2026 Omarchy's edge channel has the fix for:
-          <ul>
-            {UNLOCK_FIXED.map((name) => <li>{name}</li>)}
-          </ul>
-          <p>The Lenovo Yoga Slim 7x shows its prompt without one.</p>
+          <p>Your model's page on <a href="/?view=hardware">the board</a> says, under Disk password prompt, whether the prompt shows on it.</p>
         </li>
         <li>
-          <strong>Still black, or your model isn't listed?</strong> Then nobody has made the fix for it yet, and you can. Your AI agent can do it with you:
+          <strong>Still black after the update?</strong> Then nobody has made the fix for your model yet, and you can. Your AI agent can do it with you:
           <pre><code>hw-test fix disk-unlock</code></pre>
           It gets what is known about the fault, how to change the laptop safely, and how to send the fix to Omarchy so every owner of the model gets it.
         </li>
