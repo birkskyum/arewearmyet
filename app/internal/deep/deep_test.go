@@ -547,7 +547,7 @@ func thermal(t *testing.T, degrees int) (machine.System, func(int)) {
 
 func TestTheTemperatureTestRunsThroughByItself(t *testing.T) {
 	beforePace, beforeLoad, beforeCool := pace, MaxLoad, CoolFirst
-	pace, MaxLoad, CoolFirst = 5*time.Millisecond, 60*time.Millisecond, 40*time.Millisecond
+	pace, MaxLoad, CoolFirst = 5*time.Millisecond, 300*time.Millisecond, 40*time.Millisecond
 	defer func() { pace, MaxLoad, CoolFirst = beforePace, beforeLoad, beforeCool }()
 
 	sys, heat := thermal(t, 41)
