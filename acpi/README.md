@@ -9,7 +9,7 @@ values and can differ from a running machine where the firmware fills fields in 
 dumps published here first. Each folder's SOURCE.md says where its tables came from. The SoC serial number (SOSN)
 is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. Disassemble a table with `iasl -d`.
 
-95 of 117 models have at least one dump.
+98 of 118 models have at least one dump.
 
 | Model | Dumps |
 | --- | --- |
@@ -23,7 +23,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | ASUS V400 AiO (VM471QA) | [firmware/asus-v400-aio-vm471qa](firmware/asus-v400-aio-vm471qa) |
 | ASUS Vivobook 14 | [hardware-reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa](../reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa), [firmware/asus-vivobook-14-x1407qa](firmware/asus-vivobook-14-x1407qa) |
 | ASUS Vivobook S 15 | [asus-vivobook-s-15](aarch64-laptops/asus-vivobook-s-15), [asus-vivobook-s15-q5507](aarch64-laptops/asus-vivobook-s15-q5507), [asus-vivobook-s15-s5507](aarch64-laptops/asus-vivobook-s15-s5507) |
-| ASUS Vivobook S14 (S3407QA) | [arewearmyet/asus-vivobook-s14-s3407qa](asus-vivobook-s14-s3407qa) |
+| ASUS Vivobook S14 (S3407QA) | [arewearmyet/asus-vivobook-s14-s3407qa](asus-vivobook-s14-s3407qa), [hardware-reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa](../reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa) |
 | ASUS Vivobook S14 (S5408QA) | [firmware/asus-vivobook-s14-s5408qa](firmware/asus-vivobook-s14-s5408qa) |
 | ASUS Vivobook S14 Flip | [firmware/asus-vivobook-s14-flip-tp5408qa](firmware/asus-vivobook-s14-flip-tp5408qa) |
 | ASUS Vivobook S16 (S3607QA) | [hardware-reports/asustek-computer-inc/asus-vivobook-s-16-s3607qa-s3607qa](../reports/asustek-computer-inc/asus-vivobook-s-16-s3607qa-s3607qa) |
@@ -45,15 +45,17 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | Honor MagicBook Art 14 | [honor-mro-521](aarch64-laptops/honor-mro-521), [honor-magicbook-art-14](aarch64-laptops/honor-magicbook-art-14) |
 | HP EliteBook 6 G1q | [hp-elitebook-6-g1q](aarch64-laptops/hp-elitebook-6-g1q) |
 | HP EliteBook Ultra G1q | [hp-elitebook-ultra-g1q](aarch64-laptops/hp-elitebook-ultra-g1q) |
+| HP OmniBook 3 14 | [hardware-reports/hp/hp-omnibook-3-laptop-14-hz0xxx](../reports/hp/hp-omnibook-3-laptop-14-hz0xxx) |
 | HP OmniBook 3 16 (16-bz0) | [hardware-reports/hp/hp-omnibook-3-laptop-16-bz0xxx](../reports/hp/hp-omnibook-3-laptop-16-bz0xxx) |
 | HP OmniBook 3 16 (16-ct0) | [firmware/hp-omnibook-3-16-ct0](firmware/hp-omnibook-3-16-ct0) |
 | HP OmniBook 5 14 | [hp-omnibook-5-14-he0xxx](aarch64-laptops/hp-omnibook-5-14-he0xxx), [hardware-reports/hp/hp-omnibook-5-laptop-14-he0xxx](../reports/hp/hp-omnibook-5-laptop-14-he0xxx) |
-| HP OmniBook X 14 | [hp-omnibook-x14-fe0xxx](aarch64-laptops/hp-omnibook-x14-fe0xxx) |
+| HP OmniBook X 14 | [hp-omnibook-x14-fe0xxx](aarch64-laptops/hp-omnibook-x14-fe0xxx), [hardware-reports/hp/hp-omnibook-x-laptop-14-fe0xxx](../reports/hp/hp-omnibook-x-laptop-14-fe0xxx) |
 | HP EliteBook 6 G2q | [firmware/hp-elitebook-6-g2q](firmware/hp-elitebook-6-g2q) |
 | HP OmniBook 5 14 (2026) | [firmware/hp-omnibook-5-14-he1](firmware/hp-omnibook-5-14-he1) |
 | HP OmniBook Ultra 14 | [arewearmyet/hp-omnibook-ultra-14-kg0](hp-omnibook-ultra-14-kg0) |
 | HP OmniBook X 14 (14-kr0) | [firmware/hp-omnibook-x-14-kr0](firmware/hp-omnibook-x-14-kr0) |
 | HP OmniBook X 16 (16-cp0) | [firmware/hp-omnibook-x-14-kr0](firmware/hp-omnibook-x-14-kr0) |
+| HP OmniBook X 14 (2026) | [hardware-reports/hp/hp-omnibook-x-laptop-14-kr1xxx](../reports/hp/hp-omnibook-x-laptop-14-kr1xxx) |
 | Lenovo IdeaCentre Mini x | [lenovo-ideacentre-01q8x10](aarch64-laptops/lenovo-ideacentre-01q8x10) |
 | Lenovo IdeaPad 5x 2-in-1 | [lenovo-ideapad-5-2in1-83GH-14Q8X9](aarch64-laptops/lenovo-ideapad-5-2in1-83GH-14Q8X9) |
 | Lenovo IdeaPad Slim 3x | [lenovo-ideapad-slim3x-15q8x10-WCN7850](aarch64-laptops/lenovo-ideapad-slim3x-15q8x10-WCN7850) |
@@ -82,6 +84,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | Qualcomm Snapdragon Dev Kit for Windows | [qualcomm-snapdragon-dev-kit](aarch64-laptops/qualcomm-snapdragon-dev-kit) |
 | Samsung Galaxy Book4 Edge 16 | [hardware-reports/samsung-electronics-co-ltd/galaxy-book4-edge/a220b319](../reports/samsung-electronics-co-ltd/galaxy-book4-edge/a220b319) |
 | Samsung Galaxy Book4 Edge 14 | [samsung-galaxybook4-edge](aarch64-laptops/samsung-galaxybook4-edge) |
+| Samsung Galaxy Book6 Edge 16 | [hardware-reports/samsung/galaxy-book6-edge-palf](../reports/samsung/galaxy-book6-edge-palf) |
 | Huawei MateBook E Go | [huawei-matebooke-go](aarch64-laptops/huawei-matebooke-go) |
 | Lenovo ThinkPad X13s | [lenovo-thinkpad-x13s](aarch64-laptops/lenovo-thinkpad-x13s) |
 | Microsoft Surface Pro 9 5G | [microsoft-surface-pro-9-5G](aarch64-laptops/microsoft-surface-pro-9-5G), [linux-surface/surface_pro_9_5g](linux-surface/surface_pro_9_5g) |
@@ -100,7 +103,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | Lenovo IdeaPad 5G | [lenovo-ideapad-5g](aarch64-laptops/lenovo-ideapad-5g), [lenovo-ideapad-5g-14q8x05](aarch64-laptops/lenovo-ideapad-5g-14q8x05) |
 | Lenovo Miix 630 | [lenovo-miix-630](aarch64-laptops/lenovo-miix-630) |
 | Lenovo Yoga C630 | [lenovo-yoga-c630](aarch64-laptops/lenovo-yoga-c630) |
-| Microsoft Surface Pro X | [microsoft-surface-prox](aarch64-laptops/microsoft-surface-prox), [linux-surface/surface_pro_x_sq1](linux-surface/surface_pro_x_sq1), [linux-surface/surface_pro_x_sq2](linux-surface/surface_pro_x_sq2) |
+| Microsoft Surface Pro X | [microsoft-surface-prox](aarch64-laptops/microsoft-surface-prox), [linux-surface/surface_pro_x_sq1](linux-surface/surface_pro_x_sq1), [linux-surface/surface_pro_x_sq2](linux-surface/surface_pro_x_sq2), [hardware-reports/microsoft-corporation/surface-pro-x](../reports/microsoft-corporation/surface-pro-x) |
 | Samsung Galaxy Book2 | [samsung-galaxybook2](aarch64-laptops/samsung-galaxybook2) |
 | Samsung Galaxy Book2 Go | [samsung-galaxybook2-go](aarch64-laptops/samsung-galaxybook2-go) |
 | Samsung Galaxy Book Go | [samsung-galaxy-book-go](aarch64-laptops/samsung-galaxy-book-go) |
@@ -117,12 +120,10 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 - ASUS ProArt PZ13
 - ASUS Vivobook 16
 - Fujitsu FMV Note U
-- HP OmniBook 3 14
 - HP OmniBook 5 16
 - HP ProBook 4 G1q
 - HP EliteBook X G2q
 - HP OmniBook 5 16 (2026)
-- HP OmniBook X 14 (2026)
 - HP OmniBook X 16 (2026)
 - HUMAIN Horizon
 - HUMAIN Horizon Pro
@@ -131,14 +132,5 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 - Microsoft Surface Laptop 13-inch
 - Samsung Galaxy Book4 Edge 15
 - Samsung Galaxy Book5 Edge 5G
-- Samsung Galaxy Book6 Edge 16
+- Samsung Galaxy Book6 Edge 5G
 - HYRICAN Study Pad One
-
-## Not matched to a model yet
-
-- [hardware-reports/hp/hp-omnibook-x-laptop-14-fe0xxx](../reports/hp/hp-omnibook-x-laptop-14-fe0xxx)
-- [hardware-reports/samsung/galaxy-book6-edge-palf](../reports/samsung/galaxy-book6-edge-palf)
-- [hardware-reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa](../reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa)
-- [hardware-reports/microsoft-corporation/surface-pro-x](../reports/microsoft-corporation/surface-pro-x)
-- [hardware-reports/hp/hp-omnibook-x-laptop-14-kr1xxx](../reports/hp/hp-omnibook-x-laptop-14-kr1xxx)
-- [hardware-reports/hp/hp-omnibook-3-laptop-14-hz0xxx](../reports/hp/hp-omnibook-3-laptop-14-hz0xxx)
