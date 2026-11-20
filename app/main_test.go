@@ -3,6 +3,8 @@ package main
 import (
 	"bufio"
 	"encoding/json"
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"strings"
@@ -175,5 +177,57 @@ func TestOneResultCanSayThePartIsNotThere(t *testing.T) {
 	}
 	if code := tell(&report.Run{Model: "lenovo-yoga-slim-7x-14q8x9"}, "http://127.0.0.1:1", "headphones", "missing", "agent", "No jack.", "", false); code != 2 {
 		t.Errorf("an unknown state was taken, with exit code %d", code)
+	}
+}
+
+// That a part works because of a change is said of a part that works here, at least partly, and
+// what was recorded on the site can be read back on the computer
+func TestANeedIsForAPartThatWorksAndIsKept(t *testing.T) {
+	t.Setenv("XDG_STATE_HOME", t.TempDir())
+	run := &report.Run{Model: "lenovo-yoga-slim-7x-14q8x9", Kernel: "7.3.0-73-omarchy"}
+	// No result yet, then a broken one
+	if code := need(run, "http://127.0.0.1:1", "suspend", "The kernel option x.", "agent", false, false); code != 2 {
+		t.Errorf("a need for an untested part ended with %d", code)
+	}
+	if code := tell(&report.Run{Model: run.Model}, "http://127.0.0.1:1", "suspend", report.Broken, report.Owner, "It never wakes.", "", false); code != 0 {
+		t.Fatal(code)
+	}
+	if code := need(run, "http://127.0.0.1:1", "suspend", "The kernel option x.", "agent", false, false); code != 2 {
+		t.Errorf("a need for a broken part ended with %d", code)
+	}
+	if code := need(run, "http://127.0.0.1:1", "no-such-check", "The kernel option x.", "agent", false, false); code != 2 {
+		t.Errorf("a need for no check ended with %d", code)
+	}
+	if code := tell(&report.Run{Model: run.Model}, "http://127.0.0.1:1", "suspend", report.Works, report.Owner, "It wakes every time now.", "", false); code != 0 {
+		t.Fatal(code)
+	}
+	if code := need(run, "http://127.0.0.1:1", "suspend", "The kernel option x.", "measured", false, false); code != 2 {
+		t.Errorf("a need said to be measured ended with %d", code)
+	}
+	if code := need(run, "http://127.0.0.1:1", "suspend", "The kernel option x.", "agent", true, false); code != 0 {
+		t.Errorf("a need for a working part, not sent, ended with %d", code)
+	}
+	// Sent to a site that takes it, it is kept, and taken back it is gone
+	var got []report.Need
+	site := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var body report.Need
+		_ = json.NewDecoder(r.Body).Decode(&body)
+		got = append(got, body)
+		w.WriteHeader(http.StatusCreated)
+		_, _ = w.Write([]byte(`{"page": "https://arewearmyet.com/models/lenovo-yoga-slim-7x-14q8x9"}`))
+	}))
+	defer site.Close()
+	if code := need(run, site.URL, "suspend", "The kernel option x, MAC aa:bb:cc:dd:ee:ff.", "agent", true, true); code != 0 {
+		t.Fatalf("sending ended with %d", code)
+	}
+	want := report.Need{Check: "suspend", Text: "The kernel option x, MAC xx:xx:xx:xx:xx:xx.", How: "agent", Proved: true, Kernel: "7.3.0-73-omarchy"}
+	if len(got) != 1 || got[0] != want || report.Needs()["suspend"] != want {
+		t.Errorf("sent %+v, kept %+v", got, report.Needs())
+	}
+	if code := need(run, site.URL, "suspend", "none", "agent", false, true); code != 0 {
+		t.Fatalf("taking back ended with %d", code)
+	}
+	if len(report.Needs()) != 0 || got[1].Text != "" {
+		t.Errorf("after taking back: sent %+v, kept %+v", got[1], report.Needs())
 	}
 }

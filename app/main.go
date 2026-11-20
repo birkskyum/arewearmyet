@@ -25,6 +25,7 @@ import (
 	"os/user"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -206,20 +207,45 @@ func main() {
 	// It is printed and never sent
 	if command == "changes" {
 		found := probe.FindChanges(machine.Real(), run)
+		// What the running test device tree changes is kept beside it by hw-test tree
+		if diff := filepath.Join(guided.Workspace(), "tree.diff"); run.Setup != nil && run.Setup.TestTree {
+			if _, err := os.Stat(diff); err == nil {
+				found.TreeDiff = diff
+			}
+		}
+		recorded := report.Needs()
 		if *jsonOnly {
-			data, _ := json.MarshalIndent(found, "", "  ")
+			data, _ := json.MarshalIndent(struct {
+				probe.Changes
+				Recorded map[string]report.Need `json:"recorded,omitempty"`
+			}{found, recorded}, "", "  ")
 			fmt.Println(string(data))
 			return
 		}
 		if found.Empty() {
-			fmt.Println("Nothing here changes the hardware that Omarchy didn't install, as far as files show it.")
-			return
+			fmt.Println("Nothing here changes the hardware that Omarchy didn't install, as far as files show it. The kernel, its modules and its options are Omarchy's own.")
+		} else {
+			fmt.Println("On this computer, and not from Omarchy:")
+			for _, line := range found.Lines() {
+				fmt.Println("  " + line)
+			}
+			fmt.Println("\nThis list stays on the computer. It covers the kernel, settings files for kernel modules, device rules, sound and browser switches, and firmware and sound profile files. hw-test report --check ID --needs TEXT records which part works because of one of them.")
 		}
-		fmt.Println("On this computer, and not from Omarchy:")
-		for _, line := range found.Lines() {
-			fmt.Println("  " + line)
+		if len(recorded) > 0 {
+			fmt.Println("\nRecorded on the site for this computer:")
+			checks := make([]string, 0, len(recorded))
+			for check := range recorded {
+				checks = append(checks, check)
+			}
+			sort.Strings(checks)
+			for _, check := range checks {
+				proved := ""
+				if recorded[check].Proved {
+					proved = " (proved)"
+				}
+				fmt.Printf("  %s needs: %s%s\n", check, recorded[check].Text, proved)
+			}
 		}
-		fmt.Println("\nThis list stays on the computer. hw-test report --check ID --needs TEXT records which part works because of one of them.")
 		return
 	}
 
@@ -415,7 +441,7 @@ func tell(run *report.Run, api, check, state, how, note, evidence string, send b
 		return 2
 	}
 	if checks, unknown := guided.ChecksFor([]string{check}); check == "" || len(unknown) > 0 || len(checks) != 1 || checks[0] != check {
-		return fail("report needs --check with a check's id, like suspend. hw-test status lists them.")
+		return fail("report needs --check with a check's id, like suspend. hw-test status --json lists them.")
 	}
 	// absent is for a part the computer turns out not to have, like a headphone jack on a laptop with
 	// only USB-C ports. It takes back a "broken" that was recorded for it
@@ -462,7 +488,7 @@ func need(run *report.Run, api, check, text, how string, proved, send bool) int 
 		return 2
 	}
 	if checks, unknown := guided.ChecksFor([]string{check}); check == "" || len(unknown) > 0 || len(checks) != 1 || checks[0] != check {
-		return fail("report needs --check with a check's id, like suspend. hw-test status lists them.")
+		return fail("report needs --check with a check's id, like suspend. hw-test status --json lists them.")
 	}
 	if how != report.Owner && how != "agent" {
 		return fail("--how is owner (they told you) or agent (your own reading of the files).")
@@ -473,6 +499,14 @@ func need(run *report.Run, api, check, text, how string, proved, send bool) int 
 	}
 	if text == "" && proved {
 		return fail("--proved goes with a sentence in --needs.")
+	}
+	// A need is said of a part that works here, at least partly. For one that doesn't, a note is the place
+	if latest, tested := report.Local()[check]; text != "" && (!tested || (latest.State != report.Works && latest.State != report.Partial)) {
+		state := "has no result on this computer yet"
+		if tested {
+			state = "is recorded as " + latest.State + " on this computer"
+		}
+		return fail(check + " " + state + ". --needs is for a part that works, at least partly, because of a change. Test the part first, or write what you found as a note with hw-test note --kind workaround --check " + check + ".")
 	}
 	record := report.Need{Check: check, Text: text, How: how, Proved: proved, Kernel: run.Kernel}
 	if !send {

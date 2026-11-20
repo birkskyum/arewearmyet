@@ -30,7 +30,7 @@ It opens on a menu of what it can test on your computer, with where each part st
 | `hw-test STEP...` | One part alone, or a few, like `hw-test camera` or `hw-test wifi bluetooth`. Only those parts are reported |
 | `hw-test status` | The latest result of every check on this computer. Nothing is run |
 | `hw-test facts` | The devices the test found to work with. Nothing is sent |
-| `hw-test changes` | What was changed on this computer for its hardware, as far as files show it. That is your own settings files for kernel modules, device rules and sound, firmware and sound profile files that no package holds, and changed files of hardware packages. It is for an agent to judge. Nothing is sent. `--json` prints it as data |
+| `hw-test changes` | What was changed on this computer for its hardware, as far as files show it. That is the kernel, its modules and its options, your own settings files for kernel modules, device rules and sound, browser switches that differ from Omarchy's, firmware and sound profile files that no package holds, and changed files of hardware packages. It also lists what this computer has recorded with `--needs`. It is for an agent to judge. Nothing is sent. `--json` prints it as data, with `sent` (what a report names), `settings` (each file's `path` and what it `does`), `placed`, `altered`, `packages`, `treeDiff` and `recorded` |
 
 ### Steps
 
@@ -150,7 +150,7 @@ These commands let an agent run the test without the owner passing results back 
 | `hw-test ask STEP...` | Opens a step that takes the owner in a window on their desktop, waits up to half an hour, and prints the result as JSON |
 | `hw-test ask update` | Opens Omarchy's update in a window for the owner, who confirms it there, and prints how it ended as JSON, with whether it finished, which packages moved, whether a restart is due, and the last lines of its log. It refuses, with the reasons, where an update would do harm. That is while a test boot entry stands, when the running kernel is not Omarchy's own, or when a kernel, device tree or firmware package was built on the computer |
 | `hw-test report --check ID --state works\|partial\|broken\|absent --note TEXT` | Sends a report of one result that no test measured. `absent` is for a part the computer turns out not to have. `--how owner` (the default) is what the owner saw, `--how agent` a reading of logs. `--evidence` holds the line of output that shows it |
-| `hw-test report --check ID --needs TEXT` | Says that the part works on this computer because of a change made on it, in one sentence, like "The kernel option gpiolib_acpi.ignore_wake, which keeps the lid sensor from waking it." It shows under that computer's result and stays until taken back with `--needs none`. `--proved` says that switching the change off and measuring the part again showed it. `--how` is as above |
+| `hw-test report --check ID --needs TEXT` | Says that the part works on this computer because of a change made on it, in one sentence, like "The kernel option gpiolib_acpi.ignore_wake, which keeps the lid sensor from waking it." It shows under that computer's result and stays until taken back with `--needs none`. `--proved` says that switching the change off and measuring the part again showed it. `--how` is as above. It is refused for a part with no working result on this computer |
 
 `hw-test status --json` gives an object with one entry per check.
 

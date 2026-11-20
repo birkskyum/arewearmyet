@@ -7,6 +7,8 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 	"time"
@@ -80,13 +82,37 @@ type Need struct {
 	Kernel string `json:"kernel,omitempty"`
 }
 
-// SendNeed records a need on the site, or takes it back when its text is empty.
+// SendNeed records a need on the site, or takes it back when its text is empty, and keeps what
+// stands on this computer too, so it can be read back.
 func SendNeed(api string, need Need) (NoteSent, error) {
 	token, err := Token()
 	if err != nil {
 		return NoteSent{}, err
 	}
-	return post(api+"/api/needs", token, need)
+	sent, err := post(api+"/api/needs", token, need)
+	if err != nil {
+		return sent, err
+	}
+	kept := Needs()
+	if need.Text == "" {
+		delete(kept, need.Check)
+	} else {
+		kept[need.Check] = need
+	}
+	if data, err := json.MarshalIndent(kept, "", "  "); err == nil {
+		_ = os.MkdirAll(stateDir(), 0o700)
+		_ = os.WriteFile(filepath.Join(stateDir(), "needs.json"), data, 0o600)
+	}
+	return sent, nil
+}
+
+// Needs are the needs this computer has recorded on the site and not taken back, by check.
+func Needs() map[string]Need {
+	kept := map[string]Need{}
+	if data, err := os.ReadFile(filepath.Join(stateDir(), "needs.json")); err == nil {
+		_ = json.Unmarshal(data, &kept)
+	}
+	return kept
 }
 
 // Solve marks a problem written from this machine as solved, or open again.

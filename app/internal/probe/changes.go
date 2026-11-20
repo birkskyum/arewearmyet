@@ -34,6 +34,8 @@ type Changes struct {
 	// Packages come from no repository and hold kernel modules for the running kernel, firmware
 	// or sound profiles
 	Packages []string `json:"packages,omitempty"`
+	// TreeDiff is the file that holds what the running test device tree changes, when it is there
+	TreeDiff string `json:"treeDiff,omitempty"`
 }
 
 // SettingsFile is one settings file of the owner's, with what it does as far as the test reads it.
@@ -70,6 +72,12 @@ var alterable = []string{"alsa-ucm-conf", "wireplumber", "pipewire", "libcamera"
 
 // What Omarchy's own scripts and its firmware copy are, on a computer
 var omarchyFolders = []string{"/usr/share/omarchy/install", "/usr/share/omarchy/bin", "/usr/share/omarchy/migrations", "/usr/share/omarchy/default", "/usr/share/omarchy/config"}
+
+// Omarchy's own copy of the settings it puts into a home folder, at the same path under it
+const omarchyConfig = "/usr/share/omarchy/config"
+
+// homeFolder is the owner's home folder
+var homeFolder = os.UserHomeDir
 
 const (
 	firmwareCopy     = "/usr/bin/qcom-firmware-extract"
@@ -153,17 +161,48 @@ func FindChanges(sys machine.System, run *report.Run) Changes {
 			}
 		}
 	}
-	sound := soundFolders
-	if home, err := os.UserHomeDir(); err == nil && sys.Root == "" {
-		sound = append(append([]string{}, sound...), home+"/.config/wireplumber", home+"/.config/pipewire")
-	}
-	for _, folder := range sound {
+	for _, folder := range soundFolders {
 		for _, path := range sys.Files(folder, 200) {
 			if !held[path] && strings.HasSuffix(path, ".conf") {
 				loose = append(loose, file{path, "sound"})
 			}
 		}
 	}
+	// Settings in the home folder. Omarchy puts its own there by copying them, so a file that is
+	// the same as Omarchy's copy is Omarchy's, and one that differs was changed by the owner
+	var changed []SettingsFile
+	if home, err := homeFolder(); err == nil {
+		config := home + "/.config"
+		var mine []file
+		for _, folder := range []string{config + "/wireplumber", config + "/pipewire"} {
+			for _, path := range sys.Files(folder, 200) {
+				if strings.HasSuffix(path, ".conf") {
+					mine = append(mine, file{path, "sound"})
+				}
+			}
+		}
+		// The switches a browser starts with decide what it does with the graphics chip, the camera
+		// and video decoding
+		for _, path := range sys.Glob(config + "/*-flags.conf") {
+			mine = append(mine, file{path, "browser"})
+		}
+		for _, f := range mine {
+			own := omarchyConfig + strings.TrimPrefix(f.path, config)
+			switch {
+			case !sys.Exists(own):
+				loose = append(loose, f)
+			case sys.ReadAll(own) != sys.ReadAll(f.path):
+				does := []string{"differs from Omarchy's own copy, " + own}
+				if f.holds == "browser" {
+					if added := Switches(sys.ReadAll(f.path), sys.ReadAll(own)); len(added) > 0 {
+						does = append(does, "adds the browser switches "+strings.Join(added, ", "))
+					}
+				}
+				changed = append(changed, SettingsFile{Path: f.path, Does: does})
+			}
+		}
+	}
+	found.Settings = changed
 	if len(loose) == 0 {
 		return found
 	}
@@ -203,6 +242,10 @@ func FindChanges(sys machine.System, run *report.Run) Changes {
 			for _, key := range SoundSettings(text) {
 				does = add(does, "sets the sound setting "+key, nil, 20)
 			}
+		case "browser":
+			if added := Switches(text, ""); len(added) > 0 {
+				does = append(does, "starts the browser with "+strings.Join(added, ", "))
+			}
 		}
 		found.Settings = append(found.Settings, SettingsFile{Path: f.path, Does: does})
 	}
@@ -214,6 +257,13 @@ func (c Changes) Lines() []string {
 	var out []string
 	for _, line := range c.Sent.Lines() {
 		out = append(out, line+" (in the report)")
+	}
+	// Said, so that nothing listed isn't taken for nothing looked at
+	if c.Sent == nil || (c.Sent.Kernel == "" && len(c.Sent.Rebuilt) == 0 && len(c.Sent.Modules) == 0 && len(c.Sent.Options) == 0) {
+		out = append(out, "The kernel, its modules and its options are Omarchy's own")
+	}
+	if c.TreeDiff != "" {
+		out = append(out, c.TreeDiff+", which holds what the test device tree changes")
 	}
 	for _, name := range c.Packages {
 		out = append(out, "package "+name+", from no repository")
@@ -232,6 +282,39 @@ func (c Changes) Lines() []string {
 		out = append(out, what+", changed since its package was installed")
 	}
 	return out
+}
+
+// Switches are the switches a browser's settings file has that Omarchy's own copy doesn't, each
+// by its name, with the features an --enable-features switch adds.
+func Switches(text, omarchys string) []string {
+	have := map[string]bool{}
+	for _, word := range strings.Fields(omarchys) {
+		have[word] = true
+		if name, list, ok := strings.Cut(word, "="); ok {
+			for _, item := range strings.Split(list, ",") {
+				have[name+"="+item] = true
+			}
+		}
+	}
+	var added []string
+	for _, line := range lines(text) {
+		for _, word := range strings.Fields(line) {
+			name, list, valued := strings.Cut(word, "=")
+			if have[word] || !strings.HasPrefix(name, "--") {
+				continue
+			}
+			if !valued || !strings.HasSuffix(name, "-features") {
+				added = add(added, name, nil, 30)
+				continue
+			}
+			for _, item := range strings.Split(list, ",") {
+				if !have[name+"="+item] {
+					added = add(added, name+"="+item, nil, 30)
+				}
+			}
+		}
+	}
+	return added
 }
 
 // ruleWords puts one of Rules into words, like "has a device rule for usb that sets power/control=on".

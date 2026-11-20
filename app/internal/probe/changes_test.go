@@ -94,6 +94,15 @@ func ownersComputer(t *testing.T) (string, []string) {
 	write(t, root, "etc/wireplumber/wireplumber.conf.d/kef-lsx-no-suspend.conf", ownersSound)
 	write(t, root, "usr/lib/firmware/qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn", "x")
 	write(t, root, "usr/share/alsa/ucm2/Qualcomm/x1e80100/mine.conf", "x")
+	// In the home folder: Omarchy's own sound file as it copied it, its browser switches with
+	// some added, and a sound file that is in none of Omarchy's folders
+	write(t, root, "usr/share/omarchy/config/wireplumber/wireplumber.conf.d/bluetooth-a2dp-autoconnect.conf", "monitor.bluez.rules = [ ]\n")
+	write(t, root, "home/owner/.config/wireplumber/wireplumber.conf.d/bluetooth-a2dp-autoconnect.conf", "monitor.bluez.rules = [ ]\n")
+	write(t, root, "usr/share/omarchy/config/chromium-flags.conf", "--ozone-platform=wayland\n--enable-features=TouchpadOverscrollHistoryNavigation\n")
+	write(t, root, "home/owner/.config/chromium-flags.conf", "--ozone-platform=wayland\n# for WebGPU\n--enable-features=TouchpadOverscrollHistoryNavigation,Vulkan,WebGPU\n--enable-unsafe-webgpu\n")
+	write(t, root, "home/owner/.config/pipewire/pipewire.conf.d/rate.conf", "context.properties = { default.clock.rate = 96000 }\n")
+	homeFolder = func() (string, error) { return "/home/owner", nil }
+	t.Cleanup(func() { homeFolder = os.UserHomeDir })
 	return root, []string{"/etc/modprobe.d/omarchy-usb-autosuspend.conf", "/usr/lib/firmware/qcom/a660_sqe.fw.zst"}
 }
 
@@ -113,11 +122,13 @@ func TestChangesAreFoundForTheAgentAndNotSent(t *testing.T) {
 	found := FindChanges(sys, run)
 	want := Changes{
 		Settings: []SettingsFile{
+			{"/home/owner/.config/chromium-flags.conf", []string{"differs from Omarchy's own copy, /usr/share/omarchy/config/chromium-flags.conf", "adds the browser switches --enable-features=Vulkan, --enable-features=WebGPU, --enable-unsafe-webgpu"}},
 			{"/etc/modprobe.d/my-fix.conf", []string{"gives kernel module snd_soc_x1e80100 the option i2s_mode=1", "gives kernel module snd_soc_x1e80100 the option serial=…", "keeps kernel module qcom_spmi_temp_alarm from loading", "keeps kernel module pcspkr from loading"}},
 			{"/etc/modules-load.d/kef-speakers.conf", []string{"loads kernel module scmi-cpufreq at start"}},
 			{"/etc/mkinitcpio.conf.d/mine.conf", []string{"puts kernel module panel_edp into the boot image", "puts kernel module msm into the boot image"}},
 			{"/etc/udev/rules.d/99-yubikey.rules", []string{"has a device rule for usb that sets power/control=on", "has a device rule for usb that runs a program", "has a device rule for input that sets LIBINPUT_IGNORE_DEVICE", "has a device rule for input that changes who may use it", "has a device rule that changes who may use it", "has a device rule that sets serial"}},
 			{"/etc/wireplumber/wireplumber.conf.d/kef-lsx-no-suspend.conf", []string{"sets the sound setting api.alsa.headroom", "sets the sound setting session.suspend-timeout-seconds"}},
+			{"/home/owner/.config/pipewire/pipewire.conf.d/rate.conf", []string{"sets the sound setting default.clock.rate"}},
 		},
 		Placed:  []string{"/usr/lib/firmware/qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn", "/usr/share/alsa/ucm2/Qualcomm/x1e80100/mine.conf"},
 		Altered: []string{"/usr/share/alsa/ucm2/x.conf", "pipewire"},
@@ -125,12 +136,13 @@ func TestChangesAreFoundForTheAgentAndNotSent(t *testing.T) {
 	if !reflect.DeepEqual(found, want) {
 		t.Fatalf("got  %+v\nwant %+v", found, want)
 	}
-	if lines := found.Lines(); len(lines) != 9 || lines[1] != "/etc/modules-load.d/kef-speakers.conf, which loads kernel module scmi-cpufreq at start" {
+	// With nothing of the kernel's changed, that is said too, so silence isn't a guess
+	if lines := found.Lines(); len(lines) != 12 || lines[0] != "The kernel, its modules and its options are Omarchy's own" || lines[3] != "/etc/modules-load.d/kef-speakers.conf, which loads kernel module scmi-cpufreq at start" {
 		t.Errorf("in words: %q", lines)
 	}
 	// Omarchy's own files, and the copy kept beside one of the owner's, are not among them
 	for _, line := range found.Lines() {
-		for _, omarchys := range []string{"hid_apple", "qualcomm-adsp-nofw", "qcom-firmware.conf", "omarchy-usb-autosuspend", ".bak", "qcdxkmsuc8380", "a660_sqe"} {
+		for _, omarchys := range []string{"hid_apple", "qualcomm-adsp-nofw", "qcom-firmware.conf", "omarchy-usb-autosuspend", ".bak", "qcdxkmsuc8380", "a660_sqe", "bluetooth-a2dp"} {
 			if strings.Contains(line, omarchys) {
 				t.Errorf("%q is taken for the owner's: %s", omarchys, line)
 			}
