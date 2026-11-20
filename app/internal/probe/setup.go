@@ -13,8 +13,8 @@ import (
 // is how its owner got a part working. So a run doesn't say whether the computer is stock. It
 // names what differs, where the machine itself can tell, and a result is read against that.
 //
-// What can't be told this way (a rule or settings file the owner wrote, a changed device tree)
-// is asked about at the end of the guided test.
+// Nothing of it is asked of the owner. settings.go reads the settings files they wrote. What stays
+// unseen is a device tree changed by hand, which only root can compare with the packaged one.
 
 // ownKeys and ownOptions are the kernel options Omarchy sets by itself, as
 // data/kernel-options.yaml in the repository lists them. An option in ownKeys is Omarchy's
@@ -81,6 +81,7 @@ func setup(sys machine.System, run *report.Run) *report.Setup {
 	}
 
 	found.Packages = hardwarePackages(sys, foreign, run.Kernel)
+	settings(sys, found)
 	if found.Empty() {
 		return nil
 	}

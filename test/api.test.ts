@@ -452,6 +452,14 @@ test('keeps what a computer ran that Omarchy did not install, by name, and shows
       // The second is Omarchy's own and the third names a disk, which an older hw-test might still send
       options: ['regulator_ignore_unused', 'clk_ignore_unused', 'root=UUID=11111111-2222-3333-4444-555555555555', 'luks.key=…', 'a b'],
       packages: ['my-ucm'],
+      // What hw-test reads out of the owner's settings files, and anything of another shape is dropped
+      moduleOptions: ['snd_soc_x1e80100 i2s_mode=1', 'hid_apple fnmode=…', 'options hid_apple fnmode=2'],
+      blocked: ['pcspkr'],
+      loaded: ['scmi-cpufreq', 'a module'],
+      rules: ['usb sets power/control=on', 'usb runs', 'input env LIBINPUT_IGNORE_DEVICE', 'any permissions', 'usb runs /home/owner/fix', 'usb sets idVendor=="1050"'],
+      files: ['firmware/qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn', 'alsa/ucm2/Qualcomm/mine.conf', '/home/owner/file', 'etc/passwd'],
+      altered: ['alsa-ucm-conf'],
+      sound: ['api.alsa.headroom', 'node.name = "KEF"'],
       testTree: true,
       note: 'a rule for the speakers, MAC aa:bb:cc:dd:ee:ff',
       serial: 'PF123456',
@@ -464,6 +472,13 @@ test('keeps what a computer ran that Omarchy did not install, by name, and shows
     modules: ['omnibook_fix'],
     options: ['regulator_ignore_unused', 'luks.key=…'],
     packages: ['my-ucm'],
+    moduleOptions: ['snd_soc_x1e80100 i2s_mode=1', 'hid_apple fnmode=…'],
+    blocked: ['pcspkr'],
+    loaded: ['scmi-cpufreq'],
+    rules: ['usb sets power/control=on', 'usb runs', 'input env LIBINPUT_IGNORE_DEVICE', 'any permissions'],
+    files: ['firmware/qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn', 'alsa/ucm2/Qualcomm/mine.conf'],
+    altered: ['alsa-ucm-conf'],
+    sound: ['api.alsa.headroom'],
     testTree: true,
     note: 'a rule for the speakers, MAC xx:xx:xx:xx:xx:xx',
   };

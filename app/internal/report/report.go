@@ -83,15 +83,50 @@ type Setup struct {
 	// Packages come from no repository and hold kernel modules for the running kernel, firmware or
 	// sound profiles
 	Packages []string `json:"packages,omitempty"`
+	// ModuleOptions are options the owner's own settings give a kernel module, as "module name=value"
+	ModuleOptions []string `json:"moduleOptions,omitempty"`
+	// Blocked are kernel modules the owner's own settings keep from loading
+	Blocked []string `json:"blocked,omitempty"`
+	// Loaded are kernel modules the owner's own settings load at start
+	Loaded []string `json:"loaded,omitempty"`
+	// Rules say what the owner's own device rules do, as "usb sets power/control=on", "input runs",
+	// "hidraw permissions" or "input env LIBINPUT_IGNORE_DEVICE". "any" stands for no one kind of device
+	Rules []string `json:"rules,omitempty"`
+	// Files are firmware, sound profile and camera files that no package holds and Omarchy's
+	// firmware copy didn't place, as their path under /usr/lib or /usr/share
+	Files []string `json:"files,omitempty"`
+	// Altered are hardware packages with files changed since they were installed
+	Altered []string `json:"altered,omitempty"`
+	// Sound are the settings the owner's own sound files set, by name alone
+	Sound []string `json:"sound,omitempty"`
 	// TestTree is set while the computer runs a device tree built with hw-test tree
 	TestTree bool `json:"testTree,omitempty"`
-	// Note is the owner's answer to what they changed for the hardware
-	Note string `json:"note,omitempty"`
 }
 
 // Empty says whether nothing was found.
 func (s *Setup) Empty() bool {
-	return s == nil || (s.Kernel == "" && len(s.Rebuilt) == 0 && len(s.Modules) == 0 && len(s.Options) == 0 && len(s.Packages) == 0 && !s.TestTree && s.Note == "")
+	return s == nil || len(s.Lines()) == 0
+}
+
+// Rule puts one of Rules into words, like "a device rule for usb that sets power/control=on".
+func Rule(rule string) string {
+	kind, does, _ := strings.Cut(rule, " ")
+	text := "a device rule for " + kind
+	if kind == "any" {
+		text = "a device rule"
+	}
+	verb, what, _ := strings.Cut(does, " ")
+	switch verb {
+	case "sets":
+		return text + " that sets " + what
+	case "runs":
+		return text + " that runs a program"
+	case "env":
+		return text + " that sets " + what
+	case "permissions":
+		return text + " that changes who may use it"
+	}
+	return text
 }
 
 // Lines says what was found, one thing a line, in the words the test shows.
@@ -103,23 +138,26 @@ func (s *Setup) Lines() []string {
 	if s.Kernel != "" {
 		lines = append(lines, "kernel package "+s.Kernel)
 	}
-	for _, name := range s.Rebuilt {
-		lines = append(lines, name+" built by someone other than Omarchy")
+	each := func(list []string, before, after string) {
+		for _, item := range list {
+			lines = append(lines, before+item+after)
+		}
 	}
-	for _, name := range s.Modules {
-		lines = append(lines, "kernel module "+name)
+	each(s.Rebuilt, "", " built by someone other than Omarchy")
+	each(s.Modules, "kernel module ", "")
+	each(s.Options, "kernel option ", "")
+	each(s.Packages, "package ", "")
+	each(s.ModuleOptions, "module option ", "")
+	each(s.Blocked, "kernel module ", " kept from loading")
+	each(s.Loaded, "kernel module ", " loaded at start")
+	for _, rule := range s.Rules {
+		lines = append(lines, Rule(rule))
 	}
-	for _, option := range s.Options {
-		lines = append(lines, "kernel option "+option)
-	}
-	for _, name := range s.Packages {
-		lines = append(lines, "package "+name)
-	}
+	each(s.Files, "file ", ", which no package holds")
+	each(s.Altered, "changed files in package ", "")
+	each(s.Sound, "sound setting ", "")
 	if s.TestTree {
 		lines = append(lines, "a test device tree from hw-test tree")
-	}
-	if s.Note != "" {
-		lines = append(lines, "in your words, "+s.Note)
 	}
 	return lines
 }

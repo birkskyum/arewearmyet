@@ -61,3 +61,9 @@ exact:
   - accessibility=on
   - modprobe.blacklist=qcom_q6v5_pas
   - omarchy.qcom_early=1
+
+# Settings files Omarchy wrote in earlier versions and its scripts no longer name. hw-test reads
+# the settings files that are in no package and that Omarchy's scripts don't name as the owner's,
+# so a file left by an older Omarchy goes here (and in settings.go)
+files:
+  - hid_apple.conf

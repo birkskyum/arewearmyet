@@ -326,8 +326,7 @@ func TestAMiniPCIsNotAskedToUnplugItsOnlyScreen(t *testing.T) {
 			t.Errorf("a mini PC is asked %q", asked.text)
 		}
 	}
-	// The disk password, the installer and what the owner changed
-	if len(q.list) != 3 {
+	if len(q.list) != 2 {
 		t.Errorf("asked %d questions", len(q.list))
 	}
 }

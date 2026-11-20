@@ -6,6 +6,7 @@ package machine
 
 import (
 	"context"
+	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -120,6 +121,26 @@ func (s System) Glob(pattern string) []string {
 		}
 		out = append(out, strings.TrimPrefix(m, filepath.Clean(s.Root)))
 	}
+	sort.Strings(out)
+	return out
+}
+
+// Files lists the files and links under a folder, however deep, without the root, sorted, up to
+// limit of them.
+func (s System) Files(dir string, limit int) []string {
+	var out []string
+	_ = filepath.WalkDir(s.path(dir), func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return nil
+		}
+		if len(out) >= limit {
+			return filepath.SkipAll
+		}
+		if !entry.IsDir() && entry.Name() != ".keep" {
+			out = append(out, strings.TrimPrefix(path, filepath.Clean(s.Root)))
+		}
+		return nil
+	})
 	sort.Strings(out)
 	return out
 }

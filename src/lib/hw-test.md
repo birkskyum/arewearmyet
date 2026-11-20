@@ -76,7 +76,11 @@ A result that works but looks off (one speaker much quieter than the other) is m
 
 A test sends its results to your model's page when it ends. With the results it sends the computer's model, BIOS version and hardware IDs, the kernel version and the versions of about fifteen system packages. It sends no serial number, address, name or file, and it needs no account. The computer is told apart by a random token kept in `~/.local/state/arewearmyet/token`, of which the site stores only a hash.
 
-Nearly every computer that gets tested has something on it that Omarchy didn't install, which is often how its owner got a part working. So the test also sends, by name, a kernel module, a kernel option, a kernel package or a package of firmware, kernel modules or sound profiles that isn't Omarchy's. A kernel option whose value names a disk or an address is sent without the value. The guided test ends by asking whether you changed anything else for the hardware, and sends what you answer. All of it shows under your results on the model's page, where it tells the next owner what a part needed to work.
+Nearly every computer that gets tested has something on it that Omarchy didn't install, which is often how its owner got a part working. The test finds that by itself and asks you nothing about it. It sends, by name, a kernel module, a kernel option, a kernel package or a package of firmware, kernel modules or sound profiles that isn't Omarchy's. A kernel option whose value names a disk or an address is sent without the value.
+
+It also reads the settings files you wrote yourself, which are the ones in no package that Omarchy's own scripts don't name. A file's name and most of what is in it can say what you own, so neither is sent. What is sent is what the file does, in the kernel's own words. That is the option it gives a kernel module, the module it loads or keeps from loading, the kind of device a rule is for and what the rule sets (as in "a device rule for usb that sets power/control=on"), and the names of the sound settings it sets. The devices a rule picks out and the program it runs stay on the computer. A firmware, sound profile or camera file that no package holds is sent by its path, and a hardware package whose files were changed after the install by its name.
+
+All of it shows in the summary before you send, and under your results on the model's page, where it tells the next owner what a part needed to work. The test can't see a device tree that was changed by hand.
 
 | Option | What it does |
 | --- | --- |

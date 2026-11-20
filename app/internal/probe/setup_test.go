@@ -63,6 +63,9 @@ func TestOwnOptionsMatchTheSites(t *testing.T) {
 	if !reflect.DeepEqual(lists["keys"], ownKeys) {
 		t.Errorf("keys differ.\nfile %v\nhere %v", lists["keys"], ownKeys)
 	}
+	if !reflect.DeepEqual(lists["files"], ownFiles) {
+		t.Errorf("files differ.\nfile %v\nhere %v", lists["files"], ownFiles)
+	}
 	if !reflect.DeepEqual(lists["exact"], ownOptions) {
 		t.Errorf("exact options differ.\nfile %v\nhere %v", lists["exact"], ownOptions)
 	}

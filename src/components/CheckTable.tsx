@@ -15,7 +15,11 @@ type Row = { id: string; group: string; title: string; works: string; probe?: st
 type Change = { machines: number; from: string | null; to: string | null; since: string };
 type Owner = { machines: number; states: Record<string, number>; how: Record<string, number>; regressed?: Change; fixed?: Change; latest: { state: State; how: string; note: string | null; evidence: string | null; kernel: string | null; os?: string | null; created: string; run: string; setup?: Setup }[] };
 // What a computer ran that Omarchy didn't install, which its results are read against
-type Setup = { kernel?: string; rebuilt?: string[]; modules?: string[]; options?: string[]; packages?: string[]; testTree?: boolean; note?: string };
+type Setup = {
+  kernel?: string; rebuilt?: string[]; modules?: string[]; options?: string[]; packages?: string[];
+  moduleOptions?: string[]; blocked?: string[]; loaded?: string[]; rules?: string[]; files?: string[]; altered?: string[]; sound?: string[];
+  testTree?: boolean; note?: string;
+};
 type Note = { id: string; check: string | null; kind: string; title: string; status?: string; created: string; replies: number; logs: { name: string }[]; kernel: string | null };
 type Live = { owners: { machines: number; checks: Record<string, Owner> }; fixes: { id: string; check: string | null; url: string; note: string | null; created: string; changes?: { check: string; from: { state: State }; to: { state: State } }[] }[]; notes?: Note[] };
 const KIND: Record<string, string> = { problem: 'Problem', workaround: 'Workaround', upstream: 'Work elsewhere', note: 'Note' };
@@ -26,8 +30,15 @@ const HOW: Record<string, string> = { measured: 'measured by the test', owner: '
 const ORDER: State[] = ['works', 'partial', 'broken', 'absent', 'untested'];
 const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
 
+// "a device rule for usb that sets power/control=on", from "usb sets power/control=on"
+function ruleText(rule: string): string {
+  const [kind, verb, what] = rule.split(' ');
+  const does = verb === 'runs' ? 'runs a program' : verb === 'permissions' ? 'changes who may use it' : `sets ${what}`;
+  return `a device rule${kind === 'any' ? '' : ` for ${kind}`} that ${does}`;
+}
+
 // "This computer ran with kernel module omnibook_fix, kernel option regulator_ignore_unused."
-/** What a computer ran beyond what Omarchy installs, in a sentence, or nothing when it ran nothing of the kind. */
+/** What a computer ran beyond what Omarchy installs, in a few sentences, or nothing when it ran nothing of the kind. */
 function setupText(setup?: Setup): string | undefined {
   if (!setup) return undefined;
   const parts = [
@@ -38,9 +49,23 @@ function setupText(setup?: Setup): string | undefined {
     ...(setup.packages ?? []).map((name) => `package ${name}`),
     setup.testTree ? 'a test device tree' : '',
   ].filter(Boolean);
-  const ran = parts.length ? `This computer ran with ${parts.join(', ')}.` : '';
-  const said = setup.note ? `Asked what they changed for the hardware, the owner wrote “${setup.note}”.` : '';
-  return [ran, said].filter(Boolean).join(' ') || undefined;
+  // What hw-test read out of the settings files the owner wrote, without their names
+  const settings = [
+    ...(setup.moduleOptions ?? []).map((option) => `module option ${option}`),
+    ...(setup.blocked ?? []).map((name) => `kernel module ${name} kept from loading`),
+    ...(setup.loaded ?? []).map((name) => `kernel module ${name} loaded at start`),
+    ...(setup.rules ?? []).map(ruleText),
+    ...(setup.sound ?? []).map((key) => `sound setting ${key}`),
+  ];
+  const files = setup.files ?? [];
+  const shown = files.slice(0, 6).join(', ') + (files.length > 6 ? ` and ${files.length - 6} more` : '');
+  return [
+    parts.length ? `This computer ran with ${parts.join(', ')}.` : '',
+    settings.length ? `Its owner's settings files hold ${settings.join(', ')}.` : '',
+    files.length ? `It has files that no package holds (${shown}).` : '',
+    setup.altered?.length ? `Files of ${setup.altered.join(' and ')} were changed after the install.` : '',
+    setup.note ? `Asked what they changed for the hardware, the owner wrote “${setup.note}”.` : '',
+  ].filter(Boolean).join(' ') || undefined;
 }
 
 // "Worked on 7.3.0-67, broken since 7.3.0-72 (2026-11-17), on 2 machines"

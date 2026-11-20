@@ -1276,7 +1276,8 @@ Options:
 
 Nothing personal is sent, which means no serial numbers, addresses, names or files. The microphone recording
 and the camera picture of the guided test never leave this computer. What this computer runs that Omarchy
-didn't install for the hardware (a kernel module, a kernel option, a firmware package) is sent by name.
+didn't install for the hardware (a kernel module, a kernel option, a firmware package) is sent by name,
+and so is what your own settings files do for it, without the files' names. hw-test finds that by itself.
 
 Every command with its options is at https://arewearmyet.com/docs/hw-test
 `

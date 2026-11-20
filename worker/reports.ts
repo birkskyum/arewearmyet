@@ -107,7 +107,11 @@ async function model(env: Env, url: URL, id: string): Promise<Response> {
 
 type ResultRow = { model?: string; check_id: string; state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; os: string | null; created: string; machine: string; run: string; setup: string | null };
 /** What a computer ran that Omarchy didn't install, by name, plus the owner's words on what they changed. */
-type Setup = { kernel?: string; rebuilt?: string[]; modules?: string[]; options?: string[]; packages?: string[]; testTree?: true; note?: string };
+type Setup = {
+  kernel?: string; rebuilt?: string[]; modules?: string[]; options?: string[]; packages?: string[];
+  moduleOptions?: string[]; blocked?: string[]; loaded?: string[]; rules?: string[]; files?: string[]; altered?: string[]; sound?: string[];
+  testTree?: true; note?: string;
+};
 type Change = { machines: number; from: string | null; to: string | null; since: string };
 type OwnerCheck = {
   machines: number;
@@ -338,6 +342,12 @@ type RunBody = {
 
 const SETUP_NAME = /^[A-Za-z0-9_.+@-]{1,60}$/;
 const SETUP_OPTION = /^[A-Za-z0-9_.-]{1,60}(=(…|[A-Za-z0-9_.,:@%+-]{0,60}))?$/;
+// "snd_soc_x1e80100 i2s_mode=1", an option the owner's settings give a kernel module
+const SETUP_MODULE_OPTION = /^[A-Za-z0-9_.+@-]{1,60} [A-Za-z0-9_.-]{1,60}(=(…|[A-Za-z0-9_.,:@%+-]{0,60}))?$/;
+// "usb sets power/control=on", what one of the owner's device rules does to a kind of device
+const SETUP_RULE = /^[a-z0-9_-]{1,30} (sets [A-Za-z0-9_/.-]{1,60}(=[A-Za-z0-9_.,:@%+-]{0,60})?|runs|env [A-Z0-9_]{1,40}|permissions)$/;
+const SETUP_FILE = /^(firmware|alsa\/ucm2|libcamera)\/[A-Za-z0-9_.+@/-]{1,110}$/;
+const SETUP_SOUND = /^[a-z][a-z0-9_.-]{1,60}$/;
 
 /** A run's setup as sent, kept to names of a plain shape. Nothing in it is `undefined` when nothing was found. */
 function parseSetup(value: unknown): Setup | undefined {
@@ -352,6 +362,11 @@ function parseSetup(value: unknown): Setup | undefined {
   }
   const options = names(sent.options, SETUP_OPTION, 24);
   if (options.length) setup.options = options;
+  const shapes = { moduleOptions: SETUP_MODULE_OPTION, blocked: SETUP_NAME, loaded: SETUP_NAME, rules: SETUP_RULE, files: SETUP_FILE, altered: SETUP_NAME, sound: SETUP_SOUND } as const;
+  for (const [key, shape] of Object.entries(shapes) as [keyof typeof shapes, RegExp][]) {
+    const list = names(sent[key], shape, 20);
+    if (list.length) setup[key] = list;
+  }
   if (sent.testTree === true) setup.testTree = true;
   if (typeof sent.note === 'string' && clean(sent.note, 300)) setup.note = clean(sent.note, 300);
   return Object.keys(setup).length ? setup : undefined;
