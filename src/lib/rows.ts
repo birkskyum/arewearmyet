@@ -29,7 +29,7 @@ export type TableRow = {
 
 const year = (released: string | number | null) => (released ? String(released).slice(0, 4) : '');
 const plain = ({ key, label, tone, title, href, rank, full }: Cell) => ({ key, label, tone, title, href, rank, full });
-const announcedTitle = (statusText: string | null) => (statusText ? `${ANNOUNCED.meaning} The vendor said: ${statusText}.` : null);
+const announcedTitle = (statusText: string | null) => (statusText ? `${ANNOUNCED.meaning} It was ${statusText}.` : null);
 
 const VARIANT: Record<string, { tone: TableRow['variants'][number]['tone']; state: string }> = {
   works: { tone: 'good', state: 'boots' },

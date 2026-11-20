@@ -85,7 +85,7 @@ export default function Review() {
                       <div class="flex flex-wrap items-center gap-3">
                         <span class="text-zinc-500">{note.kind}</span>
                         <a class="text-zinc-200 underline decoration-zinc-600" href={`/note?id=${note.parent ?? note.id}`}>{note.title ?? `answer to ${note.parent}`}</a>
-                        <span class="text-zinc-500">{note.model} · {note.check ?? 'general'} · {note.created.slice(0, 16)}{note.agent ? ` · ${note.agent}` : ''}{note.logs ? ` · logs: ${note.logs}` : ''}</span>
+                        <span class="text-zinc-500">{note.model} · {note.check ?? 'general'} · {note.created.slice(0, 16)}{note.agent ? ` · ${note.agent}` : ''}{note.logs ? ` · logs ${note.logs}` : ''}</span>
                         <button class={`${BUTTON} ml-auto`} onClick={() => hide('note', note.id, !note.hidden)}>{note.hidden ? 'Show' : 'Hide'}</button>
                       </div>
                       <p class="mt-2 whitespace-pre-wrap break-words text-zinc-400">{note.body}</p>

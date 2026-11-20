@@ -1,12 +1,12 @@
-# Every ARM PC model the board tracks. One entry per hardware model; variants
+# Every ARM PC model the board tracks. One entry per hardware model. Variants
 # that Linux describes with separate device trees are listed inside it.
 #
 #   generation     x1 (Snapdragon X), x2 (Snapdragon X2), 8cx (8cx Gen 3), c (Snapdragon C) or 7c (Snapdragon 7c)
 #   chips          the processors it's sold with
-#   variants       one per device tree: compatible is the tree's first
+#   variants       one per device tree. compatible is the tree's first
 #                  compatible string, also for trees that are only posted or
-#                  out of tree; ids are systemd hardware ID files to check even
-#                  when they name a different compatible; borrowed: true when the
+#                  out of tree. ids are systemd hardware ID files to check even
+#                  when they name a different compatible. borrowed is true when the
 #                  tree is another model's on the same mainboard, whose hardware
 #                  IDs don't pick it here, so only its own ids count
 #   firmware       linux-firmware folders with this model's files
@@ -22,17 +22,17 @@
 #   devicetree_posted  the posted device tree patch, until it's accepted
 #   devicetree_out_of_tree  where a device tree for it lives outside Linux
 #   devicetree_files  that tree's files, a URL each, a path under data/device-trees/<id>/ for a
-#                  tree sent in to this repository, or a patch URL and #file to cut it out;
+#                  tree sent in to this repository, or a patch URL and #file to cut it out.
 #                  scripts/trees.ts copies posted and out-of-tree trees to device-trees/
 #   discussion     where owners work on it, when that's a separate thread
 #   team_has_one   true when someone on the Omarchy team has the machine
 #   boot           android when it starts through Android's bootloader, like a Pixel,
-#                  or depthcharge through ChromeOS's, like a Chromebook, instead of UEFI;
-#                  those models get their own section, with
+#                  or depthcharge through ChromeOS's, like a Chromebook, instead of UEFI.
+#                  Those models get their own section, with
 #   bootloader     unlockable or locked, and
-#   linux_image    boots or none: whether a Linux image starts on it yet
+#   linux_image    boots or none, for whether a Linux image starts on it yet
 #   status         set when it was announced but isn't confirmed shipping
-#   reports        what owners saw on the current Omarchy release: state works,
+#   reports        what owners saw on the current Omarchy release, with state works,
 #                  workaround (reached the desktop only with one, which the note
 #                  names) or problems (didn't reach it), an optional variant, a
 #                  short note and the month
@@ -990,7 +990,7 @@ models:
     variants:
       - { compatible: "hp,elitebook-6-g1q", borrowed: true, ids: ["x1p42100-hp-probook-4-g1q.json"] }
     ids_collected: "https://bugs.launchpad.net/ubuntu-concept/+bug/2167258"
-    notes: "HP builds it on the EliteBook 6 G1q's mainboard (board 8E06, driver pack sp174046), so it takes that tree and firmware. Owners boot it with the OmniBook X 14's tree; nobody has tried the EliteBook's yet."
+    notes: "HP builds it on the EliteBook 6 G1q's mainboard (board 8E06, driver pack sp174046), so it takes that tree and firmware. Owners boot it with the OmniBook X 14's tree, and nobody has tried the EliteBook's yet."
     sources:
       - https://www.hp.com/au-en/shop/hp-probook-4-g1q-14-inch-notebook-next-gen-ai-pc-bx2e6pt.html
       - https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-probook-4-g1q
@@ -1599,7 +1599,7 @@ models:
       - { compatible: "microsoft,romulus13" }
     acpi: ["microsoft-surface-romulus13_and_15", "linux-surface/surface_laptop_7_qcom", "hardware-reports/microsoft-corporation/microsoft-surface-laptop-7th-edition"]
     reports:
-      - { state: "workaround", note: "The screen stays dark after install; the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.", checked: "2026-10" }
+      - { state: "workaround", note: "The screen stays dark after install, and the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.", checked: "2026-10" }
     sources:
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
       - https://www.cdw.com/product/sur-lt7-13in-x1p-64-100-16-512-w11-g/7941189
@@ -1653,7 +1653,7 @@ models:
       - { model: "LCD", chip: "X1P-64-100", compatible: "microsoft,denali-lcd" }
     acpi: ["microsoft-surface-pro-11", "linux-surface/surface_pro_11_qcom", "hardware-reports/microsoft-corporation/microsoft-surface-pro-11th-edition"]
     reports:
-      - { state: "works", variant: "OLED", note: "Boots on Omarchy's kernel; suspend, both cameras, pen and touch work.", checked: "2026-10" }
+      - { state: "works", variant: "OLED", note: "Boots on Omarchy's kernel. Suspend, both cameras, pen and touch work.", checked: "2026-10" }
     sources:
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
       - https://www.notebookcheck.it/Microsoft-rilascia-il-nuovo-Surface-Pro-11-con-display-OLED-da-120-Hz-opzionale-e-chipset-Snapdragon-X-Plus-o-Snapdragon-X-Elite.839774.0.html
@@ -1880,7 +1880,7 @@ models:
     firmware_download: "https://www.samsung.com/global/galaxybooks-downloadcenter/"
     devicetree_posted: "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
     ids_collected: "https://github.com/birkskyum/arewearmyet/issues/1"
-    notes: "The European NP940XMA has another baseboard name and BIOS line than the NP944XMA, so it has its own hardware IDs, on edge since linux-omarchy 7.3-42. The NP944XMA boots the edge image without the owner's board package; what it still lacks there is in its report."
+    notes: "The European NP940XMA has another baseboard name and BIOS line than the NP944XMA, so it has its own hardware IDs, on edge since linux-omarchy 7.3-42. The NP944XMA boots the edge image without the owner's board package, and what it still lacks there is in its report."
     reports:
       - { state: "problems", variant: "NP944XMA", note: "Edge 2026.11.16.492 boots, installs and reaches the desktop without the owner's board package, with display, GPU, Wi-Fi and both DSPs working. The built-in keyboard is dead in Hyprland (0CF2:9050 is tagged as a tablet pad), the disk password prompt isn't shown, USB-C has no hotplug and SuperSpeed in one orientation only, the Wi-Fi MAC address changes every boot, and there is no sound, battery, Bluetooth, camera or fan control. With the owner's board package all of these work.", checked: "2026-11" }
     sources:
@@ -2232,7 +2232,7 @@ models:
       - "https://raw.githubusercontent.com/omacom/omarchy-pkgs/12ed0f96/pkgbuilds/linux-omarchy-dtbs/0038-arm64-dts-qcom-sc8180x-Add-Microsoft-Surface-Pro-X.patch#sc8180x-microsoft-surface-pro-x.dtsi"
     notes: "Its device trees are Val Packett's posted series from Maximilian Luz's linux-surface work, with the two fixes Haipeng Lin's test found, and its firmware comes from the bundles Microsoft publishes on Windows Update. The SQ2 with cellular shares the SQ1's SKU, so it boots the SQ1's tree at the SQ1's top clock. Its sensor DSP needs linux-omarchy 7.3-65 (omacom/omarchy-pkgs#2860). Nobody has booted Omarchy on it yet."
     reports:
-      - { state: "workaround", variant: "SQ1", note: "Monkey1911 reached the desktop on the edge image of 17 November (linux-omarchy 7.3-72) and ran the hardware test there. The install image needed two things done by hand: the display clock driver kept from loading, or the screen goes black, and the older USB driver added, or the image doesn't find its own stick. The installed system hangs in the Limine boot menu and starts from a firmware boot entry that goes to the kernel image directly. Keyboard, touchpad, Wi-Fi, Bluetooth, the battery and sleep work. The screen runs without the graphics chip, and sound, the camera, the touchscreen and the pen don't work yet.", checked: "2026-11" }
+      - { state: "workaround", variant: "SQ1", note: "Monkey1911 reached the desktop on the edge image of 17 November (linux-omarchy 7.3-72) and ran the hardware test there. The install image needed two things done by hand. The display clock driver has to be kept from loading, or the screen goes black, and the older USB driver has to be added, or the image doesn't find its own stick. The installed system hangs in the Limine boot menu and starts from a firmware boot entry that goes to the kernel image directly. Keyboard, touchpad, Wi-Fi, Bluetooth, the battery and sleep work. The screen runs without the graphics chip, and sound, the camera, the touchscreen and the pen don't work yet.", checked: "2026-11" }
     acpi: ["microsoft-surface-prox", "linux-surface/surface_pro_x_sq1", "linux-surface/surface_pro_x_sq2", "hardware-reports/microsoft-corporation/surface-pro-x"]
     ids_collected: "https://github.com/turbineBMW/omarchy-hardware-reports/issues/47"
     sources:

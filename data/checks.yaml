@@ -1,17 +1,17 @@
-# What "supported" means past booting: one list of checks for every Snapdragon PC.
+# What "supported" means past booting, as one list of checks for every Snapdragon PC.
 #
 #   id        stable key, used by the probe script, the API and data/findings.yaml
 #   group     the heading it sits under on a model page
 #   title     what's checked, as a short label
 #   works     what has to be true for it to count as working
-#   probe     what probe.sh measures for it, when it can measure anything; a probe
+#   probe     what probe.sh measures for it, when it can measure anything. A probe
 #             alone never marks a check as working where a person has to see or hear it
 #   person    what the owner does to check it, for the parts no command can see
 #   optional  true when not every model has the hardware (touchscreen, modem, ...)
 #   desk      the title, works and person texts as they read on a desktop, mini PC or developer
 #             kit, which has no lid to close and whose only screen is one that is plugged in
 #
-# States a check can have on a model: works, partial, broken, untested, absent
+# The states a check can have on a model are works, partial, broken, untested and absent
 # (the model doesn't have that hardware).
 
 groups:
@@ -61,21 +61,21 @@ checks:
     title: Graphics acceleration
     works: The desktop runs on the GPU, not on software rendering.
     probe: On a Snapdragon, whether a render node from the msm driver exists and the GPU's firmware loaded. On an NVIDIA machine, whether a driver is bound to its GPU. The graphics test asks Vulkan which device programs draw on.
-    debug: "The GPU needs the msm kernel driver, Mesa, and three firmware files: SQE and GMU firmware from linux-firmware, and a zap shader signed by the computer's maker, named by `firmware-name` under the tree's `gpu` node. `journalctl -k -b | grep -iE 'adreno|a7xx|a8xx|gmu|zap'` shows which is missing. Without the zap shader the desktop runs on software rendering, and `vulkaninfo --summary` shows llvmpipe."
+    debug: "The GPU needs the msm kernel driver, Mesa, and three firmware files, which are the SQE and GMU firmware from linux-firmware and a zap shader signed by the computer's maker, named by `firmware-name` under the tree's `gpu` node. `journalctl -k -b | grep -iE 'adreno|a7xx|a8xx|gmu|zap'` shows which is missing. Without the zap shader the desktop runs on software rendering, and `vulkaninfo --summary` shows llvmpipe."
 
   - id: webgl
     group: display
     title: WebGL in the browser
     works: The default browser gives pages WebGL on the GPU, not on a renderer that runs on the processor.
     probe: The graphics test opens a page in the default browser without a window and reads the renderer its WebGL context reports. The result names the browser. Chromium stands in when the default is not Chrome, Chromium or one built on it.
-    debug: "Each browser on Omarchy starts with switches of its own: Chrome with `~/.config/chrome-flags.conf`, Chromium with `~/.config/chromium-flags.conf`. The result names the browser that was tested, so change that one's file. Its `chrome://gpu` page says what it uses and why a feature is off. WebGL on SwiftShader means the browser found no usable GPU, so fix the `gpu` check first."
+    debug: "Each browser on Omarchy starts with switches of its own, Chrome with `~/.config/chrome-flags.conf` and Chromium with `~/.config/chromium-flags.conf`. The result names the browser that was tested, so change that one's file. Its `chrome://gpu` page says what it uses and why a feature is off. WebGL on SwiftShader means the browser found no usable GPU, so fix the `gpu` check first."
 
   - id: webgpu
     group: display
     title: WebGPU in the browser
     works: The default browser gives pages WebGPU on the GPU without being started in a special way.
     probe: The graphics test asks the default browser for a WebGPU adapter and device, as it comes and again with the switches that turn WebGPU on. Working only with the switches counts as partly. The result names the browser.
-    debug: "Chrome and Chromium on Linux don't turn WebGPU on by themselves on most ARM GPUs. Vulkan has to work first, which `vulkaninfo --summary` shows by naming the GPU and not llvmpipe. The result names the browser that was tested, and each reads its own file: Chrome `~/.config/chrome-flags.conf`, Chromium `~/.config/chromium-flags.conf`. The test's first run starts the browser with that file, so switches set there count as working. A switch set for one browser does nothing for the other. To try it for Chromium on this machine, keep a copy of its file, then `omarchy-chromium-add-feature Vulkan` and `omarchy-chromium-add-feature WebGPU` (they add to the `--enable-features` line that is there, where a second such line would replace it), and put `--enable-unsafe-webgpu` on a line of its own. A fix for everyone is a per-user setting in omacom/omarchy (the guide's table says where). Whether Omarchy wants that switch on by default is the team's call, so say in the pull request that it is a proposal."
+    debug: "Chrome and Chromium on Linux don't turn WebGPU on by themselves on most ARM GPUs. Vulkan has to work first, which `vulkaninfo --summary` shows by naming the GPU and not llvmpipe. The result names the browser that was tested, and each reads its own file, Chrome `~/.config/chrome-flags.conf` and Chromium `~/.config/chromium-flags.conf`. The test's first run starts the browser with that file, so switches set there count as working. A switch set for one browser does nothing for the other. To try it for Chromium on this machine, keep a copy of its file, then `omarchy-chromium-add-feature Vulkan` and `omarchy-chromium-add-feature WebGPU` (they add to the `--enable-features` line that is there, where a second such line would replace it), and put `--enable-unsafe-webgpu` on a line of its own. A fix for everyone is a per-user setting in omacom/omarchy (the guide's table says where). Whether Omarchy wants that switch on by default is the team's call, so say in the pull request that it is a proposal."
 
   - id: backlight
     group: display
@@ -91,7 +91,7 @@ checks:
     works: Every key types, including the function row.
     probe: Whether a built-in keyboard device exists.
     person: Type on it and try the function row (volume, brightness, mute).
-    debug: "Most of these keyboards are HID over I2C: a node under one of the tree's I2C buses with `compatible = \"hid-over-i2c\"`, the descriptor address, an interrupt GPIO and its supply. `cat /sys/bus/i2c/devices/*/name` and `journalctl -k -b | grep -i i2c_hid` show whether it was found. Bus, address and interrupt come from the device's `_CRS` in the ACPI DSDT. Some models put the keyboard on an internal USB port or behind the embedded controller instead."
+    debug: "Most of these keyboards are HID over I2C, which the tree describes as a node under one of the tree's I2C buses with `compatible = \"hid-over-i2c\"`, the descriptor address, an interrupt GPIO and its supply. `cat /sys/bus/i2c/devices/*/name` and `journalctl -k -b | grep -i i2c_hid` show whether it was found. Bus, address and interrupt come from the device's `_CRS` in the ACPI DSDT. Some models put the keyboard on an internal USB port or behind the embedded controller instead."
 
   - id: touchpad
     group: display
@@ -99,7 +99,7 @@ checks:
     works: Pointer, tap or click, two-finger scrolling and gestures work.
     probe: Whether a built-in touchpad device exists.
     person: Move, click, scroll with two fingers and try a three-finger swipe.
-    debug: "As for the keyboard: usually HID over I2C, described in the tree with bus, address, interrupt GPIO and supply taken from the DSDT. A touchpad that is found but doesn't move the pointer often has the wrong interrupt pin or polarity. Its line in `/proc/interrupts` should count up while a finger moves."
+    debug: "Like the keyboard it is usually HID over I2C, described in the tree with bus, address, interrupt GPIO and supply taken from the DSDT. A touchpad that is found but doesn't move the pointer often has the wrong interrupt pin or polarity. Its line in `/proc/interrupts` should count up while a finger moves."
 
   - id: touchscreen
     group: display
@@ -131,7 +131,7 @@ checks:
     works: Bluetooth turns on, finds devices and keeps headphones and mice connected.
     probe: Whether a Bluetooth controller exists and is powered. The wireless test listens for eight seconds and counts the devices it hears.
     person: Pair a pair of headphones or a mouse and use it for a few minutes.
-    debug: "The Bluetooth half of the Wi-Fi chip sits on a UART: a `bluetooth` node under one of the tree's serial ports with its supplies. `journalctl -k -b | grep -iE 'bluetooth|hci|qca'` shows its firmware loading from `qca/`, and some machines need an NVM file of their own. A controller without an address shows as unconfigured in `btmgmt info`. `rfkill list` rules out a soft block."
+    debug: "The Bluetooth half of the Wi-Fi chip sits on a UART, which the tree describes as a `bluetooth` node under one of its serial ports with its supplies. `journalctl -k -b | grep -iE 'bluetooth|hci|qca'` shows its firmware loading from `qca/`, and some machines need an NVM file of their own. A controller without an address shows as unconfigured in `btmgmt info`. `rfkill list` rules out a soft block."
 
   - id: speakers
     group: sound
@@ -139,7 +139,7 @@ checks:
     works: Every built-in speaker plays, at a normal volume, without crackling.
     probe: Whether a sound card with a playback device exists, besides HDMI and USB ones.
     person: Play music and say whether both sides (and the tweeters, if it has them) play cleanly.
-    debug: "Sound runs through the audio DSP. In order: the ADSP must be running (see the `adsp` check), the sound card must exist (`cat /proc/asound/cards`), the topology file the card asks for must be under `/lib/firmware/qcom/` (the journal names it when it's missing), and alsa-ucm-conf needs a profile for the card (`alsaucm listcards`, `wpctl status`). The speaker amplifiers (WSA883x or WSA884x on SoundWire) need their reset GPIOs and supplies in the tree. One silent side is usually one amplifier's GPIO or the channel mapping. `hw-test speakers` measures each side with the microphones. `ls /sys/bus/soundwire/devices/` shows whether every amplifier is there. `dtc -I fs -O dts /proc/device-tree 2>/dev/null | grep -A9 'speaker@'` shows each one's reset GPIO in the running tree, and `tr '\\0' '\\n' < /proc/device-tree/sound/audio-routing | paste - -` the output each speaker is fed from. On a side with a woofer and a tweeter, the two should come from different outputs (`WSA_SPK1` and `WSA_SPK2`). A quiet or silent side with every amplifier present is usually this routing, not a GPIO. Never raise amplifier or speaker gains above what the sound profile sets: the kernel has no speaker protection on these computers, and a speaker can be damaged."
+    debug: "Sound runs through the audio DSP. Four things have to hold, in this order. The ADSP must be running (see the `adsp` check), the sound card must exist (`cat /proc/asound/cards`), the topology file the card asks for must be under `/lib/firmware/qcom/` (the journal names it when it's missing), and alsa-ucm-conf needs a profile for the card (`alsaucm listcards`, `wpctl status`). The speaker amplifiers (WSA883x or WSA884x on SoundWire) need their reset GPIOs and supplies in the tree. One silent side is usually one amplifier's GPIO or the channel mapping. `hw-test speakers` measures each side with the microphones. `ls /sys/bus/soundwire/devices/` shows whether every amplifier is there. `dtc -I fs -O dts /proc/device-tree 2>/dev/null | grep -A9 'speaker@'` shows each one's reset GPIO in the running tree, and `tr '\\0' '\\n' < /proc/device-tree/sound/audio-routing | paste - -` the output each speaker is fed from. On a side with a woofer and a tweeter, the two should come from different outputs (`WSA_SPK1` and `WSA_SPK2`). A quiet or silent side with every amplifier present is usually this routing, not a GPIO. Never raise amplifier or speaker gains above what the sound profile sets. The kernel has no speaker protection on these computers, and a speaker can be damaged."
 
   - id: microphones
     group: sound
@@ -188,7 +188,7 @@ checks:
     desk:
       works: The computer sleeps when asked to, and wakes to the lock screen with a key or the power button, every time.
       person: Put it to sleep for a few minutes, five times in a row, and say whether it woke each time.
-    debug: "`cat /sys/power/mem_sleep` shows the sleep mode in brackets, s2idle or deep. After a sleep, `journalctl -k -b | grep -E 'PM:|suspend'` shows which device refused, and the files under `/sys/power/suspend_stats/` count failures and name the last failing device. A restart in place of a wake leaves no line after 'suspend entry' at the end of `journalctl -k -b -1`. Try the other sleep mode to tell a firmware problem from a driver's. `hw-test sleep` measures a lid-close sleep with the owner. For a freeze on wake, check before the long press on power whether the Caps Lock light still toggles and whether the computer answers a ping from another machine: that tells a frozen desktop from a frozen kernel. Record `grep -H . /sys/bus/usb/devices/*/{product,speed}` and `cat /sys/class/drm/card*-*/status` with the same things plugged in. `journalctl --list-boots` lists the boots, and `hw-test note --log boot-N` attaches the kernel's log of the one that froze."
+    debug: "`cat /sys/power/mem_sleep` shows the sleep mode in brackets, s2idle or deep. After a sleep, `journalctl -k -b | grep -E 'PM:|suspend'` shows which device refused, and the files under `/sys/power/suspend_stats/` count failures and name the last failing device. A restart in place of a wake leaves no line after 'suspend entry' at the end of `journalctl -k -b -1`. Try the other sleep mode to tell a firmware problem from a driver's. `hw-test sleep` measures a lid-close sleep with the owner. For a freeze on wake, check before the long press on power whether the Caps Lock light still toggles and whether the computer answers a ping from another machine, which tells a frozen desktop from a frozen kernel. Record `grep -H . /sys/bus/usb/devices/*/{product,speed}` and `cat /sys/class/drm/card*-*/status` with the same things plugged in. `journalctl --list-boots` lists the boots, and `hw-test note --log boot-N` attaches the kernel's log of the one that froze."
 
   - id: suspend-drain
     group: power
@@ -203,7 +203,7 @@ checks:
     works: The laptop hibernates and resumes where it was.
     probe: Whether the kernel offers hibernation and has swap to hold it.
     person: Hibernate from the menu and start it again.
-    debug: "`cat /sys/power/state` must list `disk`, and swap must be at least the size of memory. Where `disk` is missing the kernel offers no hibernation on this chip. That can't be fixed from the machine: tell the owner and go on to the next part."
+    debug: "`cat /sys/power/state` must list `disk`, and swap must be at least the size of memory. Where `disk` is missing the kernel offers no hibernation on this chip. That can't be fixed from the machine, so tell the owner and go on to the next part."
 
   - id: lid
     group: sensors
@@ -256,7 +256,7 @@ checks:
     works: The webcam gives a picture in the browser and in video calls.
     probe: Whether a camera device from the camera subsystem or USB exists.
     person: Open a video call test page in Chromium and say whether the picture looks right.
-    debug: "The webcam is a MIPI sensor: a sensor node on a camera I2C bus with its clock, reset GPIO and supplies, linked to the camera subsystem in the tree. `cam -l` from libcamera names the sensor, and `journalctl -k -b | grep -iE 'camss|cci|ov0|imx|hi5'` shows one that didn't answer. `hw-test camera`, run by the owner, takes one frame, and the check works when they answer that the picture is real and its colours look right. A picture that is too dark, pale, green or noisy comes from libcamera's processing for that sensor (its tuning file), not from the driver. Omarchy has no place for a tuning fix yet, so don't open a pull request for one: write a `workaround` note with what you changed, and open an issue on omacom/omarchy."
+    debug: "The webcam is a MIPI sensor, which the tree describes as a sensor node on a camera I2C bus with its clock, reset GPIO and supplies, linked to the camera subsystem in the tree. `cam -l` from libcamera names the sensor, and `journalctl -k -b | grep -iE 'camss|cci|ov0|imx|hi5'` shows one that didn't answer. `hw-test camera`, run by the owner, takes one frame, and the check works when they answer that the picture is real and its colours look right. A picture that is too dark, pale, green or noisy comes from libcamera's processing for that sensor (its tuning file), not from the driver. Omarchy has no place for a tuning fix yet, so don't open a pull request for one. Write a `workaround` note with what you changed, and open an issue on omacom/omarchy."
 
   - id: video-decode
     group: media
@@ -271,7 +271,7 @@ checks:
     title: Compute DSP (NPU)
     works: The compute DSP starts with its firmware.
     probe: The state of the cdsp remote processor and the firmware it loaded.
-    debug: "As for the `adsp` check: `cat /sys/class/remoteproc/remoteproc*/{name,state,firmware}` shows its state and the maker-signed file it wants. Nothing else depends on it yet."
+    debug: "As for the `adsp` check, `cat /sys/class/remoteproc/remoteproc*/{name,state,firmware}` shows its state and the maker-signed file it wants. Nothing else depends on it yet."
 
   - id: fans
     group: sensors
@@ -279,7 +279,7 @@ checks:
     works: The temperatures can be read and follow the load, and the fan speeds up when the computer gets hot.
     probe: Which temperature and fan sensors exist. The temperature test keeps every core and the GPU busy for up to two minutes and reads whether the sensors show the heat. It sees a fan start by its speed, or where no sensor gives that, by the temperature falling while the processor works on at the same rate.
     person: Press f during the temperature test the moment you hear the fan speed up, or say that the computer has none.
-    debug: "Temperatures come from the chip's own sensors and need nothing per model. Fans are run by the embedded controller by itself, and their speed can be read only where the kernel has a driver for that model's controller (`ls /sys/class/hwmon/*/fan*_input`). A missing fan speed is a missing kernel driver, not a broken fan, and writing that driver is beyond a fix from the machine: tell the owner. `hw-test temperatures` heats the computer and reports how the sensors follow. With the owner there, they press f when they hear the fan, which is what turns this check to works on a machine without a speed sensor."
+    debug: "Temperatures come from the chip's own sensors and need nothing per model. Fans are run by the embedded controller by itself, and their speed can be read only where the kernel has a driver for that model's controller (`ls /sys/class/hwmon/*/fan*_input`). A missing fan speed is a missing kernel driver, not a broken fan, and writing that driver is beyond a fix from the machine, so tell the owner. `hw-test temperatures` heats the computer and reports how the sensors follow. With the owner there, they press f when they hear the fan, which is what turns this check to works on a machine without a speed sensor."
 
   - id: fingerprint
     group: sensors
@@ -288,7 +288,7 @@ checks:
     probe: Whether a known fingerprint reader is on USB.
     person: Enroll a finger with fprintd and try it.
     optional: true
-    debug: "Readers are USB devices, supported or not by libfprint: `grep -H . /sys/bus/usb/devices/*/{idVendor,idProduct,product}` gives the ID to look up in libfprint's list of supported devices. A reader that isn't among them sits on an internal USB port whose supply or controller isn't enabled in the tree."
+    debug: "Readers are USB devices, supported or not by libfprint. `grep -H . /sys/bus/usb/devices/*/{idVendor,idProduct,product}` gives the ID to look up in libfprint's list of supported devices. A reader that isn't among them sits on an internal USB port whose supply or controller isn't enabled in the tree."
 
   - id: modem
     group: sensors

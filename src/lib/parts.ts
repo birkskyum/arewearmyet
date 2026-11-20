@@ -93,7 +93,7 @@ export function modelParts(model: Machine): PartState[] {
     const others = there.filter((row) => !counted.includes(row));
     const title = [
       `${counted.length} of ${of} ${of === 1 ? 'check' : 'checks'} ${level === 'omarchy' ? 'seen on Omarchy' : 'known for the chip family, none seen on this model yet'}. ${lines(counted)}.`,
-      others.length ? `For the chip family: ${lines(others)}.` : '',
+      others.length ? `The chip family has ${lines(others)}.` : '',
     ].filter(Boolean).join(' ');
     return { part, key: `${level}-${state}`, state, level, covered: counted.length, of, title };
   });
@@ -143,7 +143,7 @@ export function partCells(model: Machine): Record<string, PillCell | TextCell | 
     key: onOmarchy.length ? 'some' : elsewhere ? 'elsewhere' : 'none',
     label: summary,
     dots: parts.map((p) => ({ tone: p.state === 'works' ? 'good' : p.state === 'partial' ? 'close' : p.state === 'broken' ? 'wanted' : p.state === 'absent' ? 'absent' : 'none', solid: p.level === 'omarchy' })),
-    title: `${summary}. In order: ${parts.map((p) => `${p.part.title} ${p.state === 'unknown' ? 'not known' : p.state === 'absent' ? 'not on this model' : (p.level === 'omarchy' ? '' : 'for the chip family ') + LABEL[p.state].toLowerCase()}`).join(', ')}.`,
+    title: `${summary}. In the columns' order, ${parts.map((p) => `${p.part.title} ${p.state === 'unknown' ? 'not known' : p.state === 'absent' ? 'not on this model' : (p.level === 'omarchy' ? '' : 'for the chip family ') + LABEL[p.state].toLowerCase()}`).join(', ')}.`,
     rank,
   };
   return cells;

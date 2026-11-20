@@ -8762,7 +8762,7 @@
         "https://www.hp.com/au-en/shop/hp-probook-4-g1q-14-inch-notebook-next-gen-ai-pc-bx2e6pt.html",
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-probook-4-g1q"
       ],
-      "notes": "HP builds it on the EliteBook 6 G1q's mainboard (board 8E06, driver pack sp174046), so it takes that tree and firmware. Owners boot it with the OmniBook X 14's tree; nobody has tried the EliteBook's yet.",
+      "notes": "HP builds it on the EliteBook 6 G1q's mainboard (board 8E06, driver pack sp174046), so it takes that tree and firmware. Owners boot it with the OmniBook X 14's tree, and nobody has tried the EliteBook's yet.",
       "outcome": "should",
       "bootable": "edge",
       "reports": [],
@@ -12684,7 +12684,7 @@
       "reports": [
         {
           "state": "workaround",
-          "note": "The screen stays dark after install; the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.",
+          "note": "The screen stays dark after install, and the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.",
           "checked": "2026-10"
         }
       ],
@@ -12774,7 +12774,7 @@
           "reports": [
             {
               "state": "workaround",
-              "note": "The screen stays dark after install; the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.",
+              "note": "The screen stays dark after install, and the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.",
               "checked": "2026-10"
             }
           ]
@@ -13037,7 +13037,7 @@
         {
           "state": "works",
           "variant": "OLED",
-          "note": "Boots on Omarchy's kernel; suspend, both cameras, pen and touch work.",
+          "note": "Boots on Omarchy's kernel. Suspend, both cameras, pen and touch work.",
           "checked": "2026-10"
         }
       ],
@@ -13130,7 +13130,7 @@
             {
               "state": "works",
               "variant": "OLED",
-              "note": "Boots on Omarchy's kernel; suspend, both cameras, pen and touch work.",
+              "note": "Boots on Omarchy's kernel. Suspend, both cameras, pen and touch work.",
               "checked": "2026-10"
             }
           ]
@@ -14480,7 +14480,7 @@
         "https://www.energystar.gov/productfinder/product/certified-computers/details/4510120/export/pdf",
         "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
       ],
-      "notes": "The European NP940XMA has another baseboard name and BIOS line than the NP944XMA, so it has its own hardware IDs, on edge since linux-omarchy 7.3-42. The NP944XMA boots the edge image without the owner's board package; what it still lacks there is in its report.",
+      "notes": "The European NP940XMA has another baseboard name and BIOS line than the NP944XMA, so it has its own hardware IDs, on edge since linux-omarchy 7.3-42. The NP944XMA boots the edge image without the owner's board package, and what it still lacks there is in its report.",
       "outcome": "should",
       "bootable": "edge",
       "reports": [
@@ -16873,7 +16873,7 @@
         {
           "state": "workaround",
           "variant": "SQ1",
-          "note": "Monkey1911 reached the desktop on the edge image of 17 November (linux-omarchy 7.3-72) and ran the hardware test there. The install image needed two things done by hand: the display clock driver kept from loading, or the screen goes black, and the older USB driver added, or the image doesn't find its own stick. The installed system hangs in the Limine boot menu and starts from a firmware boot entry that goes to the kernel image directly. Keyboard, touchpad, Wi-Fi, Bluetooth, the battery and sleep work. The screen runs without the graphics chip, and sound, the camera, the touchscreen and the pen don't work yet.",
+          "note": "Monkey1911 reached the desktop on the edge image of 17 November (linux-omarchy 7.3-72) and ran the hardware test there. The install image needed two things done by hand. The display clock driver has to be kept from loading, or the screen goes black, and the older USB driver has to be added, or the image doesn't find its own stick. The installed system hangs in the Limine boot menu and starts from a firmware boot entry that goes to the kernel image directly. Keyboard, touchpad, Wi-Fi, Bluetooth, the battery and sleep work. The screen runs without the graphics chip, and sound, the camera, the touchscreen and the pen don't work yet.",
           "checked": "2026-11"
         }
       ],
@@ -16952,7 +16952,7 @@
             {
               "state": "workaround",
               "variant": "SQ1",
-              "note": "Monkey1911 reached the desktop on the edge image of 17 November (linux-omarchy 7.3-72) and ran the hardware test there. The install image needed two things done by hand: the display clock driver kept from loading, or the screen goes black, and the older USB driver added, or the image doesn't find its own stick. The installed system hangs in the Limine boot menu and starts from a firmware boot entry that goes to the kernel image directly. Keyboard, touchpad, Wi-Fi, Bluetooth, the battery and sleep work. The screen runs without the graphics chip, and sound, the camera, the touchscreen and the pen don't work yet.",
+              "note": "Monkey1911 reached the desktop on the edge image of 17 November (linux-omarchy 7.3-72) and ran the hardware test there. The install image needed two things done by hand. The display clock driver has to be kept from loading, or the screen goes black, and the older USB driver has to be added, or the image doesn't find its own stick. The installed system hangs in the Limine boot menu and starts from a firmware boot entry that goes to the kernel image directly. Keyboard, touchpad, Wi-Fi, Bluetooth, the battery and sleep work. The screen runs without the graphics chip, and sound, the camera, the touchscreen and the pen don't work yet.",
               "checked": "2026-11"
             }
           ]

@@ -190,7 +190,7 @@ export default function StatusTable(props: Props) {
       model.name,
       model.subtitle || null,
       ...statusColumns().map((column) => cellText(model.cells[column.id])),
-      model.variants.map((variant) => `${variant.text}: ${variant.state}`).join('; ') || null,
+      model.variants.map((variant) => `${variant.text} (${variant.state})`).join(', ') || null,
       model.notes,
       model.href,
     ]);

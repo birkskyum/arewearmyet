@@ -50,7 +50,7 @@ const HARDWARE_VIEW = { id: 'hardware', label: 'Hardware', question: HARDWARE_QU
   ...PARTS.map((part) => ({ id: `part-${part.id}`, header: part.title, question: part.question, options: PART_OPTIONS })),
 ] };
 const HARDWARE_KEYS = [{ dot: 'bg-emerald-400', text: 'works' }, { dot: 'bg-amber-400', text: 'partly' }, { dot: 'bg-rose-400', text: 'broken' }];
-const HARDWARE_DOTS = { id: 'parts', header: 'Hardware', question: `The parts past booting, in the order of the Hardware view: ${PARTS.map((part) => part.title.toLowerCase()).join(', ')}. Filled is seen on Omarchy on that model, faint is not known yet. Click for the Hardware view.` };
+const HARDWARE_DOTS = { id: 'parts', header: 'Hardware', question: `The parts past booting, in the order of the Hardware view (${PARTS.map((part) => part.title.toLowerCase()).join(', ')}). Filled is seen on Omarchy on that model, faint is not known yet. Click for the Hardware view.` };
 const snapdragonViews = [
   { id: 'omarchy', label: 'Omarchy', question: `What Omarchy's packages ship today. A check is a piece Omarchy ships, and pointing at it says which channel has it.`, columns: [...OMARCHY_LEGEND.map((group, i) => ({ id: omarchyIds[i], header: group.column, question: group.question, options: FILTERS[omarchyIds[i]] })), HARDWARE_DOTS] },
   { id: 'upstream', label: 'Upstream', question: 'What Linux, systemd and linux-firmware have, which every distro gets.', columns: UPSTREAM_LEGEND.map((group, i) => ({ id: upstreamIds[i], header: group.column, question: group.question, options: FILTERS[upstreamIds[i]] })) },
@@ -127,7 +127,7 @@ import { SHELL } from '../lib/shell';
         Every ARM laptop needs a device tree, hardware IDs and firmware. Omarchy ships them in its own packages, often before Linux, systemd and linux-firmware have them. The Omarchy view shows what Omarchy ships today, and the Upstream view what every distro gets. A check means Omarchy ships the piece, and pointing at it says which channel has it. Bootable says whether an owner reached the desktop. The newest fixes are on edge, the {image ? <a class={LINK} href={image.url}>nightly image</a> : 'nightly image'}, with <span class="whitespace-nowrap">linux-omarchy {status.omarchy.kernel}</span> and systemd {status.omarchy.systemd}. Booting is the first goal. Each model's page, behind its name, goes on to everything past booting, from sound and the camera to sleep and USB4, with what owners and their agents measured.
       </p>
       <p class="mt-5 hidden max-w-3xl text-sm text-zinc-400 hw:block">
-        Booting is the first goal. This is what comes after it: whether the screen, keyboard, Wi-Fi, sound, camera, sleep and ports work on each model. Every label is a result from Omarchy on that model, measured by <a class={LINK} href="/docs/hw-test">hw-test</a> or reported by an owner. An empty cell means nobody has reported yet, and running hw-test on that model fills it in. Each model's page, behind its name, has every check with its source.
+        Booting is the first goal. After it comes whether the screen, keyboard, Wi-Fi, sound, camera, sleep and ports work on each model. Every label is a result from Omarchy on that model, measured by <a class={LINK} href="/docs/hw-test">hw-test</a> or reported by an owner. An empty cell means nobody has reported yet, and running hw-test on that model fills it in. Each model's page, behind its name, has every check with its source.
       </p>
       <div class="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 rounded-xl bg-[#9ece6a]/10 px-5 py-4 ring-1 ring-[#9ece6a]/40">
         <p class="text-zinc-300"><strong class="font-semibold text-[#9ece6a]">Own an ARM laptop that isn't green yet?</strong> Help get it there, whatever distro you run. It only takes a few minutes.</p>
@@ -256,7 +256,7 @@ import { SHELL } from '../lib/shell';
 
     <Family id="googlebooks" title="Googlebooks with Snapdragon" total={googlebooks.length}>
       <p class="max-w-3xl text-sm text-zinc-400">
-        They use the same Snapdragon X Elite as the laptops above, but start like a Pixel, through Android's bootloader instead of UEFI. So they need no ACPI tables or hardware IDs, and Omarchy's ARM image doesn't start on them; they need a device tree and a Linux image built for that bootloader.
+        They use the same Snapdragon X Elite as the laptops above, but start like a Pixel, through Android's bootloader instead of UEFI. So they need no ACPI tables or hardware IDs, and Omarchy's ARM image doesn't start on them. They need a device tree and a Linux image built for that bootloader.
       </p>
       <p class={HELP}>
         To help, read the device tree Googlebook OS starts with, following the <a class={LINK} href="https://github.com/omacom/omarchy/discussions/16627">owner guide</a>. It changes nothing on the laptop.

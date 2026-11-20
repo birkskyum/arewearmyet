@@ -81,7 +81,7 @@ export default function CheckTable(props: { model: string; groups: { id: string;
   const fixesFor = (id: string) => live()?.fixes.filter((fix) => fix.check === id || fix.changes?.some((change) => change.check === id)) ?? [];
   const measured = (fix: Live['fixes'][number], id: string) => {
     const change = fix.changes?.find((c) => c.check === id);
-    return change ? ` Measured before and after: ${LABEL[change.from.state].toLowerCase()} → ${LABEL[change.to.state].toLowerCase()}.` : '';
+    return change ? ` The test measured ${LABEL[change.from.state].toLowerCase()} before it and ${LABEL[change.to.state].toLowerCase()} after.` : '';
   };
   // A model's table has the rows of the parts it has. A part it doesn't have is named in one line
   // below, and a part few machines of its kind have gets a row once something is known about it.

@@ -86,7 +86,7 @@ const STATES = {
     missing: { label: 'Missing', tone: 'wanted', meaning: `linux-firmware doesn't have its files. It takes them only when the maker submits or signs them off.` },
   },
   acpi: {
-    report: { label: 'Report', tone: 'good', meaning: `An owner sent a hardware report from Omarchy's report tool: its ACPI tables, hardware IDs, panels and firmware list.` },
+    report: { label: 'Report', tone: 'good', meaning: `An owner sent a hardware report from Omarchy's report tool, with its ACPI tables, hardware IDs, panels and firmware list.` },
     collected: { label: 'ACPI dump', tone: 'good', meaning: `Its ACPI tables are in the aarch64-laptops collection or this board's copy of a dump not merged there yet, which is enough to write a device tree from. An Omarchy hardware report still adds its hardware IDs, panels and firmware list.` },
     firmware: { label: 'From BIOS', tone: 'close', meaning: `Its ACPI tables were taken out of the maker's BIOS image, which is enough to start a device tree. An owner's dump still adds its hardware IDs, panels, firmware list and the values the firmware fills in at boot.` },
     helps: { label: 'Still useful', tone: 'muted', meaning: `It has a device tree, but a report still gives the hardware IDs for each of its model numbers, the maker's firmware list, its panels and the tables to check the tree against.` },
@@ -136,7 +136,7 @@ const CHANNELS = ['stable', 'rc', 'edge'];
 // A piece Omarchy ships shows a check, whichever channel has it: the legend says so once, and the
 // states that aren't a channel follow
 const shipped = (group: Record<string, State>, what: string): State[] => [
-  { label: CHECK, tone: 'good', meaning: `${what} Pointing at it says which channel has it: stable, RC, or edge only. A first version can be in stable while later fixes are still on edge only.` },
+  { label: CHECK, tone: 'good', meaning: `${what} Pointing at it says whether stable, RC or only edge has it. A first version can be in stable while later fixes are still on edge only.` },
   ...Object.entries(group).filter(([key]) => !CHANNELS.includes(key)).map(([, state]) => state),
 ];
 const BOOTABLE_GROUP: Group = { column: 'Bootable', question: `Whether it boots Omarchy, and otherwise what it still needs. A filled label means an owner reached the desktop, an outlined one that nobody has confirmed it yet. Reports from any distro are welcome. Booting needs no firmware, and features like suspend and USB4 come next.`, states: Object.values(STATES.bootable) as State[] };
@@ -206,9 +206,9 @@ const releaseRank = (tag: string) => {
   const [major, minor] = release(tag).split('.').map(Number);
   return major * 100 + (minor || 0);
 };
-const reportNotes = (reports: { note: string; variant?: string }[]) => reports.map((r) => (r.variant ? `${r.variant}: ${r.note}` : r.note)).join(' ');
+const reportNotes = (reports: { note: string; variant?: string }[]) => reports.map((r) => (r.variant ? `(${r.variant}) ${r.note}` : r.note)).join(' ');
 
-/** Whether Omarchy's edge install image starts the model by itself: it carries the model's device tree and the hardware IDs that pick it. */
+/** Whether Omarchy's edge install image starts the model by itself, which takes the model's device tree and the hardware IDs that pick it. */
 export function edgeStarts(model: Model): boolean {
   const carried = (channel: string | null | undefined) => channel === 'stable' || channel === 'rc' || channel === 'edge';
   return carried(model.omarchy?.deviceTree) && carried(model.omarchy?.ids);
@@ -224,7 +224,7 @@ export function bootableCell(model: Model): Cell {
   const pulls = { deviceTree: model.omarchy.deviceTreePull, ids: model.omarchy.idsPull };
   const pull = key === 'pr' ? (['deviceTree', 'ids'] as const).map((piece) => (model.pieces[piece] === 'pr' ? pulls[piece] : null)).find(Boolean) : null;
   return cell(STATES.bootable, key, {
-    title: [meaning, channel ? SINCE[channel] : '', notes, pull ? `#${pull.number}: ${pull.title}.` : ''].filter(Boolean).join(' '),
+    title: [meaning, channel ? SINCE[channel] : '', notes, pull ? `#${pull.number} (${pull.title}).` : ''].filter(Boolean).join(' '),
     href: pull?.url,
     full: channel ? `${STATES.bootable[key].label} (${CHANNEL_WORD[channel]})` : undefined,
   });
@@ -255,7 +255,7 @@ export function idsCell(model: Model): Cell {
 }
 
 // "#2037: Add OEM firmware packages" after a state's meaning, for cells that link to a pull request
-const pullTitle = (meaning: string, pull: { number: number; title: string } | null) => (pull ? `${meaning} #${pull.number}: ${pull.title}.` : meaning);
+const pullTitle = (meaning: string, pull: { number: number; title: string } | null) => (pull ? `${meaning} #${pull.number} (${pull.title}).` : meaning);
 
 export function omarchyTreeCell(model: Model): Cell {
   const { deviceTree, deviceTreePull } = model.omarchy;
@@ -276,7 +276,7 @@ export function omarchyIdsCell(model: Model): Cell {
 
 export function omarchyFirmwareCell(model: Model): Cell {
   const { firmware, firmwareChannel, firmwarePackages, firmwarePull } = model.omarchy;
-  if (firmwareChannel) return check(STATES.omarchyFirmware, firmwareChannel, `${STATES.omarchyFirmware[firmwareChannel as Channel].meaning} Packages: ${firmwarePackages.join(', ')}.`);
+  if (firmwareChannel) return check(STATES.omarchyFirmware, firmwareChannel, `${STATES.omarchyFirmware[firmwareChannel as Channel].meaning} The packages are ${firmwarePackages.join(', ')}.`);
   if (firmware === 'pr') return cell(STATES.omarchyFirmware, 'pr', { href: firmwarePull?.url, title: pullTitle(STATES.omarchyFirmware.pr.meaning, firmwarePull) });
   if (firmware === 'download') return cell(STATES.omarchyFirmware, 'download', { href: model.upstream.firmwareDownload ?? undefined });
   return cell(STATES.omarchyFirmware, firmware === 'partial' ? 'partial' : 'windows');
@@ -285,7 +285,7 @@ export function omarchyFirmwareCell(model: Model): Cell {
 export function upstreamFirmwareCell(model: Model): Cell {
   const key = model.upstream.firmwareUpstream as keyof typeof STATES.upstreamFirmware;
   const missing = model.upstream.firmwareUpstreamMissing;
-  const detail = key === 'next-release' ? ` The release after ${status.firmwareRelease} adds ${missing.join(', ')}.` : key === 'partial' ? ` Still missing: ${missing.join(', ')}.` : '';
+  const detail = key === 'next-release' ? ` The release after ${status.firmwareRelease} adds ${missing.join(', ')}.` : key === 'partial' ? ` It still lacks ${missing.join(', ')}.` : '';
   return cell(STATES.upstreamFirmware, key, { title: STATES.upstreamFirmware[key].meaning + detail, href: key === 'posted' ? model.upstream.firmwarePosted ?? undefined : undefined });
 }
 
