@@ -10,6 +10,8 @@
 #             was found in, with its member path (archives inside the package joined with !/).
 #             A file with no package has a note on where it comes from instead
 #   links     names that are links to another file, as linux-firmware's WHENCE writes them
+#             Folders under ath11k/ and ath12k/ hold a Wi-Fi card's board data (board.bin) for a card
+#             linux-firmware's board-2.bin doesn't list, taken from the maker's Windows Wi-Fi driver
 # packages    the maker downloads, each with title, url, the maker's page when the url changes per version,
 #             size and SHA-256 as fetched, the date it was fetched, a note when fetching it
 #             needs care, and manual, true when the url is a page the download has to be started
@@ -24,6 +26,15 @@
 # the linux-firmware merge requests (!1331 to !1338 and !1341).
 
 folders:
+  - path: "ath12k/WCN7850/hw2.0"
+    models: ["microsoft-surface-laptop-7-15"]
+    files:
+      - name: "board.bin"
+        size: 88780
+        sha256: "b24438910ff0383d299798a997d3ef3484be624ac013aec2ce7939ec32900c4f"
+        note: "The WCN7850 card 17cb:1107 with the generic subsystem 17cb:1107 and qmi-board-id 255. The INF (qcwlanhmt8380.inf, DriverVer 1.0.4458.2600) gives it its default BDFileName, bdwlan.elf. Runs on linux-firmware's WLAN.HMT.1.1.c7."
+        from:
+          - { package: "microsoft-surfacelaptop7", member: "SurfaceUpdate/qcwlanhmt8380/bdwlan.elf" }
   - path: "qcom/glymur/ACER/SFSP14-Q51T"
     models: ["acer-swift-spin-14-ai-sfsp14-q51t"]
     files:
