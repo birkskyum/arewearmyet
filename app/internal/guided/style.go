@@ -66,6 +66,28 @@ func wrap(text string, width int) string {
 	for _, paragraph := range strings.Split(text, "\n") {
 		line := ""
 		for _, word := range strings.Fields(paragraph) {
+			// A word longer than a line goes on in the next, since nothing shown is cut off
+			for lipgloss.Width(word) > width {
+				letters := []rune(word)
+				room := width
+				if line != "" {
+					room = width - lipgloss.Width(line) - 1
+				}
+				if room < 8 {
+					lines = append(lines, line)
+					line = ""
+					continue
+				}
+				room = min(room, len(letters))
+				if line != "" {
+					line += " "
+				}
+				lines = append(lines, line+string(letters[:room]))
+				line, word = "", string(letters[room:])
+			}
+			if word == "" {
+				continue
+			}
 			if line != "" && lipgloss.Width(line)+1+lipgloss.Width(word) > width {
 				lines = append(lines, line)
 				line = word
@@ -81,34 +103,47 @@ func wrap(text string, width int) string {
 	return strings.Join(lines, "\n")
 }
 
-// resultsTable lists results with their state, and the evidence where there is room.
+// resultsTable lists results with their state and what was seen. The columns are as wide as
+// what is in them, and text that doesn't fit its column goes on in the next line. Nothing is cut.
 func resultsTable(results []report.Result, width int) string {
-	var out strings.Builder
-	for i, result := range results {
-		name := checkTitle[result.Check]
-		if name == "" {
-			name = result.Check
+	width = max(width, 20)
+	nameWidth, stateWidth := 0, 0
+	for _, result := range results {
+		nameWidth = max(nameWidth, lipgloss.Width(first(checkTitle[result.Check], result.Check))+2)
+		stateWidth = max(stateWidth, lipgloss.Width(stateLabel[result.State])+2)
+	}
+	// In a narrow window the name's column gives way first
+	nameWidth = max(10, min(nameWidth, width-stateWidth))
+	// What was seen stands beside the state where there is room for a readable column, and under it otherwise
+	detailWidth := width - nameWidth - stateWidth
+	beside := detailWidth >= 24
+	var out []string
+	for _, result := range results {
+		names := strings.Split(wrap(first(checkTitle[result.Check], result.Check), nameWidth-2), "\n")
+		detail := first(result.Note, result.Evidence)
+		var details []string
+		if detail != "" && beside {
+			details = strings.Split(wrap(detail, detailWidth), "\n")
 		}
-		// The name's column gives way first in a narrow window
-		nameWidth := max(10, min(30, width-19))
-		if lipgloss.Width(name) >= nameWidth {
-			name = string([]rune(name)[:nameWidth-2]) + "…"
-		}
-		line := lipgloss.NewStyle().Width(nameWidth).Render(name) + stateStyle(result.State).Width(18).Render(stateLabel[result.State])
-		detail := result.Note
-		if detail == "" {
-			detail = result.Evidence
-		}
-		if room := width - 50; room > 20 && detail != "" {
-			if letters := []rune(detail); len(letters) > room {
-				detail = string(letters[:room-1]) + "…"
+		for i := 0; i < max(len(names), len(details)); i++ {
+			name, state, seen := "", "", ""
+			if i < len(names) {
+				name = names[i]
 			}
-			line += soft.Render(detail)
+			if i == 0 {
+				state = stateLabel[result.State]
+			}
+			if i < len(details) {
+				seen = details[i]
+			}
+			line := lipgloss.NewStyle().Width(nameWidth).Render(name) + stateStyle(result.State).Width(stateWidth).Render(state) + soft.Render(seen)
+			out = append(out, strings.TrimRight(line, " "))
 		}
-		out.WriteString(line)
-		if i < len(results)-1 {
-			out.WriteByte('\n')
+		if detail != "" && !beside {
+			for _, line := range strings.Split(wrap(detail, width-2), "\n") {
+				out = append(out, "  "+soft.Render(line))
+			}
 		}
 	}
-	return out.String()
+	return strings.Join(out, "\n")
 }

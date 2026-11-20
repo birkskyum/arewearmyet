@@ -77,16 +77,7 @@ func Report(run *report.Run, width int) string {
 	if framed {
 		inner = width - 4
 	}
-	// Plain text broken into lines that fit, with a word longer than a line cut short
-	fit := func(text string) []string {
-		lines := strings.Split(wrap(text, inner), "\n")
-		for i, line := range lines {
-			if letters := []rune(line); len(letters) > inner {
-				lines[i] = string(letters[:inner-1]) + "…"
-			}
-		}
-		return lines
-	}
+	fit := func(text string) []string { return strings.Split(wrap(text, inner), "\n") }
 	var body []string
 	name := strings.TrimSpace(run.Hardware["maker"] + " " + first(run.Hardware["family"], run.Hardware["product"]))
 	if bios := run.Hardware["bios"]; bios != "" {

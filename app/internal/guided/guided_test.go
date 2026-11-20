@@ -1710,7 +1710,16 @@ func TestTheReportIsFramedWithWhatIsSent(t *testing.T) {
 			t.Errorf("narrow, a line is %d wide: %q", lipgloss.Width(line), line)
 		}
 	}
+	// Nothing that was seen is cut off, at any width
+	for _, width := range []int{40, 56, 80, 140} {
+		drawn := strings.Join(strings.Fields(strings.NewReplacer("│", " ", "\n", " ").Replace(ansi.ReplaceAllString(Report(run, width), ""))), " ")
+		if strings.Contains(drawn, "…") || !strings.Contains(drawn, "Woke by itself after four seconds, twice in five tries, with the charger in.") {
+			t.Errorf("at %d wide, what was seen is cut:\n%s", width, Report(run, width))
+		}
+	}
 	if os.Getenv("SHOW") != "" {
-		fmt.Println(ansi.ReplaceAllString(Report(run, 80), ""))
+		for _, width := range []int{80, 56, 40} {
+			fmt.Println(ansi.ReplaceAllString(Report(run, width), ""))
+		}
 	}
 }
