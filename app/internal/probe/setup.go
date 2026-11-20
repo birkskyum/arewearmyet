@@ -86,9 +86,9 @@ func setup(sys machine.System, run *report.Run) *report.Setup {
 	return found
 }
 
-// ExtraOptions are the kernel options in a command line beyond the ones Omarchy sets. An option
-// whose value names a disk or an address, or holds anything but plain characters, is given by its
-// name alone.
+// ExtraOptions are the kernel options in a command line beyond the ones Omarchy sets, by name.
+// An option's value is left out. It is the part that can name a disk or an address, and the part
+// that means least to the next owner.
 func ExtraOptions(cmdline string) []string {
 	own := map[string]bool{}
 	for _, option := range ownOptions {
@@ -99,19 +99,12 @@ func ExtraOptions(cmdline string) []string {
 		keys[key] = true
 	}
 	var extra []string
-	seen := map[string]bool{}
 	for _, option := range strings.Fields(cmdline) {
-		key, value, valued := strings.Cut(option, "=")
-		if own[option] || keys[key] || !optionKey.MatchString(key) {
+		key, _, _ := strings.Cut(option, "=")
+		if own[option] || keys[key] {
 			continue
 		}
-		if valued && (!optionValue.MatchString(value) || identity.MatchString(value)) {
-			option = key + "=…"
-		}
-		if !seen[option] && len(extra) < 24 {
-			seen[option] = true
-			extra = append(extra, option)
-		}
+		extra = add(extra, key, optionKey, 24)
 	}
 	return extra
 }

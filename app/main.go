@@ -394,8 +394,8 @@ func printResults(run *report.Run) {
 		fmt.Fprintf(os.Stderr, "  %-17s %-8s %s\n", result.Check, result.State, result.Evidence)
 	}
 	fmt.Fprintln(os.Stderr)
-	// What a result is read against, sent along by name
-	if line := guided.SetupLine(run.Setup); line != "" {
+	// What else the run names about the computer
+	for _, line := range run.Setup.Lines() {
 		fmt.Fprintln(os.Stderr, line)
 	}
 }
@@ -1343,7 +1343,8 @@ Options:
 
 Nothing personal is sent, which means no serial numbers, addresses, names or files. The microphone recording
 and the camera picture of the guided test never leave this computer. Another kernel than Omarchy's, a kernel
-module from no repository and a kernel option beyond Omarchy's are sent by name. Your settings files are not.
+module from no repository and a kernel option beyond Omarchy's are sent by name, without the option's value.
+Your settings files are not sent.
 
 Every command with its options is at https://arewearmyet.com/docs/hw-test
 `

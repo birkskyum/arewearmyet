@@ -89,26 +89,30 @@ func (s *Setup) Empty() bool {
 	return s == nil || len(s.Lines()) == 0
 }
 
-// Lines says what was found, one thing a line, in the words the test shows.
+// Lines says what was found in the words the test shows, a line for each kind of thing, like
+// "Kernel option added on this computer: gpiolib_acpi.ignore_wake".
 func (s *Setup) Lines() []string {
 	if s == nil {
 		return nil
 	}
 	var lines []string
+	kind := func(one, many string, names []string) {
+		switch len(names) {
+		case 0:
+		case 1:
+			lines = append(lines, one+": "+names[0])
+		default:
+			lines = append(lines, many+": "+strings.Join(names, ", "))
+		}
+	}
 	if s.Kernel != "" {
-		lines = append(lines, "kernel package "+s.Kernel)
+		lines = append(lines, "Kernel from another package than Omarchy's: "+s.Kernel)
 	}
-	for _, name := range s.Rebuilt {
-		lines = append(lines, name+" built by someone other than Omarchy")
-	}
-	for _, name := range s.Modules {
-		lines = append(lines, "kernel module "+name)
-	}
-	for _, option := range s.Options {
-		lines = append(lines, "kernel option "+option)
-	}
+	kind("Package not built by Omarchy", "Packages not built by Omarchy", s.Rebuilt)
+	kind("Kernel module added on this computer", "Kernel modules added on this computer", s.Modules)
+	kind("Kernel option added on this computer", "Kernel options added on this computer", s.Options)
 	if s.TestTree {
-		lines = append(lines, "a test device tree from hw-test tree")
+		lines = append(lines, "Running a test device tree from hw-test tree")
 	}
 	return lines
 }

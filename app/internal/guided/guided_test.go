@@ -1654,18 +1654,18 @@ func TestAComputerWithoutALidIsPutToSleepByTheTest(t *testing.T) {
 	}
 }
 
-// What goes with the results about the computer itself is said in one line before anything is sent
+// What the run names about the computer itself is said in the report, before anything is sent
 func TestTheSummarySaysWhatElseIsSent(t *testing.T) {
 	run := &report.Run{}
 	run.Set("battery", report.Works, report.Measured, "87%", "")
 	last := &summary{run: run, options: Options{Send: true}}
 	last.start()
-	if drawn := last.view(100, 40); strings.Contains(drawn, "Also sent") {
+	if drawn := last.view(100, 40); strings.Contains(drawn, "added on this computer") {
 		t.Errorf("a computer with nothing of its own is told something more is sent:\n%s", drawn)
 	}
 	run.Setup = &report.Setup{Modules: []string{"omnibook_fix"}, Options: []string{"regulator_ignore_unused"}}
 	drawn := last.view(100, 40)
-	for _, text := range []string{"Also sent: kernel module omnibook_fix, kernel option regulator_ignore_unused.", "Send this report"} {
+	for _, text := range []string{"Kernel module added on this computer: omnibook_fix", "Kernel option added on this computer: regulator_ignore_unused", "Send this report"} {
 		if !strings.Contains(drawn, text) {
 			t.Errorf("the summary lacks %q:\n%s", text, drawn)
 		}
@@ -1679,7 +1679,7 @@ func TestTheReportIsFramedWithWhatIsSent(t *testing.T) {
 		Hardware: map[string]string{"maker": "LENOVO", "family": "Yoga Slim 7 14Q8X9", "product": "83ED", "bios": "NHCN58WW"},
 		Packages: map[string]string{"linux-omarchy": "7.3-72", "mesa": "26.3"},
 		Chids:    []string{"a", "b", "c"},
-		Setup:    &report.Setup{Options: []string{"gpiolib_acpi.ignore_wake=VEN_0488:00@355"}},
+		Setup:    &report.Setup{Options: []string{"gpiolib_acpi.ignore_wake", "regulator_ignore_unused"}, TestTree: true},
 	}
 	run.Set("battery", report.Works, report.Measured, "87%", "")
 	run.Set("suspend", report.Partial, report.Owner, "", "Woke by itself after four seconds, twice in five tries, with the charger in.")
@@ -1694,7 +1694,7 @@ func TestTheReportIsFramedWithWhatIsSent(t *testing.T) {
 		if !strings.HasPrefix(lines[0], "╭─ Report ─") || !strings.HasPrefix(lines[len(lines)-1], "╰─") {
 			t.Errorf("at %d wide, the frame is open:\n%s", width, drawn)
 		}
-		for _, text := range []string{"LENOVO Yoga Slim 7 14Q8X9, BIOS NHCN58WW", "Kernel 7.3.0-72-omarchy, 2 package versions, 3", "hardware IDs", "Battery readings", "Sleep and wake", "Also sent: kernel option"} {
+		for _, text := range []string{"LENOVO Yoga Slim 7 14Q8X9, BIOS NHCN58WW", "Kernel 7.3.0-72-omarchy, 2 package versions, 3", "hardware IDs", "Battery readings", "Sleep and wake", "Kernel options added on this computer", "gpiolib_acpi.ignore_wake,", "regulator_ignore_unused", "Running a test device tree"} {
 			if !strings.Contains(drawn, text) {
 				t.Errorf("at %d wide, the report lacks %q:\n%s", width, text, drawn)
 			}
@@ -1709,6 +1709,10 @@ func TestTheReportIsFramedWithWhatIsSent(t *testing.T) {
 		if lipgloss.Width(line) > 40 {
 			t.Errorf("narrow, a line is %d wide: %q", lipgloss.Width(line), line)
 		}
+	}
+	// What the run names about the computer stands with its model and kernel, above the results
+	if whole := ansi.ReplaceAllString(Report(run, 140), ""); strings.Contains(whole, "Also sent") || strings.Index(whole, "Kernel options added") > strings.Index(whole, "Battery readings") {
+		t.Errorf("the computer's own lines are out of place:\n%s", whole)
 	}
 	// Nothing that was seen is cut off, at any width
 	for _, width := range []int{40, 56, 80, 140} {

@@ -94,12 +94,12 @@ func Report(run *report.Run, width int) string {
 		software += fmt.Sprintf(", %d hardware IDs", count)
 	}
 	body = append(body, fit(software)...)
-	body = append(body, "")
-	body = append(body, strings.Split(resultsTable(run.Results, inner), "\n")...)
-	if line := SetupLine(run.Setup); line != "" {
-		body = append(body, "")
+	// What else the run names about the computer, said with the rest of what describes it
+	for _, line := range run.Setup.Lines() {
 		body = append(body, fit(line)...)
 	}
+	body = append(body, "")
+	body = append(body, strings.Split(resultsTable(run.Results, inner), "\n")...)
 	if !framed {
 		// A narrow window has no room for a frame, so the report is set apart by its heading alone
 		return title.Render("Report") + "\n" + strings.Join(body, "\n")
@@ -111,16 +111,6 @@ func Report(run *report.Run, width int) string {
 	}
 	out.WriteString("╰" + strings.Repeat("─", inner+2) + "╯")
 	return out.String()
-}
-
-// SetupLine says in one line what goes with the results about the computer itself, or nothing
-// on a computer that runs Omarchy's own kernel with Omarchy's own options.
-func SetupLine(setup *report.Setup) string {
-	lines := setup.Lines()
-	if len(lines) == 0 {
-		return ""
-	}
-	return "Also sent: " + strings.Join(lines, ", ") + "."
 }
 
 // failing lists the checks this round found partly working or broken, or working with something

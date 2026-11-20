@@ -213,7 +213,7 @@ func FindChanges(sys machine.System, run *report.Run) Changes {
 func (c Changes) Lines() []string {
 	var out []string
 	for _, line := range c.Sent.Lines() {
-		out = append(out, line+" (named in a run)")
+		out = append(out, line+" (in the report)")
 	}
 	for _, name := range c.Packages {
 		out = append(out, "package "+name+", from no repository")

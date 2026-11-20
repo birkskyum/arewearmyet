@@ -26,16 +26,17 @@ func TestStockOptionsAreNotTheOwners(t *testing.T) {
 
 func TestOwnersOptionsAreNamed(t *testing.T) {
 	got := ExtraOptions(stockCmdline + " gpiolib_acpi.ignore_wake=VEN_0488:00@355 regulator_ignore_unused module_blacklist=qcom_q6v5_pas console=ttyMSM0,115200 regulator_ignore_unused")
-	want := []string{"gpiolib_acpi.ignore_wake=VEN_0488:00@355", "regulator_ignore_unused", "module_blacklist=qcom_q6v5_pas", "console=ttyMSM0,115200"}
+	// By name alone. console is Omarchy's with another value, and here it is the owner's
+	want := []string{"gpiolib_acpi.ignore_wake", "regulator_ignore_unused", "module_blacklist", "console"}
 	if !reflect.DeepEqual(got, want) {
 		t.Fatalf("got %v, want %v", got, want)
 	}
 }
 
-// A value that names one disk, card or address stays on the computer, and so does anything odd
-func TestOptionValuesThatNameTheComputerStayHome(t *testing.T) {
+// No value is sent, so nothing that names a disk, a card or an address can be in one
+func TestOptionValuesStayHome(t *testing.T) {
 	got := ExtraOptions("rd.luks.uuid=11111111-2222-3333-4444-555555555555 ip=192.168.1.20 netconsole=6666@10.0.0.2/aa:bb:cc:dd:ee:ff luks.key=/home/birk/key some\"thing=1 dm-mod.create=0123456789abcdef0123")
-	want := []string{"rd.luks.uuid=…", "ip=…", "netconsole=…", "luks.key=…", "dm-mod.create=…"}
+	want := []string{"rd.luks.uuid", "ip", "netconsole", "luks.key", "dm-mod.create"}
 	if !reflect.DeepEqual(got, want) {
 		t.Fatalf("got %v, want %v", got, want)
 	}
