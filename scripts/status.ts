@@ -549,6 +549,8 @@ const summary = {
   // The same for the Windows on Arm PCs from before Snapdragon X
   older: older.length,
   byPieceOlder: byPiece(older),
+  // And for Qualcomm's entry line, the Snapdragon C
+  byPieceEntry: byPiece(rows.filter((row) => row.generation === 'c' && row.boot === 'uefi')),
 };
 
 // Anything the sources know that no model claims yet, so the list can be completed

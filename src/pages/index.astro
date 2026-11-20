@@ -187,13 +187,21 @@ import { SHELL } from '../lib/shell';
     </Family>
 
     <Family id="snapdragon-7c-8cx-835-850" title="Snapdragon 7c, 8cx, 835 and 850" total={older.length}>
-      <PieceBars pieces={summary.byPieceOlder} models={older} anchor="snapdragon-7c-8cx-835-850" urlPrefix="8cx-" />
-      <p class="mt-8 max-w-3xl text-sm text-zinc-400">
+      <p class="max-w-3xl text-sm text-zinc-400">
         The Windows on Arm machines from before Snapdragon X, with the Snapdragon 8cx, 850, 835 and 7c. They start through UEFI like the models above, so they need the same pieces and use the same views and labels. Omarchy carries device trees for most of them, from Linux, from owners' ports, or written from their ACPI tables.
       </p>
-      <div class="mt-4" data-views data-view="omarchy">
+      {/* The bars follow the page's switch, as the first table's do */}
+      <div class="group/views mt-8" data-views data-view="omarchy">
         <ViewState prefix="8cx-" views={snapdragonViews.map((v) => v.id)} />
-        <StatusTable client:load rows={older} views={snapdragonViews} chips={[{ key: '8cx', label: '8cx Gen 3' }, { key: '8cx-gen1', label: '8cx Gen 1 and 2' }, { key: '850', label: '850' }, { key: '835', label: '835' }, { key: '7c', label: '7c' }]} urlPrefix="8cx-" exportName="arewearmyet-snapdragon-7c-8cx-835-850" exportTitle="Snapdragon 7c, 8cx, 835 and 850" />
+        <div class="group-data-[view=hardware]/views:hidden">
+          <PieceBars pieces={summary.byPieceOlder} models={older} anchor="snapdragon-7c-8cx-835-850" urlPrefix="8cx-" />
+        </div>
+        <div class="hidden group-data-[view=hardware]/views:block">
+          <PartBars models={older} anchor="snapdragon-7c-8cx-835-850" urlPrefix="8cx-" />
+        </div>
+        <div class="mt-4">
+          <StatusTable client:load rows={older} views={snapdragonViews} chips={[{ key: '8cx', label: '8cx Gen 3' }, { key: '8cx-gen1', label: '8cx Gen 1 and 2' }, { key: '850', label: '850' }, { key: '835', label: '835' }, { key: '7c', label: '7c' }]} urlPrefix="8cx-" exportName="arewearmyet-snapdragon-7c-8cx-835-850" exportTitle="Snapdragon 7c, 8cx, 835 and 850" />
+        </div>
       </div>
     </Family>
 
@@ -201,9 +209,18 @@ import { SHELL } from '../lib/shell';
       <p class="max-w-3xl text-sm text-zinc-400">
         Qualcomm's entry line for budget Windows laptops. Its drivers are the ones for the 7c Gen 3 (SC7280) in Arm Chromebooks, a chip Linux already describes, so each laptop needs a board tree, hardware IDs and firmware like the models above.
       </p>
-      <div class="mt-4" data-views data-view="omarchy">
+      {/* The bars follow the page's switch, as the first table's do */}
+      <div class="group/views mt-8" data-views data-view="omarchy">
         <ViewState prefix="c-" views={snapdragonViews.map((v) => v.id)} />
-        <StatusTable client:load rows={entry} views={snapdragonViews} chips={[]} urlPrefix="c-" exportName="arewearmyet-snapdragon-c" exportTitle="Snapdragon C" />
+        <div class="group-data-[view=hardware]/views:hidden">
+          <PieceBars pieces={summary.byPieceEntry} models={entry} anchor="snapdragon-c" urlPrefix="c-" />
+        </div>
+        <div class="hidden group-data-[view=hardware]/views:block">
+          <PartBars models={entry} anchor="snapdragon-c" urlPrefix="c-" />
+        </div>
+        <div class="mt-4">
+          <StatusTable client:load rows={entry} views={snapdragonViews} chips={[]} urlPrefix="c-" exportName="arewearmyet-snapdragon-c" exportTitle="Snapdragon C" />
+        </div>
       </div>
     </Family>
 

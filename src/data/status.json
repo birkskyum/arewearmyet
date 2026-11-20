@@ -2238,6 +2238,83 @@
           "available": []
         }
       }
+    },
+    "byPieceEntry": {
+      "deviceTree": {
+        "omarchy": 1,
+        "fromUpstream": 0,
+        "added": 1,
+        "pull": 0,
+        "available": 0,
+        "upstream": 0,
+        "channels": {
+          "stable": 0,
+          "rc": 0,
+          "edge": 1
+        },
+        "models": {
+          "fromUpstream": [],
+          "added": [
+            "hp-omnibook-3-16-ct0"
+          ],
+          "pull": [],
+          "available": []
+        }
+      },
+      "ids": {
+        "omarchy": 0,
+        "fromUpstream": 0,
+        "added": 0,
+        "pull": 0,
+        "available": 0,
+        "upstream": 0,
+        "channels": {
+          "stable": 0,
+          "rc": 0,
+          "edge": 0
+        },
+        "models": {
+          "fromUpstream": [],
+          "added": [],
+          "pull": [],
+          "available": []
+        }
+      },
+      "firmware": {
+        "omarchy": 1,
+        "fromUpstream": 0,
+        "added": 1,
+        "pull": 0,
+        "available": 0,
+        "upstream": 0,
+        "channels": {
+          "stable": 0,
+          "rc": 0,
+          "edge": 1
+        },
+        "models": {
+          "fromUpstream": [],
+          "added": [
+            "hp-omnibook-3-16-ct0"
+          ],
+          "pull": [],
+          "available": []
+        }
+      },
+      "all": {
+        "omarchy": 0,
+        "fromUpstream": 0,
+        "added": 0,
+        "pull": 0,
+        "available": 0,
+        "upstream": 0,
+        "models": {
+          "fromUpstream": [],
+          "added": [],
+          "pull": [],
+          "available": []
+        }
+      }
     }
   },
   "models": [
