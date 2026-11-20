@@ -22,7 +22,7 @@ func interruptLine(sys machine.System, inputDevice string) string {
 	if at == "" || at == "/" {
 		return ""
 	}
-	// Its pin on the interrupt controller: after the controller's handle in
+	// Its pin on the interrupt controller, which comes after the controller's handle in
 	// interrupts-extended, or first in interrupts
 	pin := int64(-1)
 	if cells := sys.Bytes(at + "/of_node/interrupts-extended"); len(cells) >= 8 {
@@ -33,7 +33,7 @@ func interruptLine(sys machine.System, inputDevice string) string {
 	if pin < 0 {
 		return ""
 	}
-	// Several controllers can have a pin of that number; the one in use by an input driver is it
+	// Several controllers can have a pin of that number, and the one in use by an input driver is it
 	fallback := ""
 	for _, line := range sys.Glob("/sys/kernel/irq/*") {
 		if hwirq, ok := sys.Int(line + "/hwirq"); !ok || hwirq != pin {
@@ -67,7 +67,7 @@ func interrupts(sys machine.System, line string) (int64, bool) {
 	return total, true
 }
 
-// Describe says how the guided test will check things on this machine: which hardware it
+// Describe says how the guided test will check things on this machine, which is the hardware it
 // found and what it can measure it by. It is what `hw-test facts` prints.
 func Describe(sys machine.System, touchscreenDevice string) []string {
 	var lines []string

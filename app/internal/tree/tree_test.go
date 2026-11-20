@@ -13,9 +13,9 @@ import (
 	"testing"
 )
 
-// kernel is a stand-in for a kernel's build folder: two tree sources, a bindings header one of
-// them includes, and a dtc that writes what it was given, so the flow is tested without a
-// device tree compiler.
+// kernel is a stand-in for a kernel's build folder, with two tree sources, a bindings header one of
+// them includes, and a dtc that writes what it was given, so the flow is tested without a device
+// tree compiler.
 func kernel(t *testing.T) System {
 	t.Helper()
 	for _, tool := range []string{"gcc", "git", "cp"} {
@@ -38,11 +38,11 @@ func kernel(t *testing.T) System {
 	if err := os.Symlink("../../../include/dt-bindings", filepath.Join(build, "scripts/dtc/include-prefixes/dt-bindings")); err != nil {
 		t.Fatal(err)
 	}
-	// Stands in for dtc: copies the preprocessed source to where the tree should go
+	// Stands in for dtc by copying the preprocessed source to where the tree should go
 	file("scripts/dtc/dtc", "#!/bin/sh\nfor a in \"$@\"; do last=$a; done\nwhile [ $# -gt 0 ]; do [ \"$1\" = -o ] && out=$2; shift; done\ncp \"$last\" \"$out\"\n", 0o755)
 	conf := filepath.Join(t.TempDir(), "uki.conf")
 	os.WriteFile(conf, []byte("[UKI]\nDeviceTree=/boot/dtbs/linux-omarchy/qcom/x1e80100-lenovo-yoga-slim7x.dtb\nDeviceTreeAuto=/boot/dtbs/linux-omarchy/qcom/x1e80100-dell-xps13-9345.dtb\n"), 0o644)
-	// Omarchy's package: one patch that changes this machine's tree, one that adds a model the
+	// Omarchy's package, with one patch that changes this machine's tree, one that adds a model the
 	// kernel doesn't have, and one the kernel's sources already hold
 	recipe := filepath.Join(t.TempDir(), "linux-omarchy-dtbs")
 	os.MkdirAll(recipe, 0o755)
@@ -110,8 +110,8 @@ func TestAChangedTreeIsBuiltAsThePackageDoesWithItsDiff(t *testing.T) {
 		t.Fatal(err)
 	}
 	root := started.Root
-	// Omarchy's patches are laid over the kernel's sources, as its package does: two applied,
-	// and the one the kernel already has passed over
+	// Omarchy's patches are laid over the kernel's sources, as its package does, with two applied, and
+	// the one the kernel already has passed over
 	if started.Applied != 2 || len(started.Skipped) != 1 || !strings.Contains(started.Skipped[0], "0003-") {
 		t.Errorf("patches: %d applied, passed over %v", started.Applied, started.Skipped)
 	}
@@ -278,7 +278,7 @@ func TestStartSaysWhetherTheSourcesAreWhatTheComputerStartsWith(t *testing.T) {
 	if left, _ := filepath.Glob(filepath.Join(dir, ".stock-*")); len(left) != 0 {
 		t.Errorf("the comparison left files behind: %v", left)
 	}
-	// An older package is installed: the sources are ahead of what the computer starts with
+	// An older package is installed, so the sources are ahead of what the computer starts with
 	record([]byte("an older tree"))
 	if started, err := s.Start(t.TempDir()); err != nil || started.Stock != "differs" {
 		t.Errorf("with another tree installed: %q, %v", started.Stock, err)
@@ -352,11 +352,11 @@ func TestTheChangeIsWrittenAsOnePatchForThePackage(t *testing.T) {
 			t.Errorf("the patch lacks %q:\n%s", want, patch)
 		}
 	}
-	// It holds the change alone: neither Omarchy's own patches nor the mark
+	// It holds the change alone, with neither Omarchy's own patches nor the mark
 	if strings.Contains(string(patch), "+\tmodel") || strings.Contains(string(patch), "elitebook") || strings.Contains(string(patch), Mark) {
 		t.Errorf("the patch holds more than the change:\n%s", patch)
 	}
-	// It fits the package's sources: laid over a fresh start, it gives the same tree
+	// It fits the package's sources, so laid over a fresh start, it gives the same tree
 	fresh := t.TempDir()
 	again, err := s.Start(fresh)
 	if err != nil {
@@ -371,8 +371,8 @@ func TestTheChangeIsWrittenAsOnePatchForThePackage(t *testing.T) {
 		t.Error("the patched fresh sources differ from the changed ones")
 	}
 
-	// Going on after the patch: the build's diff is still the whole change, and a second
-	// writing replaces the first with everything in it
+	// Going on after the patch, the build's diff is still the whole change, and a second writing
+	// replaces the first with everything in it
 	built, err := s.Build(dir, "x1e80100-lenovo-yoga-slim7x")
 	if err != nil || len(built.Changed) != 1 {
 		t.Fatalf("building after the patch: changed %v, %v", built.Changed, err)
@@ -419,7 +419,7 @@ func TestTheTestEntryStartsOnceByItselfAndTheUsualOrderIsLeftAlone(t *testing.T)
 			t.Errorf("the boot script lacks %q", part)
 		}
 	}
-	// The order the computer starts in is never written: only the one-time word is
+	// The order the computer starts in is never written. Only the one-time word is
 	for _, never := range []string{"--bootorder", " -o ", "efibootmgr -q --create "} {
 		if strings.Contains(script, never) {
 			t.Errorf("the boot script changes the usual order: %q", never)

@@ -1,5 +1,5 @@
 ---
-// How many of a family's models have each piece, in Omarchy and upstream: one cell per model,
+// How many of a family's models have each piece, in Omarchy and upstream, with one cell per model,
 // coloured by where its piece comes from, each linking to the model in the family's table
 import type { TableRow } from '../lib/rows';
 import type status from '../data/status.json';
@@ -16,7 +16,7 @@ const { pieces, models, anchor, urlPrefix = '' } = Astro.props;
 const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
 const byName = <T extends { vendor: string; name: string }>(a: T, b: T) => a.vendor.localeCompare(b.vendor) || a.name.localeCompare(b.name);
 
-// Where each piece stands: in any Omarchy channel, in the releases every distro gets,
+// Where each piece stands, which is in any Omarchy channel, in the releases every distro gets,
 // in an open omarchy-pkgs pull request or elsewhere
 const byPiece = pieces;
 const channelNote = (channels: Record<string, number>) => `Stable ${channels.stable}, RC ${channels.rc}, edge ${channels.edge}.`;

@@ -158,8 +158,8 @@ func (k *keyboard) view(width, height int) string {
 		var cells []string
 		for _, key := range row {
 			style := lipgloss.NewStyle().Width(key.width).Align(lipgloss.Center)
-			// Three looks that read on any theme: a pressed key is black on green, a key still
-			// to press is the text colour reversed like a key cap, an optional key is plain text
+			// Three looks that read on any theme. A pressed key is black on green, a key still to press is
+			// the text colour reversed like a key cap, and an optional key is plain text
 			switch {
 			case k.lit[key.code]:
 				style = style.Background(lipgloss.Green).Foreground(lipgloss.Black).Bold(true)

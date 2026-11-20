@@ -8,12 +8,12 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 )
 
-// touchpad watches the pointer in the terminal: moving, clicking and scrolling each light up
-// as they happen, so nothing has to be judged from memory.
+// touchpad watches the pointer in the terminal. Moving, clicking and scrolling each light up as
+// they happen, so nothing has to be judged from memory.
 type touchpad struct {
 	run    *report.Run
 	device string
-	// places counts the cells the pointer has been over; a few of them is a movement.
+	// places counts the cells the pointer has been over, and a few of them is a movement.
 	places  map[[2]int]bool
 	clicked bool
 	// wheel holds the scroll directions seen. Which finger direction is "up" depends on the

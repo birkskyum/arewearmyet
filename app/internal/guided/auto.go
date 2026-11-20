@@ -32,8 +32,8 @@ type unattended interface{ alone(bool) }
 // linger is how long an automatic step's results stay up before the test goes on.
 const linger = 3 * time.Second
 
-// auto is a test that needs nobody: it runs when its turn comes, shows what it measured and
-// goes on by itself. Nothing in it waits for a key.
+// auto is a test that needs nobody. It runs when its turn comes, shows what it measured and goes on
+// by itself. Nothing in it waits for a key.
 type auto struct {
 	run   *report.Run
 	test  deep.Test
@@ -84,8 +84,8 @@ func (a *auto) start() tea.Cmd {
 	return tea.Batch(measure, a.tick())
 }
 
-// keep writes a result into the run. A check the quick check already found failing stays
-// failing unless this test found it worse: a deeper look that is content doesn't undo it.
+// keep writes a result into the run. A check the quick check already found failing stays failing
+// unless this test found it worse, since a deeper look that is content doesn't undo it.
 func keep(run *report.Run, result report.Result) {
 	if had, ok := run.Get(result.Check); ok && severity[had.State] > severity[result.State] {
 		return
@@ -167,9 +167,9 @@ func showResults(results []report.Result, width int) string {
 	return strings.Join(lines, "\n")
 }
 
-// Unattended runs the automatic tests the words name with nobody at the keyboard, for a
-// session without a terminal: an agent's, or one over a pipe. The sound test is left out,
-// since it plays tones out loud. It reports only what these tests measured.
+// Unattended runs the automatic tests the words name with nobody at the keyboard, for a session
+// without a terminal, like an agent's or one over a pipe. The sound test is left out, since it
+// plays tones out loud. It reports only what these tests measured.
 func Unattended(run *report.Run, tests []deep.Test, words []string, say func(string)) {
 	wanted := map[string]bool{}
 	for _, word := range words {
@@ -206,8 +206,8 @@ func AutomaticWords() []string { return automaticWords }
 // soundWords run the sound test, which plays tones and listens to them.
 var soundWords = map[string]bool{"speakers": true, "microphone": true}
 
-// MaySound says whether the sound test may run with nobody at a terminal: the owner handed
-// the speakers or the microphones to an agent, which is their yes to its tones.
+// MaySound says whether the sound test may run with nobody at a terminal. That is when the owner
+// handed the speakers or the microphones to an agent, which is their yes to its tones.
 func MaySound(now time.Time) bool {
 	return report.Handed("speakers", now) || report.Handed("microphones", now)
 }
@@ -222,8 +222,8 @@ func WantsSound(words []string) bool {
 	return false
 }
 
-// Heard runs the sound test with nobody at a terminal: it plays the tones, listens to them
-// and writes what the microphones made of them into the run.
+// Heard runs the sound test with nobody at a terminal. It plays the tones, listens to them and
+// writes what the microphones made of them into the run.
 func Heard(run *report.Run, dir string, say func(string)) {
 	say("Playing test tones at half volume and listening to them…")
 	s := newSpeakers(run, dir)
@@ -239,9 +239,9 @@ func Heard(run *report.Run, dir string, say func(string)) {
 	}
 }
 
-// Automatic says whether every word names a test that needs nobody and makes no sound, or
-// the sound test where the owner has agreed to it: by handing the speakers over, or as the
-// agent says they did with --play.
+// Automatic says whether every word names a test that needs nobody and makes no sound, or the sound
+// test where the owner has agreed to it, by handing the speakers over or as the agent says they did
+// with --play.
 func Automatic(words []string, play bool) bool {
 	quiet := map[string]bool{}
 	for _, word := range automaticWords {

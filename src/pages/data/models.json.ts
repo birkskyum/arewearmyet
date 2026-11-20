@@ -1,4 +1,4 @@
-// Every model with a page, served as GET /api/models: Snapdragon PCs, Chromebooks and Googlebooks, and NVIDIA machines.
+// Every model with a page, served as GET /api/models. That is Snapdragon PCs, Chromebooks and Googlebooks, and NVIDIA machines.
 import { bootableOf, coverage, googlePageModels, nvidiaPageModels, pageModels } from '../../lib/checks';
 
 export function GET() {

@@ -128,8 +128,8 @@ func TestQuestionsAskOnlyWhatIsThereAndUnmeasured(t *testing.T) {
 	run := &report.Run{}
 	run.Set("charging", report.Works, report.Measured, "PD", "")
 	run.Set("bluetooth", report.Works, report.Measured, "hci0 powered", "")
-	// The touchpad and the USB ports have steps of their own here; sound has none, as on a
-	// machine without PipeWire's tools, so it is asked about
+	// The touchpad and the USB ports have steps of their own here. Sound has none, as on a machine
+	// without PipeWire's tools, so it is asked about
 	covered := map[string]bool{"touchpad": true, "usb": true}
 	q := newQuestions(run, probe.Facts{Laptop: true, Touchpad: "pad", SoundCard: "card", Bluetooth: "hci0"}, covered)
 	var checks []string
@@ -140,14 +140,14 @@ func TestQuestionsAskOnlyWhatIsThereAndUnmeasured(t *testing.T) {
 		t.Errorf("asked: %s", got)
 	}
 
-	q.update(press('1')) // speakers: yes
-	q.update(press('2')) // microphone: partly, then a note
+	q.update(press('1')) // speakers, yes
+	q.update(press('2')) // microphone, partly, then a note
 	for _, c := range "very quiet" {
 		q.update(press(c))
 	}
 	q.update(press(tea.KeyEnter))
-	q.update(press('4')) // external screen: haven't tried
-	q.update(press('3')) // installer: no
+	q.update(press('4')) // external screen, haven't tried
+	q.update(press('3')) // installer, no
 	q.update(press(tea.KeyEnter))
 	if !q.done() {
 		t.Fatal("not done")
@@ -187,7 +187,7 @@ func TestEffectsTurnWhatWasSeenIntoResults(t *testing.T) {
 	if skipped.run.State("backlight") != "" || skipped.run.State("keyboard") != report.Works {
 		t.Errorf("skipped: %+v", skipped.run.Results)
 	}
-	// A skipped key isn't called working: the keyboard's result says which weren't checked
+	// A skipped key isn't called working. The keyboard's result says which weren't checked
 	if keyboard, _ = skipped.run.Get("keyboard"); keyboard.Note != "Not checked were volume up, volume down, mute" || keyboard.How != report.Measured {
 		t.Errorf("skipped keys aren't named: %+v", keyboard)
 	}
@@ -256,7 +256,7 @@ func TestTheTestSkipsStepsWithNothingToDoAndDrawsAtAnySize(t *testing.T) {
 	run := &report.Run{Hardware: map[string]string{"maker": "LENOVO", "family": "Yoga Slim 7 14Q8X9"}}
 	run.Set("display", report.Works, report.Measured, "eDP-1 connected, 2944x1840", "")
 	last := &summary{run: run, options: Options{Send: false}}
-	// No volume control and no backlight: the effects step has nothing to ask
+	// No volume control and no backlight, so the effects step has nothing to ask
 	m := &model{run: run, summary: last, failed: map[string]string{}, steps: []step{&welcome{run: run}, &effects{run: run}, newQuestions(run, probe.Facts{}, nil), last}}
 	m.Update(press(tea.KeyEnter))
 	if m.at != 2 {
@@ -269,7 +269,7 @@ func TestTheTestSkipsStepsWithNothingToDoAndDrawsAtAnySize(t *testing.T) {
 		}
 	}
 	m.Update(tea.WindowSizeMsg{Width: 120, Height: 40})
-	for range 3 { // USB ports, an external screen, the installer: haven't tried
+	for range 3 { // USB ports, an external screen and the installer, none tried
 		m.Update(press('4'))
 	}
 	if m.at != 3 || !strings.Contains(m.View().Content, "Nothing is sent") {
@@ -307,7 +307,7 @@ func TestCameraTakesItsPictureOnlyWhenToldAndShowsItInTheTerminal(t *testing.T) 
 	if intro := c.view(80, 30); !strings.Contains(intro, "When you press Enter it takes one picture and shows it here") || !strings.Contains(intro, "never leaves this computer") {
 		t.Errorf("the intro doesn't say what will happen:\n%s", intro)
 	}
-	// Enter takes it at once: the intro was the warning
+	// Enter takes it at once, as the intro was the warning
 	if c.update(press(tea.KeyEnter)) == nil || c.phase != "capturing" {
 		t.Fatalf("after Enter it is %q", c.phase)
 	}
@@ -426,7 +426,7 @@ func TestTheFanTestIsDoneWithTheOwnerWhereOnlyTheirEarsCanTell(t *testing.T) {
 		}
 		return strings.Join(out, ", ")
 	}
-	// No fan speed sensor: the step is one of those done with the owner, and asks for their ear
+	// No fan speed sensor, so the step is one of those done with the owner, and asks for their ear
 	ear := newHeat(run, machine.Fixture(dir), dir)
 	ear.byEar = true
 	all := []step{newKeyboard(run), ear, newQuestions(run, probe.Facts{}, nil), newAuto(run, deep.Test{Name: "Video decoding"})}
@@ -548,7 +548,8 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 	for range 2 {
 		m.Update(press(tea.KeyUp))
 	}
-	// The menu is the list of what there is: no second list of steps above it, and nothing to skip
+	// The menu is the list of what there is, with no second list of steps above it, and nothing to
+	// skip
 	if strings.Contains(drawn, "○ Send") || strings.Contains(drawn, "Ctrl+N") {
 		t.Errorf("the start screen repeats the steps:\n%s", drawn)
 	}
@@ -563,7 +564,7 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 		t.Errorf("the whole test: at %d of %d", m.at, len(m.steps))
 	}
 
-	// The camera alone: only it and the send step are left, and only it is reported
+	// The camera alone. Only it and the send step are left, and only it is reported
 	m, start = open()
 	at := 0
 	for i, part := range start.parts {
@@ -709,7 +710,7 @@ func TestAStoppedTestGoesOnFromItsStepAndACrashIsThatStepsResult(t *testing.T) {
 		t.Error("the step it crashed in would run again")
 	}
 
-	// The owner restarted it themselves: no blame, and the step runs again
+	// The owner restarted it themselves, so no blame, and the step runs again
 	run = &report.Run{}
 	opening, steps = resume(run, saved, "this-boot", &welcome{run: run}, build(run))
 	opening.update(press('2'))
@@ -742,8 +743,8 @@ func TestChosenStepsRunAlone(t *testing.T) {
 	if got := names(choose(all, []string{"camera", "keyboard"})); got != "Keyboard, Volume and brightness keys, Camera" {
 		t.Errorf("camera and keyboard: %s", got)
 	}
-	// Everything done with the owner in one go: not the sound, which measures itself, nor the
-	// voice step that only stands in for it
+	// Everything done with the owner in one go, without the sound, which measures itself, and without
+	// the voice step that only stands in for it
 	if got := names(choose(all, []string{"manual"})); got != "Keyboard, Volume and brightness keys, Headphones, Camera, Questions" {
 		t.Errorf("manual: %s", got)
 	}
@@ -775,7 +776,7 @@ func TestAStickBehindAPluggedInHubSaysNothingOfThePort(t *testing.T) {
 	u := newUSB(run, machine.Fixture(root))
 	u.start()
 	seen := func() { u.update(usbMsg{u.devices()}) }
-	// The case goes on: its hub, and a moment later the two devices built into it
+	// The case goes on, first its hub, and a moment later the two devices built into it
 	device("1-1", "480", "050d", "0001")
 	seen()
 	device("1-1.1", "12", "050d", "0002")
@@ -795,7 +796,7 @@ func TestAStickBehindAPluggedInHubSaysNothingOfThePort(t *testing.T) {
 		t.Errorf("result %+v", result)
 	}
 
-	// A hub that is part of the computer is no such excuse: its ports are the computer's own
+	// A hub that is part of the computer is no such excuse, since its ports are the computer's own
 	root = t.TempDir()
 	device("usb1", "480", "1d6b", "0002")
 	device("1-1", "480", "05e3", "0610")
@@ -837,7 +838,7 @@ func TestUSBPlugInsAreSeenWithTheirSpeed(t *testing.T) {
 	seen()
 	unplug("2-1")
 	seen()
-	// A hub comes with the devices on it; it is one plug-in
+	// A hub comes with the devices on it, and it is one plug-in
 	device("1-2", "480", "0608")
 	device("1-2.1", "480", "c52b")
 	seen()
@@ -977,7 +978,7 @@ func TestTouchpadIsMeasuredFromThePointerInTheTerminal(t *testing.T) {
 }
 
 func TestTouchscreenCountsTouchesByItsInterrupt(t *testing.T) {
-	// A touchscreen on I2C as the device tree describes it: pin 51 of the GPIO controller
+	// A touchscreen on I2C as the device tree describes it, on pin 51 of the GPIO controller
 	root := t.TempDir()
 	set := func(path string, data []byte) {
 		os.MkdirAll(filepath.Dir(filepath.Join(root, path)), 0o755)
@@ -989,7 +990,7 @@ func TestTouchscreenCountsTouchesByItsInterrupt(t *testing.T) {
 	os.MkdirAll(filepath.Join(root, "sys/class/input"), 0o755)
 	os.Symlink(filepath.Join(root, device, "0018:27C6:0123.0001/input/input5/event5"), filepath.Join(root, "sys/class/input/event5"))
 	os.Symlink("..", filepath.Join(root, device, "0018:27C6:0123.0001/input/input5/event5/device"))
-	// Three lines share the driver's name; another controller has a pin 51 too
+	// Three lines share the driver's name, and another controller has a pin 51 too
 	for irq, line := range map[string][3]string{"138": {"51", "hid-over-i2c", "653,0,0"}, "141": {"3", "hid-over-i2c", "14377,0,0"}, "77": {"51", "", "0,0,0"}} {
 		set("sys/kernel/irq/"+irq+"/hwirq", []byte(line[0]+"\n"))
 		set("sys/kernel/irq/"+irq+"/actions", []byte(line[1]+"\n"))
@@ -1005,7 +1006,7 @@ func TestTouchscreenCountsTouchesByItsInterrupt(t *testing.T) {
 	screen.clock = func() time.Time { return now }
 	screen.start()
 	count := int64(653)
-	// A touch: the line fires for a moment, then goes quiet
+	// A touch. The line fires for a moment, then goes quiet
 	touch := func() {
 		for i := 0; i < 5; i++ {
 			count += 7
@@ -1157,8 +1158,8 @@ func TestNothingIsDrawnInAFaintColour(t *testing.T) {
 	}
 }
 
-// Nothing may run past the window's edge, where it would be cut off: every step is drawn in
-// a narrow window and each line measured. Only the picture of the keyboard has a width of its own.
+// Nothing may run past the window's edge, where it would be cut off. Every step is drawn in a
+// narrow window and each line measured. Only the picture of the keyboard has a width of its own.
 func TestNoLineIsCutOffInANarrowWindow(t *testing.T) {
 	run := &report.Run{Hardware: map[string]string{"maker": "LENOVO", "product": "83ED"}}
 	run.Set("wifi", report.Works, report.Measured, "wlan0 (ath12k_wifi7_pci) connected, with a long line of evidence that goes on and on", "")
@@ -1229,7 +1230,7 @@ func TestSoundIsMeasuredFromTheRecordingWithNobodyListening(t *testing.T) {
 			t.Errorf("the result doesn't show %q:\n%s", text, drawn)
 		}
 	}
-	// Enter takes the measurement as it is: nothing was asked
+	// Enter takes the measurement as it is, and nothing was asked
 	s.update(press(tea.KeyEnter))
 	if !s.done() {
 		t.Error("not done after Enter")
@@ -1261,7 +1262,8 @@ func TestSoundAsksOnlyWhenTheRecordingHoldsNothing(t *testing.T) {
 		t.Errorf("speakers %+v, microphones %+v", speakers, microphones)
 	}
 
-	// The owner heard nothing either: the speakers failed, and the microphones are left to the voice step
+	// The owner heard nothing either, so the speakers failed, and the microphones are left to the
+	// voice step
 	run = &report.Run{}
 	s = newSpeakers(run, t.TempDir())
 	played(s, 0, 0, 0, 0, 0)
@@ -1329,7 +1331,7 @@ func TestMicrophoneLevelIsMeasuredSoQuietIsNotBlamedOnTheSpeakers(t *testing.T) 
 		return m, run
 	}
 
-	// A quiet microphone: the recording itself is far below the tone
+	// A quiet microphone, where the recording itself is far below the tone
 	m, run := record(150)
 	if !m.quiet() || m.gain < 20 || !strings.Contains(m.view(100, 40), "it is the microphone and not the speakers") || !strings.Contains(m.ask.question, "times louder") {
 		t.Fatalf("quiet=%v gain=%.0f\n%s", m.quiet(), m.gain, m.view(100, 40))
@@ -1378,7 +1380,7 @@ func TestCtrlNPassesAnyStepOver(t *testing.T) {
 		if m.at != want {
 			t.Fatalf("after %d presses it is at step %d", want, m.at)
 		}
-		// Every step of the test shows the key; the last one, which sends, doesn't
+		// Every step of the test shows the key. The last one, which sends, doesn't
 		if shown := strings.Contains(m.View().Content, "Ctrl+N for the next step"); shown != (want < 6) {
 			t.Errorf("at step %d the key is shown: %v", want, shown)
 		}
@@ -1415,7 +1417,7 @@ func TestSleepWaitsForWifiAndRecordsHowLongItTook(t *testing.T) {
 		now := time.Unix(5000, 0)
 		s.clock = func() time.Time { return now }
 		s.update(press(tea.KeyEnter))
-		// Asleep: Wi-Fi drops. Awake: the kernel counts one more sleep, and Wi-Fi is still down
+		// Asleep, Wi-Fi drops. Awake, the kernel counts one more sleep, and Wi-Fi is still down
 		set("sys/class/net/wlan0/operstate", "down\n")
 		s.update(sleepMsg{ok: 2, failed: 0})
 		if s.phase != "settling" {
@@ -1424,7 +1426,7 @@ func TestSleepWaitsForWifiAndRecordsHowLongItTook(t *testing.T) {
 		return s, run, &now
 	}
 
-	// Wi-Fi comes back after 23 seconds: slow, and not a failure
+	// Wi-Fi comes back after 23 seconds, which is slow, and not a failure
 	root := t.TempDir()
 	s, run, now := woke(root)
 	for second := 1; second <= 22; second++ {
@@ -1446,7 +1448,7 @@ func TestSleepWaitsForWifiAndRecordsHowLongItTook(t *testing.T) {
 		t.Errorf("result %+v", result)
 	}
 
-	// Still down after a minute: that is a problem, whatever the owner answers
+	// Still down after a minute, which is a problem, whatever the owner answers
 	s, run, now = woke(t.TempDir())
 	for second := 1; second <= 60; second++ {
 		*now = now.Add(time.Second)
@@ -1496,7 +1498,7 @@ func TestARoundEndsOnGoingBackToTheStartByDefault(t *testing.T) {
 	run := &report.Run{}
 	run.Set("camera", report.Works, report.Owner, "a frame", "")
 
-	// Sent: back to the start is where the cursor rests, then the page, then leaving
+	// Sent. Back to the start is where the cursor rests, then the page, then leaving
 	s := &summary{run: run, options: Options{Send: true}}
 	s.start()
 	s.update(sentMsg{sent: report.Sent{Run: "RUN-AAAAAAAAAA", Page: "https://arewearmyet.com/models/x"}})
@@ -1573,7 +1575,7 @@ func TestARoundEndsOnGoingBackToTheStartByDefault(t *testing.T) {
 		t.Errorf("farewell %q", s.farewell())
 	}
 
-	// Asked not to send at all: the results, then the same choice
+	// Asked not to send at all, so the results, then the same choice
 	s = &summary{run: run, options: Options{Send: false}}
 	s.start()
 	if drawn := s.view(90, 30); !strings.Contains(drawn, "Webcam") || !strings.Contains(drawn, "Nothing is sent, as asked") || !strings.Contains(drawn, "Back to the start") {
@@ -1624,7 +1626,7 @@ func TestAComputerWithoutALidIsPutToSleepByTheTest(t *testing.T) {
 	if strings.Join(asked, ", ") != "systemctl suspend" || s.over {
 		t.Fatalf("asked %v, over %v", asked, s.over)
 	}
-	// Awake again: the kernel counted the sleep
+	// Awake again, and the kernel counted the sleep
 	s.update(sleepMsg{ok: 1})
 	s.update(settleMsg{})
 	s.update(press('1'))

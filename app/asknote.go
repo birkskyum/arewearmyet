@@ -20,7 +20,7 @@ var partWords = map[string]string{
 	"hibernation": "hibernate", "password": "disk-unlock", "unlock": "disk-unlock", "install": "installer", "video": "video-decode",
 }
 
-// part finds the check a word means: its id, an everyday word for it, or a word of its title.
+// part finds the check a word means, by its id, an everyday word for it, or a word of its title.
 // Without the site's list, a known word still stands.
 func part(word string, checks map[string]report.Check) (string, bool) {
 	word = strings.ToLower(strings.TrimSpace(word))
@@ -47,7 +47,7 @@ func part(word string, checks map[string]report.Check) (string, bool) {
 	return "", false
 }
 
-// headline makes a note's one line from its text: all of it when it is short, and otherwise
+// headline makes a note's one line from its text. That is all of it when it is short, and otherwise
 // its start, up to the end of a sentence or of a word.
 func headline(text string) string {
 	text = strings.Join(strings.Fields(text), " ")
@@ -62,9 +62,9 @@ func headline(text string) string {
 	return strings.TrimRight(text, ".!? ")
 }
 
-// askNote asks at the terminal for what a note needs and wasn't given: which part it is
-// about, what happened, and which log shows it. Nobody has to type the options out. It
-// answers false when the owner gave nothing to write.
+// askNote asks at the terminal for what a note needs and wasn't given, which is the part it is
+// about, what happened, and which log shows it. Nobody has to type the options out. It answers
+// false when the owner gave nothing to write.
 func askNote(in *bufio.Reader, out io.Writer, checks map[string]report.Check, args noteArgs, word string) (noteArgs, bool) {
 	ask := func(question string) string {
 		fmt.Fprint(out, question+"\n> ")

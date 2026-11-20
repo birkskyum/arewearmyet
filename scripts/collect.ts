@@ -1,13 +1,13 @@
 // Reads the public sources that decide whether a Snapdragon PC can run Linux and
 // writes what they say to data/sources.json. Run with `pnpm collect`.
 //
-// Sources: device trees in Linux releases and linux-next, hardware IDs in systemd
+// The sources are device trees in Linux releases and linux-next, hardware IDs in systemd
 // releases and Ubuntu's stubble, firmware folders in linux-firmware, and the ACPI
 // dumps collected by the aarch64-laptops project, linux-surface and the ARM installer's reports.
 //
 // `pnpm collect omarchy acpi` refreshes only those parts (kernel, ids, firmware, acpi, omarchy) and keeps the
 // rest of data/sources.json. What a fixed ref holds is kept in .cache/collect, so a run fetches only what
-// moves; `--fresh` fetches everything again.
+// moves. `--fresh` fetches everything again.
 
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -23,7 +23,7 @@ const DT_PATTERN = /^(x1|hamoa|purwa|glymur|mahua|kalambo|sc8280xp|sc7180-trogdo
 const DT_DIR = 'arch/arm64/boot/dts/qcom';
 // samsung is the Galaxy Book S's folder (qcom/samsung/w767), which its tree has always named
 const FIRMWARE_SOCS = ['x1e80100', 'x1p42100', 'x126100', 'glymur', 'kalambo', 'sc8280xp', 'sc8180x', 'sc8180xp', 'sc7180', 'sc7180-trogdor', 'sc7280', 'sdm850', 'msm8998', 'samsung'];
-// Omarchy's package channels: its own repository carries the kernel and the makers' firmware
+// Omarchy's package channels. Its own repository carries the kernel and the makers' firmware
 // packages, its Arch Linux ARM mirror carries systemd, whose hardware ID list decides which device
 // tree boots, and linux-firmware. Their files databases list what each package installs.
 const OMARCHY_CHANNELS = [
@@ -72,7 +72,7 @@ async function cached<T>(key: string, fetcher: () => Promise<T>): Promise<T> {
 
 // GitHub's API and raw hosts answer the odd request with a 5xx, so a server
 // error or a dropped connection is tried again before the run gives up. GitHub
-// and GitLab also answer a burst of requests with 429; that waits as long as
+// and GitLab also answer a burst of requests with 429. That waits as long as
 // Retry-After says, or a minute, and is tried more often.
 async function fetchRetrying(url: string, init: RequestInit = {}): Promise<Response> {
   for (let attempt = 1; ; attempt++) {
@@ -92,7 +92,7 @@ async function fetchRetrying(url: string, init: RequestInit = {}): Promise<Respo
 }
 
 async function getJson(url: string, headers: Record<string, string> = {}): Promise<any> {
-  // GitLab rate-limits unauthenticated API calls per address; a token lifts that
+  // GitLab rate-limits unauthenticated API calls per address, and a token lifts that
   if (process.env.GITLAB_TOKEN && url.startsWith('https://gitlab.com/')) headers = { ...headers, 'PRIVATE-TOKEN': process.env.GITLAB_TOKEN };
   const response = await fetchRetrying(url, { headers });
   if (response.status === 404) return undefined;
@@ -136,7 +136,7 @@ async function pullFiles(repo: string, pull: { number: number; head: { sha: stri
   return cached(`pull files ${repo} ${pull.number} ${pull.head.sha}`, () => pages(`repos/${repo}/pulls/${pull.number}/files`));
 }
 
-// The root node's model and compatible strings of a device tree source: the first ones after "/ {", however
+// The root node's model and compatible strings of a device tree source, which are the first ones after "/ {", however
 // they are indented, since some trees indent with spaces
 function parseDts(source: string): { model?: string; compatible: string[] } {
   const root = source.slice(Math.max(0, source.search(/^\/ \{/m)));
@@ -267,7 +267,7 @@ async function firmwareFilesFetch(ref: string): Promise<string[]> {
       files.push(...batch.filter((entry) => entry.type === 'blob').map((entry) => entry.path));
     }
   }
-  // Through the API, which takes the token; GitLab rate-limits its raw file URLs per address
+  // Through the API, which takes the token, since GitLab rate-limits its raw file URLs per address
   const headers: Record<string, string> = process.env.GITLAB_TOKEN ? { 'PRIVATE-TOKEN': process.env.GITLAB_TOKEN } : {};
   const whenceResponse = await fetchRetrying(`${LINUX_FIRMWARE}/repository/files/WHENCE/raw?ref=${ref}`, { headers });
   if (!whenceResponse.ok) throw new Error(`${whenceResponse.status} WHENCE at ${ref}`);
@@ -318,7 +318,7 @@ function packages(dir: string | undefined): Package[] {
   });
 }
 
-// What a channel ships for Snapdragon PCs: the device trees in its kernel, the hardware ID files
+// What a channel ships for Snapdragon PCs, which is the device trees in its kernel, the hardware ID files
 // in systemd and the ones the kernel package adds, and every Qualcomm laptop firmware file by the
 // package it comes in, under the name the kernel asks for
 function channelContents(repo: Package[], core: Package[]) {
@@ -347,7 +347,7 @@ function channelContents(repo: Package[], core: Package[]) {
   };
 }
 
-// The device trees a kernel patch adds: a new file shows up as a section from /dev/null to b/<path>
+// The device trees a kernel patch adds. A new file shows up as a section from /dev/null to b/<path>
 function patchDeviceTrees(text: string) {
   const added = new Map<string, string>();
   for (const section of text.split(/^diff --git /m)) {
@@ -427,7 +427,7 @@ function omarchyKernelRecipe() {
   return { added, changedFirmware, ids };
 }
 
-// Open pull requests on omarchy-pkgs that add what a model needs: a kernel or device tree package patch
+// Open pull requests on omarchy-pkgs that add what a model needs, be it a kernel or device tree package patch
 // with its device tree, a hardware ID file for either package, or a maker's firmware package, by the files
 // it installs
 async function collectOmarchyPulls() {
@@ -471,7 +471,7 @@ async function collectOmarchy() {
     channels.push({ name: channel.name, ...channelContents(packages(repo), packages(core)) });
   }
   const recipe = omarchyKernelRecipe();
-  // The edge nightly image, which testers install: it picks up every tree and ID the edge kernel has
+  // The edge nightly image, which testers install. It picks up every tree and ID the edge kernel has
   const latest = await getJson('https://nightly.omarchy.org/edge-aarch64/latest.json').catch(() => undefined);
   const image = latest?.url ? { version: latest.version, url: latest.url, kernel: latest.kernel ?? null } : null;
   return { channels, kernelAddedDeviceTrees: recipe.added, kernelChangedFirmware: recipe.changedFirmware, carriedIds: recipe.ids, image, pulls: await collectOmarchyPulls() };
@@ -482,15 +482,15 @@ async function collectOmarchy() {
 //   a folder master doesn't have
 // - linux-surface's dumps of the Arm Surfaces, as linux-surface/<folder>
 // - the ARM installer's hardware reports, merged or in an open pull request, by reports/<vendor>/<model> folder as
-//   hardware-reports/<vendor>/<model>, since one model can get several reports; a report in a folder several
-//   models share (PER_REPORT) by its own folder
+//   hardware-reports/<vendor>/<model>, since one model can get several reports. A report in a folder several
+//   models share (PER_REPORT) goes by its own folder
 // - this repository's acpi/<folder> as arewearmyet/<folder>, for dumps published here first
 // - this repository's acpi/firmware/<folder> as firmware/<folder>, for tables taken out of a maker's BIOS or UEFI image
 const LAPTOPS = 'aarch64-laptops/build';
 const SURFACE = 'linux-surface/acpidumps';
 const REPORTS = 'turbineBMW/omarchy-hardware-reports';
 const SURFACE_ARM = /_qcom$|_5g$|^windows_dev_kit|^surface_pro_x/;
-// Report folders that hold more than one model, so each report in them goes by its own folder: the ones the installer
+// Report folders that hold more than one model, so each report in them goes by its own folder. They are the ones the installer
 // couldn't name, and the Galaxy Book4 Edge, whose 14, 15 and 16 inch models all give the same product name
 const PER_REPORT = new Set(['unknown/unknown', 'samsung-electronics-co-ltd/galaxy-book4-edge']);
 
@@ -557,7 +557,7 @@ async function collectAcpiDumps(): Promise<AcpiDump[]> {
   ];
 }
 
-// One source being down mustn't stop the rest: a part that fails keeps what the last run found, and is
+// One source being down mustn't stop the rest. A part that fails keeps what the last run found, and is
 // listed under stale with when it last worked, which the site shows. Only a run where every part fails stops.
 const previous = existsSync('data/sources.json') ? JSON.parse(readFileSync('data/sources.json', 'utf8')) : undefined;
 if (parts.size < PARTS.length && !previous) throw new Error('a partial collect needs data/sources.json from a full one');

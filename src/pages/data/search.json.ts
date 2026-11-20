@@ -1,4 +1,4 @@
-// Every model on the board, for the search in the bar at the top of each page: its name, what
+// Every model on the board, for the search in the bar at the top of each page, with its name, what
 // the search matches on, and its page.
 import { googlebookRows, nvidiaRows, snapdragonRows, type TableRow } from '../../lib/rows';
 

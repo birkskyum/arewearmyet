@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-// Frame is one picture, three bytes a pixel: red, green, blue.
+// Frame is one picture, three bytes a pixel, for red, green and blue.
 type Frame struct {
 	Width, Height int
 	Pixels        []byte

@@ -1,6 +1,6 @@
-// The hardware view: the checks past booting rolled up into the parts an owner thinks in, per
+// The hardware view, which is the checks past booting rolled up into the parts an owner thinks in, per
 // model. A part's colour is its state and its fill is the evidence. Solid means seen on Omarchy,
-// by hw-test or an owner. Nothing else counts: not what another distro's users saw, and not
+// by hw-test or an owner. Nothing else counts, neither what another distro's users saw nor
 // what was found on another model of the same chip.
 import owners from '../../data/owners.json';
 import { countsAsStatus, modelChecks, type CheckState, type Subject } from './checks';
@@ -9,7 +9,7 @@ import type { Tone } from './tones';
 export type Part = { id: string; title: string; question: string; checks: string[] };
 
 // Hibernation, the two Qualcomm processors, the fingerprint reader and the modem stay on the model's
-// page: no kernel offers hibernation on these chips yet, and the others are parts few models have
+// page. No kernel offers hibernation on these chips yet, and the others are parts few models have
 export const PARTS: Part[] = [
   { id: 'start', title: 'Starting', question: 'The installer from a USB stick, and the disk password prompt at startup.', checks: ['installer', 'disk-unlock'] },
   { id: 'screen', title: 'Screen and graphics', question: 'The built-in screen and its brightness, graphics acceleration, WebGL and WebGPU in the browser, and hardware video decoding.', checks: ['display', 'backlight', 'gpu', 'webgl', 'webgpu', 'video-decode'] },
@@ -48,14 +48,14 @@ function seen(model: Machine): Map<string, Seen> {
     if (here.length) {
       const states = here.map((r) => r.state);
       const state = states.every((s) => s === 'absent') ? 'absent' : overall(states.filter((s) => s !== 'absent'));
-      // The kernel says how current the result is: a fault seen on an older kernel may be fixed since
+      // The kernel says how current the result is, as a fault seen on an older kernel may be fixed since
       const kernel = here[0].kernel ? `, on ${here[0].kernel.replace(/-omarchy$/, '')}` : '';
       out.set(row.id, { check: row.id, title, state, level: 'omarchy', how: (here.length === 1 ? `an owner's test` : `${here.length} owners' tests`) + kernel });
       continue;
     }
     const finding = row.finding;
     if (!finding || finding.state === 'untested') continue;
-    // What was found on one machine of a chip family is no result for another: the tests have
+    // What was found on one machine of a chip family is no result for another. The tests have
     // already shown a part working on one model and not on its sibling. So only the model's own
     // findings and tests count here. The family's note still shows on the model's page
     if (row.from === 'family') continue;
@@ -102,7 +102,7 @@ export function modelParts(model: Machine): PartState[] {
 const LABEL = { works: 'Works', partial: 'Partly', broken: 'Broken' } as const;
 const SOLID: Record<string, Tone> = { works: 'good', partial: 'close', broken: 'wanted' };
 const OUTLINED: Record<string, Tone> = { works: 'good-seen', partial: 'close-seen', broken: 'wanted-seen' };
-// Best first: what is seen on Omarchy before what is known for the chip family, then what nobody knows
+// Best first, so what is seen on Omarchy before what is known for the chip family, then what nobody knows
 const RANK = ['omarchy-works', 'omarchy-partial', 'omarchy-broken', 'elsewhere-works', 'elsewhere-partial', 'elsewhere-broken', 'absent', 'unknown'];
 
 export const PART_OPTIONS: { key: string; label: string; tone?: Tone }[] = [
@@ -149,7 +149,7 @@ export function partCells(model: Machine): Record<string, PillCell | TextCell | 
   return cells;
 }
 
-/** For the bars above the table: per part, how many models have it seen on Omarchy, known for the chip family, or not at all. */
+/** For the bars above the table, per part, how many models have it seen on Omarchy, known for the chip family, or not at all. */
 export function partTotals(models: Machine[]) {
   const all = models.map(modelParts);
   return PARTS.map((part, i) => {

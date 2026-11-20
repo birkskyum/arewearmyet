@@ -10,8 +10,8 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 )
 
-// hinge is a machine whose lid the test moves: what the system says of it now, and what it
-// has written down about it.
+// hinge is a machine whose lid the test moves, with what the system says of it now, and what it has
+// written down about it.
 type hinge struct {
 	down  string // "b true", "b false", or "" when it can't be asked
 	log   string
@@ -81,8 +81,8 @@ func TestALidThatPutTheComputerToSleepIsReadFromTheLog(t *testing.T) {
 	l := h.lid(run)
 	l.start()
 	h.look(l, 300*time.Millisecond)
-	// The computer slept the moment the lid went down: the test saw neither state, and is
-	// back twenty seconds later with the lid open again
+	// The computer slept the moment the lid went down, so the test saw neither state, and is back
+	// twenty seconds later with the lid open again
 	h.log = "Lid closed.\nSuspending...\nLid opened.\n"
 	h.look(l, 20*time.Second)
 	result, _ := run.Get("lid")
@@ -123,7 +123,7 @@ func TestALidThatSaysNothingIsTheOwnersWord(t *testing.T) {
 	if result, _ := run.Get("lid"); result.State != report.Partial || !strings.Contains(result.Note, "opening it isn't") {
 		t.Errorf("stuck closed: %+v", result)
 	}
-	// Skipped: nothing is said about the lid
+	// Skipped, so nothing is said about the lid
 	run = &report.Run{}
 	l = (&hinge{down: "b false"}).lid(run)
 	l.start()

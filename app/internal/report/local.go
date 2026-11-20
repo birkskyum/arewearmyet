@@ -29,11 +29,11 @@ func Local() map[string]Kept {
 	return kept
 }
 
-// Remember keeps a run's results as the machine's latest. A newer result replaces an older
-// one, with two exceptions. A measurement which merely finds a thing working doesn't take
-// back a failure the owner reported: that stands until the owner tests the thing again, and
-// the site counts results the same way. And the quick check's "works" doesn't take back a
-// failure that a closer test found.
+// Remember keeps a run's results as the machine's latest. A newer result replaces an older one,
+// with two exceptions. A measurement which merely finds a thing working doesn't take back a failure
+// the owner reported. That stands until the owner tests the thing again, and the site counts
+// results the same way. And the quick check's "works" doesn't take back a failure that a closer
+// test found.
 func Remember(run *Run, when time.Time) error {
 	kept := Local()
 	for _, result := range run.Results {
@@ -57,8 +57,8 @@ func Remember(run *Run, when time.Time) error {
 	if err := os.MkdirAll(stateDir(), 0o700); err != nil {
 		return err
 	}
-	// Beside what stands, the last thing each test found, whatever stood before: that is what
-	// a fix is measured by
+	// Beside what stands, the last thing each test found, whatever stood before. That is what a fix is
+	// measured by
 	last := Latest()
 	for _, result := range run.Results {
 		if result.State == Untested {
@@ -80,9 +80,9 @@ func Remember(run *Run, when time.Time) error {
 
 func latestFile() string { return filepath.Join(stateDir(), "measured.json") }
 
-// Latest is the last result each check's test gave on this machine, with nothing held back:
-// where Local keeps an owner's failure standing until the owner tests again, this is simply
-// what was found last.
+// Latest is the last result each check's test gave on this machine, with nothing held back. Where
+// Local keeps an owner's failure standing until the owner tests again, this is simply what was
+// found last.
 func Latest() map[string]Kept {
 	last := map[string]Kept{}
 	if data, err := os.ReadFile(latestFile()); err == nil {
@@ -127,7 +127,7 @@ func Handed(check string, now time.Time) bool {
 // threadFile holds, per folder, the agent conversation hw-test started for the work there.
 func threadFile() string { return filepath.Join(stateDir(), "threads.json") }
 
-// Thread is a conversation hw-test started: the program that holds it and its name for it.
+// Thread is a conversation hw-test started, with the program that holds it and its name for it.
 type Thread struct {
 	Kind string    `json:"kind"`
 	ID   string    `json:"id"`
@@ -153,10 +153,10 @@ func ThreadFor(dir string) (Thread, bool) {
 	return thread, ok && thread.ID != "" && time.Since(thread.When) < HandedFor
 }
 
-// NoteSession notes which conversation the agent working in a folder is in, as its own
-// program names it, each time that agent calls hw-test from there. That is how hw-test
-// knows a conversation it didn't start. A thread hw-test started in T3 Code stays the one
-// kept: the agent inside it names only its own, inner conversation.
+// NoteSession notes which conversation the agent working in a folder is in, as its own program
+// names it, each time that agent calls hw-test from there. That is how hw-test knows a conversation
+// it didn't start. A thread hw-test started in T3 Code stays the one kept, since the agent inside
+// it names only its own, inner conversation.
 func NoteSession(dir, kind, id string, when time.Time) error {
 	kept := threads()[dir]
 	if kept.Kind == "t3" && kind != "t3" && kept.ID != "" && when.Sub(kept.When) < HandedFor {
@@ -190,8 +190,8 @@ func KeepThread(dir string, thread Thread) error {
 func testEntryFile() string { return filepath.Join(stateDir(), "test-entry.json") }
 
 // TestEntry is the test boot entry hw-test tree boot installed, noted here because the boot
-// partition can't be read without the owner's password. Kernel is the kernel its image was
-// built from: an update to another kernel leaves the entry with one that no longer matches.
+// partition can't be read without the owner's password. Kernel is the kernel its image was built
+// from. An update to another kernel leaves the entry with one that no longer matches.
 type TestEntry struct {
 	Kernel string    `json:"kernel"`
 	When   time.Time `json:"when"`

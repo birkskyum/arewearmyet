@@ -47,7 +47,7 @@ const ARCHIVE = 'https://github.com/birkskyum/arewearmyet/tree/main/device-trees
 const models: Model[] = list.models;
 const ignore: { ids?: string[]; firmware?: string[]; acpi?: string[] } = list.ignore ?? {};
 
-// NVIDIA's ARM PCs boot through ACPI; their status is what testers report
+// NVIDIA's ARM PCs boot through ACPI, so their status is what testers report
 type NvidiaModel = { id: string; vendor: string; name: string; generation: 'n1x' | 'gb10'; form?: string; model_numbers?: string[]; modelNumbers?: string[]; released?: string | number; omarchy: 'works' | 'expected' | 'untested' | 'problems' | 'missing'; linux: 'omarchy' | 'mainline'; status?: string; notes?: string; sources?: string[] };
 const nvidia: NvidiaModel[] = (list.nvidia ?? []).map(({ model_numbers, ...model }: NvidiaModel) => ({ form: 'laptop', released: null, status: null, notes: null, sources: [], modelNumbers: model_numbers ?? [], ...model }));
 
@@ -69,7 +69,7 @@ if (!sources.kernelReleases.includes(kernelBase)) throw new Error(`Omarchy's ${O
 if (!sources.systemdReleases.includes(systemdRelease)) throw new Error(`Omarchy's ${OMARCHY_CHANNEL} systemd ${channel.systemd} is ${systemdRelease}, which SYSTEMD_RELEASES in scripts/collect.ts doesn't list`);
 
 // Release order, so "first in v6.15" can be compared with "Omarchy builds v7.2"
-// Where Omarchy's recipes keep the device trees they add on top of a Linux release; a patch is named
+// Where Omarchy's recipes keep the device trees they add on top of a Linux release. A patch is named
 // by its recipe folder and file, such as linux-omarchy-dtbs/0013-....patch
 const OMARCHY_PATCHES = 'https://github.com/omacom/omarchy-pkgs/blob/master/pkgbuilds/';
 const kernelRank = (release: string | null) => (release ? sources.kernelReleases.indexOf(release) : Infinity);
@@ -103,7 +103,7 @@ const stubbleIds: Stubble[] = sources.stubble;
 
 const used = { deviceTrees: new Set<string>(), ids: new Set<string>(), firmware: new Set<string>(), acpi: new Set<string>() };
 
-// What each Omarchy channel ships, read from its packages' file lists, most stable channel first: the
+// What each Omarchy channel ships, read from its packages' file lists, most stable channel first. That is the
 // device trees in its kernel, the compatibles that systemd's hardware IDs and the kernel's own pick,
 // and every firmware file with the package it comes in
 const CHANNELS = ['stable', 'rc', 'edge'] as const;
@@ -162,7 +162,7 @@ function variantStatus(variant: Variant) {
   const treeHere = channelRank(treeChannel) <= channelRank(OMARCHY_CHANNEL);
   const idsHere = channelRank(idsChannel) <= channelRank(OMARCHY_CHANNEL);
   const computed = treeHere ? (idsHere ? 'should' : 'manual') : dt ? 'notCarried' : 'none';
-  // The most stable channel whose install image boots it: its device tree and the hardware IDs that pick it
+  // The most stable channel whose install image boots it, which takes its device tree and the hardware IDs that pick it
   const bootChannel = treeChannel && idsChannel ? CHANNELS[Math.max(channelRank(treeChannel), channelRank(idsChannel))] : null;
   return {
     ...variant,
@@ -179,7 +179,7 @@ function variantStatus(variant: Variant) {
   };
 }
 
-// What an owner saw outranks what the pieces predict; a model shows its best variant
+// What an owner saw outranks what the pieces predict, and a model shows its best variant
 const OUTCOMES = ['works', 'should', 'workaround', 'problems', 'manual', 'notCarried', 'none'] as const;
 type Outcome = (typeof OUTCOMES)[number];
 const best = (values: Outcome[]) => [...values].sort((a, b) => OUTCOMES.indexOf(a) - OUTCOMES.indexOf(b))[0];
@@ -197,7 +197,7 @@ const firmwareMain = new Set<string>(sources.firmwareMain);
 
 // data/firmware-sources.yaml lists the makers' downloads holding the firmware linux-firmware doesn't
 // ship yet. A model has a vendor download when every file its device tree loads is in linux-firmware
-// or in one of them; without a device tree, when every file of its folders there is in one.
+// or in one of them. Without a device tree, it has one when every file of its folders there is in one.
 type SourceFolder = { path: string; models: string[]; files?: { name: string; from: unknown[] }[]; links?: { name: string; target: string }[] };
 const sourceFolders: SourceFolder[] = parse(readFileSync('data/firmware-sources.yaml', 'utf8')).folders;
 const sourced = new Set(sourceFolders.flatMap((folder) => (folder.files ?? []).filter((file) => file.from.length).map((file) => `${folder.path}/${file.name}`)));
@@ -208,7 +208,7 @@ for (const folder of sourceFolders) {
   }
 }
 // Trees outside Linux are only known through their copies in device-trees/, so the files they load
-// come from the firmware-name lines there: in the .dts naming one of the model's compatibles (a series
+// come from the firmware-name lines there, in the .dts naming one of the model's compatibles (a series
 // can add trees for several models) and the files it includes
 // A model that shares another's board and tree, like the OmniBook 5 16 the OmniBook 5 14's, has no copy of
 // its own and reads that model's. A board .dtsi the copy doesn't hold, like the Vivobook 16's that the
@@ -255,7 +255,7 @@ function sourcesDownload(id: string, needed: string[]): string | undefined {
   return anchor(folders[0].path);
 }
 
-// Firmware counts as there when every file the device tree loads is in linux-firmware: in its
+// Firmware counts as there when every file the device tree loads is in linux-firmware, either in its
 // newest release, which distributions ship, or already merged for the next one. Models without a
 // device tree fall back to their folder having the signed audio DSP image. A vendor download works
 // today, so it comes before a merge request that is still waiting for review.
@@ -269,12 +269,12 @@ function firmwareState(needed: string[], folders: { path: string; files: string[
   if (files.length && !missingMain.length) return { state: 'next-release', missing: missingReleased.map(name) };
   if (download) return { state: 'download', missing: [] as string[] };
   if (posted) return { state: 'posted', missing: [] as string[] };
-  // Some files there, some not: say which are still missing
+  // Some files there, some not, so say which are still missing
   if (needed.length && missingMain.length < needed.length) return { state: 'partial', missing: missingMain.map(name) };
   return { state: 'windows', missing: missingMain.map(name) };
 }
 
-// Upstream on its own: whether linux-firmware has every file, in a release, merged for the next one,
+// Upstream on its own. That is whether linux-firmware has every file, in a release, merged for the next one,
 // sent as a merge request, partly, or not at all
 function upstreamFirmware(files: string[], posted?: string) {
   const name = (file: string) => file.split('/').pop()!;
@@ -285,7 +285,7 @@ function upstreamFirmware(files: string[], posted?: string) {
   return { state: 'missing', missing: [] as string[] };
 }
 
-// In Omarchy: the first channel whose packages hold every file, from linux-firmware or a maker's package.
+// In Omarchy, that is the first channel whose packages hold every file, from linux-firmware or a maker's package.
 // Otherwise an open pull request that adds the rest, some of the files, a maker's download it could
 // package, or the laptop's own Windows.
 function omarchyFirmware(files: string[], download?: string) {
@@ -303,7 +303,7 @@ function omarchyFirmware(files: string[], download?: string) {
 
 const acpiDumps: { folder: string; url: string }[] = sources.acpiDumps;
 
-// Whether a fresh install boots it: problems an owner reported, otherwise the most stable channel whose install
+// Whether a fresh install boots it. That is problems an owner reported, otherwise the most stable channel whose install
 // image picks its device tree, whether or not an owner has tried it yet. Without one, what it still needs
 // to boot, the first piece nobody has, then pieces Omarchy doesn't carry, then open pull requests.
 // Firmware isn't needed to boot, so the firmware column covers it.
@@ -322,7 +322,7 @@ function bootable(outcome: Outcome, channel: Channel | null, pieces: Record<'dev
   return 'needs-ids';
 }
 
-// Who we know has the machine: the team, someone in Omarchy's community (a report on Omarchy, a hardware
+// Who we know has the machine. It is the team, someone in Omarchy's community (a report on Omarchy, a hardware
 // report from its installer tool, hardware IDs sent in here or an Omarchy discussion), someone in the wider
 // Linux community (a tree in Linux, a posted patch, an owner's repository or an aarch64-laptops dump), or
 // nobody (no tree, no tables, no report)
@@ -375,7 +375,7 @@ const rows = models.map((model) => {
   acpi.forEach((dump) => used.acpi.add(dump.folder));
 
   const dts = variants.map((v) => v.deviceTree).filter(Boolean) as NonNullable<(typeof variants)[number]['deviceTree']>[];
-  // Closest to Linux first: released, queued, posted, then out of tree, whether Omarchy's kernel or another
+  // Closest to Linux first, so released, queued, posted, then out of tree, whether Omarchy's kernel or another
   // kernel or repository carries it
   const upstreamDts = dts.filter((dt) => dt.upstream);
   const deviceTree = upstreamDts.length ? (upstreamDts.some((dt) => dt.firstRelease) ? 'released' : 'next')
@@ -384,7 +384,7 @@ const rows = models.map((model) => {
     : 'missing';
   const omarchyPatch = dts.find((dt) => dt.patch)?.patch;
   const firstRelease = dts.map((dt) => dt.firstRelease).filter(Boolean).sort((a, b) => kernelRank(a) - kernelRank(b))[0] ?? null;
-  // systemd's list first, then merged into stubble or open as a pull request there; otherwise IDs sent in
+  // systemd's list first, then merged into stubble or open as a pull request there. Otherwise IDs sent in
   // through the board count as collected
   const stubble = variants.flatMap((v) => v.stubble);
   const stubbleEntry = stubble.find((entry) => entry.state === 'merged') ?? stubble[0];
@@ -405,7 +405,7 @@ const rows = models.map((model) => {
     firmwarePackages: omarchyFw.packages,
     firmwarePull: omarchyFw.pull,
   };
-  // Each piece: the channel that ships it, an open pull request, somewhere else Omarchy could take it from,
+  // For each piece, the channel that ships it, an open pull request, somewhere else Omarchy could take it from,
   // or nowhere yet
   const pieces = {
     deviceTree: omarchy.deviceTree ?? (omarchy.deviceTreePull ? 'pr' : deviceTree !== 'missing' ? 'elsewhere' : 'none'),
@@ -464,7 +464,7 @@ const count = <T>(items: T[], test: (item: T) => boolean) => items.filter(test).
 type Row = (typeof rows)[number];
 const current = rows.filter((row) => ['x1', 'x2'].includes(row.generation) && row.boot === 'uefi');
 const older = rows.filter((row) => ['8cx', '8cx-gen1', '850', '835', '7c'].includes(row.generation) && row.boot === 'uefi');
-// Where each piece stands for a set of models: in an Omarchy channel, in the releases of Linux, systemd and
+// Where each piece stands for a set of models, which is in an Omarchy channel, in the releases of Linux, systemd and
 // linux-firmware that any distro can ship, in an open pull request or elsewhere, and all three together
 function byPiece(set: Row[]) {
   const omarchy = {
@@ -477,7 +477,7 @@ function byPiece(set: Row[]) {
     ids: (r: Row) => r.variants.some((v) => v.ids.some((entry) => entry.matches && entry.firstRelease)),
     firmware: (r: Row) => r.upstream.firmwareUpstream === 'released',
   };
-  // Exists elsewhere, but Omarchy doesn't carry it yet and no pull request adds it: a tree in Linux, linux-next,
+  // Exists elsewhere, but Omarchy doesn't carry it yet and no pull request adds it. That is a tree in Linux, linux-next,
   // a posted patch or out of tree, hardware IDs anywhere, firmware in a maker's download or on its way to linux-firmware
   const available = {
     deviceTree: (r: Row) => !omarchy.deviceTree(r) && !pull.deviceTree(r) && r.upstream.deviceTree !== 'missing',
@@ -532,7 +532,7 @@ const summary = {
   workaround: count(current, (r) => r.outcome === 'workaround'),
   problems: count(current, (r) => r.outcome === 'problems'),
   notYet: count(current, (r) => ['manual', 'notCarried', 'none'].includes(r.outcome)),
-  // What we have to run each model, wherever it is: a device tree in Linux or out of tree, hardware IDs
+  // What we have to run each model, wherever it is, meaning a device tree in Linux or out of tree, hardware IDs
   // listed or sent in, and firmware we can get without the machine's own Windows
   deviceTree: count(current, (r) => r.upstream.deviceTree !== 'missing'),
   ids: count(current, (r) => r.upstream.ids !== 'missing'),
@@ -540,7 +540,7 @@ const summary = {
   // Hardware IDs and Windows firmware only apply to models that start through UEFI
   googlebooks: count(rows, (r) => r.boot === 'android'),
   chromebooks: count(rows, (r) => r.boot === 'depthcharge'),
-  // Every dump collected counts, also once its model has a device tree; one is still wanted while a model
+  // Every dump collected counts, also once its model has a device tree. One is still wanted while a model
   // has no device tree anywhere, posted or out of tree included
   acpi: count(current, (r) => r.upstream.acpi === 'collected'),
   acpiWanted: count(current, (r) => r.upstream.deviceTree === 'missing' && r.upstream.acpi !== 'collected'),
@@ -568,7 +568,7 @@ writeFileSync(
 );
 console.log(summary);
 
-// What the Worker needs to check owners' reports: the check ids, and enough of every model to match a
+// What the Worker needs to check owners' reports, which is the check ids and enough of every model to match a
 // machine to it by its device tree's compatible string or its model number
 const checkList = parse(readFileSync('data/checks.yaml', 'utf8'));
 const findings = parse(readFileSync('data/findings.yaml', 'utf8'));
@@ -577,7 +577,7 @@ const checkIds = new Set<string>(checkList.checks.map((c: { id: string }) => c.i
 const modelIds = new Set([...rows.map((row) => row.id), ...nvidia.map((model) => model.id)]);
 const STATES_ALLOWED = ['works', 'partial', 'broken', 'untested', 'absent'];
 // What a finding rests on. One that names a public page carries the words of the page it rests
-// on, which scripts/quotes.ts looks for in the page itself, and says where it was seen: on
+// on, which scripts/quotes.ts looks for in the page itself, and says where it was seen, on
 // Omarchy, on another distro, or by a device tree's author. So nothing gets onto the site on a
 // link alone. A finding without a link is the team's own note and is shown as that.
 function backed(where: string, f: { state: string }, inherited?: string) {
@@ -601,7 +601,7 @@ for (const [id, entry] of Object.entries<{ checks?: Record<string, { state: stri
     backed(`${id}, ${check}`, f);
   }
 }
-// Which models each hardware ID (CHID) belongs to, from every ID file the board knows: systemd's, Ubuntu's
+// Which models each hardware ID (CHID) belongs to, from every ID file the board knows, which are systemd's, Ubuntu's
 // stubble and the ones Omarchy carries. A machine's own hardware IDs then name its model exactly, the way a
 // boot image picks its device tree. A file a model names itself (variants[].ids) belongs to that model only,
 // so a model that borrows another's tree isn't taken for it.
@@ -625,7 +625,7 @@ rows.forEach((row, index) => {
 // The Omarchy Arm Installer's hardware reports hold each machine's own IDs, copied to reports/ by
 // scripts/archive.ts. A model that names a report folder (acpi: hardware-reports/...) gets those too,
 // which covers models nobody has sent to systemd or stubble yet.
-// A hardware ID as systemd makes it: a version 5 UUID of the fields joined by "&", in UTF-16
+// A hardware ID as systemd makes it, a version 5 UUID of the fields joined by "&", in UTF-16
 const chidOf = (...fields: string[]): string => {
   const hash = createHash('sha1').update(Buffer.from('70ffd8124c7f4c7d0000000000000000', 'hex')).update(Buffer.from(fields.join('&'), 'utf16le')).digest().subarray(0, 16);
   hash[6] = (hash[6] & 0x0f) | 0x50;
@@ -675,14 +675,14 @@ writeFileSync(
       compatibles: row.variants.map((v: { compatible?: string }) => v.compatible).filter(Boolean),
       modelNumbers: row.modelNumbers,
     })).concat(
-      // NVIDIA machines start through ACPI: no hardware IDs or compatible strings name them, so a
+      // NVIDIA machines start through ACPI. No hardware IDs or compatible strings name them, so a
       // machine is matched by the maker's model number in its firmware strings
       nvidia.map((model) => ({ id: model.id, vendor: model.vendor, name: model.name, generation: model.generation, boot: 'acpi', compatibles: [], modelNumbers: model.modelNumbers ?? [] })),
     ),
   }) + '\n',
 );
 // A file both linux-firmware-qcom and one of Omarchy's firmware packages ship on edge. The package's copy is
-// xz-compressed, so the kernel loads linux-firmware's, but the recipe should drop it: regenerate it with
+// xz-compressed, so the kernel loads linux-firmware's, but the recipe should drop it. Regenerate it with
 // scripts/snapdragon-firmware-recipes.py, which also stops when linux-firmware has only half a DSP's set.
 const edgeFirmware: Record<string, string[]> = sources.omarchy.channels.find((c: { name: string }) => c.name === 'edge')?.firmware ?? {};
 const inLinuxFirmware = new Set(edgeFirmware['linux-firmware-qcom'] ?? []);

@@ -15,7 +15,7 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/tools"
 )
 
-// part is one sound the test plays while the microphones record: a tone on one speaker, or a
+// part is one sound the test plays while the microphones record, either a tone on one speaker or a
 // pitch on both.
 type part struct {
 	label string
@@ -25,7 +25,7 @@ type part struct {
 	seconds float64
 }
 
-// The test tone on each side shows that speaker works; three pitches on both show what the
+// The test tone on each side shows that speaker works, and three pitches on both show what the
 // microphones pick up from low to high.
 var parts = []part{
 	{"the left speaker", audio.Pitch, audio.Left, 1.5},
@@ -70,10 +70,10 @@ func playPart(dir string, at int) tea.Cmd {
 	}
 }
 
-// speakers is the sound test. The speakers play known tones and the microphones record them
-// at the same moment: a tone found in the recording shows that the speaker made it and that
-// the microphone picked it up, so both are measured with nobody listening. The owner is asked
-// only when the recording holds none of the tones, which can be either end's doing.
+// speakers is the sound test. The speakers play known tones and the microphones record them at the
+// same moment. A tone found in the recording shows that the speaker made it and that the microphone
+// picked it up, so both are measured with nobody listening. The owner is asked only when the
+// recording holds none of the tones, which can be either end's doing.
 type speakers struct {
 	run   *report.Run
 	dir   string
@@ -86,8 +86,8 @@ type speakers struct {
 	ask   choice
 	// note takes the owner's own words when none of the answers fits.
 	note line
-	// handsOff is set when the round is the automatic tests alone: the tones then start by
-	// themselves and a result that measured fine goes on by itself.
+	// handsOff is set when the round is the automatic tests alone. The tones then start by themselves
+	// and a result that measured fine goes on by itself.
 	handsOff bool
 	over     bool
 }
@@ -152,7 +152,7 @@ func (s *speakers) balance() string {
 	return fmt.Sprintf("the %s side %.0f dB louder than the %s at the microphones", louder, difference, quieter)
 }
 
-// uneven is how far apart the two sides have to be before it is worth a second look: half
+// uneven is how far apart the two sides have to be before it is worth a second look. That is half
 // as loud to the ear, and more than where the microphones sit usually explains.
 const uneven = 6
 
@@ -210,13 +210,13 @@ func (s *speakers) pickup() string {
 	return text
 }
 
-// measure writes what the recording shows as results: each speaker that was heard works, and
+// measure writes what the recording shows as results. Each speaker that was heard works, and
 // microphones that heard anything work.
 func (s *speakers) measure() {
 	switch left, right := s.left().Clearly(), s.right().Clearly(); {
 	case left && right:
-		// Both play, which is what the check asks. A side well below the other is said, and can
-		// be handed to an agent: it is a quiet speaker, or only where the microphones sit
+		// Both play, which is what the check asks. A side well below the other is said, and can be handed
+		// to an agent. It is a quiet speaker, or only where the microphones sit
 		if _, quieter, difference, _ := s.sides(); difference >= uneven {
 			look := fmt.Sprintf("The %s speaker measures %.0f dB quieter than the other.", quieter, difference)
 			s.run.Set("speakers", report.Works, report.Measured, s.evidence(), look+" That is worth a listen, as it can be where the microphones sit, or a speaker that plays too quietly.")
@@ -261,7 +261,7 @@ func (s *speakers) update(msg tea.Msg) tea.Cmd {
 			}
 			return nil
 		}
-		// Nothing of it in the recording: the speakers were silent, or the microphones deaf
+		// Nothing of it in the recording, so the speakers were silent, or the microphones deaf
 		s.phase = "silent"
 		s.ask = choice{question: "The microphones recorded none of the tones, so this can't be measured. Did you hear them?",
 			options: []string{"Yes, on the left and on the right", "Only on the left", "Only on the right", "No, nothing", "Play them again"}}
@@ -390,10 +390,10 @@ type recordedMsg struct{ samples []int16 }
 
 type playedMsg struct{ err error }
 
-// microphones records a few seconds, measures how loud the recording is, and plays it back
-// made as loud as the test tone. A recording is numbers, so its level is the microphone's
-// doing alone: a quiet one is the microphone recording quietly, whatever the speakers are
-// set to. Played back at the tone's loudness, the owner judges only whether it is clear.
+// microphones records a few seconds, measures how loud the recording is, and plays it back made as
+// loud as the test tone. A recording is numbers, so its level is the microphone's doing alone. A
+// quiet one is the microphone recording quietly, whatever the speakers are set to. Played back at
+// the tone's loudness, the owner judges only whether it is clear.
 type microphones struct {
 	run       *report.Run
 	dir       string
@@ -416,8 +416,8 @@ type microphones struct {
 
 const (
 	recordFor = 4 * time.Second
-	// Speech this far below full scale is too quiet to use: the other side of a call would
-	// barely hear it. The test tone plays at about -12.
+	// Speech this far below full scale is too quiet to use, as the other side of a call would barely
+	// hear it. The test tone plays at about -12.
 	quietBelow = -40.0
 	// Below this the recording holds nothing but the microphone's own noise.
 	silentBelow = -60.0
@@ -483,7 +483,7 @@ func (m *microphones) measured() string {
 	return text
 }
 
-// verdict explains the level: where a quiet recording's quietness comes from.
+// verdict explains the level, which is where a quiet recording's quietness comes from.
 func (m *microphones) verdict() string {
 	switch {
 	case m.silent():

@@ -18,8 +18,8 @@ func TestAChangeIsMeasuredAgainstTheSnapshotByWhatWasTestedAgain(t *testing.T) {
 	t.Setenv("XDG_STATE_HOME", t.TempDir())
 	start := time.Date(2026, 11, 19, 6, 0, 0, 0, time.UTC)
 
-	// Where the machine stands: the speakers partly, by the owner's ear; the GPU's closer
-	// test failing; Wi-Fi and the audio processor fine by the quick check
+	// Where the machine stands. The speakers are partly working, by the owner's ear, the GPU's closer
+	// test is failing, and Wi-Fi and the audio processor are fine by the quick check
 	tests := &Run{Kernel: "7.3.0-72-omarchy", Results: []Result{
 		{Check: "speakers", State: Partial, How: Owner, Evidence: "left heard at -31 dB, right not heard", Note: "Only the left speaker plays."},
 		result("webgpu", Partial, Measured, "WebGPU only with switches"),
@@ -52,7 +52,7 @@ func TestAChangeIsMeasuredAgainstTheSnapshotByWhatWasTestedAgain(t *testing.T) {
 	if loaded, ok := LoadSnapshot(""); !ok || !loaded.When.Equal(start) || loaded.Results["speakers"].State != Partial {
 		t.Fatalf("the snapshot wasn't kept: %+v", loaded)
 	}
-	// Nothing tested since: nothing to say about the change
+	// Nothing tested since, so nothing to say about the change
 	if changes := Changes(snapshot, Latest()); len(changes) != 0 {
 		t.Fatalf("changes with nothing tested again: %+v", changes)
 	}
@@ -73,8 +73,8 @@ func TestAChangeIsMeasuredAgainstTheSnapshotByWhatWasTestedAgain(t *testing.T) {
 		by[change.Check] = change
 		order = append(order, change.Check)
 	}
-	// What got better comes first; what was never tested before has no "before"; the camera,
-	// not tested again, isn't mentioned
+	// What got better comes first. What was never tested before has no "before". The camera, not
+	// tested again, isn't mentioned
 	if strings.Join(order, " ") != "adsp speakers microphones wifi" {
 		t.Errorf("the changes, in order: %v", order)
 	}

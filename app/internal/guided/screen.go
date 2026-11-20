@@ -27,7 +27,7 @@ type screen struct {
 	details   string
 	replugged string
 	since     time.Time
-	// only is set when the screen under test is the only one the computer has: a mini PC's
+	// only is set when the screen under test is the only one the computer has, like a mini PC's
 	// monitor, which nobody is asked to unplug.
 	only bool
 	ask  choice
@@ -111,7 +111,7 @@ func (s *screen) describe(name string) string {
 		how = "DisplayPort over USB-C"
 	}
 	mode := ""
-	// Hyprland knows the mode in use; without it, the first mode the screen offers
+	// Hyprland knows the mode in use. Without it, the first mode the screen offers
 	var monitors []struct {
 		Name        string  `json:"name"`
 		Width       int     `json:"width"`

@@ -23,10 +23,9 @@ type frameMsg struct {
 	err     error
 }
 
-// camera takes one picture when the owner says so, draws it in the terminal and asks whether
-// it looks right. A window with the picture at full size opens only when asked for. The
-// picture stays on the computer: only how bright it is and how much contrast it has are
-// reported.
+// camera takes one picture when the owner says so, draws it in the terminal and asks whether it
+// looks right. A window with the picture at full size opens only when asked for. The picture stays
+// on the computer. Only how bright it is and how much contrast it has are reported.
 type camera struct {
 	run     *report.Run
 	dir     string
@@ -272,7 +271,7 @@ func (c *camera) view(width, height int) string {
 		}
 		return c.ask.view(width) + "\n\n" + wrap("The test measured "+c.evidence()+".", width)
 	}
-	// The picture, in whatever height the question leaves: sharp where the terminal draws it
+	// The picture, in whatever height the question leaves. It is sharp where the terminal draws it
 	// itself, and in coloured blocks elsewhere or once the window is narrower than it
 	columns, rows := c.space(width, height)
 	drawn := c.frame.Render(columns, rows)

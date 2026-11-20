@@ -1,5 +1,5 @@
 // Colour classes for the status labels, kept apart from the data so the table island stays small
-// The -seen tones are outlined: known from somewhere other than Omarchy, so not yet the model's status
+// The -seen tones are outlined, for what is known from somewhere other than Omarchy, so not yet the model's status
 export type Tone = 'good' | 'close' | 'wanted' | 'muted' | 'info' | 'good-seen' | 'close-seen' | 'wanted-seen';
 
 export const TONE: Record<Tone, string> = {

@@ -1,5 +1,5 @@
 // Looks up a firmware report an owner sent with the ARM installer, by the code it gave them.
-// The reports are private: they sit in the site's own storage, which only a signed-in wrangler
+// The reports are private. They sit in the site's own storage, which only a signed-in wrangler
 // can read, so this runs by hand and nothing of a report is written into the repository.
 //
 //   node scripts/firmware-report.ts               the codes owners have posted, by issue
@@ -24,7 +24,7 @@ const BUCKET = 'arewearmyet-firmware';
 const CACHE = join(homedir(), '.cache', 'arewearmyet', 'firmware-reports');
 const CODE = /^FW-[0-9A-Z]{10}$/;
 const REPOS = ['turbineBMW/omarchy-hardware-reports', 'birkskyum/arewearmyet'];
-// The files a device tree names: the DSP and GPU images, their configuration and the video engine's
+// The files a device tree names, which are the DSP and GPU images, their configuration and the video engine's
 const LOADED = /^(qc(adsp|cdsp|dxkmsuc|vss|av1e)\w*\.mbn|(adsp|cdsp)_dtbs\.elf|(adsp|cdsp|battmgr)\w*\.jsn|wpss\.mbn)$/i;
 
 function gh(args: string[]): string {
@@ -95,7 +95,7 @@ function show(code: string) {
     }
   }
 
-  // Without a firmware folder of its own: what a tree would load, and whether another model has the same bytes
+  // Without a firmware folder of its own, what a tree would load, and whether another model has the same bytes
   if (!own.length) {
     console.log('\nNo firmware folder for it yet. The files a device tree would load:');
     for (const file of report.files.filter((f) => LOADED.test(f.name.split('/').pop()!)).sort((a, b) => a.name.localeCompare(b.name))) {

@@ -57,7 +57,7 @@ func newHeat(run *report.Run, sys machine.System, dir string) *heat {
 		begin:   func() warmer { return deep.StartWarming(sys, dir) }}
 }
 
-// The step's two names: measured alone, or with the owner listening for the fan.
+// The step's two names, measured alone or with the owner listening for the fan.
 const (
 	heatAlone = "Temperatures"
 	heatByEar = "Temperatures and fan"
@@ -193,7 +193,7 @@ func (h *heat) update(msg tea.Msg) tea.Cmd {
 			case key == "s":
 				h.rest()
 			case key == "f" && !h.handsOff:
-				// Heard: that is what the load was for
+				// Heard, which is what the load was for
 				h.warming.Heard()
 				h.rest()
 			case key == "n" && !h.handsOff:

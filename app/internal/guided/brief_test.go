@@ -92,7 +92,7 @@ func TestTheBriefSaysWhatFailsWhatIsKnownAndHowToGoAboutIt(t *testing.T) {
 	if strings.Contains(brief, "### Wi-Fi") || strings.Contains(brief, "Fine.") {
 		t.Error("a part that works is listed as work")
 	}
-	// The how-to lives in the guide: the brief doesn't repeat its tables and rule lists
+	// The how-to lives in the guide, so the brief doesn't repeat its tables and rule lists
 	for _, repeated := range []string{"| What is wrong |", "## Measuring with hw-test", "## The rules that matter most", "curl -s -X POST"} {
 		if strings.Contains(brief, repeated) {
 			t.Errorf("the brief repeats the guide's %q", repeated)
@@ -162,7 +162,7 @@ func TestTheBriefNamesThePartInItsSnapshotCommands(t *testing.T) {
 }
 
 // An NVIDIA machine describes its own hardware through ACPI, so its brief names no device tree
-// commands: there is no tree to read, build or boot.
+// commands, as there is no tree to read, build or boot.
 func TestTheBriefForAnNvidiaMachineLeavesTheDeviceTreeOut(t *testing.T) {
 	b := yoga()
 	b.Run.Compatible = ""
@@ -218,8 +218,8 @@ func TestWhatFailsIsHandedToTheOwnersAgentWithTheBrief(t *testing.T) {
 			t.Errorf("the agent's first message lacks %q: %s", text, prompt)
 		}
 	}
-	// One part alone, as the owner picks it: the brief is for that part, says so, names what
-	// else is left for later, and has what an agent without a network or a PATH needs
+	// One part alone, as the owner picks it. The brief is for that part, says so, names what else is
+	// left for later, and has what an agent without a network or a PATH needs
 	one := yoga()
 	one.Only, one.Binary = []string{"speakers"}, "/home/owner/.local/share/mise/installs/hw/0.16.0/hw-test"
 	one.GetGuide = func() ([]byte, error) { return []byte("# Are we ARM yet? Guide for AI agents\n"), nil }
@@ -249,8 +249,8 @@ func TestWhatFailsIsHandedToTheOwnersAgentWithTheBrief(t *testing.T) {
 	if brief := Brief(one); !strings.Contains(brief, "### Webcam (check `camera`), works, with something to look into") || !strings.Contains(brief, "- **Worth a second look.** The picture is 30 of 255 bright. Find out whether it is a fault") {
 		t.Errorf("a part worth a look:\n%s", brief)
 	}
-	// Handed over by the owner, the speakers are the agent's to measure: the brief says how, and
-	// the computer remembers the owner's yes for the sound test
+	// Handed over by the owner, the speakers are the agent's to measure. The brief says how, and the
+	// computer remembers the owner's yes for the sound test
 	t.Setenv("XDG_STATE_HOME", t.TempDir())
 	if Automatic([]string{"speakers"}, false) || MaySound(time.Now()) {
 		t.Error("the sound test would run for an agent before the owner handed the speakers over")
@@ -314,7 +314,7 @@ func TestWhatFailsIsHandedToTheOwnersAgentWithTheBrief(t *testing.T) {
 	if elsewhere.Opened || !strings.Contains(elsewhere.Said, "Give it to your agent") {
 		t.Errorf("not on Omarchy: %+v", elsewhere)
 	}
-	// Nothing failing: no agent is opened for nothing
+	// Nothing failing, so no agent is opened for nothing
 	fine := yoga()
 	fine.Kept = map[string]report.Kept{"wifi": fine.Kept["wifi"]}
 	opened := false
@@ -356,8 +356,8 @@ func TestTheScreensOfferTheAgentOnlyWhenSomethingFails(t *testing.T) {
 		t.Errorf("asked %q\n%s", asked, s.view(90, 30))
 	}
 
-	// With several to look into, the owner picks one, and the offer is there again for the next:
-	// a part that can't be fixed, like hibernation here, holds up nothing
+	// With several to look into, the owner picks one, and the offer is there again for the next, so a
+	// part that can't be fixed, like hibernation here, holds up nothing
 	run.Set("hibernate", report.Broken, report.Measured, "the kernel offers no hibernation", "")
 	run.Set("speakers", report.Works, report.Measured, "left -47 dB, right -55 dB", "")
 	run.Flag("speakers", "The right speaker measures 8 dB quieter than the other.")
@@ -388,8 +388,8 @@ func TestTheScreensOfferTheAgentOnlyWhenSomethingFails(t *testing.T) {
 		t.Errorf("Back: phase %q", s.phase)
 	}
 
-	// The start screen: an agent takes one part at a time, the one under the cursor. On
-	// "Everything" there is nothing to hand over, so a part that can't be fixed holds up nothing
+	// The start screen. An agent takes one part at a time, the one under the cursor. On "Everything"
+	// there is nothing to hand over, so a part that can't be fixed holds up nothing
 	when := time.Date(2026, 11, 19, 2, 0, 0, 0, time.UTC)
 	kept := map[string]report.Kept{
 		"camera":   {Result: report.Result{Check: "camera", State: report.Partial, Note: "Too dark."}, When: when},
@@ -420,7 +420,8 @@ func TestTheScreensOfferTheAgentOnlyWhenSomethingFails(t *testing.T) {
 	if start.update(press('a')) == nil || start.started {
 		t.Error("a didn't hand the camera over")
 	}
-	// Enter on such a part asks first: test it again, or have an agent look into it as it stands
+	// Enter on such a part asks first whether to test it again, or have an agent look into it as it
+	// stands
 	picked := ""
 	start.pick = func(word string) { picked = word }
 	start.handed = ""

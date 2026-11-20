@@ -1,7 +1,7 @@
-// Package tools runs the programs the guided test needs: PipeWire's player and recorder,
-// libcamera's cam, the volume control and the browser. Every one of them is given a time
-// limit and killed at the end of it, because players and recorders have been seen to hang
-// after their last sample.
+// Package tools runs the programs the guided test needs, which are PipeWire's player and recorder,
+// libcamera's cam, the volume control and the browser. Every one of them is given a time limit and
+// killed at the end of it, because players and recorders have been seen to hang after their last
+// sample.
 package tools
 
 import (
@@ -32,8 +32,8 @@ func Have(names ...string) bool {
 
 // HeadphoneOutput says whether the sound server offers a headphone output on a sound card that is
 // part of the computer. known is false where that can't be asked. A laptop with only USB-C ports
-// has none, and the kernel's own "Headphone Jack" control says nothing: the Yoga Slim 7x has that
-// control and no socket. USB and Bluetooth sound cards don't count, since an adapter or a pair
+// has none, and the kernel's own "Headphone Jack" control says nothing, as the Yoga Slim 7x has
+// that control and no socket. USB and Bluetooth sound cards don't count, since an adapter or a pair
 // of USB-C headphones is a sound card of its own.
 func HeadphoneOutput() (offered, known bool) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -148,9 +148,9 @@ type sample struct {
 	mean float64
 }
 
-// settled says whether the brightness has stopped changing: over the last second it moved by
-// no more than two of 255. The first frames are left out, as the camera's processing has only
-// just started on them.
+// settled says whether the brightness has stopped changing, which is when it moved by no more than
+// two of 255 over the last second. The first frames are left out, as the camera's processing has
+// only just started on them.
 func settled(samples []sample) bool {
 	if len(samples) < 4 {
 		return false
@@ -194,10 +194,10 @@ func brightness(ppm []byte) (float64, bool) {
 }
 
 // Frame runs the first camera until its picture has settled on a brightness, and returns that
-// frame. A fixed handful of frames is too few: the picture starts dark and brightens over
-// seconds. cam takes its optional values attached (--capture=450), and a PPM file holds only
-// 24-bit pixels, hence the pixel format. Frames are deleted as they come, so a long wait
-// doesn't fill the folder.
+// frame. A fixed handful of frames is too few, since the picture starts dark and brightens over
+// seconds. cam takes its optional values attached (--capture=450), and a PPM file holds only 24-bit
+// pixels, hence the pixel format. Frames are deleted as they come, so a long wait doesn't fill the
+// folder.
 func Frame(dir string) (Shot, error) {
 	var last error
 	for _, format := range []string{"BGR888", "RGB888"} {
@@ -454,19 +454,19 @@ func OwnersEnv(env []string) []string {
 // different agents, by whichever subscription they have, and each keeps its conversations
 // its own way. Going on in the same one keeps everything the agent has learnt so far.
 type Session struct {
-	// Kind is the program that holds it: t3 (a T3 Code thread) or herdr (a herdr pane), which
-	// both run whatever agent the owner has inside them, or codex or claude for those two
-	// started plainly in a terminal.
+	// Kind is the program that holds it, either t3 (a T3 Code thread) or herdr (a herdr pane), which
+	// both run whatever agent the owner has inside them, or codex or claude for those two started
+	// plainly in a terminal.
 	Kind string `json:"kind,omitempty"`
 	ID   string `json:"id,omitempty"`
 }
 
-// holders are the programs that say which conversation this is, and how. The ones that hold
-// other agents inside them come first: their thread or pane is what the owner looks at.
+// holders are the programs that say which conversation this is, and how. The ones that hold other
+// agents inside them come first, since their thread or pane is what the owner looks at.
 var holders = [][2]string{{"T3CODE_THREAD_ID", "t3"}, {"HERDR_PANE_ID", "herdr"}, {"CODEX_THREAD_ID", "codex"}, {"CLAUDE_CODE_SESSION_ID", "claude"}}
 
-// CurrentSessions are the conversations this program was started from, outermost first:
-// a Codex running in a T3 Code thread is both, and the thread is tried first.
+// CurrentSessions are the conversations this program was started from, outermost first. A Codex
+// running in a T3 Code thread is both, and the thread is tried first.
 func CurrentSessions() []Session {
 	var held []Session
 	for _, known := range holders {
@@ -489,8 +489,8 @@ func CurrentSession() Session {
 // the agents Omarchy can set as the default.
 var t3Drivers = map[string]string{"codex": "codex", "claude": "claudeAgent", "agy": "antigravity", "opencode": "opencode", "cursor-agent": "cursor", "grok": "grok"}
 
-// t3Model picks the agent and model a new T3 Code thread runs: the owner's default agent in
-// Omarchy, on the model T3 Code lists for it first. HW_TEST_T3_MODEL, as provider/model, says
+// t3Model picks the agent and model a new T3 Code thread runs, which is the owner's default agent
+// in Omarchy, on the model T3 Code lists for it first. HW_TEST_T3_MODEL, as provider/model, says
 // otherwise. Empty means T3 Code's own default for the project.
 func t3Model() (provider, model string) {
 	if given := strings.SplitN(os.Getenv("HW_TEST_T3_MODEL"), "/", 2); len(given) == 2 {
@@ -562,9 +562,9 @@ func t3Up(dir string) bool {
 	return false
 }
 
-// T3Show brings T3 Code's window to the front, so the owner sees their agent's thread in its
-// list. T3 Code has no way from outside to open one given thread: what it offers, t3 app,
-// always opens a new, empty one for the folder, which would hide the thread that is at work.
+// T3Show brings T3 Code's window to the front, so the owner sees their agent's thread in its list.
+// T3 Code has no way from outside to open one given thread. What it offers, t3 app, always opens a
+// new, empty one for the folder, which would hide the thread that is at work.
 func T3Show(dir string) {
 	if Have("omarchy-hyprland-focus-app") {
 		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
@@ -625,11 +625,11 @@ func activeWindow() string {
 // and t3Appear how long a typed thread is looked for afterwards.
 var t3Settle, t3Appear = 1500 * time.Millisecond, 20 * time.Second
 
-// T3Type opens a new thread for the folder in T3 Code's own window and types the message
-// into it, as the owner would. T3 Code can only be told from outside to open a new, empty
-// thread, never an existing one. So this is the way to have the thread the owner is looking
-// at be the one at work, with nothing to hunt for. It needs the desktop in front of it: it
-// types only while T3 Code's window has the keyboard, and gives up otherwise.
+// T3Type opens a new thread for the folder in T3 Code's own window and types the message into it,
+// as the owner would. T3 Code can only be told from outside to open a new, empty thread, never an
+// existing one. So this is the way to have the thread the owner is looking at be the one at work,
+// with nothing to hunt for. It needs the desktop in front of it. It types only while T3 Code's
+// window has the keyboard, and gives up otherwise.
 func T3Type(dir, message string) (id, title string, err error) {
 	if !Have("t3", "wtype", "hyprctl", "omarchy-hyprland-focus-app") {
 		return "", "", ErrNoSession
@@ -753,8 +753,8 @@ func FocusAgentWindow() {
 // ErrAgentOpen says the conversation is open in a window that can't be written to from outside.
 var ErrAgentOpen = errors.New("the agent's window is open and can't be written to from here")
 
-// Show takes the owner to a conversation of their agent without saying anything in it: the
-// window it is open in, or a new window on the same conversation.
+// Show takes the owner to a conversation of their agent without saying anything in it, in the
+// window it is open in, or in a new window on the same conversation.
 func Show(session Session, dir string) error {
 	switch {
 	case session.ID == "":
@@ -834,10 +834,9 @@ var ErrNotOmarchy = errors.New("this system has no omarchy-agent")
 // and with the given first message, the way Omarchy's own menu does.
 func Agent(dir, prompt string) error { return agent(dir, prompt, 0) }
 
-// AgentHandedOver opens the agent as Agent does, and returns only once its launcher has
-// handed the window over to the desktop, or after a while. A caller that ends right away
-// needs this: a service's leftover processes are stopped with it, and a launcher stopped
-// halfway opens nothing.
+// AgentHandedOver opens the agent as Agent does, and returns only once its launcher has handed the
+// window over to the desktop, or after a while. A caller that ends right away needs this, since a
+// service's leftover processes are stopped with it, and a launcher stopped halfway opens nothing.
 func AgentHandedOver(dir, prompt string) error { return agent(dir, prompt, 30*time.Second) }
 
 func agent(dir, prompt string, wait time.Duration) error {
@@ -861,7 +860,7 @@ func agent(dir, prompt string, wait time.Duration) error {
 			return nil
 		}
 	}
-	// Another way of opening an agent than Omarchy's, for other distros: a command line that
+	// Another way of opening an agent than Omarchy's, for other distros. It is a command line that
 	// gets the first message as its last argument, like HW_TEST_AGENT="foot -e claude"
 	if line := strings.Fields(os.Getenv("HW_TEST_AGENT")); len(line) > 0 {
 		command := exec.Command(line[0], append(line[1:], prompt)...)

@@ -1,10 +1,10 @@
 // Keeps a copy of what the board links that no durable archive holds yet, next to device-trees/:
-// - hwids/<model id>/: every hardware ID file that systemd's list doesn't have, from Omarchy's kernel
+// - hwids/<model id>/ holds every hardware ID file that systemd's list doesn't have, from Omarchy's kernel
 //   package or from Ubuntu's stubble (merged or in a pull request), in stubble's format, with a SOURCE.md.
-// - reports/<maker>/<model>/<report>/: each hardware report in turbineBMW/omarchy-hardware-reports, merged or in an
+// - reports/<maker>/<model>/<report>/ holds each hardware report in turbineBMW/omarchy-hardware-reports, merged or in an
 //   open pull request, minus its device list, driver files and registry export, which stay there. The SoC serial
 //   number (SOSN) is zeroed in its ACPI tables.
-// - acpi/aarch64-laptops/<folder>/ and acpi/linux-surface/<folder>/: the tables of every ACPI dump the board reads
+// - acpi/aarch64-laptops/<folder>/ and acpi/linux-surface/<folder>/ hold the tables of every ACPI dump the board reads
 //   from aarch64-laptops, merged or proposed, and from linux-surface, with the SOSN zeroed and the tables that hold
 //   a Windows product key left out, and acpi/README.md, which lists every model's dumps.
 // It reads data/sources.json, so it runs after scripts/collect.ts.
@@ -205,7 +205,7 @@ function blankProcessorSerial(table: Buffer) {
   return { data, changed };
 }
 
-// The same for a panel's serial number in its EDID: the number in bytes 12 to 15 and a serial number descriptor
+// The same for a panel's serial number in its EDID, which is the number in bytes 12 to 15 and a serial number descriptor
 // (tag 0xff), with the block's checksum put right.
 function blankEdidSerial(edid: Buffer) {
   const data = Buffer.from(edid);
@@ -290,9 +290,9 @@ writeFileSync('reports/README.md', [
 ].join('\n'));
 
 // ACPI dumps
-// Only the tables, one file each: the binary files that hold a table, under their own names, else acpidump's text
+// Only the tables, one file each. They are the binary files that hold a table, under their own names, else acpidump's text
 // output, named after each table's signature (ssdt1.dat, ssdt2.dat and so on when there are several), and the
-// disassembly of any table with no binary. Left out: MSDM and SLIC, which hold the Windows product key, WPBT, as
+// disassembly of any table with no binary. Left out are MSDM and SLIC, which hold the Windows product key, WPBT, as
 // the installer leaves it out, and RGRT, the regulatory logo, an image of several MB. Dumps the board ignores
 // aren't copied.
 const ARCHIVED_ACPI = { 'aarch64-laptops/build': 'aarch64-laptops', 'linux-surface/acpidumps': 'linux-surface' } as Record<string, string>;
@@ -308,7 +308,7 @@ const signatureOf = (data: Buffer) => {
 };
 const stemOf = (path: string) => path.split('/').pop()!.replace(/\.[^.]*$/, '').toLowerCase();
 
-// The tables in acpidump's text output: a "DSDT @ 0x..." line, then lines of offset, hex bytes and text
+// The tables in acpidump's text output, each a "DSDT @ 0x..." line, then lines of offset, hex bytes and text
 function parseAcpidump(text: string, from: string): Table[] {
   const tables: Table[] = [];
   let bytes: number[] | undefined;
@@ -344,7 +344,7 @@ for (const dump of acpiDumps.filter((dump) => dump.repo && ARCHIVED_ACPI[dump.re
   const read = (path: string) => rawFile(dump.repo!, dump.ref!, path);
   const relative = (path: string) => path.slice(dump.dir!.length + 1);
 
-  // Binary tables first; files that aren't one, like firmware or a damaged table, are skipped
+  // Binary tables first. Files that aren't one, like firmware or a damaged table, are skipped
   let tables: Table[] = (await inBatches(listed.filter((entry) => !NOT_TABLES.test(entry.path)), 8, async (entry) => ({ entry, data: await read(entry.path) })))
     .flatMap(({ entry, data }) => {
       const signature = signatureOf(data);
@@ -381,7 +381,7 @@ for (const dump of acpiDumps.filter((dump) => dump.repo && ARCHIVED_ACPI[dump.re
     writeFileSync(join(to, file), scrubbed.data);
     written.push(`${file} (${table.from})`);
   }
-  // The disassembly where no binary of the same name is a table: when only the disassembly was shared, or a
+  // The disassembly where no binary of the same name is a table, which is when only the disassembly was shared or a
   // binary was damaged. A text dump holds every table, so its folder's disassembly isn't needed
   for (const entry of fromDump ? [] : listed.filter((entry) => entry.path.toLowerCase().endsWith('.dsl') && !binaryNames.has(stemOf(entry.path)))) {
     const file = entry.path.split('/').pop()!;

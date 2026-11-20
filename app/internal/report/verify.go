@@ -20,7 +20,7 @@ type Versions struct {
 	Packages map[string]string `json:"packages"`
 }
 
-// Snapshot is where a machine stood before a change: every check's standing result, and the
+// Snapshot is where a machine stood before a change, with every check's standing result, and the
 // versions it ran, taken so that what a fix changes can be measured against it.
 type Snapshot struct {
 	When     time.Time       `json:"when"`
@@ -125,9 +125,9 @@ func StandingParts() []string {
 // "not on this model", has none.
 var Rank = map[string]int{Works: 0, Partial: 1, Broken: 2}
 
-// Changes lists every check that was tested again since the snapshot, with its state then
-// and now: what got better first, then what got worse, then what stayed as it was. A check
-// nobody tested since says nothing about the change, and is left out.
+// Changes lists every check that was tested again since the snapshot, with its state then and now.
+// What got better comes first, then what got worse, then what stayed as it was. A check nobody
+// tested since says nothing about the change, and is left out.
 func Changes(snapshot Snapshot, latest map[string]Kept) []Change {
 	var changes []Change
 	for check, now := range latest {

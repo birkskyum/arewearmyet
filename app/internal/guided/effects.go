@@ -22,8 +22,8 @@ type levels struct {
 
 type levelsMsg levels
 
-// effect is one key checked by what it does: the desktop keeps the volume and brightness
-// keys for itself, so no program sees them pressed, but anyone can see the volume move.
+// effect is one key checked by what it does. The desktop keeps the volume and brightness keys for
+// itself, so no program sees them pressed, but anyone can see the volume move.
 type effect struct {
 	label string
 	// happened says whether the levels changed the way the key should change them.
@@ -156,8 +156,8 @@ func (e *effects) update(msg tea.Msg) tea.Cmd {
 	return nil
 }
 
-// finish turns what was seen into results: the brightness keys are the backlight check, and
-// a volume or mute key without effect makes the keyboard only partly working.
+// finish turns what was seen into results. The brightness keys are the backlight check, and a
+// volume or mute key without effect makes the keyboard only partly working.
 func (e *effects) finish() {
 	e.cleanup()
 	var deadKeys, unchecked []string
@@ -194,7 +194,7 @@ func (e *effects) finish() {
 	if len(deadKeys) > 0 {
 		notes = append(notes, "No effect from "+strings.Join(deadKeys, ", "))
 	}
-	// A key that was skipped isn't called working: the result says it wasn't checked
+	// A key that was skipped isn't called working. The result says it wasn't checked
 	if len(unchecked) > 0 {
 		notes = append(notes, "Not checked were "+strings.Join(unchecked, ", "))
 	}

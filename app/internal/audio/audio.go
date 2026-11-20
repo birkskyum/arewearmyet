@@ -83,7 +83,7 @@ func Samples(file []byte) []int16 {
 	return samples
 }
 
-// Level is how loud samples are: their root mean square.
+// Level is how loud samples are, as their root mean square.
 func Level(samples []int16) int {
 	if len(samples) == 0 {
 		return 0
@@ -129,7 +129,8 @@ func Both(pitch, seconds float64) []byte {
 	return WAV(samples, 2)
 }
 
-// Quietest is the level of a recording's quietest quarter second: its noise with nothing playing.
+// Quietest is the level of a recording's quietest quarter second, which is its noise with nothing
+// playing.
 func Quietest(samples []int16) int {
 	quietest := -1
 	for at := 0; at+window <= len(samples); at += window {
@@ -140,10 +141,10 @@ func Quietest(samples []int16) int {
 	return max(quietest, 0)
 }
 
-// HearAt looks for a tone of the given pitch in a mono recording, a quarter second at a time.
-// Short windows, because the speakers' and the microphones' clocks differ a little, which
-// smears the tone out of a long measurement; and the tone has to be most of the sound in a
-// window, so room noise and the click of the microphones starting don't count.
+// HearAt looks for a tone of the given pitch in a mono recording, a quarter second at a time. The
+// windows are short because the speakers' and the microphones' clocks differ a little, which smears
+// the tone out of a long measurement. And the tone has to be most of the sound in a window, so room
+// noise and the click of the microphones starting don't count.
 func HearAt(samples []int16, pitch float64) Heard {
 	coefficient := 2 * math.Cos(2*math.Pi*pitch/Rate)
 	var heard Heard
@@ -173,8 +174,8 @@ func HearAt(samples []int16, pitch float64) Heard {
 	return heard
 }
 
-// Decibels is a level relative to the loudest a recording can hold: 0 is full scale, -6 is
-// half of it, and silence is far below.
+// Decibels is a level relative to the loudest a recording can hold, so 0 is full scale, -6 is half
+// of it, and silence is far below.
 func Decibels(level int) float64 {
 	if level <= 0 {
 		return -100

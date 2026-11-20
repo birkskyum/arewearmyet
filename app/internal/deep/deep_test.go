@@ -15,7 +15,7 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 )
 
-// with is a machine whose programs answer as given: by name, or by name and an argument.
+// with is a machine whose programs answer as given, by name, or by name and an argument.
 func with(t *testing.T, answers map[string]string) machine.System {
 	t.Helper()
 	sys := machine.Fixture(t.TempDir())
@@ -143,8 +143,8 @@ func browser(t *testing.T, plain, switched string) machine.System {
 var chromium = Engine{Name: "Chromium", Command: "chromium"}
 
 // The browser that is tested is the one the desktop opens for a link, since each browser reads
-// switches of its own: on Omarchy Chrome is the default, and testing Chromium there sent an
-// agent to fix the wrong browser. A default this test can't drive is stood in for, by name.
+// switches of its own. On Omarchy Chrome is the default, and testing Chromium there sent an agent
+// to fix the wrong browser. A default this test can't drive is stood in for, by name.
 func TestTheDefaultBrowserIsTheOneTested(t *testing.T) {
 	desktop := func(entry string, installed ...string) machine.System {
 		sys := machine.Fixture(t.TempDir())
@@ -171,11 +171,11 @@ func TestTheDefaultBrowserIsTheOneTested(t *testing.T) {
 	}{
 		{"google-chrome.desktop", []string{"google-chrome-stable", "chromium"}, Engine{Name: "Chrome", Command: "google-chrome-stable"}, true},
 		{"chromium.desktop", []string{"google-chrome-stable", "chromium"}, Engine{Name: "Chromium", Command: "chromium"}, true},
-		// Firefox can't be driven: Chromium stands in, and the result will say so
+		// Firefox can't be driven, so Chromium stands in, and the result will say so
 		{"firefox.desktop", []string{"firefox", "chromium"}, Engine{Name: "Chromium", Command: "chromium", Instead: "firefox"}, true},
 		// The default's entry is there but its program is gone
 		{"google-chrome.desktop", []string{"chromium"}, Engine{Name: "Chromium", Command: "chromium", Instead: "google-chrome"}, true},
-		// Nothing says what the default is: whichever can be driven
+		// Nothing says what the default is, so whichever can be driven
 		{"", []string{"google-chrome-stable"}, Engine{Name: "Chrome", Command: "google-chrome-stable"}, true},
 		{"firefox.desktop", []string{"firefox"}, Engine{}, false},
 	} {
@@ -209,7 +209,7 @@ func TestTheBrowserReportsWebGLAndWhetherWebGPUNeedsSwitchingOn(t *testing.T) {
 	adapter := `"webgpu":"qualcomm adreno-7xx","device":true`
 	dir := t.TempDir()
 
-	// As on the Yoga: WebGL on the GPU, WebGPU only with the switches
+	// As on the Yoga, with WebGL on the GPU and WebGPU only with the switches
 	results := Browser(browser(t, `{`+onGPU+`,"webgpuWhy":"no adapter"}`, `{`+onGPU+`,`+adapter+`}`), chromium, dir)
 	webgl, webgpu := one(t, results, "webgl"), one(t, results, "webgpu")
 	if webgl.State != report.Works || !strings.Contains(webgl.Evidence, "Adreno X1-85") {
@@ -224,8 +224,8 @@ func TestTheBrowserReportsWebGLAndWhetherWebGPUNeedsSwitchingOn(t *testing.T) {
 		t.Errorf("webgpu by itself: %+v", webgpu)
 	}
 
-	// No GPU behind either: WebGL on the processor, and an adapter on the processor isn't
-	// WebGPU working, whether or not it calls itself a fallback
+	// No GPU behind either. WebGL runs on the processor, and an adapter on the processor isn't WebGPU
+	// working, whether or not it calls itself a fallback
 	for _, fallback := range []string{"true", "false"} {
 		software := `{"webgl":"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0)), SwiftShader driver)","webglVersion":"WebGL 2.0","webgpu":"google swiftshader","fallback":` + fallback + `,"device":true}`
 		results = Browser(browser(t, software, software), chromium, dir)
@@ -274,7 +274,7 @@ func TestABrowserThatHangsIsGivenUpOn(t *testing.T) {
 	done := make(chan []report.Result, 1)
 	go func() { done <- Browser(sys, chromium, t.TempDir()) }()
 	time.Sleep(400 * time.Millisecond)
-	// The wait is over by now; the program itself is ended by the limit on a real machine
+	// The wait is over by now, and the program itself is ended by the limit on a real machine
 	close(release)
 	select {
 	case results := <-done:
@@ -328,7 +328,7 @@ func TestWirelessKeepsTheSignalAndOnlyHowManyDevicesWereHeard(t *testing.T) {
 	if weak.State != report.Works || !strings.Contains(weak.Note, "very weak") {
 		t.Errorf("weak: %+v", weak)
 	}
-	// Not connected, and nothing heard: neither says the radio is broken, so nothing is reported
+	// Not connected, and nothing heard. Neither says the radio is broken, so nothing is reported
 	if results := Wireless(with(t, map[string]string{"iw": "Not connected.\n", "bluetoothctl": "Discovery started\n"}), "wlan0", "hci0"); len(results) != 0 {
 		t.Errorf("nothing to go on: %+v", results)
 	}
@@ -425,12 +425,12 @@ func TestTheLoadShowsOnTheSensorsAndTheFan(t *testing.T) {
 	}
 	hot := Heat{Sensors: 59, Rest: 38, Peak: 68, After: 47, Loaded: 95 * time.Second, Slowest: 1}
 
-	// Nothing showed a fan: the sensors work, and whether there is a fan is still open
+	// Nothing showed a fan. The sensors work, and whether there is a fan is still open
 	fans := one(t, hot.Report(), "fans")
 	if fans.State != report.Partial || fans.Note != FanUnseen || !strings.Contains(fans.Evidence, "59 temperature sensors. The hottest went from 38 to 68 °C in 95 s with every core busy, and back to 47 °C") || !strings.Contains(fans.Evidence, "back to 47 °C") {
 		t.Errorf("no fan seen: %+v", fans)
 	}
-	// The temperature fell under steady work: a fan started, measured with no sensor for its speed
+	// The temperature fell under steady work, so a fan started, measured with no sensor for its speed
 	kicked := hot
 	kicked.Kicked = &Kick{At: 90 * time.Second, From: 68, To: 62}
 	if fans = one(t, kicked.Report(), "fans"); fans.State != report.Works || fans.How != report.Measured || !strings.Contains(fans.Evidence, "fell from 68 to 62 °C while the processor worked on at the same rate") || !strings.Contains(fans.Note, "speed can't be read") {
@@ -504,19 +504,19 @@ func TestAFanIsSeenByTheTemperatureItBringsDownUnderSteadyWork(t *testing.T) {
 		}
 		return readings(38, samples...)
 	}
-	// Still climbing, or level: no fan yet
+	// Still climbing, or level, so no fan yet
 	if kick := readings(38, climb...).kicked(); kick != nil {
 		t.Errorf("a fan seen while it climbs: %+v", kick)
 	}
 	if kick := with(1, 67.5, 67.8, 67.6, 67.9).kicked(); kick != nil {
 		t.Errorf("a fan seen in a level temperature: %+v", kick)
 	}
-	// It falls and stays down while the work goes on as before: the fan
+	// It falls and stays down while the work goes on as before, which is the fan
 	kick := with(1, 66, 63, 62, 62.4).kicked()
 	if kick == nil || kick.From != 68 || kick.To > 63 || kick.At != 7*time.Second {
 		t.Fatalf("the fan wasn't seen: %+v", kick)
 	}
-	// It falls because the processor was slowed down: that is throttling, not a fan
+	// It falls because the processor was slowed down, which is throttling, not a fan
 	if kick := with(0.6, 66, 63, 62, 62.4).kicked(); kick != nil {
 		t.Errorf("throttling taken for a fan: %+v", kick)
 	}
@@ -584,8 +584,8 @@ func TestTheTemperatureTestRunsThroughByItself(t *testing.T) {
 		t.Errorf("heard: %+v", found)
 	}
 
-	// A processor at 96 °C is at work, not in danger: the load goes on. It ends only when a
-	// sensor comes close to the temperature its own shutdown is set at
+	// A processor at 96 °C is at work, not in danger, so the load goes on. It ends only when a sensor
+	// comes close to the temperature its own shutdown is set at
 	file := func(root, path, text string) {
 		os.MkdirAll(filepath.Dir(filepath.Join(root, path)), 0o755)
 		os.WriteFile(filepath.Join(root, path), []byte(text), 0o644)
@@ -715,7 +715,7 @@ func TestTheNetworkCableIsTestedByReachingTheRouterThroughIt(t *testing.T) {
 	}
 	route := "default via 192.168.1.1 proto dhcp src 192.168.1.20 metric 100\n"
 
-	// No cable: nothing to say either way
+	// No cable, so nothing to say either way
 	if results := Wired(cable("0", map[string]string{"ip": route}), "enp1s0"); len(results) != 0 {
 		t.Errorf("without a cable: %+v", results)
 	}

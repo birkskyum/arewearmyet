@@ -91,7 +91,7 @@ func TestReadsARecordingWhoseHeaderWasNeverFinished(t *testing.T) {
 }
 
 func TestAQuietRecordingIsBoostedToTheTonesLoudness(t *testing.T) {
-	// Speech-like: a quiet stretch, then a louder second
+	// Speech-like, a quiet stretch, then a louder second
 	quiet := build(func(i int) float64 {
 		if i < Rate {
 			return sine(i, 200, 20)

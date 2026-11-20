@@ -226,8 +226,8 @@ func TestAMenuTooTallForTheWindowScrollsWithTheCursor(t *testing.T) {
 	if drawn := c.viewIn(80, 9); !strings.Contains(drawn, "↑ more") || strings.Contains(drawn, "↓ more") {
 		t.Errorf("at the bottom:\n%s", drawn)
 	}
-	// The words after a part are cut to the window, and left out where there is no room for
-	// them: every part stays on one line, with nothing past the edge
+	// The words after a part are cut to the window, and left out where there is no room for them, so
+	// every part stays on one line, with nothing past the edge
 	for _, width := range []int{60, 40, 24} {
 		drawn := c.view(width)
 		for _, line := range strings.Split(drawn, "\n") {

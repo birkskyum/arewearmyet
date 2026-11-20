@@ -2,7 +2,7 @@
  * The site's pages, plus a private drop for firmware the Omarchy Arm Installer
  * finds in a laptop's Windows drivers, when its owner opts in.
  *
- * The bucket has no public URL and this Worker only writes to it: nothing here
+ * The bucket has no public URL and this Worker only writes to it. Nothing here
  * lists or returns a stored file. Files are kept by their SHA-256, so a file
  * many laptops share is stored once, and R2 rejects a body whose hash differs
  * from the one in its URL. The installer asks which files are missing, sends
@@ -10,7 +10,7 @@
  * code back for the owner's hardware report.
  *
  * A request body can't pass 100 MB on this plan, so a bigger file comes in
- * parts: an R2 multipart upload under incoming/, which is then copied to its
+ * parts, as an R2 multipart upload under incoming/, which is then copied to its
  * place under files/ with the same SHA-256 check, so R2 does the hashing
  * rather than the Worker.
  *
@@ -40,7 +40,7 @@ const CODE_ALPHABET = 'ABCDEFGHJKMNPQRSTVWXYZ23456789';
 export default {
   async fetch(request, env): Promise<Response> {
     const url = new URL(request.url);
-    // /api itself answers with the list of routes; every other path outside /api/ is a page
+    // /api itself answers with the list of routes. Every other path outside /api/ is a page
     if (url.pathname !== '/api' && !url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
     if (!url.pathname.startsWith('/api/firmware/')) {
       if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
@@ -98,7 +98,7 @@ async function putFile(hash: string, request: Request, env: Env): Promise<Respon
  * A file over MAX_FILE, in parts:
  * POST uploads/<sha256> with {"size"} starts it and answers {"uploadId"};
  * PUT uploads/<sha256>/<uploadId>/<part> sends part 1, 2, ..., each the same
- * size but the last, at least 5 MiB and at most MAX_FILE, and answers {"etag"};
+ * size but the last, at least 5 MiB and at most MAX_FILE, and answers {"etag"}.
  * POST uploads/<sha256>/<uploadId>/complete with {"parts": [{"partNumber", "etag"}]}
  * joins them, checks the SHA-256 and stores the file.
  */
@@ -190,14 +190,14 @@ async function putReport(request: Request, env: Env): Promise<Response> {
   for (const f of files) {
     const { folder, name, size, sha256 } = (f ?? {}) as Record<string, unknown>;
     if (typeof folder !== 'string' || !segment(folder) || typeof name !== 'string' || name.split('/').length > 8 || !name.split('/').every(segment))
-      return json({ error: `Bad file path: ${String(folder)}/${String(name)}` }, 400);
+      return json({ error: `Bad file path ${String(folder)}/${String(name)}` }, 400);
     if (typeof size !== 'number' || !Number.isInteger(size) || size < 0) return json({ error: `Bad size for ${folder}/${name}` }, 400);
     if (typeof sha256 !== 'string' || !SHA256.test(sha256)) return json({ error: `Bad SHA-256 for ${folder}/${name}` }, 400);
     cleanFiles.push({ folder, name, size, sha256, uploaded: size <= MAX_LARGE });
   }
 
   // The same machine sending the same files again gets its first code back,
-  // so a second run makes no second report; any other driver changes it
+  // so a second run makes no second report. Any other driver changes it
   const digestKey = `digests/${await listDigest(cleanMachine, cleanFiles)}`;
   const known = await env.FIRMWARE.get(digestKey);
   if (known) return json({ code: await known.text(), known: true });

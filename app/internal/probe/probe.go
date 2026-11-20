@@ -1,4 +1,4 @@
-// Package probe is the quick check: what can be measured on a Snapdragon PC without asking
+// Package probe is the quick check, which is what can be measured on a Snapdragon PC without asking
 // anyone and without changing anything. It only reads files and runs read-only commands.
 //
 // A check gets a result here only when the machine itself shows it. What takes eyes or ears
@@ -17,8 +17,8 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 )
 
-// Facts are what the quick check learned about the hardware that the guided test builds on:
-// which devices exist, whatever state they are in.
+// Facts are what the quick check learned about the hardware that the guided test builds on, which
+// is the devices that exist, whatever state they are in.
 type Facts struct {
 	Laptop      bool
 	Keyboard    string // the built-in keyboard's device name
@@ -40,7 +40,8 @@ type Facts struct {
 // The last three are what Omarchy installs for the GPU on NVIDIA's ARM machines
 var packages = []string{"linux-omarchy", "linux-omarchy-dtbs", "linux-firmware", "linux-firmware-qcom", "mesa", "systemd", "omarchy", "hyprland", "pipewire", "alsa-ucm-conf", "bluez", "libcamera", "linux-omarchy-nvidia-open", "nvidia-utils", "libva-nvidia-driver"}
 
-// Desktops, mini PCs and all-in-ones, by SMBIOS chassis type: no battery, lid or built-in keyboard to expect.
+// Desktops, mini PCs and all-in-ones, by SMBIOS chassis type, with no battery, lid or built-in
+// keyboard to expect.
 var desktops = map[string]bool{"3": true, "4": true, "5": true, "6": true, "7": true, "13": true, "15": true, "16": true, "35": true, "36": true}
 
 var (
@@ -56,8 +57,8 @@ func Quick(sys machine.System) (*report.Run, Facts, error) {
 		return nil, Facts{}, fmt.Errorf("this is a %s machine, and the check is for ARM PCs", arch)
 	}
 
-	// Without /sys there is nothing to read, and every device would look missing: that is a
-	// container or another system, not a computer with broken hardware
+	// Without /sys there is nothing to read, and every device would look missing. That is a container
+	// or another system, not a computer with broken hardware
 	if !sys.IsDir("/sys/class/input") && !sys.IsDir("/sys/class/drm") {
 		return nil, Facts{}, fmt.Errorf("this system's /sys can't be read, so there is nothing to check (is this a container?)")
 	}
@@ -90,8 +91,8 @@ func Quick(sys machine.System) (*report.Run, Facts, error) {
 	klog := sys.Run("journalctl", "-k", "-b", "--no-pager", "-q", "-o", "cat")
 	platform := Platform(sys)
 
-	// Each part on its own: these machines have half-working drivers and odd values in /sys,
-	// and one part tripping over them mustn't cost the others their results
+	// Each part on its own. These machines have half-working drivers and odd values in /sys, and one
+	// part tripping over them mustn't cost the others their results
 	for _, part := range []func(){
 		func() { screen(sys, measured) },
 		func() { gpu(sys, klog, measured) },
@@ -227,8 +228,8 @@ func gpu(sys machine.System, klog string, measured set) {
 	}
 }
 
-// Input devices, by udev's view of them. One that's missing on a laptop is broken; one
-// that's there still needs a person to try it.
+// Input devices, by udev's view of them. One that's missing on a laptop is broken, and one that's
+// there still needs a person to try it.
 func input(sys machine.System, facts *Facts, measured set) {
 	for _, backlight := range sys.Glob("/sys/class/backlight/*") {
 		if sys.Exists(backlight + "/max_brightness") {
@@ -330,9 +331,9 @@ func wireless(sys machine.System, facts *Facts, measured set) {
 	}
 }
 
-// wired finds the network socket: an Ethernet interface with hardware behind it that isn't Wi-Fi.
-// One on USB is a desktop's own, where the socket is often wired that way inside. On a laptop
-// it is an adapter or a dock, which says nothing about the laptop.
+// wired finds the network socket, which is an Ethernet interface with hardware behind it that isn't
+// Wi-Fi. One on USB is a desktop's own, where the socket is often wired that way inside. On a
+// laptop it is an adapter or a dock, which says nothing about the laptop.
 func wired(sys machine.System, facts *Facts, measured set) {
 	linked := false
 	for _, net := range sys.Glob("/sys/class/net/*") {
@@ -360,7 +361,8 @@ func wired(sys machine.System, facts *Facts, measured set) {
 	}
 }
 
-// WiredLink describes a wired interface with a cable in it: its driver and the speed it settled on.
+// WiredLink describes a wired interface with a cable in it, by its driver and the speed it settled
+// on.
 func WiredLink(sys machine.System, name string) string {
 	net := "/sys/class/net/" + name
 	link := name + " (" + sys.LinkName(net+"/device/driver") + ") connected"
@@ -381,7 +383,7 @@ func switchedOff(sys machine.System, kind string) bool {
 	return false
 }
 
-// The remote processors: the audio DSP, which sound, the battery and USB-C power need, and
+// The remote processors. They are the audio DSP, which sound, the battery and USB-C power need, and
 // the compute DSP.
 func processors(sys machine.System, measured set) {
 	for _, processor := range sys.Glob("/sys/class/remoteproc/remoteproc*") {
@@ -523,8 +525,8 @@ func ports(sys machine.System, measured set) {
 	}
 }
 
-// A built-in camera is a sensor on I2C behind Qualcomm's camera subsystem, named like
-// "ov02c10 10-0036"; a USB one shows as a video device of its own.
+// A built-in camera is a sensor on I2C behind Qualcomm's camera subsystem, named like "ov02c10
+// 10-0036". A USB one shows as a video device of its own.
 func media(sys machine.System, platform string, facts *Facts, measured set) {
 	decoder, subsystem := "", false
 	for _, video := range sys.Glob("/sys/class/video4linux/video*") {
@@ -585,13 +587,13 @@ const (
 	Apple        = "arm-apple" // the Omarchy Mac team's
 )
 
-// Platform names the kind of ARM machine this is, as Omarchy sorts them: "qualcomm", "n1x",
-// "gb10", "nvidia" (an NVIDIA machine that is neither), "apple", or "" when nothing tells. It
-// asks Omarchy's own detector first and reads the machine itself where that isn't there.
+// Platform names the kind of ARM machine this is, as Omarchy sorts them. It is "qualcomm", "n1x",
+// "gb10", "nvidia" (an NVIDIA machine that is neither), "apple", or "" when nothing tells. It asks
+// Omarchy's own detector first and reads the machine itself where that isn't there.
 //
-// A Snapdragon machine and a Mac name themselves in the device tree they start with. NVIDIA's
-// ARM PCs start through ACPI, with no device tree: an N1x laptop is known by its GPU (PCI
-// 10de:2e06) or by its I2C controllers (ACPI NVDA0200), a GB10 desktop by its GPU (10de:2e12).
+// A Snapdragon machine and a Mac name themselves in the device tree they start with. NVIDIA's ARM
+// PCs start through ACPI, with no device tree. An N1x laptop is known by its GPU (PCI 10de:2e06) or
+// by its I2C controllers (ACPI NVDA0200), a GB10 desktop by its GPU (10de:2e12).
 func Platform(sys machine.System) string {
 	if out, err := sys.RunFor(3*time.Second, "omarchy-hw-platform"); err == nil {
 		switch strings.TrimSpace(out) {

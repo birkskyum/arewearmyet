@@ -51,7 +51,7 @@ test('sorts what owners report into a work list', () => {
   assert.match(result.ready[0], /Speakers\*\* works on 2 machines\. `speakers: \{ state: works, checked: \d{4}-\d{2} \}`/);
   // The family-level USB4 report and the OmniBook's sleep have no finding of the model's own
   assert.equal(result.first.length, 2);
-  assert.match(result.unmatched[0], /Acme Unheard Of 14, device tree `acme,unheard`: 2 runs from 1 machine/);
+  assert.match(result.unmatched[0], /Acme Unheard Of 14, device tree `acme,unheard`, with 2 runs from 1 machine/);
 
   const body = render(result);
   assert.match(body, /^Owners' reports from 4 machines across 2 models/);

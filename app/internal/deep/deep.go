@@ -1,8 +1,8 @@
-// Package deep holds the tests that measure further than the quick check and need nobody at
-// the keyboard: which renderer the graphics really use, whether the browser gets WebGL and
-// WebGPU, what the radios hear, whether a video decodes on the hardware decoder, and whether
-// the temperature sensors and fans answer to load. Each takes from a few seconds to half a
-// minute, so each can be run alone.
+// Package deep holds the tests that measure further than the quick check and need nobody at the
+// keyboard. They find which renderer the graphics really use, whether the browser gets WebGL and
+// WebGPU, what the radios hear, whether a video decodes on the hardware decoder, and whether the
+// temperature sensors and fans answer to load. Each takes from a few seconds to half a minute, so
+// each can be run alone.
 package deep
 
 import (
@@ -44,7 +44,7 @@ func software(renderer string) bool {
 var vulkanField = regexp.MustCompile(`(?m)^\s*(deviceName|deviceType|driverName)\s*=\s*(.+?)\s*$`)
 
 // Graphics asks Vulkan which device it draws on. The quick check sees that the GPU's driver is
-// bound; this sees whether programs actually get the GPU or a renderer on the processor.
+// bound. This sees whether programs actually get the GPU or a renderer on the processor.
 func Graphics(sys machine.System) []report.Result {
 	out, err := sys.RunFor(15*time.Second, "vulkaninfo", "--summary")
 	if err != nil && out == "" {
@@ -67,8 +67,8 @@ func Graphics(sys machine.System) []report.Result {
 	return []report.Result{result("gpu", report.Works, "Vulkan draws on "+name+" ("+fields["driverName"]+")", "")}
 }
 
-// The page the browser is given: it makes a WebGL context and asks for a WebGPU adapter and
-// device, and sends what it got back to the test.
+// The page the browser is given. It makes a WebGL context and asks for a WebGPU adapter and device,
+// and sends what it got back to the test.
 const browserPage = `<!doctype html><meta charset=utf-8><title>hw-test</title><script>
 (async()=>{const r={};
 try{const c=document.createElement("canvas");const gl=c.getContext("webgl2")||c.getContext("webgl");
@@ -99,8 +99,8 @@ type Engine struct {
 	Instead string
 }
 
-// The browsers this test can drive: the Chromium family, which all take the same switches.
-// entry is the name of the desktop entry, without ".desktop".
+// The browsers this test can drive, which are the Chromium family, as they all take the same
+// switches. entry is the name of the desktop entry, without ".desktop".
 var engines = []struct{ entry, name, command string }{
 	{"google-chrome", "Chrome", "google-chrome-stable"},
 	{"com.google.chrome", "Chrome", "google-chrome-stable"},
@@ -110,10 +110,10 @@ var engines = []struct{ entry, name, command string }{
 	{"microsoft-edge", "Edge", "microsoft-edge-stable"},
 }
 
-// Which picks the browser to test: the one the desktop opens for a link, since that is where
+// Which picks the browser to test. It is the one the desktop opens for a link, since that is where
 // the owner meets WebGL and WebGPU. Each browser reads its own switches (chrome-flags.conf,
-// chromium-flags.conf), so one can have WebGPU while the other has not. When the default is not
-// of the Chromium family, Chromium stands in where it is installed, and the result says so.
+// chromium-flags.conf), so one can have WebGPU while the other has not. When the default is not of
+// the Chromium family, Chromium stands in where it is installed, and the result says so.
 func Which(sys machine.System) (Engine, bool) {
 	entry, err := sys.RunFor(3*time.Second, "omarchy-cmd-default-browser")
 	if err != nil || strings.TrimSpace(entry) == "" {
@@ -186,7 +186,7 @@ func ask(sys machine.System, command, dir string, extra ...string) (Page, bool) 
 	case page = <-answer:
 		ok = true
 	case <-gone:
-		// The browser went away: it either answered just before, or never will
+		// The browser went away, so it either answered just before, or never will
 		select {
 		case page = <-answer:
 			ok = true
@@ -260,9 +260,9 @@ var (
 	btDevice   = regexp.MustCompile(`(?m)^.*\bDevice\s+([0-9A-Fa-f:]{17})\b`)
 )
 
-// Wireless reads how good the Wi-Fi link is and listens for Bluetooth devices for a few
-// seconds. The quick check sees that Wi-Fi is connected and Bluetooth powered; this sees what
-// the radios make of the air around them.
+// Wireless reads how good the Wi-Fi link is and listens for Bluetooth devices for a few seconds.
+// The quick check sees that Wi-Fi is connected and Bluetooth powered. This sees what the radios
+// make of the air around them.
 func Wireless(sys machine.System, wifi, bluetooth string) []report.Result {
 	var results []report.Result
 	if wifi != "" {
@@ -283,7 +283,7 @@ func Wireless(sys machine.System, wifi, bluetooth string) []report.Result {
 		}
 	}
 	if bluetooth != "" {
-		// The scan's own output names every device it hears; only how many is kept
+		// The scan's own output names every device it hears, and only how many is kept
 		heard, _ := sys.RunFor(15*time.Second, "bluetoothctl", "--timeout", "8", "scan", "on")
 		devices := map[string]bool{}
 		for _, match := range btDevice.FindAllStringSubmatch(heard, -1) {
@@ -314,7 +314,7 @@ func Wired(sys machine.System, ethernet string) []report.Result {
 	if via == nil {
 		return []report.Result{result("ethernet", report.Partial, link+", but the network gave it no address or route", "The link comes up and nothing is reached through it. That can be the network as much as the socket.")}
 	}
-	// The router's address stays on the computer: only whether it answered is kept
+	// The router's address stays on the computer, and only whether it answered is kept
 	out, _ := sys.RunFor(10*time.Second, "ping", "-c", "3", "-W", "2", "-I", ethernet, via[1])
 	if got := pingCount.FindStringSubmatch(out); got != nil && got[1] != "0" {
 		return []report.Result{result("ethernet", report.Works, link+", and the router answered "+got[1]+" of 3 pings through it", "")}
@@ -336,15 +336,15 @@ func decode(sys machine.System, how ...string) (frames int, out string, err erro
 	return frames, out, err, took
 }
 
-// Video makes a two-second clip and decodes it on the hardware decoder. The quick check sees
-// that a decoder exists; this sees whether it gives frames. A Snapdragon machine decodes on
-// its video engine, an NVIDIA one on its GPU.
+// Video makes a two-second clip and decodes it on the hardware decoder. The quick check sees that a
+// decoder exists. This sees whether it gives frames. A Snapdragon machine decodes on its video
+// engine, an NVIDIA one on its GPU.
 func Video(sys machine.System, dir string) []report.Result {
 	clip := filepath.Join(dir, "clip.mp4")
 	defer os.Remove(clip)
 	if out, err := sys.RunFor(40*time.Second, "ffmpeg", "-hide_banner", "-loglevel", "error", "-f", "lavfi", "-i", "testsrc2=duration=2:size=1280x720:rate=30",
 		"-c:v", "libx264", "-pix_fmt", "yuv420p", "-y", clip); err != nil {
-		// Nothing to decode with: no ffmpeg, or it can't make a clip
+		// Nothing to decode with, as there is no ffmpeg, or it can't make a clip
 		_ = out
 		return nil
 	}
@@ -400,9 +400,9 @@ func lastLine(text string) string {
 	return strings.TrimSpace(lines[len(lines)-1])
 }
 
-// How the temperature test runs: a warm machine cools first, then every core works until a
-// fan is seen starting or the time is up, and the sensors are watched a little longer as it
-// cools. The load ends early at a temperature well under where the hardware protects itself.
+// How the temperature test runs. A warm machine cools first, then every core works until a fan is
+// seen starting or the time is up, and the sensors are watched a little longer as it cools. The
+// load ends early at a temperature well under where the hardware protects itself.
 var (
 	CoolFirst = 60 * time.Second
 	MaxLoad   = 120 * time.Second
@@ -451,8 +451,8 @@ type Heat struct {
 	Samples []Sample
 	// FanRest and FanPeak are the fan's speed before the load and its highest under it.
 	FanRest, FanPeak int64
-	// Kicked is set when the temperature fell while the processor went on working at the same
-	// rate: more heat was being carried off, which is a fan starting.
+	// Kicked is set when the temperature fell while the processor went on working at the same rate.
+	// More heat was being carried off, which is a fan starting.
 	Kicked *Kick
 	// Slowest is the lowest rate of work under load, as a share of the first seconds.
 	Slowest float64
@@ -530,8 +530,8 @@ func near(sys machine.System, limits map[string]float64) bool {
 	return false
 }
 
-// Warming is a temperature test under way. The app steps it once a second and draws what it
-// reads; Warm runs it through by itself.
+// Warming is a temperature test under way. The app steps it once a second and draws what it reads,
+// and Warm runs it through by itself.
 type Warming struct {
 	sys   machine.System
 	heat  Heat
@@ -571,9 +571,9 @@ func StartWarming(sys machine.System, dir string) *Warming {
 	return w
 }
 
-// labour keeps one core as busy as it gets: eight streams of integer arithmetic and eight of
-// multiply-and-add side by side, with a little memory traffic, so every part of the core has
-// work in every cycle. On the Yoga Slim 7x this draws a quarter more power than hashing does.
+// labour keeps one core as busy as it gets, with eight streams of integer arithmetic and eight of
+// multiply-and-add side by side, and a little memory traffic, so every part of the core has work in
+// every cycle. On the Yoga Slim 7x this draws a quarter more power than hashing does.
 func (w *Warming) labour() {
 	var x [8]uint64
 	var f [8]float64
@@ -625,7 +625,7 @@ func (w *Warming) labour() {
 	}
 }
 
-// The page that keeps the GPU busy: a shader with a long loop over a large canvas, drawn as
+// The page that keeps the GPU busy. It has a shader with a long loop over a large canvas, drawn as
 // often as the browser gets to it.
 const gpuPage = `<!doctype html><meta charset=utf-8><title>hw-test load</title><canvas id=c width=2048 height=2048></canvas><script>
 const gl=document.getElementById("c").getContext("webgl2")||document.getElementById("c").getContext("webgl");
@@ -680,7 +680,7 @@ func watts(sys machine.System) float64 {
 	return 0
 }
 
-// Step takes one reading under load and says whether the load is over: a fan was seen
+// Step takes one reading under load and says whether the load is over, which is when a fan was seen
 // starting, the time is up, or the machine got hot enough to stop at.
 func (w *Warming) Step() (Sample, bool) {
 	now := time.Now()
@@ -698,7 +698,7 @@ func (w *Warming) Step() (Sample, bool) {
 		sample.Rate = rate / w.baseline
 	}
 	w.heat.Samples = append(w.heat.Samples, sample)
-	// One slow second is something else wanting the processor; five in a row is it being held back
+	// One slow second is something else wanting the processor, and five in a row is it being held back
 	if count := len(w.heat.Samples); count >= 8 {
 		w.heat.Slowest = min(w.heat.Slowest, mean(w.heat.Samples, count-5, count, func(s Sample) float64 { return s.Rate }))
 	}
@@ -731,10 +731,10 @@ func mean(samples []Sample, from, to int, of func(Sample) float64) float64 {
 	return total / float64(to-from)
 }
 
-// kicked looks for a fan starting: after the peak the temperature has stayed clearly lower
-// for a few seconds, while the processor did as much work as it did around the peak. Heat
-// was going in as before, so more of it was being carried off. A processor that was slowed
-// down instead cools the same way, and isn't counted.
+// kicked looks for a fan starting. After the peak the temperature has stayed clearly lower for a
+// few seconds, while the processor did as much work as it did around the peak. Heat was going in as
+// before, so more of it was being carried off. A processor that was slowed down instead cools the
+// same way, and isn't counted.
 func (w *Warming) kicked() *Kick {
 	samples := w.heat.Samples
 	count := len(samples)
@@ -866,7 +866,7 @@ func (h Heat) Report() []report.Result {
 // a fan starting. Whether the computer has a fan at all is then for its owner to say.
 const FanUnseen = "The temperatures can be read and answer to load. No fan was seen starting, and there is no sensor for its speed."
 
-// Test is one of the tests, as the app offers it: its name, what it says while it runs and
+// Test is one of the tests, as the app offers it, with its name, what it says while it runs and
 // what it measures.
 type Test struct {
 	Name string
@@ -882,9 +882,9 @@ type Test struct {
 	Nothing string
 }
 
-// Tests lists the tests this machine can run, in the order to run them: each needs the
-// program it measures with, and the wireless one a radio. The temperature test comes last,
-// so the heat it makes doesn't slow the others.
+// Tests lists the tests this machine can run, in the order to run them. Each needs the program it
+// measures with, and the wireless one a radio. The temperature test comes last, so the heat it
+// makes doesn't slow the others.
 func Tests(sys machine.System, wifi, bluetooth, ethernet, dir string) []Test {
 	var tests []Test
 	if sys.Has("vulkaninfo") {

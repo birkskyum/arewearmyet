@@ -30,7 +30,7 @@ func TestTheBlockForAPullRequestShowsEachCheckBeforeAndAfter(t *testing.T) {
 		"| ✅ Speakers | partly, left heard at -31 dB, right not heard (seen by the owner) | works, left heard at -31 dB, right heard at -32 dB (measured by the test) |",
 		// What got worse is shown as plainly as what got better
 		"| ❌ Headphone jack | works (seen by the owner) | broken, no sound / after the change (seen by the owner) |",
-		// What was never tested before isn't a row: it says nothing of what the change did
+		// What was never tested before isn't a row, as it says nothing of what the change did
 		"The change has nothing to compare for built-in microphones (works), tested for the first time after it.",
 		"Testing again found wi-fi still working.",
 		"https://arewearmyet.com/models/lenovo-yoga-slim-7x-14q8x9",
@@ -42,7 +42,7 @@ func TestTheBlockForAPullRequestShowsEachCheckBeforeAndAfter(t *testing.T) {
 	if strings.Contains(block, "mesa") || strings.Contains(block, "| Wi-Fi |") || strings.Contains(block, "| Built-in microphones |") {
 		t.Errorf("the block lists what didn't change:\n%s", block)
 	}
-	// A check that works on both sides gets a row when it is asked for: a change can move a
+	// A check that works on both sides gets a row when it is asked for, since a change can move a
 	// number without moving the state
 	if block = VerifyBlock(run, report.Model{}, snapshot, changes, false, "wifi"); !strings.Contains(block, "| Wi-Fi | works, connected (measured by the test) | works, connected (measured by the test) |") || strings.Contains(block, "still working") {
 		t.Errorf("an asked-for row isn't shown:\n%s", block)
@@ -52,8 +52,8 @@ func TestTheBlockForAPullRequestShowsEachCheckBeforeAndAfter(t *testing.T) {
 	if block = VerifyBlock(run, report.Model{}, snapshot, changes, false); !strings.Contains(block, "the same package versions on both sides, so the change was tried outside the packages") {
 		t.Errorf("unchanged versions aren't said:\n%s", block)
 	}
-	// Started from the test image, it says so: that is the change no package version shows
-	// The test image was running before the change too: the device tree is not what differs
+	// Started from the test image, it says so. That is the change no package version shows
+	// The test image was running before the change too, so the device tree is not what differs
 	onImage := snapshot
 	onImage.TestImage = true
 	if block = VerifyBlock(run, report.Model{}, onImage, changes, true); !strings.Contains(block, "Both sides ran the same test boot image") || strings.Contains(block, "After, the computer was started from a test boot image") {

@@ -47,7 +47,7 @@ type Result struct {
 	Look string `json:"look,omitempty"`
 }
 
-// Run is what's sent: the machine, its software and the results. It holds no serial
+// Run is what's sent, which is the machine, its software and the results. It holds no serial
 // numbers, addresses or names.
 type Run struct {
 	Mode       string            `json:"mode"`
@@ -258,9 +258,9 @@ type Finding struct {
 	Version string `json:"version"`
 	Checked string `json:"checked"`
 	Source  string `json:"source"`
-	// Basis is what the finding rests on: omarchy (or empty, the same), other-distro,
-	// tree-author or maker-spec. Where says where it was seen, and Quote is the passage of the
-	// source it rests on.
+	// Basis is what the finding rests on, one of omarchy (or empty, the same), other-distro,
+	// tree-author or maker-spec. Where says where it was seen, and Quote is the passage of the source
+	// it rests on.
 	Basis string `json:"basis"`
 	Where string `json:"where"`
 	Quote string `json:"quote"`
@@ -301,9 +301,9 @@ func Findings(api, model string) (map[string]Finding, error) {
 	return found, nil
 }
 
-// Match asks the site which model a machine is, by its hardware IDs, its device tree's name
-// and its product strings. It gives up after a few seconds: the answer is only for showing
-// the owner their model's page, and nothing depends on it.
+// Match asks the site which model a machine is, by its hardware IDs, its device tree's name and its
+// product strings. It gives up after a few seconds, as the answer is only for showing the owner
+// their model's page, and nothing depends on it.
 func Match(api string, run *Run) (Model, error) {
 	query := url.Values{}
 	for _, chid := range run.Chids {
@@ -330,7 +330,8 @@ func Match(api string, run *Run) (Model, error) {
 	return model, nil
 }
 
-// Check is what the site says about one check: what working means, and where to look when it doesn't.
+// Check is what the site says about one check, which is what working means, and where to look when
+// it doesn't.
 type Check struct {
 	ID     string `json:"id"`
 	Title  string `json:"title"`

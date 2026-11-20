@@ -1,7 +1,7 @@
-// Package machine reads the computer the app runs on: files under /sys, /proc and /etc, and the
-// output of a few read-only commands. Tests point it at a copy of another machine's files
-// (test/probe/fixtures in the repository, made with scripts/probe-fixture.sh), where the
-// commands are answered from the same copy.
+// Package machine reads the computer the app runs on, through files under /sys, /proc and /etc, and
+// the output of a few read-only commands. Tests point it at a copy of another machine's files
+// (test/probe/fixtures in the repository, made with scripts/probe-fixture.sh), where the commands
+// are answered from the same copy.
 package machine
 
 import (
@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-// System is one machine: the real one when Root is empty, or a fixture folder.
+// System is one machine, the real one when Root is empty, or a fixture folder.
 type System struct {
 	// Root is put in front of every path read.
 	Root string
@@ -79,7 +79,7 @@ func (s System) Bytes(p string) []byte {
 		}
 		data = got.data
 	case <-time.After(readLimit):
-		// The read stays stuck in its own goroutine; the check goes on without the value
+		// The read stays stuck in its own goroutine, and the check goes on without the value
 		return nil
 	}
 	if len(data) > 64*1024 {
@@ -227,7 +227,7 @@ func (s System) Has(name string) bool {
 	return err == nil
 }
 
-// Fixture is a machine copied by scripts/probe-fixture.sh: its files under root, and its
+// Fixture is a machine copied by scripts/probe-fixture.sh, with its files under root, and its
 // commands answered from root/cmd and root/udev.
 func Fixture(root string) System {
 	read := func(parts ...string) (string, error) {

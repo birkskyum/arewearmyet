@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Write a recipe per Snapdragon machine from arewearmyet's firmware table: each recipe downloads
+# Write a recipe per Snapdragon machine from arewearmyet's firmware table. Each recipe downloads
 # the OEM's own Windows driver package at build time, unpacks it without running it, installs the
 # firmware files the machine's device tree asks for and checks each against its SHA-256.
 #
@@ -7,7 +7,7 @@
 # DIR is the pkgbuilds/ folder of an omacom/omarchy-pkgs checkout. The table defaults to
 # https://arewearmyet.com/firmware-sources.json, which serves data/firmware-sources.yaml.
 # --linux-firmware is the package database whose linux-firmware-qcom the recipes leave files to,
-# by default Omarchy's edge mirror of Arch Linux ARM's core; "none" leaves nothing out.
+# by default Omarchy's edge mirror of Arch Linux ARM's core. "none" leaves nothing out.
 # Naming recipes limits the run to them.
 import argparse, io, json, os, re, sys, tarfile, textwrap, urllib.request
 
@@ -61,7 +61,7 @@ WUDRIVERS_URL = "https://github.com/birkskyum/wudrivers"
 SCRIPT_URL = "https://github.com/birkskyum/arewearmyet/blob/main/scripts/snapdragon-firmware-recipes.py"
 
 # Recipe name -> the machines it is for, and the firmware folders their device trees load from.
-# Left out: glymur/ASUSTeK/UX3607OA, which asus-zenbook-a16-firmware ships, and
+# Left out are glymur/ASUSTeK/UX3607OA, which asus-zenbook-a16-firmware ships, and
 # x1e80100/LENOVO/21N1, whose ThinkPad T14s Gen 6 set linux-firmware already ships.
 RECIPES = {
     "acer-spin-7-firmware": ("Acer Spin 7 SP714-61NA", ["qcom/sc8180xp/Acer/SP714-61NA"]),
@@ -276,7 +276,7 @@ def provide(path):
     return "qcom-firmware-" + path.removeprefix("qcom/").replace("/", "-").lower()
 
 
-# The README.package.md the recipe installs: where each file comes from and when the package can go.
+# The README.package.md the recipe installs, which says where each file comes from and when the package can go.
 def readme(name, who, paths, what, makers, chosen, wanted, provided):
     by = human_list(makers)
     wu = all(windows_update(packages[p]) for p in chosen)
@@ -356,7 +356,7 @@ def recipe(name, who, paths):
         print(f"{name}: linux-firmware ships every file, so the recipe can go")
         return None
 
-    # The fewest OEM downloads that hold every file: the one with the most of the rest first,
+    # The fewest OEM downloads that hold every file, picked with the one that has the most of the rest first,
     # the smaller on a tie.
     remaining, chosen = list(range(len(wanted))), []
     while remaining:
@@ -376,7 +376,7 @@ def recipe(name, who, paths):
         if "!xz@" in w["src"][1]:
             raise SystemExit(f"{name}: {w['dest']} is an XZ stream; the generator does not unpack those")
 
-    # The audio DSP is the image signed for the board; the others can be Qualcomm's generic ones from
+    # The audio DSP is the image signed for the board. The others can be Qualcomm's generic ones from
     # another maker's download, so the signer and the recipe's page come from the audio DSP's package.
     signed = [w["src"][0] for w in wanted if re.match(r"(qcadsp\d+\.mbn|adsp_dtbs\.elf)$", os.path.basename(w["dest"]))]
     signers = [p for p in chosen if p in signed] or chosen

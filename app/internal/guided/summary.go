@@ -63,13 +63,13 @@ type summary struct {
 	handed string
 	// asked is the last screen's question, put back after a part was picked for the agent.
 	asked string
-	// once ends the test here without a screen: the steps were opened for the owner by an
-	// agent, which gets their result.
+	// once ends the test here without a screen. The steps were opened for the owner by an agent, which
+	// gets their result.
 	once bool
 }
 
-// failing lists the checks this round found partly working or broken, or working with
-// something worth a second look: what an agent can be asked to look into.
+// failing lists the checks this round found partly working or broken, or working with something
+// worth a second look, which is what an agent can be asked to look into.
 func (s *summary) failing() []string {
 	var failing []string
 	for _, result := range s.run.Results {
@@ -80,9 +80,9 @@ func (s *summary) failing() []string {
 	return failing
 }
 
-// agentOption is the last screen's offer to hand a part to the owner's agent. An agent takes
-// one part at a time, so a part that can't be fixed doesn't hold up the others: with several
-// to choose from, the owner picks one, and the offer is there again for the next.
+// agentOption is the last screen's offer to hand a part to the owner's agent. An agent takes one
+// part at a time, so a part that can't be fixed doesn't hold up the others. With several to choose
+// from, the owner picks one, and the offer is there again for the next.
 func (s *summary) agentOption() string {
 	switch failing := s.failing(); len(failing) {
 	case 0:
@@ -129,8 +129,8 @@ func (s *summary) start() tea.Cmd {
 	return nil
 }
 
-// end puts up the last choice of a round: back to the start, which is where the cursor
-// rests, the page when something was sent, or leaving.
+// end puts up the last choice of a round, which is back to the start, where the cursor rests, the
+// page when something was sent, or leaving.
 func (s *summary) end(question string) {
 	s.phase, s.asked = "end", question
 	options := []string{"Back to the start"}
@@ -160,7 +160,7 @@ func (s *summary) attempt() tea.Cmd {
 	}
 }
 
-// page is where the run shows: the model's page, or for a machine the board doesn't know,
+// page is where the run shows, which is the model's page, or for a machine the board doesn't know,
 // the form that adds it.
 func (s *summary) page() string {
 	if s.sent.Page != "" {
@@ -228,7 +228,7 @@ func (s *summary) update(msg tea.Msg) tea.Cmd {
 			case "Quit":
 				s.over = true
 			case s.agentOption():
-				// The choice stays up: the agent works in a window of its own
+				// The choice stays up, as the agent works in a window of its own
 				failing := s.failing()
 				if len(failing) == 1 {
 					return s.hand(failing[0])

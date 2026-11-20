@@ -26,7 +26,7 @@ func TestALogIsCleanedOfWhatNamesTheOwnerLineByLine(t *testing.T) {
 			t.Errorf("%q is still in the log:\n%s", personal, clean)
 		}
 	}
-	// What a reader needs stays: the lines, the versions, what happened
+	// What a reader needs stays, which is the lines, the versions and what happened
 	for _, kept := range []string{"Linux version 7.3.0-59-omarchy", "wlan0: authenticate with xx:xx:xx:xx:xx:xx", "SRC=[removed] DST=[removed] LEN=73", "Hostname set to <this-computer>", "/home/user/.local/bin/tool", "Chromium 153.0.8010.36, alsa-ucm-conf 1.2.16.1, firmware 172.4.0.2 kept"} {
 		if !strings.Contains(clean, kept) {
 			t.Errorf("the log lost %q:\n%s", kept, clean)

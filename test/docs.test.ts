@@ -24,7 +24,7 @@ test('the agent guide names no route the list lacks', () => {
 });
 
 test('every listed route outside the firmware drop is answered by the worker', async () => {
-  // Enough of an environment for a route to refuse the request by itself: a route that isn't
+  // Enough of an environment for a route to refuse the request by itself. A route that isn't
   // served is answered with where the API is described, before it touches any of this
   const none = { first: async () => null, all: async () => ({ results: [] }), run: async () => ({ meta: { changes: 0 } }) };
   const env = {

@@ -1,4 +1,4 @@
-// Turns models into plain rows for the table island: every label, hover text and sort rank is
+// Turns models into plain rows for the table island. Every label, hover text and sort rank is
 // worked out here at build time, so the browser only receives what it shows
 import status from '../data/status.json';
 import { partCells, type Dot } from './parts';
@@ -41,7 +41,7 @@ const VARIANT: Record<string, { tone: TableRow['variants'][number]['tone']; stat
   none: { tone: 'wanted', state: 'needs a tree' },
 };
 
-// A variant that boots says so, like the model's cell does: the channel is no verdict on how well
+// A variant that boots says so, like the model's cell does. The channel is no verdict on how well
 const variantState = (v: Model['variants'][number]) => VARIANT[v.outcome];
 
 const modelRow = (model: Model, cells: Record<string, CellData>): TableRow => ({

@@ -1994,7 +1994,7 @@ models:
       - https://www.cnx-software.com/2022/10/25/600-windows-dev-kit-2023-is-powered-by-qualcomm-snapdragon-8cx-gen-3-processor/
 
 
-  # Snapdragon 7c, 8cx, 835 and 850: Windows on Arm machines from before Snapdragon X
+  # Snapdragon 7c, 8cx, 835 and 850, the Windows on Arm machines from before Snapdragon X
   - id: acer-aspire-1-a114-61
     vendor: "Acer"
     name: "Aspire 1"
@@ -2620,10 +2620,10 @@ nvidia:
       - https://www.msi.com/news/detail/MSI-Unveils-EdgeMesa-N-AI--Mini-PC-Powered-by-NVIDIA-RTX-Spark-at-COMPUTEX-2026-148987
       - https://notebookcheck.net/MSI-releases-new-compact-desktop-PC-with-Nvidia-RTX-Spark-and-6-144-CUDA-cores.1447829.0.html
 
-# Source entries the board leaves out on purpose: Qualcomm's reference boards.
-# Also left out: Qualcomm's internal reference designs and industrial boards,
-# the cancelled TUXEDO Elite 14, models announced but never confirmed shipping
-# (Tecno Megabook S14, Geekom QS1, Zenbook A16 UX3607QA),
+# Source entries the board leaves out on purpose, which are Qualcomm's reference boards.
+# The board also leaves out Qualcomm's internal reference designs and industrial boards,
+# the cancelled TUXEDO Elite 14 and models announced but never confirmed shipping
+# (Tecno Megabook S14, Geekom QS1, Zenbook A16 UX3607QA).
 
 ignore:
   ids: ["glymur-crd.json", "x1e80100-crd.json", "sc8280xp-radxa-dragon-q8b.json"]

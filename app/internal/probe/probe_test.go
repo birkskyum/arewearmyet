@@ -268,8 +268,8 @@ func TestOddValuesInSysDoNotStopTheCheck(t *testing.T) {
 	expect(t, run, map[string]string{"display": report.Works, "wifi": report.Works, "suspend": ""})
 }
 
-// nvidia turns the copied machine into one of NVIDIA's ARM PCs: started through ACPI, so with
-// no device tree and none of Qualcomm's devices, and with NVIDIA's GPU on the PCI bus.
+// nvidia turns the copied machine into one of NVIDIA's ARM PCs, which is started through ACPI, so
+// with no device tree and none of Qualcomm's devices, and with NVIDIA's GPU on the PCI bus.
 func nvidia(t *testing.T, root, device, driver string) {
 	t.Helper()
 	for _, gone := range []string{"proc/device-tree", "sys/bus/platform/drivers/adreno", "sys/class/video4linux", "sys/class/remoteproc"} {

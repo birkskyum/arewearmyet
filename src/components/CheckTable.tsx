@@ -1,4 +1,4 @@
-// A model's checks, grouped, from two sources kept apart: the notes written by hand in
+// A model's checks, grouped, from two sources kept apart, which are the notes written by hand in
 // data/findings.yaml, and what hw-test measured on people's machines. The second is what owners'
 // runs say, which comes live from /api/models/<id> so a new run shows without a rebuild.
 import { createSignal, For, onMount, Show } from 'solid-js';
@@ -53,7 +53,7 @@ function Pill(props: { state: State; dim?: boolean; prefix?: string; tip?: strin
 }
 
 export default function CheckTable(props: { model: string; groups: { id: string; title: string }[]; rows: Row[] }) {
-  // Fetched in the browser only: the page is built ahead of time, and owners' runs change after that
+  // Fetched in the browser only, since the page is built ahead of time and owners' runs change after that
   const [live, setLive] = createSignal<Live | null>(null);
   const [state, setState] = createSignal<'loading' | 'done' | 'failed'>('loading');
   onMount(async () => {
@@ -126,7 +126,7 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                     <summary class="grid cursor-pointer list-none grid-cols-[1fr_auto] items-start gap-x-4 gap-y-1 px-4 py-3 hover:bg-zinc-800/50 sm:grid-cols-[14rem_1fr_auto] [&::-webkit-details-marker]:hidden">
                       <span class="font-medium text-zinc-100">{row.title}</span>
                       <span class="col-span-2 row-start-2 text-sm text-zinc-400 sm:col-span-1 sm:row-start-auto">
-                        {/* The two sources, each named: what someone wrote down, and what hw-test found */}
+                        {/* The two sources, each named, are what someone wrote down and what hw-test found */}
                         <Show when={status(row)}>
                           {(f) => (
                             <span class="block">

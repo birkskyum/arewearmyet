@@ -1,5 +1,5 @@
 ---
-// How far a family's models are past booting, part by part: one cell per model, coloured by what
+// How far a family's models are past booting, part by part, with one cell per model, coloured by what
 // is known about the part on it, each linking to the model in the family's hardware view
 import status from '../data/status.json';
 import { PARTS, modelParts } from '../lib/parts';
@@ -33,7 +33,7 @@ const rows = PARTS.map((part, i) => {
   const works = count('omarchy-works');
   const partly = count('omarchy-partial');
   const broken = count('omarchy-broken');
-  // The counter is the bar in numbers: the models where the part works, of those that have it
+  // The counter is the bar in numbers, the models where the part works out of those that have it
   const tested = works + partly + broken;
   const tip = tested ? `Tested on Omarchy on ${tested} so far. It works on ${works}, partly on ${partly} and is broken on ${broken}.` : 'Nobody has tested it on Omarchy yet.';
   return { part, cells, works, tip };

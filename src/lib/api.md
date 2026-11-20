@@ -65,7 +65,7 @@ The list of routes, with a line on each and the address of this page.
   "name": "Are we ARM yet?",
   "docs": "https://arewearmyet.com/docs/api",
   "guide": "https://arewearmyet.com/agents.md",
-  "routes": [{ "method": "GET", "path": "/api/checks", "does": "Every check: ..." }]
+  "routes": [{ "method": "GET", "path": "/api/checks", "does": "Every check, with ..." }]
 }
 ```
 

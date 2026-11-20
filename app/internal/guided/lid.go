@@ -55,7 +55,7 @@ func (l *lid) state() (down, ok bool) {
 	return out == "b true", out == "b true" || out == "b false"
 }
 
-// logged reads what the system wrote down about the lid since the test began: whether it
+// logged reads what the system wrote down about the lid since the test began, which is whether it
 // closed, and whether it opened after that.
 func (l *lid) logged() (closed, opened, ok bool) {
 	out, err := l.sys.RunFor(5*time.Second, "journalctl", "-b", "-u", "systemd-logind", "--no-pager", "-o", "cat", "--since", fmt.Sprintf("@%d", l.began.Unix()))

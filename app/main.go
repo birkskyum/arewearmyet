@@ -3,15 +3,15 @@
 //	hw-test            the guided test, which is the quick check, then keyboard, sound, camera and sleep with you
 //	hw-test quick      the quick check alone, read-only, a few seconds, no questions
 //	hw-test sound      one part of the guided test alone, reporting only that part
-//	hw-test manual     the tests done with you: keyboard, touchpad, camera, ports, sleep
+//	hw-test manual     the tests done with you (keyboard, touchpad, camera, ports, sleep)
 //	hw-test fix        hand what doesn't work to the owner's agent, with a brief of what was measured
-//	hw-test auto       the tests that need nobody: graphics, browser, wireless, video, temperatures, sound
+//	hw-test auto       the tests that need nobody (graphics, browser, wireless, video, temperatures, sound)
 //
-// Both show the results and send them to the model's page. What's sent: the maker, model, SKU,
+// Both show the results and send them to the model's page. What's sent is the maker, model, SKU,
 // board and BIOS version, the hardware IDs made from those, the kernel, OS and a few package
-// versions, and the results. No serial numbers, addresses, user or host names, and no files:
-// the guided test's microphone recording and camera picture stay on the computer and are deleted
-// when it ends.
+// versions, and the results. No serial numbers, addresses, user or host names, and no files. The
+// guided test's microphone recording and camera picture stay on the computer and are deleted when
+// it ends.
 package main
 
 import (
@@ -55,7 +55,7 @@ func main() {
 		}
 	}()
 
-	// The words before the options: a command, or the steps to run alone
+	// The words before the options are a command, or the steps to run alone
 	args := os.Args[1:]
 	command := "guided"
 	var only, topics []string
@@ -64,7 +64,7 @@ func main() {
 		args = args[1:]
 		switch {
 		case command == "brief" || command == "fix" || command == "verify" || command == "resume" || command == "tree" || command == "kernel" || command == "note" || command == "ask":
-			// What follows these two names what to hand over: checks, or parts of the test
+			// What follows these two names what to hand over, as checks or parts of the test
 			topics = append(topics, word)
 		case guided.KnownStep(word):
 			only = append(only, word)
@@ -147,7 +147,8 @@ func main() {
 	case "status":
 		// The latest result of every check on this machine, without running anything
 		if *jsonOnly {
-			// The same as data, for an agent: every check's latest result, with when and on which kernel
+			// The same as data, for an agent, with every check's latest result, when it was and on which
+			// kernel
 			data, _ := json.MarshalIndent(report.Local(), "", "  ")
 			fmt.Println(string(data))
 			return
@@ -201,16 +202,17 @@ func main() {
 		os.Exit(tell(run, *api, *check, *state, *how, *noteText, *evidence, !*noSend && !*jsonOnly))
 	}
 
-	// Before and after a change: what a pull request changed on this machine, as measured
+	// Before and after a change, which is what a pull request changed on this machine, as measured
 	if command == "verify" {
 		os.Exit(verify(run, topics, *api, *pr, *title, *check, *again, !*noSend && !*jsonOnly))
 	}
 
-	// A note: what fits no check, written down where other owners' agents read it
+	// A note is what fits no check, written down where other owners' agents read it
 	if command == "note" {
 		args := noteArgs{api: *api, kind: *kind, title: *title, check: *check, body: *body, bodyFile: *bodyFile, reply: *reply, solved: *solved,
 			logs: logs, links: links, send: !*noSend && !*jsonOnly}
-		// At a terminal, what wasn't given is asked for: hw-test note, or hw-test note wifi, is the whole command
+		// At a terminal, what wasn't given is asked for, so hw-test note, or hw-test note wifi, is the
+		// whole command
 		if args.solved == "" && args.body == "" && args.bodyFile == "" && guided.Interactive() {
 			checks, _ := report.Checks(*api)
 			asked, written := askNote(terminal, os.Stderr, checks, args, strings.Join(topics, " "))
@@ -227,14 +229,14 @@ func main() {
 		os.Exit(writeNote(run, args))
 	}
 
-	// The brief for an agent: printed, or written down and handed to the owner's agent
+	// The brief for an agent, printed, or written down and handed to the owner's agent
 	if command == "brief" || command == "fix" {
 		checks, unknown := guided.ChecksFor(topics)
 		if len(unknown) > 0 {
 			fmt.Fprintf(os.Stderr, "hw-test: %s is neither a check nor a part of the test. hw-test status lists the checks.\n", strings.Join(unknown, ", "))
 			os.Exit(2)
 		}
-		// Results from before stand; what was never tested here is as the quick check found it now
+		// Results from before stand, and what was never tested here is as the quick check found it now
 		kept := report.Local()
 		for _, result := range run.Results {
 			if _, had := kept[result.Check]; !had {
@@ -244,7 +246,7 @@ func main() {
 		known, _ := report.Checks(*api)
 		matched, _ := report.Match(*api, run)
 		// An agent takes one part at a time, so one that can't be fixed doesn't hold up the others.
-		// Nothing is tested again for this: it goes by the results already on this computer
+		// Nothing is tested again for this. It goes by the results already on this computer
 		if candidates := guided.Failing(kept); command == "fix" && len(checks) == 0 && len(candidates) > 1 && guided.Interactive() {
 			picked, ok := pickOne(terminal, os.Stderr, guided.Summed(kept, candidates))
 			if !ok {
@@ -282,7 +284,7 @@ func main() {
 		}
 		say := func(line string) { fmt.Fprintln(os.Stderr, line) }
 		guided.Unattended(run, deep.Tests(machine.Real(), facts.Wifi, facts.Bluetooth, facts.Ethernet, dir), only, say)
-		// The sound test plays tones out loud, so it runs here only on the owner's yes: their
+		// The sound test plays tones out loud, so it runs here only on the owner's yes, which is their
 		// handing the speakers or the microphones to an agent
 		if guided.WantsSound(only) && (*play || guided.MaySound(time.Now())) && facts.SoundCard != "" && tools.Have("pw-play", "pw-record") {
 			guided.Heard(run, dir, say)
@@ -306,9 +308,9 @@ func main() {
 		}
 		return
 	}
-	// The guided test needs someone at the keyboard; without a terminal it is the quick check
+	// The guided test needs someone at the keyboard, and without a terminal it is the quick check
 	if command == "guided" && guided.Interactive() {
-		// The quick results are kept aside: if the guided test can't run here, they are still sent
+		// The quick results are kept aside, so they are still sent if the guided test can't run here
 		measured := append([]report.Result(nil), run.Results...)
 		err := guided.Run(run, facts, guided.Options{API: *api, Send: !*noSend, Only: only, Version: version, Once: *once})
 		// The steps' results go back to whoever opened them for the owner
@@ -373,7 +375,7 @@ func announce() {
 	}
 }
 
-// tell sends one result that no test measured: what the owner saw, or what the agent read.
+// tell sends one result that no test measured, either what the owner saw or what the agent read.
 func tell(run *report.Run, api, check, state, how, note, evidence string, send bool) int {
 	fail := func(text string) int {
 		fmt.Fprintln(os.Stderr, "hw-test: "+text)
@@ -382,8 +384,8 @@ func tell(run *report.Run, api, check, state, how, note, evidence string, send b
 	if checks, unknown := guided.ChecksFor([]string{check}); check == "" || len(unknown) > 0 || len(checks) != 1 || checks[0] != check {
 		return fail("report needs --check with a check's id, like suspend. hw-test status lists them.")
 	}
-	// absent is for a part the computer turns out not to have, like a headphone jack on a
-	// laptop with only USB-C ports: it takes back a "broken" that was recorded for it
+	// absent is for a part the computer turns out not to have, like a headphone jack on a laptop with
+	// only USB-C ports. It takes back a "broken" that was recorded for it
 	if state != report.Works && state != report.Partial && state != report.Broken && state != report.Absent {
 		return fail("report needs --state works, partial, broken or absent (the computer doesn't have the part).")
 	}
@@ -398,8 +400,8 @@ func tell(run *report.Run, api, check, state, how, note, evidence string, send b
 			run.Model = matched.ID
 		}
 	}
-	// This result alone: the site keeps each check's newest result per machine, so the
-	// others this machine has sent stand as they are
+	// This result alone. The site keeps each check's newest result per machine, so the others this
+	// machine has sent stand as they are
 	run.Mode = "agent"
 	run.Results = nil
 	run.Quick = nil
@@ -419,9 +421,9 @@ func tell(run *report.Run, api, check, state, how, note, evidence string, send b
 	return 0
 }
 
-// asOwner runs a step that needs the owner's password: written out as a script to read, and
-// run with sudo where there is a terminal to ask in. Without one, as with an agent, the same
-// step is opened for the owner in a window of their own, and waited for.
+// asOwner runs a step that needs the owner's password. It is written out as a script to read, and
+// run with sudo where there is a terminal to ask in. Without one, as with an agent, the same step
+// is opened for the owner in a window of their own, and waited for.
 func asOwner(dir, command, step, file, script, what string) int {
 	fail := func(err error) int {
 		fmt.Fprintln(os.Stderr, "hw-test:", err)
@@ -432,8 +434,8 @@ func asOwner(dir, command, step, file, script, what string) int {
 		return fail(err)
 	}
 	if !guided.Interactive() {
-		// No terminal here to ask for the password in, as with an agent: the step is opened
-		// for the owner in a window of their own, and waited for
+		// No terminal here to ask for the password in, as with an agent, so the step is opened for the
+		// owner in a window of their own, and waited for
 		self, _ := os.Executable()
 		quote := func(text string) string { return "'" + strings.ReplaceAll(text, "'", `'\''`) + "'" }
 		answered := filepath.Join(dir, "."+file+".done")
@@ -466,7 +468,7 @@ func asOwner(dir, command, step, file, script, what string) int {
 	return 0
 }
 
-// deviceTree is the way to try a changed device tree: the sources, a build, a boot entry of
+// deviceTree is the way to try a changed device tree, with the sources, a build, a boot entry of
 // its own, and taking it away again.
 func deviceTree(words []string, body string) int {
 	system := tree.Real()
@@ -588,9 +590,9 @@ func deviceTree(words []string, body string) int {
 	return 2
 }
 
-// kernelChange is the way to try a change in one kernel driver: Omarchy's kernel source as
-// the running kernel was built from it, one driver folder built against the running kernel,
-// the result loaded until the next restart, and the change written as a patch.
+// kernelChange is the way to try a change in one kernel driver. It takes Omarchy's kernel source as
+// the running kernel was built from it, one driver folder built against the running kernel, the
+// result loaded until the next restart, and the change written as a patch.
 func kernelChange(words []string, body string) int {
 	system := kernel.Real()
 	dir, err := os.Getwd()
@@ -720,12 +722,12 @@ func comeBack(prompt string, cancel, show, atLogin bool) int {
 		case resume.Open:
 			// Used up before the agent opens, so nothing can make it open twice
 			places.Clear()
-			// The launcher is waited for: this service ends here, and would take a launcher that is
+			// The launcher is waited for, since this service ends here and would take a launcher that is
 			// still at it down with it. The owner is told how it went either way
 			said := []string{"Your agent is back", "It goes on with the hardware work from before the restart. hw-test resume left this."}
-			// In the conversation the word was left from, where its agent said which that is:
-			// everything it had learnt is still there. Otherwise, or if that can't be opened, a
-			// new one, which reads the notes
+			// In the conversation the word was left from, where its agent said which that is, since
+			// everything it had learnt is still there. Otherwise, or if that can't be opened, a new one,
+			// which reads the notes
 			err := tools.ErrNoSession
 			for _, held := range word.Sessions {
 				if err = tools.Continue(tools.Session{Kind: held.Kind, ID: held.ID}, word.Dir, resume.Said(word)); err == nil {
@@ -761,7 +763,8 @@ func comeBack(prompt string, cancel, show, atLogin bool) int {
 		}
 	}
 	var sessions []resume.Held
-	// The thread hw-test started for this folder comes first: its agent isn't told which thread it is in
+	// The thread hw-test started for this folder comes first, as its agent isn't told which thread it
+	// is in
 	if kept, ok := report.ThreadFor(dir); ok {
 		sessions = append(sessions, resume.Held{Kind: kept.Kind, ID: kept.ID})
 	}
@@ -789,8 +792,8 @@ func update() int {
 		fmt.Fprintln(os.Stderr, "hw-test is installed through mise, which isn't on this system. The releases are at https://github.com/birkskyum/arewearmyet/releases")
 		return 1
 	}
-	// The version is asked for by its number: mise remembers what "latest" was for a while,
-	// and would answer with the release this already is
+	// The version is asked for by its number, since mise remembers what "latest" was for a while and
+	// would answer with the release this already is
 	wanted := report.NewestRelease()
 	switch {
 	case wanted == "":
@@ -832,7 +835,7 @@ func update() int {
 // verify takes the snapshot a change is measured against, or measures the change against it.
 func verify(run *report.Run, words []string, api, pr, what, rows string, again, send bool) int {
 	now := time.Now()
-	// verify before speakers: a snapshot for that part alone. Without a part it is the one
+	// verify before speakers takes a snapshot for that part alone. Without a part it is the one
 	// snapshot for whatever is being changed
 	step, part := "", ""
 	if len(words) == 1 || len(words) == 2 {
@@ -848,8 +851,8 @@ func verify(run *report.Run, words []string, api, pr, what, rows string, again, 
 	testImage := tree.Running("/proc/device-tree")
 	switch step {
 	case "before":
-		// A snapshot that is still being measured against is not written over: after a
-		// restart, a second one would hold the change already and show it as no change
+		// A snapshot that is still being measured against is not written over. After a restart, a second
+		// one would hold the change already and show it as no change
 		if standing, ok := report.LoadSnapshot(part); ok && !standing.Used && !again && len(standing.Results) > 0 {
 			fmt.Fprintf(os.Stderr, "hw-test: a snapshot from %s is there already, and no change has been recorded against it yet.\nIf you are in the middle of that change (after a restart, say), leave it, since %s measures against it.\nTo start on another change to the same part: %s --new\nTo work on another part, give its name, so each part has a snapshot of its own: hw-test verify before <part>\n", standing.When.Format("2 Jan 15:04"), named("hw-test verify after"), named("hw-test verify before"))
 			return 2
@@ -948,7 +951,7 @@ type noteArgs struct {
 	send                                                   bool
 }
 
-// attach reads a log by name and cleans it of what names the owner: the kernel's log of this
+// attach reads a log by name and cleans it of what names the owner. The log is the kernel's of this
 // boot or the one before, or a file.
 func attach(name string) (report.Log, error) {
 	sys := machine.Real()
@@ -987,8 +990,8 @@ func attach(name string) (report.Log, error) {
 	return report.Log{Name: logName, Text: clean}, nil
 }
 
-// owner gives the names a log could hold of its owner: the computer's, the account's, and the
-// words of their full name.
+// owner gives the names a log could hold of its owner, which are the computer's, the account's, and
+// the words of their full name.
 func owner() (host, account string, names []string) {
 	host, _ = os.Hostname()
 	account = os.Getenv("USER")
@@ -1001,8 +1004,8 @@ func owner() (host, account string, names []string) {
 	return host, account, names
 }
 
-// attached says in a line or two which logs go with a note and what was taken out of them.
-// Reading a log first is the owner's choice, with --json: nobody is shown one unasked.
+// attached says in a line or two which logs go with a note and what was taken out of them. Reading
+// a log first is the owner's choice, with --json, and nobody is shown one unasked.
 func attached(logs []report.Log) string {
 	var listed []string
 	for _, log := range logs {

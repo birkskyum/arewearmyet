@@ -45,7 +45,7 @@ func TestANewerReleaseIsNoticedAndAskedAboutAtMostTwiceADay(t *testing.T) {
 	if got := Newer("0.12.0", now); got != "0.12.1" || asked != 1 {
 		t.Fatalf("newer %q after asking %d times", got, asked)
 	}
-	// Again within the day: the answer is remembered, and nobody is asked
+	// Again within the day, the answer is remembered, and nobody is asked
 	if got := Newer("0.12.0", now.Add(time.Hour)); got != "0.12.1" || asked != 1 {
 		t.Errorf("newer %q after asking %d times", got, asked)
 	}
@@ -92,8 +92,8 @@ func TestAMachineWithoutANetworkIsNotHeldUp(t *testing.T) {
 		t.Errorf("the start was held up for %s", waited)
 	}
 
-	// A machine that has never had an answer doesn't try at every start: the next few starts
-	// ask nobody, and it tries again a quarter of an hour on
+	// A machine that has never had an answer doesn't try at every start. The next few starts ask
+	// nobody, and it tries again a quarter of an hour on
 	asked := 0
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		asked++
@@ -119,7 +119,7 @@ func TestNothingAboutTheReleaseCheckCanStopTheStart(t *testing.T) {
 		return server.Close
 	}
 
-	// A server that takes the connection and never answers: the start waits two seconds, no more
+	// A server that takes the connection and never answers. The start waits two seconds, no more
 	t.Setenv("XDG_STATE_HOME", t.TempDir())
 	release := make(chan struct{})
 	stop := answer(func(w http.ResponseWriter, r *http.Request) { <-release })
@@ -185,7 +185,7 @@ func TestNothingAboutTheReleaseCheckCanStopTheStart(t *testing.T) {
 		}
 	}
 
-	// A state folder that can't be written to: the answer still comes, it just isn't kept
+	// A state folder that can't be written to. The answer still comes, it just isn't kept
 	locked := t.TempDir()
 	if err := os.Chmod(locked, 0o500); err != nil {
 		t.Fatal(err)

@@ -31,7 +31,7 @@ function downloads(folder: Folder): Package[] {
 const folders = [...sources.folders].sort((a, b) => (modelName.get(a.models[0]) ?? a.path).localeCompare(modelName.get(b.models[0]) ?? b.path));
 const fileCount = sources.folders.reduce((n, f) => n + (f.files?.length ?? 0), 0);
 
-// The spreadsheet download: one row per file, with the package that has it first and any others after
+// The spreadsheet download, with one row per file, the package that has it first and any others after
 const exportHeader = ['Models', 'Folder', 'File', 'Size (bytes)', 'SHA-256', 'Maker', 'Package', 'Path in the package', 'Download', 'Page', 'Also in', 'Note'];
 const exportRows = folders.flatMap((folder) => {
   const names = folder.models.map((id) => modelName.get(id) ?? id).join(', ');

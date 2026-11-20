@@ -5,7 +5,7 @@ export { TONE, type Tone };
 export type Model = (typeof status.models)[number];
 export type NvidiaModel = (typeof status.nvidia)[number];
 
-// A label as the legend shows it; cells reuse its text as their hover title and sort by rank
+// A label as the legend shows it. Cells reuse its text as their hover title and sort by rank
 type State = { label: string; tone: Tone; meaning: string };
 type Channel = 'stable' | 'rc' | 'edge';
 // `full` is the cell in words, for the spreadsheet, where the table shows only a mark
@@ -15,7 +15,7 @@ const kernel = status.omarchy.kernelBase.replace(/^v/, '');
 const channelKernel = (name: string) => status.omarchy.channels.find((c) => c.name === name)?.kernel ?? '';
 
 const STATES = {
-  // Whether it boots: an owner reached the desktop, or the pieces are shipped and nobody has confirmed it.
+  // Whether it boots. Either an owner reached the desktop, or the pieces are shipped and nobody has confirmed it.
   // The channel that has the pieces is in the hover text, since a first version of a device tree can be in
   // stable while the fixes to it are on edge only, and "Stable" in the cell read as "stable is enough"
   bootable: {
@@ -44,7 +44,7 @@ const STATES = {
     mismatch: { label: 'Mismatch', tone: 'close', meaning: `systemd's entry names a different device tree than the kernel's, so it never matches.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: `Not in systemd's list yet.` },
   },
-  // The Omarchy view: what Omarchy's packages ship, by the most stable channel that has it
+  // The Omarchy view, which is what Omarchy's packages ship, by the most stable channel that has it
   omarchyTree: {
     stable: { label: '✓ Stable', tone: 'good', meaning: `Omarchy's stable kernel ships it (linux-omarchy ${channelKernel('stable')}). Later fixes to it can still be on edge only.` },
     rc: { label: '✓ RC', tone: 'good', meaning: `Omarchy's RC kernel ships it (linux-omarchy ${channelKernel('rc')}), the one the current install image has. Later fixes to it can still be on edge only.` },
@@ -77,7 +77,7 @@ const STATES = {
     download: { label: 'Not packaged', tone: 'close', meaning: `The maker's driver download has it, but Omarchy doesn't package it yet. Until then the installer copies it from Windows.` },
     windows: { label: 'From Windows', tone: 'close', meaning: `Omarchy's installer copies it from the laptop's own Windows. Nobody has found it in a maker's download yet.` },
   },
-  // The upstream view of firmware: linux-firmware on its own
+  // The upstream view of firmware, which is linux-firmware on its own
   upstreamFirmware: {
     released: { label: 'Released', tone: 'good', meaning: `Every file its device tree loads is in linux-firmware's newest release (${status.firmwareRelease}).` },
     'next-release': { label: 'Next release', tone: 'close', meaning: 'Merged into linux-firmware, and coming with its next release.' },
@@ -92,7 +92,7 @@ const STATES = {
     helps: { label: 'Still useful', tone: 'muted', meaning: `It has a device tree, but a report still gives the hardware IDs for each of its model numbers, the maker's firmware list, its panels and the tables to check the tree against.` },
     wanted: { label: 'Wanted', tone: 'wanted', meaning: 'The first thing to send for a model without a device tree.' },
   },
-  // Whether it boots: someone booted this model, or another of its platform
+  // Whether it boots, which is when someone booted this model, or another of its platform
   nvidiaOmarchy: {
     boots: { label: 'Boots', tone: 'good', meaning: `Someone booted into Omarchy on it. Not every feature has to work yet.` },
     should: { label: 'Should boot', tone: 'good-seen', meaning: `Same platform as a model that boots, but nobody has tried this one yet.` },
@@ -133,7 +133,7 @@ type Group = { column: string; question: string; states: State[] };
 const ACPI_GROUP: Group = { column: 'Hardware report', question: `The laptop's own hardware tables, hardware IDs, panel and firmware list, from Omarchy's report tool or a dump in aarch64-laptops. A device tree is written from it and checked against it.`, states: Object.values(STATES.acpi) as State[] };
 const CHECK = '✓';
 const CHANNELS = ['stable', 'rc', 'edge'];
-// A piece Omarchy ships shows a check, whichever channel has it: the legend says so once, and the
+// A piece Omarchy ships shows a check, whichever channel has it. The legend says so once, and the
 // states that aren't a channel follow
 const shipped = (group: Record<string, State>, what: string): State[] => [
   { label: CHECK, tone: 'good', meaning: `${what} Pointing at it says whether stable, RC or only edge has it. A first version can be in stable while later fixes are still on edge only.` },
@@ -141,7 +141,7 @@ const shipped = (group: Record<string, State>, what: string): State[] => [
 ];
 const BOOTABLE_GROUP: Group = { column: 'Bootable', question: `Whether it boots Omarchy, and otherwise what it still needs. A filled label means an owner reached the desktop, an outlined one that nobody has confirmed it yet. Reports from any distro are welcome. Booting needs no firmware, and features like suspend and USB4 come next.`, states: Object.values(STATES.bootable) as State[] };
 
-// The Omarchy view: what Omarchy's packages ship today
+// The Omarchy view, which is what Omarchy's packages ship today
 export const OMARCHY_LEGEND: Group[] = [
   BOOTABLE_GROUP,
   ACPI_GROUP,
@@ -151,14 +151,14 @@ export const OMARCHY_LEGEND: Group[] = [
   { column: 'Who has one', question: 'Who we know has the machine and can try changes on it.', states: Object.values(STATES.machine) as State[] },
 ];
 
-// The upstream view: what Linux, systemd and linux-firmware have, which every distro gets
+// The upstream view, which is what Linux, systemd and linux-firmware have and every distro gets
 export const UPSTREAM_LEGEND: Group[] = [
   { column: 'Linux', question: 'Its device tree in Linux itself.', states: Object.values(STATES.deviceTree) as State[] },
   { column: 'systemd', question: `Its hardware IDs in systemd's list, which boot images pick the device tree from.`, states: Object.values(STATES.ids) as State[] },
   { column: 'linux-firmware', question: 'Its firmware files in linux-firmware.', states: Object.values(STATES.upstreamFirmware) as State[] },
 ];
 
-// The Omarchy view: what Omarchy's packages ship for it, and what owners reached
+// The Omarchy view, which is what Omarchy's packages ship for it and what owners reached
 export const GOOGLEBOOK_OMARCHY_LEGEND: Group[] = [
   { column: 'Bootloader', question: 'Whether its Android-style bootloader lets owners start another system.', states: Object.values(STATES.bootloader) as State[] },
   { column: 'Device tree', question: `The description of the hardware that Linux needs, in Omarchy's kernel, the same work as for the other Snapdragon laptops.`, states: shipped(STATES.omarchyTree, `Omarchy's kernel ships it.`) },
@@ -166,33 +166,33 @@ export const GOOGLEBOOK_OMARCHY_LEGEND: Group[] = [
   { column: 'Bootable', question: 'Has an owner reached the desktop on it? Tested on Omarchy so far.', states: Object.values(STATES.googlebookOmarchy) as State[] },
 ];
 
-// Chromebooks: the same columns, with ChromeOS's bootloader, which starts another system in developer mode
+// Chromebooks get the same columns, with ChromeOS's bootloader, which starts another system in developer mode
 export const CHROMEBOOK_OMARCHY_LEGEND: Group[] = GOOGLEBOOK_OMARCHY_LEGEND.map((group, i) =>
   i === 0 ? { ...group, question: `Whether ChromeOS's bootloader lets owners start another system. Developer mode does, and turning it on wipes the laptop.` } : group,
 );
 
-// The upstream view: its device tree in Linux itself
+// The upstream view, which is its device tree in Linux itself
 export const GOOGLEBOOK_UPSTREAM_LEGEND: Group[] = [
   { column: 'Linux', question: 'Its device tree in Linux itself.', states: Object.values(STATES.deviceTree) as State[] },
 ];
 
-// The Omarchy view: Omarchy's kernel and whether it boots
+// The Omarchy view, which is Omarchy's kernel and whether it boots
 export const NVIDIA_OMARCHY_LEGEND: Group[] = [
   { column: 'Kernel', question: `Omarchy's kernel with the patches it needs.`, states: shipped(STATES.nvidiaKernel, `Omarchy's kernel carries the patches it needs.`) },
   { column: 'Bootable', question: `Whether it boots Omarchy. A filled label means someone reached the desktop on it, an outlined one that another model of the same platform boots and nobody has tried this one. Reports from any distro are welcome.`, states: Object.values(STATES.nvidiaOmarchy) as State[] },
 ];
 
-// The upstream view: what Linux itself has, which every distro gets
+// The upstream view, which is what Linux itself has and every distro gets
 export const NVIDIA_UPSTREAM_LEGEND: Group[] = [
   { column: 'Linux', question: `Whether plain Linux runs it, or it needs patches Linux doesn't have yet.`, states: Object.values(STATES.nvidiaLinux) as State[] },
 ];
 
-// Ranks sort best first: a state's position in its group, or a release number within "done"
+// Ranks sort best first, by a state's position in its group, or a release number within "done"
 const cell = (group: Record<string, State>, key: string, extra: { label?: string; tone?: Tone; title?: string; href?: string; rank?: number; full?: string } = {}): Cell => {
   const state = group[key];
   return { ...state, key, label: extra.label ?? state.label, tone: extra.tone ?? state.tone, title: extra.title ?? state.meaning, href: extra.href, rank: extra.rank ?? 1000 + Object.keys(group).indexOf(key), full: extra.full };
 };
-// A piece Omarchy ships: a check in the cell, and the channel that has it in the hover text and the spreadsheet
+// A piece Omarchy ships gets a check in the cell, and the channel that has it in the hover text and the spreadsheet
 const CHANNEL_WORD: Record<string, string> = { stable: 'stable', rc: 'RC', edge: 'edge only' };
 const check = (group: Record<string, State>, channel: string, title?: string): Cell => cell(group, channel, { label: CHECK, title, full: `Yes (${CHANNEL_WORD[channel] ?? channel})` });
 // Which channel has the pieces a model boots with, said after whether it boots
@@ -254,7 +254,7 @@ export function idsCell(model: Model): Cell {
   return cell(STATES.ids, model.upstream.ids === 'mismatch' ? 'mismatch' : 'wanted');
 }
 
-// "#2037: Add OEM firmware packages" after a state's meaning, for cells that link to a pull request
+// "#2037 (Add OEM firmware packages)." after a state's meaning, for cells that link to a pull request
 const pullTitle = (meaning: string, pull: { number: number; title: string } | null) => (pull ? `${meaning} #${pull.number} (${pull.title}).` : meaning);
 
 export function omarchyTreeCell(model: Model): Cell {

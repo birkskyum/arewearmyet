@@ -84,7 +84,7 @@ test('finds a machine by its device tree, then by its model number', async () =>
   assert.equal(byNumber.body.by, 'model number');
   assert.equal((await call('GET', '/api/match?product=HP%20OmniBook%20X%20Laptop%2014-fe0xxx&vendor=HP')).body.model, 'hp-omnibook-x-14-fe');
   assert.equal((await call('GET', '/api/match?product=Unheard%20Of')).body.model, null);
-  // The family a pull request for the machine names: Chromebooks and Googlebooks are Google's, the rest came with Windows
+  // The family a pull request for the machine names. Chromebooks and Googlebooks are Google's, the rest came with Windows
   assert.equal(byNumber.body.family, 'arm-dragon-msft');
   // The kernel on each of Omarchy's channels comes with the match, to tell a machine that is behind
   assert.match(byNumber.body.kernels.edge, /^\d+\.\d+/);
@@ -277,7 +277,7 @@ test("a later measurement that finds a thing working doesn't take back the owner
   };
   const hibernate = async () => (await call('GET', `/api/models/${model}`)).body.owners.checks.hibernate;
 
-  // The owner saw it fail; a quick check the next day only measures that it ran once
+  // The owner saw it fail, and a quick check the next day only measures that it ran once
   await send('7.3.0-72-omarchy', [{ check: 'hibernate', state: 'partial', how: 'owner', note: 'The second one ended in a restart.' }]);
   await send('7.3.0-72-omarchy', [{ check: 'hibernate', state: 'works', how: 'measured', evidence: '1 since boot' }]);
   assert.deepEqual((await hibernate()).states, { partial: 1 });
@@ -311,7 +311,7 @@ test('takes a note with logs, answers to it and a solved mark, and cleans what n
   }
   assert.equal((await call('POST', '/api/notes', { kind: 'note', title: 'No token on this one', body: 'It freezes when woken with a dock plugged in.', model: YOGA })).status, 400);
 
-  // A problem that fits no check: a freeze after a sequence of events, with the kernel's log.
+  // A problem that fits no check, here a freeze after a sequence of events, with the kernel's log.
   // The model is the one this machine's run named.
   const log = ['[  812.4] PM: suspend entry (deep)', '[  815.1] ath12k_pci 0004:01:00.0: failed to resume', '[UFW BLOCK] IN=wlan0 SRC=192.168.1.20 DST=224.0.0.251 MAC=aa:bb:cc:dd:ee:ff', 'usb 1-1: SerialNumber: 0123456789AB', 'Chromium 153.0.8010.36 on /home/alice/.cache',
     'Kernel command line: cryptdevice=PARTUUID=3069aaaa-1111-2222-3333-444455556666:root root=/dev/mapper/root rw', 'BTRFS info (device dm-0): first mount of filesystem a504bbbb-1111-2222-3333-444455556666',
@@ -356,7 +356,7 @@ test('takes a note with logs, answers to it and a solved mark, and cleans what n
   const reply = await call('POST', `/api/notes/${id}/replies`, { body: 'Same here on the HP dock. It wakes fine with the dock plugged in before sleep.', agent: 'claude', links: ['https://github.com/omacom/omarchy-pkgs/pull/3000'] }, { 'x-machine-token': TOKEN_B });
   assert.equal(reply.status, 201);
   assert.equal(reply.body.of, id);
-  // An answer isn't answered itself: the thread stays one level deep
+  // An answer isn't answered itself, so the thread stays one level deep
   assert.equal((await call('POST', `/api/notes/${reply.body.note}/replies`, { body: 'An answer to an answer, which has no place.' }, { 'x-machine-token': TOKEN_A })).status, 400);
 
   // It shows on the model, in the list by check and kind, and with its answer when read

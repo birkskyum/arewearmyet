@@ -1,5 +1,5 @@
 /** @jsxImportSource solid-js */
-// The model table. TanStack Table does the sorting, filtering and per-option counts; each column
+// The model table. TanStack Table does the sorting, filtering and per-option counts. Each column
 // header carries its own sort button and filter menu, and the view lives in the page address so
 // a filtered table can be shared.
 import { For, Show, createEffect, createSignal, onCleanup, onMount, untrack } from 'solid-js';
@@ -37,7 +37,7 @@ type Props = {
   views?: View[];
   // Filter choices for the Model column, by chip generation
   chips: Option[];
-  // Prefix for this table's address parameters; leave out to keep the view out of the address
+  // Prefix for this table's address parameters. Leave it out to keep the view out of the address
   urlPrefix?: string;
   // The spreadsheet download's file name (without date and extension) and sheet name
   exportName: string;
@@ -61,7 +61,7 @@ const inSet = (row: Row, id: string, value: unknown) => !Array.isArray(value) ||
 // The search box matches a row that has every word of it, in any part of its text or as a full product number that starts with one of its series
 const bySearch = (row: Row, _id: string, value: unknown) =>
   typeof value !== 'string' || !value || value.toLowerCase().split(' ').every((word) => row.original.search.includes(word) || row.original.prefixes.some((prefix) => word.startsWith(prefix)));
-// The search as the filter holds it and the address shows it: as typed, with single spaces and none at the ends
+// The search as the filter holds it and the address shows it, which is as typed, with single spaces and none at the ends
 const normalized = (text: string) => text.trim().split(/\s+/).join(' ');
 const byRank = (a: Row, b: Row, id: string) => (a.original.cells[id]?.rank ?? Infinity) - (b.original.cells[id]?.rank ?? Infinity);
 // A status cell as the table shows it
@@ -76,8 +76,8 @@ const DOT = {
 const VARIANT_TONE = { good: 'text-emerald-400', close: 'text-amber-400', wanted: 'text-rose-400', muted: 'text-zinc-500' };
 const ICON_BUTTON = 'inline-flex items-center gap-0.5 rounded px-1 py-0.5 text-zinc-500 hover:bg-zinc-800 hover:text-zinc-100';
 
-// The parts past booting as a row of dots: filled when seen on Omarchy, outlined when known from
-// elsewhere, faint when nobody knows, a dash when the model lacks the part
+// The parts past booting as a row of dots. A dot is filled when seen on Omarchy, outlined when known from
+// elsewhere, faint when nobody knows, and a dash when the model lacks the part
 function Dots(props: { cell: Extract<CellData, { dots: unknown }>; column: string; open?: () => void }) {
   const dots = (
     <span class="inline-flex items-center gap-1">
@@ -162,7 +162,7 @@ export default function StatusTable(props: Props) {
   });
 
   const brands = [...new Set(props.rows.map((row) => row.vendor))].sort().map((vendor) => ({ key: vendor, label: vendor }));
-  // Every header: what it sorts by, and which column and choices its filter menu uses
+  // Every header, with what it sorts by and which column and choices its filter menu uses
   const fixedHeaders = [
     { id: 'brand', header: 'Brand', question: 'Who makes it', filterColumn: 'brand', options: brands as Option[] },
     { id: 'model', header: 'Model', question: 'The model and its variants', filterColumn: props.chips.length ? 'chip' : undefined, options: props.chips },
@@ -195,7 +195,7 @@ export default function StatusTable(props: Props) {
       model.href,
     ]);
   const filtering = () => filters().length > 0;
-  // The active filters as the bar above the table names them: the column, and each ticked choice with its pill
+  // The active filters as the bar above the table names them, by the column and each ticked choice with its pill
   const filterLabel: Record<string, string> = { brand: 'Brand', chip: 'Chip' };
   const activeFilters = () =>
     filters()
@@ -261,7 +261,7 @@ export default function StatusTable(props: Props) {
   const reveal = () => root.closest('[data-views]')?.removeAttribute('data-pending');
 
   // An open menu stays under its filter button when the page scrolls or resizes, or the columns
-  // change width after filtering; it closes once the button is off screen
+  // change width after filtering. It closes once the button is off screen
   const follow = () => {
     for (const menu of document.querySelectorAll<HTMLElement>('[data-filter-menu]:popover-open')) {
       const rect = document.querySelector(`[popovertarget="${menu.id}"]`)!.getBoundingClientRect();
@@ -392,7 +392,7 @@ export default function StatusTable(props: Props) {
         </div>
       </Show>
 
-      {/* Below the xl width a row is a card: the model on top, then each status under its column's name.
+      {/* Below the xl width a row is a card, with the model on top, then each status under its column's name.
           The header row stays, wrapped, since sorting and filtering are done from it. */}
       <div class="mt-4 overflow-x-auto rounded-xl ring-1 ring-zinc-800">
         <table class="w-full text-left text-sm max-xl:block">

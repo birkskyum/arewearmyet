@@ -39,7 +39,7 @@ func TestThePictureHasSettledOnlyWhenItStoppedChangingForASecond(t *testing.T) {
 		}
 		return samples
 	}
-	// As measured on a Yoga Slim 7x from a cold start: about five of 255 a second, for seconds
+	// As measured on a Yoga Slim 7x from a cold start, about five of 255 a second, for seconds
 	var ramp []float64
 	for i := 0; i < 40; i++ {
 		ramp = append(ramp, 17+float64(i)*0.75)
@@ -49,7 +49,7 @@ func TestThePictureHasSettledOnlyWhenItStoppedChangingForASecond(t *testing.T) {
 			t.Fatalf("a picture still brightening counted as settled after %d samples", i)
 		}
 	}
-	// Dark first frames, then steady: settled once a second of steady frames is in
+	// Dark first frames, then steady, and settled once a second of steady frames is in
 	steady := []float64{33, 71, 77, 77, 77, 76, 77, 77, 77, 77, 77}
 	if settled(series(steady[:8]...)) {
 		t.Error("settled before a second of steady frames")
@@ -57,7 +57,7 @@ func TestThePictureHasSettledOnlyWhenItStoppedChangingForASecond(t *testing.T) {
 	if !settled(series(steady...)) {
 		t.Error("a steady picture never settled")
 	}
-	// The ramp's end: steady after brightening
+	// The ramp's end, steady after brightening
 	if !settled(series(append(ramp, 47, 47, 47, 46, 47, 47, 47, 47, 47)...)) {
 		t.Error("a picture that stopped brightening never settled")
 	}
@@ -314,7 +314,8 @@ func TestAnOpenCodexTakesTheMessageAndAClosedOneOpensAgain(t *testing.T) {
 	work := t.TempDir()
 	codex, claude := Session{Kind: "codex", ID: "01a1f404"}, Session{Kind: "claude", ID: "c0ffee"}
 
-	// The agent's window is open: Codex takes the message into the conversation it shows, and the window comes forward
+	// The agent's window is open, so Codex takes the message into the conversation it shows, and the
+	// window comes forward
 	windows("com.mitchellh.ghostty", "org.omarchy.agent")
 	if !AgentWindowOpen() {
 		t.Fatal("the agent's window wasn't seen")
@@ -334,7 +335,7 @@ func TestAnOpenCodexTakesTheMessageAndAClosedOneOpensAgain(t *testing.T) {
 		t.Errorf("going to an open agent: %v", err)
 	}
 
-	// No agent window: the same conversation opens again, with the message or without
+	// No agent window, so the same conversation opens again, with the message or without
 	windows("com.mitchellh.ghostty")
 	if AgentWindowOpen() {
 		t.Fatal("an agent window was seen where there is none")
@@ -357,7 +358,7 @@ func TestTheMessageIsTypedIntoTheThreadT3CodeOpensInFront(t *testing.T) {
 	script := func(name, body string) {
 		os.WriteFile(filepath.Join(bin, name), []byte("#!/bin/sh\n"+body), 0o755)
 	}
-	// T3 Code: one thread there already, and a new one once a message has been typed and sent
+	// T3 Code, with one thread there already, and a new one once a message has been typed and sent
 	script("t3", `printf '%s|' "$@" >> `+dir+`/called; echo >> `+dir+`/called
 [ "$1" = app ] && touch `+dir+`/opened
 if [ "$1 $2" = "thread list" ]; then
@@ -375,8 +376,8 @@ exit 0
 	defer func() { t3Settle, t3Appear = 1500*time.Millisecond, 20*time.Second }()
 	work := t.TempDir()
 
-	// T3 Code's window has the keyboard: the message is typed as one line and sent, and the
-	// thread that wasn't there before is the one
+	// T3 Code's window has the keyboard, so the message is typed as one line and sent, and the thread
+	// that wasn't there before is the one
 	front("com.t3tools.T3Code")
 	id, title, err := T3Type(work, "Read BRIEF.md in this folder\nand help me")
 	text, _ := os.ReadFile(filepath.Join(dir, "text"))
@@ -391,7 +392,7 @@ exit 0
 	if _, opened := os.Stat(filepath.Join(dir, "opened")); opened != nil {
 		t.Error("T3 Code wasn't asked to open the folder")
 	}
-	// Another window has the keyboard: nothing is typed into it
+	// Another window has the keyboard, so nothing is typed into it
 	os.Remove(filepath.Join(dir, "text"))
 	os.Remove(filepath.Join(dir, "sent"))
 	front("com.mitchellh.ghostty")
@@ -413,7 +414,7 @@ exit 0
 }
 
 func TestAWindowForTheOwnerDoesNotInheritAnAgentsBareSettings(t *testing.T) {
-	// As measured in a Codex thread: colours off and paging off, in a terminal that has colours
+	// As measured in a Codex thread, with colours off and paging off, in a terminal that has colours
 	agent := []string{"HOME=/home/owner", "NO_COLOR=1", "PAGER=cat", "GIT_PAGER=cat", "TERM=xterm-ghostty", "COLORTERM=truecolor", "CLICOLOR=0", "FORCE_COLOR=0", "PATH=/usr/bin"}
 	if got := strings.Join(OwnersEnv(agent), " "); got != "HOME=/home/owner TERM=xterm-ghostty COLORTERM=truecolor PATH=/usr/bin" {
 		t.Errorf("an agent's environment became %q", got)

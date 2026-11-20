@@ -8,11 +8,11 @@ import (
 	"time"
 )
 
-// Pending is a guided test that is under way, kept on disk from step to step. These tests run
-// on machines where a step can take the whole computer down: sleep that never wakes, a camera
-// or sound driver that crashes the kernel. The next run then finds the test where it stopped:
-// the answers given so far aren't lost, and a restart in the middle of a step is itself what
-// that step found.
+// Pending is a guided test that is under way, kept on disk from step to step. These tests run on
+// machines where a step can take the whole computer down, like sleep that never wakes, or a camera
+// or sound driver that crashes the kernel. The next run then finds the test where it stopped. The
+// answers given so far aren't lost, and a restart in the middle of a step is itself what that step
+// found.
 type Pending struct {
 	// Boot is the kernel's id for the boot the test ran in. A different one now means a restart.
 	Boot      string    `json:"boot"`
@@ -57,8 +57,8 @@ func (p Pending) Restarted(boot string) bool {
 	return p.Boot != "" && boot != "" && p.Boot != boot
 }
 
-// Restore puts an interrupted test's results back into a fresh run: the owner's answers, and
-// anything the new quick check didn't measure again.
+// Restore puts an interrupted test's results back into a fresh run, which are the owner's answers,
+// and anything the new quick check didn't measure again.
 func (p Pending) Restore(run *Run) {
 	for _, saved := range p.Results {
 		if _, measuredAgain := run.Get(saved.Check); !measuredAgain || saved.How == Owner {

@@ -8,10 +8,10 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 )
 
-// The terminal's own colours, so the test looks like the rest of the desktop's theme. Only
-// its normal text colour is used for anything that has to be read: a theme's "bright black"
-// can be nearly its background, as it is on a blue theme, so secondary text is told apart by
-// not being bold or coloured, never by being fainter.
+// The terminal's own colours, so the test looks like the rest of the desktop's theme. Only its
+// normal text colour is used for anything that has to be read. A theme's "bright black" can be
+// nearly its background, as it is on a blue theme, so secondary text is told apart by not being
+// bold or coloured, never by being fainter.
 var (
 	bold   = lipgloss.NewStyle().Bold(true)
 	soft   = lipgloss.NewStyle()

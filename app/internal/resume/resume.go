@@ -18,15 +18,15 @@ import (
 // later, unasked, would only be a surprise.
 const Expires = 24 * time.Hour
 
-// Word is what was left before a restart: where the agent worked, what to tell it, and the
+// Word is what was left before a restart, which is where the agent worked, what to tell it, and the
 // boot it was left in, by which the next boot is told from the same one.
 type Word struct {
 	Dir    string    `json:"dir"`
 	Prompt string    `json:"prompt"`
 	Boot   string    `json:"boot"`
 	Set    time.Time `json:"set"`
-	// Sessions name the conversation the word was left from, where the agent said which it
-	// is, outermost first: the same one is gone on in after the restart.
+	// Sessions name the conversation the word was left from, where the agent said which it is,
+	// outermost first. The same one is gone on in after the restart.
 	Sessions []Held `json:"sessions,omitempty"`
 }
 
@@ -67,10 +67,10 @@ func (p Places) link() string {
 // quote puts a path in single quotes for a shell, whatever it holds.
 func quote(text string) string { return "'" + strings.ReplaceAll(text, "'", `'\''`) + "'" }
 
-// Unit is the service that runs once at login. It goes through a login shell, so the agent
-// starts with the same programs on its path as in the owner's terminal, and waits a moment
-// for the desktop to be up. What it started is left running when it ends: the agent's
-// launcher would otherwise be stopped with the service, before any window is open.
+// Unit is the service that runs once at login. It goes through a login shell, so the agent starts
+// with the same programs on its path as in the owner's terminal, and waits a moment for the desktop
+// to be up. What it started is left running when it ends, since the agent's launcher would
+// otherwise be stopped with the service, before any window is open.
 func Unit(program string) string {
 	return `[Unit]
 Description=hw-test: bring the agent back after a restart
@@ -127,8 +127,8 @@ func (p Places) Clear() {
 	reload()
 }
 
-// reload tells the user's systemd about the change. It doesn't matter when that fails: the
-// files are read anew at the next login.
+// reload tells the user's systemd about the change. It doesn't matter when that fails, as the files
+// are read anew at the next login.
 func reload() {
 	if _, err := exec.LookPath("systemctl"); err == nil {
 		_ = exec.Command("systemctl", "--user", "daemon-reload").Run()
@@ -141,11 +141,11 @@ type Decision int
 const (
 	// Nothing was left, or it isn't time.
 	Nothing Decision = iota
-	// Wait: the computer hasn't restarted since the word was left, so it stays for when it has.
+	// Wait says the computer hasn't restarted since the word was left, so it stays for when it has.
 	Wait
 	// Open the agent with the word. The word is used up by this.
 	Open
-	// Stale: the word is too old to act on, and is cleared.
+	// Stale says the word is too old to act on, and is cleared.
 	Stale
 )
 

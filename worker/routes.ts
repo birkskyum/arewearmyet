@@ -7,14 +7,14 @@ export const DOCS = 'https://arewearmyet.com/docs/api';
 
 export const ROUTES = [
   ['GET', '/api', 'This list'],
-  ['GET', '/api/checks', 'Every check: what works means, what is measured, what the owner does, where to look when it fails'],
+  ['GET', '/api/checks', 'Every check, with what works means, what is measured, what the owner does and where to look when it fails'],
   ['GET', '/api/models', 'Every computer model with its id, page and API link'],
-  ['GET', '/api/models/<id>', 'One model: booting, findings, owners\' results, fixes, notes, wanted checks'],
+  ['GET', '/api/models/<id>', 'One model, with booting, findings, owners\' results, fixes, notes and wanted checks'],
   ['GET', '/api/match', 'Which model a computer is, from its hardware IDs, device tree or firmware strings'],
   ['GET', '/api/owners', 'Every model\'s owners\' results at once, and the computers that matched no model'],
   ['GET', '/api/runs/<id>', 'One run as stored'],
   ['GET', '/api/fixes', 'What one pull request changed, over every computer that measured it'],
-  ['GET', '/api/notes', 'Notes: problems, workarounds and pointers to work elsewhere'],
+  ['GET', '/api/notes', 'Notes, which are problems, workarounds and pointers to work elsewhere'],
   ['GET', '/api/notes/<id>', 'One note with its answers and its logs'],
   ['GET', '/api/notes/<id>/logs/<name>', 'One log of a note, as plain text'],
   ['POST', '/api/runs', 'Send a run of results from one computer'],

@@ -36,7 +36,7 @@ func TestAWordLeftBeforeARestartOpensTheAgentOnceAfterIt(t *testing.T) {
 		t.Errorf("the service isn't wanted at login: %q, %v", target, err)
 	}
 
-	// A login in the same boot is the owner logging out and in: the word waits
+	// A login in the same boot is the owner logging out and in, so the word waits
 	if got := At(left, found, "boot-one", set.Add(10*time.Minute)); got != Wait {
 		t.Errorf("same boot: %v", got)
 	}

@@ -58,8 +58,8 @@ func newSleep(run *report.Run, facts probe.Facts) *sleep {
 		note: line{prompt: "What was wrong after waking? (Enter to leave it empty)"}}
 }
 
-// newSleepAsked is the step for a computer with no lid to close: a desktop or mini PC, or a
-// laptop whose lid switch wasn't found. It asks the system for sleep, and the owner wakes it.
+// newSleepAsked is the step for a computer with no lid to close, which is a desktop or mini PC, or
+// a laptop whose lid switch wasn't found. It asks the system for sleep, and the owner wakes it.
 func newSleepAsked(run *report.Run, facts probe.Facts, sys machine.System) *sleep {
 	s := newSleep(run, facts)
 	s.command = func() (string, error) { return sys.RunFor(30*time.Second, "systemctl", "suspend") }
@@ -153,8 +153,8 @@ func (s *sleep) update(msg tea.Msg) tea.Cmd {
 			s.run.Set("suspend", report.Broken, report.Measured, fmt.Sprintf("%s started a sleep that failed (the kernel's count of failed sleeps went from %d to %d)", began, s.failed, msg.failed), "")
 			s.over = true
 		case msg.ok > s.ok:
-			// Awake. Now watch what comes back and time it, for up to a minute: how long Wi-Fi
-			// takes is worth knowing, and one look too early would call a slow reconnect a failure
+			// Awake. Now watch what comes back and time it, for up to a minute. How long Wi-Fi takes is
+			// worth knowing, and one look too early would call a slow reconnect a failure
 			s.phase, s.woke, s.back, s.problems = "settling", s.clock(), nil, nil
 			return s.settle()
 		default:
@@ -215,7 +215,7 @@ func (s *sleep) update(msg tea.Msg) tea.Cmd {
 		case "ask":
 			switch s.ask.update(msg) {
 			case 0:
-				// What was measured counts too: a "yes" with Wi-Fi still down is only partly working
+				// What was measured counts too, so a "yes" with Wi-Fi still down is only partly working
 				state := report.Works
 				if len(s.problems) > 0 {
 					state = report.Partial

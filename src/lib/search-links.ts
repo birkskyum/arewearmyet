@@ -1,4 +1,4 @@
-// The page's side of search.ts: a plain click on a link marked data-search asks its table to search
+// The page's side of search.ts. A plain click on a link marked data-search asks its table to search
 import { SEARCH_EVENT, type SearchAsked } from './search';
 
 addEventListener('click', (event) => {

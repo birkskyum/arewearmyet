@@ -42,7 +42,7 @@ func InTerminal() bool {
 	return os.Getenv("TERM") == "xterm-ghostty" || os.Getenv("TERM") == "xterm-kitty" || os.Getenv("KITTY_WINDOW_ID") != "" || os.Getenv("GHOSTTY_RESOURCES_DIR") != ""
 }
 
-// Fit is how many cells the frame takes in a space of at most columns by rows: as large as
+// Fit is how many cells the frame takes in a space of at most columns by rows, which is as large as
 // fits, in the frame's own shape. A cell is about twice as high as it is wide.
 func (f Frame) Fit(columns, rows int) (int, int) {
 	if f.Width == 0 || f.Height == 0 {
@@ -118,8 +118,8 @@ func (f Frame) Hand(id, columns, rows int) (string, error) {
 	return out.String(), nil
 }
 
-// Cells are the lines of cells the terminal fills with picture number id, which is at most
-// 255: the picture's number travels as the cells' colour.
+// Cells are the lines of cells the terminal fills with picture number id, which is at most 255,
+// since the picture's number travels as the cells' colour.
 func Cells(id, columns, rows int) string {
 	var out strings.Builder
 	for row := 0; row < min(rows, MaxCells); row++ {

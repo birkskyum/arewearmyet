@@ -23,8 +23,8 @@ import (
 // Guide is where an agent reads how to work on these machines.
 const Guide = "https://arewearmyet.com/agents.md"
 
-// Briefing is what goes into a brief: the computer, what the tests found on it, and what the
-// site knows about each check.
+// Briefing is what goes into a brief, which is the computer, what the tests found on it, and what
+// the site knows about each check.
 type Briefing struct {
 	Version string
 	Run     *report.Run
@@ -60,9 +60,9 @@ type Briefing struct {
 	guideCopy bool
 }
 
-// Command is where an agent finds hw-test when its name alone isn't found: the command the
-// owner types, which follows updates, and only without that the file that is running now.
-// A path with a version in it would keep an agent on that version after an update.
+// Command is where an agent finds hw-test when its name alone isn't found. It is the command the
+// owner types, which follows updates, and only without that the file that is running now. A path
+// with a version in it would keep an agent on that version after an update.
 func Command() string {
 	if home, err := os.UserHomeDir(); err == nil {
 		if installed := filepath.Join(home, ".local", "bin", "hw-test"); tools.Have(installed) {
@@ -73,11 +73,11 @@ func Command() string {
 	return running
 }
 
-// InThread hands work to the conversation the owner's agent already has for this folder, so
-// nothing the agent learnt is lost and the owner has one place to look. That is the thread
-// hw-test started in T3 Code, or the conversation of an agent in a terminal, which says
-// which it is whenever it calls hw-test. Without one, and where T3 Code is installed, a new
-// thread is started there: T3 Code runs whichever agent the owner has, and keeps the thread.
+// InThread hands work to the conversation the owner's agent already has for this folder, so nothing
+// the agent learnt is lost and the owner has one place to look. That is the thread hw-test started
+// in T3 Code, or the conversation of an agent in a terminal, which says which it is whenever it
+// calls hw-test. Without one, and where T3 Code is installed, a new thread is started there, since
+// T3 Code runs whichever agent the owner has, and keeps the thread.
 func InThread(dir, title, message string) (string, error) {
 	if os.Getenv("HW_TEST_AGENT") != "" {
 		return "", tools.ErrNoSession
@@ -99,9 +99,9 @@ func InThread(dir, title, message string) (string, error) {
 			return "Your agent's window is open, and it can't be written to from here. Tell it to read BRIEF.md again, which is about " + strings.TrimPrefix(title, "Fix ") + " now.", nil
 		}
 	}
-	// In T3 Code's own window first, typed into the thread it opens: then the thread in front
-	// of the owner is the one at work. Where that can't be done, a thread is started behind
-	// the window and the owner is told which one to click
+	// In T3 Code's own window first, typed into the thread it opens, so the thread in front of the
+	// owner is the one at work. Where that can't be done, a thread is started behind the window and
+	// the owner is told which one to click
 	prior, _ := report.ThreadFor(dir)
 	if id, named, err := tools.T3Type(dir, message); err == nil {
 		if id != "" {
@@ -140,7 +140,7 @@ func worthALook(result report.Result) bool {
 	return result.State == report.Works && result.Look != ""
 }
 
-// summed says a result in a line for a list to pick from: the part, how it stands and why.
+// summed says a result in a line for a list to pick from, with the part, how it stands and why.
 func summed(check string, result report.Result) string {
 	state := stateLabel[result.State]
 	if worthALook(result) {
@@ -169,9 +169,9 @@ func Summed(kept map[string]report.Kept, checks []string) []string {
 	return lines
 }
 
-// Fill adds what the machine and the site know beyond the results: the family, the device
-// tree's source, what is written up about the model and the notes left on it. Whatever can't
-// be had is left out.
+// Fill adds what the machine and the site know beyond the results, which is the family, the device
+// tree's source, what is written up about the model and the notes left on it. Whatever can't be had
+// is left out.
 func (b *Briefing) Fill(api string) {
 	b.Family = probe.Family(machine.Real())
 	if source, err := tree.Real().Machine(); err == nil {
@@ -183,8 +183,8 @@ func (b *Briefing) Fill(api string) {
 	}
 }
 
-// ChecksFor turns words into checks: a check's own id, or a part of the test, which stands
-// for the checks it tests.
+// ChecksFor turns words into checks. A word is a check's own id, or a part of the test, which
+// stands for the checks it tests.
 func ChecksFor(words []string) (checks []string, unknown []string) {
 	seen := map[string]bool{}
 	add := func(check string) {
@@ -226,8 +226,8 @@ func remeasure(check string) (command string, owner bool) {
 	return "hw-test quick --json", false
 }
 
-// Failing lists what an agent can be asked to look into in the machine's latest results: the
-// checks that are broken, those partly working, and those that work with something worth a
+// Failing lists what an agent can be asked to look into in the machine's latest results. Those are
+// the checks that are broken, those partly working, and those that work with something worth a
 // second look, in that order.
 func Failing(kept map[string]report.Kept) []string {
 	rank := func(check string) int {
@@ -256,10 +256,10 @@ func Failing(kept map[string]report.Kept) []string {
 
 var howSaid = map[string]string{report.Measured: "measured by the test", report.Owner: "seen by the owner", "agent": "read by an agent"}
 
-// Brief writes what an agent needs to pick a failing part up: the computer, what was
-// measured and what is already known of each part, and the order to go about it in. The
-// guide has the rules and the how-to in full, so the brief only names them. It holds no
-// serial number, address, user or host.
+// Brief writes what an agent needs to pick a failing part up, which is the computer, what was
+// measured and what is already known of each part, and the order to go about it in. The guide has
+// the rules and the how-to in full, so the brief only names them. It holds no serial number,
+// address, user or host.
 func Brief(b Briefing) string {
 	var out strings.Builder
 	say := func(format string, args ...any) { fmt.Fprintf(&out, format+"\n", args...) }
@@ -423,7 +423,7 @@ func Brief(b Briefing) string {
 	say("")
 	say("Several parts hang on one. Sound, the battery, charging and USB-C all need the audio processor (`adsp`) running, and WebGL and WebGPU need the GPU. `hw-test status` shows all of it at any time.")
 
-	// One part at a time: a part that can't be fixed must not hold up the others
+	// One part at a time. A part that can't be fixed must not hold up the others
 	var others []string
 	for _, check := range Failing(b.Kept) {
 		if !covered[check] {
@@ -480,7 +480,8 @@ func Brief(b Briefing) string {
 		before, after = "hw-test verify before "+work[0], "hw-test verify after "+work[0]
 	}
 	say("2. **Snapshot.** `%s`, once, before you change anything. The name keeps this part's snapshot apart from another part's. When the owner hears or sees a part differently than the test says, record that first with `hw-test report`.", before)
-	// An NVIDIA machine describes its own hardware through ACPI: it has no device tree to read or change
+	// An NVIDIA machine describes its own hardware through ACPI, so it has no device tree to read or
+	// change
 	acpi := family == probe.Nvidia
 	if acpi {
 		say("3. **Look.** The commands under \"Where to look\" only read. This computer describes its own hardware through ACPI, so there is no device tree. `sudo dmesg` and `journalctl -k -b` say what each driver found.")
@@ -503,7 +504,7 @@ func Brief(b Briefing) string {
 	return out.String()
 }
 
-// familyLine is how the brief names the line a pull request opens with: the machine's
+// familyLine is how the brief names the line a pull request opens with. That is the machine's
 // family when it is known, and the choice of them when it isn't.
 func familyLine(family string) string {
 	switch family {
@@ -550,7 +551,7 @@ func HandOver(b Briefing, dir string, launch func(dir, prompt string) error) Han
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		return Handed{Said: "The brief couldn't be written (" + err.Error() + ")."}
 	}
-	// A copy of the guide goes beside the brief: an agent's surroundings often have no network
+	// A copy of the guide goes beside the brief, since an agent's surroundings often have no network
 	where := Guide
 	if b.GetGuide != nil {
 		if text, err := b.GetGuide(); err == nil && len(text) > 0 && os.WriteFile(filepath.Join(dir, "GUIDE.md"), text, 0o644) == nil {
@@ -571,8 +572,8 @@ func HandOver(b Briefing, dir string, launch func(dir, prompt string) error) Han
 		titles = append(titles, strings.ToLower(first(checkTitle[check], check)))
 	}
 	prompt := fmt.Sprintf("Read BRIEF.md in this folder and help me get this working on my computer. It is about %s, and says what was measured, how to measure again with hw-test and where to look. The guide it points to, %s, has the rules and says where a fix goes, so read that first.", strings.Join(titles, ", "), where)
-	// A conversation that keeps comes first: the next part and every new result then go into
-	// the same one, whichever agent runs in it
+	// A conversation that keeps comes first. The next part and every new result then go into the same
+	// one, whichever agent runs in it
 	if b.InThread != nil {
 		if said, err := b.InThread(dir, "Fix "+strings.Join(titles, ", "), prompt); err == nil {
 			return Handed{File: file, Opened: true, Said: said + " The brief is in " + file + "."}
@@ -593,9 +594,8 @@ func HandOver(b Briefing, dir string, launch func(dir, prompt string) error) Han
 // handedMsg carries how handing over went back to the screen that asked.
 type handedMsg struct{ handed Handed }
 
-// handOver hands the given checks to the agent without holding the screen up: the site is
-// asked for its notes on the checks first, and the brief is written without them when it
-// doesn't answer.
+// handOver hands the given checks to the agent without holding the screen up. The site is asked for
+// its notes on the checks first, and the brief is written without them when it doesn't answer.
 func handOver(run *report.Run, options Options, model report.Model, only []string) tea.Cmd {
 	return func() tea.Msg {
 		// What this round found counts as the machine's latest before the brief is written from it

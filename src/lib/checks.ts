@@ -34,7 +34,7 @@ const findings = parse(findingsRaw) as FindingsFile;
 export const GROUPS = checksFile.groups;
 export const CHECKS = checksFile.checks;
 
-// Generations whose family findings count for a model; the older Windows on Arm chips have none yet
+// Generations whose family findings count for a model. The older Windows on Arm chips have none yet
 const FAMILY: Record<string, string> = { x1: 'x1', x2: 'x2' };
 
 export const STATE_LABEL: Record<CheckState, string> = { works: 'Works', partial: 'Partly', broken: 'Broken', untested: 'Untested', absent: 'Not on this model' };
@@ -56,7 +56,7 @@ export function nvidiaPageModels(): NvidiaModel[] {
 }
 
 /** What the checks need to know about a machine, whichever group it is in. */
-// `boot` is how it starts: uefi, or Google's boot software (android, depthcharge)
+// `boot` is how it starts, either uefi or Google's boot software (android, depthcharge)
 export type Subject = { id: string; generation: string; form?: string | null; boot?: string | null };
 
 const NVIDIA = new Set(['n1x', 'gb10']);
@@ -79,7 +79,7 @@ function notOn(model: Subject, check: string): Finding | null {
 /** Whether a model is expected to have a check's part, by its form. */
 const expectedOn = (model: Subject, check: string): boolean => !WHERE_LISTED.includes(check) && (!DESK_ONLY.includes(check) || DESKS.has(model.form ?? ''));
 
-// `given` marks a finding nobody had to write: a part the machine can't have, by what it is
+// `given` marks a finding nobody had to write, for a part the machine can't have, by what it is
 // `expected` is false for a part this kind of machine rarely has, whose row shows only once something is known
 export type CheckRow = Check & { finding: Finding | null; from: 'model' | 'family' | null; familySource: string | null; given?: true; expected: boolean };
 
@@ -104,7 +104,7 @@ export function modelChecks(model: Subject): CheckRow[] {
   });
 }
 
-/** Whether a check is one to ask an owner for: its part is on every model, or on this kind of machine. */
+/** Whether a check is one to ask an owner for, which it is when its part is on every model or on this kind of machine. */
 const askedFor = (row: CheckRow): boolean => (DESK_ONLY.includes(row.id) || WHERE_LISTED.includes(row.id) ? row.expected : !row.optional);
 
 export function modelExtra(model: Subject) {
@@ -117,7 +117,7 @@ export function modelExtra(model: Subject) {
  * working. What is reported from elsewhere is counted apart.
  */
 export function coverage(model: Subject) {
-  // The checks that apply to this machine: the parts it has, and not those few of its kind have
+  // The checks that apply to this machine, which are the parts it has, and not those few of its kind have
   const rows = modelChecks(model).filter((row) => row.finding?.state !== 'absent' && (row.expected || row.finding));
   const own = rows.filter((row) => row.from === 'model');
   // A part the maker lists and nobody has tested is neither written up nor reported from elsewhere
@@ -131,9 +131,9 @@ export function coverage(model: Subject) {
 }
 
 /**
- * Whether a model boots, as the API says it: the channel whose image starts a Snapdragon PC, or what
+ * Whether a model boots, as the API says it. That is the channel whose image starts a Snapdragon PC, or what
  * it still needs. A Chromebook or Googlebook starts another way and needs no hardware IDs, so for one
- * it is what its own Bootable cell says: works, workaround, problems, untested or notyet.
+ * it is what its own Bootable cell says, one of works, workaround, problems, untested or notyet.
  */
 export function bootableOf(model: Model): string {
   return model.boot === 'uefi' ? model.bootable : googlebookOmarchyCell(model).key;
@@ -179,7 +179,7 @@ export function nvidiaData(model: NvidiaModel) {
     form: model.form,
     released: model.released,
     page: `https://arewearmyet.com/models/${model.id}`,
-    // These start through UEFI with ACPI: no device tree, hardware IDs or firmware package per model
+    // These start through UEFI with ACPI, so there is no device tree, hardware IDs or firmware package per model
     boots: { outcome: model.omarchy, kernel: model.kernel ?? null, linux: model.linux },
     notes: model.notes,
     details: extra.details,

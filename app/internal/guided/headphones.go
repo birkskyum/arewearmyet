@@ -14,7 +14,7 @@ import (
 
 // headphones plays the tone once wired headphones are plugged in, and asks where it came from.
 // Where the sound server offers no headphone output, it asks first whether the computer has a
-// headphone socket at all: many laptops have only USB-C ports, and an owner who plugs USB-C
+// headphone socket at all. Many laptops have only USB-C ports, and an owner who plugs USB-C
 // headphones in would otherwise report a jack that isn't there as broken.
 type headphones struct {
 	run   *report.Run
@@ -130,8 +130,8 @@ func (h *headphones) update(msg tea.Msg) tea.Cmd {
 	return nil
 }
 
-// evidence says that no headphone output is offered, where that is so: a socket that is there
-// with no output behind it is a fault of its own, which an agent can start from.
+// evidence says that no headphone output is offered, where that is so. A socket that is there with
+// no output behind it is a fault of its own, which an agent can start from.
 func (h *headphones) evidence() string {
 	if h.none {
 		return noOutput

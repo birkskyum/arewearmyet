@@ -11,10 +11,9 @@ import (
 	"time"
 )
 
-// Releases is where the newest release of the app is asked for: the address on GitHub that
-// leads on to the newest release's own page. It is an ordinary web address, not GitHub's API,
-// which allows a network address only sixty questions an hour and then refuses. Tests point
-// it elsewhere.
+// Releases is where the newest release of the app is asked for, which is the address on GitHub that
+// leads on to the newest release's own page. It is an ordinary web address, not GitHub's API, which
+// allows a network address only sixty questions an hour and then refuses. Tests point it elsewhere.
 var Releases = "https://github.com/birkskyum/arewearmyet/releases/latest"
 
 // How long an answer about the newest release is trusted before asking again, and how long a
@@ -117,8 +116,8 @@ func NewestRelease() (version string) {
 // ForgetRelease drops what was kept about the newest release, after an update.
 func ForgetRelease() { os.Remove(releaseFile()) }
 
-// newest asks where the newest release is and reads its version out of the answer: the
-// address leads on to .../releases/tag/v0.12.3, and it isn't followed.
+// newest asks where the newest release is and reads its version out of the answer. The address
+// leads on to .../releases/tag/v0.12.3, and it isn't followed.
 func newest() string {
 	client := http.Client{Timeout: 2 * time.Second, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
 	request, err := http.NewRequest(http.MethodGet, Releases, nil)

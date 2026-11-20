@@ -194,7 +194,7 @@ type Started struct {
 	Skipped, Misfit []string
 	// Machine is this machine's tree, when it was found among the sources.
 	Machine string
-	// Stock says how the sources compare with the tree this computer starts with: "same",
+	// Stock says how the sources compare with the tree this computer starts with. It is "same",
 	// "differs", or empty when it couldn't be told.
 	Stock string
 }
@@ -244,7 +244,8 @@ func (s System) Start(dir string) (Started, error) {
 			return started, err
 		}
 	}
-	// With their links resolved, as the package copies them: dt-bindings/input links into include/uapi
+	// With their links resolved, as the package copies them, since dt-bindings/input links into
+	// include/uapi
 	copies := [][]string{
 		{"cp", "-rL", filepath.Join(s.Headers, "arch/arm64/boot/dts"), filepath.Join(root, "arch/arm64/boot") + "/"},
 		{"cp", "-rL", filepath.Join(s.Headers, "include/dt-bindings"), filepath.Join(root, "include") + "/"},
@@ -283,8 +284,8 @@ func (s System) Start(dir string) (Started, error) {
 			return started, err
 		}
 	}
-	// Whether these sources are what the computer starts with: compiled unchanged, they give
-	// the installed tree byte for byte, unless the installed package is older or newer
+	// Whether these sources are what the computer starts with. Compiled unchanged, they give the
+	// installed tree byte for byte, unless the installed package is older or newer
 	if machine, err := s.machine(filepath.Join(root, qcom)); err == nil {
 		started.Machine = machine
 		out := filepath.Join(dir, ".stock-"+machine)
@@ -303,7 +304,7 @@ func (s System) Start(dir string) (Started, error) {
 	return started, nil
 }
 
-// base is the commit the sources started as: the kernel's, with Omarchy's patches.
+// base is the commit the sources started as, which is the kernel's, with Omarchy's patches.
 func base(root string) (string, error) {
 	out, err := run(root, "git", "rev-list", "--max-parents=0", "HEAD")
 	if err != nil {

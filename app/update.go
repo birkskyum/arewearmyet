@@ -16,11 +16,11 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/tree"
 )
 
-// hw-test ask update: the system update as a step for the owner. An agent that finds the
-// computer behind its channel used to ask the owner to run the update and tell it how it went,
-// and on the Yoga three of the owner's messages in one session were that relay. Here the
-// update opens in a window for the owner, who confirms it as always, and the agent gets the
-// outcome: whether it finished, what moved, whether a restart is due, and the log's last lines.
+// hw-test ask update is the system update as a step for the owner. An agent that finds the computer
+// behind its channel used to ask the owner to run the update and tell it how it went, and on the
+// Yoga three of the owner's messages in one session were that relay. Here the update opens in a
+// window for the owner, who confirms it as always, and the agent gets the outcome, which is whether
+// it finished, what moved, whether a restart is due, and the log's last lines.
 //
 // An update is never the agent's to decide, and there are times it does harm, so those are
 // checked first and refused with the reason.

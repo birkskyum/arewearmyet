@@ -1,8 +1,7 @@
-// Package kernel is the way to try a change in one kernel driver without building or
-// installing a kernel: Omarchy's kernel source as the running kernel was built from it, one
-// driver folder built against the running kernel's headers, and the result loaded for this
-// session only. Nothing it does outlasts a restart, and nothing is written where the system
-// starts from.
+// Package kernel is the way to try a change in one kernel driver without building or installing a
+// kernel. It takes Omarchy's kernel source as the running kernel was built from it, one driver
+// folder built against the running kernel's headers, and the result loaded for this session only.
+// Nothing it does outlasts a restart, and nothing is written where the system starts from.
 package kernel
 
 import (
@@ -140,7 +139,7 @@ func (s System) Start(dir string) (Started, error) {
 	if _, err := run(clone, "git", "sparse-checkout", "set", Recipe); err != nil {
 		return started, err
 	}
-	// The recipe as it was when the running kernel was built: the newest commit whose
+	// The recipe as it was when the running kernel was built, which is the newest commit whose
 	// PKGBUILD has this version and release
 	file := Recipe + "/PKGBUILD"
 	version, release, _ := strings.Cut(s.Release, "-")
@@ -159,8 +158,8 @@ func (s System) Start(dir string) (Started, error) {
 	recipe := RecipeIn(dir)
 	listed, _ := filepath.Glob(filepath.Join(recipe, "*.patch"))
 	started.Patches = len(listed)
-	// Fetches the source and applies the patches, and builds nothing. The signatures are
-	// the packagers' own business: the checksums in the recipe are still checked.
+	// Fetches the source and applies the patches, and builds nothing. The signatures are the
+	// packagers' own business, and the checksums in the recipe are still checked.
 	if _, err := run(recipe, "makepkg", "-o", "--skippgpcheck", "--nodeps"); err != nil {
 		return started, fmt.Errorf("the kernel's source couldn't be prepared: %v", err)
 	}

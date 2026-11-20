@@ -20,7 +20,7 @@ func TestTheMachineKeepsItsLatestResultForEachCheck(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// The next day on a newer kernel: the camera is fixed, and a quick check counts one good sleep
+	// The next day on a newer kernel, the camera is fixed, and a quick check counts one good sleep
 	second := &Run{Kernel: "7.3.0-72-omarchy"}
 	second.Set("camera", Works, Owner, "a 1920x1092 frame", "")
 	second.Set("suspend", Works, Measured, "1 sleeps since boot", "")

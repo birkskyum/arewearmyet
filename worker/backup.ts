@@ -1,6 +1,6 @@
 /**
  * A nightly copy of the reports database in the private bucket, as one JSON file per day under
- * backups/reports/. D1 can roll back 30 days by itself; these files outlast that. A month of daily
+ * backups/reports/. D1 can roll back 30 days by itself, and these files outlast that. A month of daily
  * copies is kept, and the first of each month for good.
  */
 

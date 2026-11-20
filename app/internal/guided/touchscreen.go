@@ -13,9 +13,9 @@ import (
 
 type touchMsg struct{ count int64 }
 
-// touchscreen counts touches by the touchscreen's own interrupt, which fires whenever a
-// finger is on it. A terminal can't be asked: it gets a tap as a click at the pointer, or not
-// at all. Where the interrupt can't be found, clicks in the terminal are counted instead.
+// touchscreen counts touches by the touchscreen's own interrupt, which fires whenever a finger is
+// on it. A terminal can't be asked, since it gets a tap as a click at the pointer, or not at all.
+// Where the interrupt can't be found, clicks in the terminal are counted instead.
 type touchscreen struct {
 	run    *report.Run
 	sys    machine.System
@@ -26,7 +26,7 @@ type touchscreen struct {
 	last    int64
 	fired   int64
 	touches int
-	// touching is set while the count is rising; a touch ends when it has stopped for a moment.
+	// touching is set while the count is rising, and a touch ends when it has stopped for a moment.
 	touching bool
 	changed  time.Time
 	clicks   map[[2]int]bool
@@ -38,7 +38,7 @@ type touchscreen struct {
 
 const (
 	touchesWanted = 3
-	// A finger on the screen fires many times a second; this long without one is a lifted finger.
+	// A finger on the screen fires many times a second, so this long without one is a lifted finger.
 	touchGap = 350 * time.Millisecond
 )
 
@@ -94,8 +94,8 @@ func (t *touchscreen) evidence() string {
 	return fmt.Sprintf("%s, %d touches, its interrupt fired %d times", t.device, t.touches, t.fired)
 }
 
-// enough moves on to the one thing that can't be measured: whether the desktop put the touch
-// where the finger was.
+// enough moves on to the one thing that can't be measured, which is whether the desktop put the
+// touch where the finger was.
 func (t *touchscreen) enough() {
 	t.ask = &choice{question: fmt.Sprintf("The touchscreen registered %d touches. Did the desktop react where you touched, like focus or the pointer following your finger?", t.seen()),
 		options: []string{"Yes, where I touched", "It reacted, but in the wrong place", "No, nothing on the screen reacted"}}

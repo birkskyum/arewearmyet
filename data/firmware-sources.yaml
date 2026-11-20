@@ -1,5 +1,5 @@
 # Where each Snapdragon laptop's own firmware can be had from its maker, for the files
-# linux-firmware doesn't ship yet. Nothing here is firmware: every entry is a download link and
+# linux-firmware doesn't ship yet. Nothing here is firmware. Every entry is a download link and
 # checksums, so a tool on any distro can fetch the maker's package (or take a copy the owner
 # downloaded), check it and install the files where the device tree loads them. The same list is
 # served as /firmware-sources.json.
@@ -10,16 +10,16 @@
 #             was found in, with its member path (archives inside the package joined with !/).
 #             A file with no package has a note on where it comes from instead
 #   links     names that are links to another file, as linux-firmware's WHENCE writes them
-# packages    the maker downloads: title, url, the maker's page when the url changes per version,
+# packages    the maker downloads, each with title, url, the maker's page when the url changes per version,
 #             size and SHA-256 as fetched, the date it was fetched, a note when fetching it
-#             needs care, and manual: true when the url is a page the download has to be started
+#             needs care, and manual, true when the url is a page the download has to be started
 #             from by hand. A url wu://<update ID>/<revision>/<SHA-1> is a file of an update on
-#             Windows Update, which hands out short-lived links only;
+#             Windows Update, which hands out short-lived links only.
 #             https://github.com/birkskyum/wudrivers fetches a fresh one with `wudrivers fetch`
 #
 # Packages unpack with 7-Zip (Windows Update's driver cabinets too), except Lenovo's (innoextract) and Microsoft's MSIs (msiextract).
 # ASUS's are executables with a 7-Zip archive appended. A member ending in !xz@N is an XZ stream
-# that starts N bytes into that file: the SoC control processor images sit like that inside the
+# that starts N bytes into that file. The SoC control processor images sit like that inside the
 # BIOS images in HP's and ASUS's packages. The files were matched byte for byte to the ones in
 # the linux-firmware merge requests (!1331 to !1338 and !1341).
 
@@ -4010,7 +4010,7 @@ folders:
       - name: "qcadsp8180.mbn"
         size: 11745780
         sha256: "2b9836033f37cc860fdbd9a26a2d5360bb4914fa75fdb1f784a0781d43075c64"
-        note: "Signed under Qualcomm's General Use Test Key (QCT Root CA 1), like the Lenovo Yoga C630's retail images. The laptop runs it: Windows loads it, and Matt Durr's Linux port starts the ADSP with the copy from Windows' DriverStore."
+        note: "Signed under Qualcomm's General Use Test Key (QCT Root CA 1), like the Lenovo Yoga C630's retail images. The laptop runs it. Windows loads it, and Matt Durr's Linux port starts the ADSP with the copy from Windows' DriverStore."
         from:
           - { package: "dell-inspiron-14-3420-wu-200.0.14.0-qcsubsys-ext-adsp8180", member: "qcadsp8180.mbn" }
       - name: "qcdxkmsuc8180.mbn"
@@ -4334,7 +4334,7 @@ packages:
     size: 19202731
     sha256: "ac267ad6536c14e4f4e1b0b32fedeeb5f33c7faab708895fdbfcd774483fda25"
     fetched: "2026-11-02"
-    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file, so a new version needs the new link from the page."
   - id: "acer-a14-11m-multimedia-driver-31.0.152.0"
     maker: "Acer"
     title: "MultiMedia driver 31.0.152.0 for the A14-11M"
@@ -4343,7 +4343,7 @@ packages:
     size: 177979898
     sha256: "fe25905fe9b011bb6f924961d9caa03db9af85246bd0c9cff7bed8efa7cea7ea"
     fetched: "2026-11-02"
-    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file, so a new version needs the new link from the page."
   - id: "acer-a14-11m-qualcomm-base-driver-0.9100.1"
     maker: "Acer"
     title: "Qualcomm Base Driver 0.9100.1 for the A14-11M"
@@ -4352,7 +4352,7 @@ packages:
     size: 187365743
     sha256: "fed4d588c12caee23bc0a733a41232227cc329fa0e408be14522cadbd777312b"
     fetched: "2026-11-02"
-    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file, so a new version needs the new link from the page."
   - id: "acer-a16-11m-adsp-2.0.9100.0001"
     maker: "Acer"
     title: "ADSP driver 2.0.9100.0001 for the A16-11M"
@@ -4361,7 +4361,7 @@ packages:
     size: 19202731
     sha256: "2e707e21f4afc80e5c5160575230595b915e5d9f38e248cf948303e089998810"
     fetched: "2026-11-02"
-    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file, so a new version needs the new link from the page."
   - id: "acer-a16-11m-multimedia-driver-31.0.152.0"
     maker: "Acer"
     title: "MultiMedia driver 31.0.152.0 for the A16-11M"
@@ -4370,7 +4370,7 @@ packages:
     size: 177979898
     sha256: "e0450e73a8c5709d5d1604bd42eba61496276809591ead1739a3c2fcf8f6da86"
     fetched: "2026-11-02"
-    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file, so a new version needs the new link from the page."
   - id: "acer-a16-11m-qualcomm-base-driver-0.9100.1"
     maker: "Acer"
     title: "Qualcomm Base Driver 0.9100.1 for the A16-11M"
@@ -4379,7 +4379,7 @@ packages:
     size: 187365743
     sha256: "a0244eb84019a5ee0fe6edb411440116b1a2b3420f8a5f587a4663050a95f91c"
     fetched: "2026-11-02"
-    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file, so a new version needs the new link from the page."
   - id: "acer-al14-11m-qualcomm-base-driver-1.0.4572.8200"
     maker: "Acer"
     title: "Qualcomm Base Driver 1.0.4572.8200 for the AL14-11M"
@@ -4388,7 +4388,7 @@ packages:
     size: 299560575
     sha256: "57523f7d4ee202895e933dffbfdd0fb3517ba8f3c51aebc2b5432506bd434aca"
     fetched: "2026-11-16"
-    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page. Both of the AL14-11M's Qualcomm packs have the same file name with different contents."
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file, so a new version needs the new link from the page. Both of the AL14-11M's Qualcomm packs have the same file name with different contents."
   - id: "acer-al14-11m-multimedia-driver-1.0.4572.8200"
     maker: "Acer"
     title: "MultiMedia driver 1.0.4572.8200 for the AL14-11M"
@@ -4397,7 +4397,7 @@ packages:
     size: 299495192
     sha256: "34130dedb1e99464b4234b7814b731454a6bf8cb3121ef73e133497688a9c4d0"
     fetched: "2026-11-16"
-    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page. Both of the AL14-11M's Qualcomm packs have the same file name with different contents."
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file, so a new version needs the new link from the page. Both of the AL14-11M's Qualcomm packs have the same file name with different contents."
   - id: "acer-sfg14-01-adsp-2.0.7800.0002"
     maker: "Acer"
     title: "ADSP driver 2.0.7800.0002 for the SFG14-01"
@@ -4406,7 +4406,7 @@ packages:
     size: 19131404
     sha256: "a3f987de1d2c427ecf0d7e42986b6047ace7b96a642930bdd40c465aeac8c1ea"
     fetched: "2026-11-02"
-    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file, so a new version needs the new link from the page."
   - id: "acer-sfg14-01-qualcomm-base-driver-0.7800.1"
     maker: "Acer"
     title: "Qualcomm Base Driver 0.7800.1 for the SFG14-01"
@@ -4415,7 +4415,7 @@ packages:
     size: 135322747
     sha256: "a47e77e77e4d5b3dcd38260afd04ba3f93febfe6358fd5c70b49d2a92eff840d"
     fetched: "2026-11-02"
-    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file, so a new version needs the new link from the page."
   - id: "acer-sfg14-01-multimedia-driver-31.0.96.0"
     maker: "Acer"
     title: "MultiMedia driver 31.0.96.0 for the SFG14-01"
@@ -4424,7 +4424,7 @@ packages:
     size: 163904468
     sha256: "3d55e8f45d3cb36df820514b8ec27eafa5629c92b02e6dc17d09594037a9f355"
     fetched: "2026-11-02"
-    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file, so a new version needs the new link from the page."
   - id: "acer-sf14-11-adsp-2.0.7800.0002"
     maker: "Acer"
     title: "ADSP driver 2.0.7800.0002 for the SF14-11"
@@ -4433,7 +4433,7 @@ packages:
     size: 19131404
     sha256: "a3f987de1d2c427ecf0d7e42986b6047ace7b96a642930bdd40c465aeac8c1ea"
     fetched: "2026-11-02"
-    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file, so a new version needs the new link from the page."
   - id: "acer-sf14-11-qualcomm-base-driver-0.7800.1"
     maker: "Acer"
     title: "Qualcomm Base Driver 0.7800.1 for the SF14-11"
@@ -4442,7 +4442,7 @@ packages:
     size: 135322747
     sha256: "a47e77e77e4d5b3dcd38260afd04ba3f93febfe6358fd5c70b49d2a92eff840d"
     fetched: "2026-11-02"
-    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file, so a new version needs the new link from the page."
   - id: "acer-sf14-11-multimedia-driver-31.0.96.0"
     maker: "Acer"
     title: "MultiMedia driver 31.0.96.0 for the SF14-11"
@@ -4451,7 +4451,7 @@ packages:
     size: 163904468
     sha256: "3d55e8f45d3cb36df820514b8ec27eafa5629c92b02e6dc17d09594037a9f355"
     fetched: "2026-11-02"
-    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file, so a new version needs the new link from the page."
   - id: "acer-sfsp14-q51t-qualcomm-base-driver-685.13804.40.0"
     maker: "Acer"
     title: "Qualcomm Base Driver 685.13804.40.0 for the SFSP14-Q51T"
@@ -4460,7 +4460,7 @@ packages:
     size: 426339986
     sha256: "58d0aa896171fc3b895ccb0423ff506e5282bc0edcd2dcc5357bec35a10faeb9"
     fetched: "2026-11-15"
-    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file, so a new version needs the new link from the page."
   - id: "acer-others-acer-2.0-w11x64-a"
     maker: "Acer"
     title: "Other Drivers 2.0 package for the SFA14-11"
@@ -4469,7 +4469,7 @@ packages:
     size: 246293766
     sha256: "3c955be4bbfcfc64d556b0073dc19af38db75d35292e18acec3bd49781db5df0"
     fetched: "2026-11-02"
-    note: "Acer's file server only accepts a link with the acerid its support page gives each file; a new version needs the new link from the page."
+    note: "Acer's file server only accepts a link with the acerid its support page gives each file, so a new version needs the new link from the page."
   - id: "asus-socpackage-43699"
     maker: "ASUS"
     title: "S5507QA V1.318.7800.0"
@@ -4947,7 +4947,7 @@ packages:
     size: 533954560
     sha256: "7ca4d76e425bd7bf05403900e2505eac47bd595c9838d78ce044934ae8d2f3ae"
     fetched: "2026-11-07"
-    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+    note: "The file link changes with every version. The page always lists the current one, which may hold newer files."
   - id: "microsoft-surfacelaptop13in2ndeditionwithsnapdragon"
     maker: "Microsoft"
     title: "Surface Laptop 13-inch 2nd Edition with Snapdragon"
@@ -4956,7 +4956,7 @@ packages:
     size: 687312896
     sha256: "6301570ca49f810c6b63b0eb5c2f729bb3072508e42cdfa980be65af8f1950ef"
     fetched: "2026-11-14"
-    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+    note: "The file link changes with every version. The page always lists the current one, which may hold newer files."
   - id: "microsoft-surfacelaptop7"
     maker: "Microsoft"
     title: "Surface Laptop 7th Edition"
@@ -4965,7 +4965,7 @@ packages:
     size: 530989056
     sha256: "4c4640205fa181cc7ac9bc14c35903d3147537cbe2ae8940ba2ade8e7ae25305"
     fetched: "2026-11-15"
-    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+    note: "The file link changes with every version. The page always lists the current one, which may hold newer files."
   - id: "microsoft-surfacelaptop8withsnapdragon"
     maker: "Microsoft"
     title: "Surface Laptop 8th Edition with Snapdragon"
@@ -4974,7 +4974,7 @@ packages:
     size: 693526528
     sha256: "e888288deb0e5f25322a118d2b36522df06b25bd56be952cd6fb7b6ffb4f20a0"
     fetched: "2026-11-02"
-    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+    note: "The file link changes with every version. The page always lists the current one, which may hold newer files."
   - id: "microsoft-surfacepro-12in-1st-edition"
     maker: "Microsoft"
     title: "Surface Pro 12-inch"
@@ -4983,7 +4983,7 @@ packages:
     size: 532025344
     sha256: "99481ae6b407672b4422066abca92b3b521869b34af1fa5124b702bfa6824f0c"
     fetched: "2026-11-02"
-    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+    note: "The file link changes with every version. The page always lists the current one, which may hold newer files."
   - id: "microsoft-surfacepro11"
     maker: "Microsoft"
     title: "Surface Pro 11th Edition"
@@ -4992,7 +4992,7 @@ packages:
     size: 647004160
     sha256: "8b299016027a4a87f50cf168f69ca1fb8dedc9a0612fcd6cff89b9bc64135ec2"
     fetched: "2026-11-02"
-    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+    note: "The file link changes with every version. The page always lists the current one, which may hold newer files."
   - id: "microsoft-surfacepro12in2ndeditionwithsnapdragon"
     maker: "Microsoft"
     title: "Surface Pro 12-inch 2nd Edition with Snapdragon"
@@ -5001,7 +5001,7 @@ packages:
     size: 808103936
     sha256: "2f39eb38825a355499a45ba0e186a35d22b3bfa6309d11a5f564e7f7a893edb4"
     fetched: "2026-11-14"
-    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+    note: "The file link changes with every version. The page always lists the current one, which may hold newer files."
   - id: "microsoft-surfacepro12withsnapdragon"
     maker: "Microsoft"
     title: "Surface Pro 12th Edition with Snapdragon"
@@ -5010,7 +5010,7 @@ packages:
     size: 690786304
     sha256: "a35da2faa0af7c05b701ac9b451b70c335d8795b025427da082739b665d2a51a"
     fetched: "2026-11-14"
-    note: "The file link changes with every version; the page always lists the current one, which may hold newer files."
+    note: "The file link changes with every version. The page always lists the current one, which may hold newer files."
   - id: "samsung-basw-a4325a01-1063"
     maker: "Samsung"
     title: "Qualcomm Windows Driver Pack 2.5.30.1086 for the NP750XQB"
@@ -5018,7 +5018,7 @@ packages:
     size: 474524650
     sha256: "04b1d92deacf4ff7848224c7f3d5061618678d19c585ccb47786e672a719a843"
     fetched: "2026-11-08"
-    note: "Samsung lists it for the NP750XQB (built 2025-05-30); the NP750XQA's page still offers the 2024 pack 1.0.0.0 (BASW-A4242A01). Both models report board CA09144D, the only Samsung board its audio DSP extension takes. Its audio DSP board trees equal those running on an NP750XQA owner's laptop, and its GPU zap shader is Samsung-signed with rollback version 1 like the owner's, where the 2024 pack's is Qualcomm's generic one with version 0."
+    note: "Samsung lists it for the NP750XQB (built 2025-05-30), and the NP750XQA's page still offers the 2024 pack 1.0.0.0 (BASW-A4242A01). Both models report board CA09144D, the only Samsung board its audio DSP extension takes. Its audio DSP board trees equal those running on an NP750XQA owner's laptop, and its GPU zap shader is Samsung-signed with rollback version 1 like the owner's, where the 2024 pack's is Qualcomm's generic one with version 0."
   - id: "samsung-basw-a4231a01-1063"
     maker: "Samsung"
     title: "Windows Driver Pack"
@@ -5042,7 +5042,7 @@ packages:
     size: 404353024
     sha256: "f371bbe1c262ad4526b16e898b30958eeeb7df38e7e87026cc2ff781829c23eb"
     fetched: "2026-11-06"
-    note: "The file link changes with every version; the page always lists the current one, which may hold newer files. The Windows Dev Kit 2023 reports the same subsystem IDs (MSHW0276 audio DSP, MSHW0278 compute DSP, MSWW8280 GPU), so Windows gives it these drivers too. A Dev Kit's own copy (Armbian's DEVKIT23) has this compute DSP byte for byte and an older build of this audio DSP with the same Microsoft signing (OEM 0x69, model 0x47)."
+    note: "The file link changes with every version. The page always lists the current one, which may hold newer files. The Windows Dev Kit 2023 reports the same subsystem IDs (MSHW0276 audio DSP, MSHW0278 compute DSP, MSWW8280 GPU), so Windows gives it these drivers too. A Dev Kit's own copy (Armbian's DEVKIT23) has this compute DSP byte for byte and an older build of this audio DSP with the same Microsoft signing (OEM 0x69, model 0x47)."
   - id: "huawei-msupdate-adsp-9.9.9999.1"
     maker: "Huawei"
     title: "Qualcomm Audio DSP Subsystem extension 9.9.9999.1 for the MateBook E Go (Windows Update)"
@@ -5051,7 +5051,7 @@ packages:
     size: 7003354
     sha256: "7670f5dd82474ebf28b7f0d0e064188894e2836208903e304d45c54d3d244308"
     fetched: "2026-11-06"
-    note: "A Microsoft Update Catalog cab submitted by Huawei Device Co., Ltd.; it has a signature appended, which 7-Zip reports as data after the archive and cabextract as extra bytes."
+    note: "A Microsoft Update Catalog cab submitted by Huawei Device Co., Ltd. It has a signature appended, which 7-Zip reports as data after the archive and cabextract as extra bytes."
   - id: "huawei-system-hardware-update-200.0.10.0"
     maker: "Huawei"
     title: "HUAWEI - System Hardware Update - 4/26/2024 (200.0.10.0), from Windows Update"

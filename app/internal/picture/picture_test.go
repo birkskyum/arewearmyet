@@ -49,7 +49,7 @@ func TestDrawsTheFrameInCellsThatKeepItsShape(t *testing.T) {
 	drawn := frame.Render(80, 20)
 	lines := strings.Split(drawn, "\n")
 	cells := strings.Count(lines[0], "▀")
-	// 16:9 in cells twice as high as wide: 20 rows are 40 pixels high, so 71 wide
+	// 16:9 in cells twice as high as wide, where 20 rows are 40 pixels high, so 71 wide
 	if len(lines) != 20 || cells != 71 {
 		t.Errorf("drew %d rows of %d cells", len(lines), cells)
 	}

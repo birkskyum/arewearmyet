@@ -1,11 +1,11 @@
 # What's known about each check past booting, kept by hand and reviewed like the
-# model list. Owners' own runs of probe.sh come in through the API and show next to
-# these on the model pages; this file holds what someone has looked at and written up.
+# model list. Owners' own runs of hw-test come in through the API and show next to
+# these on the model pages. This file holds what someone has looked at and written up.
 #
-# families: what holds across a chip family, shown on every model of it unless the
+# families   what holds across a chip family, shown on every model of it unless the
 #   model's own finding says otherwise. Keys are generations from models.yaml.
-# models: per model id
-#   details   longer notes for the model page: what's specific to it, quirks, history
+# models     one entry per model id
+#   details   longer notes for the model page, on what's specific to it, its quirks and history
 #   links     [{ title, url }] discussions, owner repos, write-ups
 #   checks    { <check id>: { state, note, version, checked, source } }
 #             state     works, partial, broken, untested or absent
@@ -16,7 +16,7 @@
 #             version   the linux-omarchy (or other kernel) version it was seen on
 #             checked   the month, as YYYY-MM
 #             source    a link to the report, discussion or pull request
-#             basis     what it rests on: omarchy (seen on Omarchy), other-distro (seen on another
+#             basis     what it rests on, one of omarchy (seen on Omarchy), other-distro (seen on another
 #                       distro), tree-author (said by the device tree's author of their own
 #                       kernel) or maker-spec (the maker's description of the model). Only
 #                       omarchy and maker-spec count as the model's status on the site. Left
@@ -88,7 +88,7 @@ families:
 models:
   lenovo-yoga-slim-7x-14q8x9:
     details: |
-      The team's main test machine, the 83ED with a first-generation X Elite, tested with BIOS NHCN62WW. Lenovo's compute DSP firmware is in linux-firmware since 21 October 2026 (merge request 1314) and comes with its next release; until then the installer copies it from Windows. The fan and temperature readings need a driver that is still under review. Kernels 7.2.9 to 7.2.11 stop the keyboard and touchpad; Linux 7.3 has Qualcomm's fix.
+      The team's main test machine, the 83ED with a first-generation X Elite, tested with BIOS NHCN62WW. Lenovo's compute DSP firmware is in linux-firmware since 21 October 2026 (merge request 1314) and comes with its next release. Until then the installer copies it from Windows. The fan and temperature readings need a driver that is still under review. Kernels 7.2.9 to 7.2.11 stop the keyboard and touchpad, and Linux 7.3 has Qualcomm's fix.
     links:
       - title: Omarchy on the Lenovo Yoga Slim 7x (discussion 10426)
         url: https://github.com/omacom/omarchy/discussions/10426
@@ -108,7 +108,7 @@ models:
       adsp: { state: works, note: "Starts from the firmware Linux ships.", version: "7.2.8", checked: 2026-10 }
       battery: { state: works, version: "7.2.8", checked: 2026-10 }
       cdsp: { state: partial, note: "Lenovo's firmware is in linux-firmware since 21 October 2026 and reaches the laptop with its next release.", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/10426", basis: omarchy, where: "Omarchy on the team's Yoga Slim 7x, October 2026", quote: Lenovo's firmware is in Linux's firmware since 21 October and reaches the laptop with its next release }
-      fans: { state: partial, note: "The laptop's firmware runs the fans and they respond to load. The temperatures can be read (59 sensors on 7.3-59). The fan speed can't yet: its driver is under review.", version: "7.3-59", checked: 2026-11 }
+      fans: { state: partial, note: "The laptop's firmware runs the fans and they respond to load. The temperatures can be read (59 sensors on 7.3-59). The fan speed can't yet, since its driver is under review.", version: "7.3-59", checked: 2026-11 }
       suspend: { state: partial, note: "Closing the lid enters the deepest sleep since linux-omarchy 7.2.8-19. Sleep started with the lid open ends by itself after about 15 seconds on the charger or 5 minutes on battery.", version: "7.2.8-19", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/10426", basis: omarchy, where: "Omarchy on the team's Yoga Slim 7x, October 2026", quote: Sleep started with the lid open ends by itself after about 15 seconds on the charger or about 5 minutes on battery }
       hibernate: { state: broken, note: "Waking from hibernation restarts the laptop.", checked: 2026-10, source: "https://github.com/omacom/omarchy/discussions/11823", basis: omarchy, where: "Omarchy on the Yoga Slim 7x, page updated 21 October 2026", quote: Hibernation | ❌ | Waking from hibernation restarts the laptop. }
       camera: { state: works, note: "Works since linux-omarchy 7.2.8-20, and Chromium shows live video with the privacy light on. About 1 in 100 camera starts still times out.", version: "7.2.8-21", checked: 2026-10, source: "https://github.com/omacom/omarchy-pkgs/pull/1277", basis: omarchy, where: "linux-omarchy 7.2.8-20, 2026-10-18", quote: "A capture after 60 s with the panel off works, and Chromium shows upright live video with the privacy LED on." }
@@ -144,7 +144,7 @@ models:
       touchscreen: { state: works, note: "Touch works since linux-omarchy-dtbs 7.3-31, with two-finger scroll and pinch. Light taps can register as drags before iptsd 3.1.0-5, and the pen hasn't been tested.", checked: 2026-11, source: "https://github.com/omacom/omarchy/discussions/18966", basis: omarchy, where: "Omarchy edge r7886, kernel 7.3-63, linux-omarchy-dtbs 7.3-31, 2026-11-15", quote: "Everything in the first post's list has landed, thanks to @birkskyum and the maintainers. Running an up-to-date edge install now (r7886, kernel 7.3-63, `linux-omarchy-dtbs` 7.3-31), with one local package and one local rule left." }
       camera: { state: partial, note: "The front camera shows video in a browser call since linux-omarchy-dtbs 7.3-31. The picture is nearly black in a dim room unless the sensor's gain is raised by hand, and camera tuning is still open.", checked: 2026-11, source: "https://github.com/omacom/omarchy/discussions/18966", basis: omarchy, where: "Omarchy edge r7886, kernel 7.3-63, linux-omarchy-dtbs 7.3-31, 2026-11-15", quote: "Everything in the first post's list has landed, thanks to @birkskyum and the maintainers. Running an up-to-date edge install now (r7886, kernel 7.3-63, `linux-omarchy-dtbs` 7.3-31), with one local package and one local rule left." }
       video-decode: { state: works, note: "The video decoder comes up since its firmware ships in Omarchy's firmware package for this laptop (15 November 2026). H.264 and HEVC clips decoded through ffmpeg match software decoding.", checked: 2026-11, source: "https://github.com/birkskyum/arewearmyet/issues/13", basis: omarchy, where: "Omarchy, updated to microsoft-surface-laptop-7-firmware 20261115-1, 2026-11-15", quote: "Verified on the laptop after updating: Iris decoder and encoder come up on the packaged file." }
-      suspend: { state: broken, note: "Wakes by itself; the lid switch line and the USB-A wake line fire together.", checked: 2026-11, source: "https://github.com/omacom/omarchy/issues/18970", basis: omarchy, where: "Omarchy 4.0.0.r7863, kernel 7.3.0-62-omarchy; unchanged on 7.3.0-72-omarchy on 2026-11-18", quote: "The laptop wakes from suspend by itself, 17 to 35 seconds after going to sleep, with nothing touched." }
+      suspend: { state: broken, note: "Wakes by itself. The lid switch line and the USB-A wake line fire together.", checked: 2026-11, source: "https://github.com/omacom/omarchy/issues/18970", basis: omarchy, where: "Omarchy 4.0.0.r7863, kernel 7.3.0-62-omarchy, and unchanged on 7.3.0-72-omarchy on 2026-11-18", quote: "The laptop wakes from suspend by itself, 17 to 35 seconds after going to sleep, with nothing touched." }
 
   samsung-galaxy-book4-edge-14:
     details: |
@@ -247,7 +247,7 @@ models:
 
   hp-omnibook-x-14-kr:
     details: |
-      The 14-kr1 with the 6-core X2 Plus (Kalambo) chip. Its tree ships with the GPU off, so the desktop needs LIBGL_ALWAYS_SOFTWARE=1 in /etc/environment. The kernel picks deep sleep by default, which loses the Wi-Fi card on resume and restarts the laptop after a few cycles; s2idle is being tested.
+      The 14-kr1 with the 6-core X2 Plus (Kalambo) chip. Its tree ships with the GPU off, so the desktop needs LIBGL_ALWAYS_SOFTWARE=1 in /etc/environment. The kernel picks deep sleep by default, which loses the Wi-Fi card on resume and restarts the laptop after a few cycles, and s2idle is being tested.
     links:
       - title: Owner's hardware report and test thread
         url: https://github.com/turbineBMW/omarchy-hardware-reports/issues/45
@@ -354,7 +354,7 @@ models:
         quote: 13.8-inch PixelSense Flow™ touchscreen display
   acer-aspire-1-a114-61:
     links:
-      - title: "postmarketOS wiki: Acer Aspire 1"
+      - title: "postmarketOS wiki page for the Acer Aspire 1"
         url: https://wiki.postmarketos.org/wiki/Acer_Aspire_1_A114-61_(acer-aspire1)
     checks:
       disk-unlock:
@@ -363,7 +363,7 @@ models:
         checked: 2024-07
         source: https://wiki.postmarketos.org/wiki/Acer_Aspire_1_A114-61_(acer-aspire1)
         basis: other-distro
-        where: postmarketOS wiki, where the feature table lists it as Works; the wiki now marks this port as archived
+        where: postmarketOS wiki, where the feature table lists it as Works. The wiki now marks this port as archived
         quote: Full disk encryption and unlocking with unl0kr.
       display:
         state: works
@@ -371,7 +371,7 @@ models:
         checked: 2024-07
         source: https://wiki.postmarketos.org/wiki/Acer_Aspire_1_A114-61_(acer-aspire1)
         basis: other-distro
-        where: postmarketOS wiki, where the feature table lists it as Works; the wiki now marks this port as archived
+        where: postmarketOS wiki, where the feature table lists it as Works. The wiki now marks this port as archived
         quote: Whether the display works; ideally with sleep mode and brightness control.
       keyboard:
         state: works
@@ -379,7 +379,7 @@ models:
         checked: 2024-07
         source: https://wiki.postmarketos.org/wiki/Acer_Aspire_1_A114-61_(acer-aspire1)
         basis: other-distro
-        where: postmarketOS wiki, mainline kernel; the wiki now marks this port as archived
+        where: postmarketOS wiki, mainline kernel. The wiki now marks this port as archived
         quote: By default the media keys will be on top (press Fn to input F1, F2...) and Fn behavior can be swapped via sysfs.
       touchpad:
         state: works
@@ -387,7 +387,7 @@ models:
         checked: 2024-07
         source: https://wiki.postmarketos.org/wiki/Acer_Aspire_1_A114-61_(acer-aspire1)
         basis: other-distro
-        where: postmarketOS wiki, where the feature table lists it as Works; the wiki now marks this port as archived
+        where: postmarketOS wiki, where the feature table lists it as Works. The wiki now marks this port as archived
         quote: Whether the built-in touchpad works.
       speakers:
         state: works
@@ -395,7 +395,7 @@ models:
         checked: 2024-07
         source: https://wiki.postmarketos.org/wiki/Acer_Aspire_1_A114-61_(acer-aspire1)
         basis: other-distro
-        where: postmarketOS wiki, mainline kernel; the wiki now marks this port as archived
+        where: postmarketOS wiki, mainline kernel. The wiki now marks this port as archived
         quote: Internal mic is not implemented yet.
       microphones:
         state: broken
@@ -411,7 +411,7 @@ models:
         checked: 2024-07
         source: https://wiki.postmarketos.org/wiki/Acer_Aspire_1_A114-61_(acer-aspire1)
         basis: other-distro
-        where: postmarketOS wiki, where the feature table lists it as Works; the wiki now marks this port as archived
+        where: postmarketOS wiki, where the feature table lists it as Works. The wiki now marks this port as archived
         quote: Whether charging and battery level reporting work.
       lid:
         state: partial
@@ -419,7 +419,7 @@ models:
         checked: 2024-07
         source: https://wiki.postmarketos.org/wiki/Acer_Aspire_1_A114-61_(acer-aspire1)
         basis: other-distro
-        where: postmarketOS wiki, mainline kernel; the wiki now marks this port as archived
+        where: postmarketOS wiki, mainline kernel. The wiki now marks this port as archived
         quote: The sensor is reported, but can't be used for wakeup yet.
       usb:
         state: works
@@ -427,7 +427,7 @@ models:
         checked: 2024-07
         source: https://wiki.postmarketos.org/wiki/Acer_Aspire_1_A114-61_(acer-aspire1)
         basis: other-distro
-        where: postmarketOS wiki, where the feature table lists it as Works; the wiki now marks this port as archived
+        where: postmarketOS wiki, where the feature table lists it as Works. The wiki now marks this port as archived
         quote: Whether the full-sized USB-A port works.
       external-display:
         state: works
@@ -435,7 +435,7 @@ models:
         checked: 2024-07
         source: https://wiki.postmarketos.org/wiki/Acer_Aspire_1_A114-61_(acer-aspire1)
         basis: other-distro
-        where: postmarketOS wiki, mainline kernel; the wiki now marks this port as archived
+        where: postmarketOS wiki, mainline kernel. The wiki now marks this port as archived
         quote: Using DisplayPort/HDMI audio requires restarting PulseAudio
   acer-aspire-14-ai-a14-11m:
     links:
@@ -787,7 +787,7 @@ models:
         under: "Supported features:"
   apcsilmic-dot-1:
     links:
-      - title: "aarch64-laptops: Support Apcsilmic Dot 1"
+      - title: "aarch64-laptops issue on Apcsilmic Dot 1 support"
         url: https://github.com/aarch64-laptops/build/issues/117
     checks:
       installer:
@@ -808,7 +808,7 @@ models:
         quote: Dot 1 Mini PC offers 4G network support for instant internet access without having to worry about Wi-Fi.
   asus-ascent-qn10:
     links:
-      - title: "Kernel list: ASUS Ascent QN10 device tree"
+      - title: "Kernel list posting of the ASUS Ascent QN10 device tree"
         url: https://patchwork.kernel.org/project/linux-arm-msm/patch/20261113-qn10-v1-2-e09b2aa7ccbe@oss.qualcomm.com/
     checks:
       display:
@@ -877,7 +877,7 @@ models:
         quote: 2 x USB 3.2 Gen2 10Gbpd Type-A 1 x USB 4 Gen2 40Gbps Type-C (with DP2.1/PD, 5V/3A) 1 x HDMI 1 x RJ45 LAN Port 1 x DC-in
   asus-novago-tp370ql:
     links:
-      - title: "aarch64-laptops: device status and Secure Boot steps"
+      - title: "aarch64-laptops page on device status and Secure Boot steps"
         url: https://github.com/aarch64-laptops/build/blob/master/README.md
     checks:
       display:
@@ -1468,9 +1468,9 @@ models:
         quote: Wi-Fi only comes up on about three boots in five so far, and the microphones and webcam don't work yet.
   asus-vivobook-s15-s5507:
     links:
-      - title: "postmarketOS wiki: ASUS Vivobook S 15"
+      - title: "postmarketOS wiki page for the ASUS Vivobook S 15"
         url: https://wiki.postmarketos.org/wiki/ASUS_Vivobook_S_15_(asus-s5507q)
-      - title: "Omarchy issue: Vivobook S 15 hardware enablement and fixes"
+      - title: "Omarchy issue on Vivobook S 15 hardware enablement and fixes"
         url: https://github.com/omacom/omarchy/issues/17473
       - title: Ubuntu concept bug for the Vivobook S 15 (X Elite)
         url: https://bugs.launchpad.net/ubuntu-concept/+bug/2084674
@@ -1737,7 +1737,7 @@ models:
         checked: 2026-11
         source: https://github.com/turbineBMW/omarchy-hardware-reports/issues/2
         basis: omarchy
-        where: Omarchy, installed from edge image 2026.11.11.487; full speed seen in an Ubuntu live session
+        where: Omarchy, installed from edge image 2026.11.11.487, with full speed seen in an Ubuntu live session
         quote: Apart from audio, the Wi-Fi still needs the calibration data the script adds
       bluetooth:
         state: works
@@ -2262,11 +2262,11 @@ models:
         quote: It seems they can go up in speed, but they never go down afterwards.
   asus-zenbook-a14-ux3407na:
     links:
-      - title: "Ubuntu concept: HDMI freezes the laptop"
+      - title: "Ubuntu concept bug on HDMI freezing the laptop"
         url: https://bugs.launchpad.net/ubuntu-concept/+bug/2167021
-      - title: "Ubuntu concept: no sound out of the box"
+      - title: "Ubuntu concept bug on no sound out of the box"
         url: https://bugs.launchpad.net/ubuntu-concept/+bug/2167022
-      - title: "Ubuntu concept: no Wi-Fi out of the box"
+      - title: "Ubuntu concept bug on no Wi-Fi out of the box"
         url: https://bugs.launchpad.net/ubuntu-concept/+bug/2167023
     checks:
       wifi:
@@ -2307,11 +2307,11 @@ models:
         quote: "Confirmed working: external displays via USB-C DisplayPort Alt Mode (af54000/af5c000 controllers) at full native resolution (tested 5120x2880)."
   asus-zenbook-a16-ux3607oa:
     links:
-      - title: "Omarchy: set up the Zenbook A16's firmware, disk unlock and sleep"
+      - title: "Omarchy pull request that sets up the Zenbook A16's firmware, disk unlock and sleep"
         url: https://github.com/omacom/omarchy/pull/17083
-      - title: "Omarchy: turn off suspend on the Zenbook A16 until it sleeps reliably"
+      - title: "Omarchy pull request that turns off suspend on the Zenbook A16 until it sleeps reliably"
         url: https://github.com/omacom/omarchy/pull/18178
-      - title: "Kernel list: Zenbook A16 support, with the list of working hardware"
+      - title: "Kernel list posting of Zenbook A16 support, with the list of working hardware"
         url: https://patchwork.kernel.org/project/linux-arm-msm/cover/20260721-topic-a16_submission-v1-0-8ea213130d05@oss.qualcomm.com/
     checks:
       installer:
@@ -2796,7 +2796,7 @@ models:
         checked: 2026-11
         source: https://github.com/omacom/omarchy/discussions/19382
         basis: omarchy
-        where: Omarchy 4.5.0-3, linux-omarchy 7.3-3.1; the other unit on Ubuntu 26.10, kernel 7.3.0-21-qcom-x1e
+        where: Omarchy 4.5.0-3, linux-omarchy 7.3-3.1. The other unit was on Ubuntu 26.10, kernel 7.3.0-21-qcom-x1e
         quote: 1023 here, unlike the 0 reported for the 7441 and for this model on Ubuntu. Keys not tested
       keyboard:
         state: works
@@ -2805,7 +2805,7 @@ models:
         checked: 2026-11
         source: https://github.com/omacom/omarchy/discussions/19382
         basis: omarchy
-        where: Omarchy 4.5.0-3, linux-omarchy 7.3-3.1; the media keys on Ubuntu 26.10, kernel 7.3.0-21-qcom-x1e
+        where: Omarchy 4.5.0-3, linux-omarchy 7.3-3.1. The media keys are from Ubuntu 26.10, kernel 7.3.0-21-qcom-x1e
         quote: "| Keyboard and touchpad | ✅ |"
       touchpad:
         state: works
@@ -2823,7 +2823,7 @@ models:
         checked: 2026-11
         source: https://github.com/omacom/omarchy/discussions/19382
         basis: omarchy
-        where: Omarchy 4.5.0-3, linux-omarchy 7.3-3.1; the other unit on Ubuntu 26.10, kernel 7.3.0-21-qcom-x1e
+        where: Omarchy 4.5.0-3, linux-omarchy 7.3-3.1. The other unit was on Ubuntu 26.10, kernel 7.3.0-21-qcom-x1e
         quote: Works out of the box
       wifi:
         state: works
@@ -2832,7 +2832,7 @@ models:
         checked: 2026-11
         source: https://github.com/omacom/omarchy/discussions/19382
         basis: omarchy
-        where: Omarchy 4.5.0-3, linux-omarchy 7.3-3.1; the wake time on Ubuntu 26.10, kernel 7.3.0-21-qcom-x1e
+        where: Omarchy 4.5.0-3, linux-omarchy 7.3-3.1. The wake time is from Ubuntu 26.10, kernel 7.3.0-21-qcom-x1e
         quote: WCN7850, worked out of the box
       bluetooth:
         state: works
@@ -3482,9 +3482,9 @@ models:
     links:
       - title: Omarchy ISO pull request with an owner's test report (September 2026)
         url: https://github.com/omacom/omarchy-iso/pull/197
-      - title: "Omarchy pull request: internal microphone routing"
+      - title: "Omarchy pull request on internal microphone routing"
         url: https://github.com/omacom/omarchy/pull/15574
-      - title: "Ubuntu bug: Support HP EliteBook Ultra G1q 14"
+      - title: "Ubuntu bug on support for the HP EliteBook Ultra G1q 14"
         url: https://bugs.launchpad.net/ubuntu-concept/+bug/2093269
     checks:
       installer:
@@ -3625,7 +3625,7 @@ models:
         quote: fail to probe on the CDSP edge with -12, consistent with cDSP/NPU still being unvalidated.
   hp-elitebook-x-g2q:
     links:
-      - title: "Kernel list: HP EliteBook X G2q support, with the list of working hardware"
+      - title: "Kernel list posting of HP EliteBook X G2q support, with the list of working hardware"
         url: https://patchwork.kernel.org/project/linux-arm-msm/cover/20260829-glymur-send-v5-0-a11bdf6a4b66@oss.qualcomm.com/
     checks:
       display:
@@ -3795,7 +3795,7 @@ models:
         quote: 5G module is optional and must be configured at the factory.
   hp-envy-x2-snapdragon:
     links:
-      - title: "aarch64-laptops: device status and Secure Boot steps"
+      - title: "aarch64-laptops page on device status and Secure Boot steps"
         url: https://github.com/aarch64-laptops/build/blob/master/README.md
     checks:
       display:
@@ -3902,9 +3902,9 @@ models:
         quote: (1) USB Type-C (Generation 1) on left side
   hp-omnibook-3-14-hz0:
     links:
-      - title: "Omarchy packages: speakers and microphones for the OmniBook 3 14"
+      - title: "Omarchy packages pull request with speakers and microphones for the OmniBook 3 14"
         url: https://github.com/omacom/omarchy-pkgs/pull/2756
-      - title: "Omarchy packages issue: touchpad at a second address on some units"
+      - title: "Omarchy packages issue on the touchpad at a second address on some units"
         url: https://github.com/omacom/omarchy-pkgs/issues/2755
     checks:
       backlight:
@@ -3991,7 +3991,7 @@ models:
         quote: "USB 3.2 Gen 2 Type-C ports (2), support:"
   hp-omnibook-5-16-bf0:
     links:
-      - title: "Ubuntu bug: Support HP OmniBook 5 Laptop 16-bf0xxx (8E33)"
+      - title: "Ubuntu bug on support for the HP OmniBook 5 Laptop 16-bf0xxx (8E33)"
         url: https://bugs.launchpad.net/ubuntu-concept/+bug/2169090
     checks:
       gpu:
@@ -4066,9 +4066,9 @@ models:
         quote: 2 USB Type-C® 10Gbps signaling rate (USB Power Delivery, DisplayPort™ 1.4a, HP Sleep
   hp-omnibook-5-16-bf1:
     links:
-      - title: "Omarchy: add the HP OmniBook 5 16 (2026)"
+      - title: "Omarchy packages pull request that adds the HP OmniBook 5 16 (2026)"
         url: https://github.com/omacom/omarchy-pkgs/pull/2211
-      - title: "Omarchy: update the HP OmniBook 5 16-bf1xxx device tree"
+      - title: "Omarchy packages pull request that updates the HP OmniBook 5 16-bf1xxx device tree"
         url: https://github.com/omacom/omarchy-pkgs/pull/2822
     checks:
       installer:
@@ -4096,7 +4096,7 @@ models:
         checked: 2026-11
         source: https://github.com/omacom/omarchy-pkgs/pull/2211
         basis: other-distro
-        where: the owner's own kernel, relayed in an Omarchy packaging pull request of 6 November 2026; GPU left off in linux-omarchy 7.3-19
+        where: the owner's own kernel, relayed in an Omarchy packaging pull request of 6 November 2026. The GPU is left off in linux-omarchy 7.3-19
         quote: Rahul boots this tree on his own kernel with the panel, input, GPU, Wi-Fi, Bluetooth, battery and USB working. On this kernel the desktop renders on the CPU, and Bluetooth, sound and the embedded controller don't work yet.
       keyboard:
         state: works
@@ -4132,7 +4132,7 @@ models:
         checked: 2026-11
         source: https://github.com/omacom/omarchy-pkgs/pull/2211
         basis: other-distro
-        where: the owner's own kernel, relayed in an Omarchy packaging pull request of 6 November 2026; not working in linux-omarchy 7.3-19
+        where: the owner's own kernel, relayed in an Omarchy packaging pull request of 6 November 2026. It is not working in linux-omarchy 7.3-19
         quote: Rahul boots this tree on his own kernel with the panel, input, GPU, Wi-Fi, Bluetooth, battery and USB working. On this kernel the desktop renders on the CPU, and Bluetooth, sound and the embedded controller don't work yet.
       battery:
         state: works
@@ -4154,9 +4154,9 @@ models:
         quote: Rahul tested Omarchy's 2026.11.09 live image on his laptop (theflyingrahul/linux-hp-omnibook-5-glymur#30). It booted with display, NVMe, USB, keyboard and touchpad.
   hp-omnibook-ultra-14-kg0:
     links:
-      - title: "Kernel list: HP OmniBook Ultra 14-kg0xxx device tree, with the list of working hardware"
+      - title: "Kernel list posting of the HP OmniBook Ultra 14-kg0xxx device tree, with the list of working hardware"
         url: https://patchwork.kernel.org/project/linux-arm-msm/cover/20261108-hp-omnibook-v2-v3-0-f489fd0bdf33@oss.qualcomm.com/
-      - title: "Omarchy: show the disk unlock prompt on Snapdragon X2 machines"
+      - title: "Omarchy pull request that shows the disk unlock prompt on Snapdragon X2 machines"
         url: https://github.com/omacom/omarchy/pull/17662
     checks:
       installer:
@@ -4285,13 +4285,13 @@ models:
         quote: 5MP USB RGB Camera + IR Camera
   hp-omnibook-x-14-fe:
     links:
-      - title: "Omarchy issue: first install on the OmniBook X 14, with the fixes that followed"
+      - title: "Omarchy issue on the first install on the OmniBook X 14, with the fixes that followed"
         url: https://github.com/omacom/omarchy/issues/17396
-      - title: "Omarchy issue: monitor and headphone outputs missing after boot"
+      - title: "Omarchy issue on monitor and headphone outputs missing after boot"
         url: https://github.com/omacom/omarchy/issues/18585
-      - title: "Omarchy issue: lid actions do not run on device tree laptops"
+      - title: "Omarchy issue on lid actions not running on device tree laptops"
         url: https://github.com/omacom/omarchy/issues/19298
-      - title: "Ubuntu bug: Support HP OmniBook X Laptop 14-fe1xxx (X Plus)"
+      - title: "Ubuntu bug on support for the HP OmniBook X Laptop 14-fe1xxx (X Plus)"
         url: https://bugs.launchpad.net/ubuntu-concept/+bug/2092951
     checks:
       installer:
@@ -4413,7 +4413,7 @@ models:
         checked: 2026-11
         source: https://github.com/omacom/omarchy/issues/18585
         basis: omarchy
-        where: Omarchy edge, linux-omarchy 7.3-49; the jack report is from Ubuntu 26.04 on a 14-fe1
+        where: Omarchy edge, linux-omarchy 7.3-49. The jack report is from Ubuntu 26.04 on a 14-fe1
         quote: are missing, so a monitor on a USB-C port and plugged-in headphones don't show up as outputs.
       adsp:
         state: works
@@ -4483,9 +4483,9 @@ models:
         quote: The CDSP also comes up with the newer files
   hp-omnibook-x-16-cp:
     links:
-      - title: "Kernel list: HP OmniBook X 16-cp1 device tree, with the owner's test notes"
+      - title: "Kernel list posting of the HP OmniBook X 16-cp1 device tree, with the owner's test notes"
         url: https://patchwork.kernel.org/project/linux-arm-msm/cover/20261114020509.632311-1-jeff.roach0@gmail.com/
-      - title: "Ubuntu concept: bring-up of the HP OmniBook X 16-cp1"
+      - title: "Ubuntu concept bug on the bring-up of the HP OmniBook X 16-cp1"
         url: https://bugs.launchpad.net/ubuntu-concept/+bug/2170451
     checks:
       display:
@@ -4687,7 +4687,7 @@ models:
         quote: USB Type-C® 10 Gbps port Connects a USB device, provides high-speed data transfer,
   hp-probook-4-g1q:
     links:
-      - title: "Ubuntu bug: HP ProBook 4 G1q, with an owner's report on Ubuntu 26.04"
+      - title: "Ubuntu bug on the HP ProBook 4 G1q, with an owner's report on Ubuntu 26.04"
         url: https://bugs.launchpad.net/ubuntu-concept/+bug/2167258
     checks:
       wifi:
@@ -4874,7 +4874,7 @@ models:
         checked: 2025-10
         source: https://github.com/torvalds/linux/commit/aab69794b55d
         basis: tree-author
-        where: Kernel commit of October 2025, by the tree's author; the working readings on Nura (formerly postmarketOS), kernel 6.8.0
+        where: Kernel commit of October 2025, by the tree's author. The working readings are from Nura (formerly postmarketOS), kernel 6.8.0
         quote: 1. Panel backlight, lid detection and battery will be supported with the
       lid:
         state: broken
@@ -4910,7 +4910,7 @@ models:
         checked: 2025-10
         source: https://github.com/torvalds/linux/commit/aab69794b55d
         basis: tree-author
-        where: Kernel commit of October 2025, by the tree's author; the sensor notes on the Nura (formerly postmarketOS) wiki
+        where: Kernel commit of October 2025, by the tree's author. The sensor notes are on the Nura (formerly postmarketOS) wiki
         quote: 3. Cameras are tested to work with modified downstream driver, and once
       cdsp:
         state: works
@@ -4942,11 +4942,11 @@ models:
         under: "Supported features:"
   huawei-matebook-e-go:
     links:
-      - title: "Kernel list: MateBook E Go embedded controller drivers"
+      - title: "Kernel list posting of the MateBook E Go embedded controller drivers"
         url: https://lore.kernel.org/linux-arm-msm/20250214180656.28599-1-mitltlatltl@gmail.com/
-      - title: "Kernel list: MateBook E Go built-in panel"
+      - title: "Kernel list posting of the MateBook E Go built-in panel"
         url: https://lore.kernel.org/linux-arm-msm/20260630042229.277799-1-mitltlatltl@gmail.com/
-      - title: "Kernel list: MateBook E Go front camera"
+      - title: "Kernel list posting of the MateBook E Go front camera"
         url: https://lore.kernel.org/linux-arm-msm/20260425105300.745044-1-mitltlatltl@gmail.com/
     checks:
       display:
@@ -5041,7 +5041,7 @@ models:
         checked: 2025-02
         source: https://lore.kernel.org/linux-arm-msm/20250214180656.28599-1-mitltlatltl@gmail.com/
         basis: tree-author
-        where: Kernel list posting of February 2025, by the tree's author; low-power charging from the tree's commit of December 2024
+        where: Kernel list posting of February 2025, by the tree's author. Low-power charging is from the tree's commit of December 2024
         quote: "- USB Type-C PD(high power)"
         under: "provides the following features:"
       lid:
@@ -5051,7 +5051,7 @@ models:
         checked: 2025-02
         source: https://lore.kernel.org/linux-arm-msm/20250214180656.28599-1-mitltlatltl@gmail.com/
         basis: tree-author
-        where: Kernel list posting of February 2025, by the tree's author; tablet mode switch from the tree's commit of December 2024
+        where: Kernel list posting of February 2025, by the tree's author. The tablet mode switch is from the tree's commit of December 2024
         quote: "- LID switch detection"
         under: "provides the following features:"
       usb:
@@ -5355,7 +5355,7 @@ models:
         quote: 2x USB-C 3.2 Gen 2 (support data transfer, Power Delivery 3.0, and DisplayPort™ 1.4)
   lenovo-ideapad-5x-2-in-1-14q8x9:
     links:
-      - title: "Ubuntu bug: Support Lenovo IdeaPad 5x, with a 2-in-1 owner's report"
+      - title: "Ubuntu bug on support for the Lenovo IdeaPad 5x, with a 2-in-1 owner's report"
         url: https://bugs.launchpad.net/ubuntu-concept/+bug/2098124
     checks:
       keyboard:
@@ -5424,7 +5424,7 @@ models:
         quote: 2x USB-C® (USB 10Gbps), with USB PD 45-65W and DisplayPort™ 1.4
   lenovo-ideapad-slim-3x-15q8x10:
     links:
-      - title: "Ubuntu bug: Add support for Lenovo IdeaPad Slim 3"
+      - title: "Ubuntu bug on support for the Lenovo IdeaPad Slim 3"
         url: https://bugs.launchpad.net/ubuntu-concept/+bug/2114876
     checks:
       touchpad:
@@ -5652,7 +5652,7 @@ models:
         quote: 2x USB-C® (USB 10Gbps / USB 3.2 Gen 2), with USB PD 45-65W and DisplayPort™ 1.4
   lenovo-miix-630:
     links:
-      - title: "aarch64-laptops: device status and Secure Boot steps"
+      - title: "aarch64-laptops page on device status and Secure Boot steps"
         url: https://github.com/aarch64-laptops/build/blob/master/README.md
     checks:
       display:
@@ -5988,9 +5988,9 @@ models:
         quote: 1x USB-C® (USB 10Gbps / USB 3.2 Gen 2), with data transfer and 5V@0.9A charging
   lenovo-thinkpad-t14s-gen-6-snapdragon:
     links:
-      - title: "Debian wiki: Debian on the ThinkPad T14s Gen 6 Snapdragon"
+      - title: "Debian wiki page for the ThinkPad T14s Gen 6 Snapdragon"
         url: https://wiki.debian.org/InstallingDebianOn/Thinkpad/T14s_Gen6_Snapdragon
-      - title: "Omarchy: desktop camera access on the Snapdragon ThinkPad T14s"
+      - title: "Omarchy pull request for desktop camera access on the Snapdragon ThinkPad T14s"
         url: https://github.com/omacom/omarchy/pull/15331
     checks:
       display:
@@ -6149,11 +6149,11 @@ models:
         quote: Quectel RM520N-GL, 5G Sub-6 GHz, M.2 card, with embedded eSIM functionality
   lenovo-thinkpad-t14s-gen-7-snapdragon:
     links:
-      - title: "Kernel list: Elan touchpad fix for the T14s Gen 7, tested on two units"
+      - title: "Kernel list posting of the Elan touchpad fix for the T14s Gen 7, tested on two units"
         url: https://lore.kernel.org/linux-arm-msm/20261014234949.1730808-1-luke@phorex.org/
-      - title: "Kernel list: HDMI port of the T14s Gen 7"
+      - title: "Kernel list posting of the HDMI port of the T14s Gen 7"
         url: https://lore.kernel.org/linux-arm-msm/20261109-t14s-gen7-hdmi-port-v1-1-1a691e6c180e@oss.qualcomm.com/
-      - title: "Kernel list: embedded controller of the T14s Gen 7"
+      - title: "Kernel list posting of the embedded controller of the T14s Gen 7"
         url: https://lore.kernel.org/linux-arm-msm/20261107-t14s-gen7-ec-v1-2-f4a8edaac447@oss.qualcomm.com/
     checks:
       display:
@@ -6300,11 +6300,11 @@ models:
         quote: Snapdragon® X61 5G Modem-RF System, 5G Sub-6 GHz, M.2 card, with embedded eSIM functionality
   lenovo-thinkpad-x13s-gen-1:
     links:
-      - title: "Omarchy issue: ThinkPad X13s sleep, USB-C and panel problems"
+      - title: "Omarchy issue on ThinkPad X13s sleep, USB-C and panel problems"
         url: https://github.com/omacom/omarchy/issues/18983
-      - title: "Debian wiki: Debian on the ThinkPad X13s"
+      - title: "Debian wiki page for the ThinkPad X13s"
         url: https://wiki.debian.org/InstallingDebianOn/Thinkpad/X13s
-      - title: "postmarketOS wiki: Lenovo ThinkPad X13s"
+      - title: "postmarketOS wiki page for the Lenovo ThinkPad X13s"
         url: https://wiki.postmarketos.org/wiki/Lenovo_ThinkPad_X13s_(lenovo-21bx)
     checks:
       disk-unlock:
@@ -6494,7 +6494,7 @@ models:
         quote: 2x USB-C® 3.2 Gen 2 (support data transfer, Power Delivery 3.0 and DisplayPort™ 1.4a)
   lenovo-yoga-c630:
     links:
-      - title: "postmarketOS wiki: Lenovo Yoga C630"
+      - title: "postmarketOS wiki page for the Lenovo Yoga C630"
         url: https://wiki.postmarketos.org/wiki/Lenovo_Yoga_c630_(lenovo-yoga-c630)
     checks:
       disk-unlock:
@@ -6644,7 +6644,7 @@ models:
         quote: one USB 3.1 Type-C Gen 1 (with the function of Power Delivery and DisplayPort),
   lenovo-yoga-slim-7x-14q8y11:
     links:
-      - title: "Kernel list: Lenovo Yoga Slim 7x Gen 11 support, with an owner's test"
+      - title: "Kernel list posting of Lenovo Yoga Slim 7x Gen 11 support, with an owner's test"
         url: https://lore.kernel.org/linux-arm-msm/20260731-topic-yoga_submission-v2-0-f1887031da4f@oss.qualcomm.com/
     checks:
       display:
@@ -6907,7 +6907,7 @@ models:
         under: "Working:"
   microsoft-surface-laptop-13in-1st-edition:
     links:
-      - title: "Omarchy: add the Microsoft Surface Laptop 13-inch"
+      - title: "Omarchy packages pull request that adds the Microsoft Surface Laptop 13-inch"
         url: https://github.com/omacom/omarchy-pkgs/pull/2289
     checks:
       display:
@@ -7000,7 +7000,7 @@ models:
         quote: "- 2 × USB-C/USB 3.2 ports with support for - Charging - Data transfer - DisplayPort 1.4a (up to 2 × 4K @ 60 Hz) - Surface Thunderbolt™ 4 Dock support - Supports fast charging with a minimum 60 W charger via USB-C 9 - USB-A 3.1 (Gen 2) - 3.5-mm headphone jack"
   microsoft-surface-laptop-7-13:
     links:
-      - title: "linux-surface: Surface Laptop 7th Edition support thread"
+      - title: "linux-surface support thread for the Surface Laptop 7th Edition"
         url: https://github.com/linux-surface/linux-surface/issues/1590
     checks:
       gpu:
@@ -7086,7 +7086,7 @@ models:
         quote: libcamera has no CameraSensorHelper for the SL7's ov02c10 front camera, so the software ISP misreads the gain units.
   microsoft-surface-pro-12in-1st-edition:
     links:
-      - title: "linux-surface: installing on the Surface Pro 12-inch"
+      - title: "linux-surface issue on installing on the Surface Pro 12-inch"
         url: https://github.com/linux-surface/linux-surface/issues/1962
     checks:
       gpu:
@@ -7231,7 +7231,7 @@ models:
         checked: 2026-07
         source: https://github.com/torvalds/linux/commit/447f8053b184
         basis: tree-author
-        where: Kernel commit of June 2026, by the tree's author, tested on model 2110; the working cameras on the author's own branch, May 2026
+        where: Kernel commit of June 2026, by the tree's author, tested on model 2110. The working cameras are on the author's own branch, May 2026
         quote: "Not currently supported: - Accelerometer - Front, Back and IR cameras"
       video-decode:
         state: broken
@@ -7815,7 +7815,7 @@ models:
         quote: LLMs and LVMs locally. NPU 1x RJ45 Ethernet
   samsung-galaxy-book-go:
     links:
-      - title: "velvet-os: Snapdragon 7c Windows laptops status"
+      - title: "velvet-os issue on the status of Snapdragon 7c Windows laptops"
         url: https://github.com/velvet-os/imagebuilder/issues/136
     checks:
       display:
@@ -7957,7 +7957,7 @@ models:
         checked: 2025-04
         source: https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Book_S_(samsung-w767)
         basis: other-distro
-        where: postmarketOS, per its wiki's feature table; the device is archived there
+        where: postmarketOS, per its wiki's feature table. The device is archived there
         quote: FDE Full disk encryption and unlocking with unl0kr. Works
       display:
         state: partial
@@ -7966,7 +7966,7 @@ models:
         checked: 2025-04
         source: https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Book_S_(samsung-w767)
         basis: other-distro
-        where: postmarketOS, per its wiki's feature table; the device is archived there
+        where: postmarketOS, per its wiki's feature table. The device is archived there
         quote: Screen Whether the display works; ideally with sleep mode and brightness control. Partial
       gpu:
         state: works
@@ -7975,7 +7975,7 @@ models:
         checked: 2025-04
         source: https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Book_S_(samsung-w767)
         basis: other-distro
-        where: postmarketOS, per its wiki's feature table; the device is archived there
+        where: postmarketOS, per its wiki's feature table. The device is archived there
         quote: Multimedia 3D Acceleration Works
       keyboard:
         state: works
@@ -7984,7 +7984,7 @@ models:
         checked: 2025-04
         source: https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Book_S_(samsung-w767)
         basis: other-distro
-        where: postmarketOS, per its wiki's feature table; the device is archived there
+        where: postmarketOS, per its wiki's feature table. The device is archived there
         quote: Keyboard Whether the built-in physical keyboard works. Works
       touchpad:
         state: works
@@ -7993,7 +7993,7 @@ models:
         checked: 2025-04
         source: https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Book_S_(samsung-w767)
         basis: other-distro
-        where: postmarketOS, per its wiki's feature table; the device is archived there
+        where: postmarketOS, per its wiki's feature table. The device is archived there
         quote: Touchpad Whether the built-in touchpad works. Works
       touchscreen:
         state: broken
@@ -8002,7 +8002,7 @@ models:
         checked: 2025-04
         source: https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Book_S_(samsung-w767)
         basis: other-distro
-        where: postmarketOS, per its wiki's feature table; the device is archived there
+        where: postmarketOS, per its wiki's feature table. The device is archived there
         quote: Touchscreen Broken Keyboard
       wifi:
         state: works
@@ -8011,7 +8011,7 @@ models:
         checked: 2025-04
         source: https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Book_S_(samsung-w767)
         basis: other-distro
-        where: postmarketOS, per its wiki's feature table; the device is archived there
+        where: postmarketOS, per its wiki's feature table. The device is archived there
         quote: Connectivity Wi-Fi Works
       bluetooth:
         state: works
@@ -8020,7 +8020,7 @@ models:
         checked: 2025-04
         source: https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Book_S_(samsung-w767)
         basis: other-distro
-        where: postmarketOS, per its wiki's feature table; the device is archived there
+        where: postmarketOS, per its wiki's feature table. The device is archived there
         quote: Wi-Fi Works Bluetooth Works
       speakers:
         state: broken
@@ -8029,7 +8029,7 @@ models:
         checked: 2025-04
         source: https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Book_S_(samsung-w767)
         basis: other-distro
-        where: postmarketOS, per its wiki's feature table; the device is archived there
+        where: postmarketOS, per its wiki's feature table. The device is archived there
         quote: Audio Audio playback, microphone, headset and buttons. Broken
       battery:
         state: broken
@@ -8038,7 +8038,7 @@ models:
         checked: 2025-04
         source: https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Book_S_(samsung-w767)
         basis: other-distro
-        where: postmarketOS, per its wiki's feature table; the device is archived there
+        where: postmarketOS, per its wiki's feature table. The device is archived there
         quote: Battery Whether charging and battery level reporting work. Broken
       lid:
         state: broken
@@ -8047,7 +8047,7 @@ models:
         checked: 2025-04
         source: https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Book_S_(samsung-w767)
         basis: other-distro
-        where: postmarketOS, per its wiki's feature table; the device is archived there
+        where: postmarketOS, per its wiki's feature table. The device is archived there
         quote: Hall Effect Measures magnetic fields; usually used as a flip cover sensor Broken
       usb:
         state: works
@@ -8056,7 +8056,7 @@ models:
         checked: 2025-04
         source: https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Book_S_(samsung-w767)
         basis: other-distro
-        where: postmarketOS, per its wiki's feature table; the device is archived there
+        where: postmarketOS, per its wiki's feature table. The device is archived there
         quote: USB OTG USB On-The-Go or USB-C Role switching. Works
       external-display:
         state: broken
@@ -8065,7 +8065,7 @@ models:
         checked: 2025-04
         source: https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Book_S_(samsung-w767)
         basis: other-distro
-        where: postmarketOS, per its wiki's feature table; the device is archived there
+        where: postmarketOS, per its wiki's feature table. The device is archived there
         quote: HDMI/DP Video and audio output with HDMI or DisplayPort. Broken
       camera:
         state: broken
@@ -8074,7 +8074,7 @@ models:
         checked: 2025-04
         source: https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Book_S_(samsung-w767)
         basis: other-distro
-        where: postmarketOS, per its wiki's feature table; the device is archived there
+        where: postmarketOS, per its wiki's feature table. The device is archived there
         quote: Camera Broken Connectivity
       modem:
         state: broken
@@ -8083,7 +8083,7 @@ models:
         checked: 2025-04
         source: https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Book_S_(samsung-w767)
         basis: other-distro
-        where: postmarketOS, per its wiki's feature table; the device is archived there
+        where: postmarketOS, per its wiki's feature table. The device is archived there
         quote: Modem Mobile data Broken
       fingerprint:
         state: untested
@@ -8095,7 +8095,7 @@ models:
         quote: Sensors Fingerprint Sensor, Hall Sensor, Light Sensor (Keyboard Backlit on/off)
   samsung-galaxy-book2-go:
     links:
-      - title: "Kernel list: Add Samsung Galaxy Book2 Go (v2)"
+      - title: "Kernel list posting that adds the Samsung Galaxy Book2 Go (v2)"
         url: https://lore.kernel.org/all/20261112-book2go-v2-1-12691134e34e@fairphone.com/
     checks:
       display:
@@ -8475,7 +8475,7 @@ models:
         quote: Security TPM Yes FingerPrint Reader Yes
   tcl-book-14-go:
     links:
-      - title: "velvet-os: Snapdragon 7c Windows laptops status"
+      - title: "velvet-os issue on the status of Snapdragon 7c Windows laptops"
         url: https://github.com/velvet-os/imagebuilder/issues/136
     checks:
       display:
@@ -9408,7 +9408,7 @@ models:
         checked: 2026-11
         source: https://learn.microsoft.com/en-us/surface/tech-specs/surface-laptop-ultra-1stedition
         basis: maker-spec
-        where: "Microsoft Learn, Tech specs: Surface Laptop Ultra (Display)"
+        where: "Microsoft Learn, the Surface Laptop Ultra's tech specs (Display)"
         quote: 15-inch PixelSense™ Ultra touchscreen display
   microsoft-surface-rtx-spark-dev-box:
     checks:

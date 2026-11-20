@@ -44,7 +44,7 @@ func TestANoteIsAskedForAtTheTerminalSoNothingHasToBeTypedOut(t *testing.T) {
 		return bufio.NewReader(strings.NewReader(strings.Join(lines, "\n") + "\n"))
 	}
 
-	// hw-test note: the part, what happened, and whether it was before the last restart
+	// hw-test note asks for the part, what happened, and whether it was before the last restart
 	var asked strings.Builder
 	args, written := askNote(typed("sleep", "Slept about five minutes. Wi-Fi was gone on wake and needed a restart.", "y"), &asked, checks, noteArgs{kind: "problem"}, "")
 	if !written || args.check != "suspend" || args.title != "Slept about five minutes. Wi-Fi was gone on wake and needed a restart" || strings.Join(args.logs, ",") != "previous" || !strings.HasPrefix(args.body, "Slept about five") {
@@ -55,7 +55,7 @@ func TestANoteIsAskedForAtTheTerminalSoNothingHasToBeTypedOut(t *testing.T) {
 			t.Errorf("it didn't ask %q:\n%s", question, asked.String())
 		}
 	}
-	// hw-test note wifi: the part is given, and Enter on the last question means this start's log
+	// hw-test note wifi gives the part, and Enter on the last question means this start's log
 	asked.Reset()
 	args, written = askNote(typed("It restarts by itself a few minutes after joining the network", ""), &asked, checks, noteArgs{kind: "problem"}, "wifi")
 	if !written || args.check != "wifi" || strings.Join(args.logs, ",") != "kernel" || strings.Contains(asked.String(), "Which part") || args.title != "It restarts by itself a few minutes after joining the network" {
@@ -121,8 +121,8 @@ func TestOnePartIsPickedForTheAgentByItsNumber(t *testing.T) {
 }
 
 func TestAnAgentHasTheOwnerDoAStepAndGetsItsResultBack(t *testing.T) {
-	// A stand-in for the terminal window: it finds the file the step is to answer in, and
-	// answers as the step would once the owner is through
+	// A stand-in for the terminal window. It finds the file the step is to answer in, and answers as
+	// the step would once the owner is through
 	dir := t.TempDir()
 	window := filepath.Join(dir, "window")
 	os.WriteFile(window, []byte(`#!/bin/sh

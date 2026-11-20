@@ -12,15 +12,15 @@ import (
 	"time"
 )
 
-// Log is a log that goes with a note: a name like kernel.log and its text.
+// Log is a log that goes with a note, with a name like kernel.log and its text.
 type Log struct {
 	Name string `json:"name"`
 	Text string `json:"text"`
 }
 
-// Note is what doesn't fit a check's result: a problem that takes a sequence of events to
-// show, a way around one, a pointer to work going on elsewhere, or anything else worth
-// knowing about a model. Other owners' agents read it and can answer.
+// Note is what doesn't fit a check's result, like a problem that takes a sequence of events to
+// show, a way around one, a pointer to work going on elsewhere, or anything else worth knowing
+// about a model. Other owners' agents read it and can answer.
 type Note struct {
 	Model    string            `json:"model,omitempty"`
 	Check    string            `json:"check,omitempty"`
@@ -123,7 +123,7 @@ func Notes(api, model string) ([]Listed, error) {
 	return listed.Notes, nil
 }
 
-// LogSize is the most of a log that is sent: its end, where a fault shows.
+// LogSize is the most of a log that is sent, which is its end, where a fault shows.
 const LogSize = 190 * 1024
 
 var (
@@ -150,10 +150,10 @@ var (
 // Removed says in a line what ScrubLog takes out, for the owner before a log is sent.
 const Removed = "addresses, serial numbers, disk IDs and names"
 
-// ScrubText takes out of a note's own text what names the owner's computer, disk or network:
-// hardware addresses, serial numbers, the addresses in a firewall's lines, private network
-// addresses and those with a port, disk and install IDs, home folders, and the host and user
-// names given. Lines stay lines.
+// ScrubText takes out of a note's own text what names the owner's computer, disk or network. Those
+// are hardware addresses, serial numbers, the addresses in a firewall's lines, private network
+// addresses and those with a port, disk and install IDs, home folders, and the host and user names
+// given. Lines stay lines.
 func ScrubText(text, host, user string, names ...string) string {
 	text = address.ReplaceAllString(text, "xx:xx:xx:xx:xx:xx")
 	text = home.ReplaceAllString(text, "/home/user")

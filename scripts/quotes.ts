@@ -45,7 +45,7 @@ async function attachments(text: string): Promise<string[]> {
   return parts;
 }
 
-/** Everything a reader of the page sees as text: the post, every comment and reply, a commit's message, a file's contents. */
+/** Everything a reader of the page sees as text, from the post and every comment and reply to a commit's message and a file's contents. */
 async function read(url: string): Promise<string> {
   const file = join(CACHE, createHash('sha256').update(url).digest('hex').slice(0, 24));
   if (existsSync(file)) return readFileSync(file, 'utf8');
@@ -105,7 +105,7 @@ const plain = (text: string) => text.toLowerCase().normalize('NFKD').replace(/[^
 
 type Found = { found: 'found' | 'missing' | 'too short' | 'unreachable'; under?: string };
 
-/** A line as written, but for its spacing: a ticked box and an empty one, or a check mark and a cross, stay different. */
+/** A line as written, but for its spacing. A ticked box and an empty one, or a check mark and a cross, stay different. */
 const exact = (line: string) => line.toLowerCase().replace(/\s+/g, '');
 
 /**
@@ -128,7 +128,7 @@ export async function found(source: string, quote: string, about = ''): Promise<
   } catch {
     return { found: 'unreachable' };
   }
-  // A line of a list or a row of a table: the line that leads the list in says what the list
+  // A line of a list or a row of a table. The line that leads the list in says what the list
   // is ("Working:", or a heading)
   const lines = text.split('\n');
   const leads: string[] = [];

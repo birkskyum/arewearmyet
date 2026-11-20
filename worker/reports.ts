@@ -26,7 +26,7 @@ const MODES = ['quick', 'guided', 'agent'] as const;
 const HARDWARE_KEYS = ['maker', 'product', 'family', 'sku', 'board', 'bios'] as const;
 const PACKAGE_KEYS = ['linux-omarchy', 'linux-omarchy-dtbs', 'linux', 'linux-firmware', 'linux-firmware-qcom', 'mesa', 'systemd', 'omarchy', 'hyprland', 'pipewire', 'alsa-ucm-conf', 'bluez', 'libcamera', 'hw-test', 'linux-omarchy-nvidia-open', 'nvidia-utils', 'libva-nvidia-driver'] as const;
 const TOKEN = /^[A-Za-z0-9_-]{32,128}$/;
-// A hardware ID with its type, as systemd-analyze chid numbers them: "3:8073dbed-501f-5f5e-a619-4cdd9c00e865"
+// A hardware ID with its type, as systemd-analyze chid numbers them, like "3:8073dbed-501f-5f5e-a619-4cdd9c00e865"
 const CHID = /^(ext)?\d{1,2}:[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/;
 // The types made from the product name, the SKU or the mainboard, which tell models apart. The others
 // (maker and family, maker and enclosure, maker alone) are shared by a maker's whole range.
@@ -34,14 +34,14 @@ const SPECIFIC_CHIDS = new Set(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
 const RUN_ID = /^RUN-[A-Z0-9]{10}$/;
 const NOTE_ID = /^NOTE-[A-Z0-9]{10}$/;
 const LOG_NAME = /^[a-z0-9][a-z0-9._-]{0,59}$/;
-// What a note is: something that goes wrong, a way around it, a pointer to work elsewhere, or anything else
+// A note is something that goes wrong, a way around it, a pointer to work elsewhere, or anything else
 const NOTE_KINDS = ['problem', 'workaround', 'upstream', 'note'] as const;
 const NOTE_BODY = 8000;
 const LOG_SIZE = 200 * 1024;
 const LOGS_PER_NOTE = 4;
 const MODEL_ID = /^[a-z0-9][a-z0-9-]{1,80}$/;
 const CODE_ALPHABET = 'ABCDEFGHJKMNPQRSTVWXYZ23456789';
-// Links a fix or a note may point to: where Linux, its firmware, Mesa and the distros take changes
+// Links a fix or a note may point to, which is where Linux, its firmware, Mesa and the distros take changes
 // Links in answers always point at the public site, also when testing locally
 const SITE = 'https://arewearmyet.com';
 const LINK_HOSTS = ['github.com', 'gitlab.com', 'lore.kernel.org', 'patchwork.kernel.org', 'git.kernel.org', 'gitlab.freedesktop.org', 'lists.freedesktop.org', 'patchwork.freedesktop.org', 'lists.infradead.org', 'patchew.org', 'bugs.launchpad.net', 'codeberg.org', 'bugzilla.kernel.org', 'gitlab.archlinux.org', 'arewearmyet.com'];
@@ -122,7 +122,7 @@ const NEWEST_FIRST = 'ORDER BY runs.created DESC, runs.rowid DESC';
 /**
  * Each machine's newest result per check, counted per check. A newer run replaces
  * the same machine's older one, so one owner running the test ten times counts once.
- * The older results still say when something changed: a machine that reported a check
+ * The older results still say when something changed. A machine that reported a check
  * working and now reports it broken is a regression, with the kernels on both sides.
  */
 function summarize(rows: ResultRow[]) {
@@ -139,7 +139,7 @@ function summarize(rows: ResultRow[]) {
 
   const picked: { row: ResultRow; older: ResultRow[] }[] = [];
   for (const list of history.values()) {
-    // The newest result counts, with one exception: a later measurement that merely finds a
+    // The newest result counts, with one exception. A later measurement that merely finds a
     // thing working doesn't take back what the owner reported as failing. The test measures
     // "it slept once", and the owner saw the second sleep crash. The owner's result stands until
     // the owner tests that again.
@@ -162,7 +162,7 @@ function summarize(rows: ResultRow[]) {
     entry.how[row.how] = (entry.how[row.how] ?? 0) + 1;
     if (entry.latest.length < 5) entry.latest.push({ state: row.state, how: row.how, note: row.note, evidence: row.evidence, kernel: row.kernel, os: row.os, created: row.created, run: row.run });
 
-    // Going back from that result, the first one with another state is where it turned: the
+    // Going back from that result, the first one with another state is where it turned. The
     // change counts once per machine and check, from that result's kernel to the first kernel after it
     let first = row;
     for (const before of older) {
@@ -223,7 +223,7 @@ async function modelFixes(env: Env, id: string) {
   return results.map(fixOut);
 }
 
-// Fine to failing: a change towards the front is an improvement
+// Fine to failing, so a change towards the front is an improvement
 const RANK: Record<string, number> = { works: 0, partial: 1, broken: 2 };
 
 /** What one pull request changed, over every machine that measured before and after it. */
@@ -268,9 +268,9 @@ function parseSide(value: unknown): Side | null {
  */
 function match(params: URLSearchParams) {
   // "family" is the line a pull request for the machine opens with. Every model the board matches has a
-  // Snapdragon chip: Chromebooks and Googlebooks, which start through Google's own boot software, are
+  // Snapdragon chip. Chromebooks and Googlebooks, which start through Google's own boot software, are
   // arm-dragon-google, and the ones that came with Windows arm-dragon-msft. NVIDIA machines, which start
-  // through ACPI, are arm-nvidia. Apple machines (arm-apple) are not on the board: the test names them itself
+  // through ACPI, are arm-nvidia. Apple machines (arm-apple) are not on the board, so the test names them itself
   const found = (model: Index['models'][number], by: string) => ({
     model: model.id, by, vendor: model.vendor, name: model.name, generation: model.generation, boot: model.boot,
     family: model.boot === 'acpi' ? 'arm-nvidia' : model.boot === 'depthcharge' || model.boot === 'android' ? 'arm-dragon-google' : 'arm-dragon-msft',
@@ -303,7 +303,7 @@ function match(params: URLSearchParams) {
 
 /**
  * The model a machine's hardware IDs belong to, given most specific first as systemd-analyze chid
- * lists them. The first one the board knows decides when only one model has it; when models share
+ * lists them. The first one the board knows decides when only one model has it. When models share
  * it, the model that has the most of the machine's IDs does, the more specific counting more.
  */
 function matchChids(chids: string[]): Index['models'][number] | null {
@@ -328,10 +328,10 @@ type RunBody = {
   hardware?: unknown; packages?: unknown; results?: unknown; chids?: unknown;
 };
 
-/** Stores a run and its results; the machine is created on its first run. */
+/** Stores a run and its results. The machine is created on its first run. */
 async function postRun(request: Request, env: Env, url: URL): Promise<Response> {
   const token = request.headers.get('x-machine-token') ?? '';
-  if (!TOKEN.test(token)) return json({ error: 'Send X-Machine-Token: a random string of 32 to 128 letters, digits, - or _, kept on the machine (hw-test keeps one in ~/.local/state/arewearmyet/token).' }, 400);
+  if (!TOKEN.test(token)) return json({ error: 'Send X-Machine-Token, a random string of 32 to 128 letters, digits, - or _, kept on the machine (hw-test keeps one in ~/.local/state/arewearmyet/token).' }, 400);
   const body = (await readJson(request, 256 * 1024)) as RunBody | null;
   if (!body || typeof body !== 'object') return json({ error: 'Send the run as JSON. See https://arewearmyet.com/agents.md' }, 400);
 
@@ -341,7 +341,7 @@ async function postRun(request: Request, env: Env, url: URL): Promise<Response> 
   const compatible = typeof body.compatible === 'string' ? clean(body.compatible, 120) : null;
   const chids = Array.isArray(body.chids) ? body.chids.filter((c): c is string => typeof c === 'string' && CHID.test(c.toLowerCase())).slice(0, 40).map((c) => c.toLowerCase()) : [];
 
-  // The model named in the body wins when it exists; otherwise the machine's own strings decide
+  // The model named in the body wins when it exists. Otherwise the machine's own strings decide
   let modelId = typeof body.model === 'string' && MODELS.has(body.model) ? body.model : null;
   if (!modelId) {
     const params = new URLSearchParams();
@@ -421,10 +421,10 @@ async function postFix(request: Request, env: Env): Promise<Response> {
     if (!Array.isArray(body.changes) || body.changes.length === 0 || body.changes.length > 40) return json({ error: 'changes must be a list of 1 to 40 {check, from: {state, how, evidence}, to: {state, how, evidence}}.' }, 400);
     for (const item of body.changes) {
       const { check, from, to } = (item ?? {}) as Record<string, unknown>;
-      if (typeof check !== 'string' || !CHECKS.has(check) || changes.some((c) => c.check === check)) return json({ error: `changes: ${String(check)} is no check from GET /api/checks, or is there twice.` }, 400);
+      if (typeof check !== 'string' || !CHECKS.has(check) || changes.some((c) => c.check === check)) return json({ error: `In changes, ${String(check)} is no check from GET /api/checks, or is there twice.` }, 400);
       const before = parseSide(from);
       const after = parseSide(to);
-      if (!before || !after) return json({ error: `changes: ${check} needs from and to, each with a state of ${STATES.join(', ')}.` }, 400);
+      if (!before || !after) return json({ error: `In changes, ${check} needs from and to, each with a state of ${STATES.join(', ')}.` }, 400);
       changes.push({ check, from: before, to: after });
     }
   }
@@ -459,7 +459,7 @@ function noteOut(row: NoteRow, full: boolean) {
     kind: row.kind,
     title: row.title,
     status: row.kind === 'problem' ? row.status : undefined,
-    // A list gives the start of each note; the note itself gives all of it
+    // A list gives the start of each note, and the note itself gives all of it
     body: full || row.body.length <= 600 ? row.body : row.body.slice(0, 600) + '…',
     links: row.links ? (JSON.parse(row.links) as string[]) : [],
     kernel: row.kernel,
@@ -572,7 +572,7 @@ async function postNote(request: Request, env: Env, parent: string | null): Prom
       if (typeof body.check !== 'string' || !CHECKS.has(body.check)) return json({ error: 'check must be an id from GET /api/checks, or left out when the note is about no single check.' }, 400);
       check = body.check;
     }
-    if (!NOTE_KINDS.includes(body.kind as never)) return json({ error: `kind must be one of ${NOTE_KINDS.join(', ')}: something that goes wrong, a way around it, a pointer to work elsewhere, or anything else.` }, 400);
+    if (!NOTE_KINDS.includes(body.kind as never)) return json({ error: `kind must be one of ${NOTE_KINDS.join(', ')}, for something that goes wrong, a way around it, a pointer to work elsewhere, or anything else.` }, 400);
     kind = body.kind as string;
     title = typeof body.title === 'string' ? clean(body.title.replace(/\s+/g, ' '), 140) : '';
     if (title.length < 8) return json({ error: 'title must say in a line what the note is about, in 8 to 140 characters.' }, 400);
@@ -595,7 +595,7 @@ async function postNote(request: Request, env: Env, parent: string | null): Prom
     for (const item of body.logs) {
       const { name, text: log } = (item ?? {}) as Record<string, unknown>;
       if (typeof name !== 'string' || !LOG_NAME.test(name) || logs.some((l) => l.name === name)) return json({ error: 'Each log needs its own name of lowercase letters, digits, dots and dashes, like kernel.log.' }, 400);
-      if (typeof log !== 'string' || !log.trim() || log.length > LOG_SIZE) return json({ error: `${name}: a log is text of at most ${LOG_SIZE / 1024} KB. Send the part that shows the problem.` }, 400);
+      if (typeof log !== 'string' || !log.trim() || log.length > LOG_SIZE) return json({ error: `A log is text of at most ${LOG_SIZE / 1024} KB, and ${name} is not. Send the part that shows the problem.` }, 400);
       logs.push({ name, text: cleanLong(log, LOG_SIZE, true) });
     }
   }
@@ -630,7 +630,7 @@ async function postStatus(request: Request, env: Env, id: string): Promise<Respo
   return json({ note: id, status: body.status });
 }
 
-/** The newest runs and fixes, for the review page; needs ADMIN_TOKEN. */
+/** The newest runs and fixes, for the review page. Needs ADMIN_TOKEN. */
 async function review(request: Request, env: Env, url: URL): Promise<Response> {
   if (!admin(request, env)) return json({ error: 'Needs the admin token.' }, 401);
   const before = url.searchParams.get('before') ?? '9999';
@@ -669,8 +669,8 @@ function parseResults(value: unknown): Result[] | string {
     if (typeof check !== 'string' || !CHECKS.has(check)) return `Unknown check ${String(check)}. GET /api/checks lists them.`;
     if (seen.has(check)) return `${check} appears twice.`;
     seen.add(check);
-    if (!STATES.includes(state as never)) return `${check}: state must be one of ${STATES.join(', ')}.`;
-    if (!HOW.includes(how as never)) return `${check}: how must be measured (the test saw it), owner (the owner saw or heard it) or agent (your own reading of logs or output).`;
+    if (!STATES.includes(state as never)) return `For ${check}, state must be one of ${STATES.join(', ')}.`;
+    if (!HOW.includes(how as never)) return `For ${check}, how must be measured (the test saw it), owner (the owner saw or heard it) or agent (your own reading of logs or output).`;
     out.push({ check, state: state as string, how: how as string, note: typeof note === 'string' ? clean(note, 600) : null, evidence: typeof evidence === 'string' ? clean(evidence, 400) : null });
   }
   return out;
@@ -707,10 +707,10 @@ function clean(text: string, max: number): string {
     .slice(0, max);
 }
 
-// Longer text, a note or a log: cleaned as above, and also of the network addresses a firewall or a
+// Longer text, a note or a log, is cleaned as above, and also of the network addresses a firewall or a
 // driver writes into logs. Only addresses in private ranges, those named as a packet's source or
 // destination and those with a port go, so version numbers with four parts stay readable.
-// A kernel log also names the disk, the install and the devices around it: disk, partition and
+// A kernel log also names the disk, the install and the devices around it, by disk, partition and
 // file system IDs, a drive's serial number in its by-id name, the machine ID, network names made from a hardware address, and what the owner
 // called a Bluetooth device. Those go too.
 function cleanLong(text: string, max: number, log = false): string {
@@ -724,7 +724,7 @@ function cleanLong(text: string, max: number, log = false): string {
     .replace(/\b(PARTUUID=)[0-9a-f]{8}-[0-9a-f]{2}\b/gi, '$1xxxxxxxx-xx')
     .replace(/\b[0-9a-f]{32}\b/gi, 'x'.repeat(32))
     .replace(/\b(enx|wlx)[0-9a-f]{12}\b/gi, '$1xxxxxxxxxxxx');
-  // Device names are only taken out of logs: in a note's own text "Lenovo's firmware" is the owner's wording
+  // Device names are only taken out of logs, since in a note's own text "Lenovo's firmware" is the owner's wording
   const named = log
     ? cleaned
         .replace(/\b(input: ).+?( \(AVRCP\) as | as \S*(?:\/uhid\/|\/bluetooth\/|\/0005:))/g, '$1[name removed]$2')

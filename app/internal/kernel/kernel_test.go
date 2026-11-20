@@ -53,7 +53,7 @@ func TestABuiltModuleIsLoadedInPlaceOfTheKernelsOwnAndNoted(t *testing.T) {
 	os.WriteFile(filepath.Join(dir, "depends"), []byte("phy_core,usb_common\n"), 0o644)
 	module := filepath.Join(dir, "phy-qcom-qmp-usb.ko")
 
-	// Not loaded before: nothing to take out, what it builds on comes first
+	// Not loaded before, so there is nothing to take out, and what it builds on comes first
 	if out, err := script(t, system.LoadScript([]string{module})); err != nil {
 		t.Fatalf("load: %v\n%s", err, out)
 	}

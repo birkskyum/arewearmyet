@@ -1,10 +1,10 @@
-// Package guided is the test done with the owner: keyboard, sound, camera, sleep and a few
-// questions, in the terminal. Each part is a step; a step measures what it can and asks only
-// what takes eyes or ears.
+// Package guided is the test done with the owner, with keyboard, sound, camera, sleep and a few
+// questions, in the terminal. Each part is a step. A step measures what it can and asks only what
+// takes eyes or ears.
 //
-// It runs on machines whose hardware support is unfinished, so nothing a step meets may end
-// the test: a step that fails is passed over, the answers are saved from step to step, and a
-// computer that goes down in the middle of a step finds its test again on the next run.
+// It runs on machines whose hardware support is unfinished, so nothing a step meets may end the
+// test. A step that fails is passed over, the answers are saved from step to step, and a computer
+// that goes down in the middle of a step finds its test again on the next run.
 package guided
 
 import (
@@ -32,7 +32,7 @@ type Options struct {
 	Only []string
 	// Version is the app's, for the brief an agent is given.
 	Version string
-	// Once ends the test after the steps named in Only, without the last screen: for a step an
+	// Once ends the test after the steps named in Only, without the last screen. It is for a step an
 	// agent opened for the owner, whose result goes back to the agent.
 	Once bool
 	// launch opens the agent, which tests replace, and guide fetches the guide for a copy
@@ -71,7 +71,7 @@ type allKeys interface{ wantsAllKeys() bool }
 // pointer is implemented by a step that needs the pointer's movement, clicks and scrolling.
 type pointer interface{ wantsMouse() bool }
 
-// opening is implemented by the screens before the test proper, which show no list of steps:
+// opening is implemented by the screens before the test proper, which show no list of steps, since
 // the menu on them is the list.
 type opening interface{ isOpening() bool }
 
@@ -197,7 +197,8 @@ func build(run *report.Run, facts probe.Facts, dir string) []step {
 	if facts.Laptop && facts.Lid != "" {
 		add("lid suspend", newLid(run, sys), newSleep(run, facts))
 	} else {
-		// No lid to close, on a desktop or where the lid switch wasn't found: the step asks for sleep itself
+		// No lid to close, on a desktop or where the lid switch wasn't found, so the step asks for sleep
+		// itself
 		add("suspend", newSleepAsked(run, facts, sys))
 	}
 	// Where the fan's speed can't be read, only the owner can say when it starts. The
@@ -210,7 +211,7 @@ func build(run *report.Run, facts probe.Facts, dir string) []step {
 	}
 	// What has no step of its own on this machine is asked about instead
 	steps = append(steps, newQuestions(run, facts, covered))
-	// Last, what needs nobody: by then the owner can walk away and come back to the results
+	// Last, what needs nobody. By then the owner can walk away and come back to the results
 	for _, test := range deep.Tests(sys, facts.Wifi, facts.Bluetooth, facts.Ethernet, dir) {
 		if test.Name == "Temperatures" {
 			// The one test that shows what it reads as it goes
@@ -236,8 +237,8 @@ func records(steps []step) bool {
 	return false
 }
 
-// handsOff tells the steps whether the round is the automatic tests alone, which may run
-// with nobody there: they then start by themselves and ask nothing they can do without.
+// handsOff tells the steps whether the round is the automatic tests alone, which may run with
+// nobody there. They then start by themselves and ask nothing they can do without.
 func handsOff(steps []step, words []string) {
 	alone := false
 	for _, word := range words {
@@ -281,7 +282,7 @@ func Run(run *report.Run, facts probe.Facts, options Options) error {
 	defer os.RemoveAll(dir)
 
 	run.Mode = "guided"
-	// What the quick check measured, put back before each round: a part alone reports only itself
+	// What the quick check measured, put back before each round, so a part alone reports only itself
 	measured := append([]report.Result(nil), run.Results...)
 	_ = report.Remember(run, time.Now())
 	var said []string
@@ -334,7 +335,7 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 	sleepMode := machine.Real().Read("/sys/power/mem_sleep")
 	m.save = func(step string) { _ = report.SavePending(step, sleepMode, run) }
 
-	// Run without a step named, the test opens on a menu: all of it, or one part alone
+	// Run without a step named, the test opens on a menu, with all of it or one part alone
 	// What the round found is kept on the machine as its latest, whether or not it is sent
 	defer func() { _ = report.Remember(run, time.Now()) }()
 	start := &welcome{run: run, only: len(options.Only) > 0, kept: report.Local()}
@@ -358,12 +359,12 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 	start.ask = start.question()
 	start.api, start.options = options.API, options
 
-	// A test found on disk stopped before its end: the computer went down, or the test did.
-	// It stays on disk until the owner has gone on from it, so opening the test and leaving
-	// again loses nothing.
+	// A test found on disk stopped before its end, because the computer went down, or the test did. It
+	// stays on disk until the owner has gone on from it, so opening the test and leaving again loses
+	// nothing.
 	var opening step = start
 	resuming := false
-	// Only the first round looks: later ones follow a part that just finished
+	// Only the first round looks. Later ones follow a part that just finished
 	if pending, found := report.LoadPending(); found && initial && !last.once {
 		opening, steps = resume(run, pending, report.BootID(), opening, steps)
 		_, resuming = opening.(*resumed)
@@ -382,7 +383,7 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 		return outcome{}, err
 	}
 	ended := final.(*model)
-	// A test left on its first screen wasn't begun: what was saved before it stays as it was
+	// A test left on its first screen wasn't begun, so what was saved before it stays as it was
 	if !(resuming && ended.at == 0) {
 		report.ClearPending()
 	}
@@ -396,9 +397,9 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 	return outcome{said: last.farewell(), again: last.again}, nil
 }
 
-// resume picks a stopped test up at the step it stopped in, with its answers restored. boot
-// is this boot's id: a test saved in another boot means the computer restarted since. A
-// saved test whose step isn't among these steps is left alone.
+// resume picks a stopped test up at the step it stopped in, with its answers restored. boot is this
+// boot's id, and a test saved in another boot means the computer restarted since. A saved test
+// whose step isn't among these steps is left alone.
 func resume(run *report.Run, pending report.Pending, boot string, opening step, steps []step) (step, []step) {
 	for at, s := range steps {
 		if s.name() != pending.Step {
@@ -464,7 +465,7 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.skipped = map[string]bool{}
 				}
 				m.skipped[m.steps[m.at].name()] = true
-				// What the step had going ends with it: a load on the processor, an open window
+				// What the step had going ends with it, like a load on the processor or an open window
 				if open, ok := m.steps[m.at].(cleaner); ok {
 					open.cleanup()
 				}
@@ -494,7 +495,7 @@ func (m *model) View() tea.View {
 	width := min(m.width, 110)
 	current := m.steps[m.at]
 
-	// Where the test is: every step's name, the current one marked
+	// Where the test is, as every step's name with the current one marked
 	var progress []string
 	for i, s := range m.steps {
 		_, failed := m.failed[s.name()]
@@ -516,7 +517,8 @@ func (m *model) View() tea.View {
 	lines := []string{title.Render("Are we ARM yet?") + "  " + machineName}
 	skip := m.skipHint()
 	if start, ok := current.(opening); ok && start.isOpening() {
-		// The start screen's menu is the list of what there is; a second list above it only repeats it
+		// The start screen's menu is the list of what there is, and a second list above it only repeats
+		// it
 		skip = ""
 	} else {
 		lines = append(lines, wrapProgress(progress, width-4))
@@ -632,7 +634,7 @@ func (s *skippable) cleanup() {
 	}
 }
 
-// menuEntry is a part the opening menu offers: the word that runs it alone, and the checks it
+// menuEntry is a part the opening menu offers, with the word that runs it alone and the checks it
 // tests, whose latest results on this machine are the part's status.
 type menuEntry struct {
 	word, label string
@@ -642,12 +644,12 @@ type menuEntry struct {
 	auto bool
 	// about is said after an entry that has no status of its own.
 	about string
-	// step, when set, is the one step the entry stands for: it is offered only when the
-	// machine has that step.
+	// step, when set, is the one step the entry stands for. It is offered only when the machine has
+	// that step.
 	step string
 }
 
-// The menu, in two groups: what measures itself, then what takes someone at the computer.
+// The menu, in two groups, first what measures itself, then what takes someone at the computer.
 var menu = []menuEntry{
 	{word: "auto", label: "All of these in one go", auto: true, about: "plays test tones"},
 	{word: "speakers", label: "Speakers and microphones", checks: []string{"speakers", "microphones"}, auto: true},
@@ -672,7 +674,7 @@ var menu = []menuEntry{
 // severity orders states from fine to failing, for a part's or the machine's worst.
 var severity = map[string]int{report.Works: 1, report.Absent: 1, report.Partial: 2, report.Broken: 3}
 
-// status is a menu part's standing from the machine's latest results: a mark for how its
+// status is a menu part's standing from the machine's latest results. It is a mark for how its
 // worst check stands, and after it when it was tested, and for a part that fails, why.
 func (e menuEntry) status(kept map[string]report.Kept) side {
 	if len(e.checks) == 0 {
@@ -716,7 +718,7 @@ func (e menuEntry) status(kept map[string]report.Kept) side {
 	return side{mark: "✓", text: when, style: good}
 }
 
-// welcome is the opening screen: what the test does, and a menu of all of it or one part.
+// welcome is the opening screen, with what the test does and a menu of all of it or one part.
 type welcome struct {
 	run *report.Run
 	// only is set when the steps were named on the command line, which need no menu.
@@ -743,8 +745,8 @@ type welcome struct {
 	handed  string
 	// newer is the newest release when this isn't it.
 	newer string
-	// offer is the choice put up for a part that fails or is worth a look: test it again, or
-	// have an agent look into it. Nil when the menu is up.
+	// offer is the choice put up for a part that fails or is worth a look, which is to test it again
+	// or have an agent look into it. Nil when the menu is up.
 	offer *choice
 	// thread is the conversation the owner's agent has going for the hardware work, when there
 	// is one, and show is what takes the owner to it, which tests replace.
@@ -795,7 +797,7 @@ func (w *welcome) question() choice {
 	return choice{question: "What would you like to test?", options: append(options, "Quit"), sides: append(sides, side{}), heads: heads}
 }
 
-// standing is where the machine stands over all checks: how many work, and what doesn't that
+// standing is where the machine stands over all checks, with how many work, and what doesn't that
 // no part of the menu covers, like something only measured.
 func (w *welcome) standing(width int) string {
 	counts := map[string]int{}
@@ -859,10 +861,9 @@ func (w *welcome) keys() string {
 	return keys
 }
 
-// failing lists what an agent would be handed from where the cursor is: the checks of the
-// part under it that fail or are worth a look. An agent takes one part at a time, so a part
-// that can't be fixed doesn't hold up the others, and on any other line there is nothing to
-// hand over.
+// failing lists what an agent would be handed from where the cursor is, which is the checks of the
+// part under it that fail or are worth a look. An agent takes one part at a time, so a part that
+// can't be fixed doesn't hold up the others, and on any other line there is nothing to hand over.
 func (w *welcome) failing() []string {
 	all := Failing(w.kept)
 	at := w.ask.cursor - 1
@@ -922,7 +923,8 @@ func (w *welcome) update(msg tea.Msg) tea.Cmd {
 		tools.Open(w.model.Page)
 		return nil
 	}
-	// To the conversation the agent already has: its window, or the same conversation opened again
+	// To the conversation the agent already has, in its window or as the same conversation opened
+	// again
 	if press.String() == "g" && w.thread.ID != "" && w.offer == nil {
 		show := w.show
 		if show == nil {
@@ -942,8 +944,8 @@ func (w *welcome) update(msg tea.Msg) tea.Cmd {
 		w.handed = "Writing the brief and opening your agent…"
 		return handOver(w.run, w.options, w.model, failing)
 	}
-	// The choice for a part with something to look into: nothing has to be tested again to
-	// have an agent work on it
+	// The choice for a part with something to look into. Nothing has to be tested again to have an
+	// agent work on it
 	if w.offer != nil {
 		picked := w.offer.update(press)
 		if press.String() == "esc" {
@@ -1015,7 +1017,7 @@ func (w *welcome) view(width, height int) string {
 	tip := wrap("Add a part's name to the command to go straight to it, like hw-test camera.", width)
 	if at := w.ask.cursor - 1; at >= 0 && at < len(w.parts) {
 		tip = wrap("hw-test "+w.parts[at].word+" goes straight to this part.", width)
-		// Why the part under the cursor fails, in full: beside it there is only room for the start
+		// Why the part under the cursor fails, in full, since beside it there is only room for the start
 		if status := w.parts[at].status(w.kept); status.mark == "◐" || status.mark == "✗" {
 			tip = status.style.Render(wrap(status.mark+" "+status.text, width)) + "\n" + tip
 		}
@@ -1025,8 +1027,8 @@ func (w *welcome) view(width, height int) string {
 	}
 	private := wrap("Only results are sent. A picture or recording the test makes never leaves this computer.", width)
 
-	// In a window too short for all of it, the menu comes first: what is only said around it
-	// gives way, and a menu that still doesn't fit scrolls with the cursor
+	// In a window too short for all of it, the menu comes first. What is only said around it gives
+	// way, and a menu that still doesn't fit scrolls with the cursor
 	lines := func(texts ...string) int {
 		total := 0
 		for _, text := range texts {
@@ -1058,9 +1060,9 @@ func (w *welcome) view(width, height int) string {
 	return strings.Join(shown, "\n\n")
 }
 
-// resumed opens a test that stopped before its end. When the computer has restarted since,
-// it asks what happened: a restart in the middle of a step is what that step found, but only
-// the owner knows whether the computer went down by itself.
+// resumed opens a test that stopped before its end. When the computer has restarted since, it asks
+// what happened. A restart in the middle of a step is what that step found, but only the owner
+// knows whether the computer went down by itself.
 type resumed struct {
 	run       *report.Run
 	pending   report.Pending
@@ -1099,7 +1101,7 @@ func (r *resumed) update(msg tea.Msg) tea.Cmd {
 	r.over = true
 	switch {
 	case r.restarted && picked == 0:
-		// It went down by itself: that is the step's result, and the step isn't run again
+		// It went down by itself. That is the step's result, and the step isn't run again
 		r.skip = true
 		if check := stepCheck[r.pending.Step]; check != "" {
 			r.pending.Crashed(r.run, check)
@@ -1118,14 +1120,14 @@ func (r *resumed) view(width, height int) string {
 	return text
 }
 
-// Status lists the machine's latest result for every check, for `hw-test status`: what works
-// here, what doesn't and why, and what hasn't been tested, without running anything.
+// Status lists the machine's latest result for every check, for `hw-test status`. That is what
+// works here, what doesn't and why, and what hasn't been tested, without running anything.
 func Status(kept map[string]report.Kept) string {
 	var checks []string
 	for check := range checkTitle {
 		checks = append(checks, check)
 	}
-	// What fails first, then what works, then what is untested; by name within each
+	// What fails first, then what works, then what is untested, and by name within each
 	rank := func(check string) int {
 		result, ok := kept[check]
 		if !ok {

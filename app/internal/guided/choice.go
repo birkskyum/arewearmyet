@@ -13,9 +13,9 @@ import (
 type choice struct {
 	question string
 	options  []string
-	// sides, when set, turn the list into a menu: each answer has a mark in front of it and a
-	// few words in a column after it, and no number to press. A menu is picked from with the
-	// arrow keys alone.
+	// sides, when set, turn the list into a menu. Each answer has a mark in front of it and a few
+	// words in a column after it, and no number to press. A menu is picked from with the arrow keys
+	// alone.
 	sides []side
 	// heads are lines set above the answer at a place in the list, to name a group of answers.
 	// An empty one is a blank line.
@@ -23,8 +23,8 @@ type choice struct {
 	cursor int
 }
 
-// side is what a menu shows around one answer: a mark in front and a few words after it, both
-// in the given style.
+// side is what a menu shows around one answer, a mark in front and a few words after it, both in
+// the given style.
 type side struct {
 	mark, text string
 	style      lipgloss.Style
@@ -48,8 +48,8 @@ func (c *choice) update(msg tea.KeyPressMsg) int {
 	return -1
 }
 
-// blocks draws each answer with what belongs to it: the group's line above it, and in a menu
-// its mark and the words after it.
+// blocks draws each answer with what belongs to it, which is the group's line above it, and in a
+// menu its mark and the words after it.
 func (c *choice) blocks(width int) []string {
 	if len(c.sides) > 0 {
 		return c.menu(width)
@@ -71,14 +71,14 @@ func (c *choice) blocks(width int) []string {
 	return blocks
 }
 
-// menu draws the answers as a menu: the cursor, the mark, the answer, and in one column
-// after the longest answer the words that go with each, cut to what the window has room for.
+// menu draws the answers as a menu, with the cursor, the mark, the answer, and in one column after
+// the longest answer the words that go with each, cut to what the window has room for.
 func (c *choice) menu(width int) []string {
 	column := 0
 	for _, option := range c.options {
 		column = max(column, lipgloss.Width(option))
 	}
-	// Cursor and mark take two cells each; three more keep the words clear of the answers
+	// Cursor and mark take two cells each, and three more keep the words clear of the answers
 	room := width - (4 + column + 3)
 	var blocks []string
 	for i, option := range c.options {
@@ -119,8 +119,8 @@ func (c *choice) menu(width int) []string {
 
 func (c *choice) view(width int) string { return c.viewIn(width, 0) }
 
-// viewIn draws the question in at most the given rows: answers that don't fit scroll, with
-// the one the cursor is on always in view. No limit when rows is 0.
+// viewIn draws the question in at most the given rows. Answers that don't fit scroll, with the one
+// the cursor is on always in view. No limit when rows is 0.
 func (c *choice) viewIn(width, rows int) string {
 	question := bold.Render(wrap(c.question, width))
 	blocks := c.blocks(width)

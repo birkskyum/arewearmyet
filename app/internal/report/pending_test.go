@@ -19,12 +19,12 @@ func TestARestartDuringSleepIsFoundAndKeepsTheAnswers(t *testing.T) {
 	if !found || len(pending.Results) != 3 {
 		t.Fatalf("found=%v, %+v", found, pending)
 	}
-	// The same boot means the test was only stopped; another boot means the computer restarted
+	// The same boot means the test was only stopped, and another boot means the computer restarted
 	if pending.Restarted(pending.Boot) || !(Pending{Step: "Sleep", Boot: "a"}).Restarted("b") || (Pending{Step: "Camera"}).Restarted("b") {
 		t.Error("restart detection is off")
 	}
 
-	// The next run measures afresh: Wi-Fi is off this time, and it didn't get to the keyboard
+	// The next run measures afresh. Wi-Fi is off this time, and it didn't get to the keyboard
 	after := &Run{}
 	after.Set("wifi", Broken, Measured, "no Wi-Fi interface", "")
 	pending.Restore(after)

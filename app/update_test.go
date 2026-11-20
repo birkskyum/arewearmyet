@@ -10,9 +10,9 @@ import (
 	"time"
 )
 
-// An update is offered only where it does no harm to the work under way. Each of these was a
-// way for it to break things: a test boot entry left with a kernel that no longer matches, a
-// kernel of the owner's own, a package they built themselves that the update would replace.
+// An update is offered only where it does no harm to the work under way. Each of these was a way
+// for it to break things, be it a test boot entry left with a kernel that no longer matches, a
+// kernel of the owner's own, or a package they built themselves that the update would replace.
 func TestAnUpdateIsNotOfferedWhereItWouldDoHarm(t *testing.T) {
 	stock := updateFacts{Kernel: "7.3.0-72-omarchy", Pkgbase: "linux-omarchy", Installed: true,
 		Packagers: map[string]string{"linux-omarchy": "Omarchy <pkgs@omarchy.org>", "linux-omarchy-dtbs": "Omarchy <pkgs@omarchy.org>", "linux-firmware-qcom": "Omarchy <pkgs@omarchy.org>"}}
@@ -58,8 +58,8 @@ func TestTheUpdateLogComesBackClean(t *testing.T) {
 	}
 }
 
-// The whole step against a stand-in update: it opens for the owner, its outcome is read the
-// moment it ends, and a failed update comes back as one, with the log's last lines.
+// The whole step against a stand-in update. It opens for the owner, its outcome is read the moment
+// it ends, and a failed update comes back as one, with the log's last lines.
 func TestTheUpdateIsOpenedForTheOwnerAndItsOutcomeComesBack(t *testing.T) {
 	dir := t.TempDir()
 	// Run what would open in the owner's window right here, with no window

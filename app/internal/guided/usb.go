@@ -14,7 +14,7 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 )
 
-// A USB device, not one of its interfaces (1-1:1.0) and not a root hub (usb1): 1-1, 3-1.2
+// A USB device like 1-1 or 3-1.2, not one of its interfaces (1-1:1.0) and not a root hub (usb1)
 var usbDevice = regexp.MustCompile(`^\d+-[\d.]+$`)
 
 // plug is one device seen appearing on a port.
@@ -37,7 +37,7 @@ type usb struct {
 	run     *report.Run
 	sys     machine.System
 	present map[string]bool
-	// first is what was there when the step began: a hub among it is part of the computer
+	// first is what was there when the step began, so a hub among it is part of the computer
 	first map[string]bool
 	plugs []plug
 	// dead counts times the owner plugged something in and nothing appeared.
@@ -85,7 +85,7 @@ func (u *usb) update(msg tea.Msg) tea.Cmd {
 			return nil
 		}
 		for device := range msg.present {
-			// A hub brings its own devices along; the hub itself is the plug
+			// A hub brings its own devices along, and the hub itself is the plug
 			if u.present[device] || strings.Contains(device, ".") && msg.present[device[:strings.LastIndex(device, ".")]] && !u.present[device[:strings.LastIndex(device, ".")]] {
 				continue
 			}
@@ -118,8 +118,8 @@ func speedName(speed int64) string {
 	return "an unknown speed"
 }
 
-// throughHub says whether a device sits behind a hub the owner plugged in: one that appeared
-// during the step, or that the system calls removable. A hub that was there from the start
+// throughHub says whether a device sits behind a hub the owner plugged in, which is one that
+// appeared during the step, or that the system calls removable. A hub that was there from the start
 // and isn't removable is part of the computer, and its ports are the computer's own.
 func (u *usb) throughHub(device string) bool {
 	for at := strings.LastIndex(device, "."); at > 0; at = strings.LastIndex(device, ".") {
@@ -131,10 +131,10 @@ func (u *usb) throughHub(device string) bool {
 	return false
 }
 
-// slowed says whether the same device ran at SuperSpeed in one plug and slower in another,
-// which is what a USB-C port wired for one orientation only does. A device that came through a
-// plugged-in hub is left out: there the hub's port set the speed. On a Surface Pro 11 a case
-// with a USB 2 hub in it made a stick look slow on a port that was fine.
+// slowed says whether the same device ran at SuperSpeed in one plug and slower in another, which is
+// what a USB-C port wired for one orientation only does. A device that came through a plugged-in
+// hub is left out, since there the hub's port set the speed. On a Surface Pro 11 a case with a USB
+// 2 hub in it made a stick look slow on a port that was fine.
 func (u *usb) slowed() bool {
 	fastest := map[string]int64{}
 	for _, p := range u.plugs {

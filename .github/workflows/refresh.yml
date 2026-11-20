@@ -51,7 +51,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # The test results as they are now, also for a build after a push: who has run hw-test on
+      # The test results as they are now, also for a build after a push, since who has run hw-test on
       # a model decides its "Who has one". A source being down mustn't stop the refresh, so this
       # one may fail, and the last copy is used then.
       - name: Copy the test results

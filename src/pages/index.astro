@@ -33,7 +33,7 @@ const nvidia = nvidiaRows().sort((a, b) => a.generation.localeCompare(b.generati
 // Whether it boots first, then the pieces in the order a model gets them
 const omarchyIds = ['bootable', 'acpi', 'tree', 'hwids', 'fw', 'machine'] as const;
 const upstreamIds = ['device-tree', 'ids', 'firmware'] as const;
-// The hardware view's legend: the marks once, then what each column covers
+// The hardware view's legend, with the marks once, then what each column covers
 const HARDWARE_LEGEND = [
   { column: 'Seen on Omarchy', question: 'A filled label is a result from Omarchy itself, measured by hw-test or reported by an owner. Only these count as the model\'s status.', states: [
     { label: 'Works', tone: 'good' as const, meaning: 'Every check of the part that has a result works.' },

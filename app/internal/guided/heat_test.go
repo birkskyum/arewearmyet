@@ -11,8 +11,8 @@ import (
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 )
 
-// oven is a load whose readings are given: the temperature at each second, and the second a
-// fan starts at, if it does.
+// oven is a load whose readings are given, which are the temperature at each second, and the second
+// a fan starts at, if it does.
 type oven struct {
 	found   deep.Heat
 	hot     []float64
@@ -98,7 +98,7 @@ func TestTheTemperatureIsShownAsItClimbsAndTheOwnerSaysWhenTheFanStarts(t *testi
 	if !strings.Contains(h.keys(), "f the moment you hear the fan") {
 		t.Errorf("keys: %s", h.keys())
 	}
-	// The owner hears the fan: that ends the load there and then, with the reading it came at
+	// The owner hears the fan, which ends the load there and then, with the reading it came at
 	h.update(press('f'))
 	if h.phase != "after" || o.stopped != 1 || o.found.Heard == nil || o.found.Heard.Hot != 66 {
 		t.Fatalf("phase %q, stopped %d, heard %+v", h.phase, o.stopped, o.found.Heard)
@@ -221,7 +221,8 @@ func TestAWarmComputerCoolsBeforeTheLoadAndAFanlessOneIsNotKeptWaiting(t *testin
 		t.Errorf("Enter didn't start it: %q", h.phase)
 	}
 
-	// A computer without a fan: said once, and the load ends when the sensors have shown the heat
+	// A computer without a fan. It is said once, and the load ends when the sensors have shown the
+	// heat
 	h, o = warmed(run, 0, 44, 47, 49, 52, 55, 58, 61, 64, 67, 70)
 	h.start()
 	seconds(h, 1)
