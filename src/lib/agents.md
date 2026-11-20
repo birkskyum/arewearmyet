@@ -72,7 +72,7 @@ omarchy-mise-install github:birkskyum/arewearmyet hw-test
 hw-test quick --json
 ```
 
-It says at its start when a newer release is out, and `hw-test update` gets it. Every command and option is in the [hw-test reference](https://arewearmyet.com/docs/hw-test.md).
+It says at its start when a newer release is out, and `hw-test update` gets it. Every command and option is on [the hardware test's page](https://arewearmyet.com/docs/hw-test.md).
 
 | Command | What it does |
 | --- | --- |

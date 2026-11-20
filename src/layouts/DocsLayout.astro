@@ -107,3 +107,29 @@ const GROUP = 'px-2.5 text-xs font-semibold uppercase tracking-wide text-zinc-50
     watch();
   }
 </script>
+
+<style is:global>
+  /* The docs' own typography. Every docs page puts its text in an article of this class */
+  .guide { line-height: 1.7; }
+  .guide h1 { color: rgb(250 250 250); font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; }
+  .guide h2 { color: rgb(244 244 245); font-size: 1.25rem; font-weight: 600; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid rgb(39 39 42); scroll-margin-top: 1.5rem; }
+  .guide h3 { color: rgb(228 228 231); font-size: 1.05rem; font-weight: 600; margin-top: 1.75rem; scroll-margin-top: 1.5rem; }
+  .guide p, .guide ul, .guide ol, .guide table, .guide pre { margin-top: 0.9rem; }
+  .guide ul { list-style: disc; padding-left: 1.4rem; }
+  .guide ol { list-style: decimal; padding-left: 1.4rem; }
+  .guide li { margin-top: 0.35rem; }
+  .guide li::marker { color: rgb(113 113 122); }
+  .guide strong { color: rgb(228 228 231); }
+  .guide a { text-decoration: underline; text-decoration-color: rgb(82 82 91); text-underline-offset: 2px; }
+  .guide a:hover { color: rgb(244 244 245); text-decoration-color: rgb(212 212 216); }
+  .guide .anchor { margin-left: 0.5rem; color: rgb(82 82 91); text-decoration: none; opacity: 0; transition: opacity 0.1s; }
+  .guide :is(h1, h2, h3):hover .anchor, .guide .anchor:focus-visible { opacity: 1; }
+  .guide code { background: rgb(39 39 42); border-radius: 0.25rem; padding: 0.1rem 0.3rem; font-size: 0.85em; color: rgb(228 228 231); }
+  /* A long address in running text or a heading breaks rather than widening the page on a phone */
+  .guide :not(pre) > code { overflow-wrap: anywhere; }
+  .guide pre { background: rgb(9 9 11) !important; border-radius: 0.5rem; padding: 0.9rem; overflow-x: auto; font-size: 0.8rem; line-height: 1.55; border: 1px solid rgb(39 39 42); }
+  .guide pre code { background: none; padding: 0; font-size: inherit; }
+  .guide table { width: 100%; border-collapse: collapse; font-size: 0.875rem; display: block; overflow-x: auto; }
+  .guide th { text-align: left; color: rgb(228 228 231); font-weight: 600; border-bottom: 1px solid rgb(63 63 70); padding: 0.5rem 0.75rem 0.5rem 0; }
+  .guide td { border-bottom: 1px solid rgb(39 39 42); padding: 0.5rem 0.75rem 0.5rem 0; vertical-align: top; }
+</style>

@@ -13,7 +13,7 @@ export const DOC_GROUPS: DocGroup[] = [
   },
   {
     title: 'Hardware test',
-    pages: [{ href: '/docs/hw-test', title: 'hw-test reference', text: 'Every command of the hardware test: the guided test, single steps, notes, handing a part to an agent, and what is sent.' }],
+    pages: [{ href: '/docs/hw-test', title: 'The hardware test', text: 'Running hw-test, what it tests and sends, handing a part to an agent, and every command.' }],
   },
   {
     title: 'Agents and API',

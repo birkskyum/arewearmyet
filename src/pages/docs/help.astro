@@ -3,23 +3,15 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { TONE } from '../../lib/labels';
 import { PILL } from '../../lib/tones';
 
-const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
 const REPO = 'https://github.com/birkskyum/arewearmyet';
 const FORM = `${REPO}/issues/new?template=model.yml`;
 const INSTALLER = 'https://github.com/turbineBMW/omarchy-arm-installer/releases/latest';
 const REPORTS = 'https://github.com/turbineBMW/omarchy-hardware-reports';
-const CARD = 'rounded-xl bg-zinc-900 p-6 ring-1 ring-zinc-800 scroll-mt-6';
-// A heading is a link to its own section, so its address can be copied. The # shows on hover
-const HEAD = 'group text-xl font-semibold text-zinc-100';
-const MARK = 'ml-2 text-zinc-600 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100';
-const STEPS = 'mt-4 list-decimal space-y-3 pl-5 marker:text-zinc-500';
-const CODE = 'mt-2 overflow-x-auto rounded-md bg-zinc-950 p-3 text-xs text-zinc-300';
-const INLINE = 'rounded bg-zinc-800 px-1 py-0.5 text-[0.85em] text-zinc-200';
 const CASES = [
   { id: 'windows', title: 'Still on Windows', text: 'Share a hardware report' },
   { id: 'linux', title: 'Running Linux on it', text: 'Save the device tree it boots with' },
   { id: 'test', title: 'Ready to test', text: 'Try it and tell us how far it got' },
-  { id: 'check', title: 'It boots', text: 'Check what works, from sound to sleep' },
+  { id: 'check', title: 'It boots', text: 'Run the hardware test' },
   { id: 'probe', title: 'Not on Omarchy', text: 'Run the quick check on another distro' },
 ];
 // The page's sections, for the list beside it
@@ -35,121 +27,110 @@ const SECTIONS = [
 ---
 
 <DocsLayout title="Help a model get there · Are we ARM yet?" description="How an ARM laptop's owner helps it run Linux, with a hardware report from Windows, its device tree or a boot test." sections={SECTIONS}>
-    <h1 class="text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">Help with your laptop</h1>
-    <p class="mt-4 text-lg">
+  <article class="guide">
+    <h1>Help with your laptop</h1>
+    <p>
       Every Snapdragon laptop needs a device tree that describes its hardware to Linux, its hardware IDs so a boot image picks that tree by itself, and its firmware. Writing a device tree takes a developer, but it's written from what's on your laptop, and it's finished by someone testing it on the real hardware.
     </p>
-    <p class="mt-3">
+    <p>
       If your laptop is marked <span class={`${PILL} ${TONE.wanted}`}>Wanted</span> on the board, says <span class={`${PILL} ${TONE['good-seen']}`}>Should boot</span> under Bootable, which nobody has confirmed yet, or isn't on it at all, pick the case that fits. Each takes a few minutes.
     </p>
-
-    <nav class="mt-6 grid gap-3 sm:grid-cols-2">
+    <ul>
       {CASES.map((c) => (
-        <a href={`#${c.id}`} class="rounded-lg bg-zinc-900 p-4 ring-1 ring-zinc-800 hover:bg-zinc-800">
-          <span class="block font-medium text-zinc-100">{c.title}</span>
-          <span class="mt-1 block text-sm">{c.text}</span>
-        </a>
+        <li><a href={`#${c.id}`}>{c.title}</a>: {c.text.charAt(0).toLowerCase() + c.text.slice(1)}</li>
       ))}
-    </nav>
+    </ul>
 
-    <section id="windows" class={`mt-10 ${CARD}`}>
-      <h2 class={HEAD}><a href="#windows">Your laptop still has Windows<span class={MARK} aria-hidden="true">#</span></a></h2>
-      <p class="mt-2">
-        The <a class={LINK} href={INSTALLER}>Omarchy Arm Installer</a> reads the laptop from its own Windows and writes a hardware report with the ACPI and SMBIOS tables Windows uses to describe the hardware, its hardware IDs, every device with its driver and resources, and a list of the firmware files in its drivers. A device tree is written from exactly that. Serial numbers and other personal details are taken out, and no firmware files go into the report.
+    <section>
+      <h2 id="windows">Your laptop still has Windows<a class="anchor" aria-label="Link to this section" href="#windows">#</a></h2>
+      <p>
+        The <a href={INSTALLER}>Omarchy Arm Installer</a> reads the laptop from its own Windows and writes a hardware report with the ACPI and SMBIOS tables Windows uses to describe the hardware, its hardware IDs, every device with its driver and resources, and a list of the firmware files in its drivers. A device tree is written from exactly that. Serial numbers and other personal details are taken out, and no firmware files go into the report.
       </p>
-      <ol class={STEPS}>
-        <li>Download <code class={INLINE}>OmarchyArmInstaller.exe</code> from the <a class={LINK} href={INSTALLER}>installer's latest release</a>. It's a pre-release, so expect rough edges.</li>
+      <ol>
+        <li>Download <code>OmarchyArmInstaller.exe</code> from the <a href={INSTALLER}>installer's latest release</a>. It's a pre-release, so expect rough edges.</li>
         <li>Right-click it and choose Run as administrator, which it needs to read the firmware tables.</li>
         <li>Choose Share a hardware report. If Linux doesn't know the laptop yet, the installer offers it by itself.</li>
         <li>Choose Collect the report. The zip lands in Downloads, next to a list of what was taken out of it. Unless you clear the box above the button, the installer then sends the firmware files in the laptop's drivers to this site's private store. They are used to ask the maker to put them in linux-firmware, and are never published.</li>
-        <li>Choose Open the form. The model and its hardware IDs are filled in already. Drag the zip in, add a link to the vendor's driver page if you know it, and submit. Reports are public in <a class={LINK} href={REPORTS}>omarchy-hardware-reports</a>.</li>
+        <li>Choose Open the form. The model and its hardware IDs are filled in already. Drag the zip in, add a link to the vendor's driver page if you know it, and submit. Reports are public in <a href={REPORTS}>omarchy-hardware-reports</a>.</li>
       </ol>
-      <p class="mt-4">If you can test boot images on the laptop later, say so in the report. An owner who can test is what gets a device tree finished.</p>
+      <p>If you can test boot images on the laptop later, say so in the report. An owner who can test is what gets a device tree finished.</p>
     </section>
 
-    <section id="linux" class={`mt-6 ${CARD}`}>
-      <h2 class={HEAD}><a href="#linux">You already run Linux on it<span class={MARK} aria-hidden="true">#</span></a></h2>
-      <p class="mt-2">
+    <section>
+      <h2 id="linux">You already run Linux on it<a class="anchor" aria-label="Link to this section" href="#linux">#</a></h2>
+      <p>
         If Linux boots on it, with another model's device tree or one you patched, the tree it boots with is the best start for its own. The kernel keeps a copy of it you can save.
       </p>
-      <ol class={STEPS}>
+      <ol>
         <li>
           Install the device tree compiler and fwupd.
-          <pre class={CODE}><code>sudo pacman -S dtc fwupd                     # Arch, Omarchy
+          <pre><code>sudo pacman -S dtc fwupd                     # Arch, Omarchy
 sudo apt install device-tree-compiler fwupd  # Debian, Ubuntu
 sudo dnf install dtc fwupd                   # Fedora</code></pre>
         </li>
         <li>
-          Save the device tree the laptop booted with, without its serial number. Warnings from <code class={INLINE}>dtc</code> are normal.
-          <pre class={CODE}><code>dtc -I fs -O dts /sys/firmware/devicetree/base &gt; tree.dts
+          Save the device tree the laptop booted with, without its serial number. Warnings from <code>dtc</code> are normal.
+          <pre><code>dtc -I fs -O dts /sys/firmware/devicetree/base &gt; tree.dts
 sed -i '/serial-number/d' tree.dts</code></pre>
         </li>
         <li>
           Save its hardware IDs.
-          <pre class={CODE}><code>sudo fwupdtool hwids &gt; hwids.txt</code></pre>
+          <pre><code>sudo fwupdtool hwids &gt; hwids.txt</code></pre>
         </li>
-        <li>Open <a class={LINK} href={FORM}>Add your model</a>, drag in both files, and say which device tree you started from and what you changed. A patch or a link to your branch is even better.</li>
+        <li>Open <a href={FORM}>Add your model</a>, drag in both files, and say which device tree you started from and what you changed. A patch or a link to your branch is even better.</li>
       </ol>
     </section>
 
-    <section id="test" class={`mt-6 ${CARD}`}>
-      <h2 class={HEAD}><a href="#test">It's ready to test<span class={MARK} aria-hidden="true">#</span></a></h2>
-      <p class="mt-2">
+    <section>
+      <h2 id="test">It's ready to test<a class="anchor" aria-label="Link to this section" href="#test">#</a></h2>
+      <p>
         A model that says <span class={`${PILL} ${TONE['good-seen']}`}>Should boot</span> under Bootable has its device tree and hardware IDs in Omarchy, so the install image picks the tree by itself. Nobody has confirmed it on the real hardware yet.
       </p>
-      <ol class={STEPS}>
-        <li>Make an Omarchy USB stick. With Windows still on the laptop, the <a class={LINK} href={INSTALLER}>Omarchy Arm Installer</a> makes one and copies the laptop's firmware onto it from Windows' own drivers. <a class={LINK} href="/docs/install">Installing Omarchy on an ARM PC</a> has every step.</li>
+      <ol>
+        <li>Make an Omarchy USB stick. With Windows still on the laptop, the <a href={INSTALLER}>Omarchy Arm Installer</a> makes one and copies the laptop's firmware onto it from Windows' own drivers. <a href="/docs/install">Install Omarchy</a> has every step.</li>
         <li>Turn off Secure Boot, boot from the stick, and install, or just see how far it gets.</li>
-        <li>If it reached the desktop, <a class={LINK} href="#check">run the hardware test</a>: it measures what works and puts it on the model's page, so there's nothing to write up.</li>
-        <li>If it didn't get that far, open <a class={LINK} href={FORM}>Add your model</a> and choose how far it got. If you run another distro on it, tell us how that does too.</li>
+        <li>If it reached the desktop, <a href="#check">run the hardware test</a>: it measures what works and puts it on the model's page, so there's nothing to write up.</li>
+        <li>If it didn't get that far, open <a href={FORM}>Add your model</a> and choose how far it got. If you run another distro on it, tell us how that does too.</li>
       </ol>
     </section>
 
-    <section id="check" class={`mt-6 ${CARD}`}>
-      <h2 class={HEAD}><a href="#check">It boots: check what works<span class={MARK} aria-hidden="true">#</span></a></h2>
-      <p class="mt-2">
-        On Omarchy, install the hardware test once and run it. It opens on a menu of what it can test on your computer, with where each part stands.
+    <section>
+      <h2 id="check">It boots: check what works<a class="anchor" aria-label="Link to this section" href="#check">#</a></h2>
+      <p>
+        On Omarchy, install the hardware test once and run it. It tests the screen, keyboard, sound, camera, Wi-Fi, sleep and the rest, some of it by itself and some of it with you, and puts the results on your model's page.
       </p>
-      <pre class={CODE}><code>omarchy-mise-install github:birkskyum/arewearmyet hw-test
+      <pre><code>omarchy-mise-install github:birkskyum/arewearmyet hw-test
 hw-test</code></pre>
-      <ul class="mt-3 list-disc space-y-1.5 pl-5">
-        <li><span class="text-zinc-200">What runs by itself</span>: speakers and microphones (it plays test tones and listens to them), graphics, Wi-Fi and Bluetooth, video decoding, and temperatures under load.</li>
-        <li><span class="text-zinc-200">What is done with you</span>: keyboard, touchpad, touchscreen, headphones, camera, USB ports, an external screen, the lid and sleep.</li>
-        <li>It shows the results and sends them to the model's page unless you say no. No serial numbers, addresses or names are sent. A recording or a camera picture is only for you to check: it never leaves the computer, and is deleted when the test ends.</li>
-        <li>One part alone: <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs text-zinc-200">hw-test camera</code>. Where the computer stands, without running anything: <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs text-zinc-200">hw-test status</code>. Every command is in the <a class={LINK} href="/docs/hw-test">hw-test reference</a>.</li>
-      </ul>
-      <p class="mt-3">
-        Something doesn't work? <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs text-zinc-200">hw-test fix</code> hands it to your AI agent with a brief: what was measured, where to look, how to measure again and where a fix goes in Omarchy. It takes one part at a time and asks you which, so nothing has to be tested again for the next one. It opens the agent you chose in Omarchy. Where T3 Code is running, the work goes into a thread there, which keeps the conversation for the next part. Any agent can also start from <a class={LINK} href="/docs/agents">arewearmyet.com/agents.md</a>.
+      <p>
+        <a href="/docs/hw-test">The hardware test</a> says what it tests, what it sends, and how to hand a part that doesn't work to your AI agent.
       </p>
     </section>
 
-    <section id="probe" class={`mt-6 ${CARD}`}>
-      <h2 class={HEAD}><a href="#probe">Not on Omarchy<span class={MARK} aria-hidden="true">#</span></a></h2>
-      <p class="mt-2">
+    <section>
+      <h2 id="probe">Not on Omarchy<a class="anchor" aria-label="Link to this section" href="#probe">#</a></h2>
+      <p>
         On another distro, the probe does the quick check. It only reads, needs no root, takes a few seconds, and shows you the results before it sends them.
       </p>
-      <pre class={CODE}><code>curl -fsSL https://arewearmyet.com/probe.sh | bash</code></pre>
-      <p class="mt-3">
+      <pre><code>curl -fsSL https://arewearmyet.com/probe.sh | bash</code></pre>
+      <p>
         It says whether each part is there and its driver came up. What a part does on Omarchy is what the model's page counts, so a result from another distro shows there as a hint.
       </p>
     </section>
 
-    <section id="not-wanted" class="mt-10 scroll-mt-6">
-      <h2 class="group text-base font-semibold text-zinc-200"><a href="#not-wanted">Please don't send<span class={MARK} aria-hidden="true">#</span></a></h2>
-      <ul class="mt-2 list-disc space-y-1 pl-5 marker:text-zinc-600">
-        <li>Serial numbers, or the <code class={INLINE}>MSDM</code> ACPI table, which holds the Windows product key. The installer leaves both out.</li>
+    <section>
+      <h2 id="not-wanted">Please don't send<a class="anchor" aria-label="Link to this section" href="#not-wanted">#</a></h2>
+      <ul>
+        <li>Serial numbers, or the <code>MSDM</code> ACPI table, which holds the Windows product key. The installer leaves both out.</li>
       </ul>
     </section>
 
-    <section id="next" class="mt-8 scroll-mt-6">
-      <h2 class="group text-base font-semibold text-zinc-200"><a href="#next">What happens next<span class={MARK} aria-hidden="true">#</span></a></h2>
-      <p class="mt-2">
+    <section>
+      <h2 id="next">What happens next<a class="anchor" aria-label="Link to this section" href="#next">#</a></h2>
+      <p>
         Reports and device trees go to the people writing trees for these laptops. The board shows each step as it lands, from a tree out of tree to one posted to the kernel list and then in a Linux release. When there's something to try on your laptop, we'll ask in your issue.
       </p>
     </section>
 
-    <div class="mt-10 flex flex-wrap gap-3 text-sm">
-      <a href={FORM} class="rounded-md bg-zinc-100 px-3 py-1.5 font-medium text-zinc-900 hover:bg-white">Add your model</a>
-      <a href="/" class="rounded-md px-3 py-1.5 text-zinc-200 ring-1 ring-zinc-700 hover:bg-zinc-800">Back to the board</a>
-    </div>
+    <p><a href={FORM}>Add your model</a> · <a href="/">Back to the board</a></p>
+  </article>
 </DocsLayout>

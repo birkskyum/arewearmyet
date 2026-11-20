@@ -1,21 +1,27 @@
-# hw-test reference
+# The hardware test
 
 `hw-test` is the hardware test for ARM computers on Omarchy. It checks the screen, keyboard, sound, camera, Wi-Fi, sleep and the rest, some of it by itself and some of it with you, and puts the results on your model's page on arewearmyet.com. When a part doesn't work, it hands that part to your AI agent with what was measured and where a fix goes.
 
-This page lists every command. To get started, [How to help](https://arewearmyet.com/docs/help) is shorter. An agent reads the [guide for agents](https://arewearmyet.com/agents.md), which says what to do with these commands and in which order.
+The first half of this page is for running the test. The second half lists every command. An agent reads the [guide for agents](https://arewearmyet.com/agents.md), which says what to do with these commands and in which order.
 
-## Install and update
+## Run it
 
 ```sh
 omarchy-mise-install github:birkskyum/arewearmyet hw-test
 hw-test
 ```
 
+It opens on a menu of what it can test on your computer, with where each part stands. A full round takes about a quarter of an hour.
+
+- **What runs by itself**: speakers and microphones (it plays test tones and listens to them), graphics, Wi-Fi and Bluetooth, the network cable, video decoding, and temperatures under load.
+- **What is done with you**: keyboard, touchpad, touchscreen, headphones, camera, USB ports, an external screen, the lid and sleep.
+- **What happens with the results**: it shows them, and sends them to the model's page unless you say no. A recording or a camera picture is only for you to check. It never leaves the computer and is deleted when its step ends.
+
 `hw-test` says at its start when a newer release is out, and `hw-test update` gets it. `hw-test version` prints the one you have. Releases are on [GitHub](https://github.com/birkskyum/arewearmyet/releases), built for Linux on ARM and on x86.
 
-On a distro other than Omarchy, the probe does the quick check: `curl -fsSL https://arewearmyet.com/probe.sh | bash`.
+On a distro other than Omarchy, [the probe](https://arewearmyet.com/docs/help#probe) does the quick check.
 
-## The test
+## Commands
 
 | Command | What it does |
 | --- | --- |
@@ -53,8 +59,6 @@ On a distro other than Omarchy, the probe does the quick check: `curl -fsSL http
 | `temperatures`, `fans` | Temperature sensors under load, and the fan, which you confirm by ear when no sensor reports it | for the fan |
 
 A step shows only where the computer has the part. A mini PC or desktop gets no keyboard, touchpad, lid or battery step, and its screen is tested in the `screen` step.
-
-The picture the camera takes and the recordings the sound tests make stay on the computer and are deleted after their step.
 
 ### Results
 

@@ -331,7 +331,7 @@ One log of a note, as `text/plain`. The address comes from the note's `logs`.
 
 ## Sending
 
-Every route here takes JSON, counts towards the limit of 30 a minute, and cleans the text it stores. `hw-test` uses these routes for you. The test itself sends runs, `hw-test report` sends one result, `hw-test verify after` sends a fix and `hw-test note` sends notes. See the [hw-test reference](https://arewearmyet.com/docs/hw-test).
+Every route here takes JSON, counts towards the limit of 30 a minute, and cleans the text it stores. `hw-test` uses these routes for you. The test itself sends runs, `hw-test report` sends one result, `hw-test verify after` sends a fix and `hw-test note` sends notes. See the [the hardware test's page](https://arewearmyet.com/docs/hw-test).
 
 ### `POST /api/runs`
 
