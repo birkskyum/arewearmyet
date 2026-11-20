@@ -77,9 +77,9 @@ func Describe(sys machine.System, touchscreenDevice string) []string {
 	}
 	if line != "" {
 		count, _ := interrupts(sys, line)
-		lines = append(lines, "touchscreen interrupt: "+line+", fired "+strconv.FormatInt(count, 10)+" times")
+		lines = append(lines, "touchscreen interrupt "+line+", fired "+strconv.FormatInt(count, 10)+" times")
 	} else if touchscreenDevice != "" {
-		lines = append(lines, "touchscreen interrupt: not found, taps are counted as clicks in the terminal")
+		lines = append(lines, "touchscreen interrupt not found, taps are counted as clicks in the terminal")
 	}
 	return lines
 }

@@ -251,14 +251,14 @@ Then tell the owner to restart when it suits them, or restart yourself with `sys
 
    ### Measured with hw-test
 
-   LENOVO Yoga Slim 7 14Q8X9, before and after this change. Before: 19 Nov 2026 06:00. After: 19 Nov 2026 06:40.
+   LENOVO Yoga Slim 7 14Q8X9, before this change on 19 Nov 2026 06:00 and after it on 19 Nov 2026 06:40.
    Kernel 7.3.0-72-omarchy and the same package versions on both sides. After, the computer was started from a test boot image with the changed device tree, made by `hw-test tree boot`.
 
    | Check | Before | After |
    | --- | --- | --- |
-   | ✅ Speakers | partly: left heard at -31 dB, right not heard (measured by the test) | works: left heard at -31 dB, right heard at -32 dB (measured by the test) |
+   | ✅ Speakers | partly, left heard at -31 dB, right not heard (measured by the test) | works, left heard at -31 dB, right heard at -32 dB (measured by the test) |
 
-   Tested again and still working: built-in microphones, headphone jack.
+   Testing again found built-in microphones, headphone jack still working.
    ```
 
 4. `hw-test verify after <part> --pr <the pull request's address> --title "<the change in a line>"` records the same on the model's page, tied to the pull request. That links the fix, so there is nothing more to send.

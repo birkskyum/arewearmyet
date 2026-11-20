@@ -103,7 +103,7 @@ func TestTheTemperatureIsShownAsItClimbsAndTheOwnerSaysWhenTheFanStarts(t *testi
 	if h.phase != "after" || o.stopped != 1 || o.found.Heard == nil || o.found.Heard.Hot != 66 {
 		t.Fatalf("phase %q, stopped %d, heard %+v", h.phase, o.stopped, o.found.Heard)
 	}
-	if drawn = ansi.ReplaceAllString(h.view(90, 30), ""); !strings.Contains(drawn, "You heard the fan at 66 °C, 6 s in") || !strings.Contains(drawn, "Watching it cool") {
+	if drawn = ansi.ReplaceAllString(h.view(90, 30), ""); !strings.Contains(drawn, "You heard the fan at 66 °C, 6 s in") || !strings.Contains(drawn, "Cooling, now at") {
 		t.Errorf("after the load:\n%s", drawn)
 	}
 	seconds(h, int(deep.CoolAfter.Seconds()))
@@ -189,7 +189,7 @@ func TestAWarmComputerCoolsBeforeTheLoadAndAFanlessOneIsNotKeptWaiting(t *testin
 	degrees := 66.0
 	h.resting = func() (float64, bool) { return degrees, degrees < 50 }
 	h.start()
-	if h.phase != "cooling" || !strings.Contains(h.view(90, 30), "Letting the computer cool first: 66 °C") {
+	if h.phase != "cooling" || !strings.Contains(h.view(90, 30), "Letting the computer cool first, now at 66 °C") {
 		t.Fatalf("phase %q:\n%s", h.phase, h.view(90, 30))
 	}
 	degrees = 58

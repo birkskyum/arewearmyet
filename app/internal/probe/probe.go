@@ -206,7 +206,7 @@ func gpu(sys machine.System, klog string, measured set) {
 		for _, line := range strings.Split(klog, "\n") {
 			lower := strings.ToLower(line)
 			if strings.Contains(lower, "zap") && (strings.Contains(lower, "fail") || strings.Contains(lower, "error")) {
-				measured("gpu", report.Broken, "GPU "+device+" bound, but: "+line)
+				measured("gpu", report.Broken, "GPU "+device+" bound, but "+line)
 				return
 			}
 		}
@@ -221,7 +221,7 @@ func gpu(sys machine.System, klog string, measured set) {
 	case renderer == "msm" || renderer == "msm_dpu" || strings.Contains(klog, "no GPU device was found"):
 		evidence := "msm drives the display, but no GPU is bound (the device tree has it off or its firmware failed)"
 		if software {
-			evidence += "; software rendering is on"
+			evidence += ", and software rendering is on"
 		}
 		measured("gpu", report.Broken, evidence)
 	}
@@ -300,11 +300,11 @@ func wireless(sys machine.System, facts *Facts, measured set) {
 		}
 		switch sys.Read(net + "/addr_assign_type") {
 		case "0":
-			measured("wifi-address", report.Works, card+": permanent address")
+			measured("wifi-address", report.Works, card+" has its permanent address")
 		case "1":
-			measured("wifi-address", report.Broken, card+": random address made by the kernel, so it changes every boot")
+			measured("wifi-address", report.Broken, card+" has a random address made by the kernel, so it changes every boot")
 		case "3":
-			measured("wifi-address", report.Works, card+": address set by the system (not from the card)")
+			measured("wifi-address", report.Works, card+" has an address set by the system (not from the card)")
 		}
 	}
 
@@ -565,7 +565,7 @@ func sensors(sys machine.System, facts *Facts, measured set) {
 		}
 	}
 	if fan != "" {
-		measured("fans", report.Works, fmt.Sprintf("%s; %d temperature sensors", fan, len(sys.Glob("/sys/class/thermal/thermal_zone*/temp"))))
+		measured("fans", report.Works, fmt.Sprintf("%s, %d temperature sensors", fan, len(sys.Glob("/sys/class/thermal/thermal_zone*/temp"))))
 	}
 	// Makers of fingerprint readers, by USB vendor
 	readers := map[string]bool{"27c6": true, "06cb": true, "04f3": true, "1c7a": true, "10a5": true, "2808": true, "298d": true}

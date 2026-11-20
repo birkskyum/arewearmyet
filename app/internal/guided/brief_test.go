@@ -49,23 +49,23 @@ func TestTheBriefSaysWhatFailsWhatIsKnownAndHowToGoAboutIt(t *testing.T) {
 	}
 	brief := Brief(b)
 	for _, text := range []string{
-		"# Hardware brief: LENOVO Yoga Slim 7 14Q8X9",
+		"# Hardware brief for LENOVO Yoga Slim 7 14Q8X9",
 		// The guide is named once, with which parts of it to read
 		"The guide for this work is https://arewearmyet.com/agents.md", "Read its Words and Rules, then step 5 (Fix it) and step 6 (Notes)",
-		"Model: LENOVO 83ED (Yoga Slim 7 14Q8X9)", "On arewearmyet.com as `lenovo-yoga-slim-7x-14q8x9`", "/api/models/lenovo-yoga-slim-7x-14q8x9",
-		"Family, which is the first line of a pull request or an issue for it: `arm-dragon-msft`",
-		"Device tree in use: `lenovo,yoga-slim7x`, built from `arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts`",
-		"Kernel: 7.3.0-59-omarchy, on Omarchy", "linux-omarchy 7.3-59, mesa 26.2.3",
+		"The model is LENOVO 83ED (Yoga Slim 7 14Q8X9).", "It is on arewearmyet.com as `lenovo-yoga-slim-7x-14q8x9`", "/api/models/lenovo-yoga-slim-7x-14q8x9",
+		"Its family, which is the first line of a pull request or an issue for it, is `arm-dragon-msft`.",
+		"The device tree in use is `lenovo,yoga-slim7x`, built from `arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts`",
+		"It runs kernel 7.3.0-59-omarchy, on Omarchy", "linux-omarchy 7.3-59, mesa 26.2.3",
 		// Whether it is up to date, which decides whether a fault is worth chasing
-		"Omarchy's channels have linux-omarchy at: stable 7.3-3.1, edge 7.3-71. This computer has 7.3-59.", "ask the owner whether to update, then run `hw-test ask update`", "It refuses, and says why, where an update would do harm",
+		"Omarchy's channels have linux-omarchy at stable 7.3-3.1, edge 7.3-71. This computer has 7.3-59.", "ask the owner whether to update, then run `hw-test ask update`", "It refuses, and says why, where an update would do harm",
 		// What fails, worst first, each with what was found and how
-		"### Speakers (check `speakers`): partly", "Measured on 19 November 2026 with kernel 7.3.0-59-omarchy, seen by the owner", "left speaker heard at -31 dB", "the left is louder than the right",
-		"Working means: Both speakers play at a usable volume.", "Where to look: Sound runs through the audio DSP.",
+		"### Speakers (check `speakers`), partly", "Measured on 19 November 2026 with kernel 7.3.0-59-omarchy, seen by the owner", "left speaker heard at -31 dB", "the left is louder than the right",
+		"**What working means.** Both speakers play at a usable volume.", "**Where to look.** Sound runs through the audio DSP.",
 		// What the site has written up goes beside what was measured, with its source
-		"### Hibernation (check `hibernate`): broken", "Already known on the site, on Omarchy (broken, 2026-10): Waking from hibernation restarts the laptop. Source: https://github.com/omacom/omarchy/discussions/11823",
+		"### Hibernation (check `hibernate`), broken", "**Already known on the site, on Omarchy** (broken, 2026-10). Waking from hibernation restarts the laptop. Source: https://github.com/omacom/omarchy/discussions/11823",
 		// A part that takes the owner is said to, and one that runs by itself has its command
-		"Measure again: `hw-test speakers --no-send --play`, which you run yourself, also without a terminal, once the owner has said yes", "Measure again: `hw-test graphics --no-send`, which runs by itself", "Measure again: `hw-test quick --no-send`",
-		"- works: wifi", "- not tested:",
+		"**Measure again.** `hw-test speakers --no-send --play`, which you run yourself, also without a terminal, once the owner has said yes", "**Measure again.** `hw-test graphics --no-send`, which runs by itself", "**Measure again.** `hw-test quick --no-send`",
+		"- **Works.** wifi", "- **Not tested.**",
 		// No notes yet isn't the same as nothing known
 		"Nobody has left a note on this model yet. That means nobody wrote one, not that nothing is known", "api/notes?q=<words>",
 		// One way to go about it, in order, with the commands
@@ -85,7 +85,7 @@ func TestTheBriefSaysWhatFailsWhatIsKnownAndHowToGoAboutIt(t *testing.T) {
 	// What was seen on another distro is told apart from what was seen on Omarchy
 	other := yoga()
 	other.Findings = map[string]report.Finding{"speakers": {State: report.Works, Basis: "other-distro", Where: "Ubuntu 25.04, kernel 6.14", Note: "All four speakers play.", Checked: "2025-05", Source: "https://bugs.launchpad.net/x"}}
-	if with := Brief(other); !strings.Contains(with, "Reported Ubuntu 25.04, kernel 6.14, not on Omarchy, so a hint and no more (works, 2025-05): All four speakers play.") || strings.Contains(with, "Already known on the site, on Omarchy (works") {
+	if with := Brief(other); !strings.Contains(with, "**Reported Ubuntu 25.04, kernel 6.14, not on Omarchy, so a hint and no more** (works, 2025-05). All four speakers play.") || strings.Contains(with, "Already known on the site, on Omarchy** (works") {
 		t.Errorf("a report from another distro isn't told apart:\n%s", with)
 	}
 	// What works isn't something to work on, and its finding isn't quoted
@@ -105,14 +105,14 @@ func TestTheBriefSaysWhatFailsWhatIsKnownAndHowToGoAboutIt(t *testing.T) {
 	// What others wrote down about this model is listed, to read before starting
 	noted := yoga()
 	noted.Notes = []report.Listed{{ID: "NOTE-AAAAAAAAAA", Check: "suspend", Kind: "problem", Status: "open", Title: "Freezes on wake with a dock", Replies: 2, URL: "https://arewearmyet.com/api/notes/NOTE-AAAAAAAAAA"}}
-	if with := Brief(noted); !strings.Contains(with, "- Freezes on wake with a dock (problem, open, suspend): `curl -s https://arewearmyet.com/api/notes/NOTE-AAAAAAAAAA`, 2 answers") || strings.Contains(with, "Nobody has left a note") {
+	if with := Brief(noted); !strings.Contains(with, "- Freezes on wake with a dock (problem, open, suspend), read with `curl -s https://arewearmyet.com/api/notes/NOTE-AAAAAAAAAA`, 2 answers") || strings.Contains(with, "Nobody has left a note") {
 		t.Errorf("the notes on the model aren't listed:\n%s", with)
 	}
 
 	// Asked for one check, the brief is about that one, also when it was never tested here
 	b = yoga()
 	b.Only = []string{"camera"}
-	if brief = Brief(b); !strings.Contains(brief, "### Webcam (check `camera`): not tested yet") || strings.Contains(brief, "### Speakers") || !strings.Contains(brief, "- partly: speakers, webgpu") {
+	if brief = Brief(b); !strings.Contains(brief, "### Webcam (check `camera`), not tested yet") || strings.Contains(brief, "### Speakers") || !strings.Contains(brief, "- **Partly.** speakers, webgpu") {
 		t.Errorf("a brief for the camera alone:\n%s", brief)
 	}
 	// A Chromebook or a Googlebook is Google's family, which its pull requests name
@@ -170,7 +170,7 @@ func TestTheBriefForAnNvidiaMachineLeavesTheDeviceTreeOut(t *testing.T) {
 	b.Model = report.Model{ID: "asus-proart-p16-h7607ba", Page: "https://arewearmyet.com/models/asus-proart-p16-h7607ba", Family: "arm-nvidia"}
 	brief := Brief(b)
 	for _, text := range []string{
-		"Family, which is the first line of a pull request or an issue for it: `arm-nvidia`",
+		"Its family, which is the first line of a pull request or an issue for it, is `arm-nvidia`.",
 		"describes its own hardware through ACPI, so there is no device tree",
 		"`hw-test tree` is not for this computer",
 		"9. **Clean up.** Restore the settings you changed",
@@ -230,12 +230,12 @@ func TestWhatFailsIsHandedToTheOwnersAgentWithTheBrief(t *testing.T) {
 	if !handed.Opened || !strings.HasPrefix(string(guide), "# Are we ARM yet? Guide for AI agents") {
 		t.Fatalf("handed %+v, guide %q", handed, guide)
 	}
-	if !strings.Contains(prompt, "on my computer: speakers.") || !strings.Contains(prompt, "GUIDE.md beside it (a copy of https://arewearmyet.com/agents.md)") {
+	if !strings.Contains(prompt, "on my computer. It is about speakers, and says") || !strings.Contains(prompt, "GUIDE.md beside it (a copy of https://arewearmyet.com/agents.md)") {
 		t.Errorf("the agent's first message: %s", prompt)
 	}
 	for _, text := range []string{
 		"A copy of the guide is in GUIDE.md beside this file", "hw-test 0.9.0 is at `/home/owner/.local/share/mise/installs/hw/0.16.0/hw-test`. If plain `hw-test` doesn't start",
-		"## One part at a time", "Stay on it until it works", "Also failing or worth a look on this computer: `hibernate`, `webgpu`, `camera`.", "`hw-test brief <check>` prints the brief for one of them from the results already here, without testing anything again",
+		"## One part at a time", "Stay on it until it works", "Also failing or worth a look on this computer are `hibernate`, `webgpu`, `camera`.", "`hw-test brief <check>` prints the brief for one of them from the results already here, without testing anything again",
 	} {
 		if !strings.Contains(string(written), text) {
 			t.Errorf("the brief for one part lacks %q:\n%s", text, written)
@@ -246,7 +246,7 @@ func TestWhatFailsIsHandedToTheOwnersAgentWithTheBrief(t *testing.T) {
 	}
 	// A part that works with something worth a look is briefed as that
 	one.Only = []string{"camera"}
-	if brief := Brief(one); !strings.Contains(brief, "### Webcam (check `camera`): works, with something to look into") || !strings.Contains(brief, "- Worth a second look: The picture is 30 of 255 bright. Find out whether it is a fault") {
+	if brief := Brief(one); !strings.Contains(brief, "### Webcam (check `camera`), works, with something to look into") || !strings.Contains(brief, "- **Worth a second look.** The picture is 30 of 255 bright. Find out whether it is a fault") {
 		t.Errorf("a part worth a look:\n%s", brief)
 	}
 	// Handed over by the owner, the speakers are the agent's to measure: the brief says how, and
@@ -258,7 +258,7 @@ func TestWhatFailsIsHandedToTheOwnersAgentWithTheBrief(t *testing.T) {
 	one.Only, one.ByOwner, one.When = []string{"speakers"}, true, time.Now()
 	HandOver(one, dir, launch)
 	written, _ = os.ReadFile(filepath.Join(dir, "BRIEF.md"))
-	if !strings.Contains(string(written), "Measure again: `hw-test speakers --no-send`, which you run yourself, also without a terminal") {
+	if !strings.Contains(string(written), "**Measure again.** `hw-test speakers --no-send`, which you run yourself, also without a terminal") {
 		t.Errorf("the brief doesn't give the agent the sound test:\n%s", written)
 	}
 	if !Automatic([]string{"speakers"}, false) || !Automatic([]string{"microphone", "graphics"}, false) || Automatic([]string{"camera"}, true) || !WantsSound([]string{"auto"}) || WantsSound([]string{"graphics"}) {
@@ -274,7 +274,7 @@ func TestWhatFailsIsHandedToTheOwnersAgentWithTheBrief(t *testing.T) {
 	}
 	// A test that takes the owner is opened for them, and nothing is retyped
 	one.Only = []string{"camera"}
-	if brief := Brief(one); !strings.Contains(brief, "Measure again: `hw-test ask camera`, which opens the test in a window for the owner") {
+	if brief := Brief(one); !strings.Contains(brief, "**Measure again.** `hw-test ask camera`, which opens the test in a window for the owner") {
 		t.Errorf("a test with the owner:\n%s", brief)
 	}
 
@@ -296,7 +296,7 @@ func TestWhatFailsIsHandedToTheOwnersAgentWithTheBrief(t *testing.T) {
 	}
 	prompt = ""
 	handed = HandOver(one, dir, launch)
-	if !handed.Opened || prompt != "" || len(threaded) != 1 || threaded[0] != "Hardware: speakers | Read BRIEF.md in this folder" || !strings.Contains(handed.Said, "in T3 Code, in a new thread") || !strings.Contains(handed.Said, "BRIEF.md") {
+	if !handed.Opened || prompt != "" || len(threaded) != 1 || threaded[0] != "Fix speakers | Read BRIEF.md in this folder" || !strings.Contains(handed.Said, "in T3 Code, in a new thread") || !strings.Contains(handed.Said, "BRIEF.md") {
 		t.Errorf("into a thread: %+v, threaded %v, terminal %q", handed, threaded, prompt)
 	}
 	one.InThread = func(string, string, string) (string, error) { return "", fmt.Errorf("T3 Code isn't running") }
@@ -369,7 +369,7 @@ func TestTheScreensOfferTheAgentOnlyWhenSomethingFails(t *testing.T) {
 	if s.update(press('2')) != nil || s.phase != "pick" {
 		t.Fatalf("choosing the agent with several: phase %q", s.phase)
 	}
-	if got := strings.Join(s.ask.options, " | "); got != "WebGPU in the browser: partly. WebGPU only with switches | Hibernation: broken. the kernel offers no hibernation | Speakers: works, with something to look into. The right speaker measures 8 dB quieter than the other | Back" ||
+	if got := strings.Join(s.ask.options, " | "); got != "WebGPU in the browser (partly). WebGPU only with switches | Hibernation (broken). the kernel offers no hibernation | Speakers (works, with something to look into). The right speaker measures 8 dB quieter than the other | Back" ||
 		!strings.Contains(s.ask.question, "one part at a time") {
 		t.Fatalf("what to pick from: %s\n%s", got, s.ask.question)
 	}
@@ -379,7 +379,7 @@ func TestTheScreensOfferTheAgentOnlyWhenSomethingFails(t *testing.T) {
 		t.Fatalf("after picking: phase %q", s.phase)
 	}
 	s.update(cmd())
-	if !strings.Contains(asked, "on my computer: speakers.") || strings.Contains(asked, "hibernation") || !strings.Contains(strings.Join(s.ask.options, "|"), "Let an agent look into one of them") {
+	if !strings.Contains(asked, "on my computer. It is about speakers, and says") || strings.Contains(asked, "hibernation") || !strings.Contains(strings.Join(s.ask.options, "|"), "Let an agent look into one of them") {
 		t.Errorf("asked %q, then offered %v", asked, s.ask.options)
 	}
 	// Back from the list leaves everything as it was
@@ -427,7 +427,7 @@ func TestTheScreensOfferTheAgentOnlyWhenSomethingFails(t *testing.T) {
 	if start.update(press(tea.KeyEnter)) != nil || start.offer == nil || start.started || picked != "" {
 		t.Fatalf("Enter on a failing part: offer %v, started %v", start.offer != nil, start.started)
 	}
-	if view := start.view(90, 30); !strings.Contains(view, "Webcam: partly. Too dark") || !strings.Contains(view, "Test it again") || !strings.Contains(view, "Let an agent look into it") {
+	if view := start.view(90, 30); !strings.Contains(view, "Webcam (partly). Too dark") || !strings.Contains(view, "Test it again") || !strings.Contains(view, "Let an agent look into it") {
 		t.Errorf("the offer:\n%s", view)
 	}
 	handing := start.update(press('2'))
@@ -445,11 +445,11 @@ func TestTheScreensOfferTheAgentOnlyWhenSomethingFails(t *testing.T) {
 	// A part that works with something worth a look is offered the same way, and says so in the list
 	start.started, picked = false, ""
 	at("speakers")
-	if list := start.question(); !strings.Contains(list.view(110), "worth a look: The right speaker measures 8 dB quieter") {
+	if list := start.question(); !strings.Contains(list.view(110), "worth a look. The right speaker measures 8 dB quieter") {
 		t.Errorf("the list doesn't say what is worth a look:\n%s", list.view(110))
 	}
 	start.update(press(tea.KeyEnter))
-	if start.offer == nil || !strings.Contains(start.view(120, 30), "Speakers: works, with something to look into. The right speaker measures 8 dB quieter than the other") {
+	if start.offer == nil || !strings.Contains(start.view(120, 30), "Speakers (works, with something to look into). The right speaker measures 8 dB quieter than the other") {
 		t.Errorf("the speakers' offer:\n%s", start.view(90, 30))
 	}
 	start.update(press(tea.KeyEscape))

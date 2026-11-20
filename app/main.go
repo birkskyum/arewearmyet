@@ -1,7 +1,7 @@
 // hw-test checks what works on a Snapdragon PC under Omarchy and reports it to arewearmyet.com.
 //
-//	hw-test            the guided test: the quick check, then keyboard, sound, camera and sleep with you
-//	hw-test quick      the quick check alone: read-only, a few seconds, no questions
+//	hw-test            the guided test, which is the quick check, then keyboard, sound, camera and sleep with you
+//	hw-test quick      the quick check alone, read-only, a few seconds, no questions
 //	hw-test sound      one part of the guided test alone, reporting only that part
 //	hw-test manual     the tests done with you: keyboard, touchpad, camera, ports, sleep
 //	hw-test fix        hand what doesn't work to the owner's agent, with a brief of what was measured
@@ -76,36 +76,36 @@ func main() {
 	}
 	flags := flag.NewFlagSet("hw-test "+command, flag.ExitOnError)
 	jsonOnly := flags.Bool("json", false, "print what would be sent, and send nothing")
-	play := flags.Bool("play", false, "for an agent, without a terminal: the owner has said yes to the sound test's tones")
+	play := flags.Bool("play", false, "for an agent, without a terminal, when the owner has said yes to the sound test's tones")
 	once := flags.Bool("once", false, "end after the named steps, without the last screen")
-	done := flags.String("done", "", "with --once: a file to write the steps' results to")
+	done := flags.String("done", "", "with --once, a file to write the steps' results to")
 	noSend := flags.Bool("no-send", false, "show the results without sending them")
 	model := flags.String("model", "", "the model's id on arewearmyet.com, when the machine isn't recognised by itself")
 	agent := flags.String("agent", "", "the agent running this, shown next to the run")
 	api := flags.String("api", report.Site, "another server, for testing")
 	// For hw-test note
 	var logs, links list
-	kind := flags.String("kind", "problem", "what the note is: problem, workaround, upstream or note")
+	kind := flags.String("kind", "problem", "what the note is, one of problem, workaround, upstream or note")
 	title := flags.String("title", "", "the note in a line")
 	check := flags.String("check", "", "the check the note is about, when it is about one")
-	body := flags.String("body", "", "the note's text; without it, read from --body-file or from standard input")
+	body := flags.String("body", "", "the note's text. Without it, read from --body-file or from standard input")
 	bodyFile := flags.String("body-file", "", "a file with the note's text")
 	reply := flags.String("reply", "", "the id of the note this answers")
 	solved := flags.String("solved", "", "the id of a problem written from this computer, to mark solved")
-	flags.Var(&logs, "log", "a log to attach, cleaned first: kernel, previous (the kernel's log of the boot before) or a file; may be given more than once")
-	flags.Var(&links, "link", "a link to where the work is; may be given more than once")
-	pr := flags.String("pr", "", "for hw-test verify after: the pull request the change is in")
+	flags.Var(&logs, "log", "a log to attach, cleaned first, as kernel, previous (the kernel's log of the boot before) or a file. May be given more than once")
+	flags.Var(&links, "link", "a link to where the work is. May be given more than once")
+	pr := flags.String("pr", "", "for hw-test verify after, the pull request the change is in")
 	// For hw-test resume
-	cancel := flags.Bool("cancel", false, "for hw-test resume: take back what was left for after the restart")
-	show := flags.Bool("show", false, "for hw-test resume: show what is left for after the restart")
+	cancel := flags.Bool("cancel", false, "for hw-test resume, take back what was left for after the restart")
+	show := flags.Bool("show", false, "for hw-test resume, show what is left for after the restart")
 	// For hw-test verify
-	again := flags.Bool("new", false, "for hw-test verify before: replace the snapshot that is there, to start on another change")
-	atLogin := flags.Bool("run", false, "for hw-test resume: what the login service calls")
+	again := flags.Bool("new", false, "for hw-test verify before, replace the snapshot that is there, to start on another change")
+	atLogin := flags.Bool("run", false, "for hw-test resume, what the login service calls")
 	// For hw-test report
-	state := flags.String("state", "", "for hw-test report: works, partial, broken or absent")
-	how := flags.String("how", "owner", "for hw-test report: owner (they saw or heard it) or agent (your reading of logs)")
-	noteText := flags.String("note", "", "for hw-test report: what was seen, in a sentence or two")
-	evidence := flags.String("evidence", "", "for hw-test report: the line of output that shows it")
+	state := flags.String("state", "", "for hw-test report, works, partial, broken or absent")
+	how := flags.String("how", "owner", "for hw-test report, owner (they saw or heard it) or agent (your reading of logs)")
+	noteText := flags.String("note", "", "for hw-test report, what was seen, in a sentence or two")
+	evidence := flags.String("evidence", "", "for hw-test report, the line of output that shows it")
 	flags.Usage = usage
 	flags.Parse(args)
 
@@ -173,7 +173,7 @@ func main() {
 	// The automatic tests need nobody, so they also run without a terminal, as an agent has it
 	unattended := len(only) > 0 && !guided.Interactive()
 	if unattended && !guided.Automatic(only, *play) {
-		fmt.Fprintln(os.Stderr, "hw-test: that step is done with you at the keyboard, so it needs a terminal. Without one, these run: "+strings.Join(guided.AutomaticWords(), ", ")+". The sound test (speakers, microphone) runs without one with --play, once the owner has said yes to its tones. A step done with the owner is opened for them by hw-test ask, as in hw-test ask camera, which waits and prints the result.")
+		fmt.Fprintln(os.Stderr, "hw-test: that step is done with you at the keyboard, so it needs a terminal. The steps that run without one are "+strings.Join(guided.AutomaticWords(), ", ")+". The sound test (speakers, microphone) runs without one with --play, once the owner has said yes to its tones. A step done with the owner is opened for them by hw-test ask, as in hw-test ask camera, which waits and prints the result.")
 		os.Exit(2)
 	}
 
@@ -391,7 +391,7 @@ func tell(run *report.Run, api, check, state, how, note, evidence string, send b
 		return fail("--how is owner (they saw or heard it and told you) or agent (your own reading of logs). What a test measured is sent by running the test.")
 	}
 	if strings.TrimSpace(note) == "" {
-		return fail("report needs --note: what was seen, in a sentence or two.")
+		return fail("report needs --note, with what was seen in a sentence or two.")
 	}
 	if run.Model == "" {
 		if matched, err := report.Match(api, run); err == nil {
@@ -508,11 +508,11 @@ func deviceTree(words []string, body string) int {
 		}
 		switch {
 		case started.Stock == "same" && len(started.Misfit) > 0:
-			fmt.Fprintln(os.Stderr, "They don't touch this computer's tree: compiled unchanged, it is the tree this computer starts with, byte for byte. So a test image differs by your change and nothing else. A patch for Omarchy still has to fit its current sources, which the pull request's build shows.")
+			fmt.Fprintln(os.Stderr, "They don't touch this computer's tree. Compiled unchanged, it is the tree this computer starts with, byte for byte. So a test image differs by your change and nothing else. A patch for Omarchy still has to fit its current sources, which the pull request's build shows.")
 		case started.Stock == "same":
 			fmt.Fprintln(os.Stderr, "Compiled unchanged, it is the tree this computer starts with, byte for byte. So a test image differs by your change and nothing else.")
 		case started.Stock == "differs":
-			fmt.Fprintln(os.Stderr, "Compiled unchanged, it is NOT the tree this computer starts with: the installed linux-omarchy-dtbs and Omarchy's packages as they are now differ for this model. A test image would carry that difference besides your change. Have the owner run omarchy update and restart, then move this folder's tree away and start again.")
+			fmt.Fprintln(os.Stderr, "Compiled unchanged, it is NOT the tree this computer starts with. The installed linux-omarchy-dtbs and Omarchy's packages as they are now differ for this model. A test image would carry that difference besides your change. Have the owner run omarchy update and restart, then move this folder's tree away and start again.")
 		case len(started.Misfit) > 0:
 			fmt.Fprintln(os.Stderr, "Whether that touches this computer's tree couldn't be told. Have the owner run omarchy update and restart, then move this folder's tree away and start again.")
 		}
@@ -533,7 +533,7 @@ func deviceTree(words []string, body string) int {
 		if len(built.Changed) == 0 {
 			fmt.Fprintln(os.Stderr, "Nothing differs from Omarchy's sources yet, so this is the stock tree.")
 		} else {
-			fmt.Fprintf(os.Stderr, "Changed against Omarchy's sources: %s\nThe change as a diff: %s\n", strings.Join(built.Changed, ", "), built.Diff)
+			fmt.Fprintf(os.Stderr, "What differs from Omarchy's sources is %s.\nThe change as a diff is in %s\n", strings.Join(built.Changed, ", "), built.Diff)
 		}
 		fmt.Fprintln(os.Stderr, "To try it from a boot entry of its own, the owner runs: hw-test tree boot")
 		return 0
@@ -543,7 +543,7 @@ func deviceTree(words []string, body string) int {
 			return fail(err)
 		}
 		name := filepath.Base(patched.File)
-		fmt.Fprintf(os.Stderr, "The change is written as one patch: %s\nIt touches %s.\n\n", patched.File, strings.Join(patched.Changed, ", "))
+		fmt.Fprintf(os.Stderr, "The change is written as one patch, %s\nIt touches %s.\n\n", patched.File, strings.Join(patched.Changed, ", "))
 		if !patched.Numbered {
 			fmt.Fprintf(os.Stderr, "Omarchy's device tree package wasn't found at %s, so the number in its name is a guess. Give it the next free number among the package's patches.\n", patched.Recipe)
 		}
@@ -578,9 +578,9 @@ func deviceTree(words []string, body string) int {
 		return code
 	case "status":
 		if tree.Running("/proc/device-tree") {
-			fmt.Println("This computer is running a device tree built by hw-test tree build: the test entry is what started.")
+			fmt.Println("This computer is running a device tree built by hw-test tree build, so the test entry is what started.")
 		} else {
-			fmt.Println("This computer is running Omarchy's own device tree: the usual entry is what started.")
+			fmt.Println("This computer is running Omarchy's own device tree, so the usual entry is what started.")
 		}
 		return 0
 	}
@@ -621,7 +621,7 @@ func kernelChange(words []string, body string) int {
 		}
 		fmt.Fprintf(os.Stderr, "The kernel source is in %s, under git, with Omarchy's %d patches applied, and nothing is built.\n", started.Source, started.Patches)
 		if !started.Exact {
-			fmt.Fprintf(os.Stderr, "Omarchy's recipe for exactly linux-omarchy %s wasn't found, so this is its newest. A driver built from it may not fit the running kernel: have the owner run omarchy update and restart first, then start again.\n", system.Release)
+			fmt.Fprintf(os.Stderr, "Omarchy's recipe for exactly linux-omarchy %s wasn't found, so this is its newest. A driver built from it may not fit the running kernel, so have the owner run omarchy update and restart first, then start again.\n", system.Release)
 		}
 		fmt.Fprintln(os.Stderr, "Change a driver, then build its folder: hw-test kernel build drivers/...")
 		return 0
@@ -639,7 +639,7 @@ func kernelChange(words []string, body string) int {
 		if len(built.Changed) == 0 {
 			fmt.Fprintln(os.Stderr, "Nothing differs from Omarchy's source yet, so these are the kernel's own drivers built again.")
 		} else {
-			fmt.Fprintf(os.Stderr, "Changed against Omarchy's source: %s\nThe change as a diff: %s\n", strings.Join(built.Changed, ", "), built.Diff)
+			fmt.Fprintf(os.Stderr, "What differs from Omarchy's source is %s.\nThe change as a diff is in %s\n", strings.Join(built.Changed, ", "), built.Diff)
 		}
 		fmt.Fprintln(os.Stderr, "To try one until the next restart: hw-test kernel load <module>")
 		return 0
@@ -672,15 +672,15 @@ func kernelChange(words []string, body string) int {
 		return asOwner(dir, "kernel", step, "kernel-load.sh", system.LoadScript(picked), "loads the built modules in place of the kernel's own, until the next restart. Nothing is written to disk")
 	case "restore":
 		if len(system.Loaded()) == 0 {
-			fmt.Fprintln(os.Stderr, "No test module is loaded: the kernel's own drivers are what runs.")
+			fmt.Fprintln(os.Stderr, "No test module is loaded, so the kernel's own drivers are what runs.")
 			return 0
 		}
 		return asOwner(dir, "kernel", step, "kernel-restore.sh", system.RestoreScript(), "takes the test modules out and loads the kernel's own again")
 	case "status":
 		if loaded := system.Loaded(); len(loaded) > 0 {
-			fmt.Printf("Test modules loaded since this start, in place of the kernel's own: %s. A restart, or hw-test kernel restore, brings the kernel's own back.\n", strings.Join(loaded, ", "))
+			fmt.Printf("The test modules loaded since this start, in place of the kernel's own, are %s. A restart, or hw-test kernel restore, brings the kernel's own back.\n", strings.Join(loaded, ", "))
 		} else {
-			fmt.Println("No test module is loaded: the kernel's own drivers are what runs.")
+			fmt.Println("No test module is loaded, so the kernel's own drivers are what runs.")
 		}
 		return 0
 	case "patch":
@@ -689,7 +689,7 @@ func kernelChange(words []string, body string) int {
 			return fail(err)
 		}
 		name := filepath.Base(patched.File)
-		fmt.Fprintf(os.Stderr, "The change is written as one patch: %s\nIt touches %s.\n\n", patched.File, strings.Join(patched.Changed, ", "))
+		fmt.Fprintf(os.Stderr, "The change is written as one patch, %s\nIt touches %s.\n\n", patched.File, strings.Join(patched.Changed, ", "))
 		fmt.Fprintf(os.Stderr, "To put it into Omarchy's kernel, in pkgbuilds/linux-omarchy-aarch64 of omarchy-pkgs:\n  1. Copy it there. Its number is the next after the recipe's last. The recipe's README says which numbers belong to what, so give it one from the right group.\n  2. In PKGBUILD, add %s to source after the last patch, and its checksum at the same place: sha256sum %s\n  3. Raise pkgrel by one, and say in the README what the patch does.\n", name, name)
 		return 0
 	}
@@ -851,7 +851,7 @@ func verify(run *report.Run, words []string, api, pr, what, rows string, again, 
 		// A snapshot that is still being measured against is not written over: after a
 		// restart, a second one would hold the change already and show it as no change
 		if standing, ok := report.LoadSnapshot(part); ok && !standing.Used && !again && len(standing.Results) > 0 {
-			fmt.Fprintf(os.Stderr, "hw-test: a snapshot from %s is there already, and no change has been recorded against it yet.\nIf you are in the middle of that change (after a restart, say), leave it: %s measures against it.\nTo start on another change to the same part: %s --new\nTo work on another part, give its name, so each part has a snapshot of its own: hw-test verify before <part>\n", standing.When.Format("2 Jan 15:04"), named("hw-test verify after"), named("hw-test verify before"))
+			fmt.Fprintf(os.Stderr, "hw-test: a snapshot from %s is there already, and no change has been recorded against it yet.\nIf you are in the middle of that change (after a restart, say), leave it, since %s measures against it.\nTo start on another change to the same part: %s --new\nTo work on another part, give its name, so each part has a snapshot of its own: hw-test verify before <part>\n", standing.When.Format("2 Jan 15:04"), named("hw-test verify after"), named("hw-test verify before"))
 			return 2
 		}
 		snapshot, err := report.TakeSnapshot(run, now, part, testImage)
@@ -860,7 +860,7 @@ func verify(run *report.Run, words []string, api, pr, what, rows string, again, 
 			return 1
 		}
 		failing := guided.Failing(snapshot.Results)
-		fmt.Fprintf(os.Stderr, "Snapshot taken: %d checks, %d of them failing", len(snapshot.Results), len(failing))
+		fmt.Fprintf(os.Stderr, "Snapshot taken of %d checks, %d of them failing", len(snapshot.Results), len(failing))
 		if len(failing) > 0 {
 			fmt.Fprintf(os.Stderr, " (%s)", strings.Join(failing, ", "))
 		}
@@ -878,7 +878,7 @@ func verify(run *report.Run, words []string, api, pr, what, rows string, again, 
 			case part == "" && len(standing) > 0:
 				fmt.Fprintf(os.Stderr, "hw-test: there is a snapshot for %s, taken with the part's name. Name the part: hw-test verify after %s\n", strings.Join(standing, ", "), standing[0])
 			case len(standing) > 0:
-				fmt.Fprintf(os.Stderr, "hw-test: there is no snapshot for %s. There is one for: %s. Take one before the change: hw-test verify before %s\n", part, strings.Join(standing, ", "), part)
+				fmt.Fprintf(os.Stderr, "hw-test: there is no snapshot for %s. There is one for %s. Take one before the change: hw-test verify before %s\n", part, strings.Join(standing, ", "), part)
 			default:
 				fmt.Fprintf(os.Stderr, "hw-test: there is no snapshot to measure against. Take one before the change: %s\n", named("hw-test verify before"))
 			}
@@ -968,7 +968,7 @@ func attach(name string) (report.Log, error) {
 	default:
 		var data []byte
 		if data, err = os.ReadFile(name); err == nil && len(data) > 8<<20 {
-			err = fmt.Errorf("it is over 8 MB: cut it down to the part that shows the problem")
+			err = fmt.Errorf("it is over 8 MB, so cut it down to the part that shows the problem")
 		}
 		text = string(data)
 		logName = strings.ToLower(filepath.Base(name))
@@ -1022,12 +1022,12 @@ func ask(steps []string) int {
 		return askUpdate()
 	}
 	if len(steps) == 0 {
-		fmt.Fprintln(os.Stderr, "hw-test: ask needs the steps to open for the owner, as in hw-test ask camera. They are: "+strings.Join(guided.StepWords(), ", "))
+		fmt.Fprintln(os.Stderr, "hw-test: ask needs the steps to open for the owner, as in hw-test ask camera. They are "+strings.Join(guided.StepWords(), ", "))
 		return 2
 	}
 	for _, word := range steps {
 		if !guided.KnownStep(word) {
-			fmt.Fprintf(os.Stderr, "hw-test: %q is no step. They are: %s\n", word, strings.Join(guided.StepWords(), ", "))
+			fmt.Fprintf(os.Stderr, "hw-test: %q is no step. They are %s\n", word, strings.Join(guided.StepWords(), ", "))
 			return 2
 		}
 	}
@@ -1049,7 +1049,7 @@ func ask(steps []string) int {
 		fmt.Fprintln(os.Stderr, "hw-test: the step couldn't be opened for the owner:", err)
 		return 1
 	}
-	fmt.Fprintf(os.Stderr, "Opened for the owner in a window of its own: %s. Waiting until they are through, half an hour at most.\n", strings.Join(steps, ", "))
+	fmt.Fprintf(os.Stderr, "Opened %s for the owner in a window of its own. Waiting until they are through, half an hour at most.\n", strings.Join(steps, ", "))
 	for waited := time.Duration(0); waited < 30*time.Minute; waited += 500 * time.Millisecond {
 		if data, err := os.ReadFile(answered); err == nil && len(data) > 0 {
 			fmt.Print(string(data))
@@ -1185,31 +1185,31 @@ func usage() { fmt.Fprint(os.Stderr, usageText()) }
 func usageText() string {
 	return `hw-test checks what works on a Snapdragon PC and reports it to arewearmyet.com.
 
-  hw-test            the guided test: the quick check, then keyboard, sound, camera and sleep with you
-  hw-test quick      the quick check alone: read-only, a few seconds, no questions
+  hw-test            the guided test, which is the quick check, then keyboard, sound, camera and sleep with you
+  hw-test quick      the quick check alone, read-only, a few seconds, no questions
   hw-test STEP...    one part alone, reporting only that part:
                      ` + wrapWords(guided.StepWords()) + `
-  hw-test manual     every test done with you: keyboard, touchpad, touchscreen,
-                     headphones, camera, USB ports, external screen, sleep and a few questions
-  hw-test auto       every test that needs nobody: sound, graphics, WebGL and
+  hw-test manual     every test done with you (keyboard, touchpad, touchscreen,
+                     headphones, camera, USB ports, external screen, sleep and a few questions)
+  hw-test auto       every test that needs nobody (sound, graphics, WebGL and
                      WebGPU, Wi-Fi and Bluetooth, the network cable, video decoding,
-                     temperatures. Without a terminal it runs all but the sound, which
+                     temperatures). Without a terminal it runs all but the sound, which
                      plays tones out loud
-  hw-test fix [WHAT...]    hand what doesn't work to your agent: writes a brief with what was
+  hw-test fix [WHAT...]    hand what doesn't work to your agent. It writes a brief with what was
                      measured, where to look and where a fix goes, and opens Omarchy's
                      agent on it. WHAT is a check or a part, like speakers. Without it,
-                     it asks which one: an agent takes one part at a time, from the
+                     it asks which one, since an agent takes one part at a time, from the
                      results already here, and nothing is tested again
   hw-test brief [WHAT...]  print that brief, to give to any agent yourself
-  hw-test ask STEP...      for an agent: open a step that takes the owner in a window on
-                     their desktop, wait until they are through, and print the result.
-                     The sound test needs no window: hw-test speakers --play, on the
+  hw-test ask STEP...      for an agent, opens a step that takes the owner in a window on
+                     their desktop, waits until they are through, and prints the result.
+                     The sound test needs no window and runs as hw-test speakers --play, on the
                      owner's yes. hw-test status --json gives every latest result as data.
                      hw-test ask update opens Omarchy's update for the owner the same way and
                      prints how it ended. It refuses, with the reason, where an update would
                      do harm, as while a test boot entry stands
   hw-test note       write down what fits no check, where other owners' agents read it and can
-                     answer: a problem that takes a sequence of events, a way around one, a
+                     answer, like a problem that takes a sequence of events, a way around one or a
                      pointer to work elsewhere. In a terminal, hw-test note asks for the
                      part, what happened and which log shows it, and hw-test note wifi
                      names the part at once. Everything can also be given, as agents do:
@@ -1217,7 +1217,7 @@ func usageText() string {
                          --title "Restarts when woken with a dock plugged in" --body-file what-happens.md
                      --kind problem|workaround|upstream|note   --check ID   --link URL...
                      --log kernel|previous|boot-N|FILE...  attaches a log, cleaned of addresses,
-                     serial numbers, disk IDs and names; boot-3 is the third boot before this
+                     serial numbers, disk IDs and names. boot-3 is the third boot before this
                      one. --json prints what would go and sends nothing
                      --reply NOTE-ID answers a note, --solved NOTE-ID closes your own problem
                      --no-send shows what would be sent, logs included, and sends nothing
@@ -1225,28 +1225,28 @@ func usageText() string {
                      Name the part the change is about, as in hw-test verify before speakers,
                      and it gets a snapshot of its own, apart from another part's. One that
                      is still in use isn't replaced unless --new says so
-  hw-test verify after [PART] --pr URL   after testing again: what the change did, check by check, as a
+  hw-test verify after [PART] --pr URL   after testing again, what the change did, check by check, as a
                      block for the pull request, and recorded with the pull request on the
                      model's page. --title says in a line what the change is. --check ID,ID
                      gives those checks a row even when they work on both sides
-  hw-test status     where this computer stands: the latest result of every check, nothing is run
+  hw-test status     where this computer stands, as the latest result of every check. Nothing is run
   hw-test tree start|build|boot|status|patch|remove   try a changed device tree from a boot entry of
-                     its own: the sources Omarchy's package builds from, with its patches, a
+                     its own. It takes the sources Omarchy's package builds from, with its patches, a
                      build, and (run by the owner, with their password) a test entry in the
                      boot menu. hw-test tree patch "arm64: dts: qcom: BOARD: WHAT" --body-file WHY
                      writes the change as the one patch the package takes
   hw-test kernel start|build|load|status|restore|patch   try a change in one kernel driver
-                     without building a kernel: Omarchy's kernel source as the running
+                     without building a kernel. It takes Omarchy's kernel source as the running
                      kernel was built from it, a build of one driver's folder (hw-test kernel
                      build drivers/phy/qualcomm), and (run by the owner, with their password)
                      the built module loaded in place of the kernel's own until the next
                      restart. hw-test kernel patch "SUBSYSTEM: WHAT" --body-file WHY writes
                      the change as a patch for the kernel's recipe
   hw-test report --check ID --state works|partial|broken|absent --note TEXT   send one result
-                     that no test measured: what the owner saw (--how owner, the default)
+                     that no test measured, either what the owner saw (--how owner, the default)
                      or what was read from logs (--how agent). absent is for a part the
                      computer doesn't have
-  hw-test resume [WHAT]    for an agent, before it restarts the computer: at the owner's next
+  hw-test resume [WHAT]    for an agent, before it restarts the computer. At the owner's next
                      login the agent opens again in this folder, once, and is told WHAT.
                      --show says what is left, --cancel takes it back
   hw-test update     get the newest release. hw-test says at its start when there is one
@@ -1259,9 +1259,9 @@ Options:
   --model ID     the model's id on arewearmyet.com, when the machine isn't recognised by itself
   --agent NAME   the agent running this, shown next to the run
 
-Nothing personal is sent: no serial numbers, addresses, names or files. The microphone recording
+Nothing personal is sent, which means no serial numbers, addresses, names or files. The microphone recording
 and the camera picture of the guided test never leave this computer.
 
-Every command with its options: https://arewearmyet.com/docs/hw-test
+Every command with its options is at https://arewearmyet.com/docs/hw-test
 `
 }

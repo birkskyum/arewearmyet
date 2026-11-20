@@ -100,10 +100,10 @@ func (k *keyboard) update(msg tea.Msg) tea.Cmd {
 	if k.missing != nil {
 		switch k.missing.update(press) {
 		case 0:
-			k.run.Set("keyboard", report.Works, report.Owner, fmt.Sprintf("%d keys registered; the owner didn't press %s", k.count(), strings.Join(k.unlit(), ", ")), "")
+			k.run.Set("keyboard", report.Works, report.Owner, fmt.Sprintf("%d keys registered, and the owner didn't press %s", k.count(), strings.Join(k.unlit(), ", ")), "")
 			k.over = true
 		case 1:
-			k.run.Set("keyboard", report.Partial, report.Owner, fmt.Sprintf("%d keys registered", k.count()), "No response from: "+strings.Join(k.unlit(), ", "))
+			k.run.Set("keyboard", report.Partial, report.Owner, fmt.Sprintf("%d keys registered", k.count()), "No response from "+strings.Join(k.unlit(), ", "))
 			k.over = true
 		case 2:
 			k.missing = nil
@@ -141,7 +141,7 @@ func (k *keyboard) update(msg tea.Msg) tea.Cmd {
 		a, b, c := k.recent[n-3], k.recent[n-2], k.recent[n-1]
 		if a == b && b == c && (c == tea.KeyEnter || c == tea.KeySpace || c == tea.KeyEscape) && len(k.unlit()) > 0 {
 			k.missing = &choice{
-				question: "These keys never lit up: " + strings.Join(k.unlit(), " ") + ". What's true?",
+				question: "The keys " + strings.Join(k.unlit(), " ") + " never lit up. What's true?",
 				options:  []string{"The keyboard is fine", "I pressed them and they don't respond", "Go back and press them"},
 			}
 		}
@@ -176,6 +176,6 @@ func (k *keyboard) view(width, height int) string {
 		status = good.Render(fmt.Sprintf("Every letter, number and arrow works (%d keys seen).", k.count())) + " Press Enter to go on."
 	}
 	intro := "Press every letter, number and arrow key once, plus Space, Enter, Backspace, Tab and Esc. Each lights up green when the computer sees it. " +
-		"The keys without a background are optional: some keyboards don't have them, and the desktop keeps some for itself."
+		"The keys without a background are optional, since some keyboards don't have them, and the desktop keeps some for itself."
 	return wrap(intro, width) + "\n\n" + strings.Join(rows, "\n\n") + "\n\n" + status
 }

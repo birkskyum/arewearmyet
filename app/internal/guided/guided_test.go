@@ -90,7 +90,7 @@ func TestKeyboardAsksAboutKeysThatNeverLit(t *testing.T) {
 	}
 	k.update(press('2')) // "I pressed them and they don't respond"
 	result, _ := run.Get("keyboard")
-	if !k.done() || result.State != report.Partial || result.Note != "No response from: 7, Q" {
+	if !k.done() || result.State != report.Partial || result.Note != "No response from 7, Q" {
 		t.Errorf("result=%+v", result)
 	}
 
@@ -180,7 +180,7 @@ func TestEffectsTurnWhatWasSeenIntoResults(t *testing.T) {
 	}
 	some := outcomes("failed", "seen", "failed", "skipped", "seen", "failed")
 	keyboard, _ := some.run.Get("keyboard")
-	if some.run.State("backlight") != report.Partial || keyboard.State != report.Partial || keyboard.Note != "No effect from: volume up, mute" || keyboard.Evidence != "60 keys registered" {
+	if some.run.State("backlight") != report.Partial || keyboard.State != report.Partial || keyboard.Note != "No effect from volume up, mute" || keyboard.Evidence != "60 keys registered" {
 		t.Errorf("some failed: backlight %q, keyboard %+v", some.run.State("backlight"), keyboard)
 	}
 	skipped := outcomes("skipped", "skipped", "skipped", "skipped", "skipped", "skipped")
@@ -188,17 +188,17 @@ func TestEffectsTurnWhatWasSeenIntoResults(t *testing.T) {
 		t.Errorf("skipped: %+v", skipped.run.Results)
 	}
 	// A skipped key isn't called working: the keyboard's result says which weren't checked
-	if keyboard, _ = skipped.run.Get("keyboard"); keyboard.Note != "Not checked: volume up, volume down, mute" || keyboard.How != report.Measured {
+	if keyboard, _ = skipped.run.Get("keyboard"); keyboard.Note != "Not checked were volume up, volume down, mute" || keyboard.How != report.Measured {
 		t.Errorf("skipped keys aren't named: %+v", keyboard)
 	}
 	one := outcomes("skipped", "seen", "failed", "seen", "seen", "seen")
-	if keyboard, _ = one.run.Get("keyboard"); keyboard.State != report.Partial || keyboard.Note != "No effect from: mute. Not checked: volume up" {
+	if keyboard, _ = one.run.Get("keyboard"); keyboard.State != report.Partial || keyboard.Note != "No effect from mute. Not checked were volume up" {
 		t.Errorf("one skipped, one failed: %+v", keyboard)
 	}
 	// With the keyboard itself untested, a dead key still counts and a skipped one says nothing
 	alone := &effects{run: &report.Run{}, items: []effect{{label: "Volume up", outcome: "skipped"}, {label: "Mute", outcome: "failed"}}}
 	alone.finish()
-	if keyboard, _ = alone.run.Get("keyboard"); keyboard.State != report.Partial || keyboard.Note != "No effect from: mute. Not checked: volume up" {
+	if keyboard, _ = alone.run.Get("keyboard"); keyboard.State != report.Partial || keyboard.Note != "No effect from mute. Not checked were volume up" {
 		t.Errorf("the keys alone: %+v", keyboard)
 	}
 	only := &effects{run: &report.Run{}, items: []effect{{label: "Volume up", outcome: "skipped"}}}
@@ -911,7 +911,7 @@ func TestAnExternalScreenIsReadWhenItIsPluggedIn(t *testing.T) {
 	set("sys/class/drm/card0-DP-2/status", "connected\n")
 	s.update(screenMsg{s.external()})
 	result, _ := run.Get("external-display")
-	if !s.done() || result.State != report.Works || !strings.Contains(result.Evidence, "DP-2 (DisplayPort over USB-C), 3840x2160 at 60 Hz; it came back") {
+	if !s.done() || result.State != report.Works || !strings.Contains(result.Evidence, "DP-2 (DisplayPort over USB-C), 3840x2160 at 60 Hz, and it came back") {
 		t.Errorf("result %+v", result)
 	}
 
@@ -946,7 +946,7 @@ func TestTouchpadIsMeasuredFromThePointerInTheTerminal(t *testing.T) {
 	// Tried, and scrolling the other way never registered
 	pad.update(press('n'))
 	result, _ := run.Get("touchpad")
-	if !pad.done() || result.State != report.Partial || result.Note != "No response to: scrolling the other way" {
+	if !pad.done() || result.State != report.Partial || result.Note != "No response to scrolling the other way" {
 		t.Errorf("result %+v", result)
 	}
 
@@ -1206,7 +1206,7 @@ func TestSoundIsMeasuredFromTheRecordingWithNobodyListening(t *testing.T) {
 	}
 	speakers, _ := run.Get("speakers")
 	microphones, _ := run.Get("microphones")
-	if speakers.State != report.Works || speakers.How != report.Measured || !strings.Contains(speakers.Evidence, "left speaker heard at -43 dB, right speaker heard at -50 dB; the left side 7 dB louder than the right") {
+	if speakers.State != report.Works || speakers.How != report.Measured || !strings.Contains(speakers.Evidence, "left speaker heard at -43 dB, right speaker heard at -50 dB, the left side 7 dB louder than the right") {
 		t.Errorf("speakers: %+v", speakers)
 	}
 	// Both play, so it works. A side that far below the other is said, and marked as worth a look
@@ -1220,11 +1220,11 @@ func TestSoundIsMeasuredFromTheRecordingWithNobodyListening(t *testing.T) {
 	if result, _ := even.Get("speakers"); result.State != report.Works || result.Look != "" || result.Note != "" {
 		t.Errorf("an even pair: %+v", result)
 	}
-	if microphones.State != report.Works || microphones.How != report.Measured || !strings.Contains(microphones.Evidence, "300 Hz at -55 dB, 1000 Hz at -41 dB, 3000 Hz at -45 dB; noise with nothing playing -71 dB") {
+	if microphones.State != report.Works || microphones.How != report.Measured || !strings.Contains(microphones.Evidence, "300 Hz at -55 dB, 1000 Hz at -41 dB, 3000 Hz at -45 dB, and noise with nothing playing -71 dB") {
 		t.Errorf("microphones: %+v", microphones)
 	}
 	drawn := s.view(90, 40)
-	for _, text := range []string{"Left", "heard at -43 dB", "the left side 7 dB louder", "3000 Hz", "noise with nothing playing: -71 dB"} {
+	for _, text := range []string{"Left", "heard at -43 dB", "the left side 7 dB louder", "3000 Hz", "noise with nothing playing -71 dB"} {
 		if !strings.Contains(drawn, text) {
 			t.Errorf("the result doesn't show %q:\n%s", text, drawn)
 		}
@@ -1638,7 +1638,7 @@ func TestAComputerWithoutALidIsPutToSleepByTheTest(t *testing.T) {
 	s.sys = sys
 	s.update(press(tea.KeyEnter))
 	s.update(asleepMsg{said: "Call to Suspend failed: Sleep verb 'suspend' is not configured or configuration is not supported by kernel\n", err: os.ErrInvalid, took: time.Second})
-	if result, _ := run.Get("suspend"); !s.over || result.State != report.Broken || !strings.Contains(result.Evidence, "systemctl suspend was refused: Call to Suspend failed") {
+	if result, _ := run.Get("suspend"); !s.over || result.State != report.Broken || !strings.Contains(result.Evidence, "systemctl suspend was refused (Call to Suspend failed") {
 		t.Errorf("a refusal: over %v, %+v", s.over, result)
 	}
 	// A command that only ended when the wait for it was given up says nothing

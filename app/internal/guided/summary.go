@@ -190,7 +190,7 @@ func (s *summary) update(msg tea.Msg) tea.Cmd {
 		s.sent, s.err = msg.sent, msg.err
 		if s.err != nil {
 			s.phase = "failed"
-			s.ask = choice{question: "Sending failed: " + s.err.Error(), options: []string{"Try again", "Give up"}}
+			s.ask = choice{question: "Sending failed (" + s.err.Error() + ").", options: []string{"Try again", "Give up"}}
 			return nil
 		}
 		question := "Sent as " + s.sent.Run + ". Thank you! It's on the model's page now."
@@ -288,7 +288,7 @@ func (s *summary) farewell() string {
 	case s.once:
 		return ""
 	case s.err != nil:
-		return "Sending failed: " + s.err.Error() + "\nRun hw-test again to retry."
+		return "Sending failed (" + s.err.Error() + ").\nRun hw-test again to retry."
 	case s.skipped || s.sent.Run == "":
 		return "Not sent."
 	}

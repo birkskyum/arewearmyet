@@ -89,9 +89,9 @@ func (t *touchscreen) seen() int {
 
 func (t *touchscreen) evidence() string {
 	if t.line == "" {
-		return fmt.Sprintf("%s: %d taps reached the terminal as clicks in different places", t.device, len(t.clicks))
+		return fmt.Sprintf("%s, %d taps reached the terminal as clicks in different places", t.device, len(t.clicks))
 	}
-	return fmt.Sprintf("%s: %d touches, its interrupt fired %d times", t.device, t.touches, t.fired)
+	return fmt.Sprintf("%s, %d touches, its interrupt fired %d times", t.device, t.touches, t.fired)
 }
 
 // enough moves on to the one thing that can't be measured: whether the desktop put the touch

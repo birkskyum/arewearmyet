@@ -190,7 +190,7 @@ func Unattended(run *report.Run, tests []deep.Test, words []string, say func(str
 		func() {
 			defer func() {
 				if fault := recover(); fault != nil {
-					say("  it ran into a problem of its own and is passed over: " + fmt.Sprint(fault))
+					say("  it ran into a problem of its own and is passed over (" + fmt.Sprint(fault) + ")")
 				}
 			}()
 			for _, result := range test.Run(say) {
@@ -233,7 +233,7 @@ func Heard(run *report.Run, dir string, say func(string)) {
 	}
 	switch {
 	case s.err != nil:
-		say("  the sound test couldn't run: " + s.err.Error())
+		say("  the sound test couldn't run (" + s.err.Error() + ")")
 	case s.phase == "silent":
 		say("  the microphones recorded none of the tones, so the speakers can't be measured without the owner listening")
 	}

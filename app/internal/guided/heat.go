@@ -239,7 +239,7 @@ func curve(samples []deep.Sample, rest float64, width int) string {
 func (h *heat) view(width, height int) string {
 	switch h.phase {
 	case "cooling":
-		return accent.Render(wrap(fmt.Sprintf("○ Letting the computer cool first: %.0f °C", h.now.Hot), width)) + "\n\n" +
+		return accent.Render(wrap(fmt.Sprintf("○ Letting the computer cool first, now at %.0f °C", h.now.Hot), width)) + "\n\n" +
 			wrap(fmt.Sprintf("It is warm from what it did before. The test starts once it is cooler, or in %.0f seconds at the latest, so the heat of the load shows.", (deep.CoolFirst-time.Duration(h.waited)*time.Second).Seconds()), width)
 	case "ask":
 		return h.readings(width) + "\n\n" + h.ask.view(width)
@@ -254,7 +254,7 @@ func (h *heat) view(width, height int) string {
 		}
 		lines = append(lines, accent.Render(wrap(fmt.Sprintf("● %s… %.0f s of at most %.0f", busy, h.now.At.Seconds(), deep.MaxLoad.Seconds()), width)))
 	} else {
-		lines = append(lines, good.Render("✓ The load is over.")+fmt.Sprintf(" Watching it cool: %.0f °C", h.now.Hot))
+		lines = append(lines, good.Render("✓ The load is over.")+fmt.Sprintf(" Cooling, now at %.0f °C", h.now.Hot))
 	}
 	lines = append(lines, "", h.readings(width))
 	if h.phase == "load" && !h.handsOff {
@@ -279,10 +279,10 @@ func (h *heat) readings(width int) string {
 		lines = append(lines, wrap(fmt.Sprintf("The processor was slowed to %.0f%% of its speed to stay cool.", found.Slowest*100), width))
 	}
 	if found.Fan != "" {
-		lines = append(lines, wrap(fmt.Sprintf("Fan (%s): %d rpm, from %d at rest.", found.Fan, h.now.Fan, found.FanRest), width))
+		lines = append(lines, wrap(fmt.Sprintf("The fan (%s) runs at %d rpm, from %d at rest.", found.Fan, h.now.Fan, found.FanRest), width))
 	}
 	if found.Kicked != nil {
-		lines = append(lines, good.Render(wrap(fmt.Sprintf("✓ A fan started: the temperature fell from %.0f to %.0f °C while the processor worked on at the same rate.", found.Kicked.From, found.Kicked.To), width)))
+		lines = append(lines, good.Render(wrap(fmt.Sprintf("✓ A fan started, as the temperature fell from %.0f to %.0f °C while the processor worked on at the same rate.", found.Kicked.From, found.Kicked.To), width)))
 	}
 	if found.Heard != nil {
 		lines = append(lines, good.Render(wrap(fmt.Sprintf("✓ You heard the fan at %.0f °C, %.0f s in.", found.Heard.Hot, found.Heard.At.Seconds()), width)))

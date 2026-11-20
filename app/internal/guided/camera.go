@@ -166,7 +166,7 @@ func (c *camera) question() {
 			options: []string{"Yes, it works there", "No, it doesn't work anywhere", "Try again", "Skip"}}
 	case c.frame.Blank():
 		c.ask = choice{question: "The picture came out black or blank. Is the camera covered, or its shutter closed?",
-			options: []string{"It was covered: take another", "No, nothing covers it", "Skip"}}
+			options: []string{"It was covered, take another", "No, nothing covers it", "Skip"}}
 	default:
 		c.ask = choice{question: "Is that a real picture of what's in front of the camera?",
 			options: []string{"Yes, and the colours look right", "Yes, but it's too dark, pale or off in colour", "No, it's black, frozen or garbage", "Take another", "Skip"}}
@@ -261,7 +261,7 @@ func (c *camera) view(width, height int) string {
 	c.width, c.height = width, height
 	switch c.phase {
 	case "intro":
-		return wrap("Now the camera. When you press Enter it takes one picture and shows it here, so you can see whether the camera works. Cover the camera first if you'd rather not be in it: a picture of anything shows it works.", width) + "\n\n" + private(width)
+		return wrap("Now the camera. When you press Enter it takes one picture and shows it here, so you can see whether the camera works. Cover the camera first if you'd rather not be in it, since a picture of anything shows it works.", width) + "\n\n" + private(width)
 	case "capturing":
 		return accent.Render("● Taking a picture with the camera") + "\n\n" +
 			wrap("It waits until the camera has adjusted to the light, which takes a few seconds, and up to fifteen in a dim room. Its light is on meanwhile.", width)
@@ -270,7 +270,7 @@ func (c *camera) view(width, height int) string {
 		if errors.Is(c.err, tools.ErrCameraBusy) {
 			return c.ask.view(width)
 		}
-		return c.ask.view(width) + "\n\n" + wrap("Measured: "+c.evidence()+".", width)
+		return c.ask.view(width) + "\n\n" + wrap("The test measured "+c.evidence()+".", width)
 	}
 	// The picture, in whatever height the question leaves: sharp where the terminal draws it
 	// itself, and in coloured blocks elsewhere or once the window is narrower than it
@@ -282,5 +282,5 @@ func (c *camera) view(width, height int) string {
 	// Seeing themselves is when people wonder where the picture goes, so it says so right under it
 	stays := good.Render("🔒 ") + wrap("This picture stays on this computer. It is not sent anywhere, and it's deleted after this step.", width-3)
 	return drawn + "\n" + stays + "\n\n" + c.ask.view(width) + "\n\n" +
-		wrap("Measured: "+c.evidence()+". Only these numbers are sent.", width)
+		wrap("The test measured "+c.evidence()+". Only these numbers are sent.", width)
 }

@@ -218,11 +218,11 @@ func Browser(sys machine.System, engine Engine, dir string) []report.Result {
 	var results []report.Result
 	switch {
 	case plain.WebGL == "":
-		results = append(results, result("webgl", report.Broken, name+" gave no WebGL context: "+plain.WebGLWhy, noted("")))
+		results = append(results, result("webgl", report.Broken, name+" gave no WebGL context ("+plain.WebGLWhy+")", noted("")))
 	case software(plain.WebGL):
-		results = append(results, result("webgl", report.Partial, name+": "+plain.WebGL+", "+plain.WebGLVersion, noted("WebGL runs on the processor, not the GPU.")))
+		results = append(results, result("webgl", report.Partial, name+" on "+plain.WebGL+", "+plain.WebGLVersion, noted("WebGL runs on the processor, not the GPU.")))
 	default:
-		results = append(results, result("webgl", report.Works, name+": "+plain.WebGL+", "+plain.WebGLVersion, noted("")))
+		results = append(results, result("webgl", report.Works, name+" on "+plain.WebGL+", "+plain.WebGLVersion, noted("")))
 	}
 
 	// An adapter that runs on the processor isn't the GPU doing WebGPU, whatever it calls itself
@@ -234,14 +234,14 @@ func Browser(sys machine.System, engine Engine, dir string) []report.Result {
 	switches := strings.Join(webgpuFlags, " ")
 	switched, ok := ask(sys, engine.Command, dir, webgpuFlags...)
 	if ok && usable(switched) {
-		return append(results, result("webgpu", report.Partial, name+": WebGPU on "+switched.WebGPU+" with "+switches+"; without them: "+first(plain.WebGPUWhy, "only "+plain.WebGPU),
+		return append(results, result("webgpu", report.Partial, name+" has WebGPU on "+switched.WebGPU+" with "+switches+", and without them "+first(plain.WebGPUWhy, "only "+plain.WebGPU),
 			noted(name+" doesn't offer WebGPU by itself here. It works when started with "+switches+".")))
 	}
 	why := first(switched.WebGPUWhy, plain.WebGPUWhy, "no answer")
 	if onProcessor(plain) || onProcessor(switched) {
 		why = "only an adapter that runs on the processor (" + first(switched.WebGPU, plain.WebGPU) + ")"
 	}
-	return append(results, result("webgpu", report.Broken, name+" offers no WebGPU, also with "+switches+": "+why, noted("")))
+	return append(results, result("webgpu", report.Broken, name+" offers no WebGPU, also with "+switches+" ("+why+")", noted("")))
 }
 
 func first(values ...string) string {
@@ -363,7 +363,7 @@ func Video(sys machine.System, dir string) []report.Result {
 	if why == "" && err != nil {
 		why = err.Error()
 	}
-	return []report.Result{result("video-decode", report.Broken, "the hardware decoder gave no frames: "+why, "")}
+	return []report.Result{result("video-decode", report.Broken, "the hardware decoder gave no frames ("+why+")", "")}
 }
 
 // videoOnGPU decodes the clip on an NVIDIA GPU, through NVDEC and, failing that, through
@@ -390,9 +390,9 @@ func videoOnGPU(sys machine.System, clip string) []report.Result {
 		if why == "" && err != nil {
 			why = err.Error()
 		}
-		whys = append(whys, way.name+": "+why)
+		whys = append(whys, way.name+" ("+why+")")
 	}
-	return []report.Result{result("video-decode", report.Broken, "the GPU gave no frames. "+strings.Join(whys, "; "), "")}
+	return []report.Result{result("video-decode", report.Broken, "the GPU gave no frames. "+strings.Join(whys, ", "), "")}
 }
 
 func lastLine(text string) string {
@@ -787,7 +787,7 @@ func Warm(sys machine.System, dir string, say func(string)) Heat {
 	// A machine that is warm from what it did before cools first, so the load has room to show
 	waited := time.Now()
 	for degrees, cool := Resting(sys); !cool && time.Since(waited) < CoolFirst; degrees, cool = Resting(sys) {
-		say(fmt.Sprintf("  letting it cool first: %.0f °C", degrees))
+		say(fmt.Sprintf("  letting it cool first, now at %.0f °C", degrees))
 		time.Sleep(pace * 5)
 	}
 	w := StartWarming(sys, dir)
@@ -823,12 +823,12 @@ func (h Heat) Report() []report.Result {
 	if h.Watts > 0 {
 		busy += fmt.Sprintf(", drawing up to %.0f W from the battery", h.Watts)
 	}
-	evidence := fmt.Sprintf("%d temperature sensors; the hottest went from %.0f to %.0f °C in %.0f s with %s, and back to %.0f °C after", h.Sensors, h.Rest, h.Peak, h.Loaded.Seconds(), busy, h.After)
+	evidence := fmt.Sprintf("%d temperature sensors. The hottest went from %.0f to %.0f °C in %.0f s with %s, and back to %.0f °C after", h.Sensors, h.Rest, h.Peak, h.Loaded.Seconds(), busy, h.After)
 	if h.Slowest > 0 && h.Slowest < 0.75 {
-		evidence += fmt.Sprintf("; the processor was slowed to %.0f%% of its speed as it got hot", h.Slowest*100)
+		evidence += fmt.Sprintf(". The processor was slowed to %.0f%% of its speed as it got hot", h.Slowest*100)
 	}
 	if h.TooHot {
-		evidence += "; the load was ended there, close to the temperature the computer shuts down at"
+		evidence += ". The load was ended there, close to the temperature the computer shuts down at"
 	}
 	// The sensors show the heat when they rise with the load or fall once it ends
 	responds := h.Peak-h.Rest >= answering || h.Peak-h.After >= answering
@@ -836,16 +836,16 @@ func (h Heat) Report() []report.Result {
 	unread := ""
 	switch {
 	case h.Fan != "":
-		evidence += fmt.Sprintf("; the fan (%s) went from %d to %d rpm", h.Fan, h.FanRest, h.FanPeak)
+		evidence += fmt.Sprintf(". The fan (%s) went from %d to %d rpm", h.Fan, h.FanRest, h.FanPeak)
 	default:
-		evidence += "; no fan speed sensor"
+		evidence += ". No fan speed sensor"
 		unread = " The fan's speed can't be read, for want of a sensor."
 	}
 	if h.Kicked != nil {
-		evidence += fmt.Sprintf("; after %.0f s the temperature fell from %.0f to %.0f °C while the processor worked on at the same rate, as when a fan starts", h.Kicked.At.Seconds(), h.Kicked.From, h.Kicked.To)
+		evidence += fmt.Sprintf(". After %.0f s the temperature fell from %.0f to %.0f °C while the processor worked on at the same rate, as when a fan starts", h.Kicked.At.Seconds(), h.Kicked.From, h.Kicked.To)
 	}
 	if h.Heard != nil {
-		evidence += fmt.Sprintf("; the owner heard the fan speed up at %.0f °C, %.0f s in", h.Heard.Hot, h.Heard.At.Seconds())
+		evidence += fmt.Sprintf(". The owner heard the fan speed up at %.0f °C, %.0f s in", h.Heard.Hot, h.Heard.At.Seconds())
 	}
 	switch {
 	case !responds:

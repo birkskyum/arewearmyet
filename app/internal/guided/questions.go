@@ -38,11 +38,11 @@ func newQuestions(run *report.Run, facts probe.Facts, covered map[string]bool) *
 		}
 	}
 	unlock, installer := "When you started the laptop, did you see the disk password prompt and type into it with the built-in keyboard?",
-		"If you installed Omarchy on this computer yourself: did the installer start from the USB stick with keyboard and touchpad working?"
+		"If you installed Omarchy on this computer yourself, did the installer start from the USB stick with keyboard and touchpad working?"
 	if !facts.Laptop {
 		// A mini PC or desktop has no keyboard or touchpad of its own to ask about
 		unlock, installer = "When you started the computer, did you see the disk password prompt, and could you type into it?",
-			"If you installed Omarchy on this computer yourself: did the installer start from the USB stick, with a picture on the screen and the keyboard working?"
+			"If you installed Omarchy on this computer yourself, did the installer start from the USB stick, with a picture on the screen and the keyboard working?"
 	}
 	add(facts.Encrypted, "disk-unlock", unlock)
 	add(facts.Touchpad != "" && !covered["touchpad"], "touchpad", "Does the touchpad move the pointer, click and scroll with two fingers?")
@@ -50,11 +50,11 @@ func newQuestions(run *report.Run, facts probe.Facts, covered map[string]bool) *
 	add(facts.SoundCard != "" && !covered["microphones"], "microphones", "Does the microphone pick you up in calls or recordings?")
 	add(facts.Camera != "" && !covered["camera"], "camera", "Does the webcam give a picture in the browser?")
 	add(!covered["usb"], "usb", "Have USB sticks and other devices worked in every USB port you've tried?")
-	add(!covered["external-display"] && unmeasured("external-display"), "external-display", "An external screen, if you've tried one: did it show a picture?")
+	add(!covered["external-display"] && unmeasured("external-display"), "external-display", "An external screen, if you've tried one, did it show a picture?")
 	add(facts.Laptop && unmeasured("charging"), "charging", "With its own charger plugged in, does the battery percentage go up?")
-	add(facts.Ethernet != "" && unmeasured("ethernet"), "ethernet", "The network socket, if you've had a cable in it: did the network come up?")
-	add(facts.Fingerprint != "", "fingerprint", "The fingerprint reader, if you've set it up: does it unlock with your finger?")
-	add(facts.Bluetooth != "" && unmeasured("bluetooth"), "bluetooth", "Bluetooth headphones or a mouse, if you've tried some: do they pair and stay connected?")
+	add(facts.Ethernet != "" && unmeasured("ethernet"), "ethernet", "The network socket, if you've had a cable in it, did the network come up?")
+	add(facts.Fingerprint != "", "fingerprint", "The fingerprint reader, if you've set it up, does it unlock with your finger?")
+	add(facts.Bluetooth != "" && unmeasured("bluetooth"), "bluetooth", "Bluetooth headphones or a mouse, if you've tried some, do they pair and stay connected?")
 	add(true, "installer", installer)
 	q.show()
 	return q

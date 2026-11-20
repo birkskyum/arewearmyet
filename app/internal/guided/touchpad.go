@@ -81,7 +81,7 @@ func (t *touchpad) update(msg tea.Msg) tea.Cmd {
 		if t.nothing != nil {
 			switch t.nothing.update(msg) {
 			case 0:
-				t.run.Set("touchpad", report.Works, report.Owner, t.device+"; the terminal reported no pointer events, the owner says it works on the desktop", "")
+				t.run.Set("touchpad", report.Works, report.Owner, t.device+", the terminal reported no pointer events, the owner says it works on the desktop", "")
 				t.over = true
 			case 1:
 				t.run.Set("touchpad", report.Broken, report.Owner, t.device, "The touchpad doesn't move the pointer.")
@@ -95,7 +95,7 @@ func (t *touchpad) update(msg tea.Msg) tea.Cmd {
 		switch msg.String() {
 		case "enter", "space":
 			if t.complete() {
-				t.run.Set("touchpad", report.Works, report.Measured, t.device+": moving the pointer, clicking and two-finger scrolling both ways registered", "")
+				t.run.Set("touchpad", report.Works, report.Measured, t.device+", moving the pointer, clicking and two-finger scrolling both ways registered", "")
 				t.over = true
 			}
 		case "n":
@@ -104,7 +104,7 @@ func (t *touchpad) update(msg tea.Msg) tea.Cmd {
 				t.nothing = &choice{question: "Nothing registered here. On the desktop, does the touchpad move the pointer?", options: []string{"Yes, it works there", "No, it does nothing", "Go back and try again"}}
 				return nil
 			}
-			t.run.Set("touchpad", report.Partial, report.Owner, t.device+": registered "+strings.Join(seen, ", "), "No response to: "+strings.Join(unseen, ", "))
+			t.run.Set("touchpad", report.Partial, report.Owner, t.device+" registered "+strings.Join(seen, ", "), "No response to "+strings.Join(unseen, ", "))
 			t.over = true
 		case "s":
 			t.over = true
@@ -132,7 +132,7 @@ func (t *touchpad) view(width, height int) string {
 	}
 	scroll := "Scroll with two fingers, one way and then the other"
 	if t.scrolled() == 1 {
-		scroll = "Scroll with two fingers: one way seen, now the other way"
+		scroll = "Scroll with two fingers. One way seen, now the other way"
 	}
 	lines := []string{
 		wrap("Now the touchpad. Do each of these anywhere in this window, and it lights up when the computer sees it.", width),

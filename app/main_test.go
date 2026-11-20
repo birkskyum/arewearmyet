@@ -64,7 +64,7 @@ func TestANoteIsAskedForAtTheTerminalSoNothingHasToBeTypedOut(t *testing.T) {
 	// A word that names no part gets the list, and a note that fits none has no part
 	asked.Reset()
 	args, _ = askNote(typed("flux", "", "The clock is an hour off after every restart of the laptop.", "n"), &asked, checks, noteArgs{kind: "note"}, "")
-	if args.check != "" || !strings.Contains(asked.String(), `No part is called "flux" here. The parts are: camera, lid, suspend, wifi.`) || args.logs[0] != "kernel" {
+	if args.check != "" || !strings.Contains(asked.String(), `No part is called "flux" here. The parts are camera, lid, suspend, wifi.`) || args.logs[0] != "kernel" {
 		t.Errorf("an unknown part: %+v\n%s", args, asked.String())
 	}
 	// Too little is asked for again, and nothing at all writes nothing

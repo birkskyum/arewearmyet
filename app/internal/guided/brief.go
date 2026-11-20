@@ -96,7 +96,7 @@ func InThread(dir, title, message string) (string, error) {
 			return "Your agent has it, in the same conversation as before.", nil
 		case errors.Is(err, tools.ErrAgentOpen):
 			tools.FocusAgentWindow()
-			return "Your agent's window is open, and it can't be written to from here. Tell it: read BRIEF.md again, it is about " + strings.TrimPrefix(title, "Hardware: ") + " now.", nil
+			return "Your agent's window is open, and it can't be written to from here. Tell it to read BRIEF.md again, which is about " + strings.TrimPrefix(title, "Fix ") + " now.", nil
 		}
 	}
 	// In T3 Code's own window first, typed into the thread it opens: then the thread in front
@@ -146,7 +146,7 @@ func summed(check string, result report.Result) string {
 	if worthALook(result) {
 		state = "works, with something to look into"
 	}
-	line := first(checkTitle[check], check) + ": " + state
+	line := first(checkTitle[check], check) + " (" + state + ")"
 	if why := first(result.Look, result.Note, result.Evidence); why != "" {
 		if len(why) > 90 {
 			why = why[:90]
@@ -271,11 +271,11 @@ func Brief(b Briefing) string {
 	}
 	family := first(b.Model.Family, b.Family)
 
-	say("# Hardware brief: %s", name)
+	say("# Hardware brief for %s", name)
 	say("")
 	say("Written by hw-test %s on %s. The owner of this computer asked for help getting the parts below to work under Omarchy.", b.Version, b.When.Format("2 January 2006"))
 	say("")
-	say("The guide for this work is %s. Its steps 1 to 4 are done for you: the computer is identified and measured. **Read its Words and Rules, then step 5 (Fix it) and step 6 (Notes), before you change anything.** This file has what is particular to this computer.%s", Guide, map[bool]string{true: " A copy of the guide is in GUIDE.md beside this file, for where the network is closed to you.", false: ""}[b.guideCopy])
+	say("The guide for this work is %s. Its steps 1 to 4 are done for you, since the computer is identified and measured. **Read its Words and Rules, then step 5 (Fix it) and step 6 (Notes), before you change anything.** This file has what is particular to this computer.%s", Guide, map[bool]string{true: " A copy of the guide is in GUIDE.md beside this file, for where the network is closed to you.", false: ""}[b.guideCopy])
 	say("")
 	say("## This computer")
 	say("")
@@ -283,30 +283,30 @@ func Brief(b Briefing) string {
 	if text := hardware["family"]; text != "" {
 		model += " (" + text + ")"
 	}
-	say("- Model: %s", model)
-	for _, field := range [][2]string{{"sku", "SKU"}, {"board", "Mainboard"}, {"bios", "BIOS"}} {
+	say("- The model is %s.", model)
+	for _, field := range [][2]string{{"sku", "SKU"}, {"board", "mainboard"}, {"bios", "BIOS"}} {
 		if value := hardware[field[0]]; value != "" {
-			say("- %s: %s", field[1], value)
+			say("- Its %s is %s.", field[1], value)
 		}
 	}
 	switch {
 	case b.Model.ID != "":
-		say("- On arewearmyet.com as `%s`: %s", b.Model.ID, first(b.Model.Page, report.Site+"/models/"+b.Model.ID))
-		say("- Everything known about this model, with its device tree and firmware: `curl -s %s/api/models/%s`", report.Site, b.Model.ID)
+		say("- It is on arewearmyet.com as `%s`, at %s", b.Model.ID, first(b.Model.Page, report.Site+"/models/"+b.Model.ID))
+		say("- Everything known about this model, with its device tree and firmware, comes from `curl -s %s/api/models/%s`.", report.Site, b.Model.ID)
 	default:
 		say("- arewearmyet.com doesn't know this computer yet. `hw-test` offers a form to add it after sending a result.")
 	}
 	if family != "" {
-		say("- Family, which is the first line of a pull request or an issue for it: `%s`", family)
+		say("- Its family, which is the first line of a pull request or an issue for it, is `%s`.", family)
 	}
 	if b.Run.Compatible != "" {
-		line := fmt.Sprintf("- Device tree in use: `%s`", b.Run.Compatible)
+		line := fmt.Sprintf("- The device tree in use is `%s`", b.Run.Compatible)
 		if b.TreeSource != "" {
 			line += fmt.Sprintf(", built from `arch/arm64/boot/dts/qcom/%s.dts`", b.TreeSource)
 		}
 		say("%s", line)
 	}
-	say("- Kernel: %s, on %s", b.Run.Kernel, b.Run.OS)
+	say("- It runs kernel %s, on %s.", b.Run.Kernel, b.Run.OS)
 	if b.Binary != "" {
 		say("- hw-test %s is at `%s`. If plain `hw-test` doesn't start where you run, as in a sandbox, call it by that path. It follows updates, so don't call a copy by its version.", b.Version, b.Binary)
 	}
@@ -316,7 +316,7 @@ func Brief(b Briefing) string {
 	}
 	sort.Strings(packages)
 	if len(packages) > 0 {
-		say("- Packages: %s", strings.Join(packages, ", "))
+		say("- Its packages are %s.", strings.Join(packages, ", "))
 	}
 	// Whether the computer is up to date decides whether a fault is still worth chasing
 	if len(b.Model.Kernels) > 0 {
@@ -326,7 +326,7 @@ func Brief(b Briefing) string {
 				channels = append(channels, channel+" "+version)
 			}
 		}
-		say("- Omarchy's channels have linux-omarchy at: %s. This computer has %s. If it is behind its channel, ask the owner whether to update, then run `hw-test ask update`: it opens Omarchy's update in a window for them and gives you how it ended, so they relay nothing. It refuses, and says why, where an update would do harm (a test boot entry stands, the kernel is not Omarchy's own, a kernel or device tree package was built on this computer). Restart after it before you debug (leave word with `hw-test resume` first, as before any restart): the fault may be fixed already.", strings.Join(channels, ", "), first(b.Run.Packages["linux-omarchy"], "an unknown version"))
+		say("- Omarchy's channels have linux-omarchy at %s. This computer has %s. If it is behind its channel, ask the owner whether to update, then run `hw-test ask update`, which opens Omarchy's update in a window for them and gives you how it ended, so they relay nothing. It refuses, and says why, where an update would do harm (a test boot entry stands, the kernel is not Omarchy's own, a kernel or device tree package was built on this computer). Restart after it before you debug (leave word with `hw-test resume` first, as before any restart), since the fault may be fixed already.", strings.Join(channels, ", "), first(b.Run.Packages["linux-omarchy"], "an unknown version"))
 	}
 
 	say("")
@@ -346,52 +346,52 @@ func Brief(b Briefing) string {
 				state = "works, with something to look into"
 			}
 		}
-		say("### %s (check `%s`): %s", first(checkTitle[check], known.Title, check), check, state)
+		say("### %s (check `%s`), %s", first(checkTitle[check], known.Title, check), check, state)
 		say("")
 		if tested {
 			say("- Measured on %s with kernel %s, %s.", result.When.Format("2 January 2006"), first(result.Kernel, "unknown"), first(howSaid[result.How], result.How))
 			if result.Evidence != "" {
-				say("- What the test found: %s", result.Evidence)
+				say("- **What the test found.** %s", result.Evidence)
 			}
 			if result.Note != "" {
-				say("- Noted: %s", result.Note)
+				say("- **Noted.** %s", result.Note)
 			}
 			if worthALook(result.Result) {
-				say("- Worth a second look: %s Find out whether it is a fault, and say so to the owner either way.", result.Look)
+				say("- **Worth a second look.** %s Find out whether it is a fault, and say so to the owner either way.", result.Look)
 			}
 		}
 		// What is written up on the site about this part, which often names the cause
 		if finding, ok := b.Findings[check]; ok && finding.Note != "" {
 			// A report from another distro or from the tree's author is a hint, and is said to be one
-			line := fmt.Sprintf("- Already known on the site, on Omarchy (%s", stateLabel[finding.State])
+			line := fmt.Sprintf("- **Already known on the site, on Omarchy** (%s", stateLabel[finding.State])
 			if !finding.OnOmarchy() {
 				from := map[string]string{"other-distro": "on another distro", "tree-author": "by the device tree's author"}[finding.Basis]
-				line = fmt.Sprintf("- Reported %s, not on Omarchy, so a hint and no more (%s", first(finding.Where, from), stateLabel[finding.State])
+				line = fmt.Sprintf("- **Reported %s, not on Omarchy, so a hint and no more** (%s", first(finding.Where, from), stateLabel[finding.State])
 			}
 			if finding.Checked != "" {
 				line += ", " + finding.Checked
 			}
-			line += "): " + finding.Note
+			line += "). " + finding.Note
 			if finding.Source != "" {
 				line += " Source: " + finding.Source
 			}
 			say("%s", line)
 		}
 		if known.Works != "" {
-			say("- Working means: %s", known.Works)
+			say("- **What working means.** %s", known.Works)
 		}
 		if known.Debug != "" {
-			say("- Where to look: %s", known.Debug)
+			say("- **Where to look.** %s", known.Debug)
 		}
 		command, owner := remeasure(check)
 		if sounds[check] && b.ByOwner {
-			say("- Measure again: `%s --no-send`, which you run yourself, also without a terminal: the owner handed you this part, and that lets the test play its tones at half volume for about twenty seconds and listen to them with the microphones. It keeps only how loud each tone was. The owner hears it, so say a word before the first run.", command)
+			say("- **Measure again.** `%s --no-send`, which you run yourself, also without a terminal. The owner handed you this part, and that lets the test play its tones at half volume for about twenty seconds and listen to them with the microphones. It keeps only how loud each tone was. The owner hears it, so say a word before the first run.", command)
 		} else if sounds[check] {
-			say("- Measure again: `%s --no-send --play`, which you run yourself, also without a terminal, once the owner has said yes to it: it plays tones at half volume for about twenty seconds and listens to them with the microphones, and keeps only how loud each tone was. Ask them once.", command)
+			say("- **Measure again.** `%s --no-send --play`, which you run yourself, also without a terminal, once the owner has said yes to it. It plays tones at half volume for about twenty seconds and listens to them with the microphones, and keeps only how loud each tone was. Ask them once.", command)
 		} else if owner {
-			say("- Measure again: `%s`, which opens the test in a window for the owner, since it needs them at the computer, waits until they are through and prints the result. Tell them a window is coming.", strings.Replace(command, "hw-test ", "hw-test ask ", 1))
+			say("- **Measure again.** `%s`, which opens the test in a window for the owner, since it needs them at the computer, waits until they are through and prints the result. Tell them a window is coming.", strings.Replace(command, "hw-test ", "hw-test ask ", 1))
 		} else {
-			say("- Measure again: `%s --no-send`, which runs by itself, also without a terminal.", strings.TrimSuffix(command, " --json"))
+			say("- **Measure again.** `%s --no-send`, which runs by itself, also without a terminal.", strings.TrimSuffix(command, " --json"))
 		}
 	}
 
@@ -417,11 +417,11 @@ func Brief(b Briefing) string {
 	for _, state := range []string{"broken", "partly", "works", "not on this model", "not tested"} {
 		if checks := working[state]; len(checks) > 0 {
 			sort.Strings(checks)
-			say("- %s: %s", state, strings.Join(checks, ", "))
+			say("- **%s.** %s", strings.ToUpper(state[:1])+state[1:], strings.Join(checks, ", "))
 		}
 	}
 	say("")
-	say("Several parts hang on one: sound, the battery, charging and USB-C all need the audio processor (`adsp`) running, and WebGL and WebGPU need the GPU. `hw-test status` shows all of it at any time.")
+	say("Several parts hang on one. Sound, the battery, charging and USB-C all need the audio processor (`adsp`) running, and WebGL and WebGPU need the GPU. `hw-test status` shows all of it at any time.")
 
 	// One part at a time: a part that can't be fixed must not hold up the others
 	var others []string
@@ -433,10 +433,10 @@ func Brief(b Briefing) string {
 	say("")
 	say("## One part at a time")
 	say("")
-	say("This brief is for what is under \"What to work on\" and nothing else. Stay on it until it works. When the first thing you try isn't the fix, the fix lives somewhere else: a setting, a kernel patch that exists elsewhere, or a driver nobody has written yet. The guide's \"Keep going\" has the order to try them in and the few reasons to hand the part back. A part you hand back comes with what you tried at each step and the next thing worth trying.")
+	say("This brief is for what is under \"What to work on\" and nothing else. Stay on it until it works. When the first thing you try isn't the fix, the fix lives somewhere else, in a setting, a kernel patch that exists elsewhere, or a driver nobody has written yet. The guide's \"Keep going\" has the order to try them in and the few reasons to hand the part back. A part you hand back comes with what you tried at each step and the next thing worth trying.")
 	if len(others) > 0 {
 		say("")
-		say("Also failing or worth a look on this computer: %s. They are for later. `hw-test brief <check>` prints the brief for one of them from the results already here, without testing anything again, and the owner can hand you one with `hw-test fix`.", strings.Join(others, ", "))
+		say("Also failing or worth a look on this computer are %s. They are for later. `hw-test brief <check>` prints the brief for one of them from the results already here, without testing anything again, and the owner can hand you one with `hw-test fix`.", strings.Join(others, ", "))
 	}
 
 	say("")
@@ -445,7 +445,7 @@ func Brief(b Briefing) string {
 	if len(b.Notes) > 0 {
 		for at, note := range b.Notes {
 			if at == 12 {
-				say("- and %d more: `curl -s '%s/api/notes?model=%s'`", len(b.Notes)-at, report.Site, b.Model.ID)
+				say("- and %d more, from `curl -s '%s/api/notes?model=%s'`", len(b.Notes)-at, report.Site, b.Model.ID)
 				break
 			}
 			about := note.Kind
@@ -455,16 +455,16 @@ func Brief(b Briefing) string {
 			if note.Check != "" {
 				about += ", " + note.Check
 			}
-			line := fmt.Sprintf("- %s (%s): `curl -s %s`", note.Title, about, note.URL)
+			line := fmt.Sprintf("- %s (%s), read with `curl -s %s`", note.Title, about, note.URL)
 			if note.Replies > 0 {
 				line += fmt.Sprintf(", %d answers", note.Replies)
 			}
 			say("%s", line)
 		}
 		say("")
-		say("Read the ones that touch your work before you start: someone may have been here.")
+		say("Read the ones that touch your work before you start, since someone may have been here.")
 	} else {
-		say("Nobody has left a note on this model yet. That means nobody wrote one, not that nothing is known: see \"Already known on the site\" above, and search every model's notes with `curl -s '%s/api/notes?q=<words>'`.", report.Site)
+		say("Nobody has left a note on this model yet. That means nobody wrote one, not that nothing is known. See \"Already known on the site\" above, and search every model's notes with `curl -s '%s/api/notes?q=<words>'`.", report.Site)
 	}
 
 	say("")
@@ -472,7 +472,7 @@ func Brief(b Briefing) string {
 	say("")
 	say("Each step is explained in the guide's step 5 and 6. In short:")
 	say("")
-	say("1. **Find where the fix lives.** Up to date (above)? Already known, with a cause? Then the device tree, a setting, the kernel or another Omarchy package: the guide's table says which holds what. Very little is out of reach, like firmware only the maker can sign.")
+	say("1. **Find where the fix lives.** Up to date (above)? Already known, with a cause? Then it is the device tree, a setting, the kernel or another Omarchy package, and the guide's table says which holds what. Very little is out of reach, like firmware only the maker can sign.")
 	// One part's work is measured against a snapshot of its own, named after it, so that it
 	// isn't compared with where the computer stood before some other part's change
 	before, after := "hw-test verify before <part>", "hw-test verify after <part>"
@@ -483,23 +483,23 @@ func Brief(b Briefing) string {
 	// An NVIDIA machine describes its own hardware through ACPI: it has no device tree to read or change
 	acpi := family == probe.Nvidia
 	if acpi {
-		say("3. **Look.** The commands under \"Where to look\" only read. This computer describes its own hardware through ACPI, so there is no device tree: `sudo dmesg` and `journalctl -k -b` say what each driver found.")
-		say("4. **Change.** A setting: try it on this computer, keeping a copy of what you change. There is no device tree here, so `hw-test tree` is not for this computer. A fault is in a kernel driver, a system setting or an application's setting, and the guide's table says where each of those is fixed.")
+		say("3. **Look.** The commands under \"Where to look\" only read. This computer describes its own hardware through ACPI, so there is no device tree. `sudo dmesg` and `journalctl -k -b` say what each driver found.")
+		say("4. **Change.** Try a setting on this computer, keeping a copy of what you change. There is no device tree here, so `hw-test tree` is not for this computer. A fault is in a kernel driver, a system setting or an application's setting, and the guide's table says where each of those is fixed.")
 	} else {
 		say("3. **Look.** The commands under \"Where to look\" only read. `dtc -I fs -O dts /proc/device-tree` shows the device tree the computer is running.")
-		say("4. **Change.** A setting: try it on this computer, keeping a copy of what you change. The device tree: `hw-test tree start`, edit, `hw-test tree build`, then the owner runs `hw-test tree boot`, which makes a boot entry of its own, and picks it at the next start. When it works, `hw-test tree patch` writes the change as the patch Omarchy's package takes. Never install a rebuilt `linux-omarchy-dtbs`, write under `/boot/dtbs` or edit `/boot/limine.conf` by hand: each can stop the computer from starting.")
+		say("4. **Change.** Try a setting on this computer, keeping a copy of what you change. For the device tree, run `hw-test tree start`, edit, `hw-test tree build`, then the owner runs `hw-test tree boot`, which makes a boot entry of its own, and picks it at the next start. When it works, `hw-test tree patch` writes the change as the patch Omarchy's package takes. Never install a rebuilt `linux-omarchy-dtbs`, write under `/boot/dtbs` or edit `/boot/limine.conf` by hand. Each can stop the computer from starting.")
 	}
 	say("5. **Before a restart, or a test that may freeze the computer:** write where you are into `PROGRESS.md`, then `hw-test resume \"<what to go on with>\"`. You are opened again at the owner's next login.")
 	say("6. **Measure again.** The \"Measure again\" command of each part you touched, and a neighbouring part. Then `" + after + "`, which prints a before-and-after block (`--check <check>` gives a row to a part that works on both sides but measures better).")
 	say("7. **Pull request.** Open it as a draft. Its description starts with a line that says only %s, then the block. Then `"+after+" --pr <its address> --title \"<the change in a line>\"`, which records it on the model's page, and mark it ready. Tell the owner.", familyLine(family))
-	say("8. **Not fixed yet?** Go to the next step of the guide's \"Keep going\": a setting, a patch from elsewhere, a driver of your own. Only when that list is done, or one of its reasons to hand back holds, leave it for the next agent: `hw-test note --kind problem --check <check> --title \"...\" --body-file <file> --log kernel`. What the owner told you about a part goes in with `hw-test report --check <check> --state partial --note \"...\"`.")
+	say("8. **Not fixed yet?** Go to the next step of the guide's \"Keep going\", which is a setting, then a patch from elsewhere, then a driver of your own. Only when that list is done, or one of its reasons to hand back holds, leave it for the next agent with `hw-test note --kind problem --check <check> --title \"...\" --body-file <file> --log kernel`. What the owner told you about a part goes in with `hw-test report --check <check> --state partial --note \"...\"`.")
 	if acpi {
 		say("9. **Clean up.** Restore the settings you changed, remove test packages, and say what is left.")
 	} else {
 		say("9. **Clean up.** `hw-test tree remove` (run by the owner), restore the settings you changed, and say what is left.")
 	}
 	say("")
-	say("The owner's data is the line: never their files, the disk's partitions or its encryption, and no firmware flashing or BIOS changes. Commands that need root go through `sudo`. When it asks for a password you can't give, hand the owner the exact command to run.")
+	say("The owner's data is the line. Never touch their files, the disk's partitions or its encryption, and do no firmware flashing or BIOS changes. Commands that need root go through `sudo`. When it asks for a password you can't give, hand the owner the exact command to run.")
 	return out.String()
 }
 
@@ -548,7 +548,7 @@ func HandOver(b Briefing, dir string, launch func(dir, prompt string) error) Han
 	}
 	file := filepath.Join(dir, "BRIEF.md")
 	if err := os.MkdirAll(dir, 0o755); err != nil {
-		return Handed{Said: "The brief couldn't be written: " + err.Error()}
+		return Handed{Said: "The brief couldn't be written (" + err.Error() + ")."}
 	}
 	// A copy of the guide goes beside the brief: an agent's surroundings often have no network
 	where := Guide
@@ -559,7 +559,7 @@ func HandOver(b Briefing, dir string, launch func(dir, prompt string) error) Han
 		}
 	}
 	if err := os.WriteFile(file, []byte(Brief(b)), 0o644); err != nil {
-		return Handed{Said: "The brief couldn't be written: " + err.Error()}
+		return Handed{Said: "The brief couldn't be written (" + err.Error() + ")."}
 	}
 	// The owner's handing a part over is what lets the agent test that part itself
 	if b.ByOwner {
@@ -570,11 +570,11 @@ func HandOver(b Briefing, dir string, launch func(dir, prompt string) error) Han
 	for _, check := range work {
 		titles = append(titles, strings.ToLower(first(checkTitle[check], check)))
 	}
-	prompt := fmt.Sprintf("Read BRIEF.md in this folder and help me get this working on my computer: %s. It says what was measured, how to measure again with hw-test and where to look. The guide it points to, %s, has the rules and says where a fix goes, so read that first.", strings.Join(titles, ", "), where)
+	prompt := fmt.Sprintf("Read BRIEF.md in this folder and help me get this working on my computer. It is about %s, and says what was measured, how to measure again with hw-test and where to look. The guide it points to, %s, has the rules and says where a fix goes, so read that first.", strings.Join(titles, ", "), where)
 	// A conversation that keeps comes first: the next part and every new result then go into
 	// the same one, whichever agent runs in it
 	if b.InThread != nil {
-		if said, err := b.InThread(dir, "Hardware: "+strings.Join(titles, ", "), prompt); err == nil {
+		if said, err := b.InThread(dir, "Fix "+strings.Join(titles, ", "), prompt); err == nil {
 			return Handed{File: file, Opened: true, Said: said + " The brief is in " + file + "."}
 		}
 	}
@@ -585,7 +585,7 @@ func HandOver(b Briefing, dir string, launch func(dir, prompt string) error) Han
 	case errors.Is(err, tools.ErrNoAgent):
 		return Handed{File: file, Said: "No agent is chosen on this computer yet. Pick one in the Omarchy menu under Setup, Default, Agent, or with omarchy default agent claude, and choose this again. The brief is in " + file + "."}
 	case errors.Is(err, tools.ErrNotOmarchy):
-		return Handed{File: file, Said: "The brief is in " + file + ". Give it to your agent: \"Read " + file + " and help me get this working.\""}
+		return Handed{File: file, Said: "The brief is in " + file + ". Give it to your agent with the words \"Read " + file + " and help me get this working.\""}
 	}
 	return Handed{File: file, Said: "The agent couldn't be opened (" + err.Error() + "). The brief is in " + file + "."}
 }

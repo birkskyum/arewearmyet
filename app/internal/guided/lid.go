@@ -89,7 +89,7 @@ func (l *lid) start() tea.Cmd {
 func (l *lid) finish() {
 	evidence := "the lid switch reported closed and then open again"
 	if l.slept > 0 {
-		evidence += fmt.Sprintf("; the computer slept %.0f s while it was down", l.slept.Seconds())
+		evidence += fmt.Sprintf(", and the computer slept %.0f s while it was down", l.slept.Seconds())
 	}
 	l.run.Set("lid", report.Works, report.Measured, evidence, "")
 	l.over = true
@@ -146,7 +146,7 @@ func (l *lid) update(msg tea.Msg) tea.Cmd {
 }
 
 func (l *lid) view(width, height int) string {
-	text := "Now the lid. Close it, count to three, and open it again. The computer may go to sleep while it is down: unlock it if it asks, and this screen will be here."
+	text := "Now the lid. Close it, count to three, and open it again. The computer may go to sleep while it is down. Unlock it if it asks, and this screen will be here."
 	if l.phase == "opening" {
 		return good.Render("✓ The lid switch reported closed.") + " " + accent.Render("Now open it.")
 	}

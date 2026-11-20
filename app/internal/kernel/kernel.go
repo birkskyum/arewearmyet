@@ -264,7 +264,7 @@ func quote(text string) string { return "'" + strings.ReplaceAll(text, "'", `'\'
 func (s System) LoadScript(modules []string) string {
 	script := `#!/bin/bash
 # Written by hw-test kernel load. Loads the modules built by hw-test kernel build in place of
-# the kernel's own. Nothing is written to disk: after a restart the kernel's own are back.
+# the kernel's own. Nothing is written to disk. After a restart the kernel's own are back.
 set -u
 marker=` + quote(s.Marker) + `
 loaded=${HW_TEST_SYS_MODULE:-/sys/module}
@@ -287,7 +287,7 @@ swap() {
     modprobe "$needs" 2>/dev/null || true
   done
   if ! insmod "$file"; then
-    echo "The built $name didn't load: the kernel's log says why (journalctl -k -b | tail). The kernel's own is put back where it was loaded." >&2
+    echo "The built $name didn't load. The kernel's log says why (journalctl -k -b | tail). The kernel's own is put back where it was loaded." >&2
     if [ $was = yes ]; then
       modprobe "$name" || echo "The kernel's own $name didn't come back either. A restart brings it back." >&2
     fi

@@ -411,7 +411,7 @@ func TestTheTestEntryStartsOnceByItselfAndTheUsualOrderIsLeftAlone(t *testing.T)
 		`efibootmgr -q --create-only --disk "$disk" --part "$number" --label 'hw-test once'`, `efibootmgr -q --bootnext "$id"`,
 		// An entry left from an earlier try goes first, and the image is the one just added
 		`efibootmgr -q -b "$id" -B || true`, `-newer "$work/before"`,
-		"Restart: the test entry starts by itself, this one time. Nothing has to be picked.",
+		"Restart, and the test entry starts by itself, this one time. Nothing has to be picked.",
 		// Where the firmware can't be told, the boot menu is still the way
 		"in the boot menu pick linux-omarchy-hwtest",
 	} {

@@ -166,7 +166,7 @@ func At(word Word, found bool, boot string, now time.Time) Decision {
 func Said(word Word) string {
 	text := "The computer has restarted and you are picking your hardware work up again. Read BRIEF.md and PROGRESS.md in this folder first."
 	if word.Prompt != "" {
-		text += " Before the restart you left yourself this: " + word.Prompt
+		text += " What you left yourself before the restart is \"" + word.Prompt + "\"."
 	}
 	return text + " Check with `uname -r` and `hw-test status` which kernel you are on now, and whether the change took."
 }

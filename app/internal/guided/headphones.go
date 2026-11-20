@@ -144,7 +144,7 @@ func (h *headphones) view(width, height int) string {
 	case "socket":
 		return wrap("Now the headphone jack. Linux offers no headphone output on this computer, as on laptops that have only USB-C ports. USB-C headphones and adapters are sound cards of their own and are not this test.", width) + "\n\n" + h.socket.view(width)
 	case "intro":
-		return wrap("Now the headphone jack, the small round socket for a 3.5 mm plug. If you have wired headphones at hand, plug them in and press Enter: a short tone plays on the left, then on the right. USB-C headphones and adapters are sound cards of their own and are not this test.", width)
+		return wrap("Now the headphone jack, the small round socket for a 3.5 mm plug. If you have wired headphones at hand, plug them in and press Enter. A short tone plays on the left, then on the right. USB-C headphones and adapters are sound cards of their own and are not this test.", width)
 	case "playing":
 		return accent.Render("▶ Playing a tone on the left, then on the right")
 	}

@@ -112,7 +112,7 @@ func (s *sleep) poll() tea.Cmd {
 func (s *sleep) evidence() string {
 	text := "slept and woke in " + s.sys.Read("/sys/power/mem_sleep")
 	if len(s.back) > 0 {
-		text += "; " + strings.Join(s.back, ", ")
+		text += ", " + strings.Join(s.back, ", ")
 	}
 	if len(s.problems) > 0 {
 		text += ", but " + strings.Join(s.problems, " and ")
@@ -167,7 +167,7 @@ func (s *sleep) update(msg tea.Msg) tea.Cmd {
 			if why == "" {
 				why = msg.err.Error()
 			}
-			s.run.Set("suspend", report.Broken, report.Measured, "systemctl suspend was refused: "+why, "")
+			s.run.Set("suspend", report.Broken, report.Measured, "systemctl suspend was refused ("+why+")", "")
 			s.over = true
 		}
 	case settleMsg:
@@ -243,10 +243,10 @@ func (s *sleep) view(width, height int) string {
 	case "intro":
 		if s.command != nil {
 			return wrap("Now sleep. When you press Enter, the computer goes to sleep. Wait about twenty seconds, then wake it with a key on the keyboard, or with the power button if a key doesn't wake it, and unlock. This screen will be here when you're back, and it then checks that Wi-Fi and sound came back too.", width) + "\n\n" +
-				soft.Render(wrap("If the computer restarts instead of waking up, just run the test again: it knows what happened and keeps your answers.", width))
+				soft.Render(wrap("If the computer restarts instead of waking up, just run the test again. It knows what happened and keeps your answers.", width))
 		}
 		return wrap("Now sleep. When you press Enter, close the lid, wait about twenty seconds, open it and unlock. This screen will be here when you're back, and it then checks that Wi-Fi and sound came back too.", width) + "\n\n" +
-			soft.Render(wrap("If the computer restarts instead of waking up, just run the test again: it knows what happened and keeps your answers.", width))
+			soft.Render(wrap("If the computer restarts instead of waking up, just run the test again. It knows what happened and keeps your answers.", width))
 	case "waiting":
 		if s.command != nil {
 			return accent.Render("● Going to sleep. Wait twenty seconds, then wake it with a key or the power button, and unlock")
@@ -261,5 +261,5 @@ func (s *sleep) view(width, height int) string {
 	case "note":
 		return s.note.view(width)
 	}
-	return s.ask.view(width) + "\n\n" + soft.Render(wrap("Measured: "+s.evidence()+".", width))
+	return s.ask.view(width) + "\n\n" + soft.Render(wrap("The test measured that it "+s.evidence()+".", width))
 }

@@ -150,7 +150,7 @@ func (s *screen) found(name string) {
 
 func (s *screen) evidence() string {
 	if s.replugged != "" {
-		return s.details + "; " + s.replugged
+		return s.details + ", and " + s.replugged
 	}
 	return s.details
 }
@@ -246,7 +246,7 @@ func (s *screen) view(width, height int) string {
 	case "picture":
 		return s.ask.view(width)
 	case "replug-out":
-		return good.Render("✓ "+s.details) + "\n\n" + wrap("Last part: unplug the screen, and plug it back in when this says so. It checks that the screen comes back.", width)
+		return good.Render("✓ "+s.details) + "\n\n" + wrap("For the last part, unplug the screen and plug it back in when this says so. It checks that the screen comes back.", width)
 	}
 	return good.Render("✓ Unplugged.") + " " + accent.Render("Now plug it back in.")
 }

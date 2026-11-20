@@ -179,9 +179,9 @@ func (s *speakers) evidence() string {
 		}
 		return fmt.Sprintf("heard at %.0f dB", audio.Decibels(h.Level))
 	}
-	text := "by the microphones at half volume: left speaker " + side(s.left()) + ", right speaker " + side(s.right())
+	text := "by the microphones at half volume, left speaker " + side(s.left()) + ", right speaker " + side(s.right())
 	if balance := s.balance(); balance != "" {
-		text += "; " + balance
+		text += ", " + balance
 	}
 	return text
 }
@@ -200,9 +200,9 @@ func (s *speakers) pickup() string {
 			tones = append(tones, name+" not picked up")
 		}
 	}
-	text := "the speakers at half volume recorded as " + strings.Join(tones, ", ") + fmt.Sprintf("; noise with nothing playing %.0f dB", audio.Decibels(s.noise))
+	text := "the speakers at half volume recorded as " + strings.Join(tones, ", ") + fmt.Sprintf(", and noise with nothing playing %.0f dB", audio.Decibels(s.noise))
 	if volume, muted, ok := tools.InputVolume(); ok {
-		text += fmt.Sprintf("; input volume %d%%", int(volume*100+0.5))
+		text += fmt.Sprintf(", input volume %d%%", int(volume*100+0.5))
 		if muted {
 			text += ", muted"
 		}
@@ -219,7 +219,7 @@ func (s *speakers) measure() {
 		// be handed to an agent: it is a quiet speaker, or only where the microphones sit
 		if _, quieter, difference, _ := s.sides(); difference >= uneven {
 			look := fmt.Sprintf("The %s speaker measures %.0f dB quieter than the other.", quieter, difference)
-			s.run.Set("speakers", report.Works, report.Measured, s.evidence(), look+" That is worth a listen: it can be where the microphones sit, or a speaker that plays too quietly.")
+			s.run.Set("speakers", report.Works, report.Measured, s.evidence(), look+" That is worth a listen, as it can be where the microphones sit, or a speaker that plays too quietly.")
 			s.run.Flag("speakers", look)
 			break
 		}
@@ -351,7 +351,7 @@ func (s *speakers) view(width, height int) string {
 	}
 	switch s.phase {
 	case "intro":
-		return wrap("Now the sound. The speakers play a few tones, first on the left, then on the right, then low, middle and high on both, while the microphones record. The test finds the tones in the recording, which checks the speakers and the microphones at once: there is nothing for you to do. The volume is set to half for it and put back after.", width) + "\n\n" + private(width)
+		return wrap("Now the sound. The speakers play a few tones, first on the left, then on the right, then low, middle and high on both, while the microphones record. The test finds the tones in the recording, which checks the speakers and the microphones at once, so there is nothing for you to do. The volume is set to half for it and put back after.", width) + "\n\n" + private(width)
 	case "playing":
 		lines := []string{accent.Render("♪ Playing " + parts[s.at].label), ""}
 		for at := 0; at < s.at; at++ {
@@ -374,10 +374,10 @@ func (s *speakers) view(width, height int) string {
 			lines = append(lines, mark(s.heard[at], fmt.Sprintf("%.0f Hz", p.pitch)))
 		}
 	}
-	lines = append(lines, fmt.Sprintf("    noise with nothing playing: %.0f dB", audio.Decibels(s.noise)), "",
+	lines = append(lines, fmt.Sprintf("    noise with nothing playing %.0f dB", audio.Decibels(s.noise)), "",
 		wrap("Measured from the recording alone. Only these numbers are sent.", width))
 	if s.err != nil {
-		lines = append(lines, bad.Render(wrap("The player reported: "+s.err.Error(), width)))
+		lines = append(lines, bad.Render(wrap("The player failed ("+s.err.Error()+").", width)))
 	}
 	return strings.Join(lines, "\n")
 }
@@ -448,7 +448,7 @@ func (m *microphones) keys() string {
 func (m *microphones) record() tea.Cmd {
 	recording, err := tools.Record(filepath.Join(m.dir, "voice.wav"))
 	if err != nil {
-		m.run.Set("microphones", report.Broken, report.Measured, "recording didn't start: "+err.Error(), "")
+		m.run.Set("microphones", report.Broken, report.Measured, "recording didn't start ("+err.Error()+")", "")
 		m.over = true
 		return nil
 	}
@@ -478,7 +478,7 @@ func (m *microphones) quiet() bool  { return !m.silent() && audio.Decibels(m.lou
 func (m *microphones) measured() string {
 	text := fmt.Sprintf("speech recorded at %.0f dB, where the test tone plays at %.0f dB", audio.Decibels(m.loudest), audio.Decibels(audio.ToneLevel))
 	if m.input != "" {
-		text += "; " + m.input
+		text += ", " + m.input
 	}
 	return text
 }
@@ -487,9 +487,9 @@ func (m *microphones) measured() string {
 func (m *microphones) verdict() string {
 	switch {
 	case m.silent():
-		return "The recording holds almost nothing: the microphone picked up no voice."
+		return "The recording holds almost nothing, so the microphone picked up no voice."
 	case m.quiet():
-		return fmt.Sprintf("The microphone records quietly: your voice is %.0f dB below the test tone you heard. That quietness is in the recording itself, so it is the microphone and not the speakers. It was played back %.0f times louder so you can judge how clear it is.",
+		return fmt.Sprintf("The microphone records quietly. Your voice is %.0f dB below the test tone you heard. That quietness is in the recording itself, so it is the microphone and not the speakers. It was played back %.0f times louder so you can judge how clear it is.",
 			audio.Decibels(audio.ToneLevel)-audio.Decibels(m.loudest), m.gain)
 	}
 	return "The microphone records at a healthy level. If it sounds quiet anywhere, that is the playback volume, not the microphone."
@@ -591,5 +591,5 @@ func (m *microphones) view(width, height int) string {
 	case "note":
 		return m.note.view(width)
 	}
-	return wrap(m.verdict(), width) + "\n\n" + m.ask.view(width) + "\n\n" + soft.Render(wrap("Measured: "+m.measured()+". Only these numbers are sent, not the recording.", width))
+	return wrap(m.verdict(), width) + "\n\n" + m.ask.view(width) + "\n\n" + soft.Render(wrap("The test measured "+m.measured()+". Only these numbers are sent, not the recording.", width))
 }

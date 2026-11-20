@@ -16,7 +16,7 @@ func measuredAs(result report.Result) string {
 	}
 	text := stateLabel[result.State]
 	if detail := first(result.Evidence, result.Note); detail != "" {
-		text += ": " + strings.ReplaceAll(detail, "|", "/")
+		text += ", " + strings.ReplaceAll(detail, "|", "/")
 	}
 	if how := howSaid[result.How]; how != "" {
 		text += " (" + how + ")"
@@ -58,7 +58,7 @@ func VerifyBlock(run *report.Run, model report.Model, snapshot report.Snapshot, 
 	machine := strings.TrimSpace(run.Hardware["maker"] + " " + first(run.Hardware["family"], run.Hardware["product"]))
 	say("### Measured with hw-test")
 	say("")
-	say("%s, before and after this change. Before: %s. After: %s.", machine, snapshot.When.Format("2 Jan 2006 15:04"), time.Now().Format("2 Jan 2006 15:04"))
+	say("%s, before this change on %s and after it on %s.", machine, snapshot.When.Format("2 Jan 2006 15:04"), time.Now().Format("2 Jan 2006 15:04"))
 	after := report.Versions{Kernel: run.Kernel, Packages: run.Packages}
 	moved := versionsChanged(snapshot.Versions, after)
 	switch {
@@ -66,13 +66,13 @@ func VerifyBlock(run *report.Run, model report.Model, snapshot report.Snapshot, 
 	case testImage && snapshot.TestImage && len(moved) == 0:
 		say("Kernel %s and the same package versions on both sides, so the change was tried outside the packages (a setting or a file of its own). Both sides ran the same test boot image, made by `hw-test tree boot` for another change.", first(run.Kernel, "unknown"))
 	case testImage && snapshot.TestImage:
-		say("What differs between the two: %s. Both sides ran the same test boot image, made by `hw-test tree boot` for another change.", strings.Join(moved, ", "))
+		say("What differs between the two is %s. Both sides ran the same test boot image, made by `hw-test tree boot` for another change.", strings.Join(moved, ", "))
 	case testImage && len(moved) == 0:
 		say("Kernel %s and the same package versions on both sides. After, the computer was started from a test boot image with the changed device tree, made by `hw-test tree boot`.", first(run.Kernel, "unknown"))
 	case testImage:
-		say("What differs between the two: %s. After, the computer was started from a test boot image with the changed device tree.", strings.Join(moved, ", "))
+		say("What differs between the two is %s. After, the computer was started from a test boot image with the changed device tree.", strings.Join(moved, ", "))
 	case len(moved) > 0:
-		say("What differs between the two: %s.", strings.Join(moved, ", "))
+		say("What differs between the two is %s.", strings.Join(moved, ", "))
 	default:
 		say("Kernel %s and the same package versions on both sides, so the change was tried outside the packages (a boot entry or a file of its own).", first(run.Kernel, "unknown"))
 	}
@@ -104,15 +104,15 @@ func VerifyBlock(run *report.Run, model report.Model, snapshot report.Snapshot, 
 	}
 	if len(same) > 0 {
 		say("")
-		say("Tested again and still working: %s.", strings.Join(same, ", "))
+		say("Testing again found %s still working.", strings.Join(same, ", "))
 	}
 	if len(fresh) > 0 {
 		say("")
-		say("Tested for the first time after the change, so with nothing to compare: %s.", strings.Join(fresh, ", "))
+		say("The change has nothing to compare for %s, tested for the first time after it.", strings.Join(fresh, ", "))
 	}
 	if model.ID != "" {
 		say("")
-		say("The model's page, with every machine's results: %s", first(model.Page, report.Site+"/models/"+model.ID))
+		say("The model's page, with every machine's results, is %s", first(model.Page, report.Site+"/models/"+model.ID))
 	}
 	return out.String()
 }

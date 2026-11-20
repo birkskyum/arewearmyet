@@ -651,7 +651,7 @@ type menuEntry struct {
 var menu = []menuEntry{
 	{word: "auto", label: "All of these in one go", auto: true, about: "plays test tones"},
 	{word: "speakers", label: "Speakers and microphones", checks: []string{"speakers", "microphones"}, auto: true},
-	{word: "graphics", label: "Graphics: Vulkan, WebGL and WebGPU", checks: []string{"gpu", "webgl", "webgpu"}, auto: true},
+	{word: "graphics", label: "Graphics (Vulkan, WebGL and WebGPU)", checks: []string{"gpu", "webgl", "webgpu"}, auto: true},
 	{word: "wireless", label: "Wi-Fi signal and Bluetooth range", checks: []string{"wifi", "bluetooth"}, auto: true},
 	{word: "ethernet", label: "Ethernet, with a cable plugged in", checks: []string{"ethernet"}, auto: true, step: "Ethernet"},
 	{word: "video", label: "Video decoding", checks: []string{"video-decode"}, auto: true},
@@ -707,7 +707,7 @@ func (e menuEntry) status(kept map[string]report.Kept) side {
 	// What works but measured something odd says so, as that is what an agent can be asked about
 	for _, check := range e.checks {
 		if result, ok := kept[check]; ok && worthALook(result.Result) {
-			return side{mark: "✓", text: when + " · worth a look: " + strings.TrimRight(result.Look, "."), style: good}
+			return side{mark: "✓", text: when + " · worth a look. " + strings.TrimRight(result.Look, "."), style: good}
 		}
 	}
 	if tested < len(e.checks) {
@@ -833,10 +833,10 @@ func (w *welcome) standing(width int) string {
 	line := fmt.Sprintf("%s · %s · %s · %d not tested",
 		good.Render(fmt.Sprintf("%d working", counts["works"])), close_.Render(fmt.Sprintf("%d partly", counts["partly"])), bad.Render(fmt.Sprintf("%d broken", counts["broken"])), counts["untested"])
 	if counts["partly"]+counts["broken"]+counts["untested"] == 0 {
-		line = good.Render("Everything works on this computer: all green.")
+		line = good.Render("Everything works on this computer, all green.")
 	}
 	if len(failing) > 5 {
-		failing = append(failing[:5], fmt.Sprintf("and %d more: hw-test status lists everything", len(failing)-5))
+		failing = append(failing[:5], fmt.Sprintf("and %d more, which hw-test status lists", len(failing)-5))
 	}
 	return strings.Join(append([]string{line}, failing...), "\n")
 }

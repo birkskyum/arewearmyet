@@ -50,7 +50,7 @@ var checkTitle = map[string]string{
 }
 
 // Said wherever the microphones or the camera are used.
-const staysHere = "It never leaves this computer: nothing recorded or photographed is sent anywhere, and it's deleted when the test ends."
+const staysHere = "It never leaves this computer. Nothing recorded or photographed is sent anywhere, and it's deleted when the test ends."
 
 // private is the line that says a recording or picture stays here, set apart so it's seen.
 func private(width int) string {

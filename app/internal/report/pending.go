@@ -76,7 +76,7 @@ func (p Pending) Crashed(run *Run, check string) {
 		if mode == "" {
 			mode = "unknown"
 		}
-		evidence = "closing the lid ended in a restart instead of a wake: the test was waiting for the computer to wake when it booted fresh (sleep modes " + mode + ")"
+		evidence = "closing the lid ended in a restart instead of a wake, as the test was waiting for the computer to wake when it booted fresh (sleep modes " + mode + ")"
 	}
 	run.Set(check, Broken, Measured, evidence, "")
 }

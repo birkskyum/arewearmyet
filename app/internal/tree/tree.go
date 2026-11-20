@@ -499,7 +499,7 @@ trap 'rm -rf "$work"' EXIT
 # With Omarchy's Direct Boot the firmware starts the stock image itself and no boot menu
 # shows, so there would be no way to pick the test entry.
 if command -v omarchy-boot-direct >/dev/null && omarchy-boot-direct; then
-  echo "Direct Boot is on, so no boot menu shows at start. Turn it off first: Omarchy menu > Setup > Direct Boot." >&2
+  echo "Direct Boot is on, so no boot menu shows at start. Turn it off first under Omarchy menu > Setup > Direct Boot." >&2
   exit 1
 fi
 
@@ -507,14 +507,14 @@ fi
 # partition is what breaks a later, ordinary update, so stop well short of it.
 free=$(df --output=avail -m /boot | tail -1)
 if (( free < 400 )); then
-  echo "The boot partition has only ${free} MB free. Free some first: old test entries, old kernels." >&2
+  echo "The boot partition has only ${free} MB free. Free some first, like old test entries or old kernels." >&2
   exit 1
 fi
 
 echo "Building an initramfs for $kernel..."
 mkinitcpio -k "$kernel" -g "$work/initramfs.img" >"$work/mkinitcpio.log" 2>&1 || { tail -20 "$work/mkinitcpio.log" >&2; exit 1; }
 
-# The system's settings for boot images are left out on purpose: they would add every
+# The system's settings for boot images are left out on purpose. They would add every
 # machine's tree, and the stock one would be picked over the changed one.
 echo "Packing the kernel, the initramfs and the changed tree..."
 ukify build --config /dev/null --linux "/usr/lib/modules/$kernel/vmlinuz" --initrd "$work/initramfs.img" \
@@ -527,7 +527,7 @@ limine-entry-tool --add-uki ` + quote(Entry) + ` "$work/` + Entry + `.efi" --com
 ` + onceScript + `
 echo
 if once; then
-  echo "Done. Restart: the test entry starts by itself, this one time. Nothing has to be picked."
+  echo "Done. Restart, and the test entry starts by itself, this one time. Nothing has to be picked."
   echo "The start after that is the usual one again, also if the test entry doesn't come up:"
   echo "then hold the power button until the computer is off, and start it again."
 else

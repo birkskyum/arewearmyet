@@ -176,9 +176,9 @@ func (e *effects) finish() {
 	span := fmt.Sprintf("the backlight moved between %d and %d", e.low, e.high)
 	switch {
 	case bright["seen"] == 2:
-		e.run.Set("backlight", report.Works, report.Measured, "both brightness keys work: "+span, "")
+		e.run.Set("backlight", report.Works, report.Measured, "both brightness keys work, "+span, "")
 	case bright["seen"] == 1 && bright["failed"] == 1:
-		e.run.Set("backlight", report.Partial, report.Measured, "only one brightness key works: "+span, "")
+		e.run.Set("backlight", report.Partial, report.Measured, "only one brightness key works, "+span, "")
 	case bright["failed"] == 2:
 		e.run.Set("backlight", report.Broken, report.Owner, fmt.Sprintf("both brightness keys pressed, the backlight stayed at %d", e.now.brightness), "")
 	}
@@ -192,11 +192,11 @@ func (e *effects) finish() {
 		notes = append(notes, keyboard.Note)
 	}
 	if len(deadKeys) > 0 {
-		notes = append(notes, "No effect from: "+strings.Join(deadKeys, ", "))
+		notes = append(notes, "No effect from "+strings.Join(deadKeys, ", "))
 	}
 	// A key that was skipped isn't called working: the result says it wasn't checked
 	if len(unchecked) > 0 {
-		notes = append(notes, "Not checked: "+strings.Join(unchecked, ", "))
+		notes = append(notes, "Not checked were "+strings.Join(unchecked, ", "))
 	}
 	if len(deadKeys) > 0 {
 		e.run.Set("keyboard", report.Partial, report.Owner, keyboard.Evidence, strings.Join(notes, ". "))
@@ -217,9 +217,9 @@ func (e *effects) view(width, height int) string {
 		case item.outcome == "seen":
 			out.WriteString(good.Render("  ✓ "+item.label) + "\n")
 		case item.outcome == "failed":
-			out.WriteString(bad.Render("  ✗ "+item.label+": nothing happened") + "\n")
+			out.WriteString(bad.Render("  ✗ "+item.label+", nothing happened") + "\n")
 		case item.outcome == "skipped":
-			out.WriteString(soft.Render("  – "+item.label+": skipped") + "\n")
+			out.WriteString(soft.Render("  – "+item.label+", skipped") + "\n")
 		case i == e.at:
 			out.WriteString(accent.Render("  › "+item.label) + "\n")
 		default:

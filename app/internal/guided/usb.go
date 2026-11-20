@@ -166,7 +166,7 @@ func (u *usb) finish() {
 	sort.Strings(seen)
 	evidence := fmt.Sprintf("%d plug-ins detected", len(u.plugs))
 	if len(seen) > 0 {
-		evidence += ": " + strings.Join(seen, ", ")
+		evidence += ", on " + strings.Join(seen, ", ")
 	}
 	switch {
 	case len(u.plugs) == 0:
@@ -183,7 +183,7 @@ func (u *usb) finish() {
 func (u *usb) view(width, height int) string {
 	lines := []string{wrap("Now the USB ports. Plug a USB stick, or any USB device, into each port in turn. It shows here when the computer sees it, with the speed it runs at. For a USB-C port, try the plug both ways round.", width), ""}
 	for i, p := range u.plugs {
-		lines = append(lines, good.Render(fmt.Sprintf("  ✓ Plug-in %d: port %s at %s", i+1, p.port, speedName(p.speed))))
+		lines = append(lines, good.Render(fmt.Sprintf("  ✓ Plug-in %d on port %s at %s", i+1, p.port, speedName(p.speed))))
 	}
 	for i := 0; i < u.dead; i++ {
 		lines = append(lines, bad.Render("  ✗ A plug-in gave no device"))

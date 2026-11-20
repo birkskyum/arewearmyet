@@ -199,7 +199,7 @@ func TestTheDefaultBrowserIsTheOneTested(t *testing.T) {
 		t.Errorf("webgpu in Chrome: %+v", webgpu)
 	}
 	results = Browser(browser(t, onGPU, onGPU), Engine{Name: "Chromium", Command: "chromium", Instead: "firefox"}, t.TempDir())
-	if webgl := one(t, results, "webgl"); !strings.HasPrefix(webgl.Evidence, "Chromium: ANGLE") || !strings.Contains(webgl.Note, "default browser here (firefox)") {
+	if webgl := one(t, results, "webgl"); !strings.HasPrefix(webgl.Evidence, "Chromium on ANGLE") || !strings.Contains(webgl.Note, "default browser here (firefox)") {
 		t.Errorf("webgl with Chromium standing in: %+v", webgl)
 	}
 }
@@ -382,7 +382,7 @@ func TestVideoIsDecodedOnTheGPUOfAnNvidiaMachine(t *testing.T) {
 		t.Errorf("through VA-API when NVDEC fails: %+v", video)
 	}
 	video = one(t, Video(gpu(map[string]string{"nvdec": "Device creation failed: -12.\n", "vaapi": "Failed to initialise VAAPI connection: -1 (unknown libva error).\n"}), dir), "video-decode")
-	if video.State != report.Broken || !strings.Contains(video.Evidence, "NVDEC: Device creation failed") || !strings.Contains(video.Evidence, "VA-API: Failed to initialise") {
+	if video.State != report.Broken || !strings.Contains(video.Evidence, "NVDEC (Device creation failed") || !strings.Contains(video.Evidence, "VA-API (Failed to initialise") {
 		t.Errorf("neither way: %+v", video)
 	}
 }
@@ -427,7 +427,7 @@ func TestTheLoadShowsOnTheSensorsAndTheFan(t *testing.T) {
 
 	// Nothing showed a fan: the sensors work, and whether there is a fan is still open
 	fans := one(t, hot.Report(), "fans")
-	if fans.State != report.Partial || fans.Note != FanUnseen || !strings.Contains(fans.Evidence, "59 temperature sensors; the hottest went from 38 to 68 °C in 95 s with every core busy, and back to 47 °C") || !strings.Contains(fans.Evidence, "back to 47 °C") {
+	if fans.State != report.Partial || fans.Note != FanUnseen || !strings.Contains(fans.Evidence, "59 temperature sensors. The hottest went from 38 to 68 °C in 95 s with every core busy, and back to 47 °C") || !strings.Contains(fans.Evidence, "back to 47 °C") {
 		t.Errorf("no fan seen: %+v", fans)
 	}
 	// The temperature fell under steady work: a fan started, measured with no sensor for its speed
@@ -566,7 +566,7 @@ func TestTheTemperatureTestRunsThroughByItself(t *testing.T) {
 	if found = Warm(sys, "", func(line string) { said = append(said, line) }); found.Rest != 72 || time.Since(began) < CoolFirst {
 		t.Errorf("warm at the start: %+v after %s", found, time.Since(began))
 	}
-	if !strings.Contains(strings.Join(said, "\n"), "letting it cool first: 72 °C") {
+	if !strings.Contains(strings.Join(said, "\n"), "letting it cool first, now at 72 °C") {
 		t.Errorf("said %q", said)
 	}
 	if degrees, cool := Resting(sys); degrees != 72 || cool {

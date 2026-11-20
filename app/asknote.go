@@ -88,7 +88,7 @@ func askNote(in *bufio.Reader, out io.Writer, checks map[string]report.Check, ar
 				ids = append(ids, id)
 			}
 			sort.Strings(ids)
-			fmt.Fprintf(out, "No part is called %q here. The parts are: %s.\n", word, strings.Join(ids, ", "))
+			fmt.Fprintf(out, "No part is called %q here. The parts are %s.\n", word, strings.Join(ids, ", "))
 			word = ""
 		}
 	}
@@ -98,7 +98,7 @@ func askNote(in *bufio.Reader, out io.Writer, checks map[string]report.Check, ar
 		case text == "":
 			return args, false
 		case len(text) < 20:
-			fmt.Fprintln(out, "A little more, please: what you did, and what the computer did.")
+			fmt.Fprintln(out, "A little more, please, on what you did and what the computer did.")
 		default:
 			args.body = text
 		}
