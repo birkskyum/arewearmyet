@@ -13,7 +13,9 @@ const listed = (f: Finding) => f.basis === 'maker-spec' && f.state === 'untested
 const FROM: Record<string, string> = { 'other-distro': 'on another distro', 'tree-author': "by the device tree's author" };
 type Row = { id: string; group: string; title: string; works: string; probe?: string; person?: string; debug?: string; optional?: boolean; finding: Finding | null; from: 'model' | 'family' | null; familySource: string | null; expected?: boolean };
 type Change = { machines: number; from: string | null; to: string | null; since: string };
-type Owner = { machines: number; states: Record<string, number>; how: Record<string, number>; regressed?: Change; fixed?: Change; latest: { state: State; how: string; note: string | null; evidence: string | null; kernel: string | null; os?: string | null; created: string; run: string }[] };
+type Owner = { machines: number; states: Record<string, number>; how: Record<string, number>; regressed?: Change; fixed?: Change; latest: { state: State; how: string; note: string | null; evidence: string | null; kernel: string | null; os?: string | null; created: string; run: string; setup?: Setup }[] };
+// What a computer ran that Omarchy didn't install, which its results are read against
+type Setup = { kernel?: string; rebuilt?: string[]; modules?: string[]; options?: string[]; packages?: string[]; testTree?: boolean; note?: string };
 type Note = { id: string; check: string | null; kind: string; title: string; status?: string; created: string; replies: number; logs: { name: string }[]; kernel: string | null };
 type Live = { owners: { machines: number; checks: Record<string, Owner> }; fixes: { id: string; check: string | null; url: string; note: string | null; created: string; changes?: { check: string; from: { state: State }; to: { state: State } }[] }[]; notes?: Note[] };
 const KIND: Record<string, string> = { problem: 'Problem', workaround: 'Workaround', upstream: 'Work elsewhere', note: 'Note' };
@@ -23,6 +25,23 @@ const TONES: Record<State, keyof typeof TONE> = { works: 'good', partial: 'close
 const HOW: Record<string, string> = { measured: 'measured by the test', owner: 'seen by the person testing', agent: "an agent's reading" };
 const ORDER: State[] = ['works', 'partial', 'broken', 'absent', 'untested'];
 const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
+
+// "This computer ran with kernel module omnibook_fix, kernel option regulator_ignore_unused."
+/** What a computer ran beyond what Omarchy installs, in a sentence, or nothing when it ran nothing of the kind. */
+function setupText(setup?: Setup): string | undefined {
+  if (!setup) return undefined;
+  const parts = [
+    setup.kernel ? `the kernel package ${setup.kernel}` : '',
+    ...(setup.rebuilt ?? []).map((name) => `its own build of ${name}`),
+    ...(setup.modules ?? []).map((name) => `kernel module ${name}`),
+    ...(setup.options ?? []).map((option) => `kernel option ${option}`),
+    ...(setup.packages ?? []).map((name) => `package ${name}`),
+    setup.testTree ? 'a test device tree' : '',
+  ].filter(Boolean);
+  const ran = parts.length ? `This computer ran with ${parts.join(', ')}.` : '';
+  const said = setup.note ? `Asked what they changed for the hardware, the owner wrote “${setup.note}”.` : '';
+  return [ran, said].filter(Boolean).join(' ') || undefined;
+}
 
 // "Worked on 7.3.0-67, broken since 7.3.0-72 (2026-11-17), on 2 machines"
 function changeText(change: Change, kind: 'regressed' | 'fixed'): string {
@@ -111,6 +130,7 @@ export default function CheckTable(props: { model: string; groups: { id: string;
           {(data) => (
             <span>
               {data().owners.machines === 0 ? 'Nobody has run hw-test on this model yet.' : `Tested with hw-test on ${data().owners.machines} machine${data().owners.machines === 1 ? '' : 's'}, newest result per machine.`}
+              {Object.values(data().owners.checks).some((check) => check.latest.some((r) => setupText(r.setup))) ? ' Where a computer ran something Omarchy didn\'t install, it is named under its result.' : ''}
             </span>
           )}
         </Show>
@@ -223,6 +243,7 @@ export default function CheckTable(props: { model: string; groups: { id: string;
                                   <span class="text-xs text-zinc-500">{HOW[r.how] ?? r.how}{r.kernel ? ` · ${r.kernel}` : ''} · {r.created.slice(0, 10)}</span>
                                   <Show when={r.note}><span>{r.note}</span></Show>
                                   <Show when={r.evidence}><code class="rounded bg-zinc-800 px-1 py-0.5 text-xs text-zinc-300">{r.evidence}</code></Show>
+                                  <Show when={setupText(r.setup)}>{(text) => <p class="basis-full text-xs text-zinc-500" data-setup>{text()}</p>}</Show>
                                 </li>
                               )}
                             </For>

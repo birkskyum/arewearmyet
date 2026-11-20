@@ -171,7 +171,7 @@ One model, with everything its page shows. `404` names the routes that find the 
 }
 ```
 
-`latest` holds up to five results, newest first. `fixed` and `regressed` appear when a computer's result turned from failing to working or the other way, with the kernels on both sides. One rule differs from "newest wins". A measurement that finds a part working doesn't take back a failure the owner reported. The owner's result stands until the owner tests that part again.
+`latest` holds up to five results, newest first. A result from a computer that ran something Omarchy didn't install has `setup`, which names it, in the shape `POST /api/runs` takes. `fixed` and `regressed` appear when a computer's result turned from failing to working or the other way, with the kernels on both sides. One rule differs from "newest wins". A measurement that finds a part working doesn't take back a failure the owner reported. The owner's result stands until the owner tests that part again.
 
 ### `GET /api/match`
 
@@ -242,6 +242,8 @@ One run as it is stored, for its owner to check what was sent.
   ]
 }
 ```
+
+A computer that ran something Omarchy didn't install also has `setup`, like `{ "modules": ["omnibook_fix"], "options": ["regulator_ignore_unused"] }`, in the shape `POST /api/runs` takes. The kernel options Omarchy sets by itself are left out of it.
 
 ### `GET /api/fixes`
 
@@ -362,6 +364,7 @@ curl -X POST https://arewearmyet.com/api/runs \
 | `compatible` | The device tree's first compatible string |
 | `hardware` | `maker`, `product`, `family`, `sku`, `board`, `bios`, from the firmware. Never a serial number |
 | `kernel`, `os`, `agent` | What ran, and which agent sent it |
+| `setup` | What the computer runs that Omarchy didn't install, by name. `kernel` is another kernel package, `rebuilt` are packages with Omarchy's names built by someone else, `modules` are kernel modules, `options` are kernel options beyond Omarchy's own (an option whose value names a disk or an address is sent as `name=…`), `packages` are packages from no repository that hold firmware, kernel modules or sound profiles, `testTree` is `true` on a test device tree, and `note` is the owner's words on what they changed. Up to 20 names a list, 24 options. Left out when there is nothing |
 | `packages` | Versions of `linux-omarchy`, `linux-omarchy-dtbs`, `linux`, `linux-firmware`, `linux-firmware-qcom`, `mesa`, `systemd`, `omarchy`, `hyprland`, `pipewire`, `alsa-ucm-conf`, `bluez`, `libcamera`, `hw-test`, and on NVIDIA machines `linux-omarchy-nvidia-open`, `nvidia-utils`, `libva-nvidia-driver`. Other names are dropped |
 
 Answers `201`.

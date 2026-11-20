@@ -789,7 +789,7 @@ func (w *welcome) question() choice {
 		case part.auto && (at == 0 || !w.parts[at-1].auto):
 			heads[len(options)] = "Runs by itself"
 		case !part.auto && (at == 0 || w.parts[at-1].auto):
-			heads[len(options)] = "Done with you"
+			heads[len(options)] = "Needs you"
 		}
 		options, sides = append(options, part.label), append(sides, part.status(w.kept))
 	}

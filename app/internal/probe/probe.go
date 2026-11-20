@@ -109,6 +109,7 @@ func Quick(sys machine.System) (*report.Run, Facts, error) {
 	} {
 		safely(part)
 	}
+	safely(func() { run.Setup = setup(sys, run) })
 	run.MarkQuick()
 	return run, facts, nil
 }

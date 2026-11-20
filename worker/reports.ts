@@ -15,10 +15,15 @@
 import index from './models.json' with { type: 'json' };
 import { DOCS, ROUTES } from './routes.ts';
 
-type Index = { checks: string[]; kernels?: Record<string, string>; chids: Record<string, number[]>; models: { id: string; vendor: string; name: string; generation: string; boot: string; compatibles: string[]; modelNumbers: string[] }[] };
+type Index = { checks: string[]; kernels?: Record<string, string>; options?: { keys: string[]; exact: string[] }; chids: Record<string, number[]>; models: { id: string; vendor: string; name: string; generation: string; boot: string; compatibles: string[]; modelNumbers: string[] }[] };
 const INDEX = index as Index;
 const CHECKS = new Set(INDEX.checks);
 const MODELS = new Map(INDEX.models.map((m) => [m.id, m]));
+
+// The kernel options Omarchy sets by itself (data/kernel-options.yaml). A run's setup leaves them out
+// when it is shown, so an option Omarchy starts setting later drops out of older runs too
+const OWN_KEYS = new Set(INDEX.options?.keys ?? []);
+const OWN_OPTIONS = new Set(INDEX.options?.exact ?? []);
 
 const STATES = ['works', 'partial', 'broken', 'untested', 'absent'] as const;
 const HOW = ['measured', 'owner', 'agent'] as const;
@@ -100,7 +105,9 @@ async function model(env: Env, url: URL, id: string): Promise<Response> {
   return json({ ...base, owners, fixes, notes }, 200, 'public, max-age=60');
 }
 
-type ResultRow = { model?: string; check_id: string; state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; os: string | null; created: string; machine: string; run: string };
+type ResultRow = { model?: string; check_id: string; state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; os: string | null; created: string; machine: string; run: string; setup: string | null };
+/** What a computer ran that Omarchy didn't install, by name, plus the owner's words on what they changed. */
+type Setup = { kernel?: string; rebuilt?: string[]; modules?: string[]; options?: string[]; packages?: string[]; testTree?: true; note?: string };
 type Change = { machines: number; from: string | null; to: string | null; since: string };
 type OwnerCheck = {
   machines: number;
@@ -108,13 +115,14 @@ type OwnerCheck = {
   how: Record<string, number>;
   // `os` says which system the result was seen on. hw-test also runs on other distros, and a result from
   // one shows a part can work, not that it does on Omarchy
-  latest: { state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; os: string | null; created: string; run: string }[];
+  // `setup` is what that computer ran beyond what Omarchy installs, left out when there was nothing
+  latest: { state: string; how: string; note: string | null; evidence: string | null; kernel: string | null; os: string | null; created: string; run: string; setup?: Setup }[];
   // Machines whose newest result turned from working to not, or the other way, with the kernels on both sides
   regressed?: Change;
   fixed?: Change;
 };
 
-const RESULT_ROWS = `SELECT runs.model, r.check_id, r.state, r.how, r.note, r.evidence, runs.kernel, runs.os, runs.created, runs.machine, runs.id AS run
+const RESULT_ROWS = `SELECT runs.model, r.check_id, r.state, r.how, r.note, r.evidence, runs.kernel, runs.os, runs.created, runs.machine, runs.id AS run, runs.setup
        FROM results r JOIN runs ON runs.id = r.run JOIN machines m ON m.id = runs.machine
       WHERE runs.hidden = 0 AND m.hidden = 0 AND r.state != 'untested'`;
 const NEWEST_FIRST = 'ORDER BY runs.created DESC, runs.rowid DESC';
@@ -160,7 +168,7 @@ function summarize(rows: ResultRow[]) {
     entry.machines++;
     entry.states[row.state] = (entry.states[row.state] ?? 0) + 1;
     entry.how[row.how] = (entry.how[row.how] ?? 0) + 1;
-    if (entry.latest.length < 5) entry.latest.push({ state: row.state, how: row.how, note: row.note, evidence: row.evidence, kernel: row.kernel, os: row.os, created: row.created, run: row.run });
+    if (entry.latest.length < 5) entry.latest.push({ state: row.state, how: row.how, note: row.note, evidence: row.evidence, kernel: row.kernel, os: row.os, created: row.created, run: row.run, setup: storedSetup(row.setup) });
 
     // Going back from that result, the first one with another state is where it turned. The
     // change counts once per machine and check, from that result's kernel to the first kernel after it
@@ -325,8 +333,44 @@ function matchChids(chids: string[]): Index['models'][number] | null {
 
 type RunBody = {
   mode?: unknown; model?: unknown; compatible?: unknown; kernel?: unknown; os?: unknown; agent?: unknown;
-  hardware?: unknown; packages?: unknown; results?: unknown; chids?: unknown;
+  hardware?: unknown; packages?: unknown; results?: unknown; chids?: unknown; setup?: unknown;
 };
+
+const SETUP_NAME = /^[A-Za-z0-9_.+@-]{1,60}$/;
+const SETUP_OPTION = /^[A-Za-z0-9_.-]{1,60}(=(…|[A-Za-z0-9_.,:@%+-]{0,60}))?$/;
+
+/** A run's setup as sent, kept to names of a plain shape. Nothing in it is `undefined` when nothing was found. */
+function parseSetup(value: unknown): Setup | undefined {
+  if (!value || typeof value !== 'object') return undefined;
+  const sent = value as Record<string, unknown>;
+  const names = (list: unknown, shape: RegExp, max: number) => [...new Set(Array.isArray(list) ? list.filter((item): item is string => typeof item === 'string' && shape.test(item)) : [])].slice(0, max);
+  const setup: Setup = {};
+  if (typeof sent.kernel === 'string' && SETUP_NAME.test(sent.kernel)) setup.kernel = sent.kernel;
+  for (const key of ['rebuilt', 'modules', 'packages'] as const) {
+    const list = names(sent[key], SETUP_NAME, 20);
+    if (list.length) setup[key] = list;
+  }
+  const options = names(sent.options, SETUP_OPTION, 24);
+  if (options.length) setup.options = options;
+  if (sent.testTree === true) setup.testTree = true;
+  if (typeof sent.note === 'string' && clean(sent.note, 300)) setup.note = clean(sent.note, 300);
+  return Object.keys(setup).length ? setup : undefined;
+}
+
+/** A stored setup as it is shown, without the kernel options that are Omarchy's own. */
+function storedSetup(text: string | null): Setup | undefined {
+  if (!text) return undefined;
+  let setup: Setup;
+  try {
+    setup = JSON.parse(text) as Setup;
+  } catch {
+    return undefined;
+  }
+  const options = (setup.options ?? []).filter((option) => !OWN_OPTIONS.has(option) && !OWN_KEYS.has(option.split('=')[0]));
+  if (options.length) setup.options = options;
+  else delete setup.options;
+  return Object.keys(setup).length ? setup : undefined;
+}
 
 /** Stores a run and its results. The machine is created on its first run. */
 async function postRun(request: Request, env: Env, url: URL): Promise<Response> {
@@ -355,13 +399,14 @@ async function postRun(request: Request, env: Env, url: URL): Promise<Response> 
   const results = parseResults(body.results);
   if (typeof results === 'string') return json({ error: results }, 400);
   if (results.length === 0) return json({ error: 'results must hold at least one result.' }, 400);
+  const setup = parseSetup(body.setup);
 
   const now = new Date().toISOString();
   const machine = await sha256(token);
   const run = code('RUN-');
   const statements = [
     env.DB.prepare('INSERT INTO machines (id, model, first_seen, last_seen) VALUES (?1, ?2, ?3, ?3) ON CONFLICT(id) DO UPDATE SET last_seen = ?3, model = COALESCE(?2, model)').bind(machine, modelId, now),
-    env.DB.prepare('INSERT INTO runs (id, machine, model, compatible, created, mode, kernel, os, packages, hardware, agent, chids) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)').bind(
+    env.DB.prepare('INSERT INTO runs (id, machine, model, compatible, created, mode, kernel, os, packages, hardware, agent, chids, setup) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)').bind(
       run, machine, modelId, compatible, now, mode,
       typeof body.kernel === 'string' ? clean(body.kernel, 80) : null,
       typeof body.os === 'string' ? clean(body.os, 80) : null,
@@ -369,6 +414,7 @@ async function postRun(request: Request, env: Env, url: URL): Promise<Response> 
       JSON.stringify(hardware),
       typeof body.agent === 'string' ? clean(body.agent, 60) : null,
       chids.length ? JSON.stringify(chids) : null,
+      setup ? JSON.stringify(setup) : null,
     ),
     ...results.map((r) => env.DB.prepare('INSERT INTO results (run, check_id, state, how, note, evidence) VALUES (?, ?, ?, ?, ?, ?)').bind(run, r.check, r.state, r.how, r.note, r.evidence)),
   ];
@@ -399,10 +445,10 @@ async function postResults(request: Request, env: Env, url: URL, run: string): P
 }
 
 async function getRun(env: Env, id: string): Promise<Response> {
-  const run = await env.DB.prepare('SELECT id, model, compatible, created, mode, kernel, os, packages, hardware, agent, chids, hidden FROM runs WHERE id = ?').bind(id).first<Record<string, string | number | null>>();
+  const run = await env.DB.prepare('SELECT id, model, compatible, created, mode, kernel, os, packages, hardware, agent, chids, setup, hidden FROM runs WHERE id = ?').bind(id).first<Record<string, string | number | null>>();
   if (!run || run.hidden) return json({ error: 'No such run.' }, 404);
   const { results } = await env.DB.prepare('SELECT check_id AS "check", state, how, note, evidence FROM results WHERE run = ? ORDER BY check_id').bind(id).all();
-  return json({ ...run, hidden: undefined, packages: JSON.parse(String(run.packages ?? '{}')), hardware: JSON.parse(String(run.hardware ?? '{}')), chids: JSON.parse(String(run.chids ?? '[]')), results });
+  return json({ ...run, hidden: undefined, packages: JSON.parse(String(run.packages ?? '{}')), hardware: JSON.parse(String(run.hardware ?? '{}')), chids: JSON.parse(String(run.chids ?? '[]')), setup: storedSetup(run.setup === null ? null : String(run.setup)), results });
 }
 
 async function postFix(request: Request, env: Env): Promise<Response> {

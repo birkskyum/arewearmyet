@@ -194,14 +194,14 @@ func TestWithoutATerminalTheAutomaticTestsReportOnlyThemselves(t *testing.T) {
 }
 
 func TestAMenuTooTallForTheWindowScrollsWithTheCursor(t *testing.T) {
-	c := choice{question: "What would you like to test?", heads: map[int]string{1: "Runs by itself", 4: "Done with you"}}
+	c := choice{question: "What would you like to test?", heads: map[int]string{1: "Runs by itself", 4: "Needs you"}}
 	for _, name := range []string{"Everything", "Sound", "Graphics", "Video", "Keyboard", "Touchpad", "Camera", "USB ports", "Sleep", "Quit"} {
 		c.options = append(c.options, name)
 		c.sides = append(c.sides, side{mark: "◐", text: "19 Nov · There is a picture, but too dark, pale or off in colour.", style: close_})
 	}
 	whole := ansi.ReplaceAllString(c.view(80), "")
 	// The mark in front, the words after in one column, and no numbers
-	for _, text := range []string{"› ◐ Everything   19 Nov · There is a picture", "  ◐ USB ports    19 Nov", "Runs by itself", "Done with you"} {
+	for _, text := range []string{"› ◐ Everything   19 Nov · There is a picture", "  ◐ USB ports    19 Nov", "Runs by itself", "Needs you"} {
 		if !strings.Contains(whole, text) {
 			t.Fatalf("the whole menu lacks %q:\n%s", text, whole)
 		}
@@ -326,7 +326,8 @@ func TestAMiniPCIsNotAskedToUnplugItsOnlyScreen(t *testing.T) {
 			t.Errorf("a mini PC is asked %q", asked.text)
 		}
 	}
-	if len(q.list) != 2 {
+	// The disk password, the installer and what the owner changed
+	if len(q.list) != 3 {
 		t.Errorf("asked %d questions", len(q.list))
 	}
 }

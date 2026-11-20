@@ -1,6 +1,6 @@
 # The hardware test
 
-`hw-test` is the hardware test for ARM computers on Omarchy. It checks the screen, keyboard, sound, camera, Wi-Fi, sleep and the rest, some of it by itself and some of it with you, and puts the results on your model's page on arewearmyet.com. When a part doesn't work, it hands that part to your AI agent with what was measured and where a fix goes.
+`hw-test` is the hardware test for ARM computers on Omarchy. It checks the screen, keyboard, sound, camera, Wi-Fi, sleep and the rest, some of it by itself and some of it with your help, and puts the results on your model's page on arewearmyet.com. When a part doesn't work, it hands that part to your AI agent with what was measured and where a fix goes.
 
 The first half of this page is for running the test. The second half lists every command. An agent reads the [guide for agents](https://arewearmyet.com/agents.md), which says what to do with these commands and in which order.
 
@@ -23,10 +23,10 @@ It opens on a menu of what it can test on your computer, with where each part st
 
 | Command | What it does |
 | --- | --- |
-| `hw-test` | The guided test. It opens with where the computer stands, runs the quick check, then goes through the parts with you |
+| `hw-test` | The guided test. It opens with where the computer stands, runs the quick check, then takes you through the parts |
 | `hw-test quick` | The quick check alone. It reads what the system says about each part, takes a few seconds, asks nothing and changes nothing |
-| `hw-test auto` | Every test that needs nobody, which is sound, graphics, WebGL and WebGPU, Wi-Fi and Bluetooth, the network cable, video decoding and temperatures. It heats the computer for a few minutes |
-| `hw-test manual` | Every test done with you, which is the keyboard, touchpad, touchscreen, headphones, camera, USB ports, an external screen, the lid, sleep and a few questions |
+| `hw-test auto` | Every test that runs by itself, which is sound, graphics, WebGL and WebGPU, Wi-Fi and Bluetooth, the network cable, video decoding and temperatures. It heats the computer for a few minutes |
+| `hw-test manual` | Every test that asks you to do something, which is the keyboard, touchpad, touchscreen, headphones, camera, USB ports, an external screen, the lid, sleep and a few questions |
 | `hw-test STEP...` | One part alone, or a few, like `hw-test camera` or `hw-test wifi bluetooth`. Only those parts are reported |
 | `hw-test status` | The latest result of every check on this computer. Nothing is run |
 | `hw-test facts` | The devices the test found to work with. Nothing is sent |
@@ -74,7 +74,9 @@ A result that works but looks off (one speaker much quieter than the other) is m
 
 ## What is sent
 
-A test sends its results to your model's page when it ends. With them go the model, the kernel and the versions of a dozen system packages. No serial number, address, name or file is sent, and no account is needed. The computer is told apart by a random token kept in `~/.local/state/arewearmyet/token`, of which the site stores only a hash.
+A test sends its results to your model's page when it ends. With the results it sends the computer's model, BIOS version and hardware IDs, the kernel version and the versions of about fifteen system packages. It sends no serial number, address, name or file, and it needs no account. The computer is told apart by a random token kept in `~/.local/state/arewearmyet/token`, of which the site stores only a hash.
+
+Nearly every computer that gets tested has something on it that Omarchy didn't install, which is often how its owner got a part working. So the test also sends, by name, a kernel module, a kernel option, a kernel package or a package of firmware, kernel modules or sound profiles that isn't Omarchy's. A kernel option whose value names a disk or an address is sent without the value. The guided test ends by asking whether you changed anything else for the hardware, and sends what you answer. All of it shows under your results on the model's page, where it tells the next owner what a part needed to work.
 
 | Option | What it does |
 | --- | --- |

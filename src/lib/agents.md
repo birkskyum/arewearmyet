@@ -79,7 +79,7 @@ It says at its start when a newer release is out, and `hw-test update` gets it. 
 | `hw-test status` | The latest result of every check on this computer. Nothing is run |
 | `hw-test quick --json` | The quick check. It is read-only, takes a few seconds and is printed as JSON. Nothing is sent |
 | `hw-test facts` | The devices the test found to work with |
-| `hw-test auto --no-send` | Every test that needs nobody (graphics, WebGL and WebGPU, Wi-Fi and Bluetooth, video decoding, temperatures). About four minutes, and it heats the computer. Runs without a terminal |
+| `hw-test auto --no-send` | Every test that runs by itself (graphics, WebGL and WebGPU, Wi-Fi and Bluetooth, video decoding, temperatures). About four minutes, and it heats the computer. Runs without a terminal |
 | `hw-test graphics`, `wireless`, `video`, `temperatures` | One of those alone |
 | `hw-test speakers --no-send` | The sound test, which plays tones and listens to them with the microphones. You run it yourself, without a terminal, on the owner's yes (rule 6). Add `--json` for the result as data |
 | `hw-test ask camera` (or `keyboard`, `touchpad`, `touchscreen`, `headphones`, `usb`, `screen`, `lid`, `sleep`) | A test that takes the owner. This opens it in a window on their desktop, waits until they are through, and prints the result as JSON. Tell them a window is coming. Never have them run a test and retype what it said |

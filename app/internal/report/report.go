@@ -60,9 +60,76 @@ type Run struct {
 	Chids      []string          `json:"chids"`
 	Packages   map[string]string `json:"packages"`
 	Results    []Result          `json:"results"`
+	// Setup is what the computer runs that Omarchy didn't install, left out when there is nothing
+	Setup *Setup `json:"setup,omitempty"`
 	// Quick is what the quick check found, by check, kept to tell its results from those of
 	// the tests that look closer. It isn't sent.
 	Quick map[string]Result `json:"-"`
+}
+
+// Setup is what a computer runs beyond what Omarchy installs, which its results are read against.
+// A part that works here with a module of the owner's own doesn't work yet for the next owner. It
+// holds names, and the owner's own words in Note.
+type Setup struct {
+	// Kernel is the package the running kernel comes from, when it isn't linux-omarchy
+	Kernel string `json:"kernel,omitempty"`
+	// Rebuilt are packages with Omarchy's names that someone else built
+	Rebuilt []string `json:"rebuilt,omitempty"`
+	// Modules are loaded kernel modules that the kernel marks as not its own and no package from a
+	// repository holds
+	Modules []string `json:"modules,omitempty"`
+	// Options are kernel options beyond the ones Omarchy sets
+	Options []string `json:"options,omitempty"`
+	// Packages come from no repository and hold kernel modules for the running kernel, firmware or
+	// sound profiles
+	Packages []string `json:"packages,omitempty"`
+	// TestTree is set while the computer runs a device tree built with hw-test tree
+	TestTree bool `json:"testTree,omitempty"`
+	// Note is the owner's answer to what they changed for the hardware
+	Note string `json:"note,omitempty"`
+}
+
+// Empty says whether nothing was found.
+func (s *Setup) Empty() bool {
+	return s == nil || (s.Kernel == "" && len(s.Rebuilt) == 0 && len(s.Modules) == 0 && len(s.Options) == 0 && len(s.Packages) == 0 && !s.TestTree && s.Note == "")
+}
+
+// Lines says what was found, one thing a line, in the words the test shows.
+func (s *Setup) Lines() []string {
+	if s == nil {
+		return nil
+	}
+	var lines []string
+	if s.Kernel != "" {
+		lines = append(lines, "kernel package "+s.Kernel)
+	}
+	for _, name := range s.Rebuilt {
+		lines = append(lines, name+" built by someone other than Omarchy")
+	}
+	for _, name := range s.Modules {
+		lines = append(lines, "kernel module "+name)
+	}
+	for _, option := range s.Options {
+		lines = append(lines, "kernel option "+option)
+	}
+	for _, name := range s.Packages {
+		lines = append(lines, "package "+name)
+	}
+	if s.TestTree {
+		lines = append(lines, "a test device tree from hw-test tree")
+	}
+	if s.Note != "" {
+		lines = append(lines, "in your words, "+s.Note)
+	}
+	return lines
+}
+
+// Changed is the run's setup to add to, made when the run has none yet.
+func (r *Run) Changed() *Setup {
+	if r.Setup == nil {
+		r.Setup = &Setup{}
+	}
+	return r.Setup
 }
 
 // MarkQuick notes the results the run has now as the quick check's.
@@ -146,6 +213,9 @@ func (r *Run) JSON() []byte {
 	}
 	if r.Results == nil {
 		r.Results = []Result{}
+	}
+	if r.Setup.Empty() {
+		r.Setup = nil
 	}
 	data, _ := json.Marshal(r)
 	return data

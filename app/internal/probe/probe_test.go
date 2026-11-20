@@ -17,8 +17,8 @@ import (
 // A Yoga Slim 7x booted with its GPU off, copied by scripts/probe-fixture.sh
 const yoga = "../../../test/probe/fixtures/yoga-slim-7x-gpu-off"
 
-// fixture copies a machine to a folder of the test's own, changes it and measures it.
-func fixture(t *testing.T, change func(root string)) (*report.Run, Facts) {
+// copied is a copy of the Yoga's files in a folder of the test's own.
+func copied(t *testing.T) string {
 	t.Helper()
 	root := t.TempDir()
 	err := filepath.WalkDir(yoga, func(path string, entry fs.DirEntry, err error) error {
@@ -46,6 +46,13 @@ func fixture(t *testing.T, change func(root string)) (*report.Run, Facts) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	return root
+}
+
+// fixture copies a machine to a folder of the test's own, changes it and measures it.
+func fixture(t *testing.T, change func(root string)) (*report.Run, Facts) {
+	t.Helper()
+	root := copied(t)
 	if change != nil {
 		change(root)
 	}

@@ -136,7 +136,8 @@ func TestQuestionsAskOnlyWhatIsThereAndUnmeasured(t *testing.T) {
 	for _, question := range q.list {
 		checks = append(checks, question.check)
 	}
-	if got := strings.Join(checks, " "); got != "speakers microphones external-display installer" {
+	// The last one, about what the owner changed, belongs to no check
+	if got := strings.Join(checks, " "); got != "speakers microphones external-display installer " || !q.list[len(q.list)-1].setup {
 		t.Errorf("asked: %s", got)
 	}
 
@@ -149,8 +150,23 @@ func TestQuestionsAskOnlyWhatIsThereAndUnmeasured(t *testing.T) {
 	q.update(press('4')) // external screen, haven't tried
 	q.update(press('3')) // installer, no
 	q.update(press(tea.KeyEnter))
+	q.update(press('4')) // what the owner changed has only No and Yes
+	if q.done() {
+		t.Fatal("a key that is no answer ended the questions")
+	}
+	q.update(press('2')) // yes, then what
+	for _, c := range "a rule for the speakers in /home/someone/rules" {
+		q.update(press(c))
+	}
+	q.update(press(tea.KeyEnter))
 	if !q.done() {
 		t.Fatal("not done")
+	}
+	if run.Setup == nil || run.Setup.Note != "a rule for the speakers in /home/user/rules" {
+		t.Errorf("what the owner changed: %+v", run.Setup)
+	}
+	if len(run.Results) != 5 {
+		t.Errorf("the owner's change became a result: %+v", run.Results)
 	}
 	want := map[string]string{"speakers": report.Works, "microphones": report.Partial, "external-display": "", "installer": report.Broken}
 	for check, state := range want {
@@ -271,6 +287,10 @@ func TestTheTestSkipsStepsWithNothingToDoAndDrawsAtAnySize(t *testing.T) {
 	m.Update(tea.WindowSizeMsg{Width: 120, Height: 40})
 	for range 3 { // USB ports, an external screen and the installer, none tried
 		m.Update(press('4'))
+	}
+	m.Update(press('1')) // and nothing changed for the hardware
+	if run.Setup != nil {
+		t.Errorf("answering no left a setup: %+v", run.Setup)
 	}
 	if m.at != 3 || !strings.Contains(m.View().Content, "Nothing is sent") {
 		t.Fatalf("at step %d: %s", m.at, m.View().Content)
@@ -515,7 +535,7 @@ func TestTheOpeningMenuRunsEverythingOrOnePart(t *testing.T) {
 		t.Errorf("the menu offers what the machine doesn't have:\n%s", drawn)
 	}
 	// What runs by itself is listed apart from what is done with the owner, and comes first
-	alone, with := strings.Index(drawn, "Runs by itself"), strings.Index(drawn, "Done with you")
+	alone, with := strings.Index(drawn, "Runs by itself"), strings.Index(drawn, "Needs you")
 	if alone < 0 || !(alone < strings.Index(drawn, "All of these in one go") && strings.Index(drawn, "Video decoding") < with && with < strings.Index(drawn, "Keyboard, volume")) {
 		t.Errorf("the two groups are off:\n%s", drawn)
 	}
@@ -664,6 +684,7 @@ func TestAStepThatFailsIsPassedOverAndTheTestGoesOn(t *testing.T) {
 			t.Fatalf("a fault in %s: at step %d, failed %v", in, m.at, m.failed)
 		}
 		// The owner goes on answering, and the summary says what was passed over
+		m.Update(press('1'))
 		m.Update(press('1'))
 		if run.State("installer") != report.Works || m.at != 3 {
 			t.Fatalf("after the fault: step %d, results %+v", m.at, run.Results)
@@ -1651,5 +1672,23 @@ func TestAComputerWithoutALidIsPutToSleepByTheTest(t *testing.T) {
 	s.update(asleepMsg{err: os.ErrDeadlineExceeded, took: 30 * time.Second})
 	if s.over || run.State("suspend") != "" {
 		t.Errorf("a late end was taken for a refusal: %+v", run.State("suspend"))
+	}
+}
+
+// What the computer runs that Omarchy didn't install is shown before anything is sent, since it goes along
+func TestTheSummaryShowsWhatIsNotFromOmarchy(t *testing.T) {
+	run := &report.Run{}
+	run.Set("battery", report.Works, report.Measured, "87%", "")
+	last := &summary{run: run, options: Options{Send: true}}
+	last.start()
+	if drawn := last.view(100, 40); strings.Contains(drawn, SetupHeading) {
+		t.Errorf("a computer with nothing of its own is told it has something:\n%s", drawn)
+	}
+	run.Setup = &report.Setup{Modules: []string{"omnibook_fix"}, Options: []string{"regulator_ignore_unused"}, Note: "a rule for the speakers"}
+	drawn := last.view(100, 40)
+	for _, text := range []string{SetupHeading, "kernel module omnibook_fix", "kernel option regulator_ignore_unused", "in your words, a rule for the speakers", "Send the lines above"} {
+		if !strings.Contains(drawn, text) {
+			t.Errorf("the summary lacks %q:\n%s", text, drawn)
+		}
 	}
 }

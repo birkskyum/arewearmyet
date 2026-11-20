@@ -13,6 +13,8 @@ import (
 type question struct {
 	check string
 	text  string
+	// setup marks the question about what the owner changed, which is no check's result
+	setup bool
 }
 
 // questions asks the few things nothing measured. Each can be answered from the chair, or
@@ -34,7 +36,7 @@ func newQuestions(run *report.Run, facts probe.Facts, covered map[string]bool) *
 	q := &questions{run: run}
 	add := func(when bool, check, text string) {
 		if when {
-			q.list = append(q.list, question{check, text})
+			q.list = append(q.list, question{check: check, text: text})
 		}
 	}
 	unlock, installer := "When you started the laptop, did you see the disk password prompt and type into it with the built-in keyboard?",
@@ -56,6 +58,8 @@ func newQuestions(run *report.Run, facts probe.Facts, covered map[string]bool) *
 	add(facts.Fingerprint != "", "fingerprint", "The fingerprint reader, if you've set it up, does it unlock with your finger?")
 	add(facts.Bluetooth != "" && unmeasured("bluetooth"), "bluetooth", "Bluetooth headphones or a mouse, if you've tried some, do they pair and stay connected?")
 	add(true, "installer", installer)
+	// Last, what no file or command shows, like a rule the owner wrote or a changed device tree
+	q.list = append(q.list, question{text: "Have you changed anything on this computer to get its hardware working, like a driver, a kernel option, a rule or a settings file?", setup: true})
 	q.show()
 	return q
 }
@@ -67,6 +71,9 @@ func (q *questions) show() {
 	}
 	current := q.list[q.at]
 	q.ask = choice{question: current.text, options: []string{"Yes", "Partly", "No", "Haven't tried"}}
+	if current.setup {
+		q.ask.options = []string{"No", "Yes"}
+	}
 	q.note = nil
 }
 
@@ -94,8 +101,23 @@ func (q *questions) update(msg tea.Msg) tea.Cmd {
 	current := q.list[q.at]
 	if q.note != nil {
 		if q.note.update(press) {
-			q.run.Set(current.check, q.state, report.Owner, "", q.note.value())
+			if current.setup {
+				if said := report.Scrub(q.note.value(), 300); said != "" {
+					q.run.Changed().Note = said
+				}
+			} else {
+				q.run.Set(current.check, q.state, report.Owner, "", q.note.value())
+			}
 			q.next()
+		}
+		return nil
+	}
+	if current.setup {
+		switch q.ask.update(press) {
+		case 0:
+			q.next()
+		case 1:
+			q.note = &line{prompt: "What did you change? (Enter to leave it empty)"}
 		}
 		return nil
 	}

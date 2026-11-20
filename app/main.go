@@ -1,11 +1,11 @@
-// hw-test checks what works on a Snapdragon PC under Omarchy and reports it to arewearmyet.com.
+// hw-test checks what works on an ARM computer running Omarchy and reports it to arewearmyet.com.
 //
-//	hw-test            the guided test, which is the quick check, then keyboard, sound, camera and sleep with you
+//	hw-test            the guided test, which is the quick check, then the keyboard, sound, camera and sleep tests, which you take part in
 //	hw-test quick      the quick check alone, read-only, a few seconds, no questions
 //	hw-test sound      one part of the guided test alone, reporting only that part
-//	hw-test manual     the tests done with you (keyboard, touchpad, camera, ports, sleep)
+//	hw-test manual     the tests that ask you to do something (keyboard, touchpad, camera, ports, sleep)
 //	hw-test fix        hand what doesn't work to the owner's agent, with a brief of what was measured
-//	hw-test auto       the tests that need nobody (graphics, browser, wireless, video, temperatures, sound)
+//	hw-test auto       the tests that run by themselves (graphics, browser, wireless, video, temperatures, sound)
 //
 // Both show the results and send them to the model's page. What's sent is the maker, model, SKU,
 // board and BIOS version, the hardware IDs made from those, the kernel, OS and a few package
@@ -174,7 +174,7 @@ func main() {
 	// The automatic tests need nobody, so they also run without a terminal, as an agent has it
 	unattended := len(only) > 0 && !guided.Interactive()
 	if unattended && !guided.Automatic(only, *play) {
-		fmt.Fprintln(os.Stderr, "hw-test: that step is done with you at the keyboard, so it needs a terminal. The steps that run without one are "+strings.Join(guided.AutomaticWords(), ", ")+". The sound test (speakers, microphone) runs without one with --play, once the owner has said yes to its tones. A step done with the owner is opened for them by hw-test ask, as in hw-test ask camera, which waits and prints the result.")
+		fmt.Fprintln(os.Stderr, "hw-test: that step needs you at the keyboard, so it needs a terminal. The steps that run without one are "+strings.Join(guided.AutomaticWords(), ", ")+". The sound test (speakers, microphone) runs without one with --play, once the owner has said yes to its tones. A step that needs the owner is opened for them by hw-test ask, as in hw-test ask camera, which waits and prints the result.")
 		os.Exit(2)
 	}
 
@@ -189,6 +189,9 @@ func main() {
 		os.Exit(1)
 	}
 	run.Model, run.Agent = *model, *agent
+	if tree.Running("/proc/device-tree") {
+		run.Changed().TestTree = true
+	}
 	// Which version measured it goes along, so a result can be read knowing what the test did then
 	if version != "dev" {
 		if run.Packages == nil {
@@ -365,6 +368,14 @@ func printResults(run *report.Run) {
 		fmt.Fprintf(os.Stderr, "  %-17s %-8s %s\n", result.Check, result.State, result.Evidence)
 	}
 	fmt.Fprintln(os.Stderr)
+	// What a result is read against, sent along by name
+	if lines := run.Setup.Lines(); len(lines) > 0 {
+		fmt.Fprintln(os.Stderr, guided.SetupHeading)
+		for _, line := range lines {
+			fmt.Fprintln(os.Stderr, "  "+line)
+		}
+		fmt.Fprintln(os.Stderr)
+	}
 }
 
 // announce says when a newer release is out. It never holds a start up for long and never
@@ -1186,15 +1197,16 @@ func usage() { fmt.Fprint(os.Stderr, usageText()) }
 // usageText is what hw-test help prints. The reference at arewearmyet.com/docs/hw-test is held
 // to it by a test.
 func usageText() string {
-	return `hw-test checks what works on a Snapdragon PC and reports it to arewearmyet.com.
+	return `hw-test checks what works on an ARM computer running Omarchy and reports it to arewearmyet.com.
 
-  hw-test            the guided test, which is the quick check, then keyboard, sound, camera and sleep with you
+  hw-test            the guided test, which is the quick check, then the keyboard, sound, camera
+                     and sleep tests, which you take part in
   hw-test quick      the quick check alone, read-only, a few seconds, no questions
   hw-test STEP...    one part alone, reporting only that part:
                      ` + wrapWords(guided.StepWords()) + `
-  hw-test manual     every test done with you (keyboard, touchpad, touchscreen,
+  hw-test manual     every test that asks you to do something (keyboard, touchpad, touchscreen,
                      headphones, camera, USB ports, external screen, sleep and a few questions)
-  hw-test auto       every test that needs nobody (sound, graphics, WebGL and
+  hw-test auto       every test that runs by itself (sound, graphics, WebGL and
                      WebGPU, Wi-Fi and Bluetooth, the network cable, video decoding,
                      temperatures). Without a terminal it runs all but the sound, which
                      plays tones out loud
@@ -1263,7 +1275,8 @@ Options:
   --agent NAME   the agent running this, shown next to the run
 
 Nothing personal is sent, which means no serial numbers, addresses, names or files. The microphone recording
-and the camera picture of the guided test never leave this computer.
+and the camera picture of the guided test never leave this computer. What this computer runs that Omarchy
+didn't install for the hardware (a kernel module, a kernel option, a firmware package) is sent by name.
 
 Every command with its options is at https://arewearmyet.com/docs/hw-test
 `

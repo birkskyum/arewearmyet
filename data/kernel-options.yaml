@@ -1,0 +1,63 @@
+# The kernel options Omarchy sets by itself on ARM computers, on an installed system and on its
+# live image. hw-test records the options a computer was started with beyond these, which are the
+# owner's own, and the site leaves these out of what a run shows.
+#
+# app/internal/probe/setup.go carries the same two lists, and its test fails when they differ.
+# Add an option here and there when Omarchy starts setting it (install/hardware and
+# etc/limine-entry-tool.d in omarchy, configs/grub and the orchestrator in omarchy-iso).
+
+# Omarchy's whatever their value. Most name a disk, so their values are never sent
+keys:
+  - root
+  - rootflags
+  - rootfstype
+  - cryptdevice
+  - cryptkey
+  - resume
+  - resume_offset
+  - archisobasedir
+  - archisosearchuuid
+  - archisolabel
+  - archisodevice
+  - img_dev
+  - img_loop
+  - initrd
+  - BOOT_IMAGE
+  - omarchy.cmdline_room
+
+# Omarchy's with exactly this value
+exact:
+  - rw
+  - quiet
+  - splash
+  - loglevel=0
+  - systemd.show_status=false
+  - rd.udev.log_level=0
+  - vt.global_cursor_default=0
+  - initramfs_async=0
+  - systemd.tty.term.console=dumb
+  - zswap.enabled=0
+  - clk_ignore_unused
+  - pd_ignore_unused
+  - arm64.nopauth
+  - systemd.tpm2_wait=0
+  - iommu.passthrough=0
+  - iommu.passthrough=1
+  - console=tty0
+  - initcall_blacklist=simpledrm_platform_driver_init
+  - cma=256M
+  - acpi=nospcr
+  - plymouth.enable=0
+  - efi_reclaim_reserved=58G@8G
+  - efi_reclaim_reserved=58G@8G,3968M@67712M
+  - mem_sleep_default=s2idle
+  - pci=hpbussize=0x20
+  - pci=hpbussize=0x80,hpmmiosize=32M,hpmmioprefsize=32G
+  - power_wrap_drv.usb4_release=0
+  - qcom_aoss.prevent_aoss_sleep=1
+  - rtc_cmos.use_acpi_alarm=1
+  - copytoram=n
+  - initramfs_options=size=90%
+  - accessibility=on
+  - modprobe.blacklist=qcom_q6v5_pas
+  - omarchy.qcom_early=1

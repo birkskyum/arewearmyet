@@ -440,3 +440,40 @@ test('ties what a pull request changed to it, as each machine measured before an
   assert.equal((await call('GET', '/api/fixes?url=' + encodeURIComponent('https://github.com/omacom/omarchy/pull/3101'))).body.machines, 0);
   assert.equal((await call('GET', '/api/fixes?url=https://example.com/x')).status, 400);
 });
+
+test('keeps what a computer ran that Omarchy did not install, by name, and shows it beside that computer\'s results', async () => {
+  const token = machine('machine-s-'.padEnd(40, 's'));
+  const sent = await call('POST', '/api/runs', run([{ check: 'battery', state: 'works', how: 'measured' }], {
+    model: 'hp-omnibook-x-14-fe',
+    setup: {
+      kernel: 'linux-omarchy-mine',
+      rebuilt: ['linux-omarchy-dtbs', 'not a name'],
+      modules: ['omnibook_fix', 'omnibook_fix', '../../etc/passwd', 7],
+      // The second is Omarchy's own and the third names a disk, which an older hw-test might still send
+      options: ['regulator_ignore_unused', 'clk_ignore_unused', 'root=UUID=11111111-2222-3333-4444-555555555555', 'luks.key=…', 'a b'],
+      packages: ['my-ucm'],
+      testTree: true,
+      note: 'a rule for the speakers, MAC aa:bb:cc:dd:ee:ff',
+      serial: 'PF123456',
+    },
+  }), token);
+  assert.equal(sent.status, 201);
+  const want = {
+    kernel: 'linux-omarchy-mine',
+    rebuilt: ['linux-omarchy-dtbs'],
+    modules: ['omnibook_fix'],
+    options: ['regulator_ignore_unused', 'luks.key=…'],
+    packages: ['my-ucm'],
+    testTree: true,
+    note: 'a rule for the speakers, MAC xx:xx:xx:xx:xx:xx',
+  };
+  assert.deepEqual((await call('GET', `/api/runs/${sent.body.run}`)).body.setup, want);
+  const page = await call('GET', '/api/models/hp-omnibook-x-14-fe');
+  assert.deepEqual(page.body.owners.checks.battery.latest.find((r: { run: string }) => r.run === sent.body.run).setup, want);
+
+  // A computer with nothing of its own has no setup, and neither has one whose only option is Omarchy's
+  await tick();
+  const plain = await call('POST', '/api/runs', run([{ check: 'battery', state: 'works', how: 'measured' }], { model: 'hp-omnibook-x-14-fe', setup: { options: ['quiet'], modules: [] } }), machine('machine-p-'.padEnd(40, 'p')));
+  assert.equal(plain.status, 201);
+  assert.equal((await call('GET', `/api/runs/${plain.body.run}`)).body.setup, undefined);
+});

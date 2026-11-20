@@ -665,6 +665,8 @@ writeFileSync(
     checks: checkList.checks.map((c: { id: string }) => c.id),
     // The kernel each Omarchy channel ships, so a machine can be told whether it is behind
     kernels: Object.fromEntries((sources.omarchy.channels as { name: string; kernel: string | null }[]).filter((c) => c.kernel).map((c) => [c.name, c.kernel])),
+    // The kernel options Omarchy sets by itself, which a run's setup leaves out
+    options: parse(readFileSync('data/kernel-options.yaml', 'utf8')),
     chids,
     models: rows.map((row) => ({
       id: row.id,
