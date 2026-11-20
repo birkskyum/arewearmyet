@@ -20,7 +20,6 @@ const KINDS = [
   { key: 'omarchy-works', color: 'bg-emerald-400', label: 'Works on Omarchy' },
   { key: 'omarchy-partial', color: 'bg-amber-400', label: 'Partly' },
   { key: 'omarchy-broken', color: 'bg-rose-400', label: 'Broken' },
-  { key: 'elsewhere', color: 'bg-zinc-500', label: 'Known from elsewhere' },
   { key: 'unknown', color: 'bg-zinc-800', label: 'Not known yet' },
 ];
 const kindOf = (key: string) => KINDS.find((kind) => kind.key === key) ?? KINDS.find((kind) => key.startsWith(kind.key))!;

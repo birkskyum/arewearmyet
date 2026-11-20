@@ -1,7 +1,7 @@
 // The hardware view: the checks past booting rolled up into the parts an owner thinks in, per
 // model. A part's colour is its state and its fill is the evidence. Solid means seen on Omarchy,
-// by hw-test or an owner. Outlined means known for the chip family on Omarchy and not yet seen
-// on this model. Reports from other distros are no status and don't show here.
+// by hw-test or an owner. Nothing else counts: not what another distro's users saw, and not
+// what was found on another model of the same chip.
 import owners from '../../data/owners.json';
 import { countsAsStatus, modelChecks, type CheckState, type Subject } from './checks';
 import type { Tone } from './tones';
@@ -55,11 +55,11 @@ function seen(model: Machine): Map<string, Seen> {
     }
     const finding = row.finding;
     if (!finding || finding.state === 'untested') continue;
-    if (row.from === 'family') {
-      // What holds for the chip family says nothing about a model that doesn't start yet
-      if (!boots) continue;
-      out.set(row.id, { check: row.id, title, state: finding.state, level: 'elsewhere', how: 'known for the chip family' });
-    } else if (countsAsStatus(finding)) {
+    // What was found on one machine of a chip family is no result for another: the tests have
+    // already shown a part working on one model and not on its sibling. So only the model's own
+    // findings and tests count here. The family's note still shows on the model's page
+    if (row.from === 'family') continue;
+    if (countsAsStatus(finding)) {
       out.set(row.id, { check: row.id, title, state: finding.state, level: 'omarchy', how: finding.basis === 'maker-spec' ? `the maker's description` : 'reported on Omarchy' + (finding.version ? `, on ${finding.version}` : '') });
     }
     // What another distro's users or a device tree's author reported is a lead for whoever
@@ -109,9 +109,6 @@ export const PART_OPTIONS: { key: string; label: string; tone?: Tone }[] = [
   { key: 'omarchy-works', label: 'Works', tone: 'good' },
   { key: 'omarchy-partial', label: 'Partly', tone: 'close' },
   { key: 'omarchy-broken', label: 'Broken', tone: 'wanted' },
-  { key: 'elsewhere-works', label: 'Works on the chip', tone: 'good-seen' },
-  { key: 'elsewhere-partial', label: 'Partly on the chip', tone: 'close-seen' },
-  { key: 'elsewhere-broken', label: 'Broken on the chip', tone: 'wanted-seen' },
   { key: 'absent', label: 'Not on this model' },
   { key: 'unknown', label: 'Not known yet' },
 ];
