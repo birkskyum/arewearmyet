@@ -117,6 +117,7 @@ import { SHELL } from '../../lib/shell';
                 <span class={`${PILL} ${TONE[REPORT_TONE[report.state as keyof typeof REPORT_TONE] ?? 'muted']}`}>{report.state === 'works' ? 'Works' : report.state === 'workaround' ? 'Workaround' : 'Problems'}</span>
                 {report.variant && <span>{report.variant}</span>}
                 {report.checked && <span>{report.checked}</span>}
+                {report.from === 'hw-test' && <span>from hw-test</span>}
               </div>
               <p class="mt-2 text-sm">{report.note}</p>
             </li>

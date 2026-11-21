@@ -1659,9 +1659,9 @@
     "nvidia": 22,
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
-    "works": 5,
-    "should": 69,
-    "workaround": 5,
+    "works": 7,
+    "should": 66,
+    "workaround": 6,
     "problems": 2,
     "notYet": 7,
     "deviceTree": 84,
@@ -5027,9 +5027,16 @@
         "https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/"
       ],
       "notes": null,
-      "outcome": "should",
+      "outcome": "works",
       "bootable": "edge",
-      "reports": [],
+      "reports": [
+        {
+          "state": "works",
+          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick works.",
+          "checked": "2026-11",
+          "from": "hw-test"
+        }
+      ],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
@@ -5097,8 +5104,15 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "should",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick works.",
+              "checked": "2026-11",
+              "from": "hw-test"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -9585,9 +9599,16 @@
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/hp-omnibook-x"
       ],
       "notes": "HP builds it on the OmniBook X 16's mainboard (board 8F46, driver pack sp172895), so the X2P-64-100 and X2E-80-100 units take that tree and firmware. The X 16's hardware IDs include the one HP's own bundles use, made from the family and the board alone (103C_5335M8 HP OmniBook X, 8F46), which the X 14 shares, so systemd-stub picks the X 16 tree on it too. Inferred from the shared board, not from an X 14's own report. Nobody has tried it yet. The X2P-42-100 units have the 6-core Kalambo chip and need a tree on kalambo.dtsi. The 2025 14-kr0 is a Snapdragon X model on board 8F45, listed on its own.",
-      "outcome": "should",
+      "outcome": "works",
       "bootable": "edge",
-      "reports": [],
+      "reports": [
+        {
+          "state": "works",
+          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick works.",
+          "checked": "2026-11",
+          "from": "hw-test"
+        }
+      ],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
@@ -9659,8 +9680,15 @@
               "url": "https://github.com/ubuntu/stubble/pull/107"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick works.",
+              "checked": "2026-11",
+              "from": "hw-test"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -11210,6 +11238,12 @@
           "state": "problems",
           "note": "The edge image of 18 November starts to the installer, which lists no disk to install to. The device tree switches on a second drive slot this model doesn't have, and that takes the power from the real one. With the slot switched off the owner's installer lists the drive. The fix is in review (omacom/omarchy-pkgs#3070), with one for the rear USB port that doesn't work.",
           "checked": "2026-11"
+        },
+        {
+          "state": "problems",
+          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick doesn't work.",
+          "checked": "2026-11",
+          "from": "hw-test"
         }
       ],
       "machine": "omarchy",
@@ -11286,6 +11320,12 @@
               "state": "problems",
               "note": "The edge image of 18 November starts to the installer, which lists no disk to install to. The device tree switches on a second drive slot this model doesn't have, and that takes the power from the real one. With the slot switched off the owner's installer lists the drive. The fix is in review (omacom/omarchy-pkgs#3070), with one for the rear USB port that doesn't work.",
               "checked": "2026-11"
+            },
+            {
+              "state": "problems",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick doesn't work.",
+              "checked": "2026-11",
+              "from": "hw-test"
             }
           ]
         }
@@ -14385,9 +14425,16 @@
         "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
       ],
       "notes": null,
-      "outcome": "should",
-      "bootable": "edge",
-      "reports": [],
+      "outcome": "workaround",
+      "bootable": "workaround",
+      "reports": [
+        {
+          "state": "workaround",
+          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick works, and the disk password prompt doesn't work.",
+          "checked": "2026-11",
+          "from": "hw-test"
+        }
+      ],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
@@ -14453,8 +14500,15 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "should",
-          "reports": []
+          "outcome": "workaround",
+          "reports": [
+            {
+              "state": "workaround",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick works, and the disk password prompt doesn't work.",
+              "checked": "2026-11",
+              "from": "hw-test"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -16870,14 +16924,20 @@
         "https://github.com/linux-surface/acpidumps/tree/master/surface_pro_x_sq2"
       ],
       "notes": "Its device trees are Val Packett's posted series from Maximilian Luz's linux-surface work, with the two fixes Haipeng Lin's test found, and its firmware comes from the bundles Microsoft publishes on Windows Update. The SQ2 with cellular shares the SQ1's SKU, so it boots the SQ1's tree at the SQ1's top clock. Its sensor DSP needs linux-omarchy 7.3-65 (omacom/omarchy-pkgs#2860). Nobody has booted Omarchy on it yet.",
-      "outcome": "should",
-      "bootable": "edge",
+      "outcome": "workaround",
+      "bootable": "workaround",
       "reports": [
         {
           "state": "workaround",
           "variant": "SQ1",
           "note": "Monkey1911 reached the desktop on the edge image of 17 November (linux-omarchy 7.3-72) and ran the hardware test there. The install image needed two things done by hand. The display clock driver has to be kept from loading, or the screen goes black, and the older USB driver has to be added, or the image doesn't find its own stick. The installed system hangs in the Limine boot menu and starts from a firmware boot entry that goes to the kernel image directly. Keyboard, touchpad, Wi-Fi, Bluetooth, the battery and sleep work. The screen runs without the graphics chip, and sound, the camera, the touchscreen and the pen don't work yet.",
           "checked": "2026-11"
+        },
+        {
+          "state": "workaround",
+          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick partly works, and the disk password prompt works.",
+          "checked": "2026-11",
+          "from": "hw-test"
         }
       ],
       "machine": "omarchy",
@@ -16957,6 +17017,12 @@
               "variant": "SQ1",
               "note": "Monkey1911 reached the desktop on the edge image of 17 November (linux-omarchy 7.3-72) and ran the hardware test there. The install image needed two things done by hand. The display clock driver has to be kept from loading, or the screen goes black, and the older USB driver has to be added, or the image doesn't find its own stick. The installed system hangs in the Limine boot menu and starts from a firmware boot entry that goes to the kernel image directly. Keyboard, touchpad, Wi-Fi, Bluetooth, the battery and sleep work. The screen runs without the graphics chip, and sound, the camera, the touchscreen and the pen don't work yet.",
               "checked": "2026-11"
+            },
+            {
+              "state": "workaround",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick partly works, and the disk password prompt works.",
+              "checked": "2026-11",
+              "from": "hw-test"
             }
           ]
         },
@@ -16986,8 +17052,15 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
-          "reports": []
+          "outcome": "workaround",
+          "reports": [
+            {
+              "state": "workaround",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick partly works, and the disk password prompt works.",
+              "checked": "2026-11",
+              "from": "hw-test"
+            }
+          ]
         },
         {
           "model": "Wi-Fi",
@@ -17015,8 +17088,15 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "should",
-          "reports": []
+          "outcome": "workaround",
+          "reports": [
+            {
+              "state": "workaround",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick partly works, and the disk password prompt works.",
+              "checked": "2026-11",
+              "from": "hw-test"
+            }
+          ]
         }
       ],
       "boot": "uefi",

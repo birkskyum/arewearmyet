@@ -5,6 +5,7 @@
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { parse } from 'yaml';
+import { startReports, type OwnerModel, type Report } from './starts.ts';
 
 // The channel testers install, from the edge nightly image
 const OMARCHY_CHANNEL = 'edge' as const;
@@ -37,7 +38,6 @@ type Model = {
   notes?: string;
   reports?: Report[];
 };
-type Report = { state: 'works' | 'workaround' | 'problems'; variant?: string; note: string; checked?: string };
 
 const sources = JSON.parse(readFileSync('data/sources.json', 'utf8'));
 const list = parse(readFileSync('data/models.yaml', 'utf8'));
@@ -329,16 +329,14 @@ function bootable(outcome: Outcome, channel: Channel | null, pieces: Record<'dev
 // The models someone has run hw-test on, from the copy of the test results the refresh keeps in
 // data/owners.json. Booting Omarchy on a machine and testing it there is being part of the
 // Omarchy community, whatever else is known about the model.
-const tested = new Set<string>(
-  (() => {
-    try {
-      const results = JSON.parse(readFileSync('data/owners.json', 'utf8')) as { models: Record<string, { machines: number }> };
-      return Object.entries(results.models).filter(([, model]) => model.machines > 0).map(([id]) => id);
-    } catch {
-      return [];
-    }
-  })(),
-);
+const owners: Record<string, OwnerModel> = (() => {
+  try {
+    return (JSON.parse(readFileSync('data/owners.json', 'utf8')) as { models: Record<string, OwnerModel> }).models;
+  } catch {
+    return {};
+  }
+})();
+const tested = new Set<string>(Object.entries(owners).filter(([, model]) => model.machines > 0).map(([id]) => id));
 
 function whoHasOne(model: Model, reports: Report[], deviceTree: string, acpi: string[]) {
   if (model.team_has_one) return 'team';
@@ -355,7 +353,10 @@ function whoHasOne(model: Model, reports: Report[], deviceTree: string, acpi: st
 }
 
 const rows = models.map((model) => {
-  const reports = model.reports ?? [];
+  // A written report says more than a run that found nothing wrong, so such a run only counts where
+  // nothing is written up. One that found a fault always counts
+  const written: Report[] = model.reports ?? [];
+  const reports = [...written, ...startReports(owners[model.id]).filter((report) => report.state !== 'works' || written.length === 0)];
   const variants = (model.variants?.length ? model.variants : [{}]).map((variant: Variant) => {
     const status = variantStatus(variant);
     const own = reports.filter((r) => !r.variant || r.variant === variant.model);

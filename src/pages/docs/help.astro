@@ -10,7 +10,7 @@ const REPORTS = 'https://github.com/turbineBMW/omarchy-hardware-reports';
 const CASES = [
   { id: 'windows', when: 'It still has Windows.', what: 'Share a hardware report' },
   { id: 'linux', when: 'It already runs Linux.', what: 'Save the device tree it boots with' },
-  { id: 'test', when: 'The board says it should boot.', what: 'Try it and tell us how far it got' },
+  { id: 'test', when: 'The board says it should install.', what: 'Try it and tell us how far it got' },
   { id: 'check', when: 'It boots Omarchy.', what: 'Run the hardware test' },
 ];
 // The page's sections, for the list beside it
@@ -31,7 +31,7 @@ const SECTIONS = [
       Every Snapdragon laptop needs a device tree that describes its hardware to Linux, its hardware IDs so a boot image picks that tree by itself, and its firmware. Writing a device tree takes a developer, but it's written from what's on your laptop, and it's finished by someone testing it on the real hardware.
     </p>
     <p>
-      If your laptop is marked <span class={`${PILL} ${TONE.wanted}`}>Wanted</span> on the board, says <span class={`${PILL} ${TONE['good-seen']}`}>Should boot</span> under Bootable, which nobody has confirmed yet, or isn't on it at all, pick the case that fits. Each takes a few minutes.
+      If your laptop is marked <span class={`${PILL} ${TONE.wanted}`}>Wanted</span> on the board, says <span class={`${PILL} ${TONE['good-seen']}`}>Should install</span> under Bootable, which nobody has confirmed yet, or isn't on it at all, pick the case that fits. Each takes a few minutes.
     </p>
     <ul>
       {CASES.map((c) => (
@@ -82,7 +82,7 @@ sed -i '/serial-number/d' tree.dts</code></pre>
     <section>
       <h2 id="test">It's ready to test<a class="anchor" aria-label="Link to this section" href="#test">#</a></h2>
       <p>
-        A model that says <span class={`${PILL} ${TONE['good-seen']}`}>Should boot</span> under Bootable has its device tree and hardware IDs in Omarchy, so the install image picks the tree by itself. Nobody has confirmed it on the real hardware yet.
+        A model that says <span class={`${PILL} ${TONE['good-seen']}`}>Should install</span> under Bootable has its device tree and hardware IDs in Omarchy, so the install image picks the tree by itself. Nobody has reported how it starts once installed.
       </p>
       <ol>
         <li>Make an Omarchy USB stick. With Windows still on the laptop, the <a href={INSTALLER}>Omarchy Arm Installer</a> makes one and copies the laptop's firmware onto it from Windows' own drivers. <a href="/docs/install">Install Omarchy</a> has every step.</li>

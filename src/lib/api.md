@@ -126,7 +126,7 @@ Every computer model with a page. Those are the Snapdragon PCs that start throug
 }
 ```
 
-`bootable` is the most stable Omarchy channel whose install image starts the model by itself (`stable`, `rc`, `edge`), or a word for what is in the way (`needs-deviceTree`, `needs-ids`, `workaround`, `problems`). `outcome` says how far it gets. `works` means an owner reached the desktop, `should` means the pieces are there and nobody has confirmed it, and `workaround`, `problems`, `manual` and `none` name what is in the way. `checksWrittenUp` counts the checks with a finding for Omarchy.
+`bootable` is the most stable Omarchy channel whose install image starts the model by itself (`stable`, `rc`, `edge`), or a word for what is in the way (`needs-deviceTree`, `needs-ids`, `workaround`, `problems`). `outcome` says how far it gets. `works` means an owner reached the desktop, `should` means the pieces are there, so the installer should run, and nobody has reported how the installed system starts, and `workaround`, `problems`, `manual` and `none` name what is in the way. `checksWrittenUp` counts the checks with a finding for Omarchy.
 
 ### `GET /api/models/<id>`
 
@@ -143,7 +143,7 @@ One model, with everything its page shows. `404` names the routes that find the 
 | `owners` | What owners' computers reported, see below |
 | `fixes` | Fixes linked to the model, as `GET /api/fixes` returns them |
 | `notes` | Up to 100 notes on the model, newest first, as `GET /api/notes` returns them |
-| `details`, `links`, `reports` | The team's own text on the model, its threads elsewhere, and its boot reports |
+| `details`, `links`, `reports` | The team's own text on the model, its threads elsewhere, and its boot reports. A report with `from` set to `hw-test` is what owners' test runs on Omarchy found about the installer and the disk password prompt |
 
 `owners` counts each computer once per check, by its newest result.
 
