@@ -1401,8 +1401,9 @@ func usageText() string {
   hw-test resume [WHAT]    for an agent, before it restarts the computer. At the owner's next
                      login the agent opens again in this folder, once, and is told WHAT.
                      --show says what is left, --cancel takes it back
-  hw-test trust [HOURS]    let your agent work on its own for some hours, 8 unless you say, 24 at
-                     most. It then restarts and changes system settings without asking first,
+  hw-test trust [HOURS]    let your agent work on its own for some hours, 8 unless you say, or for
+                     days, as in 3d, a week at most. It then restarts and changes system
+                     settings without asking first,
                      and sudo asks for no password. It needs your password once. --show says
                      whether it holds, --end takes it back
   hw-test update     get the newest release. hw-test says at its start when there is one

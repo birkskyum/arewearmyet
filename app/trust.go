@@ -19,7 +19,7 @@ import (
 const trustRule = "/etc/sudoers.d/hw-test-trust"
 
 // The longest the owner's word holds, and how long when they name no time.
-const trustMost, trustUsual = 24, 8
+const trustMost, trustUsual = 7 * 24, 8
 
 var trustUser = regexp.MustCompile(`^[a-z_][a-z0-9_-]{0,31}$`)
 
@@ -41,6 +41,19 @@ visudo -cf "$new"
 install -m 0440 -o root -g root "$new" "$rule"
 echo "sudo asks ` + name + ` for no password until ` + until.Local().Format("15:04 on 2 January") + `."
 `
+}
+
+// trustHours reads how long the owner said, in hours ("12") or in days ("3d"), a week at most.
+func trustHours(word string) (int, bool) {
+	each := 1
+	if days, found := strings.CutSuffix(word, "d"); found {
+		word, each = days, 24
+	}
+	given, err := strconv.Atoi(word)
+	if err != nil || given < 1 || given*each > trustMost {
+		return 0, false
+	}
+	return given * each, true
 }
 
 // sudoFree says whether sudo runs a command now without asking for a password.
@@ -97,9 +110,9 @@ func trust(words []string, show, end, asJSON bool) int {
 
 	hours := trustUsual
 	if len(words) > 0 {
-		given, err := strconv.Atoi(words[0])
-		if err != nil || given < 1 || given > trustMost {
-			return fail(fmt.Sprintf("trust takes a number of hours from 1 to %d, as in hw-test trust 12. Without one it is %d.", trustMost, trustUsual))
+		given, ok := trustHours(words[0])
+		if !ok {
+			return fail(fmt.Sprintf("trust takes a number of hours from 1 to %d, as in hw-test trust 12, or days from 1d to %dd, as in hw-test trust 3d. Without one it is %d hours.", trustMost, trustMost/24, trustUsual))
 		}
 		hours = given
 	}

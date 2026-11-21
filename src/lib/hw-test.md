@@ -227,7 +227,7 @@ Nothing here is written where the computer starts from, so a restart always brin
 | `hw-test resume "WHAT"` | Before a restart. At the owner's next login the agent is brought back once, in the same conversation where its program allows, and told WHAT |
 | `hw-test resume --show` | Says what is left for after the restart |
 | `hw-test resume --cancel` | Takes it back |
-| `hw-test trust [HOURS]` | Lets your agent work on its own for some hours, 8 unless you say, 24 at most. It asks for your password once. An agent that runs it gets a window opened for you, where you decide |
+| `hw-test trust [HOURS]` | Lets your agent work on its own for some hours, 8 unless you say, or for days, as in `hw-test trust 3d`, a week at most. It asks for your password once. An agent that runs it gets a window opened for you, where you decide |
 | `hw-test trust --show` | Says whether it holds and until when. `--json` gives it as data |
 | `hw-test trust --end` | Takes it back |
 

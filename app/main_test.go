@@ -250,9 +250,22 @@ func TestTheSudoRuleEndsByItselfAndIsCheckedBeforeItIsPutInPlace(t *testing.T) {
 	}
 }
 
-func TestTrustTakesOneToTwentyFourHoursAndAnAgentDoesNotLengthenItsOwn(t *testing.T) {
+func TestTrustTakesHoursOrDaysUpToAWeek(t *testing.T) {
+	for word, want := range map[string]int{"1": 1, "24": 24, "168": 168, "1d": 24, "3d": 72, "7d": 168} {
+		if got, ok := trustHours(word); !ok || got != want {
+			t.Errorf("trustHours(%q) = %d, %v, want %d", word, got, ok, want)
+		}
+	}
+	for _, word := range []string{"0", "169", "0d", "8d", "d", "-1", "2h", "soon", ""} {
+		if got, ok := trustHours(word); ok {
+			t.Errorf("trustHours(%q) = %d, want it turned down", word, got)
+		}
+	}
+}
+
+func TestTrustTakesOneHourToAWeekAndAnAgentDoesNotLengthenItsOwn(t *testing.T) {
 	t.Setenv("XDG_STATE_HOME", t.TempDir())
-	for _, hours := range []string{"0", "25", "soon"} {
+	for _, hours := range []string{"0", "169", "8d", "soon"} {
 		if code := trust([]string{hours}, false, false, false); code != 2 {
 			t.Errorf("trust %s: %d", hours, code)
 		}
