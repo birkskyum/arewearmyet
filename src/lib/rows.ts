@@ -6,7 +6,7 @@ import { ANNOUNCED, GENERATION, acpiCell, bootableCell, bootloaderCell, deviceTr
 
 export type CellData =
   | Pick<Cell, 'key' | 'label' | 'tone' | 'title' | 'href' | 'rank' | 'full'>
-  | { key: string; text: string; rank: number }
+  | { key: string; text: string; rank: number; title?: string; muted?: boolean }
   // The parts past booting as a row of dots, one per part of the hardware view
   | { key: string; label: string; dots: Dot[]; title: string; rank: number };
 export type TableRow = {

@@ -41,7 +41,7 @@ const HARDWARE_LEGEND = [
     { label: 'Broken', tone: 'wanted' as const, meaning: 'None of what was checked works.' },
     { label: 'Works 2/6', tone: 'good' as const, meaning: 'The count says how many of the part\'s checks have a result. The rest are still open.' },
   ] },
-  { column: 'No label', question: 'An empty cell means nobody has reported on the part yet. Running hw-test on the model fills it in. A dash means the model does not have the part.', states: [] },
+  { column: 'Not tested', question: 'Nobody has reported on the part yet. Running hw-test on the model fills it in. A dash means the model does not have the part.', states: [] },
   ...PARTS.map((part) => ({ column: part.title, question: part.question, states: [] })),
 ];
 const HARDWARE_QUESTION = 'Whether it boots, and what works once it runs, part by part. Every part\'s label is a result from Omarchy on that model, by hw-test or an owner.';
@@ -58,7 +58,7 @@ type LegendGroup = (typeof OMARCHY_LEGEND)[number];
 const hardwareView = (boot: BootColumn) => ({ ...HARDWARE_VIEW, columns: [boot, ...HARDWARE_VIEW.columns] });
 const hardwareLegend = (boot: LegendGroup) => [boot, ...HARDWARE_LEGEND];
 const HARDWARE_KEYS = [{ dot: 'bg-emerald-400', text: 'works' }, { dot: 'bg-amber-400', text: 'partly' }, { dot: 'bg-rose-400', text: 'broken' }];
-const HARDWARE_DOTS = { id: 'parts', header: 'Parts', question: `The parts past booting, in the order of What works (${PARTS.map((part) => part.title.toLowerCase()).join(', ')}). Filled is seen on Omarchy on that model, faint is not known yet. Click for What works.` };
+const HARDWARE_DOTS = { id: 'parts', header: 'Parts', question: `The parts past booting, in the order of What works (${PARTS.map((part) => part.title.toLowerCase()).join(', ')}). Filled is seen on Omarchy on that model, faint is not tested yet. Click for What works.` };
 const snapdragonViews = [
   { id: 'omarchy', label: 'Omarchy', question: `What Omarchy's packages ship today. A check is a piece Omarchy ships, and pointing at it says which channel has it.`, columns: [...OMARCHY_LEGEND.map((group, i) => ({ id: omarchyIds[i], header: group.column, question: group.question, options: FILTERS[omarchyIds[i]] })), HARDWARE_DOTS] },
   { id: 'upstream', label: 'Upstream', question: 'What Linux, systemd and linux-firmware have, which every distro gets.', columns: UPSTREAM_LEGEND.map((group, i) => ({ id: upstreamIds[i], header: group.column, question: group.question, options: FILTERS[upstreamIds[i]] })) },
@@ -136,7 +136,7 @@ import { SHELL } from '../lib/shell';
         Every ARM laptop needs a device tree, hardware IDs and firmware. Omarchy ships them in its own packages, often before Linux, systemd and linux-firmware have them. The Omarchy view shows what Omarchy ships today, and the Upstream view what every distro gets. A check means Omarchy ships the piece, and pointing at it says which channel has it. Bootable says whether an owner reached the desktop. The newest fixes are on edge, the {image ? <a class={LINK} href={image.url}>nightly image</a> : 'nightly image'}, with <span class="whitespace-nowrap">linux-omarchy {status.omarchy.kernel}</span> and systemd {status.omarchy.systemd}. Booting is the first goal. Each model's page, behind its name, goes on to everything past booting, from sound and the camera to sleep and USB4, with what owners and their agents measured.
       </p>
       <p class="mt-5 hidden max-w-3xl text-sm text-zinc-400 hw:block">
-        For each model, whether it boots Omarchy and what works once it does, from the screen, keyboard and Wi-Fi to sound, the camera, sleep and the ports. Bootable says whether an owner reached the desktop, or that it should boot and nobody has tried it yet. Every part's label is a result from Omarchy on that model, measured by <a class={LINK} href="/docs/hw-test">hw-test</a> or reported by an owner. An empty cell means nobody has reported yet, and running hw-test on that model fills it in. Each model's page, behind its name, has every check with its source. What a model needs underneath, its device tree, hardware IDs and firmware, is under Bring-up.
+        For each model, whether it boots Omarchy and what works once it does, from the screen, keyboard and Wi-Fi to sound, the camera, sleep and the ports. Bootable says whether an owner reached the desktop, or that it should boot and nobody has tried it yet. Every part's label is a result from Omarchy on that model, measured by <a class={LINK} href="/docs/hw-test">hw-test</a> or reported by an owner. Not tested means nobody has reported yet, and running hw-test on that model fills it in. Each model's page, behind its name, has every check with its source. What a model needs underneath, its device tree, hardware IDs and firmware, is under Bring-up.
       </p>
       <div class="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 rounded-xl bg-[#9ece6a]/10 px-5 py-4 ring-1 ring-[#9ece6a]/40">
         <p class="text-zinc-300"><strong class="font-semibold text-[#9ece6a]">Own an ARM laptop that isn't green yet?</strong> Help get it there, whatever distro you run. It only takes a few minutes.</p>

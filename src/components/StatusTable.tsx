@@ -107,7 +107,13 @@ function Dots(props: { cell: Extract<CellData, { dots: unknown }>; column: strin
 function Pill(props: { cell: CellData; column: string }) {
   const cell = props.cell;
   if ('dots' in cell) return <Dots cell={cell} column={props.column} />;
-  if ('text' in cell) return <span class="text-xs text-zinc-400">{cell.text}</span>;
+  if ('text' in cell) {
+    return (
+      <span data-tip={cell.title} data-tip-title={cell.title ? props.column : undefined} class={`text-xs ${cell.muted ? 'text-zinc-600' : 'text-zinc-400'}`}>
+        {cell.text}
+      </span>
+    );
+  }
   const classes = `${PILL} ${TONE[cell.tone]}`;
   return cell.href ? (
     <a href={cell.href} data-tip={cell.title} data-tip-title={props.column} class={`${classes} hover:brightness-125`}>

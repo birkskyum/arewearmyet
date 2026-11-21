@@ -113,12 +113,13 @@ export const PART_OPTIONS: { key: string; label: string; tone?: Tone }[] = [
   { key: 'omarchy-partial', label: 'Partly', tone: 'close' },
   { key: 'omarchy-broken', label: 'Broken', tone: 'wanted' },
   { key: 'absent', label: 'Not on this model' },
-  { key: 'unknown', label: 'Not known yet' },
+  { key: 'unknown', label: 'Not tested' },
 ];
 
 export type Dot = { tone: 'good' | 'close' | 'wanted' | 'none' | 'absent'; solid: boolean };
 type PillCell = { key: string; label: string; tone: Tone; title: string; href?: string; rank: number };
-type TextCell = { key: string; text: string; rank: number };
+// `muted` greys out a word that only says nothing is known, and `title` explains it on hover
+type TextCell = { key: string; text: string; rank: number; title?: string; muted?: boolean };
 type DotsCell = { key: string; label: string; dots: Dot[]; title: string; rank: number };
 
 /** The cells of the hardware view for one model, and the row of dots the booting view shows. */
@@ -127,7 +128,7 @@ export function partCells(model: Machine): Record<string, PillCell | TextCell | 
   const cells: Record<string, PillCell | TextCell | DotsCell> = {};
   for (const p of parts) {
     const rank = RANK.indexOf(p.key);
-    if (p.state === 'unknown') cells[`part-${p.part.id}`] = { key: p.key, text: '', rank };
+    if (p.state === 'unknown') cells[`part-${p.part.id}`] = { key: p.key, text: 'Not tested', rank, muted: true, title: `${p.title} Running hw-test on the model fills it in.` };
     else if (p.state === 'absent') cells[`part-${p.part.id}`] = { key: p.key, text: '–', rank };
     else {
       const label = LABEL[p.state] + (p.covered < p.of ? ` ${p.covered}/${p.of}` : '');
