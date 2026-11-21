@@ -1600,6 +1600,7 @@ models:
     acpi: ["microsoft-surface-romulus13_and_15", "linux-surface/surface_laptop_7_qcom", "hardware-reports/microsoft-corporation/microsoft-surface-laptop-7th-edition"]
     reports:
       - { state: "workaround", note: "The screen stays dark after install, and the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.", checked: "2026-10" }
+      - { state: "problems", note: "An owner of the 13.8\" X Elite model installed from the edge image. The install finished, and after the restart the screen stayed black and the built-in keyboard took no keys at the disk password prompt. With the display and Surface keyboard drivers added to the boot image by hand the splash showed, but the encrypted disk wasn't found in time and the boot ended in the emergency shell.", checked: "2026-11" }
     sources:
       - https://learn.microsoft.com/en-us/surface/surface-system-sku-reference
       - https://www.cdw.com/product/sur-lt7-13in-x1p-64-100-16-512-w11-g/7941189

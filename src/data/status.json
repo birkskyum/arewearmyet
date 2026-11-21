@@ -1661,8 +1661,8 @@
     "nvidiaExpected": 16,
     "works": 18,
     "should": 49,
-    "workaround": 11,
-    "problems": 3,
+    "workaround": 10,
+    "problems": 4,
     "notYet": 7,
     "deviceTree": 84,
     "ids": 60,
@@ -13002,13 +13002,18 @@
         "https://galaxus.it/en/s1/product/microsoft-surface-laptop-copilot-pc-7-edition-1380-snapdragon-x-elite-x1e-80-100-16-gb-1000-gb-de-no-45967365"
       ],
       "notes": null,
-      "outcome": "workaround",
-      "bootable": "workaround",
+      "outcome": "problems",
+      "bootable": "problems",
       "reports": [
         {
           "state": "workaround",
           "note": "The screen stays dark after install, and the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.",
           "checked": "2026-10"
+        },
+        {
+          "state": "problems",
+          "note": "An owner of the 13.8\" X Elite model installed from the edge image. The install finished, and after the restart the screen stayed black and the built-in keyboard took no keys at the disk password prompt. With the display and Surface keyboard drivers added to the boot image by hand the splash showed, but the encrypted disk wasn't found in time and the boot ended in the emergency shell.",
+          "checked": "2026-11"
         }
       ],
       "machine": "omarchy",
@@ -13093,12 +13098,17 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-microsoft-romulus13.json"
             }
           ],
-          "outcome": "workaround",
+          "outcome": "problems",
           "reports": [
             {
               "state": "workaround",
               "note": "The screen stays dark after install, and the desktop appears after typing the disk password blind. Reported on an X Elite model, size not given.",
               "checked": "2026-10"
+            },
+            {
+              "state": "problems",
+              "note": "An owner of the 13.8\" X Elite model installed from the edge image. The install finished, and after the restart the screen stayed black and the built-in keyboard took no keys at the disk password prompt. With the display and Surface keyboard drivers added to the boot image by hand the splash showed, but the encrypted disk wasn't found in time and the boot ended in the emergency shell.",
+              "checked": "2026-11"
             }
           ]
         }
