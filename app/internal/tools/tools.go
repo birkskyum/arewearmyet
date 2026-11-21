@@ -600,13 +600,14 @@ func t3Launch() bool {
 	return true
 }
 
-// t3Alive is how long a thread that T3 Code shows at work is watched for a sign of it, and
-// t3Look how often.
-var t3Alive, t3Look = 30 * time.Second, 3 * time.Second
+// t3Restore is how long T3 Code is given to bring a thread back once its server answers,
+// t3Alive how long a thread it shows at work is watched for a sign of it, and t3Look how often
+// the thread is looked at.
+var t3Restore, t3Alive, t3Look = 15 * time.Second, 30 * time.Second, 2 * time.Second
 
-// t3State reads from T3 Code whether a thread is at work, a mark that changes whenever the
-// thread moves on, and the thread's title.
-func t3State(id, dir string) (running bool, mark, title string, ok bool) {
+// t3State reads a thread's status from T3 Code, a mark that changes whenever the thread moves
+// on, and the thread's title.
+func t3State(id, dir string) (status, mark, title string, ok bool) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, "t3", "thread", "show", "--json", "--messages", "1", id)
@@ -614,7 +615,7 @@ func t3State(id, dir string) (running bool, mark, title string, ok bool) {
 	out, err := command.Output()
 	start := strings.IndexByte(string(out), '{')
 	if err != nil || start < 0 {
-		return false, "", "", false
+		return "", "", "", false
 	}
 	var shown struct {
 		Thread struct {
@@ -625,9 +626,9 @@ func t3State(id, dir string) (running bool, mark, title string, ok bool) {
 		} `json:"thread"`
 	}
 	if json.Unmarshal(out[start:], &shown) != nil || shown.Thread.Status == "" {
-		return false, "", "", false
+		return "", "", "", false
 	}
-	return shown.Thread.Status == "running", fmt.Sprintf("%d %s", shown.Thread.ItemCount, shown.Thread.UpdatedAt), shown.Thread.Title, true
+	return shown.Thread.Status, fmt.Sprintf("%d %s", shown.Thread.ItemCount, shown.Thread.UpdatedAt), shown.Thread.Title, true
 }
 
 // T3TookUp says whether T3 Code went on with a thread by itself after its app started again,
@@ -640,14 +641,33 @@ func T3TookUp(id, dir string) (title string, took bool) {
 	if id == "" || !Have("t3") || !t3Up(dir) {
 		return "", false
 	}
-	running, first, title, ok := t3State(id, dir)
-	if !ok || !running {
+	// A thread counts as at work from the moment T3 Code prepares its turn
+	atWork := map[string]bool{"running": true, "starting": true, "preparing": true, "queued": true}
+	status, first, title, ok := t3State(id, dir)
+	if !ok {
+		return "", false
+	}
+	// T3 Code's server answers a moment before it has brought its threads back, so a thread that
+	// isn't at work yet is given that moment. One that comes to work while it is watched was
+	// brought back by T3 Code, since nothing else was sent to it
+	for waited := time.Duration(0); !atWork[status] && waited < t3Restore; waited += t3Look {
+		time.Sleep(t3Look)
+		if status, _, _, ok = t3State(id, dir); !ok {
+			return title, false
+		}
+		if atWork[status] {
+			return title, true
+		}
+	}
+	if !atWork[status] {
 		return title, false
 	}
+	// At work from the first look on, which a thread cut off by the restart may still be shown
+	// as. Only one that moves is counted
 	for waited := time.Duration(0); waited < t3Alive; waited += t3Look {
 		time.Sleep(t3Look)
-		running, mark, _, ok := t3State(id, dir)
-		if !ok || !running {
+		status, mark, _, ok := t3State(id, dir)
+		if !ok || !atWork[status] {
 			return title, false
 		}
 		if mark != first {

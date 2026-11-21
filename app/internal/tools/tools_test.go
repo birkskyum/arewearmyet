@@ -312,8 +312,8 @@ func TestAT3ThreadThatWentOnByItselfNeedsNoMessage(t *testing.T) {
 	// the file "items" holds
 	os.WriteFile(filepath.Join(bin, "t3"), []byte("#!/bin/sh\nif [ \"$2\" = show ]; then echo \"{\\\"thread\\\":{\\\"status\\\":\\\"$(cat "+dir+"/status)\\\",\\\"title\\\":\\\"Speakers\\\",\\\"itemCount\\\":$(cat "+dir+"/items)}}\"; if [ -e "+dir+"/moving ]; then echo $(( $(cat "+dir+"/items) + 1 )) > "+dir+"/items; fi; fi\nexit 0\n"), 0o755)
 	t.Setenv("PATH", bin+":"+os.Getenv("PATH"))
-	t3Alive, t3Look = 300*time.Millisecond, 50*time.Millisecond
-	defer func() { t3Alive, t3Look = 30*time.Second, 3*time.Second }()
+	t3Restore, t3Alive, t3Look = 300*time.Millisecond, 300*time.Millisecond, 50*time.Millisecond
+	defer func() { t3Restore, t3Alive, t3Look = 15*time.Second, 30*time.Second, 2*time.Second }()
 	state := func(status string, moving bool) {
 		os.WriteFile(filepath.Join(dir, "status"), []byte(status), 0o644)
 		os.WriteFile(filepath.Join(dir, "items"), []byte("7"), 0o644)
@@ -332,10 +332,20 @@ func TestAT3ThreadThatWentOnByItselfNeedsNoMessage(t *testing.T) {
 	if title, took := T3TookUp("mcp:77", dir); took || title != "Speakers" {
 		t.Errorf("a thread that stands still: %q, %v", title, took)
 	}
-	// And one that waits takes the message at once
+	// One that stays waiting gets the message
 	state("idle", true)
 	if _, took := T3TookUp("mcp:77", dir); took {
 		t.Error("a waiting thread counted as gone on by itself")
+	}
+	// T3 Code's server answers before it has brought the thread back. One that comes to work a
+	// moment later was brought back by T3 Code, and gets no message
+	state("completed", false)
+	go func() {
+		time.Sleep(120 * time.Millisecond)
+		os.WriteFile(filepath.Join(dir, "status"), []byte("starting"), 0o644)
+	}()
+	if title, took := T3TookUp("mcp:77", dir); !took || title != "Speakers" {
+		t.Errorf("a thread brought back a moment after the server answered: %q, %v", title, took)
 	}
 }
 
