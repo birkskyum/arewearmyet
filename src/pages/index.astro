@@ -45,10 +45,12 @@ const HARDWARE_LEGEND = [
   ...PARTS.map((part) => ({ column: part.title, question: part.question, states: [] })),
 ];
 const HARDWARE_QUESTION = 'Whether it boots, and what works once it runs, part by part. Every part\'s label is a result from Omarchy on that model, by hw-test or an owner.';
-const HARDWARE_VIEW = { id: 'hardware', label: 'Hardware', question: HARDWARE_QUESTION, sort: 'seen', compact: true, columns: [
-  { id: 'seen', header: 'Seen on Omarchy', question: 'How many of the parts have a result from Omarchy, by hw-test or an owner. The table opens sorted by it.' },
-  ...PARTS.map((part) => ({ id: `part-${part.id}`, header: part.title, question: part.question, options: PART_OPTIONS })),
-] };
+// The table opens with the models most was seen of on top. That count orders the rows and is no column,
+// since the parts beside it say the same
+const HARDWARE_VIEW = { id: 'hardware', label: 'Hardware', question: HARDWARE_QUESTION, sort: 'seen', compact: true,
+  hidden: [{ id: 'seen', header: 'Seen on Omarchy', question: 'How many of the parts have a result from Omarchy, by hw-test or an owner.' }],
+  columns: PARTS.map((part) => ({ id: `part-${part.id}`, header: part.title, question: part.question, options: PART_OPTIONS })),
+};
 // A visitor asks whether a model boots before anything else, so the Hardware view opens with the family's
 // own Bootable column, and its legend with that column's labels
 type BootColumn = { id: string; header: string; question: string; options?: unknown };

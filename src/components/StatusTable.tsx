@@ -27,9 +27,10 @@ import { SEARCH_EVENT, type SearchAsked } from '../lib/search';
 type Option = { key: string; label: string; tone?: Tone };
 type Column = { id: string; header: string; question: string; options?: Option[] };
 // A set of status columns the table can switch to, like what Omarchy ships or what's upstream
-// `sort` names the column a view opens sorted by, when nothing else is sorting
+// `sort` names the column a view opens sorted by, when nothing else is sorting,
+// `hidden` holds columns a view sorts by and doesn't show, like how much of a model was seen,
 // and `compact` leaves the booting notes and variants out of the model column
-type View = { id: string; label: string; question: string; columns: Column[]; sort?: string; compact?: boolean };
+type View = { id: string; label: string; question: string; columns: Column[]; hidden?: Column[]; sort?: string; compact?: boolean };
 type Props = {
   rows: TableRow[];
   // One set of status columns, or several views to switch between, the first one shown by default
@@ -134,7 +135,7 @@ export default function StatusTable(props: Props) {
   const view = () => (mode() === 'hardware' && hardware) || booting.find((v) => v.id === viewId()) || booting[0];
   const statusColumns = () => view().columns;
   // Every view's columns exist in the table, so a view switch keeps sorting and counting in one place
-  const allColumns = [...new Map(views.flatMap((v) => v.columns).map((column) => [column.id, column])).values()];
+  const allColumns = [...new Map(views.flatMap((v) => [...v.columns, ...(v.hidden ?? [])]).map((column) => [column.id, column])).values()];
   const helper = createColumnHelper<typeof features, TableRow>();
   const columns = helper.columns([
     helper.accessor('vendor', { id: 'brand', header: 'Brand', sortFn: 'alphanumeric', filterFn: inSet }),
@@ -217,7 +218,7 @@ export default function StatusTable(props: Props) {
 
   // Switching views drops the filters and sorting on columns the new view doesn't have
   const settle = (next: View) => {
-    const kept = new Set(['brand', 'chip', 'q', ...next.columns.map((column) => column.id)]);
+    const kept = new Set(['brand', 'chip', 'q', ...[...next.columns, ...(next.hidden ?? [])].map((column) => column.id)]);
     setFilters((current) => current.filter((filter) => kept.has(filter.id)));
     setSorting((current) => current.filter((sort) => kept.has(sort.id) || sort.id === 'model'));
   };
