@@ -342,7 +342,10 @@ func TestAT3ThreadThatWentOnByItselfNeedsNoMessage(t *testing.T) {
 	state("completed", false)
 	go func() {
 		time.Sleep(120 * time.Millisecond)
-		os.WriteFile(filepath.Join(dir, "status"), []byte("starting"), 0o644)
+		// Put in place whole, so a look never reads the file half written
+		next := filepath.Join(dir, "status.next")
+		os.WriteFile(next, []byte("starting"), 0o644)
+		os.Rename(next, filepath.Join(dir, "status"))
 	}()
 	if title, took := T3TookUp("mcp:77", dir); !took || title != "Speakers" {
 		t.Errorf("a thread brought back a moment after the server answered: %q, %v", title, took)
