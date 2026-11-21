@@ -8,8 +8,8 @@ import type { Tone } from './tones';
 
 export type Part = { id: string; title: string; question: string; checks: string[] };
 
-// Hibernation, the two Qualcomm processors, the fingerprint reader and the modem stay on the model's
-// page. No kernel offers hibernation on these chips yet, and the others are parts few models have
+// The two Qualcomm processors, the fingerprint reader and the modem stay on the model's page. The
+// processors are no part an owner thinks in, and the other two are parts few models have
 export const PARTS: Part[] = [
   { id: 'start', title: 'Starting', question: 'The installer from a USB stick, and the disk password prompt at startup.', checks: ['installer', 'disk-unlock'] },
   { id: 'screen', title: 'Screen and graphics', question: 'The built-in screen and its brightness, graphics acceleration, WebGL and WebGPU in the browser, and hardware video decoding.', checks: ['display', 'backlight', 'gpu', 'webgl', 'webgpu', 'video-decode'] },
@@ -17,7 +17,7 @@ export const PARTS: Part[] = [
   { id: 'wireless', title: 'Wi-Fi and Bluetooth', question: 'Wi-Fi, its fixed address, and Bluetooth.', checks: ['wifi', 'wifi-address', 'bluetooth'] },
   { id: 'sound', title: 'Sound', question: 'Speakers, built-in microphones and the headphone jack.', checks: ['speakers', 'microphones', 'headphones'] },
   { id: 'camera', title: 'Camera', question: 'The webcam, in the browser and in video calls.', checks: ['camera'] },
-  { id: 'power', title: 'Battery and sleep', question: 'Battery readings, charging, sleep and wake, battery use while asleep, the lid switch, and fans and temperatures. Hibernation is on the model\'s page.', checks: ['battery', 'charging', 'suspend', 'suspend-drain', 'lid', 'fans'] },
+  { id: 'power', title: 'Battery and sleep', question: 'Battery readings, charging, sleep and wake, battery use while asleep, hibernation, the lid switch, and fans and temperatures.', checks: ['battery', 'charging', 'suspend', 'suspend-drain', 'hibernate', 'lid', 'fans'] },
   { id: 'ports', title: 'Ports', question: 'USB ports, an external screen, USB4, and the network socket where the model has one.', checks: ['usb', 'external-display', 'usb4', 'ethernet'] },
 ];
 
