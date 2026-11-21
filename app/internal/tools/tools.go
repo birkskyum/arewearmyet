@@ -600,6 +600,63 @@ func t3Launch() bool {
 	return true
 }
 
+// t3Alive is how long a thread that T3 Code shows at work is watched for a sign of it, and
+// t3Look how often.
+var t3Alive, t3Look = 30 * time.Second, 3 * time.Second
+
+// t3State reads from T3 Code whether a thread is at work, a mark that changes whenever the
+// thread moves on, and the thread's title.
+func t3State(id, dir string) (running bool, mark, title string, ok bool) {
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, "t3", "thread", "show", "--json", "--messages", "1", id)
+	command.Dir = dir
+	out, err := command.Output()
+	start := strings.IndexByte(string(out), '{')
+	if err != nil || start < 0 {
+		return false, "", "", false
+	}
+	var shown struct {
+		Thread struct {
+			Status    string `json:"status"`
+			Title     string `json:"title"`
+			ItemCount int    `json:"itemCount"`
+			UpdatedAt string `json:"updatedAt"`
+		} `json:"thread"`
+	}
+	if json.Unmarshal(out[start:], &shown) != nil || shown.Thread.Status == "" {
+		return false, "", "", false
+	}
+	return shown.Thread.Status == "running", fmt.Sprintf("%d %s", shown.Thread.ItemCount, shown.Thread.UpdatedAt), shown.Thread.Title, true
+}
+
+// T3TookUp says whether T3 Code went on with a thread by itself after its app started again,
+// and gives the thread's title. T3 Code brings a thread that was at work back when the app
+// starts. A message sent to it then only waits in the thread's queue, and reaches the agent a
+// turn later, when it has long gone on and is told to start over. So a thread that is at work
+// and moving needs no message. One that is shown at work and stands still doesn't count,
+// since a message is then the one thing that may still reach its agent.
+func T3TookUp(id, dir string) (title string, took bool) {
+	if id == "" || !Have("t3") || !t3Up(dir) {
+		return "", false
+	}
+	running, first, title, ok := t3State(id, dir)
+	if !ok || !running {
+		return title, false
+	}
+	for waited := time.Duration(0); waited < t3Alive; waited += t3Look {
+		time.Sleep(t3Look)
+		running, mark, _, ok := t3State(id, dir)
+		if !ok || !running {
+			return title, false
+		}
+		if mark != first {
+			return title, true
+		}
+	}
+	return title, false
+}
+
 // T3Show brings T3 Code's window to the front, so the owner sees their agent's thread in its list.
 // T3 Code has no way from outside to open one given thread. What it offers, t3 app, always opens a
 // new, empty one for the folder, which would hide the thread that is at work.

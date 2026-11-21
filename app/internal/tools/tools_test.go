@@ -306,6 +306,39 @@ func TestT3CodeIsStartedWhenItIsInstalledButNotRunning(t *testing.T) {
 	}
 }
 
+func TestAT3ThreadThatWentOnByItselfNeedsNoMessage(t *testing.T) {
+	dir, bin := t.TempDir(), t.TempDir()
+	// T3 Code's command shows the thread at work, with a count of what it has done so far that
+	// the file "items" holds
+	os.WriteFile(filepath.Join(bin, "t3"), []byte("#!/bin/sh\nif [ \"$2\" = show ]; then echo \"{\\\"thread\\\":{\\\"status\\\":\\\"$(cat "+dir+"/status)\\\",\\\"title\\\":\\\"Speakers\\\",\\\"itemCount\\\":$(cat "+dir+"/items)}}\"; if [ -e "+dir+"/moving ]; then echo $(( $(cat "+dir+"/items) + 1 )) > "+dir+"/items; fi; fi\nexit 0\n"), 0o755)
+	t.Setenv("PATH", bin+":"+os.Getenv("PATH"))
+	t3Alive, t3Look = 300*time.Millisecond, 50*time.Millisecond
+	defer func() { t3Alive, t3Look = 30*time.Second, 3*time.Second }()
+	state := func(status string, moving bool) {
+		os.WriteFile(filepath.Join(dir, "status"), []byte(status), 0o644)
+		os.WriteFile(filepath.Join(dir, "items"), []byte("7"), 0o644)
+		os.Remove(filepath.Join(dir, "moving"))
+		if moving {
+			os.WriteFile(filepath.Join(dir, "moving"), nil, 0o644)
+		}
+	}
+	// At work and moving, T3 Code has it
+	state("running", true)
+	if title, took := T3TookUp("mcp:77", dir); !took || title != "Speakers" {
+		t.Errorf("a thread at work and moving: %q, %v", title, took)
+	}
+	// Shown at work but standing still, a message is what may still reach it
+	state("running", false)
+	if title, took := T3TookUp("mcp:77", dir); took || title != "Speakers" {
+		t.Errorf("a thread that stands still: %q, %v", title, took)
+	}
+	// And one that waits takes the message at once
+	state("idle", true)
+	if _, took := T3TookUp("mcp:77", dir); took {
+		t.Error("a waiting thread counted as gone on by itself")
+	}
+}
+
 func TestAnOpenCodexTakesTheMessageAndAClosedOneOpensAgain(t *testing.T) {
 	dir, bin := t.TempDir(), t.TempDir()
 	for _, program := range []string{"codex", "claude", "window", "omarchy-hyprland-focus-app"} {

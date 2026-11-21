@@ -837,7 +837,24 @@ func comeBack(prompt string, cancel, show, atLogin bool) int {
 			// which reads the notes
 			err := tools.ErrNoSession
 			for _, held := range word.Sessions {
+				// T3 Code brings a thread that was at work back by itself once its app is open. A
+				// message would only wait in that thread's queue and tell the agent to start over a
+				// turn later, so none is sent
+				if held.Kind == "t3" {
+					title, took := tools.T3TookUp(held.ID, word.Dir)
+					if title != "" {
+						said[1] = "It goes on with the hardware work from before the restart, in T3 Code's thread \"" + title + "\". hw-test resume left this."
+					}
+					if took {
+						err = nil
+						tools.T3Show(word.Dir)
+						break
+					}
+				}
 				if err = tools.Continue(tools.Session{Kind: held.Kind, ID: held.ID}, word.Dir, resume.Said(word)); err == nil {
+					if held.Kind == "t3" {
+						tools.T3Show(word.Dir)
+					}
 					break
 				}
 			}
