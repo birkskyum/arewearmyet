@@ -489,3 +489,18 @@ func TestTheScreensOfferTheAgentOnlyWhenSomethingFails(t *testing.T) {
 	}
 	_ = tea.KeyEnter
 }
+
+func TestTheBriefSaysWhenTheOwnerLetsTheAgentWorkOnItsOwn(t *testing.T) {
+	b := yoga()
+	asked := Brief(b)
+	if strings.Contains(asked, "work on your own until") || !strings.Contains(asked, "run `hw-test trust`") {
+		t.Errorf("without the owner's word the brief should point at hw-test trust and claim nothing:\n%s", asked[len(asked)-700:])
+	}
+	b.Trusted = time.Date(2026, 11, 21, 9, 30, 0, 0, time.Local)
+	trusted := Brief(b)
+	for _, want := range []string{"The owner has said to work on your own until 09:30 on 21 November", "need no asking", "don't end your turn to check in", "the power button, the disk password"} {
+		if !strings.Contains(trusted, want) {
+			t.Errorf("the brief with the owner's word lacks %q", want)
+		}
+	}
+}

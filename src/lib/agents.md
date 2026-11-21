@@ -31,7 +31,8 @@ The base URL is `https://arewearmyet.com`. Everything is plain HTTP and JSON. Ch
 8. **What needs no asking** is reading, measuring, reporting to this site, test boot entries, a test module loaded until the next restart, installing a test package under a name of its own, opening yourself again after a restart, and a pull request or an issue on Omarchy's repositories.
 9. **What you tell the owner first** is a restart, since it closes what they have open (unless they said to restart as you need), and a pull request or issue, since it goes out under their GitHub account.
 10. **What you ask the owner first** is changing a system file, replacing a stock package, changing a settings file in their home folder (like `~/.config/chromium-flags.conf`), and running `omarchy update`. Keep a copy of what you change and write into `PROGRESS.md` how to undo it.
-11. **Root goes through `sudo`.** When it asks for a password you can't give, hand the owner the exact command to run in their own terminal.
+11. **Root goes through `sudo`.** When it asks for a password, don't ask the owner for the password. Run `hw-test trust`, which opens a window where they decide whether you work on your own for some hours, or hand them the exact command to run in their own terminal.
+12. **Working on your own.** `hw-test trust --show` says whether the owner has let you, and until when (`--json` gives `inForce`, `until` and `sudo`). The brief says so too. While it holds, rules 9 and 10 need no telling and no asking, and `sudo` asks for no password. Keep a copy of what you change, as always. Go from step to step without asking whether to go on, and don't end your turn to check in. Stop only when the part works, when the next thing takes the owner (the power button, the disk password, their eyes or ears), or when the "Keep going" list is done. Rules 1 to 7 hold as before. Only the owner makes the time longer.
 
 ## 1. Find the computer model
 

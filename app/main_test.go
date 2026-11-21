@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 )
@@ -229,5 +230,45 @@ func TestANeedIsForAPartThatWorksAndIsKept(t *testing.T) {
 	}
 	if len(report.Needs()) != 0 || got[1].Text != "" {
 		t.Errorf("after taking back: sent %+v, kept %+v", got[1], report.Needs())
+	}
+}
+
+func TestTheSudoRuleEndsByItselfAndIsCheckedBeforeItIsPutInPlace(t *testing.T) {
+	until := time.Date(2026, 11, 21, 9, 30, 0, 0, time.FixedZone("CET", 3600))
+	script := trustScript("birk", until)
+	// The time is in the rule itself, in UTC, so it ends with nothing left to run
+	if !strings.Contains(script, "birk ALL=(ALL:ALL) NOTAFTER=20261121083000Z NOPASSWD: ALL\n") {
+		t.Errorf("the rule:\n%s", script)
+	}
+	// A broken rule would lock sudo, so it is checked first and the script stops there
+	check, install := strings.Index(script, "visudo -cf \"$new\""), strings.Index(script, "install -m 0440 -o root -g root \"$new\" \"$rule\"")
+	if !strings.HasPrefix(script, "set -eu\n") || check < 0 || install < check {
+		t.Errorf("the rule isn't checked before it is installed:\n%s", script)
+	}
+	if !strings.Contains(script, "rule=/etc/sudoers.d/hw-test-trust\n") {
+		t.Errorf("the rule goes elsewhere:\n%s", script)
+	}
+}
+
+func TestTrustTakesOneToTwentyFourHoursAndAnAgentDoesNotLengthenItsOwn(t *testing.T) {
+	t.Setenv("XDG_STATE_HOME", t.TempDir())
+	for _, hours := range []string{"0", "25", "soon"} {
+		if code := trust([]string{hours}, false, false, false); code != 2 {
+			t.Errorf("trust %s: %d", hours, code)
+		}
+	}
+	// With the owner's word in force, a run without a terminal changes nothing
+	until := time.Now().Add(2 * time.Hour).Truncate(time.Second)
+	if err := report.SetTrust(until); err != nil {
+		t.Fatal(err)
+	}
+	if code := trust([]string{"24"}, false, false, false); code != 0 {
+		t.Errorf("trust while trusted: %d", code)
+	}
+	if kept, held := report.Trusted(time.Now()); !held || !kept.Equal(until) {
+		t.Errorf("the time was changed without the owner: %v, %v", kept, held)
+	}
+	if _, err := os.Stat(filepath.Join(report.StateDir(), "trust.sh")); err == nil {
+		t.Error("a rule was written without the owner")
 	}
 }

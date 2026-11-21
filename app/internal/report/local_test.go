@@ -50,3 +50,26 @@ func TestTheMachineKeepsItsLatestResultForEachCheck(t *testing.T) {
 		t.Error("the owner's own retest didn't replace the failure")
 	}
 }
+
+func TestTheOwnersWordHoldsUntilItsTimeAndCanBeTakenBack(t *testing.T) {
+	t.Setenv("XDG_STATE_HOME", t.TempDir())
+	now := time.Date(2026, 11, 21, 1, 0, 0, 0, time.UTC)
+	if _, held := Trusted(now); held {
+		t.Fatal("trusted with nothing said")
+	}
+	until := now.Add(8 * time.Hour)
+	if err := SetTrust(until); err != nil {
+		t.Fatal(err)
+	}
+	if got, held := Trusted(now.Add(7 * time.Hour)); !held || !got.Equal(until) {
+		t.Errorf("an hour before its time: %v, %v", got, held)
+	}
+	if _, held := Trusted(until); held {
+		t.Error("still trusted at its time")
+	}
+	_ = SetTrust(until)
+	EndTrust()
+	if _, held := Trusted(now); held {
+		t.Error("still trusted after it was taken back")
+	}
+}

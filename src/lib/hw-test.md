@@ -75,6 +75,19 @@ A result that works but looks off (one speaker much quieter than the other) is m
 
 The keyboard step lets you go on without pressing every key. When you pressed fewer than half of them, it records nothing, and what was found before stands.
 
+## Letting your agent work on its own
+
+By default an agent tells you before it restarts the computer, asks before it changes a system file or one of your settings files, and needs your password for every command that runs as root. For hardware work that means a prompt every few minutes.
+
+`hw-test trust` changes that for a set time. Until that time:
+
+- The agent restarts and changes system settings without asking first, and goes from step to step without checking in.
+- `sudo` asks for no password, for the agent's own commands and for hw-test's steps that need root.
+
+It still never touches your files, the disk's partitions or its encryption, and never flashes firmware or changes the BIOS. It still needs you for the power button, the disk password, and what only your eyes and ears can tell.
+
+This gives every program you run root on the computer until the time is up, so use it while the hardware work is going on and not as a habit. It writes one file, `/etc/sudoers.d/hw-test-trust`, with the end time in the rule itself. After that time the rule does nothing, also if the computer was off when it ran out. `hw-test trust --end` takes it back early and removes the file. Nothing about it is sent to the site.
+
 ## What is sent
 
 A test ends by showing its report, which is everything that would be sent, in one frame, and asks before it sends it. The report holds the results, the computer's model, BIOS version and hardware IDs, the kernel version and the versions of about fifteen system packages. It sends no serial number, address, name or file, and it needs no account. The computer is told apart by a random token kept in `~/.local/state/arewearmyet/token`, of which the site stores only a hash.
@@ -212,6 +225,9 @@ Nothing here is written where the computer starts from, so a restart always brin
 | `hw-test resume "WHAT"` | Before a restart. At the owner's next login the agent is brought back once, in the same conversation where its program allows, and told WHAT |
 | `hw-test resume --show` | Says what is left for after the restart |
 | `hw-test resume --cancel` | Takes it back |
+| `hw-test trust [HOURS]` | Lets your agent work on its own for some hours, 8 unless you say, 24 at most. It asks for your password once. An agent that runs it gets a window opened for you, where you decide |
+| `hw-test trust --show` | Says whether it holds and until when. `--json` gives it as data |
+| `hw-test trust --end` | Takes it back |
 
 ## Files
 

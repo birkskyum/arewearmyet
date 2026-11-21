@@ -64,7 +64,7 @@ func main() {
 		word := args[0]
 		args = args[1:]
 		switch {
-		case command == "brief" || command == "fix" || command == "verify" || command == "resume" || command == "tree" || command == "kernel" || command == "note" || command == "ask":
+		case command == "brief" || command == "fix" || command == "verify" || command == "resume" || command == "tree" || command == "kernel" || command == "note" || command == "ask" || command == "trust":
 			// What follows these two names what to hand over, as checks or parts of the test
 			topics = append(topics, word)
 		case guided.KnownStep(word):
@@ -98,7 +98,8 @@ func main() {
 	pr := flags.String("pr", "", "for hw-test verify after, the pull request the change is in")
 	// For hw-test resume
 	cancel := flags.Bool("cancel", false, "for hw-test resume, take back what was left for after the restart")
-	show := flags.Bool("show", false, "for hw-test resume, show what is left for after the restart")
+	show := flags.Bool("show", false, "for hw-test resume, show what is left for after the restart. For hw-test trust, say whether it holds")
+	end := flags.Bool("end", false, "for hw-test trust, take it back")
 	// For hw-test verify
 	again := flags.Bool("new", false, "for hw-test verify before, replace the snapshot that is there, to start on another change")
 	atLogin := flags.Bool("run", false, "for hw-test resume, what the login service calls")
@@ -132,6 +133,8 @@ func main() {
 		os.Exit(update())
 	case "resume":
 		os.Exit(comeBack(strings.Join(topics, " "), *cancel, *show, *atLogin))
+	case "trust":
+		os.Exit(trust(topics, *show, *end, *jsonOnly))
 	case "tree", "kernel":
 		// The patch's text, which says why, comes as a note's does
 		why := *body
@@ -311,6 +314,7 @@ func main() {
 			checks = []string{candidates[picked]}
 		}
 		briefing := guided.Briefing{Version: version, Run: run, Kept: kept, Model: matched, Checks: known, Only: checks, When: time.Now()}
+		briefing.Trusted, _ = report.Trusted(time.Now())
 		briefing.Binary = guided.Command()
 		if command == "fix" {
 			briefing.GetGuide = guided.FetchGuide
@@ -532,13 +536,30 @@ func need(run *report.Run, api, check, text, how string, proved, send bool) int 
 // run with sudo where there is a terminal to ask in. Without one, as with an agent, the same step
 // is opened for the owner in a window of their own, and waited for.
 func asOwner(dir, command, step, file, script, what string) int {
-	fail := func(err error) int {
+	code, _ := asOwnerRan(dir, command, step, file, script, what, true)
+	return code
+}
+
+// asOwnerRan is asOwner, and says whether the step ran in this process, as opposed to a window
+// opened for the owner. While the owner has said their agent works on its own (hw-test trust),
+// sudo asks for no password, and with free set the step runs here without a window.
+func asOwnerRan(dir, command, step, file, script, what string, free bool) (int, bool) {
+	fail := func(err error) (int, bool) {
 		fmt.Fprintln(os.Stderr, "hw-test:", err)
-		return 1
+		return 1, false
 	}
 	path := filepath.Join(dir, file)
 	if err := os.WriteFile(path, []byte(script), 0o755); err != nil {
 		return fail(err)
+	}
+	if free && !guided.Interactive() && sudoFree() {
+		fmt.Fprintf(os.Stderr, "This %s. The owner has said to work on your own (hw-test trust), so it runs without their password. What it runs is in %s.\n\n", what, path)
+		sudo := exec.Command("sudo", "-n", "bash", path)
+		sudo.Stdout, sudo.Stderr = os.Stderr, os.Stderr
+		if err := sudo.Run(); err != nil {
+			return fail(fmt.Errorf("it didn't go through: %v", err))
+		}
+		return 0, true
 	}
 	if !guided.Interactive() {
 		// No terminal here to ask for the password in, as with an agent, so the step is opened for the
@@ -557,14 +578,14 @@ func asOwner(dir, command, step, file, script, what string) int {
 						return fail(fmt.Errorf("it didn't go through in the owner's window (it ended with %s)", code))
 					}
 					fmt.Fprintln(os.Stderr, "Done in the owner's window.")
-					return 0
+					return 0, false
 				}
 				time.Sleep(500 * time.Millisecond)
 			}
 			return fail(fmt.Errorf("the owner didn't get to it"))
 		}
 		fmt.Fprintf(os.Stderr, "This step needs the owner's password, and there is no terminal here to ask for it.\nAsk the owner to run this in their own terminal:\n\n  cd %s && hw-test %s %s\n\nIt %s. What it runs is in %s.\n", dir, command, step, what, path)
-		return 3
+		return 3, false
 	}
 	fmt.Fprintf(os.Stderr, "This %s. It needs your password. What it runs is in %s.\n\n", what, path)
 	sudo := exec.Command("sudo", "bash", path)
@@ -572,7 +593,7 @@ func asOwner(dir, command, step, file, script, what string) int {
 	if err := sudo.Run(); err != nil {
 		return fail(fmt.Errorf("it didn't go through: %v", err))
 	}
-	return 0
+	return 0, true
 }
 
 // deviceTree is the way to try a changed device tree, with the sources, a build, a boot entry of
@@ -1377,6 +1398,10 @@ func usageText() string {
   hw-test resume [WHAT]    for an agent, before it restarts the computer. At the owner's next
                      login the agent opens again in this folder, once, and is told WHAT.
                      --show says what is left, --cancel takes it back
+  hw-test trust [HOURS]    let your agent work on its own for some hours, 8 unless you say, 24 at
+                     most. It then restarts and changes system settings without asking first,
+                     and sudo asks for no password. It needs your password once. --show says
+                     whether it holds, --end takes it back
   hw-test update     get the newest release. hw-test says at its start when there is one
   hw-test report --check ID --needs TEXT [--proved]   say that the part works because of a
                      change made on this computer, in a sentence. --proved when switching the

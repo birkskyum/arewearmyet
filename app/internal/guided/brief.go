@@ -48,6 +48,9 @@ type Briefing struct {
 	// Binary is where the hw-test that wrote the brief is, for an agent whose surroundings
 	// don't find it by name.
 	Binary string
+	// Trusted is until when the owner has said the agent works on its own (hw-test trust). Zero
+	// when they haven't.
+	Trusted time.Time
 	// ByOwner is set when the owner themselves asked for the handing over, at a terminal. It
 	// is what lets the agent run the handed parts' tests itself.
 	ByOwner bool
@@ -500,7 +503,11 @@ func Brief(b Briefing) string {
 		say("9. **Clean up.** `hw-test tree remove` (run by the owner), restore the settings you changed, and say what is left. A change you leave on the computer because the part works only with it is recorded with `hw-test report --check <check> --how agent --needs \"<the change and what it does for the part, in a sentence>\"`, so the model's page says the part works with a change made on this computer.")
 	}
 	say("")
-	say("The owner's data is the line. Never touch their files, the disk's partitions or its encryption, and do no firmware flashing or BIOS changes. Commands that need root go through `sudo`. When it asks for a password you can't give, hand the owner the exact command to run.")
+	say("The owner's data is the line. Never touch their files, the disk's partitions or its encryption, and do no firmware flashing or BIOS changes. Commands that need root go through `sudo`. When it asks for a password, run `hw-test trust`, which asks the owner once to let you work on your own, or hand the owner the exact command to run.")
+	if !b.Trusted.IsZero() {
+		say("")
+		say("**The owner has said to work on your own until " + b.Trusted.Local().Format("15:04 on 2 January") + "** (`hw-test trust`). Until then a restart, a system file, a settings file of theirs and a stock package need no asking, and `sudo` asks for no password. Keep a copy of what you change, as always. Go from step to step without asking whether to go on, and don't end your turn to check in. Stop only when the part works, when the next thing takes the owner (the power button, the disk password, their eyes or ears), or when the guide's \"Keep going\" list is done. `hw-test trust --show` says whether it still holds.")
+	}
 	return out.String()
 }
 
@@ -611,7 +618,8 @@ func handOver(run *report.Run, options Options, model report.Model, only []strin
 		if launch == nil {
 			launch, guide = tools.Agent, FetchGuide
 		}
-		briefing := Briefing{Version: options.Version, Run: run, Kept: report.Local(), Model: model, Checks: checks, Only: only, When: time.Now(), GetGuide: guide, ByOwner: true}
+		trusted, _ := report.Trusted(time.Now())
+		briefing := Briefing{Version: options.Version, Run: run, Kept: report.Local(), Model: model, Checks: checks, Only: only, When: time.Now(), GetGuide: guide, Trusted: trusted, ByOwner: true}
 		if options.launch == nil {
 			briefing.InThread = InThread
 		}

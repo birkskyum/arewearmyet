@@ -250,6 +250,9 @@ type Sent struct {
 	Error string `json:"error"`
 }
 
+// StateDir is the folder hw-test keeps this computer's own files in.
+func StateDir() string { return stateDir() }
+
 func stateDir() string {
 	if dir := os.Getenv("XDG_STATE_HOME"); dir != "" {
 		return filepath.Join(dir, "arewearmyet")
