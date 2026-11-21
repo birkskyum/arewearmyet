@@ -111,11 +111,12 @@ When the network isn't up yet, as right after waking, `hw-test` waits for it and
 | --- | --- |
 | `hw-test fix` | Asks which part your agent should look into, writes a brief with what was measured, where to look and where a fix goes, and opens your agent on it. Nothing is tested again |
 | `hw-test fix speakers` | The same for the part you name |
+| `hw-test fix speakers --now` | Hands the part over while your agent is at work on another one, in place of what it has. Without `--now` nothing is changed then, and you are told what the agent is working on |
 | `hw-test brief [WHAT]` | Prints that brief, to give to any agent yourself |
 
 An agent takes one part at a time, so a part that can't be fixed doesn't hold up the others. The opening screen of `hw-test` offers the same for a part that fails. It shows the conversation your agent already has on a part, and sends the next part into it.
 
-The agent works in `~/Work/hw-bringup` (or `~/hw-bringup`). `hw-test` opens the agent you have set up on Omarchy, in a terminal, with the permission settings Omarchy starts it with. An agent already running in herdr, Codex, Claude Code or a T3 Code thread is continued in the conversation it has. New work goes into a T3 Code thread only where you ask for it with `HW_TEST_T3=1`.
+The agent works in `~/Work/hw-bringup` (or `~/hw-bringup`). One computer takes one agent at a time, since hardware work restarts it and two agents can't both do that. So a second part waits until the first is done. `hw-test` opens the agent you have set up on Omarchy, in a terminal, with the permission settings Omarchy starts it with. An agent already running in herdr, Codex, Claude Code or a T3 Code thread is continued in the conversation it has. New work goes into a T3 Code thread only where you ask for it with `HW_TEST_T3=1`.
 
 | Setting | What it does |
 | --- | --- |

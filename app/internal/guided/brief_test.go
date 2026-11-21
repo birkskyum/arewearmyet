@@ -555,3 +555,67 @@ func TestNewWorkOpensTheOwnersAgentAndT3CodeOnlyWhereAskedFor(t *testing.T) {
 		t.Errorf("the new thread isn't kept: %+v, %v", kept, ok)
 	}
 }
+
+func TestAnAgentAtWorkKeepsItsBriefUntilTheOwnerSaysNow(t *testing.T) {
+	t.Setenv("XDG_STATE_HOME", t.TempDir())
+	t.Setenv("HW_TEST_AGENT", "")
+	t.Setenv("HW_TEST_T3", "")
+	dir := t.TempDir()
+	opened := 0
+	launch := func(string, string) error { opened++; return nil }
+	b := yoga()
+	b.ByOwner = true
+	b.Only = []string{"hibernate"}
+	if handed := HandOver(b, dir, launch); !handed.Opened || opened != 1 {
+		t.Fatalf("the first part: %+v, opened %d", handed, opened)
+	}
+	// The agent now has the folder and calls hw-test from it
+	_ = report.KeepThread(dir, report.Thread{Kind: "codex", ID: "c-1", When: time.Now(), Checks: []string{"hibernate"}})
+	first, _ := os.ReadFile(filepath.Join(dir, "BRIEF.md"))
+
+	// Another part, handed over by the owner while it works, changes nothing and says why
+	b.Only = []string{"speakers"}
+	handed := HandOver(b, dir, launch)
+	after, _ := os.ReadFile(filepath.Join(dir, "BRIEF.md"))
+	if handed.Opened || opened != 1 || string(after) != string(first) {
+		t.Errorf("the brief of work in progress was replaced: %+v, opened %d", handed, opened)
+	}
+	for _, want := range []string{"at work on hibernation", "nothing was changed", "hw-test fix speakers --now"} {
+		if !strings.Contains(handed.Said, want) {
+			t.Errorf("what the owner is told lacks %q: %s", want, handed.Said)
+		}
+	}
+	if kept, _ := report.ThreadFor(dir); len(kept.Checks) != 1 || kept.Checks[0] != "hibernate" {
+		t.Errorf("the agent's work was noted as another part: %+v", kept.Checks)
+	}
+
+	// The same part again is the same work, and the agent moving itself on isn't held back
+	b.Only = []string{"hibernate"}
+	if busy, _ := AtWork(dir, b.Only, time.Now()); busy {
+		t.Error("the same part counts as other work")
+	}
+	b.Only, b.ByOwner = []string{"speakers"}, false
+	if busy, with := AtWork(dir, b.Only, time.Now()); !busy || len(with) != 1 {
+		t.Errorf("another part while at work: %v, %v", busy, with)
+	}
+
+	// An agent that hasn't been heard from for half a day isn't at work any more
+	if busy, _ := AtWork(dir, []string{"speakers"}, time.Now().Add(13*time.Hour)); busy {
+		t.Error("still at work after 13 hours of silence")
+	}
+
+	// And with --now the owner gives it the new part in place of the old
+	b.ByOwner, b.Now = true, true
+	if handed := HandOver(b, dir, launch); !strings.Contains(string(mustRead(t, filepath.Join(dir, "BRIEF.md"))), "### Speakers") || strings.Contains(handed.Said, "nothing was changed") {
+		t.Errorf("with --now: %+v", handed)
+	}
+}
+
+func mustRead(t *testing.T, path string) []byte {
+	t.Helper()
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return data
+}

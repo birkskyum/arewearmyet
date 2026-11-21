@@ -79,6 +79,7 @@ func main() {
 	jsonOnly := flags.Bool("json", false, "print what would be sent, and send nothing")
 	play := flags.Bool("play", false, "for an agent, without a terminal, when the owner has said yes to the sound test's tones")
 	once := flags.Bool("once", false, "end after the named steps, without the last screen")
+	now := flags.Bool("now", false, "for hw-test fix, hand the part over while the agent is at work on another, in its place")
 	done := flags.String("done", "", "with --once, a file to write the steps' results to")
 	noSend := flags.Bool("no-send", false, "show the results without sending them")
 	model := flags.String("model", "", "the model's id on arewearmyet.com, when the machine isn't recognised by itself")
@@ -321,6 +322,7 @@ func main() {
 			briefing.InThread = guided.InThread
 			// Handing over at a terminal is the owner's own doing
 			briefing.ByOwner = guided.Interactive()
+			briefing.Now = *now
 		}
 		briefing.Fill(*api)
 		if command == "brief" {
@@ -1348,7 +1350,8 @@ func usageText() string {
                      measured, where to look and where a fix goes, and opens Omarchy's
                      agent on it. WHAT is a check or a part, like speakers. Without it,
                      it asks which one, since an agent takes one part at a time, from the
-                     results already here, and nothing is tested again
+                     results already here, and nothing is tested again. While the agent is
+                     at work on another part, nothing is changed unless you add --now
   hw-test brief [WHAT...]  print that brief, to give to any agent yourself
   hw-test ask STEP...      for an agent, opens a step that takes the owner in a window on
                      their desktop, waits until they are through, and prints the result.

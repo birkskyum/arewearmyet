@@ -51,6 +51,8 @@ type Briefing struct {
 	// Trusted is until when the owner has said the agent works on its own (hw-test trust). Zero
 	// when they haven't.
 	Trusted time.Time
+	// Now hands the parts over even while the agent is at work on others, in their place.
+	Now bool
 	// ByOwner is set when the owner themselves asked for the handing over, at a terminal. It
 	// is what lets the agent run the handed parts' tests itself.
 	ByOwner bool
@@ -553,6 +555,40 @@ type Handed struct {
 	Opened bool
 }
 
+// WorkFor is how long after an agent last called hw-test from its folder it counts as at work.
+const WorkFor = 12 * time.Hour
+
+// AtWork says whether the agent kept for a folder is at work on other parts than the given ones,
+// and on which. It is, when it was handed parts and has called hw-test from the folder lately.
+func AtWork(dir string, work []string, now time.Time) (bool, []string) {
+	kept, ok := report.ThreadFor(dir)
+	if !ok || len(kept.Checks) == 0 || now.Sub(kept.When) > WorkFor {
+		return false, nil
+	}
+	has := map[string]bool{}
+	for _, check := range kept.Checks {
+		has[check] = true
+	}
+	for _, check := range work {
+		if !has[check] {
+			return true, kept.Checks
+		}
+	}
+	return false, nil
+}
+
+// named puts checks in the words the test uses for them, as in "speakers and microphones".
+func named(checks []string) string {
+	var titles []string
+	for _, check := range checks {
+		titles = append(titles, strings.ToLower(first(checkTitle[check], check)))
+	}
+	if len(titles) > 1 {
+		return strings.Join(titles[:len(titles)-1], ", ") + " and " + titles[len(titles)-1]
+	}
+	return strings.Join(titles, "")
+}
+
 // HandOver writes the brief for the given checks, or for everything that fails, and opens
 // the owner's agent on it. launch is what opens the agent, which tests replace.
 func HandOver(b Briefing, dir string, launch func(dir, prompt string) error) Handed {
@@ -562,6 +598,13 @@ func HandOver(b Briefing, dir string, launch func(dir, prompt string) error) Han
 	}
 	if len(work) == 0 {
 		return Handed{Said: "Nothing fails in this computer's latest results, so there is nothing to hand over."}
+	}
+	// An agent that is at work on other parts keeps its brief. Writing a new one under it would
+	// leave it with the wrong work after its next restart, and one computer takes one agent at a
+	// time, since two can't both restart it. The agent moving itself on to another part isn't
+	// held back, nor is the owner who says now
+	if busy, with := AtWork(dir, work, time.Now()); busy && b.ByOwner && !b.Now {
+		return Handed{Said: "Your agent is at work on " + named(with) + ", and nothing was changed. Hand over " + named(work) + " when that is done, with the same command. To give it " + named(work) + " now, in place of what it has, run: hw-test fix " + strings.Join(work, " ") + " --now"}
 	}
 	file := filepath.Join(dir, "BRIEF.md")
 	if err := os.MkdirAll(dir, 0o755); err != nil {
