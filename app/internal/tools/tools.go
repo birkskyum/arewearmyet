@@ -544,15 +544,9 @@ func t3Up(dir string) bool {
 	if answers() {
 		return true
 	}
-	if !Have("gtk-launch") {
+	if !t3Launch() {
 		return false
 	}
-	command := exec.Command("gtk-launch", "t3code.desktop")
-	command.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
-	if command.Start() != nil {
-		return false
-	}
-	go command.Wait()
 	for waited := time.Duration(0); waited < t3Wait; waited += time.Second {
 		time.Sleep(time.Second)
 		if answers() {
@@ -560,6 +554,50 @@ func t3Up(dir string) bool {
 		}
 	}
 	return false
+}
+
+// t3Scope is how long the launcher is given to hand T3 Code over to a group of its own.
+var t3Scope = 5 * time.Second
+
+// t3Launch starts T3 Code's app in a control group of its own, as the desktop's launcher does.
+// The app is an AppImage, which serves its own files from a helper process, and that helper
+// stays in the group of whoever started the app. Started straight from the service that brings
+// an agent back after a restart, the helper was stopped when that service ended a few seconds
+// later, and the app's window died with it while its thread went on. Where no such group can
+// be made, the app is started as before.
+func t3Launch() bool {
+	launch := []string{"gtk-launch", "t3code.desktop"}
+	if !Have(launch[0]) {
+		return false
+	}
+	start := func(line []string) *exec.Cmd {
+		command := exec.Command(line[0], line[1:]...)
+		command.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
+		if command.Start() != nil {
+			return nil
+		}
+		return command
+	}
+	if Have("systemd-run") {
+		if scoped := start(append([]string{"systemd-run", "--user", "--scope", "--collect", "--quiet", "--"}, launch...)); scoped != nil {
+			done := make(chan error, 1)
+			go func() { done <- scoped.Wait() }()
+			select {
+			case err := <-done:
+				if err == nil {
+					return true
+				}
+			case <-time.After(t3Scope):
+				return true
+			}
+		}
+	}
+	plain := start(launch)
+	if plain == nil {
+		return false
+	}
+	go plain.Wait()
+	return true
 }
 
 // T3Show brings T3 Code's window to the front, so the owner sees their agent's thread in its list.

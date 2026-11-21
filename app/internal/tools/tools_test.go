@@ -266,12 +266,27 @@ func TestT3CodeIsStartedWhenItIsInstalledButNotRunning(t *testing.T) {
 	// T3 Code's command says no server is running until the app has been started
 	os.WriteFile(filepath.Join(bin, "t3"), []byte("#!/bin/sh\nif [ ! -e "+dir+"/running ]; then echo 'No running T3 Code server uses this folder. Start T3 Code, then retry.' >&2; exit 1; fi\nprintf '%s|' \"$@\" >> "+dir+"/called\necho >> "+dir+"/called\n[ \"$1\" = thread ] && [ \"$2\" = start ] && echo '{\"threadId\":\"mcp:77\"}'\nexit 0\n"), 0o755)
 	os.WriteFile(filepath.Join(bin, "gtk-launch"), []byte("#!/bin/sh\necho \"$1\" > "+dir+"/launched\n(sleep 1; touch "+dir+"/running) &\n"), 0o755)
+	// The app is started in a group of its own, so it outlives whoever started it
+	os.WriteFile(filepath.Join(bin, "systemd-run"), []byte("#!/bin/sh\necho \"$*\" > "+dir+"/scoped\nwhile [ \"$1\" != -- ]; do shift; done\nshift\nexec \"$@\"\n"), 0o755)
 	t.Setenv("PATH", bin+":"+os.Getenv("PATH"))
 	work := t.TempDir()
 	id, err := T3Start(work, "Hardware: speakers", "read the brief")
 	launched, _ := os.ReadFile(filepath.Join(dir, "launched"))
 	if err != nil || id != "mcp:77" || strings.TrimSpace(string(launched)) != "t3code.desktop" {
 		t.Fatalf("id %q, %v, launched %q", id, err, launched)
+	}
+	if scoped, _ := os.ReadFile(filepath.Join(dir, "scoped")); strings.TrimSpace(string(scoped)) != "--user --scope --collect --quiet -- gtk-launch t3code.desktop" {
+		t.Errorf("the app wasn't started in a group of its own: %q", scoped)
+	}
+	// Where no such group can be made, it is started as before
+	os.Remove(filepath.Join(dir, "launched"))
+	os.Remove(filepath.Join(dir, "running"))
+	os.WriteFile(filepath.Join(bin, "systemd-run"), []byte("#!/bin/sh\necho 'Failed to connect to user scope bus' >&2\nexit 1\n"), 0o755)
+	if id, err = T3Start(work, "Hardware: speakers", "read the brief"); err != nil || id != "mcp:77" {
+		t.Fatalf("without a group of its own: id %q, %v", id, err)
+	}
+	if launched, _ = os.ReadFile(filepath.Join(dir, "launched")); strings.TrimSpace(string(launched)) != "t3code.desktop" {
+		t.Errorf("not started without a group of its own: %q", launched)
 	}
 	// Running already, it is only written to
 	os.Remove(filepath.Join(dir, "launched"))
