@@ -1,5 +1,535 @@
 {
  "models": {
+  "asus-vivobook-s14-s3407qa": {
+   "machines": 1,
+   "checks": {
+    "display": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "eDP-1 connected, 2560x1600",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "gpu": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adreno bound to 3d00000.gpu, render node from msm_dpu",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "wifi": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "connected at 5260 MHz, signal -29 dBm, sending at 866.7 Mb/s",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "wifi-address": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "wlP4p1s0 (ath11k_pci) has an address set by the system (not from the card)",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "bluetooth": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "hci0 powered",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "adsp": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adsp running (qcom/x1p42100/ASUSTeK/vivobook-s14/qcadsp8380.mbn)",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "cdsp": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "cdsp running (qcom/x1p42100/ASUSTeK/vivobook-s14/qccdsp8380.mbn)",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "battery": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "qcom-battmgr-bat at 44%, Discharging",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "suspend": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "owner",
+       "note": "It woke up but not automatically when opening the lid, I had to manually press the power button. When sleeping the fan kept spinning, although USB traffic stopped, as seen by the light in the external SSD.",
+       "evidence": "slept and woke in s2idle [deep], Wi-Fi was back 5 s after waking, the audio processor is running",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "hibernate": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "the kernel offers no hibernation",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "camera": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "no camera device",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "video-decode": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "the hardware decoder gave no frames (Error opening output files: Invalid argument)",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "keyboard": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "owner",
+       "note": "No effect from volume up, volume down, mute, mute again",
+       "evidence": "62 keys registered, every letter, number and arrow among them",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "backlight": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "owner",
+       "note": null,
+       "evidence": "both brightness keys pressed, the backlight stayed at 0",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "touchpad": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "hid-over-i2c 04F3:3313 Touchpad, moving the pointer, clicking and two-finger scrolling both ways registered",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "speakers": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "owner",
+       "note": "No sound from the speakers.",
+       "evidence": "the microphones recorded nothing, so the speakers couldn't be measured",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "microphones": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "owner",
+       "note": "I could not record or hear anything",
+       "evidence": "speech recorded at -100 dB, where the test tone plays at -12 dB",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "usb": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "5 plug-ins detected, on 2-2 at 480 Mb/s, 4-1 at 480 Mb/s, 4-1 at 480 Mb/s, 6-1 at 480 Mb/s, 6-1 at 480 Mb/s",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "external-display": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "owner",
+       "note": "There is a picture, but it flickers or has the wrong size.",
+       "evidence": "HDMI-A-1 (HDMI), 720x480 at 60 Hz",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "lid": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "the lid switch reported closed and then open again",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "fans": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "measured",
+       "note": "The temperatures can be read and answer to load. No fan was seen starting, and there is no sensor for its speed.",
+       "evidence": "43 temperature sensors. The hottest went from 31 to 45 °C in 120 s with every core and the GPU busy, drawing up to 20 W from the battery, and back to 39 °C after. No fan speed sensor",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "charging": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": null,
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "installer": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": null,
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "webgl": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "Chrome on ANGLE (angleisbroken, Adreno X1-45, OpenGL ES 3.2), WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    },
+    "webgpu": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "measured",
+       "note": "Chrome doesn't offer WebGPU by itself here. It works when started with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU.",
+       "evidence": "Chrome has WebGPU on qualcomm adreno-7xx with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU, and without them no adapter",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T16:33:52.464Z",
+       "run": "RUN-BGHKHECXAN"
+      }
+     ]
+    }
+   }
+  },
   "asus-zenbook-a14-ux3407": {
    "machines": 1,
    "checks": {
@@ -774,6 +1304,30 @@
   "lenovo-yoga-slim-7x-14q8x9": {
    "machines": 1,
    "checks": {
+    "headphones": {
+     "machines": 1,
+     "states": {
+      "absent": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "absent",
+       "how": "owner",
+       "note": null,
+       "evidence": "the sound server offers no headphone output on the built-in sound card",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-20T20:41:52.129Z",
+       "run": "RUN-ECPDEZGY7M",
+       "setup": {
+        "testTree": true
+       }
+      }
+     ]
+    },
     "touchpad": {
      "machines": 1,
      "states": {
@@ -787,11 +1341,14 @@
        "state": "works",
        "how": "measured",
        "note": null,
-       "evidence": "hid-over-i2c 0488:1054 Touchpad: moving the pointer, clicking and two-finger scrolling both ways registered",
+       "evidence": "hid-over-i2c 0488:1054 Touchpad, moving the pointer, clicking and two-finger scrolling both ways registered",
        "kernel": "7.3.0-72-omarchy",
        "os": "Omarchy",
-       "created": "2026-11-20T00:07:21.629Z",
-       "run": "RUN-SX66WBN2A2"
+       "created": "2026-11-20T18:21:19.846Z",
+       "run": "RUN-BP4M3EER43",
+       "setup": {
+        "testTree": true
+       }
       }
      ]
     },

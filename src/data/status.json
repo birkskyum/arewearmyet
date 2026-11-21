@@ -1,18 +1,18 @@
 {
-  "collected": "2026-11-20T05:28:04.488Z",
+  "collected": "2026-11-21T05:27:02.277Z",
   "stale": [],
-  "linuxNext": "20261119",
+  "linuxNext": "20261120",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-73",
+    "kernel": "7.3-74",
     "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.19.496",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.19.496/omarchy-edge-2026.11.19.496-aarch64.iso",
-      "kernel": "7.3.0-72-omarchy"
+      "version": "2026.11.20.497",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.20.497/omarchy-edge-2026.11.20.497-aarch64.iso",
+      "kernel": "7.3.0-73-omarchy"
     },
     "channels": [
       {
@@ -397,7 +397,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-73",
+        "kernel": "7.3-74",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -1620,6 +1620,9 @@
             "qcom/sdm850/samsung/w737/qcdsp1v2850.mbn",
             "qcom/sdm850/samsung/w737/qcdsp2850.mbn",
             "qcom/sdm850/samsung/w737/qcvss850.mbn"
+          ],
+          "samsung-galaxy-book4-edge-14-support": [
+            "qcom/x1e80100/X1E80100-GalaxyBook4Edge-tplg.bin"
           ],
           "samsung-galaxy-book4-edge-15-firmware": [
             "qcom/x1p42100/SAMSUNG/galaxy-book4-edge/adsp_dtbs.elf",
