@@ -126,7 +126,7 @@ Every computer model with a page. Those are the Snapdragon PCs that start throug
 }
 ```
 
-`bootable` is the most stable Omarchy channel whose install image starts the model by itself (`stable`, `rc`, `edge`), or a word for what is in the way (`needs-deviceTree`, `needs-ids`, `workaround`, `problems`). `outcome` says how far it gets. `works` means an owner reached the desktop, `should` means the pieces are there, so the installer should run, and nobody has reported how the installed system starts, and `workaround`, `problems`, `manual` and `none` name what is in the way. `checksWrittenUp` counts the checks with a finding for Omarchy.
+`bootable` is the most stable Omarchy channel whose install image starts the model by itself (`stable`, `rc`, `edge`), or a word for what is in the way (`needs-deviceTree`, `needs-ids`, `workaround`, `problems`). `outcome` says how far it gets. `works` means an owner reached the desktop, `should` means the pieces are there and nobody has confirmed it, and `workaround`, `problems`, `manual` and `none` name what is in the way. `checksWrittenUp` counts the checks with a finding for Omarchy.
 
 ### `GET /api/models/<id>`
 

@@ -16,13 +16,14 @@ const channelKernel = (name: string) => status.omarchy.channels.find((c) => c.na
 
 const STATES = {
   // Whether it boots. Either an owner reached the desktop, or the pieces are shipped and nobody has confirmed it.
-  // The shipped pieces only say that the installer should run. Whether the installed system then shows its disk
-  // password prompt takes the model's screen and keyboard drivers in the early boot image, which no piece here tells
+  // The shipped pieces don't say whether the installed system lights its disk password prompt, which takes the
+  // model's screen drivers in the early boot image. A dark prompt still takes the password, so such a model boots,
+  // and the label stays an invitation to try. The desktop is where an owner's agent can start on the rest
   // The channel that has the pieces is in the hover text, since a first version of a device tree can be in
   // stable while the fixes to it are on edge only, and "Stable" in the cell read as "stable is enough"
   bootable: {
     boots: { label: 'Boots', tone: 'good', meaning: `An owner reached the Omarchy desktop on it, with the device tree and hardware IDs Omarchy ships. Not every feature has to work yet.` },
-    should: { label: 'Should install', tone: 'good-seen', meaning: `Omarchy ships its device tree and hardware IDs, so the install image picks the tree by itself and the installer should run. No owner has reported how the installed system starts. On some models the screen stays dark at the disk password prompt until Omarchy has a setup for that model.` },
+    should: { label: 'Should boot', tone: 'good-seen', meaning: `Omarchy ships its device tree and hardware IDs, so the install image picks the tree by itself. No owner has confirmed that it boots yet. On some models the screen stays dark at the disk password prompt after installing, and the password can still be typed there. The install guide says how.` },
     works: { label: 'Boots by hand', tone: 'good', meaning: `An owner booted into the Omarchy desktop, with a device tree or hardware IDs Omarchy doesn't ship yet.` },
     workaround: { label: 'Workaround', tone: 'close', meaning: `An owner reached the Omarchy desktop on the current release with a workaround, such as typing the disk password while the screen is dark. The notes say which.` },
     problems: { label: 'Problems', tone: 'wanted', meaning: `An owner tried the current release and couldn't get to the Omarchy desktop.` },

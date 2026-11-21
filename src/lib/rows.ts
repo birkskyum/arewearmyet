@@ -33,7 +33,7 @@ const announcedTitle = (statusText: string | null) => (statusText ? `${ANNOUNCED
 
 const VARIANT: Record<string, { tone: TableRow['variants'][number]['tone']; state: string }> = {
   works: { tone: 'good', state: 'boots' },
-  should: { tone: 'good', state: 'should install' },
+  should: { tone: 'good', state: 'should boot' },
   workaround: { tone: 'close', state: 'workaround' },
   problems: { tone: 'wanted', state: 'problems' },
   manual: { tone: 'wanted', state: 'needs IDs' },
