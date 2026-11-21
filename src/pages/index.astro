@@ -47,7 +47,7 @@ const HARDWARE_LEGEND = [
 const HARDWARE_QUESTION = 'Whether it boots, and what works once it runs, part by part. Every part\'s label is a result from Omarchy on that model, by hw-test or an owner.';
 // The table opens with the models most was seen of on top. That count orders the rows and is no column,
 // since the parts beside it say the same
-const HARDWARE_VIEW = { id: 'hardware', label: 'Hardware', question: HARDWARE_QUESTION, sort: 'seen', compact: true,
+const HARDWARE_VIEW = { id: 'hardware', label: 'What works', question: HARDWARE_QUESTION, sort: 'seen', compact: true,
   hidden: [{ id: 'seen', header: 'Seen on Omarchy', question: 'How many of the parts have a result from Omarchy, by hw-test or an owner.' }],
   columns: PARTS.map((part) => ({ id: `part-${part.id}`, header: part.title, question: part.question, options: PART_OPTIONS })),
 };
@@ -58,7 +58,7 @@ type LegendGroup = (typeof OMARCHY_LEGEND)[number];
 const hardwareView = (boot: BootColumn) => ({ ...HARDWARE_VIEW, columns: [boot, ...HARDWARE_VIEW.columns] });
 const hardwareLegend = (boot: LegendGroup) => [boot, ...HARDWARE_LEGEND];
 const HARDWARE_KEYS = [{ dot: 'bg-emerald-400', text: 'works' }, { dot: 'bg-amber-400', text: 'partly' }, { dot: 'bg-rose-400', text: 'broken' }];
-const HARDWARE_DOTS = { id: 'parts', header: 'Hardware', question: `The parts past booting, in the order of the Hardware view (${PARTS.map((part) => part.title.toLowerCase()).join(', ')}). Filled is seen on Omarchy on that model, faint is not known yet. Click for the Hardware view.` };
+const HARDWARE_DOTS = { id: 'parts', header: 'Parts', question: `The parts past booting, in the order of What works (${PARTS.map((part) => part.title.toLowerCase()).join(', ')}). Filled is seen on Omarchy on that model, faint is not known yet. Click for What works.` };
 const snapdragonViews = [
   { id: 'omarchy', label: 'Omarchy', question: `What Omarchy's packages ship today. A check is a piece Omarchy ships, and pointing at it says which channel has it.`, columns: [...OMARCHY_LEGEND.map((group, i) => ({ id: omarchyIds[i], header: group.column, question: group.question, options: FILTERS[omarchyIds[i]] })), HARDWARE_DOTS] },
   { id: 'upstream', label: 'Upstream', question: 'What Linux, systemd and linux-firmware have, which every distro gets.', columns: UPSTREAM_LEGEND.map((group, i) => ({ id: upstreamIds[i], header: group.column, question: group.question, options: FILTERS[upstreamIds[i]] })) },
