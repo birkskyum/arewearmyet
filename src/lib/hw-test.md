@@ -115,12 +115,13 @@ When the network isn't up yet, as right after waking, `hw-test` waits for it and
 
 An agent takes one part at a time, so a part that can't be fixed doesn't hold up the others. The opening screen of `hw-test` offers the same for a part that fails. It shows the conversation your agent already has on a part, and sends the next part into it.
 
-The agent works in `~/Work/hw-bringup` (or `~/hw-bringup`). `hw-test` uses the agent you have set up on Omarchy. Where T3 Code is installed, the brief goes into a thread there. An agent already running in T3 Code, herdr, Codex or Claude Code is continued in the conversation it has.
+The agent works in `~/Work/hw-bringup` (or `~/hw-bringup`). `hw-test` opens the agent you have set up on Omarchy, in a terminal, with the permission settings Omarchy starts it with. An agent already running in herdr, Codex, Claude Code or a T3 Code thread is continued in the conversation it has. New work goes into a T3 Code thread only where you ask for it with `HW_TEST_T3=1`.
 
 | Setting | What it does |
 | --- | --- |
 | `HW_TEST_AGENT` | The command that starts your agent, which gets the brief as its last argument, like `foot -e claude` |
 | `HW_TEST_TERMINAL` | The command that opens a terminal window for a step |
+| `HW_TEST_T3` | `1` opens new work in a T3 Code thread. `0` leaves T3 Code out, a thread that is going there included. Unset, a thread that is going there is continued and nothing new is started there |
 | `HW_TEST_T3_MODEL` | The model a T3 Code thread starts on, as `provider/model` |
 
 ## Notes

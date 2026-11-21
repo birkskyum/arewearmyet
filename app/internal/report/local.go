@@ -188,6 +188,17 @@ func KeepThread(dir string, thread Thread) error {
 	return os.WriteFile(threadFile(), data, 0o600)
 }
 
+// DropThread forgets the conversation kept for a folder.
+func DropThread(dir string) {
+	kept := threads()
+	if _, ok := kept[dir]; !ok {
+		return
+	}
+	delete(kept, dir)
+	data, _ := json.MarshalIndent(kept, "", " ")
+	_ = os.WriteFile(threadFile(), data, 0o600)
+}
+
 func testEntryFile() string { return filepath.Join(stateDir(), "test-entry.json") }
 
 // TestEntry is the test boot entry hw-test tree boot installed, noted here because the boot

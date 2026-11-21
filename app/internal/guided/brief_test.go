@@ -1,6 +1,7 @@
 package guided
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -502,5 +503,55 @@ func TestTheBriefSaysWhenTheOwnerLetsTheAgentWorkOnItsOwn(t *testing.T) {
 		if !strings.Contains(trusted, want) {
 			t.Errorf("the brief with the owner's word lacks %q", want)
 		}
+	}
+}
+
+func TestNewWorkOpensTheOwnersAgentAndT3CodeOnlyWhereAskedFor(t *testing.T) {
+	dir, bin, work := t.TempDir(), t.TempDir(), t.TempDir()
+	t.Setenv("XDG_STATE_HOME", t.TempDir())
+	t.Setenv("HW_TEST_AGENT", "")
+	t.Setenv("HW_TEST_T3_MODEL", "codex/gpt-6-astra")
+	// T3 Code is installed and running. Its command notes how it was called
+	os.WriteFile(filepath.Join(bin, "t3"), []byte("#!/bin/sh\nprintf '%s|' \"$@\" >> "+dir+"/called\necho >> "+dir+"/called\n[ \"$1\" = thread ] && [ \"$2\" = start ] && echo '{\"threadId\":\"mcp:77\"}'\nexit 0\n"), 0o755)
+	t.Setenv("PATH", bin+":"+os.Getenv("PATH"))
+	called := func() string {
+		data, _ := os.ReadFile(filepath.Join(dir, "called"))
+		return string(data)
+	}
+
+	// By itself hw-test starts nothing there, and the caller opens the agent Omarchy has set
+	t.Setenv("HW_TEST_T3", "")
+	if said, err := InThread(work, "Fix speakers", "read the brief"); !errors.Is(err, tools.ErrNoSession) || said != "" {
+		t.Fatalf("without being asked for T3 Code: %q, %v", said, err)
+	}
+	if strings.Contains(called(), "start") {
+		t.Errorf("a thread was started in T3 Code unasked: %s", called())
+	}
+
+	// A thread that is going there keeps the work
+	_ = report.KeepThread(work, report.Thread{Kind: "t3", ID: "mcp:12", When: time.Now(), Title: "Speakers"})
+	if said, err := InThread(work, "Fix speakers", "go on"); err != nil || !strings.Contains(said, "the same thread as before") {
+		t.Errorf("a thread that is going: %q, %v", said, err)
+	}
+	if !strings.Contains(called(), "thread|send|mcp:12|go on|") {
+		t.Errorf("the going thread wasn't written to: %s", called())
+	}
+
+	// Unless the owner leaves T3 Code out, which also forgets that thread
+	t.Setenv("HW_TEST_T3", "0")
+	if _, err := InThread(work, "Fix speakers", "go on"); !errors.Is(err, tools.ErrNoSession) {
+		t.Errorf("with T3 Code left out: %v", err)
+	}
+	if _, kept := report.ThreadFor(work); kept {
+		t.Error("the T3 Code thread is still kept for the folder")
+	}
+
+	// And asked for, new work starts there
+	t.Setenv("HW_TEST_T3", "1")
+	if said, err := InThread(work, "Fix speakers", "read the brief"); err != nil || !strings.Contains(said, "T3 Code") {
+		t.Errorf("asked for T3 Code: %q, %v", said, err)
+	}
+	if kept, ok := report.ThreadFor(work); !ok || kept.Kind != "t3" || kept.ID != "mcp:77" {
+		t.Errorf("the new thread isn't kept: %+v, %v", kept, ok)
 	}
 }

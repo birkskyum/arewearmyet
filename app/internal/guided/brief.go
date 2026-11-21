@@ -77,13 +77,19 @@ func Command() string {
 }
 
 // InThread hands work to the conversation the owner's agent already has for this folder, so nothing
-// the agent learnt is lost and the owner has one place to look. That is the thread hw-test started
-// in T3 Code, or the conversation of an agent in a terminal, which says which it is whenever it
-// calls hw-test. Without one, and where T3 Code is installed, a new thread is started there, since
-// T3 Code runs whichever agent the owner has, and keeps the thread.
+// the agent learnt is lost and the owner has one place to look. That is the conversation of an
+// agent in a terminal, which says which it is whenever it calls hw-test, or a thread in T3 Code.
+// Without one, the caller opens the agent the owner has set on Omarchy, which every owner has.
+// HW_TEST_T3=1 starts new work in a T3 Code thread, for an owner who wants it there, and
+// HW_TEST_T3=0 leaves T3 Code out, a thread that is going there included.
 func InThread(dir, title, message string) (string, error) {
 	if os.Getenv("HW_TEST_AGENT") != "" {
 		return "", tools.ErrNoSession
+	}
+	inT3 := os.Getenv("HW_TEST_T3")
+	if kept, ok := report.ThreadFor(dir); ok && kept.Kind == "t3" && inT3 == "0" {
+		// The next result and the word after a restart then go to the agent that is opened now
+		report.DropThread(dir)
 	}
 	if kept, ok := report.ThreadFor(dir); ok {
 		err := tools.Continue(tools.Session{Kind: kept.Kind, ID: kept.ID}, dir, message)
@@ -101,6 +107,9 @@ func InThread(dir, title, message string) (string, error) {
 			tools.FocusAgentWindow()
 			return "Your agent's window is open, and it can't be written to from here. Tell it to read BRIEF.md again, which is about " + strings.TrimPrefix(title, "Fix ") + " now.", nil
 		}
+	}
+	if inT3 != "1" {
+		return "", tools.ErrNoSession
 	}
 	// In T3 Code's own window first, typed into the thread it opens, so the thread in front of the
 	// owner is the one at work. Where that can't be done, a thread is started behind the window and
