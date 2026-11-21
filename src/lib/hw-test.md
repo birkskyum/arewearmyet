@@ -49,7 +49,7 @@ It opens on a menu of what it can test on your computer, with where each part st
 | `screen` | An external screen | yes |
 | `lid` | Closing and opening the lid | yes |
 | `sleep` | Sleep and wake. On a laptop you close the lid. A computer without a lid is put to sleep by the test, and you wake it | yes |
-| `questions` | What no test can see, like the disk password prompt at startup | yes |
+| `questions` | What no test can see, like whether a USB stick worked in every port. The disk password prompt is asked about only where the quick check couldn't measure it | yes |
 | `graphics`, `vulkan` | Drawing with the graphics chip | no |
 | `browser`, `webgl`, `webgpu` | WebGL and WebGPU in the browser | no |
 | `wireless`, `wifi`, `bluetooth` | Wi-Fi and Bluetooth | no |
@@ -71,7 +71,7 @@ Every check ends in one of five states.
 | not tested | Nothing was measured |
 | absent | The computer doesn't have the part |
 
-A result that works but looks off (one speaker much quieter than the other) is marked as worth a look, and can be handed to an agent like a failing one. The quick check only sees that a part is there and its driver came up, so its result never replaces what a closer test found, on the computer or on the site. A part the quick check finds gone does replace it.
+A result that works but looks off (one speaker much quieter than the other) is marked as worth a look, and can be handed to an agent like a failing one. The quick check only sees that a part is there and its driver came up, so its result never replaces what a closer test found, on the computer or on the site. A part the quick check finds gone does replace it. The disk password prompt is the exception. On a laptop with an encrypted disk the quick check reads from the kernel's log when the built-in screen and keyboard came up at this boot and when the disk opened. A screen that was up first showed the prompt, and one that came up afterwards left it dark. That is a measurement of what happened, so it counts as a test, and it is taken again at every run.
 
 The keyboard step lets you go on without pressing every key. When you pressed fewer than half of them, it records nothing, and what was found before stands.
 

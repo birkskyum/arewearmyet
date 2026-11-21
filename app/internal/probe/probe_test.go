@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 	"syscall"
 	"testing"
@@ -440,4 +441,87 @@ func TestTheNetworkSocketIsADesktopsOwnAndALaptopsOnlyWhenBuiltIn(t *testing.T) 
 	// A socket of the laptop's own counts
 	run, _ = fixture(t, func(root string) { socket(t, root, "enp1s0", "pci", "1") })
 	expect(t, run, map[string]string{"ethernet": report.Works})
+}
+
+// bootLog is the kernel's log of a boot as journalctl gives it with each line's own time.
+func bootLog(lines ...string) string {
+	var log strings.Builder
+	for i := 0; i+1 < len(lines); i += 2 {
+		seconds, _ := time.ParseDuration(lines[i] + "s")
+		log.WriteString(`{"_SOURCE_MONOTONIC_TIMESTAMP":"` + strconv.FormatInt(seconds.Microseconds(), 10) + `","MESSAGE":"` + lines[i+1] + `"}` + "\n")
+	}
+	return log.String()
+}
+
+const (
+	keyboardLine = "input: hid-over-i2c 048D:8987 Keyboard as /devices/platform/soc@0/bc0000.geniqup/b80000.i2c/i2c-1/1-003a/0018:048D:8987.0003/input/input3"
+	screenLine   = "msm_dpu ae01000.display-controller: [drm] fb0: msmdrmfb frame buffer device"
+	diskLine     = "BTRFS info (device dm-0): first mount of filesystem a5043dcb-4dd3-45e2-b3d8-b13c55012217"
+)
+
+// encrypted is the Yoga with an encrypted disk and the kernel's log of its boot.
+func encrypted(t *testing.T, log string, more func(root string)) (*report.Run, Facts) {
+	t.Helper()
+	return fixture(t, func(root string) {
+		write(t, root, "proc/cmdline", "cryptdevice=PARTUUID=30698426-b01f-42d0-ab4a-309ebd1b4ba2:root root=/dev/mapper/root quiet splash\n")
+		write(t, root, "cmd/klog-json", log)
+		if more != nil {
+			more(root)
+		}
+	})
+}
+
+func TestAScreenAndKeyboardUpBeforeTheDiskOpenedShowedThePasswordPrompt(t *testing.T) {
+	run, facts := encrypted(t, bootLog("0.466", "Run /init as init process", "2.093", keyboardLine, "2.387", screenLine, "90.169", diskLine, "91.5", "input: Some Other Keyboard as /devices/virtual/input/input9"), nil)
+	if !facts.Encrypted || facts.Keyboard != "hid-over-i2c 048D:8987" {
+		t.Fatalf("the fixture's disk or keyboard: %v, %q", facts.Encrypted, facts.Keyboard)
+	}
+	result, _ := run.Get("disk-unlock")
+	if result.State != report.Works || result.How != report.Measured {
+		t.Fatalf("the prompt of a boot with screen and keyboard up early: %+v", result)
+	}
+	if want := "the screen came up at 2.4 s and the built-in keyboard at 2.1 s, and the encrypted disk opened at 90.2 s"; result.Evidence != want {
+		t.Errorf("evidence: %q, want %q", result.Evidence, want)
+	}
+	// What happened at this boot is a test of the prompt, so a later look can't be taken for less
+	if run.Shallow(result) || run.Depth(result) != report.Test {
+		t.Errorf("the measured prompt counts as a look: %s", run.Depth(result))
+	}
+}
+
+func TestAScreenOrKeyboardThatCameUpAfterTheDiskOpenedLeftThePromptWithoutIt(t *testing.T) {
+	for name, c := range map[string]struct {
+		log   string
+		state string
+		says  string
+	}{
+		"dark, typed blind":       {bootLog("2.1", keyboardLine, "90.2", diskLine, "95.3", screenLine), report.Partial, "the prompt was dark and the password could be typed blind"},
+		"shown, no keyboard":      {bootLog("2.4", screenLine, "90.2", diskLine, "96.0", keyboardLine), report.Partial, "the prompt showed and the built-in keyboard wasn't ready for it"},
+		"dark and no keyboard":    {bootLog("90.2", diskLine, "95.3", screenLine, "96.0", keyboardLine), report.Broken, "the prompt was dark and the built-in keyboard wasn't ready for it"},
+		"the firmware's console":  {bootLog("0.9", "fb0: EFI VGA frame buffer device", "2.1", keyboardLine, "40.0", "EXT4-fs (dm-0): mounted filesystem 1234 r/w with ordered data mode"), report.Works, "the screen came up at 0.9 s"},
+		"keyboard not in the log": {bootLog("2.4", screenLine, "90.2", diskLine), report.Works, "the screen came up at 2.4 s, and the encrypted disk opened at 90.2 s"},
+	} {
+		run, _ := encrypted(t, c.log, nil)
+		result, _ := run.Get("disk-unlock")
+		if result.State != c.state || !strings.Contains(result.Evidence, c.says) {
+			t.Errorf("%s: got %q (%s), want %q with %q", name, result.State, result.Evidence, c.state, c.says)
+		}
+	}
+}
+
+func TestThePasswordPromptIsNotMeasuredWhereTheLogDoesNotTell(t *testing.T) {
+	early := bootLog("2.1", keyboardLine, "2.4", screenLine, "90.2", diskLine)
+	// No encrypted disk, so no prompt
+	run, _ := fixture(t, func(root string) { write(t, root, "cmd/klog-json", early) })
+	expect(t, run, map[string]string{"disk-unlock": ""})
+	// A desktop's prompt is on whatever screen and keyboard are plugged in
+	run, _ = encrypted(t, early, func(root string) { write(t, root, "sys/class/dmi/id/chassis_type", "3\n") })
+	expect(t, run, map[string]string{"disk-unlock": ""})
+	// A log without the kernel's own times, without a screen, or without the disk opening
+	for _, log := range []string{"", "not json\n", bootLog("2.1", keyboardLine, "90.2", diskLine), bootLog("2.1", keyboardLine, "2.4", screenLine), `{"MESSAGE":"` + screenLine + `"}` + "\n" + `{"MESSAGE":"` + diskLine + `"}` + "\n"} {
+		run, _ = encrypted(t, log, nil)
+		if result, ok := run.Get("disk-unlock"); ok {
+			t.Errorf("measured from %q: %+v", log, result)
+		}
+	}
 }

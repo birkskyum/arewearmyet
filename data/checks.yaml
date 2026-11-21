@@ -44,7 +44,7 @@ checks:
     group: start
     title: Disk password prompt
     works: The disk password prompt shows on the built-in screen at startup and the built-in keyboard types into it.
-    probe: Whether the root file system is on an encrypted disk.
+    probe: On a laptop with an encrypted disk, when the built-in screen and keyboard came up at this boot against when the disk opened, from the kernel's log.
     person: Restart and say whether the password prompt was visible and whether the built-in keyboard worked in it.
     debug: "The prompt runs from the initramfs, before most drivers load. A prompt that can't be typed into means part of the keyboard's driver chain isn't in the initramfs (i2c-hid-of, the I2C controller, pin control, regulators, or the USB controller for a USB keyboard). No visible prompt means the display's chain isn't. Compare `lsinitcpio` on the image with `lsmod` on the running system."
 

@@ -271,6 +271,12 @@ func Fixture(root string) System {
 				}
 				return read("cmd", "uname-r")
 			case "journalctl":
+				// The kernel's log with each line's own time, which the fixtures made before it was read have none of
+				for _, arg := range args {
+					if arg == "json" {
+						return read("cmd", "klog-json")
+					}
+				}
 				return read("cmd", "klog")
 			case "udevadm":
 				return read("udev", filepath.Base(args[len(args)-1]))

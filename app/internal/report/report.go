@@ -133,6 +133,12 @@ func (r *Run) MarkQuick() {
 	}
 }
 
+// MarkTested takes a check out of the quick check's own results, for one the quick check measured by
+// what the part did and not by its being there.
+func (r *Run) MarkTested(check string) {
+	delete(r.Quick, check)
+}
+
 // Shallow says whether a result is the quick check's own, which only looks at whether the
 // hardware is there and its driver came up, and not that of a test that used it.
 func (r *Run) Shallow(result Result) bool {

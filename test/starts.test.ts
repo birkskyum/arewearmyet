@@ -2,7 +2,7 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { findingReports, startReports, type OwnerModel } from '../scripts/starts.ts';
+import { findingReports, startReports, startRuns, type OwnerModel } from '../scripts/starts.ts';
 
 const run = (state: string, more: Record<string, unknown> = {}) => ({ state, kernel: '7.3.0-72-omarchy', os: 'Omarchy', created: '2026-11-19T18:47:44.644Z', ...more });
 const model = (checks: Record<string, ReturnType<typeof run>[]>): OwnerModel => ({ machines: 1, checks: Object.fromEntries(Object.entries(checks).map(([id, latest]) => [id, { latest }])) });
@@ -55,4 +55,18 @@ test("the maker's description, another distro and untested checks say nothing ab
   assert.deepEqual(findingReports({ touchscreen: { state: 'absent', basis: 'maker-spec' }, camera: { state: 'untested', basis: 'maker-spec' } }), []);
   assert.deepEqual(findingReports({ wifi: { state: 'works', basis: 'other-distro' }, gpu: { state: 'works', basis: 'tree-author' } }), []);
   assert.deepEqual(findingReports({ wifi: { state: 'untested' }, lid: { state: 'absent' } }), []);
+});
+
+test('a run that has a newer result for the password prompt puts an older finding of it aside', () => {
+  const owner = model({ 'disk-unlock': [run('works')], wifi: [run('works')] });
+  assert.deepEqual(startRuns(owner), { 'disk-unlock': '2026-11' });
+  assert.deepEqual(startRuns(model({ installer: [run('works', { os: 'Fedora Linux', kernel: '6.19.0' })] })), {});
+  const findings = { 'disk-unlock': { state: 'partial', checked: '2026-10' }, speakers: { state: 'broken', checked: '2026-10' } };
+  // By itself the finding makes it a workaround. With the run it only says an owner has the model running
+  assert.equal(findingReports(findings)[0].state, 'workaround');
+  assert.equal(findingReports(findings, startRuns(owner))[0].state, 'works');
+  assert.equal(findingReports(findings, startRuns(owner))[0].note, 'An owner has Omarchy running on it, going by the 2 checks written up from it.');
+  // A finding written after the run still counts, and so does one of a check the run didn't answer
+  assert.equal(findingReports({ 'disk-unlock': { state: 'broken', checked: '2026-12' } }, startRuns(owner))[0].state, 'workaround');
+  assert.equal(findingReports({ installer: { state: 'broken', checked: '2026-10' } }, startRuns(owner))[0].state, 'problems');
 });

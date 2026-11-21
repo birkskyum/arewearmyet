@@ -5,7 +5,7 @@
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { parse } from 'yaml';
-import { findingReports, startReports, type Finding, type OwnerModel, type Report } from './starts.ts';
+import { findingReports, startReports, startRuns, type Finding, type OwnerModel, type Report } from './starts.ts';
 
 // The channel testers install, from the edge nightly image
 const OMARCHY_CHANNEL = 'edge' as const;
@@ -359,7 +359,7 @@ const rows = models.map((model) => {
   // always counts. That it boots is said once, and only where no report is written up, since a
   // written report says more
   const written: Report[] = model.reports ?? [];
-  const found = [...startReports(owners[model.id]), ...findingReports(writtenUp[model.id]?.checks)];
+  const found = [...startReports(owners[model.id]), ...findingReports(writtenUp[model.id]?.checks, startRuns(owners[model.id]))];
   const faults = found.filter((report) => report.state !== 'works');
   const boots = written.length === 0 && faults.length === 0 ? found.slice(0, 1) : [];
   const reports = [...written, ...faults, ...boots];

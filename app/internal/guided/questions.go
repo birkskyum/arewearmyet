@@ -44,7 +44,7 @@ func newQuestions(run *report.Run, facts probe.Facts, covered map[string]bool) *
 		unlock, installer = "When you started the computer, did you see the disk password prompt, and could you type into it?",
 			"If you installed Omarchy on this computer yourself, did the installer start from the USB stick, with a picture on the screen and the keyboard working?"
 	}
-	add(facts.Encrypted, "disk-unlock", unlock)
+	add(facts.Encrypted && unmeasured("disk-unlock"), "disk-unlock", unlock)
 	add(facts.Touchpad != "" && !covered["touchpad"], "touchpad", "Does the touchpad move the pointer, click and scroll with two fingers?")
 	add(facts.SoundCard != "" && !covered["speakers"], "speakers", "Do the speakers play sound, on both sides?")
 	add(facts.SoundCard != "" && !covered["microphones"], "microphones", "Does the microphone pick you up in calls or recordings?")

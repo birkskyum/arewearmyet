@@ -28,6 +28,16 @@ const startLines = (installer: Found, unlock: Found) =>
     .map((check) => `${check.words} ${WORD[check.state!]}`)
     .join(', and ');
 
+/** The month of the newest run on Omarchy that has a result for each start check. */
+export function startRuns(model: OwnerModel | undefined): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [check] of START_CHECKS) {
+    const months = (model?.checks?.[check]?.latest ?? []).filter((result) => result.state !== 'untested' && onOmarchy(result)).map((result) => result.created?.slice(0, 7) ?? '').sort();
+    if (months.length && months[months.length - 1]) out[check] = months[months.length - 1];
+  }
+  return out;
+}
+
 export function startReports(model: OwnerModel | undefined): Report[] {
   const checks = model?.checks ?? {};
   const here = (check: string) => (checks[check]?.latest ?? []).filter((result) => result.state !== 'untested' && onOmarchy(result));
@@ -51,10 +61,13 @@ export function startReports(model: OwnerModel | undefined): Report[] {
 // on it, whatever the check found. What the maker's description says, or what was seen on another
 // distro, says nothing about that.
 export type Finding = { state: string; basis?: string; checked?: string };
-export function findingReports(checks: Record<string, Finding> | undefined): Report[] {
+// `since` holds the month of the newest run that has a result for a start check. A finding of that
+// check from the same month or earlier is out of date, as a fix may have come in since it was written
+export function findingReports(checks: Record<string, Finding> | undefined, since: Record<string, string> = {}): Report[] {
   const seen = Object.entries(checks ?? {}).filter(([, finding]) => (finding.basis ?? 'omarchy') === 'omarchy' && ['works', 'partial', 'broken'].includes(finding.state));
   if (!seen.length) return [];
-  const found = (check: string) => (seen.find(([id]) => id === check)?.[1].state ?? null) as Found;
+  const current = ([id, finding]: [string, Finding]) => !since[id] || (finding.checked ?? '') > since[id];
+  const found = (check: string) => (seen.filter(current).find(([id]) => id === check)?.[1].state ?? null) as Found;
   const [installer, unlock] = START_CHECKS.map(([check]) => found(check));
   const lines = startLines(installer, unlock);
   const checked = seen.map(([, finding]) => finding.checked).filter(Boolean).sort().pop();

@@ -97,6 +97,7 @@ func Quick(sys machine.System) (*report.Run, Facts, error) {
 		func() { screen(sys, measured) },
 		func() { gpu(sys, klog, measured) },
 		func() { input(sys, &facts, measured) },
+		func() { unlock(sys, &facts, measured) },
 		func() { wireless(sys, &facts, measured) },
 		func() { wired(sys, &facts, measured) },
 		func() { processors(sys, measured) },
@@ -111,6 +112,8 @@ func Quick(sys machine.System) (*report.Run, Facts, error) {
 	}
 	safely(func() { run.Setup = setup(sys, run) })
 	run.MarkQuick()
+	// The disk password prompt was measured by what happened at this boot, which is a test of it
+	run.MarkTested("disk-unlock")
 	return run, facts, nil
 }
 
