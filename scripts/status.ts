@@ -5,7 +5,7 @@
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { parse } from 'yaml';
-import { startReports, type OwnerModel, type Report } from './starts.ts';
+import { findingReports, startReports, type Finding, type OwnerModel, type Report } from './starts.ts';
 
 // The channel testers install, from the edge nightly image
 const OMARCHY_CHANNEL = 'edge' as const;
@@ -336,6 +336,8 @@ const owners: Record<string, OwnerModel> = (() => {
     return {};
   }
 })();
+// The checks written up per model, for what they say about a model having been started
+const writtenUp: Record<string, { checks?: Record<string, Finding> }> = (parse(readFileSync('data/findings.yaml', 'utf8')) as { models?: Record<string, { checks?: Record<string, Finding> }> }).models ?? {};
 const tested = new Set<string>(Object.entries(owners).filter(([, model]) => model.machines > 0).map(([id]) => id));
 
 function whoHasOne(model: Model, reports: Report[], deviceTree: string, acpi: string[]) {
@@ -353,10 +355,14 @@ function whoHasOne(model: Model, reports: Report[], deviceTree: string, acpi: st
 }
 
 const rows = models.map((model) => {
-  // A written report says more than a run that found nothing wrong, so such a run only counts where
-  // nothing is written up. One that found a fault always counts
+  // What owners' runs and the model's written-up checks say about starting it. A fault they found
+  // always counts. That it boots is said once, and only where no report is written up, since a
+  // written report says more
   const written: Report[] = model.reports ?? [];
-  const reports = [...written, ...startReports(owners[model.id]).filter((report) => report.state !== 'works' || written.length === 0)];
+  const found = [...startReports(owners[model.id]), ...findingReports(writtenUp[model.id]?.checks)];
+  const faults = found.filter((report) => report.state !== 'works');
+  const boots = written.length === 0 && faults.length === 0 ? found.slice(0, 1) : [];
+  const reports = [...written, ...faults, ...boots];
   const variants = (model.variants?.length ? model.variants : [{}]).map((variant: Variant) => {
     const status = variantStatus(variant);
     const own = reports.filter((r) => !r.variant || r.variant === variant.model);

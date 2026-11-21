@@ -1659,10 +1659,10 @@
     "nvidia": 22,
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
-    "works": 7,
-    "should": 66,
-    "workaround": 6,
-    "problems": 2,
+    "works": 18,
+    "should": 49,
+    "workaround": 11,
+    "problems": 3,
     "notYet": 7,
     "deviceTree": 84,
     "ids": 60,
@@ -1673,8 +1673,8 @@
     "acpiWanted": 4,
     "machine": {
       "team": 7,
-      "omarchy": 23,
-      "linux": 52,
+      "omarchy": 31,
+      "linux": 44,
       "nobody": 6
     },
     "byPiece": {
@@ -2342,9 +2342,16 @@
         "https://www.notebookcheck.net/Acer-Aspire-14-AI-A14-11M.1173609.0.html"
       ],
       "notes": "Reached the installer on the edge image. Nobody has installed it yet.",
-      "outcome": "should",
+      "outcome": "works",
       "bootable": "edge",
-      "reports": [],
+      "reports": [
+        {
+          "state": "works",
+          "note": "An owner has Omarchy running on it, going by the 5 checks written up from it. There, the installer from a USB stick works.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
@@ -2417,8 +2424,15 @@
               "url": "https://github.com/ubuntu/stubble/pull/101"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner has Omarchy running on it, going by the 5 checks written up from it. There, the installer from a USB stick works.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -4254,6 +4268,12 @@
           "state": "workaround",
           "note": "Installs from the edge channel's image and reaches the desktop. Battery, Bluetooth and graphics work. The speakers and microphones don't work yet. The screen stayed dark at the disk password prompt until the password was typed. The fix for that, loading the USB-C display drivers before the disk is unlocked, is on edge and not yet checked on this laptop.",
           "checked": "2026-11"
+        },
+        {
+          "state": "workaround",
+          "note": "An owner has Omarchy running on it, going by the 8 checks written up from it. There, the disk password prompt doesn't work.",
+          "checked": "2026-11",
+          "from": "findings"
         }
       ],
       "machine": "team",
@@ -4319,6 +4339,12 @@
               "state": "workaround",
               "note": "Installs from the edge channel's image and reaches the desktop. Battery, Bluetooth and graphics work. The speakers and microphones don't work yet. The screen stayed dark at the disk password prompt until the password was typed. The fix for that, loading the USB-C display drivers before the disk is unlocked, is on edge and not yet checked on this laptop.",
               "checked": "2026-11"
+            },
+            {
+              "state": "workaround",
+              "note": "An owner has Omarchy running on it, going by the 8 checks written up from it. There, the disk password prompt doesn't work.",
+              "checked": "2026-11",
+              "from": "findings"
             }
           ]
         }
@@ -4347,10 +4373,17 @@
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-proart-pz13"
       ],
       "notes": null,
-      "outcome": "should",
+      "outcome": "works",
       "bootable": "edge",
-      "reports": [],
-      "machine": "linux",
+      "reports": [
+        {
+          "state": "works",
+          "note": "An owner has Omarchy running on it, going by the 4 checks written up from it.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -4420,8 +4453,15 @@
               "url": "https://github.com/ubuntu/stubble/pull/104"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner has Omarchy running on it, going by the 4 checks written up from it.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -4850,6 +4890,12 @@
           "state": "workaround",
           "note": "Reaches the desktop on 4.5.0-rc2 once the GPU, compute DSP and video firmware are in place. The installer didn't copy them from the Windows partition on the owner's laptop, so they were copied over on a USB stick and installed with qcom-firmware-extract. The owner confirmed the fix for the dark disk password prompt, which is the default since omacom/omarchy#17352 (omacom/omarchy#11823).",
           "checked": "2026-10"
+        },
+        {
+          "state": "workaround",
+          "note": "An owner has Omarchy running on it, going by the 9 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+          "checked": "2026-11",
+          "from": "findings"
         }
       ],
       "machine": "omarchy",
@@ -4944,6 +4990,12 @@
               "state": "workaround",
               "note": "Reaches the desktop on 4.5.0-rc2 once the GPU, compute DSP and video firmware are in place. The installer didn't copy them from the Windows partition on the owner's laptop, so they were copied over on a USB stick and installed with qcom-firmware-extract. The owner confirmed the fix for the dark disk password prompt, which is the default since omacom/omarchy#17352 (omacom/omarchy#11823).",
               "checked": "2026-10"
+            },
+            {
+              "state": "workaround",
+              "note": "An owner has Omarchy running on it, going by the 9 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+              "checked": "2026-11",
+              "from": "findings"
             }
           ]
         },
@@ -4999,6 +5051,12 @@
               "state": "workaround",
               "note": "Reaches the desktop on 4.5.0-rc2 once the GPU, compute DSP and video firmware are in place. The installer didn't copy them from the Windows partition on the owner's laptop, so they were copied over on a USB stick and installed with qcom-firmware-extract. The owner confirmed the fix for the dark disk password prompt, which is the default since omacom/omarchy#17352 (omacom/omarchy#11823).",
               "checked": "2026-10"
+            },
+            {
+              "state": "workaround",
+              "note": "An owner has Omarchy running on it, going by the 9 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+              "checked": "2026-11",
+              "from": "findings"
             }
           ]
         }
@@ -5357,9 +5415,16 @@
         "https://nasilemaktech.com/asus-vivobook-s14-s16-snapdragon-x-launch-malaysia/"
       ],
       "notes": null,
-      "outcome": "should",
+      "outcome": "works",
       "bootable": "edge",
-      "reports": [],
+      "reports": [
+        {
+          "state": "works",
+          "note": "An owner has Omarchy running on it, going by the 14 checks written up from it. There, the installer from a USB stick works, and the disk password prompt works.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
@@ -5434,8 +5499,15 @@
               "url": "https://github.com/ubuntu/stubble/pull/103"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner has Omarchy running on it, going by the 14 checks written up from it. There, the installer from a USB stick works, and the disk password prompt works.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         },
         {
           "model": "LCD",
@@ -5470,8 +5542,15 @@
               "url": "https://github.com/ubuntu/stubble/pull/103"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner has Omarchy running on it, going by the 14 checks written up from it. There, the installer from a USB stick works, and the disk password prompt works.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -5843,9 +5922,16 @@
         "https://github.com/systemd/systemd/blob/main/src/boot/hwids/aa64/x1p42100-asus-zenbook-a14.json"
       ],
       "notes": null,
-      "outcome": "should",
-      "bootable": "stable",
-      "reports": [],
+      "outcome": "workaround",
+      "bootable": "workaround",
+      "reports": [
+        {
+          "state": "workaround",
+          "note": "An owner has Omarchy running on it, going by the 10 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "stable",
@@ -5929,8 +6015,15 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-asus-zenbook-a14.json"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "workaround",
+          "reports": [
+            {
+              "state": "workaround",
+              "note": "An owner has Omarchy running on it, going by the 10 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         },
         {
           "model": "UX3407QA OLED",
@@ -5972,8 +6065,15 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-asus-zenbook-a14-oled.json"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "workaround",
+          "reports": [
+            {
+              "state": "workaround",
+              "note": "An owner has Omarchy running on it, going by the 10 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         },
         {
           "model": "UX3407QA LCD",
@@ -6015,8 +6115,15 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-asus-zenbook-a14.json"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "workaround",
+          "reports": [
+            {
+              "state": "workaround",
+              "note": "An owner has Omarchy running on it, going by the 10 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -6144,9 +6251,16 @@
         "https://www.notebookcheck.net/Powerful-creator-tablet-with-Snapdragon-X2-Elite-Asus-ProArt-PZ14-Review.1359622.0.html"
       ],
       "notes": "Its device tree and hardware IDs are written from an owner's hardware report, on the Zenbook A14 X2's tree, and nobody has booted them yet.",
-      "outcome": "should",
+      "outcome": "works",
       "bootable": "edge",
-      "reports": [],
+      "reports": [
+        {
+          "state": "works",
+          "note": "An owner has Omarchy running on it, going by the 14 checks written up from it. There, the installer from a USB stick works.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
@@ -6213,8 +6327,15 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "should",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner has Omarchy running on it, going by the 14 checks written up from it. There, the installer from a USB stick works.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -6451,10 +6572,17 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a16-ux3607oa.dts"
       ],
       "notes": null,
-      "outcome": "should",
-      "bootable": "stable",
-      "reports": [],
-      "machine": "linux",
+      "outcome": "workaround",
+      "bootable": "workaround",
+      "reports": [
+        {
+          "state": "workaround",
+          "note": "An owner has Omarchy running on it, going by the 18 checks written up from it. There, the installer from a USB stick partly works, and the disk password prompt partly works.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -6535,8 +6663,15 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-asus-zenbook-a16-ux3607oa.json"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "workaround",
+          "reports": [
+            {
+              "state": "workaround",
+              "note": "An owner has Omarchy running on it, going by the 18 checks written up from it. There, the installer from a USB stick partly works, and the disk password prompt partly works.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -6567,9 +6702,16 @@
         "https://dl.dell.com/content/manual20917790-inspiron-14-5441-owner-s-manual.pdf"
       ],
       "notes": "The X1P-42-100 model (board 0DGG6Y) has a board and hardware IDs of its own. Its device tree and IDs are written from an owner's hardware report, and nobody has booted them yet.",
-      "outcome": "should",
-      "bootable": "edge",
-      "reports": [],
+      "outcome": "problems",
+      "bootable": "problems",
+      "reports": [
+        {
+          "state": "problems",
+          "note": "An owner has Omarchy running on it, going by the check written up from it. There, the installer from a USB stick doesn't work.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
@@ -6639,8 +6781,15 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "should",
-          "reports": []
+          "outcome": "problems",
+          "reports": [
+            {
+              "state": "problems",
+              "note": "An owner has Omarchy running on it, going by the check written up from it. There, the installer from a USB stick doesn't work.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         },
         {
           "chip": "X1P-64-100",
@@ -6674,8 +6823,15 @@
               "url": "https://github.com/ubuntu/stubble/pull/109"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "problems",
+          "reports": [
+            {
+              "state": "problems",
+              "note": "An owner has Omarchy running on it, going by the check written up from it. There, the installer from a USB stick doesn't work.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -6949,10 +7105,17 @@
         "https://dl.dell.com/content/manual6242485-latitude-7455-owner-s-manual.pdf"
       ],
       "notes": null,
-      "outcome": "should",
-      "bootable": "stable",
-      "reports": [],
-      "machine": "linux",
+      "outcome": "workaround",
+      "bootable": "workaround",
+      "reports": [
+        {
+          "state": "workaround",
+          "note": "An owner has Omarchy running on it, going by the 14 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -7035,8 +7198,15 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-dell-latitude-7455.json"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "workaround",
+          "reports": [
+            {
+              "state": "workaround",
+              "note": "An owner has Omarchy running on it, going by the 14 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -7066,10 +7236,17 @@
         "https://www.notebookcheck.net/Dell-XPS-13-9345-Snapdragon-X-Elite-review-Undercutting-the-Intel-Core-Ultra-7.869106.0.html"
       ],
       "notes": null,
-      "outcome": "should",
-      "bootable": "stable",
-      "reports": [],
-      "machine": "linux",
+      "outcome": "workaround",
+      "bootable": "workaround",
+      "reports": [
+        {
+          "state": "workaround",
+          "note": "An owner has Omarchy running on it, going by the 8 checks written up from it. There, the disk password prompt partly works.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -7155,8 +7332,15 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-dell-xps13-9345.json"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "workaround",
+          "reports": [
+            {
+              "state": "workaround",
+              "note": "An owner has Omarchy running on it, going by the 8 checks written up from it. There, the disk password prompt partly works.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -7920,10 +8104,17 @@
         "https://shop.teqex.co.uk/hp-elitebook-ultra-g1q8-14-inch-notebook-ai-pc-x1p-42-100-laptop-35-6-cm-14-touchscreen-2-2k-windows-11-pro-a37cket-abu.html"
       ],
       "notes": null,
-      "outcome": "should",
+      "outcome": "works",
       "bootable": "stable",
-      "reports": [],
-      "machine": "linux",
+      "reports": [
+        {
+          "state": "works",
+          "note": "An owner has Omarchy running on it, going by the 15 checks written up from it. There, the installer from a USB stick works, and the disk password prompt works.",
+          "checked": "2026-10",
+          "from": "findings"
+        }
+      ],
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -8003,8 +8194,15 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-hp-elitebook-ultra-g1q.json"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner has Omarchy running on it, going by the 15 checks written up from it. There, the installer from a USB stick works, and the disk password prompt works.",
+              "checked": "2026-10",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -8112,9 +8310,16 @@
         "https://www.energystar.gov/productfinder/product/certified-computers/details/4520692"
       ],
       "notes": null,
-      "outcome": "should",
+      "outcome": "works",
       "bootable": "edge",
-      "reports": [],
+      "reports": [
+        {
+          "state": "works",
+          "note": "An owner has Omarchy running on it, going by the 2 checks written up from it.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
@@ -8181,8 +8386,15 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "should",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner has Omarchy running on it, going by the 2 checks written up from it.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -8621,9 +8833,16 @@
         "https://github.com/torvalds/linux/commit/f8f7cc59dcd234f0dcc4964ff2188a7a2ae09fd6"
       ],
       "notes": null,
-      "outcome": "should",
+      "outcome": "works",
       "bootable": "stable",
-      "reports": [],
+      "reports": [
+        {
+          "state": "works",
+          "note": "An owner has Omarchy running on it, going by the 12 checks written up from it. There, the installer from a USB stick works, and the disk password prompt works.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "stable",
@@ -8708,8 +8927,15 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-hp-omnibook-x14.json"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner has Omarchy running on it, going by the 12 checks written up from it. There, the installer from a USB stick works, and the disk password prompt works.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         },
         {
           "model": "14-fe1",
@@ -8751,8 +8977,15 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-hp-omnibook-x14.json"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner has Omarchy running on it, going by the 12 checks written up from it. There, the installer from a USB stick works, and the disk password prompt works.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -9179,10 +9412,17 @@
         "https://www.notebookcheck.net/HP-releases-new-16-inch-laptop-with-Snapdragon-X2-Plus-and-over-30-hours-battery-life.1414570.0.html"
       ],
       "notes": "No GPU, Bluetooth or sound yet.",
-      "outcome": "should",
+      "outcome": "works",
       "bootable": "edge",
-      "reports": [],
-      "machine": "linux",
+      "reports": [
+        {
+          "state": "works",
+          "note": "An owner has Omarchy running on it, going by the 5 checks written up from it. There, the installer from a USB stick works.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -9251,8 +9491,15 @@
               "url": "https://github.com/ubuntu/stubble/pull/106"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner has Omarchy running on it, going by the 5 checks written up from it. There, the installer from a USB stick works.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -9289,6 +9536,12 @@
           "state": "workaround",
           "note": "Installs from the edge channel's nightly image and reaches the desktop, but the screen stayed dark at the disk password prompt. The fix for that, loading the USB-C display drivers before the disk is unlocked, is on edge and not yet checked on this laptop.",
           "checked": "2026-11"
+        },
+        {
+          "state": "workaround",
+          "note": "An owner has Omarchy running on it, going by the 2 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+          "checked": "2026-11",
+          "from": "findings"
         }
       ],
       "machine": "omarchy",
@@ -9361,6 +9614,12 @@
               "state": "workaround",
               "note": "Installs from the edge channel's nightly image and reaches the desktop, but the screen stayed dark at the disk password prompt. The fix for that, loading the USB-C display drivers before the disk is unlocked, is on edge and not yet checked on this laptop.",
               "checked": "2026-11"
+            },
+            {
+              "state": "workaround",
+              "note": "An owner has Omarchy running on it, going by the 2 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+              "checked": "2026-11",
+              "from": "findings"
             }
           ]
         }
@@ -10689,10 +10948,17 @@
         "https://github.com/aarch64-laptops/build/tree/master/misc/lenovo-xiaoxin-14-q8x9"
       ],
       "notes": null,
-      "outcome": "should",
+      "outcome": "works",
       "bootable": "edge",
-      "reports": [],
-      "machine": "linux",
+      "reports": [
+        {
+          "state": "works",
+          "note": "An owner has Omarchy running on it, going by the 3 checks written up from it. There, the disk password prompt works.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -10775,8 +11041,15 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-lenovo-ideapad-slim-5-oled.json"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner has Omarchy running on it, going by the 3 checks written up from it. There, the disk password prompt works.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         },
         {
           "model": "LCD",
@@ -10805,8 +11078,15 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner has Omarchy running on it, going by the 3 checks written up from it. There, the disk password prompt works.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -13447,9 +13727,16 @@
         "https://slickdeals.net/f/19822497-microsoft-surface-laptop-8-2026-13-8-3-2-120hz-ips-touch-snapdragon-x2-elite-x2e-80-100-16gb-lpddr5x-512gb-ssd-1199-99"
       ],
       "notes": null,
-      "outcome": "should",
+      "outcome": "works",
       "bootable": "edge",
-      "reports": [],
+      "reports": [
+        {
+          "state": "works",
+          "note": "An owner has Omarchy running on it, going by the check written up from it.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
       "machine": "team",
       "omarchy": {
         "deviceTree": "edge",
@@ -13520,8 +13807,15 @@
               "url": "https://github.com/ubuntu/stubble/pull/97"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner has Omarchy running on it, going by the check written up from it.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -14323,10 +14617,17 @@
         "https://www.notebookcheck.net/Samsung-Galaxy-Book4-Edge-15.988764.0.html"
       ],
       "notes": null,
-      "outcome": "should",
+      "outcome": "works",
       "bootable": "edge",
-      "reports": [],
-      "machine": "linux",
+      "reports": [
+        {
+          "state": "works",
+          "note": "An owner has Omarchy running on it, going by the check written up from it.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
@@ -14391,8 +14692,15 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "should",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner has Omarchy running on it, going by the check written up from it.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -14538,14 +14846,20 @@
         "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
       ],
       "notes": "The European NP940XMA has another baseboard name and BIOS line than the NP944XMA, so it has its own hardware IDs, on edge since linux-omarchy 7.3-42. The NP944XMA boots the edge image without the owner's board package, and what it still lacks there is in its report.",
-      "outcome": "should",
-      "bootable": "edge",
+      "outcome": "workaround",
+      "bootable": "workaround",
       "reports": [
         {
           "state": "problems",
           "variant": "NP944XMA",
           "note": "Edge 2026.11.16.492 boots, installs and reaches the desktop without the owner's board package, with display, GPU, Wi-Fi and both DSPs working. The built-in keyboard is dead in Hyprland (0CF2:9050 is tagged as a tablet pad), the disk password prompt isn't shown, USB-C has no hotplug and SuperSpeed in one orientation only, the Wi-Fi MAC address changes every boot, and there is no sound, battery, Bluetooth, camera or fan control. With the owner's board package all of these work.",
           "checked": "2026-11"
+        },
+        {
+          "state": "workaround",
+          "note": "An owner has Omarchy running on it, going by the 14 checks written up from it. There, the disk password prompt doesn't work.",
+          "checked": "2026-11",
+          "from": "findings"
         }
       ],
       "machine": "team",
@@ -14628,6 +14942,12 @@
               "variant": "NP944XMA",
               "note": "Edge 2026.11.16.492 boots, installs and reaches the desktop without the owner's board package, with display, GPU, Wi-Fi and both DSPs working. The built-in keyboard is dead in Hyprland (0CF2:9050 is tagged as a tablet pad), the disk password prompt isn't shown, USB-C has no hotplug and SuperSpeed in one orientation only, the Wi-Fi MAC address changes every boot, and there is no sound, battery, Bluetooth, camera or fan control. With the owner's board package all of these work.",
               "checked": "2026-11"
+            },
+            {
+              "state": "workaround",
+              "note": "An owner has Omarchy running on it, going by the 14 checks written up from it. There, the disk password prompt doesn't work.",
+              "checked": "2026-11",
+              "from": "findings"
             }
           ]
         },
@@ -14663,8 +14983,15 @@
               "url": "https://github.com/ubuntu/stubble/pull/98"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "workaround",
+          "reports": [
+            {
+              "state": "workaround",
+              "note": "An owner has Omarchy running on it, going by the 14 checks written up from it. There, the disk password prompt doesn't work.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -15074,10 +15401,17 @@
         "https://github.com/systemd/systemd/blob/main/src/boot/hwids/aa64/sc8280xp-lenovo-thinkpad-x13s-21bx.json"
       ],
       "notes": null,
-      "outcome": "should",
+      "outcome": "works",
       "bootable": "stable",
-      "reports": [],
-      "machine": "linux",
+      "reports": [
+        {
+          "state": "works",
+          "note": "An owner has Omarchy running on it, going by the 9 checks written up from it.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -15182,8 +15516,15 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8280xp-lenovo-thinkpad-x13s-4810.json"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "works",
+          "reports": [
+            {
+              "state": "works",
+              "note": "An owner has Omarchy running on it, going by the 9 checks written up from it.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -15319,10 +15660,17 @@
         "https://www.cnx-software.com/2022/10/25/600-windows-dev-kit-2023-is-powered-by-qualcomm-snapdragon-8cx-gen-3-processor/"
       ],
       "notes": null,
-      "outcome": "should",
-      "bootable": "stable",
-      "reports": [],
-      "machine": "linux",
+      "outcome": "workaround",
+      "bootable": "workaround",
+      "reports": [
+        {
+          "state": "workaround",
+          "note": "An owner has Omarchy running on it, going by the 6 checks written up from it. There, the installer from a USB stick partly works, and the disk password prompt partly works.",
+          "checked": "2026-11",
+          "from": "findings"
+        }
+      ],
+      "machine": "omarchy",
       "omarchy": {
         "deviceTree": "stable",
         "deviceTreePull": null,
@@ -15400,8 +15748,15 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/sc8280xp-microsoft-blackrock.json"
             }
           ],
-          "outcome": "should",
-          "reports": []
+          "outcome": "workaround",
+          "reports": [
+            {
+              "state": "workaround",
+              "note": "An owner has Omarchy running on it, going by the 6 checks written up from it. There, the installer from a USB stick partly works, and the disk password prompt partly works.",
+              "checked": "2026-11",
+              "from": "findings"
+            }
+          ]
         }
       ],
       "boot": "uefi",

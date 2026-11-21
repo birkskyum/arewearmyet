@@ -118,6 +118,7 @@ import { SHELL } from '../../lib/shell';
                 {report.variant && <span>{report.variant}</span>}
                 {report.checked && <span>{report.checked}</span>}
                 {report.from === 'hw-test' && <span>from hw-test</span>}
+                {report.from === 'findings' && <span>from its checks</span>}
               </div>
               <p class="mt-2 text-sm">{report.note}</p>
             </li>
