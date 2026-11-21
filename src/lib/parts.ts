@@ -8,10 +8,10 @@ import type { Tone } from './tones';
 
 export type Part = { id: string; title: string; question: string; checks: string[] };
 
-// The two Qualcomm processors, the fingerprint reader and the modem stay on the model's page. The
-// processors are no part an owner thinks in, and the other two are parts few models have
+// The installer and the disk password prompt decide the Bootable cell that stands before the parts
+// (scripts/starts.ts). The two Qualcomm processors, the fingerprint reader and the modem stay on the
+// model's page. The processors are no part an owner thinks in, and the other two are parts few models have
 export const PARTS: Part[] = [
-  { id: 'start', title: 'Starting', question: 'The installer from a USB stick, and the disk password prompt at startup.', checks: ['installer', 'disk-unlock'] },
   { id: 'screen', title: 'Screen and graphics', question: 'The built-in screen and its brightness, graphics acceleration, WebGL and WebGPU in the browser, and hardware video decoding.', checks: ['display', 'backlight', 'gpu', 'webgl', 'webgpu', 'video-decode'] },
   { id: 'input', title: 'Keyboard and touch', question: 'The built-in keyboard, the touchpad, and the touchscreen and pen where the model has them.', checks: ['keyboard', 'touchpad', 'touchscreen'] },
   { id: 'wireless', title: 'Wi-Fi and Bluetooth', question: 'Wi-Fi, its fixed address, and Bluetooth.', checks: ['wifi', 'wifi-address', 'bluetooth'] },

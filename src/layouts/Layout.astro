@@ -16,7 +16,7 @@ const image = new URL('/og.png', site);
 const imageAlt = 'Are we ARM yet? Omarchy on ARM PCs, model by model.';
 ---
 
-<html lang="en" class="bg-zinc-950">
+<html lang="en" class="bg-zinc-950" data-mode={home ? 'hardware' : undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

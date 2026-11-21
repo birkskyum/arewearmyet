@@ -54,7 +54,7 @@ const rows = PARTS.map((part, i) => {
         <div class="@container min-w-0 flex-1">
           <div class="grid h-3 grid-flow-col grid-cols-[repeat(var(--half),minmax(0,1fr))] grid-rows-2 gap-0.5 @lg:grid-flow-row @lg:grid-cols-[repeat(var(--all),minmax(0,1fr))] @lg:grid-rows-1" style={`--all: ${row.cells.length}; --half: ${Math.ceil(row.cells.length / 2)}`}>
             {row.cells.map((cell) => (
-              <a href={`/?${urlPrefix}view=hardware&${urlPrefix}q=${encodeURIComponent(cell.name)}#${anchor}`} data-search={cell.name} data-prefix={urlPrefix} class={`rounded-[2px] ${cell.kind.color} transition hover:scale-y-150 hover:brightness-150`} data-tip-title={`${row.part.title} on the ${cell.name}`} data-tip={cell.tip} aria-label={`${row.part.title} on the ${cell.name}, ${cell.kind.label.toLowerCase()}`}></a>
+              <a href={`/?${urlPrefix}q=${encodeURIComponent(cell.name)}#${anchor}`} data-search={cell.name} data-prefix={urlPrefix} class={`rounded-[2px] ${cell.kind.color} transition hover:scale-y-150 hover:brightness-150`} data-tip-title={`${row.part.title} on the ${cell.name}`} data-tip={cell.tip} aria-label={`${row.part.title} on the ${cell.name}, ${cell.kind.label.toLowerCase()}`}></a>
             ))}
           </div>
         </div>

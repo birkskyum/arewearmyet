@@ -119,14 +119,18 @@ function Pill(props: { cell: CellData; column: string }) {
   );
 }
 
+// The address's word for Bring-up while every table there shows its first view
+const BRING_UP = 'bring-up';
+
 export default function StatusTable(props: Props) {
   const views: View[] = props.views ?? [{ id: 'default', label: '', question: '', columns: props.columns ?? [] }];
-  // The page-wide switch picks between Booting and Hardware for every table at once. Within Booting
-  // a table has views of its own (what Omarchy ships, what is upstream), switched from its toolbar
+  // The page-wide switch picks between Hardware and Bring-up for every table at once. Within Bring-up
+  // a table has views of its own (what Omarchy ships, what is upstream), switched from its toolbar.
+  // The page is built in Hardware, the mode it opens in
   const booting = views.filter((v) => v.id !== 'hardware');
   const hardware = views.find((v) => v.id === 'hardware');
   const [viewId, setViewId] = createSignal(booting[0].id);
-  const [mode, followMode] = createSignal<Mode>('booting');
+  const [mode, followMode] = createSignal<Mode>(hardware ? 'hardware' : 'booting');
   const view = () => (mode() === 'hardware' && hardware) || booting.find((v) => v.id === viewId()) || booting[0];
   const statusColumns = () => view().columns;
   // Every view's columns exist in the table, so a view switch keeps sorting and counting in one place
@@ -304,9 +308,12 @@ export default function StatusTable(props: Props) {
     createEffect(() => {
       const next = new URLSearchParams(location.search);
       for (const key of [...ids, 'q', 'sort', 'view']) next.delete(prefix + key);
-      // The page's mode is written once, by the table without a prefix, as view=hardware
-      if (prefix === '' && mode() === 'hardware') next.set('view', 'hardware');
-      else if (viewId() !== booting[0].id) next.set(prefix + 'view', viewId());
+      // Hardware is what the page opens in, so it needs no word in the address. Bring-up is written
+      // once, by the table without a prefix, as view=bring-up, or as the view this table shows within it
+      if (hardware && mode() === 'booting') {
+        if (viewId() !== booting[0].id) next.set(prefix + 'view', viewId());
+        else if (prefix === '') next.set('view', BRING_UP);
+      } else if (!hardware && viewId() !== booting[0].id) next.set(prefix + 'view', viewId());
       for (const filter of filters()) next.set(prefix + filter.id, Array.isArray(filter.value) ? filter.value.join(',') : String(filter.value));
       // The order a view opens in by itself stays out of the address
       const [first] = sorting();

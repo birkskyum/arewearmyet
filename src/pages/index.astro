@@ -44,17 +44,23 @@ const HARDWARE_LEGEND = [
   { column: 'No label', question: 'An empty cell means nobody has reported on the part yet. Running hw-test on the model fills it in. A dash means the model does not have the part.', states: [] },
   ...PARTS.map((part) => ({ column: part.title, question: part.question, states: [] })),
 ];
-const HARDWARE_QUESTION = 'What works once it runs, part by part. Every label is a result from Omarchy on that model, by hw-test or an owner.';
+const HARDWARE_QUESTION = 'Whether it boots, and what works once it runs, part by part. Every part\'s label is a result from Omarchy on that model, by hw-test or an owner.';
 const HARDWARE_VIEW = { id: 'hardware', label: 'Hardware', question: HARDWARE_QUESTION, sort: 'seen', compact: true, columns: [
   { id: 'seen', header: 'Seen on Omarchy', question: 'How many of the parts have a result from Omarchy, by hw-test or an owner. The table opens sorted by it.' },
   ...PARTS.map((part) => ({ id: `part-${part.id}`, header: part.title, question: part.question, options: PART_OPTIONS })),
 ] };
+// A visitor asks whether a model boots before anything else, so the Hardware view opens with the family's
+// own Bootable column, and its legend with that column's labels
+type BootColumn = { id: string; header: string; question: string; options?: unknown };
+type LegendGroup = (typeof OMARCHY_LEGEND)[number];
+const hardwareView = (boot: BootColumn) => ({ ...HARDWARE_VIEW, columns: [boot, ...HARDWARE_VIEW.columns] });
+const hardwareLegend = (boot: LegendGroup) => [boot, ...HARDWARE_LEGEND];
 const HARDWARE_KEYS = [{ dot: 'bg-emerald-400', text: 'works' }, { dot: 'bg-amber-400', text: 'partly' }, { dot: 'bg-rose-400', text: 'broken' }];
 const HARDWARE_DOTS = { id: 'parts', header: 'Hardware', question: `The parts past booting, in the order of the Hardware view (${PARTS.map((part) => part.title.toLowerCase()).join(', ')}). Filled is seen on Omarchy on that model, faint is not known yet. Click for the Hardware view.` };
 const snapdragonViews = [
   { id: 'omarchy', label: 'Omarchy', question: `What Omarchy's packages ship today. A check is a piece Omarchy ships, and pointing at it says which channel has it.`, columns: [...OMARCHY_LEGEND.map((group, i) => ({ id: omarchyIds[i], header: group.column, question: group.question, options: FILTERS[omarchyIds[i]] })), HARDWARE_DOTS] },
   { id: 'upstream', label: 'Upstream', question: 'What Linux, systemd and linux-firmware have, which every distro gets.', columns: UPSTREAM_LEGEND.map((group, i) => ({ id: upstreamIds[i], header: group.column, question: group.question, options: FILTERS[upstreamIds[i]] })) },
-  HARDWARE_VIEW,
+  hardwareView({ id: omarchyIds[0], header: OMARCHY_LEGEND[0].column, question: OMARCHY_LEGEND[0].question, options: FILTERS[omarchyIds[0]] }),
 ];
 const nvidiaNotes = { id: 'notes', header: 'Notes', question: 'What else to know' };
 const nvidiaViews = [
@@ -68,7 +74,7 @@ const nvidiaViews = [
     { id: 'linux', header: 'Linux', question: NVIDIA_UPSTREAM_LEGEND[0].question, options: FILTERS.nvidiaLinux },
     nvidiaNotes,
   ] },
-  HARDWARE_VIEW,
+  hardwareView({ id: 'omarchy', header: NVIDIA_OMARCHY_LEGEND[1].column, question: NVIDIA_OMARCHY_LEGEND[1].question, options: FILTERS.nvidiaOmarchy }),
 ];
 const legendExtra = [
   { label: 'Green', tone: 'good' as const, meaning: 'Done.' },
@@ -88,12 +94,12 @@ const googlebookViews = [
   { id: 'upstream', label: 'Upstream', question: 'What Linux itself has, which every distro gets.', columns: [
     { id: 'device-tree', header: 'Linux', question: GOOGLEBOOK_UPSTREAM_LEGEND[0].question, options: FILTERS.googlebookDeviceTree },
   ] },
-  HARDWARE_VIEW,
+  hardwareView({ id: 'omarchy', header: GOOGLEBOOK_OMARCHY_LEGEND[3].column, question: GOOGLEBOOK_OMARCHY_LEGEND[3].question, options: FILTERS.googlebookOmarchy }),
 ];
 const chromebookViews = [
   { ...googlebookViews[0], columns: [...googlebookViews[0].columns.map((column, i) => ({ ...column, question: CHROMEBOOK_OMARCHY_LEGEND[i].question })), HARDWARE_DOTS] },
   { ...googlebookViews[1], columns: [{ ...googlebookViews[1].columns[0], options: FILTERS.chromebookDeviceTree }] },
-  HARDWARE_VIEW,
+  hardwareView({ id: 'omarchy', header: CHROMEBOOK_OMARCHY_LEGEND[3].column, question: CHROMEBOOK_OMARCHY_LEGEND[3].question, options: FILTERS.googlebookOmarchy }),
 ];
 // The Googlebooks' Omarchy view gets the row of dots too, after the Chromebooks took their own copy of its columns
 googlebookViews[0].columns.push(HARDWARE_DOTS as never);
@@ -109,11 +115,12 @@ const NAV = 'rounded-full px-3 py-1 text-zinc-300 ring-1 ring-zinc-700 hover:bg-
 import { SHELL } from '../lib/shell';
 ---
 
-<Layout home title="Are we ARM yet? Omarchy on ARM PCs, model by model" description="Which ARM PCs boot Omarchy today, what Omarchy ships for each, and what Linux, systemd and linux-firmware have.">
+<Layout home title="Are we ARM yet? Omarchy on ARM PCs, model by model" description="Which ARM PCs boot Omarchy today, what works on each, and what Omarchy ships for them.">
   <script is:inline slot="head">
-    // The page opens in the mode its address names, before anything is painted. An older link
-    // that named one table's view (nvidia-view=hardware) counts too
-    if ([...new URLSearchParams(location.search)].some(([key, value]) => (key === 'view' || key.endsWith('-view')) && value === 'hardware')) document.documentElement.dataset.mode = 'hardware';
+    // The page opens in Hardware, which <html> carries from the start, unless its address names Bring-up
+    // (view=bring-up) or one of a table's views within it (view=upstream, nvidia-view=upstream). This runs
+    // before anything is painted
+    if ([...new URLSearchParams(location.search)].some(([key, value]) => (key === 'view' || key.endsWith('-view')) && value !== 'hardware')) delete document.documentElement.dataset.mode;
   </script>
   <main class={`${SHELL} py-10`}>
     <header>
@@ -127,7 +134,7 @@ import { SHELL } from '../lib/shell';
         Every ARM laptop needs a device tree, hardware IDs and firmware. Omarchy ships them in its own packages, often before Linux, systemd and linux-firmware have them. The Omarchy view shows what Omarchy ships today, and the Upstream view what every distro gets. A check means Omarchy ships the piece, and pointing at it says which channel has it. Bootable says whether an owner reached the desktop. The newest fixes are on edge, the {image ? <a class={LINK} href={image.url}>nightly image</a> : 'nightly image'}, with <span class="whitespace-nowrap">linux-omarchy {status.omarchy.kernel}</span> and systemd {status.omarchy.systemd}. Booting is the first goal. Each model's page, behind its name, goes on to everything past booting, from sound and the camera to sleep and USB4, with what owners and their agents measured.
       </p>
       <p class="mt-5 hidden max-w-3xl text-sm text-zinc-400 hw:block">
-        Booting is the first goal. After it comes whether the screen, keyboard, Wi-Fi, sound, camera, sleep and ports work on each model. Every label is a result from Omarchy on that model, measured by <a class={LINK} href="/docs/hw-test">hw-test</a> or reported by an owner. An empty cell means nobody has reported yet, and running hw-test on that model fills it in. Each model's page, behind its name, has every check with its source.
+        For each model, whether it boots Omarchy and what works once it does, from the screen, keyboard and Wi-Fi to sound, the camera, sleep and the ports. Bootable says whether an owner reached the desktop, or that it should boot and nobody has tried it yet. Every part's label is a result from Omarchy on that model, measured by <a class={LINK} href="/docs/hw-test">hw-test</a> or reported by an owner. An empty cell means nobody has reported yet, and running hw-test on that model fills it in. Each model's page, behind its name, has every check with its source. What a model needs underneath, its device tree, hardware IDs and firmware, is under Bring-up.
       </p>
       <div class="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 rounded-xl bg-[#9ece6a]/10 px-5 py-4 ring-1 ring-[#9ece6a]/40">
         <p class="text-zinc-300"><strong class="font-semibold text-[#9ece6a]">Own an ARM laptop that isn't green yet?</strong> Help get it there, whatever distro you run. It only takes a few minutes.</p>
@@ -150,7 +157,7 @@ import { SHELL } from '../lib/shell';
     </Group>
 
     <Family id="snapdragon" title="Snapdragon X and X2" total={current.length}>
-      <div class="group/views" data-views data-view="omarchy">
+      <div class="group/views" data-views data-view="hardware">
         <ViewState prefix="" views={snapdragonViews.map((v) => v.id)} />
         <div class="group-data-[view=hardware]/views:hidden">
           <PieceBars pieces={summary.byPiece} models={current} anchor="snapdragon" />
@@ -162,7 +169,7 @@ import { SHELL } from '../lib/shell';
           <Legend title="What the labels mean" groups={OMARCHY_LEGEND} extra={legendExtra} />
         </div>
         <div class="mt-8 hidden group-data-[view=hardware]/views:block">
-          <Legend title="What the labels mean" groups={HARDWARE_LEGEND} keys={HARDWARE_KEYS} />
+          <Legend title="What the labels mean" groups={hardwareLegend(OMARCHY_LEGEND[0])} keys={HARDWARE_KEYS} />
         </div>
         <div class="mt-8 hidden group-data-[view=upstream]/views:block">
           <Legend title="What the labels mean" groups={UPSTREAM_LEGEND} extra={legendExtra} />
@@ -186,7 +193,7 @@ import { SHELL } from '../lib/shell';
         The Windows on Arm machines from before Snapdragon X, with the Snapdragon 8cx, 850, 835 and 7c. They start through UEFI like the models above, so they need the same pieces and use the same views and labels. Omarchy carries device trees for most of them, from Linux, from owners' ports, or written from their ACPI tables.
       </p>
       {/* The bars follow the page's switch, as the first table's do */}
-      <div class="group/views mt-8" data-views data-view="omarchy">
+      <div class="group/views mt-8" data-views data-view="hardware">
         <ViewState prefix="8cx-" views={snapdragonViews.map((v) => v.id)} />
         <div class="group-data-[view=hardware]/views:hidden">
           <PieceBars pieces={summary.byPieceOlder} models={older} anchor="snapdragon-7c-8cx-835-850" urlPrefix="8cx-" />
@@ -205,7 +212,7 @@ import { SHELL } from '../lib/shell';
         Qualcomm's entry line for budget Windows laptops. Its drivers are the ones for the 7c Gen 3 (SC7280) in Arm Chromebooks, a chip Linux already describes, so each laptop needs a board tree, hardware IDs and firmware like the models above.
       </p>
       {/* The bars follow the page's switch, as the first table's do */}
-      <div class="group/views mt-8" data-views data-view="omarchy">
+      <div class="group/views mt-8" data-views data-view="hardware">
         <ViewState prefix="c-" views={snapdragonViews.map((v) => v.id)} />
         <div class="group-data-[view=hardware]/views:hidden">
           <PieceBars pieces={summary.byPieceEntry} models={entry} anchor="snapdragon-c" urlPrefix="c-" />
@@ -230,7 +237,7 @@ import { SHELL } from '../lib/shell';
       <p class={HELP}>
         To help, install Omarchy's ARM image or another distro and report whether it boots, through <a class={LINK} href={`${REPO}/issues/new?template=model.yml`}>Add your model</a>. On Omarchy, <a class={LINK} href="/docs/hw-test">hw-test</a> checks the rest and puts the results on the model's page.
       </p>
-      <div class="group/views mt-4" data-views data-view="omarchy">
+      <div class="group/views mt-4" data-views data-view="hardware">
         <ViewState prefix="nvidia-" views={nvidiaViews.map((v) => v.id)} />
         <div class="mb-8 hidden group-data-[view=hardware]/views:block">
           <PartBars models={nvidia} anchor="nvidia" urlPrefix="nvidia-" />
@@ -242,7 +249,7 @@ import { SHELL } from '../lib/shell';
           <Legend title="What the labels mean" groups={NVIDIA_UPSTREAM_LEGEND} />
         </div>
         <div class="hidden group-data-[view=hardware]/views:block">
-          <Legend title="What the labels mean" groups={HARDWARE_LEGEND} keys={HARDWARE_KEYS} />
+          <Legend title="What the labels mean" groups={hardwareLegend(NVIDIA_OMARCHY_LEGEND[1])} keys={HARDWARE_KEYS} />
         </div>
         <div class="mt-4">
           <StatusTable client:load rows={nvidia} views={nvidiaViews} chips={[{ key: 'n1x', label: 'NVIDIA N1x' }, { key: 'gb10', label: 'NVIDIA GB10' }]} urlPrefix="nvidia-" exportName="arewearmyet-nvidia" exportTitle="NVIDIA N1x and GB10" />
@@ -261,7 +268,7 @@ import { SHELL } from '../lib/shell';
       <p class={HELP}>
         To help, read the device tree Googlebook OS starts with, following the <a class={LINK} href="https://github.com/omacom/omarchy/discussions/16627">owner guide</a>. It changes nothing on the laptop.
       </p>
-      <div class="group/views mt-4" data-views data-view="omarchy">
+      <div class="group/views mt-4" data-views data-view="hardware">
         <ViewState prefix="googlebook-" views={googlebookViews.map((v) => v.id)} />
         <div class="mb-8 hidden group-data-[view=hardware]/views:block">
           <PartBars models={googlebooks} anchor="googlebooks" urlPrefix="googlebook-" />
@@ -270,7 +277,7 @@ import { SHELL } from '../lib/shell';
           <Legend title="What the labels mean" groups={GOOGLEBOOK_OMARCHY_LEGEND} />
         </div>
         <div class="hidden group-data-[view=hardware]/views:block">
-          <Legend title="What the labels mean" groups={HARDWARE_LEGEND} keys={HARDWARE_KEYS} />
+          <Legend title="What the labels mean" groups={hardwareLegend(GOOGLEBOOK_OMARCHY_LEGEND[3])} keys={HARDWARE_KEYS} />
         </div>
         <div class="hidden group-data-[view=upstream]/views:block">
           <Legend title="What the labels mean" groups={GOOGLEBOOK_UPSTREAM_LEGEND} />
@@ -285,7 +292,7 @@ import { SHELL } from '../lib/shell';
       <p class="max-w-3xl text-sm text-zinc-400">
         Arm Chromebooks start through ChromeOS's bootloader instead of UEFI, so like the Googlebooks they need no ACPI tables or hardware IDs, and Omarchy's ARM image doesn't start on them. Their device trees have been in Linux for years, so what they need is a Linux image built for that bootloader, which developer mode lets them start.
       </p>
-      <div class="group/views mt-4" data-views data-view="omarchy">
+      <div class="group/views mt-4" data-views data-view="hardware">
         <ViewState prefix="chromebook-" views={chromebookViews.map((v) => v.id)} />
         <div class="mb-8 hidden group-data-[view=hardware]/views:block">
           <PartBars models={chromebooks} anchor="chromebooks" urlPrefix="chromebook-" />
@@ -294,7 +301,7 @@ import { SHELL } from '../lib/shell';
           <Legend title="What the labels mean" groups={CHROMEBOOK_OMARCHY_LEGEND} />
         </div>
         <div class="hidden group-data-[view=hardware]/views:block">
-          <Legend title="What the labels mean" groups={HARDWARE_LEGEND} keys={HARDWARE_KEYS} />
+          <Legend title="What the labels mean" groups={hardwareLegend(CHROMEBOOK_OMARCHY_LEGEND[3])} keys={HARDWARE_KEYS} />
         </div>
         <div class="hidden group-data-[view=upstream]/views:block">
           <Legend title="What the labels mean" groups={GOOGLEBOOK_UPSTREAM_LEGEND} />
