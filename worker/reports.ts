@@ -13,6 +13,7 @@
  */
 
 import index from './models.json' with { type: 'json' };
+import { askForRebuild } from './rebuild.ts';
 import { DOCS, ROUTES } from './routes.ts';
 
 type Index = { checks: string[]; kernels?: Record<string, string>; options?: { keys: string[]; exact: string[] }; chids: Record<string, number[]>; models: { id: string; vendor: string; name: string; generation: string; boot: string; compatibles: string[]; modelNumbers: string[] }[] };
@@ -51,7 +52,12 @@ const CODE_ALPHABET = 'ABCDEFGHJKMNPQRSTVWXYZ23456789';
 const SITE = 'https://arewearmyet.com';
 const LINK_HOSTS = ['github.com', 'gitlab.com', 'lore.kernel.org', 'patchwork.kernel.org', 'git.kernel.org', 'gitlab.freedesktop.org', 'lists.freedesktop.org', 'patchwork.freedesktop.org', 'lists.infradead.org', 'patchew.org', 'bugs.launchpad.net', 'codeberg.org', 'bugzilla.kernel.org', 'gitlab.archlinux.org', 'arewearmyet.com'];
 
-export async function reports(request: Request, env: Env, url: URL): Promise<Response | null> {
+export async function reports(request: Request, env: Env, url: URL, wait: (work: Promise<unknown>) => void = () => {}): Promise<Response | null> {
+  // What /api/owners serves changed, so the site's overview is built again
+  const changed = (response: Response) => {
+    if (response.ok) wait(askForRebuild(env));
+    return response;
+  };
   const path = url.pathname.slice('/api/'.length).replace(/\/$/, '');
   const parts = path.split('/');
 
@@ -74,16 +80,16 @@ export async function reports(request: Request, env: Env, url: URL): Promise<Res
 
   if (request.method !== 'POST') return parts[0] === 'firmware' ? null : json({ error: `Not found. The API is described at ${DOCS}` }, 404);
   if (parts[0] === 'firmware') return null;
-  if (path === 'review/hide') return hide(request, env);
+  if (path === 'review/hide') return changed(await hide(request, env));
   if (env.REPORTS !== 'on') return json({ error: 'Reports are closed for now.' }, 503);
   const ip = request.headers.get('cf-connecting-ip') ?? 'local';
   const { success } = await env.REPORT_LIMIT.limit({ key: ip });
   if (!success) return json({ error: 'Too many reports, try again in a minute.' }, 429);
 
-  if (path === 'runs') return postRun(request, env, url);
-  if (parts[0] === 'runs' && parts.length === 3 && RUN_ID.test(parts[1]) && parts[2] === 'results') return postResults(request, env, url, parts[1]);
+  if (path === 'runs') return changed(await postRun(request, env, url));
+  if (parts[0] === 'runs' && parts.length === 3 && RUN_ID.test(parts[1]) && parts[2] === 'results') return changed(await postResults(request, env, url, parts[1]));
   if (path === 'fixes') return postFix(request, env);
-  if (path === 'needs') return postNeed(request, env);
+  if (path === 'needs') return changed(await postNeed(request, env));
   if (path === 'notes') return postNote(request, env, null);
   if (parts[0] === 'notes' && parts.length === 3 && NOTE_ID.test(parts[1]) && parts[2] === 'replies') return postNote(request, env, parts[1]);
   if (parts[0] === 'notes' && parts.length === 3 && NOTE_ID.test(parts[1]) && parts[2] === 'status') return postStatus(request, env, parts[1]);

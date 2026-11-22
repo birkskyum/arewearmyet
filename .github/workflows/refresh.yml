@@ -4,13 +4,22 @@ on:
   schedule:
     - cron: '17 5 * * *'
   workflow_dispatch:
+    inputs:
+      # Asked for by the reports API (worker/rebuild.ts) when owners' results change. Builds as after
+      # a push, without collecting the sources or committing
+      results:
+        type: boolean
+        default: false
   push:
     branches: [main]
 
 permissions:
+  actions: write
   contents: write
   issues: write
 
+# One run at a time, and the newest of the waiting ones. A results build that arrives while a scheduled
+# run waits takes its place, and that day's collection is skipped
 concurrency:
   group: refresh
 
@@ -18,6 +27,8 @@ jobs:
   refresh:
     runs-on: ubuntu-26.04
     env:
+      # Collect the sources and commit what changed: the daily run and a dispatch by hand
+      FULL: ${{ github.event_name != 'push' && !inputs.results }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
@@ -34,19 +45,19 @@ jobs:
           cache-dependency-path: app/go.sum
 
       - name: Collect the sources
-        if: github.event_name != 'push'
+        if: env.FULL == 'true'
         run: pnpm collect
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Copy the device trees not in Linux yet
-        if: github.event_name != 'push'
+        if: env.FULL == 'true'
         run: pnpm trees
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Copy the hardware IDs, reports and ACPI dumps
-        if: github.event_name != 'push'
+        if: env.FULL == 'true'
         run: pnpm archive
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -61,7 +72,7 @@ jobs:
 
       # Commit only when something besides the collection time changed
       - name: Commit changed data
-        if: github.event_name != 'push'
+        if: env.FULL == 'true'
         run: |
           collected='data/sources.json data/owners.json device-trees hwids reports acpi'
           commit() {
@@ -101,9 +112,20 @@ jobs:
         if: env.CLOUDFLARE_API_TOKEN != ''
         run: pnpm wrangler deploy
 
+      # Results that came in after this build copied them asked for no build of their own, since the
+      # API asks once a minute at most. Build again for them
+      - name: Build again for results that came in meanwhile
+        if: inputs.results && env.CLOUDFLARE_API_TOKEN != ''
+        run: |
+          cp data/owners.json "$RUNNER_TEMP/built.json"
+          pnpm run owners || exit 0
+          if ! cmp -s data/owners.json "$RUNNER_TEMP/built.json"; then gh workflow run refresh.yml --ref main -f results=true; fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # One issue, labelled digest, that says where owners' reports add to or disagree with the findings
       - name: Compare owners' reports with the findings
-        if: github.event_name != 'push' && env.CLOUDFLARE_API_TOKEN != ''
+        if: env.FULL == 'true' && env.CLOUDFLARE_API_TOKEN != ''
         run: pnpm digest --issue
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

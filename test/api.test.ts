@@ -7,6 +7,7 @@ import { join } from 'node:path';
 import { after, before, test } from 'node:test';
 import assert from 'node:assert/strict';
 import { getPlatformProxy } from 'wrangler';
+import { askForRebuild } from '../worker/rebuild.ts';
 import { reports } from '../worker/reports.ts';
 
 const YOGA = 'lenovo-yoga-slim-7x-14q8x9';
@@ -20,6 +21,8 @@ let state: string;
 let proxy: Awaited<ReturnType<typeof getPlatformProxy>>;
 let env: Record<string, unknown>;
 let allow = true;
+// What each request handed the Worker to finish after answering
+const waits: Promise<unknown>[] = [];
 
 before(async () => {
   state = mkdtempSync(join(tmpdir(), 'api-test-'));
@@ -46,7 +49,7 @@ after(async () => {
 async function call(method: string, path: string, body?: unknown, headers: Record<string, string> = {}) {
   const url = new URL(`https://arewearmyet.com${path}`);
   const request = new Request(url, { method, headers: { 'content-type': 'application/json', ...headers }, body: body === undefined ? undefined : JSON.stringify(body) });
-  const response = (await reports(request, env as never, url))!;
+  const response = (await reports(request, env as never, url, (work) => waits.push(work)))!;
   return { status: response.status, body: (await response.json()) as any };
 }
 const machine = (token: string) => ({ 'x-machine-token': token });
@@ -579,4 +582,26 @@ test('keeps which change made on a computer a part works because of, under that 
   assert.equal((await call('POST', '/api/runs', run([{ check: 'suspend', state: 'broken', how: 'owner', note: 'It no longer wakes.' }], { model: 'hp-omnibook-x-14-fe' }), token)).status, 201);
   const page = await call('GET', '/api/models/hp-omnibook-x-14-fe');
   assert.equal(page.body.owners.checks.suspend.latest.some((r: { needs?: unknown }) => r.needs), false);
+});
+
+test('asks for the site to be built again when results come in, once a minute at most', async () => {
+  waits.length = 0;
+  assert.equal((await call('POST', '/api/runs', run([{ check: 'wifi', state: 'bogus', how: 'measured' }]), machine(TOKEN_A))).status, 400);
+  assert.equal(waits.length, 0);
+  assert.equal((await call('POST', '/api/runs', run([{ check: 'wifi', state: 'works', how: 'measured' }]), machine(TOKEN_A))).status, 201);
+  assert.equal(waits.length, 1);
+  // Without the token nothing is asked
+  assert.equal(await waits[0], false);
+
+  const asked: { url: string; init: RequestInit }[] = [];
+  const send = (async (url: string, init: RequestInit) => { asked.push({ url, init }); return new Response(null, { status: 204 }); }) as unknown as typeof fetch;
+  const withToken = { ...env, REBUILD_TOKEN: 'github-token' } as never;
+  const start = new Date('2030-01-01T00:00:00Z');
+  assert.equal(await askForRebuild(withToken, start, send), true);
+  assert.equal(await askForRebuild(withToken, new Date(start.getTime() + 30_000), send), false);
+  assert.equal(await askForRebuild(withToken, new Date(start.getTime() + 61_000), send), true);
+  assert.equal(asked.length, 2);
+  assert.match(asked[0].url, /\/actions\/workflows\/refresh\.yml\/dispatches$/);
+  assert.equal((asked[0].init.headers as Record<string, string>).authorization, 'Bearer github-token');
+  assert.deepEqual(JSON.parse(String(asked[0].init.body)), { ref: 'main', inputs: { results: true } });
 });

@@ -38,13 +38,13 @@ const MACHINE_KEYS = ['manufacturer', 'product', 'family', 'sku', 'baseboard', '
 const CODE_ALPHABET = 'ABCDEFGHJKMNPQRSTVWXYZ23456789';
 
 export default {
-  async fetch(request, env): Promise<Response> {
+  async fetch(request, env, ctx): Promise<Response> {
     const url = new URL(request.url);
     // /api itself answers with the list of routes. Every other path outside /api/ is a page
     if (url.pathname !== '/api' && !url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
     if (!url.pathname.startsWith('/api/firmware/')) {
       if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
-      return (await reports(request, env, url)) ?? json({ error: 'Not found.' }, 404);
+      return (await reports(request, env, url, (work) => ctx.waitUntil(work))) ?? json({ error: 'Not found.' }, 404);
     }
     if (env.FIRMWARE_UPLOADS !== 'on') return json({ error: 'Uploads are closed.' }, 503);
 

@@ -25,5 +25,7 @@
   ],
   // "off" closes the firmware drop or the reports without a code change.
   // ADMIN_TOKEN, for hiding reports from /review, is a secret (wrangler secret put ADMIN_TOKEN)
+  // REBUILD_TOKEN, a GitHub token with Actions write on the repository, lets new results start a
+  // build of the site (worker/rebuild.ts). Without it the site follows them once a day
   "vars": { "FIRMWARE_UPLOADS": "on", "REPORTS": "on" }
 }
