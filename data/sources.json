@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-21T05:27:02.277Z",
+  "collected": "2026-11-22T02:05:01.617Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -5250,6 +5250,30 @@
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
     },
     {
+      "folder": "hardware-reports/lenovo/83n3",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/61",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "19902ad98bcb60530f625f059675adc199d680d1",
+      "dir": "reports/lenovo/83n3/85c9358e",
+      "pull": {
+        "number": 61,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
+      "folder": "hardware-reports/dell-inc/inspiron-14-5441",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/59",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "4ec2b7e644c4d0330788e634f6095535483436ed",
+      "dir": "reports/dell-inc/inspiron-14-5441/0b7969eb",
+      "pull": {
+        "number": 59,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
       "folder": "hardware-reports/hp/hp-omnibook-x-laptop-14-fe0xxx",
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/56",
       "repo": "turbineBMW/omarchy-hardware-reports",
@@ -5966,7 +5990,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-74",
+        "kernel": "7.3-75",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -9675,9 +9699,9 @@
       }
     ],
     "image": {
-      "version": "2026.11.20.497",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.20.497/omarchy-edge-2026.11.20.497-aarch64.iso",
-      "kernel": "7.3.0-73-omarchy"
+      "version": "2026.11.21.498",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.21.498/omarchy-edge-2026.11.21.498-aarch64.iso",
+      "kernel": "7.3.0-74-omarchy"
     },
     "pulls": [
       {

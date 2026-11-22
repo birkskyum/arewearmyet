@@ -1,18 +1,18 @@
 {
-  "collected": "2026-11-21T05:27:02.277Z",
+  "collected": "2026-11-22T02:05:01.617Z",
   "stale": [],
   "linuxNext": "20261120",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-74",
+    "kernel": "7.3-75",
     "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.20.497",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.20.497/omarchy-edge-2026.11.20.497-aarch64.iso",
-      "kernel": "7.3.0-73-omarchy"
+      "version": "2026.11.21.498",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.21.498/omarchy-edge-2026.11.21.498-aarch64.iso",
+      "kernel": "7.3.0-74-omarchy"
     },
     "channels": [
       {
@@ -397,7 +397,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-74",
+        "kernel": "7.3-75",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -4373,14 +4373,14 @@
         "https://www.qualcomm.com/snapdragon/laptops-and-tablets/laptop-device-finder/asus-proart-pz13"
       ],
       "notes": null,
-      "outcome": "works",
-      "bootable": "edge",
+      "outcome": "workaround",
+      "bootable": "workaround",
       "reports": [
         {
-          "state": "works",
-          "note": "An owner has Omarchy running on it, going by the 4 checks written up from it.",
+          "state": "workaround",
+          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-73. There, the installer from a USB stick partly works, and the disk password prompt partly works.",
           "checked": "2026-11",
-          "from": "findings"
+          "from": "hw-test"
         }
       ],
       "machine": "omarchy",
@@ -4453,13 +4453,13 @@
               "url": "https://github.com/ubuntu/stubble/pull/104"
             }
           ],
-          "outcome": "works",
+          "outcome": "workaround",
           "reports": [
             {
-              "state": "works",
-              "note": "An owner has Omarchy running on it, going by the 4 checks written up from it.",
+              "state": "workaround",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-73. There, the installer from a USB stick partly works, and the disk password prompt partly works.",
               "checked": "2026-11",
-              "from": "findings"
+              "from": "hw-test"
             }
           ]
         }
@@ -6751,7 +6751,7 @@
         "acpiUrls": [
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-5441-x1p-42-100",
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspron-14-5441-x1p-64-100",
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/32"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/59"
         ]
       },
       "variants": [
@@ -7105,14 +7105,14 @@
         "https://dl.dell.com/content/manual6242485-latitude-7455-owner-s-manual.pdf"
       ],
       "notes": null,
-      "outcome": "workaround",
-      "bootable": "workaround",
+      "outcome": "works",
+      "bootable": "stable",
       "reports": [
         {
-          "state": "workaround",
-          "note": "An owner has Omarchy running on it, going by the 14 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+          "state": "works",
+          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-75. There, the installer from a USB stick works, and the disk password prompt works.",
           "checked": "2026-11",
-          "from": "findings"
+          "from": "hw-test"
         }
       ],
       "machine": "omarchy",
@@ -7198,13 +7198,13 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-dell-latitude-7455.json"
             }
           ],
-          "outcome": "workaround",
+          "outcome": "works",
           "reports": [
             {
-              "state": "workaround",
-              "note": "An owner has Omarchy running on it, going by the 14 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+              "state": "works",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-75. There, the installer from a USB stick works, and the disk password prompt works.",
               "checked": "2026-11",
-              "from": "findings"
+              "from": "hw-test"
             }
           ]
         }
@@ -11518,12 +11518,6 @@
           "state": "problems",
           "note": "The edge image of 18 November starts to the installer, which lists no disk to install to. The device tree switches on a second drive slot this model doesn't have, and that takes the power from the real one. With the slot switched off the owner's installer lists the drive. The fix is in review (omacom/omarchy-pkgs#3070), with one for the rear USB port that doesn't work.",
           "checked": "2026-11"
-        },
-        {
-          "state": "problems",
-          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick doesn't work.",
-          "checked": "2026-11",
-          "from": "hw-test"
         }
       ],
       "machine": "omarchy",
@@ -11600,12 +11594,6 @@
               "state": "problems",
               "note": "The edge image of 18 November starts to the installer, which lists no disk to install to. The device tree switches on a second drive slot this model doesn't have, and that takes the power from the real one. With the slot switched off the owner's installer lists the drive. The fix is in review (omacom/omarchy-pkgs#3070), with one for the rear USB port that doesn't work.",
               "checked": "2026-11"
-            },
-            {
-              "state": "problems",
-              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick doesn't work.",
-              "checked": "2026-11",
-              "from": "hw-test"
             }
           ]
         }
@@ -18604,6 +18592,8 @@
     "firmware": [
       "qcom/x1e80100/ASUSTeK/vivobook-16"
     ],
-    "acpi": []
+    "acpi": [
+      "hardware-reports/lenovo/83n3"
+    ]
   }
 }

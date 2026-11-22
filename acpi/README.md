@@ -134,3 +134,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 - Samsung Galaxy Book5 Edge 5G
 - Samsung Galaxy Book6 Edge 5G
 - HYRICAN Study Pad One
+
+## Not matched to a model yet
+
+- [hardware-reports/lenovo/83n3](../reports/lenovo/83n3)
