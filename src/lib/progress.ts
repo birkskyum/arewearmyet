@@ -4,17 +4,18 @@ import status from '../data/status.json';
 import { bootableCell, googlebookOmarchyCell, nvidiaOmarchyCell, type Cell } from './labels';
 import { PARTS, modelParts } from './parts';
 
-export type ProgressGroup = { key: string; label: string; uefi: boolean };
+// `short` is the button's word beside its maker's name in the sticky bar, and `label` the full name it says on hover
+export type ProgressGroup = { key: string; label: string; short: string; maker: string; uefi: boolean; about?: string };
 // `uefi` marks the chips Bring-up has bars for. The pieces those bars count, a device tree, hardware IDs and
 // firmware, are what a Snapdragon PC that starts through UEFI needs, and NVIDIA's and Google's machines don't
 export const PROGRESS_GROUPS: ProgressGroup[] = [
-  { key: 'x1', label: 'Snapdragon X', uefi: true },
-  { key: 'x2', label: 'Snapdragon X2', uefi: true },
-  { key: 'older', label: 'Snapdragon 7c, 8cx, 835 and 850', uefi: true },
-  { key: 'c', label: 'Snapdragon C', uefi: true },
-  { key: 'n1x', label: 'NVIDIA N1x', uefi: false },
-  { key: 'gb10', label: 'NVIDIA GB10', uefi: false },
-  { key: 'google', label: 'Chromebooks and Googlebooks', uefi: false },
+  { key: 'x1', label: 'Snapdragon X1', short: 'X1', maker: 'Snapdragon', uefi: true },
+  { key: 'x2', label: 'Snapdragon X2', short: 'X2', maker: 'Snapdragon', uefi: true },
+  { key: 'older', label: 'Snapdragon 7c, 8cx, 835 and 850', short: 'Older', maker: 'Snapdragon', uefi: true, about: 'The Windows on Arm PCs from before Snapdragon X.' },
+  { key: 'c', label: 'Snapdragon C', short: 'C', maker: 'Snapdragon', uefi: true },
+  { key: 'n1x', label: 'NVIDIA N1x', short: 'N1x', maker: 'NVIDIA', uefi: false },
+  { key: 'gb10', label: 'NVIDIA GB10', short: 'GB10', maker: 'NVIDIA', uefi: false },
+  { key: 'google', label: 'Chromebooks and Googlebooks', short: 'Chromebooks', maker: '', uefi: false },
 ];
 
 export type PieceKind = 'upstream' | 'added' | 'pull' | 'available' | 'none';
@@ -83,3 +84,12 @@ export function progressModels(): ProgressModel[] {
 }
 
 export const PROGRESS_PARTS = PARTS.map(({ title, question }) => ({ title, question }));
+
+// How many models each button counts, in What works and, for All, in Bring-up
+export function progressCounts(models: ProgressModel[]) {
+  return {
+    all: models.length,
+    uefi: models.filter((model) => model.pieces).length,
+    groups: Object.fromEntries(PROGRESS_GROUPS.map((group) => [group.key, models.filter((model) => model.group === group.key).length])),
+  };
+}

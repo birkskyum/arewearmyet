@@ -11,8 +11,7 @@ const SIDE = 'rounded-md px-4 py-1.5 text-sm font-semibold';
       <button type="button" data-set-mode="hardware" aria-pressed="true" class={`${SIDE} text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100 hw:bg-zinc-100 hw:text-zinc-900 hw:hover:bg-zinc-100 hw:hover:text-zinc-900`}>What works</button>
       <button type="button" data-set-mode="booting" aria-pressed="false" class={`${SIDE} bg-zinc-100 text-zinc-900 hw:bg-transparent hw:text-zinc-300 hw:hover:bg-zinc-800 hw:hover:text-zinc-100`}>Bring-up</button>
     </div>
-    <p class="ml-auto text-sm text-zinc-400 max-lg:hidden hw:hidden">What does it need? The device tree, hardware IDs and firmware of each model.</p>
-    <p class="ml-auto hidden text-sm text-zinc-400 lg:hw:block">Does it boot, and what works? Each part, as owners and <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs text-zinc-200">hw-test</code> found it.</p>
+    <slot />
   </div>
 </div>
 

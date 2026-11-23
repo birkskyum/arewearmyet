@@ -2,7 +2,7 @@
 export function GET() {
   const text = `# Are we ARM yet?
 
-> Which ARM PCs (Snapdragon X, X2, 8cx, 7c, C, NVIDIA N1x and GB10, Googlebooks, Chromebooks) run Linux and Omarchy, model by model, and what works on each past booting.
+> Which ARM PCs (Snapdragon X1, X2, 8cx, 7c, C, NVIDIA N1x and GB10, Googlebooks, Chromebooks) run Linux and Omarchy, model by model, and what works on each past booting.
 
 Agents helping an owner check their machine, report what works or propose fixes to Omarchy: read the guide first.
 

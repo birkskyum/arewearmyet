@@ -1,10 +1,9 @@
-// The bars at the top of the home page, which count every model on it. The buttons above them narrow
-// them to one kind of chip. What works shows whether the models boot and the parts past booting, and
+// The bars at the top of the home page, which count every model on it, or the chip chosen with the buttons in the
+// sticky bar (ChipPills.tsx). What works shows whether the models boot and the parts past booting, and
 // Bring-up the pieces a Snapdragon PC that starts through UEFI needs. Each model is one cell, coloured by
 // its state and linking to its table
-import { createEffect, createMemo, createSignal, For, onCleanup, onMount, Show, type JSX } from 'solid-js';
-import { PROGRESS_PARAM, setPageChip } from '../lib/chip-choice';
-import { MODE_EVENT, readMode, type Mode } from '../lib/mode';
+import { createEffect, createMemo, createSignal, For, Show, type JSX } from 'solid-js';
+import { chosenChip } from '../lib/chip-choice';
 import type { BootKind, PieceKind, ProgressGroup, ProgressModel } from '../lib/progress';
 
 type Props = {
@@ -13,8 +12,6 @@ type Props = {
   parts: { title: string; question: string }[];
 };
 
-// The chip the bars count sits in the address, so a link can open the page on it
-const PARAM = PROGRESS_PARAM;
 const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
 
 const PART_KINDS = [
@@ -126,45 +123,12 @@ function Bar(props: { title: string; cells: Cell[]; choice: string; count: (show
 }
 
 export default function Progress(props: Props) {
+  // The chosen chip reaches the bars once they are drawn, so they first match the built page
   const [chosen, setChosen] = createSignal('all');
-  const [mode, setMode] = createSignal<Mode>('hardware');
+  createEffect(() => setChosen(chosenChip()));
   const uefi = (key: string) => props.groups.find((group) => group.key === key)?.uefi ?? false;
   // Bring-up has no bars for NVIDIA's and Google's machines, so with one of them chosen it counts every model it has bars for
   const pieceChoice = () => (uefi(chosen()) ? chosen() : 'all');
-  const pressed = () => (mode() === 'booting' ? pieceChoice() : chosen());
-
-  onMount(() => {
-    const asked = new URLSearchParams(location.search).get(PARAM);
-    if (asked && props.groups.some((group) => group.key === asked)) setChosen(asked);
-    const heard = () => setMode(readMode());
-    heard();
-    addEventListener(MODE_EVENT, heard);
-    onCleanup(() => removeEventListener(MODE_EVENT, heard));
-    // A link to a section the chosen chip hides, like the Snapdragon group's link to the Chromebooks, shows every chip again
-    const leave = (event: MouseEvent) => {
-      const link = (event.target as Element | null)?.closest?.('a[href^="#"]') as HTMLAnchorElement | null;
-      const target = link && document.getElementById(decodeURIComponent(link.hash.slice(1)));
-      if (target && chosen() !== 'all' && target.closest('[data-chips]') && !target.checkVisibility()) choose('all');
-    };
-    addEventListener('click', leave);
-    onCleanup(() => removeEventListener('click', leave));
-  });
-  // The chip the buttons show as chosen is the page's. The sections below that hold other chips hide (index.astro's
-  // rules on data-progress), and the tables of two chips show its rows only
-  createEffect(() => {
-    const chip = pressed();
-    setPageChip(chip);
-    if (chip === 'all') delete document.documentElement.dataset.progress;
-    else document.documentElement.dataset.progress = chip;
-  });
-  const choose = (key: string) => {
-    setChosen(key);
-    const params = new URLSearchParams(location.search);
-    if (key === 'all') params.delete(PARAM);
-    else params.set(PARAM, key);
-    const search = params.toString();
-    history.replaceState(null, '', `${location.pathname}${search ? `?${search}` : ''}${location.hash}`);
-  };
 
   const withPieces = props.models.filter((model) => model.pieces);
   const table = (model: ProgressModel, view = '') => `/?${view}${model.prefix}q=${encodeURIComponent(model.name)}#${model.anchor}`;
@@ -240,11 +204,8 @@ export default function Progress(props: Props) {
     return { done, pull: n('pull'), available: n('available'), title: `In Omarchy for ${done} of ${shown.length}`, tip };
   };
 
-  const button = (key: string, active: () => boolean) =>
-    `items-center gap-1.5 rounded-full px-3 py-1 text-sm ring-1 ${active() ? 'bg-zinc-100 font-medium text-zinc-900 ring-zinc-100' : 'text-zinc-300 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100'} ${key !== 'all' && !uefi(key) ? 'hidden hw:inline-flex' : 'inline-flex'}`;
-
   return (
-    <section class="mt-12 scroll-mt-20" id="progress" aria-label="How far the models are">
+    <section class="mt-12 scroll-mt-28" id="progress" aria-label="How far the models are">
       <div class="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
         <h2 class="hidden text-lg font-semibold text-zinc-50 hw:block">Booting, then part by part</h2>
         <h2 class="text-lg font-semibold text-zinc-50 hw:hidden">Omarchy and upstream</h2>
@@ -259,23 +220,6 @@ export default function Progress(props: Props) {
           <li class="flex items-center gap-1.5"><span class="size-2.5 rounded-[2px] bg-amber-400"></span><a class={LINK} href="https://github.com/omacom/omarchy-pkgs/pulls">Open pull requests</a></li>
           <li class="flex items-center gap-1.5"><span class="size-2.5 rounded-[2px] bg-zinc-600"></span>Exists elsewhere</li>
         </ul>
-      </div>
-      <div class="mt-4 flex flex-wrap gap-2" role="group" aria-label="Which models the bars count">
-        <button type="button" aria-pressed={pressed() === 'all'} onClick={() => choose('all')} class={button('all', () => pressed() === 'all')}>
-          All
-          <span class="text-zinc-500">
-            <span class="hidden hw:inline">{props.models.length}</span>
-            <span class="hw:hidden">{withPieces.length}</span>
-          </span>
-        </button>
-        <For each={props.groups}>
-          {(group) => (
-            <button type="button" aria-pressed={pressed() === group.key} onClick={() => choose(group.key)} class={button(group.key, () => pressed() === group.key)}>
-              {group.label}
-              <span class="text-zinc-500">{props.models.filter(inChoice(group.key)).length}</span>
-            </button>
-          )}
-        </For>
       </div>
 
       <dl class="mt-5 hidden gap-x-8 gap-y-5 sm:grid-cols-2 hw:grid">

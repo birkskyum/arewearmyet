@@ -10,7 +10,8 @@ import { ANNOUNCED, CHROMEBOOK_OMARCHY_LEGEND, FILTERS, GOOGLEBOOK_OMARCHY_LEGEN
 import { PILL } from '../lib/tones';
 import { googlebookRows, nvidiaRows, snapdragonRows } from '../lib/rows';
 import { PARTS, PART_OPTIONS } from '../lib/parts';
-import { PROGRESS_GROUPS, PROGRESS_PARTS, progressModels } from '../lib/progress';
+import ChipPills from '../components/ChipPills';
+import { PROGRESS_GROUPS, PROGRESS_PARTS, progressCounts, progressModels } from '../lib/progress';
 import Group from '../components/Group.astro';
 import ViewState from '../components/ViewState.astro';
 import ModeSwitch from '../components/ModeSwitch.astro';
@@ -105,6 +106,7 @@ const chromebookViews = [
 // The Googlebooks' Omarchy view gets the row of dots too, after the Chromebooks took their own copy of its columns
 googlebookViews[0].columns.push(HARDWARE_DOTS as never);
 const HELP = 'mt-2 max-w-3xl text-sm text-zinc-400';
+const models = progressModels();
 
 const collected = new Date(status.collected).toISOString().slice(0, 10);
 // Sources the last refresh couldn't reach, whose data is older than the rest
@@ -155,15 +157,17 @@ import { SHELL } from '../lib/shell';
       </div>
     </header>
 
-    <ModeSwitch />
+    <ModeSwitch>
+      <ChipPills client:load groups={PROGRESS_GROUPS} counts={progressCounts(models)} />
+    </ModeSwitch>
 
-    <Progress client:load models={progressModels()} groups={PROGRESS_GROUPS} parts={PROGRESS_PARTS} />
+    <Progress client:load models={models} groups={PROGRESS_GROUPS} parts={PROGRESS_PARTS} />
 
     <Group id="snapdragon-pcs" chips="x1 x2 older c" title="Snapdragon PCs" total={current.length + older.length + entry.length}>
       Laptops, tablets and desktops sold with Windows or Linux. They start through UEFI and need a device tree, hardware IDs and firmware. Until Omarchy 4.6 is out, <a class={LINK} href="/docs/install">install from the edge image</a>, which has the newest fixes for these machines. <a class={LINK} href="#chromebooks-and-googlebooks">Chromebooks and Googlebooks</a> are further down.
     </Group>
 
-    <Family id="snapdragon" chips="x1 x2" title="Snapdragon X and X2" total={current.length}>
+    <Family id="snapdragon" chips="x1 x2" title="Snapdragon X1 and X2" total={current.length}>
       <div class="group/views" data-views data-view="hardware">
         <ViewState prefix="" views={snapdragonViews.map((v) => v.id)} />
         <div class="group-data-[view=hardware]/views:hidden group-data-[view=upstream]/views:hidden">
@@ -180,11 +184,11 @@ import { SHELL } from '../lib/shell';
             client:load
             rows={current}
             views={snapdragonViews}
-            chips={[{ key: 'x1', label: 'Snapdragon X' }, { key: 'x2', label: 'Snapdragon X2' }]}
+            chips={[{ key: 'x1', label: 'Snapdragon X1' }, { key: 'x2', label: 'Snapdragon X2' }]}
             pageChips={['x1', 'x2']}
             urlPrefix=""
             exportName="arewearmyet-snapdragon-x"
-            exportTitle="Snapdragon X and X2"
+            exportTitle="Snapdragon X1 and X2"
           />
         </div>
       </div>
@@ -265,7 +269,7 @@ import { SHELL } from '../lib/shell';
           <Legend title="What the labels mean" groups={GOOGLEBOOK_UPSTREAM_LEGEND} />
         </div>
         <div class="mt-4">
-          <StatusTable client:load rows={googlebooks} views={googlebookViews} chips={[{ key: 'x1', label: 'Snapdragon X' }, { key: 'x2', label: 'Snapdragon X2' }]} urlPrefix="googlebook-" exportName="arewearmyet-googlebooks" exportTitle="Googlebooks with Snapdragon" />
+          <StatusTable client:load rows={googlebooks} views={googlebookViews} chips={[{ key: 'x1', label: 'Snapdragon X1' }, { key: 'x2', label: 'Snapdragon X2' }]} urlPrefix="googlebook-" exportName="arewearmyet-googlebooks" exportTitle="Googlebooks with Snapdragon" />
         </div>
       </div>
     </Family>
