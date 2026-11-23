@@ -140,7 +140,7 @@ export default function Progress(props: Props) {
     heard();
     addEventListener(MODE_EVENT, heard);
     onCleanup(() => removeEventListener(MODE_EVENT, heard));
-    // A link to a section the chosen chip hides, like the switch's links to the groups, shows every chip again
+    // A link to a section the chosen chip hides, like the Snapdragon group's link to the Chromebooks, shows every chip again
     const leave = (event: MouseEvent) => {
       const link = (event.target as Element | null)?.closest?.('a[href^="#"]') as HTMLAnchorElement | null;
       const target = link && document.getElementById(decodeURIComponent(link.hash.slice(1)));

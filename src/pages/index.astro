@@ -155,11 +155,7 @@ import { SHELL } from '../lib/shell';
       </div>
     </header>
 
-    <ModeSwitch groups={[
-      { href: '#snapdragon-pcs', label: 'Snapdragon', total: current.length + older.length + entry.length },
-      { href: '#nvidia-pcs', label: 'NVIDIA', total: nvidia.length },
-      { href: '#chromebooks-and-googlebooks', label: 'Chromebooks', total: googlebooks.length + chromebooks.length },
-    ]} />
+    <ModeSwitch />
 
     <Progress client:load models={progressModels()} groups={PROGRESS_GROUPS} parts={PROGRESS_PARTS} />
 
