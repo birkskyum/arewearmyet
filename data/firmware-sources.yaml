@@ -1056,10 +1056,9 @@ folders:
     files:
       - name: "adsp_dtbs.elf"
         size: 73528
-        sha256: "e251321b394b41ae9ff79af254805aca8f5f0204907a57254976008f340d96c6"
-        note: "ASUS signs the ADSP images per board. This is the S5507QAD package's, signed for the X Elite board (SUBSYS_1EF31043)."
+        sha256: "4cf6f9eb7a4e5cf78481af0e8787ea61b6ac1d8ea72d5ce9785a72e02adda04d"
         from:
-          - { package: "asus-socpackage-44984", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_QAD_Signed/adsp_dtbs.elf" }
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adsp_dtbs.elf" }
       - name: "adspr.jsn"
         size: 697
         sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
@@ -1112,10 +1111,9 @@ folders:
           - { package: "asus-socpackage-52327", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
       - name: "qcadsp8380.mbn"
         size: 21879224
-        sha256: "d8e2d3d5403f5da9e2f5194e26920e45bfa77d93fe71fdb742c4976bf13a05f7"
-        note: "ASUS signs the ADSP images per board. This is the S5507QAD package's, signed for the X Elite board (SUBSYS_1EF31043)."
+        sha256: "4ddea417cedc2eb965f3e6559ca92ea1a112c4c3bd8b901ddb5eca06d50970f7"
         from:
-          - { package: "asus-socpackage-44984", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_QAD_Signed/qcadsp8380.mbn" }
+          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/qcadsp8380.mbn" }
       - name: "qccdsp8380.mbn"
         size: 3174824
         sha256: "4387fa1a234aacbff50f8a215b96536d17c4b25b6b798392e15a162e4adcd7a0"
@@ -2240,10 +2238,9 @@ folders:
     files:
       - name: "adsp_dtbs.elf"
         size: 73528
-        sha256: "4cf6f9eb7a4e5cf78481af0e8787ea61b6ac1d8ea72d5ce9785a72e02adda04d"
-        note: "ASUS signs the ADSP images per board. This is the S5507QA package's, signed for the X Plus board (SUBSYS_1FC31043)."
+        sha256: "e251321b394b41ae9ff79af254805aca8f5f0204907a57254976008f340d96c6"
         from:
-          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/adsp_dtbs.elf" }
+          - { package: "asus-socpackage-44984", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_QAD_Signed/adsp_dtbs.elf" }
       - name: "adspr.jsn"
         size: 697
         sha256: "e9ba7199626b0c03f2ec02822d744f678ad567fe0625a28fe5f5908b7281e9db"
@@ -2286,10 +2283,9 @@ folders:
           - { package: "asus-socpackage-52327", member: "QualcommBSP/qcnspmcdm_ext_cdsp8380/cdspr.jsn" }
       - name: "qcadsp8380.mbn"
         size: 21879224
-        sha256: "4ddea417cedc2eb965f3e6559ca92ea1a112c4c3bd8b901ddb5eca06d50970f7"
-        note: "ASUS signs the ADSP images per board. This is the S5507QA package's, signed for the X Plus board (SUBSYS_1FC31043)."
+        sha256: "d8e2d3d5403f5da9e2f5194e26920e45bfa77d93fe71fdb742c4976bf13a05f7"
         from:
-          - { package: "asus-socpackage-43699", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_0324_Signed/qcadsp8380.mbn" }
+          - { package: "asus-socpackage-44984", member: "Driver/QualcommBSP/Subsystem/qcsubsys_ext_adsp8380_QAD_Signed/qcadsp8380.mbn" }
       - name: "qccdsp8380.mbn"
         size: 3174824
         sha256: "4387fa1a234aacbff50f8a215b96536d17c4b25b6b798392e15a162e4adcd7a0"
