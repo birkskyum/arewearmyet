@@ -47,7 +47,7 @@ is zeroed, and MSDM and SLIC, which hold the Windows product key, are left out. 
 | HP EliteBook Ultra G1q | [hp-elitebook-ultra-g1q](aarch64-laptops/hp-elitebook-ultra-g1q) |
 | HP OmniBook 3 14 | [hardware-reports/hp/hp-omnibook-3-laptop-14-hz0xxx](../reports/hp/hp-omnibook-3-laptop-14-hz0xxx) |
 | HP OmniBook 3 16 (16-bz0) | [hardware-reports/hp/hp-omnibook-3-laptop-16-bz0xxx](../reports/hp/hp-omnibook-3-laptop-16-bz0xxx) |
-| HP OmniBook 3 16 (16-ct0) | [firmware/hp-omnibook-3-16-ct0](firmware/hp-omnibook-3-16-ct0) |
+| HP OmniBook 3 16 (16-ct0) | [hardware-reports/hp/hp-omnibook-3-laptop-16-ct0xxx](../reports/hp/hp-omnibook-3-laptop-16-ct0xxx), [firmware/hp-omnibook-3-16-ct0](firmware/hp-omnibook-3-16-ct0) |
 | HP OmniBook 5 14 | [hp-omnibook-5-14-he0xxx](aarch64-laptops/hp-omnibook-5-14-he0xxx), [hardware-reports/hp/hp-omnibook-5-laptop-14-he0xxx](../reports/hp/hp-omnibook-5-laptop-14-he0xxx) |
 | HP OmniBook X 14 | [hp-omnibook-x14-fe0xxx](aarch64-laptops/hp-omnibook-x14-fe0xxx), [hardware-reports/hp/hp-omnibook-x-laptop-14-fe0xxx](../reports/hp/hp-omnibook-x-laptop-14-fe0xxx) |
 | HP EliteBook 6 G2q | [firmware/hp-elitebook-6-g2q](firmware/hp-elitebook-6-g2q) |

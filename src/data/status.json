@@ -1,18 +1,18 @@
 {
-  "collected": "2026-11-22T02:05:01.617Z",
+  "collected": "2026-11-23T05:29:19.785Z",
   "stale": [],
   "linuxNext": "20261120",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-75",
+    "kernel": "7.3-77",
     "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.21.498",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.21.498/omarchy-edge-2026.11.21.498-aarch64.iso",
-      "kernel": "7.3.0-74-omarchy"
+      "version": "2026.11.22.499",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.22.499/omarchy-edge-2026.11.22.499-aarch64.iso",
+      "kernel": "7.3.0-75-omarchy"
     },
     "channels": [
       {
@@ -397,7 +397,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-75",
+        "kernel": "7.3-77",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -1660,8 +1660,8 @@
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
     "works": 18,
-    "should": 49,
-    "workaround": 10,
+    "should": 48,
+    "workaround": 11,
     "problems": 4,
     "notYet": 7,
     "deviceTree": 84,
@@ -2269,8 +2269,8 @@
         "omarchy": 0,
         "fromUpstream": 0,
         "added": 0,
-        "pull": 0,
-        "available": 1,
+        "pull": 1,
+        "available": 0,
         "upstream": 0,
         "channels": {
           "stable": 0,
@@ -2280,10 +2280,10 @@
         "models": {
           "fromUpstream": [],
           "added": [],
-          "pull": [],
-          "available": [
+          "pull": [
             "hp-omnibook-3-16-ct0"
-          ]
+          ],
+          "available": []
         }
       },
       "firmware": {
@@ -2311,16 +2311,16 @@
         "omarchy": 0,
         "fromUpstream": 0,
         "added": 0,
-        "pull": 0,
-        "available": 1,
+        "pull": 1,
+        "available": 0,
         "upstream": 0,
         "models": {
           "fromUpstream": [],
           "added": [],
-          "pull": [],
-          "available": [
+          "pull": [
             "hp-omnibook-3-16-ct0"
-          ]
+          ],
+          "available": []
         }
       }
     }
@@ -4686,9 +4686,16 @@
         "https://www.notebookcheck.net/Asus-Vivobook-14-A1407QA.1068304.0.html"
       ],
       "notes": "Its tree builds on the Vivobook 16 X1607QA's, since ASUS ships both the same firmware files.",
-      "outcome": "should",
-      "bootable": "edge",
-      "reports": [],
+      "outcome": "workaround",
+      "bootable": "workaround",
+      "reports": [
+        {
+          "state": "workaround",
+          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick partly works, and the disk password prompt works.",
+          "checked": "2026-11",
+          "from": "hw-test"
+        }
+      ],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
@@ -4756,8 +4763,15 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "should",
-          "reports": []
+          "outcome": "workaround",
+          "reports": [
+            {
+              "state": "workaround",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick partly works, and the disk password prompt works.",
+              "checked": "2026-11",
+              "from": "hw-test"
+            }
+          ]
         }
       ],
       "boot": "uefi",
@@ -8525,14 +8539,18 @@
       ],
       "notes": "HP's driver pack sp174797 is the 7c Gen 3's (SC7280 power driver, 8270 firmware), and its BIOS capsule holds the DSDT a device tree can be written from.",
       "outcome": "manual",
-      "bootable": "carry",
+      "bootable": "pr",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
         "ids": null,
-        "idsPull": null,
+        "idsPull": {
+          "url": "https://github.com/omacom/omarchy-pkgs/pull/3276",
+          "number": 3276,
+          "title": "linux-omarchy-dtbs: add the HP OmniBook 3 16 (16-ct0)'s hardware IDs"
+        },
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -8542,7 +8560,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "elsewhere",
+        "ids": "pr",
         "firmware": "edge"
       },
       "upstream": {
@@ -8562,8 +8580,9 @@
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
         "firmwareFolders": [],
-        "acpi": "firmware",
+        "acpi": "collected",
         "acpiUrls": [
+          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/63",
           "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/hp-omnibook-3-16-ct0"
         ]
       },
@@ -8575,7 +8594,11 @@
           "idsChannel": null,
           "bootChannel": null,
           "treePull": null,
-          "idsPull": null,
+          "idsPull": {
+            "url": "https://github.com/omacom/omarchy-pkgs/pull/3276",
+            "number": 3276,
+            "title": "linux-omarchy-dtbs: add the HP OmniBook 3 16 (16-ct0)'s hardware IDs"
+          },
           "deviceTree": {
             "file": "sc7280-hp-omnibook-3-16-ct0.dts",
             "firstRelease": null,
@@ -13039,7 +13062,7 @@
         "firmware": "download",
         "firmwareMissing": [],
         "firmwareAudioOnly": false,
-        "firmwareDownload": "/firmware/#qcom-x1e80100-microsoft",
+        "firmwareDownload": "/firmware/#qcom-x1e80100-microsoft-Romulus",
         "firmwarePosted": null,
         "firmwareUpstream": "missing",
         "firmwareUpstreamMissing": [],
@@ -13068,6 +13091,7 @@
             "patch": null
           },
           "firmwareNeeded": [
+            "qcom/x1e80100/microsoft/Romulus/qcvss8380.mbn",
             "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
             "qcom/x1e80100/microsoft/Romulus/qcadsp8380.mbn",
             "qcom/x1e80100/microsoft/Romulus/adsp_dtbs.elf",

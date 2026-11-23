@@ -3,6 +3,34 @@
   "asus-proart-pz13-ht5306": {
    "machines": 1,
    "checks": {
+    "suspend-drain": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "agent": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "agent",
+       "note": "An unplugged s2idle test resumed on the same boot after 31 hours 15 minutes. Battery fell from 97.6 to 63.6 percent (20.00 Wh), approximately 0.64 W over the suspend interval. Readings include brief awake time around the test.",
+       "evidence": null,
+       "kernel": "7.3.0-73-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-23T01:39:51.596Z",
+       "run": "RUN-M3D6K85JFS",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options",
+         "module_blacklist"
+        ]
+       }
+      }
+     ]
+    },
     "lid": {
      "machines": 1,
      "states": {
@@ -223,34 +251,6 @@
        "os": "Omarchy",
        "created": "2026-11-21T16:35:44.632Z",
        "run": "RUN-VQ82ENK7WX",
-       "setup": {
-        "options": [
-         "rd.luks.name",
-         "rd.luks.options",
-         "module_blacklist"
-        ]
-       }
-      }
-     ]
-    },
-    "suspend-drain": {
-     "machines": 1,
-     "states": {
-      "broken": 1
-     },
-     "how": {
-      "agent": 1
-     },
-     "latest": [
-      {
-       "state": "broken",
-       "how": "agent",
-       "note": "Battery fell from 99.0 to 54.1 percent between the pre-suspend and morning readings. The prior boot logged deep suspend entry without a logged exit, followed by a fresh boot.",
-       "evidence": null,
-       "kernel": "7.3.0-73-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-21T16:35:43.956Z",
-       "run": "RUN-5XPCX7NY2J",
        "setup": {
         "options": [
          "rd.luks.name",
@@ -822,6 +822,655 @@
          "rd.luks.name",
          "rd.luks.options",
          "module_blacklist"
+        ]
+       }
+      }
+     ]
+    }
+   }
+  },
+  "asus-vivobook-14-x1407qa": {
+   "machines": 1,
+   "checks": {
+    "display": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "eDP-1 connected, 1920x1200",
+       "depth": "look",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "gpu": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adreno bound to 3d00000.gpu, render node from msm_dpu",
+       "depth": "look",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "disk-unlock": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "the screen came up at 0.4 s, and the encrypted disk opened at 107.4 s",
+       "depth": "test",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "wifi": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "connected at 5500 MHz, signal -51 dBm, sending at 866.7 Mb/s",
+       "depth": "test",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "wifi-address": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "wlP4p1s0 (ath11k_pci) has an address set by the system (not from the card)",
+       "depth": "look",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "bluetooth": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "heard 17 Bluetooth devices nearby in 8 s",
+       "depth": "test",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "adsp": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adsp running (qcom/x126100/ASUSTeK/vivobook-16/qcadsp8380.mbn)",
+       "depth": "look",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "cdsp": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "cdsp running (qcom/x126100/ASUSTeK/vivobook-16/qccdsp8380.mbn)",
+       "depth": "look",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "battery": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "qcom-battmgr-bat at 100%, Discharging",
+       "depth": "look",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "hibernate": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "the kernel offers no hibernation",
+       "depth": "look",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "camera": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "no camera device",
+       "depth": "look",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "video-decode": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "the hardware decoder gave no frames (Error opening output files: Invalid argument)",
+       "depth": "test",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "keyboard": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "76 keys registered, every letter, number and arrow among them",
+       "depth": "test",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "backlight": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "both brightness keys work, the backlight moved between 1843 and 2457",
+       "depth": "test",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "touchpad": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "hid-over-i2c 04F3:3313 Touchpad, moving the pointer, clicking and two-finger scrolling both ways registered",
+       "depth": "test",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "speakers": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": "the microphones recorded nothing, so the speakers couldn't be measured",
+       "depth": "test",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "microphones": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "owner",
+       "note": "Did not record anything",
+       "evidence": "speech recorded at -100 dB, where the test tone plays at -12 dB, input volume 100%",
+       "depth": "test",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "headphones": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "owner",
+       "note": "With headphones plugged in, the sound stays on the speakers.",
+       "evidence": null,
+       "depth": "test",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "lid": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "the lid switch reported closed and then open again, and the computer slept 5 s while it was down",
+       "depth": "test",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "fans": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "measured",
+       "note": "The temperatures can be read and answer to load. No fan was seen starting, and there is no sensor for its speed.",
+       "evidence": "43 temperature sensors. The hottest went from 31 to 60 °C in 67 s with every core and the GPU busy, drawing up to 31 W from the battery, and back to 42 °C after. No fan speed sensor",
+       "depth": "test",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "installer": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "owner",
+       "note": "Keyboard worked, did not try touchpad",
+       "evidence": null,
+       "depth": "test",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "webgl": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": "The default browser here (firefox) is not one this test can drive, so this is Chrome's answer.",
+       "evidence": "Chrome on ANGLE (angleisbroken, Adreno X1-45, OpenGL ES 3.2), WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+       "depth": "test",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "webgpu": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "measured",
+       "note": "Chrome doesn't offer WebGPU by itself here. It works when started with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU. The default browser here (firefox) is not one this test can drive, so this is Chrome's answer.",
+       "evidence": "Chrome has WebGPU on qualcomm adreno-7xx with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU, and without them no adapter",
+       "depth": "test",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:28:47.118Z",
+       "run": "RUN-TJBK9FKXN4",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
         ]
        }
       }
@@ -3300,6 +3949,46 @@
   "lenovo-yoga-slim-7x-14q8x9": {
    "machines": 1,
    "checks": {
+    "hibernate": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "agent": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "agent",
+       "note": "Measured by the agent, not by a test: 10 of 10 power-off hibernations in one session resumed where it was (daily10-19, 22 Nov 2026), through Limine's default kernel, with Wi-Fi, sound, Bluetooth, both DSPs and the GPU working after each; logs in the owner's evidence folder.",
+       "evidence": null,
+       "depth": "test",
+       "kernel": "7.3.0-75-omarchy-yogahib",
+       "os": "Omarchy",
+       "created": "2026-11-22T22:52:32.663Z",
+       "run": "RUN-ESDFW28RJF",
+       "setup": {
+        "kernel": "linux-omarchy-yogahib",
+        "modules": [
+         "sbsa_gwdt"
+        ]
+       },
+       "needs": {
+        "text": "A locally built linux-omarchy-yogahib 7.3-75 kernel as Limine's default (fixes for GIC LPI tables, the GPU GMU, TrustZone memory bridges, Bluetooth UART, SoundWire and reset-gpio after a power-off restore, plus a watchdog guard), and a systemd unit that stops the DSPs and Wi-Fi before hibernating an",
+        "how": "agent",
+        "created": "2026-11-22T22:52:33.738Z"
+       }
+      }
+     ],
+     "changed": 1,
+     "fixed": {
+      "machines": 1,
+      "from": "7.3.0-59-omarchy",
+      "to": "7.3.0-75-omarchy-yogahib",
+      "since": "2026-11-22T22:52:32.663Z"
+     }
+    },
     "headphones": {
      "machines": 1,
      "states": {
@@ -3855,27 +4544,6 @@
       }
      ]
     },
-    "hibernate": {
-     "machines": 1,
-     "states": {
-      "broken": 1
-     },
-     "how": {
-      "measured": 1
-     },
-     "latest": [
-      {
-       "state": "broken",
-       "how": "measured",
-       "note": null,
-       "evidence": "the kernel offers no hibernation",
-       "kernel": "7.3.0-59-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-19T00:40:46.186Z",
-       "run": "RUN-MQW53YXVRD"
-      }
-     ]
-    },
     "disk-unlock": {
      "machines": 1,
      "states": {
@@ -3915,6 +4583,314 @@
        "os": "Omarchy",
        "created": "2026-11-19T00:40:46.186Z",
        "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    }
+   }
+  },
+  "microsoft-surface-laptop-7-13": {
+   "machines": 1,
+   "checks": {
+    "speakers": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": "Owner heard a 1 kHz test tone; the microphones recorded it. hw-test microphone low tone was not audible.",
+       "evidence": null,
+       "depth": "test",
+       "kernel": "7.3.0-75-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T09:15:39.725Z",
+       "run": "RUN-WAPGMVRBEH",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ],
+        "testTree": true
+       }
+      }
+     ]
+    },
+    "microphones": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "agent": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "agent",
+       "note": "Fixed by routing VA DMIC0/1 to the VA macro vdd-micb supply (it was never enabled; DMICs ran unpowered) and a 2.4 MHz DMIC clock, as on the Surface Pro 11. A 2 s 1 kHz tone from the speakers (owner heard it) rose from ~16 to ~1200 in both channels of PipeWire Internal microphones. hw-test microphone low tone was inaudible on these speakers.",
+       "evidence": null,
+       "depth": "test",
+       "kernel": "7.3.0-75-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T09:15:38.011Z",
+       "run": "RUN-H8QT5WBKKV",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ],
+        "testTree": true
+       },
+       "needs": {
+        "text": "romulus dtsi: route VA DMIC0/DMIC1 to vdd-micb and use qcom,dmic-sample-rate 2400000 (linux-omarchy-dtbs patch 0067)",
+        "how": "owner",
+        "proved": true,
+        "created": "2026-11-22T09:15:38.942Z"
+       }
+      }
+     ],
+     "changed": 1
+    },
+    "webgl": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "Chrome on ANGLE (angleisbroken, Adreno X1-85, OpenGL ES 3.2), WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+       "depth": "test",
+       "kernel": "7.3.0-75-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T09:13:24.868Z",
+       "run": "RUN-QM2S3G2RDD",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ],
+        "testTree": true
+       }
+      }
+     ]
+    },
+    "webgpu": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "measured",
+       "note": "Chrome doesn't offer WebGPU by itself here. It works when started with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU.",
+       "evidence": "Chrome has WebGPU on qualcomm adreno-7xx with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU, and without them no adapter",
+       "depth": "test",
+       "kernel": "7.3.0-75-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T09:13:24.868Z",
+       "run": "RUN-QM2S3G2RDD",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ],
+        "testTree": true
+       }
+      }
+     ]
+    },
+    "wifi": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "connected at 5745 MHz, signal -51 dBm, sending at 866.7 Mb/s",
+       "depth": "test",
+       "kernel": "7.3.0-75-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T09:13:24.868Z",
+       "run": "RUN-QM2S3G2RDD",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ],
+        "testTree": true
+       }
+      }
+     ]
+    },
+    "bluetooth": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "heard 9 Bluetooth devices nearby in 8 s",
+       "depth": "test",
+       "kernel": "7.3.0-75-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T09:13:24.868Z",
+       "run": "RUN-QM2S3G2RDD",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ],
+        "testTree": true
+       }
+      }
+     ]
+    },
+    "video-decode": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "60 frames of 720p H.264 decoded on the hardware decoder in 0.2 s",
+       "depth": "test",
+       "kernel": "7.3.0-75-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T09:13:24.868Z",
+       "run": "RUN-QM2S3G2RDD",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ],
+        "testTree": true
+       }
+      }
+     ]
+    },
+    "usb": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "agent": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "agent",
+       "note": "USB-A: USB 2 stick on 1-2. Both USB-C ports: a SanDisk 3.2 Gen1 stick enumerates at SuperSpeed (5 Gb/s), on 6-1 (a600000) and 2-1 (a800000), with UCSI partner add/remove and the data role switching to host. The earlier USB-C plug-ins that gave no device were not reproduced.",
+       "evidence": null,
+       "depth": "test",
+       "kernel": "7.3.0-75-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T09:09:36.609Z",
+       "run": "RUN-77Z5VBFTEP",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ],
+        "testTree": true
+       }
+      }
+     ]
+    },
+    "touchpad": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": "With iptsd 3.1.0-5 installed: pointer, press to click, two-finger scroll work (owner). SSAM POS events enabled by a kernel driver (ItsLucas 004e91d ported to 7.3-75): with no POS request at boot the pad gave no interrupts (28); after loading the patched surface_aggregator_registry/tabletsw it streamed (471), SW_TABLET_MODE 0. Needs the romulus13 touchpad DT node (omacom/omarchy-pkgs#3238).",
+       "evidence": null,
+       "depth": "test",
+       "kernel": "7.3.0-75-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T08:40:22.017Z",
+       "run": "RUN-DFJJ4S3VBD",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ],
+        "testTree": true
+       }
+      }
+     ],
+     "fixed": {
+      "machines": 1,
+      "from": "7.3.0-75-omarchy",
+      "to": "7.3.0-75-omarchy",
+      "since": "2026-11-22T08:40:22.017Z"
+     }
+    },
+    "camera": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "agent": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "agent",
+       "note": "Front OV02C10 binds at 12-0036 with a romulus13 port of omarchy-pkgs dtbs patch 0031 (CCI1 bus 1, CSIPHY4, PM8010 rails, reset GPIO 237); libcamera simple pipeline lists it and streams 1920x1080 at ~18.8 fps. Picture is correct but dark (no sensor tuning), same as the 15\". The guided camera window closed without a result.",
+       "evidence": null,
+       "depth": "test",
+       "kernel": "7.3.0-75-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T08:40:21.071Z",
+       "run": "RUN-D775ADDDWT",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ],
+        "testTree": true
+       }
       }
      ]
     }

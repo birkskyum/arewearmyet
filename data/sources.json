@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-22T02:05:01.617Z",
+  "collected": "2026-11-23T05:29:19.785Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -5250,6 +5250,18 @@
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-bz0xxx"
     },
     {
+      "folder": "hardware-reports/hp/hp-omnibook-3-laptop-16-ct0xxx",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/63",
+      "repo": "turbineBMW/omarchy-hardware-reports",
+      "ref": "e26be29f88a9d00e9f2dd430f7c6cb0cf399e508",
+      "dir": "reports/hp/hp-omnibook-3-laptop-16-ct0xxx/e21c3e28",
+      "pull": {
+        "number": 63,
+        "state": "open",
+        "by": "github-actions[bot]"
+      }
+    },
+    {
       "folder": "hardware-reports/lenovo/83n3",
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/61",
       "repo": "turbineBMW/omarchy-hardware-reports",
@@ -5990,7 +6002,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-75",
+        "kernel": "7.3-77",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -8656,6 +8668,14 @@
         "qcom/msm8998/hp/envy-x2/qcslpi8998_CLS.mbn",
         "qcom/msm8998/hp/envy-x2/qcvss8998.mbn"
       ],
+      "x1e80100-microsoft-romulus13.dts": [
+        "qcom/x1e80100/microsoft/Romulus/qcvss8380.mbn",
+        "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
+        "qcom/x1e80100/microsoft/Romulus/qcadsp8380.mbn",
+        "qcom/x1e80100/microsoft/Romulus/adsp_dtbs.elf",
+        "qcom/x1e80100/microsoft/Romulus/qccdsp8380.mbn",
+        "qcom/x1e80100/microsoft/Romulus/cdsp_dtbs.elf"
+      ],
       "x1e80100-microsoft-romulus15.dts": [
         "qcom/x1e80100/microsoft/Romulus/qcvss8380.mbn",
         "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn",
@@ -9699,31 +9719,24 @@
       }
     ],
     "image": {
-      "version": "2026.11.21.498",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.21.498/omarchy-edge-2026.11.21.498-aarch64.iso",
-      "kernel": "7.3.0-74-omarchy"
+      "version": "2026.11.22.499",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.22.499/omarchy-edge-2026.11.22.499-aarch64.iso",
+      "kernel": "7.3.0-75-omarchy"
     },
     "pulls": [
       {
-        "number": 3051,
-        "title": "microsoft-surface-laptop-7-firmware: install Surface Wi-Fi board data",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/3051",
-        "draft": false,
+        "number": 3276,
+        "title": "linux-omarchy-dtbs: add the HP OmniBook 3 16 (16-ct0)'s hardware IDs",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/3276",
+        "draft": true,
         "deviceTrees": [],
-        "ids": [],
-        "firmware": [
-          "qcom/x1e80100/microsoft/Romulus/adsp_dtbs.elf",
-          "qcom/x1e80100/microsoft/Romulus/adspr.jsn",
-          "qcom/x1e80100/microsoft/Romulus/adsps.jsn",
-          "qcom/x1e80100/microsoft/Romulus/adspua.jsn",
-          "qcom/x1e80100/microsoft/Romulus/battmgr.jsn",
-          "qcom/x1e80100/microsoft/Romulus/cdsp_dtbs.elf",
-          "qcom/x1e80100/microsoft/Romulus/cdspr.jsn",
-          "qcom/x1e80100/microsoft/Romulus/qcadsp8380.mbn",
-          "qcom/x1e80100/microsoft/Romulus/qccdsp8380.mbn",
-          "qcom/x1e80100/microsoft/Romulus/qcvss8380.mbn",
-          "qcom/x1e80100/microsoft/qcdxkmsuc8380.mbn"
-        ]
+        "ids": [
+          {
+            "file": "sc7280-hp-omnibook-3-16-ct0.json",
+            "compatible": "hp,omnibook-3-16-ct0"
+          }
+        ],
+        "firmware": []
       }
     ]
   }
