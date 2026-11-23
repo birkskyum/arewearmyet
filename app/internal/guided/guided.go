@@ -406,7 +406,7 @@ func resume(run *report.Run, pending report.Pending, boot string, opening step, 
 			continue
 		}
 		pending.Restore(run)
-		back := &resumed{run: run, pending: pending, restarted: pending.Restarted(boot)}
+		back := &resumed{run: run, pending: pending, restarted: pending.Restarted(boot), last: at == len(steps)-1}
 		back.ask = back.question()
 		rest := append([]step{&skippable{step: s, skip: func() bool { return back.skip }}}, steps[at+1:]...)
 		return back, rest
@@ -1067,7 +1067,9 @@ type resumed struct {
 	run       *report.Run
 	pending   report.Pending
 	restarted bool
-	ask       choice
+	// last is set when the step it stopped in is the test's last, so the results come next
+	last bool
+	ask  choice
 	// skip is set when the step it stopped in is to be passed over.
 	skip bool
 	over bool
@@ -1114,8 +1116,13 @@ func (r *resumed) update(msg tea.Msg) tea.Cmd {
 
 func (r *resumed) view(width, height int) string {
 	text := r.ask.view(width)
-	if r.restarted {
+	switch {
+	case r.restarted && r.last:
+		text += "\n\n" + wrap("A crash during a step is recorded as what that step found. It was the test's last step, so the whole test's results come next.", width)
+	case r.restarted:
 		text += "\n\n" + wrap("A crash during a step is recorded as what that step found, and the test goes on with the next step.", width)
+	case r.last:
+		text += "\n\n" + wrap("It is the test's last step, so the whole test's results come after it.", width)
 	}
 	return text
 }

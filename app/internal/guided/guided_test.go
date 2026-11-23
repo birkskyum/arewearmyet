@@ -738,6 +738,19 @@ func TestAStoppedTestGoesOnFromItsStepAndACrashIsThatStepsResult(t *testing.T) {
 	if !steps[0].done() || steps[0].start() != nil {
 		t.Error("the step it crashed in would run again")
 	}
+	if strings.Contains(back.view(100, 30), "last step") {
+		t.Error("a step with more after it is called the last")
+	}
+
+	// Stopped in the last step, the owner is told the results come next, so going straight to them
+	// doesn't read as the test refusing to run again
+	for _, restarted := range []string{"an-earlier-boot", "this-boot"} {
+		run = &report.Run{}
+		opening, _ = resume(run, report.Pending{Boot: restarted, Step: "Questions"}, "this-boot", &welcome{run: run}, build(run))
+		if drawn := opening.view(100, 30); !strings.Contains(drawn, "the test's last step") || !strings.Contains(drawn, "results") {
+			t.Errorf("stopped in the last step, boot %s:\n%s", restarted, drawn)
+		}
+	}
 
 	// The owner restarted it themselves, so no blame, and the step runs again
 	run = &report.Run{}
