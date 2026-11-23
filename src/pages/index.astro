@@ -117,12 +117,20 @@ import { SHELL } from '../lib/shell';
 ---
 
 <Layout home title="Are we ARM yet? Omarchy on ARM PCs, model by model" description="Which ARM PCs boot Omarchy today, what works on each, and what Omarchy ships for them.">
-  <script is:inline slot="head">
+  <script is:inline slot="head" data-chips={PROGRESS_GROUPS.map((group) => group.key).join(' ')} data-uefi={PROGRESS_GROUPS.filter((group) => group.uefi).map((group) => group.key).join(' ')}>
     // The page opens in Hardware, which <html> carries from the start, unless its address names Bring-up
     // (view=bring-up) or one of a table's views within it (view=upstream, nvidia-view=upstream). This runs
     // before anything is painted
     if ([...new URLSearchParams(location.search)].some(([key, value]) => (key === 'view' || key.endsWith('-view')) && value !== 'hardware')) delete document.documentElement.dataset.mode;
+    // A chip the address names (progress=c) hides the other sections from the start, as the bars' buttons do once
+    // they have loaded. Bring-up has no bars for NVIDIA's and Google's machines, so it shows every section then
+    (() => {
+      const { chips, uefi } = document.currentScript.dataset;
+      const chip = new URLSearchParams(location.search).get('progress');
+      if (chip && chips.split(' ').includes(chip) && (uefi.split(' ').includes(chip) || document.documentElement.dataset.mode === 'hardware')) document.documentElement.dataset.progress = chip;
+    })();
   </script>
+  <style is:inline slot="head" set:html={PROGRESS_GROUPS.map((group) => `[data-progress="${group.key}"] [data-chips]:not([data-chips~="${group.key}"]) { display: none; }`).join('\n')}></style>
   <main class={`${SHELL} py-10`}>
     <header>
       <div class="flex items-start justify-between gap-4">
@@ -155,11 +163,11 @@ import { SHELL } from '../lib/shell';
 
     <Progress client:load models={progressModels()} groups={PROGRESS_GROUPS} parts={PROGRESS_PARTS} />
 
-    <Group id="snapdragon-pcs" title="Snapdragon PCs" total={current.length + older.length + entry.length}>
+    <Group id="snapdragon-pcs" chips="x1 x2 older c" title="Snapdragon PCs" total={current.length + older.length + entry.length}>
       Laptops, tablets and desktops sold with Windows or Linux. They start through UEFI and need a device tree, hardware IDs and firmware. Until Omarchy 4.6 is out, <a class={LINK} href="/docs/install">install from the edge image</a>, which has the newest fixes for these machines. <a class={LINK} href="#chromebooks-and-googlebooks">Chromebooks and Googlebooks</a> are further down.
     </Group>
 
-    <Family id="snapdragon" title="Snapdragon X and X2" total={current.length}>
+    <Family id="snapdragon" chips="x1 x2" title="Snapdragon X and X2" total={current.length}>
       <div class="group/views" data-views data-view="hardware">
         <ViewState prefix="" views={snapdragonViews.map((v) => v.id)} />
         <div class="group-data-[view=hardware]/views:hidden group-data-[view=upstream]/views:hidden">
@@ -177,6 +185,7 @@ import { SHELL } from '../lib/shell';
             rows={current}
             views={snapdragonViews}
             chips={[{ key: 'x1', label: 'Snapdragon X' }, { key: 'x2', label: 'Snapdragon X2' }]}
+            pageChips={['x1', 'x2']}
             urlPrefix=""
             exportName="arewearmyet-snapdragon-x"
             exportTitle="Snapdragon X and X2"
@@ -185,7 +194,7 @@ import { SHELL } from '../lib/shell';
       </div>
     </Family>
 
-    <Family id="snapdragon-7c-8cx-835-850" title="Snapdragon 7c, 8cx, 835 and 850" total={older.length}>
+    <Family id="snapdragon-7c-8cx-835-850" chips="older" title="Snapdragon 7c, 8cx, 835 and 850" total={older.length}>
       <p class="max-w-3xl text-sm text-zinc-400">
         The Windows on Arm machines from before Snapdragon X, with the Snapdragon 8cx, 850, 835 and 7c. They start through UEFI like the models above, so they need the same pieces and use the same views and labels. Omarchy carries device trees for most of them, from Linux, from owners' ports, or written from their ACPI tables.
       </p>
@@ -197,7 +206,7 @@ import { SHELL } from '../lib/shell';
       </div>
     </Family>
 
-    <Family id="snapdragon-c" title="Snapdragon C" total={entry.length}>
+    <Family id="snapdragon-c" chips="c" title="Snapdragon C" total={entry.length}>
       <p class="max-w-3xl text-sm text-zinc-400">
         Qualcomm's entry line for budget Windows laptops. Its drivers are the ones for the 7c Gen 3 (SC7280) in Arm Chromebooks, a chip Linux already describes, so each laptop needs a board tree, hardware IDs and firmware like the models above.
       </p>
@@ -209,11 +218,11 @@ import { SHELL } from '../lib/shell';
       </div>
     </Family>
 
-    <Group id="nvidia-pcs" title="NVIDIA PCs" total={nvidia.length}>
+    <Group id="nvidia-pcs" chips="n1x gb10" title="NVIDIA PCs" total={nvidia.length}>
       Laptops and desktops with NVIDIA's N1x and GB10 chips. They start through UEFI and describe their own hardware, so a model needs only a kernel with the drivers.
     </Group>
 
-    <Family id="nvidia" title="NVIDIA N1x and GB10" total={nvidia.length}>
+    <Family id="nvidia" chips="n1x gb10" title="NVIDIA N1x and GB10" total={nvidia.length}>
       <p class="max-w-3xl text-sm text-zinc-400">
         NVIDIA's ARM laptops and desktops start through ACPI, so they need no device tree or hardware IDs. Omarchy's kernel carries the patches they need, which Linux itself doesn't have yet, so what counts here is whether someone has booted into Omarchy on them.
       </p>
@@ -232,16 +241,16 @@ import { SHELL } from '../lib/shell';
           <Legend title="What the labels mean" groups={hardwareLegend(NVIDIA_OMARCHY_LEGEND[1])} keys={HARDWARE_KEYS} />
         </div>
         <div class="mt-4">
-          <StatusTable client:load rows={nvidia} views={nvidiaViews} chips={[{ key: 'n1x', label: 'NVIDIA N1x' }, { key: 'gb10', label: 'NVIDIA GB10' }]} urlPrefix="nvidia-" exportName="arewearmyet-nvidia" exportTitle="NVIDIA N1x and GB10" />
+          <StatusTable client:load rows={nvidia} views={nvidiaViews} chips={[{ key: 'n1x', label: 'NVIDIA N1x' }, { key: 'gb10', label: 'NVIDIA GB10' }]} pageChips={['n1x', 'gb10']} urlPrefix="nvidia-" exportName="arewearmyet-nvidia" exportTitle="NVIDIA N1x and GB10" />
         </div>
       </div>
     </Family>
 
-    <Group id="chromebooks-and-googlebooks" title="Chromebooks and Googlebooks" total={googlebooks.length + chromebooks.length}>
+    <Group id="chromebooks-and-googlebooks" chips="google" title="Chromebooks and Googlebooks" total={googlebooks.length + chromebooks.length}>
       They start through Google's own boot software instead of UEFI, so getting past the bootloader comes first.
     </Group>
 
-    <Family id="googlebooks" title="Googlebooks with Snapdragon" total={googlebooks.length}>
+    <Family id="googlebooks" chips="google" title="Googlebooks with Snapdragon" total={googlebooks.length}>
       <p class="max-w-3xl text-sm text-zinc-400">
         They use the same Snapdragon X Elite as the laptops above, but start like a Pixel, through Android's bootloader instead of UEFI. So they need no ACPI tables or hardware IDs, and Omarchy's ARM image doesn't start on them. They need a device tree and a Linux image built for that bootloader.
       </p>
@@ -265,7 +274,7 @@ import { SHELL } from '../lib/shell';
       </div>
     </Family>
 
-    <Family id="chromebooks" title="Chromebooks with Snapdragon" total={chromebooks.length}>
+    <Family id="chromebooks" chips="google" title="Chromebooks with Snapdragon" total={chromebooks.length}>
       <p class="max-w-3xl text-sm text-zinc-400">
         Arm Chromebooks start through ChromeOS's bootloader instead of UEFI, so like the Googlebooks they need no ACPI tables or hardware IDs, and Omarchy's ARM image doesn't start on them. Their device trees have been in Linux for years, so what they need is a Linux image built for that bootloader, which developer mode lets them start.
       </p>
@@ -286,11 +295,11 @@ import { SHELL } from '../lib/shell';
       </div>
     </Family>
 
-    <Group id="apple" title="Apple Silicon">
+    <Group id="apple" chips="" title="Apple Silicon">
       Macs with Apple's own chips are the Omarchy Mac team's. They install with <a class={LINK} href="https://github.com/omacom/omarchy-mac-installer">an installer of their own</a> and run Linux through Asahi Linux, whose <a class={LINK} href="https://asahilinux.org/docs/platform/feature-support/overview/">feature support pages</a> track which models and features work.
     </Group>
 
-    <Group id="android" title="Android phones and tablets">
+    <Group id="android" chips="" title="Android phones and tablets">
       Phones and tablets that came with Android belong to <a class={LINK} href="https://omamobile.org/devices/">Omarchy Mobile</a>, which lists the devices it runs on.
     </Group>
 

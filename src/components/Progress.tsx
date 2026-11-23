@@ -2,7 +2,8 @@
 // them to one kind of chip. What works shows whether the models boot and the parts past booting, and
 // Bring-up the pieces a Snapdragon PC that starts through UEFI needs. Each model is one cell, coloured by
 // its state and linking to its table
-import { createMemo, createSignal, For, onCleanup, onMount, Show, type JSX } from 'solid-js';
+import { createEffect, createMemo, createSignal, For, onCleanup, onMount, Show, type JSX } from 'solid-js';
+import { PROGRESS_PARAM, setPageChip } from '../lib/chip-choice';
 import { MODE_EVENT, readMode, type Mode } from '../lib/mode';
 import type { BootKind, PieceKind, ProgressGroup, ProgressModel } from '../lib/progress';
 
@@ -12,8 +13,8 @@ type Props = {
   parts: { title: string; question: string }[];
 };
 
-// The chip the bars count sits in the address, so a link can open them on it
-const PARAM = 'progress';
+// The chip the bars count sits in the address, so a link can open the page on it
+const PARAM = PROGRESS_PARAM;
 const LINK = 'underline decoration-zinc-600 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-300';
 
 const PART_KINDS = [
@@ -139,6 +140,22 @@ export default function Progress(props: Props) {
     heard();
     addEventListener(MODE_EVENT, heard);
     onCleanup(() => removeEventListener(MODE_EVENT, heard));
+    // A link to a section the chosen chip hides, like the switch's links to the groups, shows every chip again
+    const leave = (event: MouseEvent) => {
+      const link = (event.target as Element | null)?.closest?.('a[href^="#"]') as HTMLAnchorElement | null;
+      const target = link && document.getElementById(decodeURIComponent(link.hash.slice(1)));
+      if (target && chosen() !== 'all' && target.closest('[data-chips]') && !target.checkVisibility()) choose('all');
+    };
+    addEventListener('click', leave);
+    onCleanup(() => removeEventListener('click', leave));
+  });
+  // The chip the buttons show as chosen is the page's. The sections below that hold other chips hide (index.astro's
+  // rules on data-progress), and the tables of two chips show its rows only
+  createEffect(() => {
+    const chip = pressed();
+    setPageChip(chip);
+    if (chip === 'all') delete document.documentElement.dataset.progress;
+    else document.documentElement.dataset.progress = chip;
   });
   const choose = (key: string) => {
     setChosen(key);

@@ -2,7 +2,7 @@
 // The model table. TanStack Table does the sorting, filtering and per-option counts. Each column
 // header carries its own sort button and filter menu, and the view lives in the page address so
 // a filtered table can be shared.
-import { For, Show, createEffect, createSignal, onCleanup, onMount, untrack } from 'solid-js';
+import { For, Show, createEffect, createSignal, on, onCleanup, onMount, untrack } from 'solid-js';
 import {
   columnFacetingFeature,
   columnFilteringFeature,
@@ -23,6 +23,7 @@ import type { CellData, TableRow } from '../lib/rows';
 import ExportButton from './ExportButton';
 import { MODE_EVENT, readMode, setMode, type Mode } from '../lib/mode';
 import { SEARCH_EVENT, type SearchAsked } from '../lib/search';
+import { pageChip } from '../lib/chip-choice';
 
 type Option = { key: string; label: string; tone?: Tone };
 type Column = { id: string; header: string; question: string; options?: Option[] };
@@ -38,6 +39,8 @@ type Props = {
   views?: View[];
   // Filter choices for the Model column, by chip generation
   chips: Option[];
+  // The chips of this table the buttons above the bars choose for the whole page, when it holds more than one
+  pageChips?: string[];
   // Prefix for this table's address parameters. Leave it out to keep the view out of the address
   urlPrefix?: string;
   // The spreadsheet download's file name (without date and extension) and sheet name
@@ -312,6 +315,16 @@ export default function StatusTable(props: Props) {
     const sort = params.get(prefix + 'sort');
     if (sort) setSorting([{ id: sort.replace(/^-/, ''), desc: sort.startsWith('-') }]);
     openSorted();
+    // A chip of this table chosen for the page shows its rows only, and choosing another clears that again. The first
+    // run leaves a chip filter from the address alone, as the page may not have a chip yet
+    if (props.pageChips) {
+      let first = true;
+      createEffect(on(pageChip, (chip) => {
+        if (props.pageChips!.includes(chip)) setSelected('chip', [chip]);
+        else if (!first) setSelected('chip', []);
+        first = false;
+      }));
+    }
     createEffect(() => {
       const next = new URLSearchParams(location.search);
       for (const key of [...ids, 'q', 'sort', 'view']) next.delete(prefix + key);
