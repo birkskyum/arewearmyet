@@ -1,9 +1,10 @@
 // The bars at the top of the home page, which count every model on it. The buttons above them narrow
-// them to one kind of chip. What works shows the parts past booting, and Bring-up the pieces a Snapdragon
-// PC that starts through UEFI needs. Each model is one cell, coloured by its state and linking to its table
+// them to one kind of chip. What works shows whether the models boot and the parts past booting, and
+// Bring-up the pieces a Snapdragon PC that starts through UEFI needs. Each model is one cell, coloured by
+// its state and linking to its table
 import { createMemo, createSignal, For, onCleanup, onMount, Show, type JSX } from 'solid-js';
 import { MODE_EVENT, readMode, type Mode } from '../lib/mode';
-import type { PieceKind, ProgressGroup, ProgressModel } from '../lib/progress';
+import type { BootKind, PieceKind, ProgressGroup, ProgressModel } from '../lib/progress';
 
 type Props = {
   models: ProgressModel[];
@@ -22,6 +23,16 @@ const PART_KINDS = [
   { key: 'unknown', color: 'bg-zinc-800', label: 'Not tested' },
 ];
 const partKind = (key: string) => PART_KINDS.find((kind) => kind.key === key) ?? PART_KINDS[3];
+// The same colours as the parts, and outlined for a model that should boot and nobody has confirmed, as in the tables
+const SHOULD = 'ring-1 ring-inset ring-emerald-400';
+const BOOT_KINDS: { key: BootKind; color: string }[] = [
+  { key: 'boots', color: 'bg-emerald-400' },
+  { key: 'workaround', color: 'bg-amber-400' },
+  { key: 'problems', color: 'bg-rose-400' },
+  { key: 'should', color: SHOULD },
+  { key: 'notyet', color: 'bg-zinc-800' },
+];
+const BOOT_QUESTION = 'Whether an owner reached the Omarchy desktop on it. Should boot means Omarchy ships everything it needs.';
 const PIECE_KINDS: { key: PieceKind; color: string }[] = [
   { key: 'upstream', color: 'bg-sky-400' },
   { key: 'added', color: 'bg-emerald-400' },
@@ -50,7 +61,12 @@ const channelNote = (channels: (string | null)[]) => {
   return `Stable ${upTo('stable')}, RC ${upTo('rc')}, edge ${upTo('edge')}.`;
 };
 
+const inChoice = (choice: string) => (model: ProgressModel) => choice === 'all' || model.group === choice;
 const byName = (a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name);
+// Cells in the legend's order, and by name within each state. Filtering hides cells and keeps that order
+const ordered = <T extends { kind: string; name: string }>(cells: T[], kinds: { key: string }[]) =>
+  cells.sort((a, b) => kinds.findIndex((kind) => kind.key === a.kind) - kinds.findIndex((kind) => kind.key === b.kind) || byName(a, b));
+
 // A bar is one row of cells while each cell stays wide enough to point at, and wraps to more rows past that, filling each
 // column top to bottom so the bar still reads from left to right. Narrow bars take half as many cells per row
 function grid(count: number): JSX.CSSProperties {
@@ -64,7 +80,49 @@ function grid(count: number): JSX.CSSProperties {
 }
 const BAR = 'grid-flow-col gap-0.5 grid-cols-(--cn) grid-rows-(--rn) h-(--hn) @lg:grid-cols-(--cw) @lg:grid-rows-(--rw) @lg:h-(--hw)';
 const CELL = 'rounded-[2px] transition hover:scale-y-150 hover:brightness-150';
-const COUNTER = 'w-28 shrink-0 whitespace-nowrap tabular-nums text-zinc-300';
+
+type Cell = { model: ProgressModel; name: string; kind: string; color: string; href: string; tipTitle: string; tip: string; label: string };
+// What the number beside a bar says, the models where it's there out of those counted, with what is on its way after it
+type Count = { done: number; pull?: number; available?: number; title: string; tip: string };
+
+function Bar(props: { title: string; cells: Cell[]; choice: string; count: (shown: Cell[]) => Count }) {
+  const shown = createMemo(() => props.cells.filter((cell) => inChoice(props.choice)(cell.model)));
+  const count = createMemo(() => props.count(shown()));
+  return (
+    <div>
+      <dt class="text-sm font-medium text-zinc-200">{props.title}</dt>
+      <dd class="mt-2 flex items-center gap-3 text-xs">
+        <div class="@container min-w-0 flex-1">
+          <Show when={shown().length === 0}>
+            <p class="text-zinc-500">None of these models has it.</p>
+          </Show>
+          <div class={`${BAR} ${shown().length ? 'grid' : 'hidden'}`} style={grid(shown().length)}>
+            <For each={props.cells}>
+              {(cell) => (
+                <a
+                  href={cell.href}
+                  data-search={cell.name}
+                  data-prefix={cell.model.prefix}
+                  class={`${CELL} ${cell.color}`}
+                  classList={{ hidden: !inChoice(props.choice)(cell.model) }}
+                  data-tip-title={cell.tipTitle}
+                  data-tip={cell.tip}
+                  aria-label={cell.label}
+                ></a>
+              )}
+            </For>
+          </div>
+        </div>
+        <span class="w-28 shrink-0 whitespace-nowrap tabular-nums text-zinc-300" classList={{ invisible: shown().length === 0 }} data-tip-title={count().title} data-tip={count().tip}>
+          {count().done}
+          <Show when={(count().pull ?? 0) > 0}><span class="text-amber-300"> +{count().pull}</span></Show>
+          <Show when={(count().available ?? 0) > 0}><span class="text-zinc-500"> +{count().available}</span></Show>{' '}
+          <span class="text-zinc-500">/ {shown().length}</span>
+        </span>
+      </dd>
+    </div>
+  );
+}
 
 export default function Progress(props: Props) {
   const [chosen, setChosen] = createSignal('all');
@@ -73,7 +131,6 @@ export default function Progress(props: Props) {
   // Bring-up has no bars for NVIDIA's and Google's machines, so with one of them chosen it counts every model it has bars for
   const pieceChoice = () => (uefi(chosen()) ? chosen() : 'all');
   const pressed = () => (mode() === 'booting' ? pieceChoice() : chosen());
-  const inChoice = (choice: string) => (model: ProgressModel) => choice === 'all' || model.group === choice;
 
   onMount(() => {
     const asked = new URLSearchParams(location.search).get(PARAM);
@@ -93,21 +150,78 @@ export default function Progress(props: Props) {
   };
 
   const withPieces = props.models.filter((model) => model.pieces);
-  // Each bar puts its cells in the legend's order, and by name within each state. Filtering hides cells and keeps that order
+  const table = (model: ProgressModel, view = '') => `/?${view}${model.prefix}q=${encodeURIComponent(model.name)}#${model.anchor}`;
+
+  const bootCells: Cell[] = ordered(
+    props.models.map((model) => ({
+      model,
+      name: model.name,
+      kind: model.boot.kind,
+      color: BOOT_KINDS.find((kind) => kind.key === model.boot.kind)!.color,
+      href: table(model),
+      tipTitle: `${model.boot.label} on the ${model.name}`,
+      tip: model.boot.tip,
+      label: `${model.name}, ${model.boot.label.toLowerCase()}`,
+    })),
+    BOOT_KINDS,
+  );
+  const bootCount = (shown: Cell[]): Count => {
+    const n = (key: BootKind) => shown.filter((cell) => cell.kind === key).length;
+    const verb = (count: number, one: string, more: string) => `${count} ${count === 1 ? one : more}`;
+    const [boots, workaround, problems, should, rest] = BOOT_KINDS.map((kind) => n(kind.key));
+    const desktop = boots
+      ? `${verb(boots, 'boots', 'boot')} to the desktop${workaround ? `, and ${workaround} more with a workaround` : ''}.`
+      : workaround ? `${verb(workaround, 'boots', 'boot')} to the desktop with a workaround.` : 'Nobody has reached the desktop on any of them yet.';
+    return {
+      done: boots,
+      title: `${boots} of the ${shown.length} boot to the desktop`,
+      tip: [
+        desktop,
+        problems ? `${verb(problems, 'has', 'have')} problems.` : '',
+        should ? `${verb(should, 'should boot and nobody has confirmed it', 'should boot and nobody has confirmed them')} yet.` : '',
+        rest ? `${verb(rest, 'still lacks a piece or waits', 'still lack a piece or wait')} for a first try.` : '',
+        BOOT_QUESTION,
+      ].filter(Boolean).join(' '),
+    };
+  };
+
   const partBars = props.parts.map((part, i) => ({
     part,
-    cells: props.models
-      .flatMap((model) => (model.parts[i] ? [{ model, name: model.name, ...model.parts[i]! }] : []))
-      .map((cell) => ({ ...cell, ...partKind(cell.kind) }))
-      .sort((a, b) => PART_KINDS.indexOf(partKind(a.kind)) - PART_KINDS.indexOf(partKind(b.kind)) || byName(a, b)),
+    cells: ordered(
+      props.models.flatMap((model) => {
+        const state = model.parts[i];
+        if (!state) return [];
+        const kind = partKind(state.kind);
+        return [{ model, name: model.name, kind: kind.key, color: kind.color, href: table(model), tipTitle: `${part.title} on the ${model.name}`, tip: state.tip, label: `${part.title} on the ${model.name}, ${kind.label.toLowerCase()}` }];
+      }),
+      PART_KINDS,
+    ),
   }));
+  const partCount = (part: Props['parts'][number]) => (shown: Cell[]): Count => {
+    const n = (key: string) => shown.filter((cell) => cell.kind === key).length;
+    const tested = n('omarchy-works') + n('omarchy-partial') + n('omarchy-broken');
+    const tip = tested ? `Tested on Omarchy on ${tested} so far. It works on ${n('omarchy-works')}, partly on ${n('omarchy-partial')} and is broken on ${n('omarchy-broken')}.` : 'Nobody has tested it on Omarchy yet.';
+    return { done: n('omarchy-works'), title: `${part.title} works on ${n('omarchy-works')} of the ${shown.length} models that have it`, tip: `${tip} ${part.question}` };
+  };
+
   const pieceBars = PIECES.map((piece, i) => ({
     piece,
-    cells: withPieces
-      .map((model) => ({ model, name: model.name, ...model.pieces![i] }))
-      .map((cell) => ({ ...cell, color: PIECE_KINDS.find((kind) => kind.key === cell.kind)!.color, tip: pieceTip(piece, cell.kind) }))
-      .sort((a, b) => PIECE_KINDS.findIndex((kind) => kind.key === a.kind) - PIECE_KINDS.findIndex((kind) => kind.key === b.kind) || byName(a, b)),
+    cells: ordered(
+      withPieces.map((model) => {
+        const { kind } = model.pieces![i];
+        const tip = pieceTip(piece, kind);
+        return { model, name: model.name, kind, color: PIECE_KINDS.find((each) => each.key === kind)!.color, href: table(model, 'view=bring-up&'), tipTitle: model.name, tip, label: `${model.name}. ${tip}` };
+      }),
+      PIECE_KINDS,
+    ),
   }));
+  const pieceCount = (i: number) => (shown: Cell[]): Count => {
+    const n = (key: PieceKind) => shown.filter((cell) => cell.kind === key).length;
+    const done = n('upstream') + n('added');
+    // The last bar, all three pieces, has no channel of its own
+    const tip = i < 3 ? `${PIECES[i].ours} ${channelNote(shown.map((cell) => cell.model.pieces![i].channel))}` : PIECES[i].ours;
+    return { done, pull: n('pull'), available: n('available'), title: `In Omarchy for ${done} of ${shown.length}`, tip };
+  };
 
   const button = (key: string, active: () => boolean) =>
     `items-center gap-1.5 rounded-full px-3 py-1 text-sm ring-1 ${active() ? 'bg-zinc-100 font-medium text-zinc-900 ring-zinc-100' : 'text-zinc-300 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100'} ${key !== 'all' && !uefi(key) ? 'hidden hw:inline-flex' : 'inline-flex'}`;
@@ -115,10 +229,12 @@ export default function Progress(props: Props) {
   return (
     <section class="mt-12 scroll-mt-20" id="progress" aria-label="How far the models are">
       <div class="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
-        <h2 class="hidden text-lg font-semibold text-zinc-50 hw:block">Past booting, part by part</h2>
+        <h2 class="hidden text-lg font-semibold text-zinc-50 hw:block">Booting, then part by part</h2>
         <h2 class="text-lg font-semibold text-zinc-50 hw:hidden">Omarchy and upstream</h2>
         <ul class="hidden flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-400 hw:flex">
-          <For each={PART_KINDS}>{(kind) => <li class="flex items-center gap-1.5"><span class={`size-2.5 rounded-[2px] ${kind.color}`}></span>{kind.label}</li>}</For>
+          <For each={PART_KINDS.slice(0, 3)}>{(kind) => <li class="flex items-center gap-1.5"><span class={`size-2.5 rounded-[2px] ${kind.color}`}></span>{kind.label}</li>}</For>
+          <li class="flex items-center gap-1.5"><span class={`size-2.5 rounded-[2px] ${SHOULD}`}></span>Should boot</li>
+          <li class="flex items-center gap-1.5"><span class="size-2.5 rounded-[2px] bg-zinc-800"></span>Not tested</li>
         </ul>
         <ul class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-400 hw:hidden">
           <li class="flex items-center gap-1.5"><span class="size-2.5 rounded-[2px] bg-sky-400"></span>Upstream releases</li>
@@ -146,89 +262,12 @@ export default function Progress(props: Props) {
       </div>
 
       <dl class="mt-5 hidden gap-x-8 gap-y-5 sm:grid-cols-2 hw:grid">
-        <For each={partBars}>
-          {(bar) => {
-            const shown = createMemo(() => bar.cells.filter((cell) => inChoice(chosen())(cell.model)));
-            const count = (key: string) => shown().filter((cell) => cell.kind === key).length;
-            const tested = () => count('omarchy-works') + count('omarchy-partial') + count('omarchy-broken');
-            const tip = () =>
-              tested() ? `Tested on Omarchy on ${tested()} so far. It works on ${count('omarchy-works')}, partly on ${count('omarchy-partial')} and is broken on ${count('omarchy-broken')}.` : 'Nobody has tested it on Omarchy yet.';
-            return (
-              <div>
-                <dt class="text-sm font-medium text-zinc-200">{bar.part.title}</dt>
-                <dd class="mt-2 flex items-center gap-3 text-xs">
-                  <div class="@container min-w-0 flex-1">
-                    <Show when={shown().length === 0}>
-                      <p class="text-zinc-500">None of these models has it.</p>
-                    </Show>
-                    <div class={`${BAR} ${shown().length ? 'grid' : 'hidden'}`} style={grid(shown().length)}>
-                      <For each={bar.cells}>
-                        {(cell) => (
-                          <a
-                            href={`/?${cell.model.prefix}q=${encodeURIComponent(cell.name)}#${cell.model.anchor}`}
-                            data-search={cell.name}
-                            data-prefix={cell.model.prefix}
-                            class={`${CELL} ${cell.color}`}
-                            classList={{ hidden: !inChoice(chosen())(cell.model) }}
-                            data-tip-title={`${bar.part.title} on the ${cell.name}`}
-                            data-tip={cell.tip}
-                            aria-label={`${bar.part.title} on the ${cell.name}, ${cell.label.toLowerCase()}`}
-                          ></a>
-                        )}
-                      </For>
-                    </div>
-                  </div>
-                  <span class={COUNTER} classList={{ invisible: shown().length === 0 }} data-tip-title={`${bar.part.title} works on ${count('omarchy-works')} of the ${shown().length} models that have it`} data-tip={`${tip()} ${bar.part.question}`}>
-                    {count('omarchy-works')} <span class="text-zinc-500">/ {shown().length}</span>
-                  </span>
-                </dd>
-              </div>
-            );
-          }}
-        </For>
+        <Bar title="Bootable" cells={bootCells} choice={chosen()} count={bootCount} />
+        <For each={partBars}>{(bar) => <Bar title={bar.part.title} cells={bar.cells} choice={chosen()} count={partCount(bar.part)} />}</For>
       </dl>
 
       <dl class="mt-5 grid gap-x-8 gap-y-5 sm:grid-cols-2 hw:hidden">
-        <For each={pieceBars}>
-          {(bar, i) => {
-            const shown = createMemo(() => bar.cells.filter((cell) => inChoice(pieceChoice())(cell.model)));
-            const count = (key: PieceKind) => shown().filter((cell) => cell.kind === key).length;
-            const omarchy = () => count('upstream') + count('added');
-            // The last bar, all three pieces, has no channel of its own
-            const ours = () => (i() < 3 ? `${bar.piece.ours} ${channelNote(shown().map((cell) => cell.channel))}` : bar.piece.ours);
-            return (
-              <div>
-                <dt class="text-sm font-medium text-zinc-200">{bar.piece.label}</dt>
-                <dd class="mt-2 flex items-center gap-3 text-xs">
-                  <div class="@container min-w-0 flex-1">
-                    <div class={`${BAR} grid`} style={grid(shown().length)}>
-                      <For each={bar.cells}>
-                        {(cell) => (
-                          <a
-                            href={`/?view=bring-up&${cell.model.prefix}q=${encodeURIComponent(cell.name)}#${cell.model.anchor}`}
-                            data-search={cell.name}
-                            data-prefix={cell.model.prefix}
-                            class={`${CELL} ${cell.color}`}
-                            classList={{ hidden: !inChoice(pieceChoice())(cell.model) }}
-                            data-tip-title={cell.name}
-                            data-tip={cell.tip}
-                            aria-label={`${cell.name}. ${cell.tip}`}
-                          ></a>
-                        )}
-                      </For>
-                    </div>
-                  </div>
-                  <span class={COUNTER} data-tip-title={`In Omarchy for ${omarchy()} of ${shown().length}`} data-tip={ours()}>
-                    {omarchy()}
-                    <Show when={count('pull') > 0}><span class="text-amber-300"> +{count('pull')}</span></Show>
-                    <Show when={count('available') > 0}><span class="text-zinc-500"> +{count('available')}</span></Show>{' '}
-                    <span class="text-zinc-500">/ {shown().length}</span>
-                  </span>
-                </dd>
-              </div>
-            );
-          }}
-        </For>
+        <For each={pieceBars}>{(bar, i) => <Bar title={bar.piece.label} cells={bar.cells} choice={pieceChoice()} count={pieceCount(i())} />}</For>
       </dl>
     </section>
   );

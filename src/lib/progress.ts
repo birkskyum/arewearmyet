@@ -1,6 +1,7 @@
 // The bars at the top of the home page count every model on it, and its buttons narrow them to one kind
 // of chip. Every model's state in each bar is worked out here at build time, so the island only counts
 import status from '../data/status.json';
+import { bootableCell, googlebookOmarchyCell, nvidiaOmarchyCell, type Cell } from './labels';
 import { PARTS, modelParts } from './parts';
 
 export type ProgressGroup = { key: string; label: string; uefi: boolean };
@@ -17,12 +18,16 @@ export const PROGRESS_GROUPS: ProgressGroup[] = [
 ];
 
 export type PieceKind = 'upstream' | 'added' | 'pull' | 'available' | 'none';
+// Whether it boots, from the family's Bootable column. `should` is a model Omarchy ships everything for and nobody has
+// confirmed yet, and `notyet` one that still lacks a piece or that nobody has tried
+export type BootKind = 'boots' | 'workaround' | 'problems' | 'should' | 'notyet';
 export type ProgressModel = {
   name: string;
   group: string;
   // The table the model is in, so its cells search that table and no other
   prefix: string;
   anchor: string;
+  boot: { kind: BootKind; label: string; tip: string };
   // One per part, null where the model doesn't have the part
   parts: ({ kind: string; tip: string } | null)[];
   // One per piece (device tree, hardware IDs, firmware, all three), for the models Bring-up counts
@@ -47,6 +52,10 @@ const pieceKind = (piece: (typeof PIECES)[number], id: string): PieceKind => {
 const parts = (model: Parameters<typeof modelParts>[0]) =>
   modelParts(model).map((part) => (part.state === 'absent' ? null : { kind: part.key.startsWith('omarchy-') ? part.key : 'unknown', tip: part.title }));
 
+const BOOT_KIND: Record<string, BootKind> = { boots: 'boots', works: 'boots', workaround: 'workaround', problems: 'problems', should: 'should' };
+// The Googlebooks' column answers Yes, which needs its question beside it, so the bar says Boots
+const boot = (cell: Cell) => ({ kind: BOOT_KIND[cell.key] ?? 'notyet', label: cell.label === 'Yes' ? 'Boots' : (cell.full ?? cell.label), tip: cell.title });
+
 const where = (group: string, boot: string) => {
   if (group === 'x1' || group === 'x2') return { prefix: '', anchor: 'snapdragon' };
   if (group === 'older') return { prefix: '8cx-', anchor: 'snapdragon-7c-8cx-835-850' };
@@ -64,11 +73,12 @@ export function progressModels(): ProgressModel[] {
       name: `${model.vendor} ${model.name}`,
       group,
       ...where(group, model.boot),
+      boot: boot(uefi ? bootableCell(model) : googlebookOmarchyCell(model)),
       parts: parts(model),
       pieces: uefi ? PIECES.map((piece, i) => ({ kind: pieceKind(piece, model.id), channel: channels[i] })) : null,
     };
   });
-  const nvidia = status.nvidia.map((model) => ({ name: `${model.vendor} ${model.name}`, group: model.generation, ...where(model.generation, 'uefi'), parts: parts(model), pieces: null }));
+  const nvidia = status.nvidia.map((model) => ({ name: `${model.vendor} ${model.name}`, group: model.generation, ...where(model.generation, 'uefi'), boot: boot(nvidiaOmarchyCell(model)), parts: parts(model), pieces: null }));
   return [...snapdragon, ...nvidia];
 }
 
