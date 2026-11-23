@@ -28,10 +28,12 @@ import { pageChip } from '../lib/chip-choice';
 type Option = { key: string; label: string; tone?: Tone };
 type Column = { id: string; header: string; question: string; options?: Option[] };
 // A set of status columns the table can switch to, like what Omarchy ships or what's upstream
-// `sort` names the column a view opens sorted by, when nothing else is sorting,
+// `sort` names the column a view opens sorted by, when nothing else is sorting, and `then` the one that orders its ties,
 // `hidden` holds columns a view sorts by and doesn't show, like how much of a model was seen,
 // and `compact` leaves the booting notes and variants out of the model column
-type View = { id: string; label: string; question: string; columns: Column[]; hidden?: Column[]; sort?: string; compact?: boolean };
+type View = { id: string; label: string; question: string; columns: Column[]; hidden?: Column[]; sort?: string; then?: string; compact?: boolean };
+// The order a view opens in
+const opening = (view: View): SortingState => (view.sort ? [{ id: view.sort, desc: false }, ...(view.then ? [{ id: view.then, desc: false }] : [])] : []);
 type Props = {
   rows: TableRow[];
   // One set of status columns, or several views to switch between, the first one shown by default
@@ -131,6 +133,8 @@ function Pill(props: { cell: CellData; column: string }) {
 
 // The address's word for Bring-up while every table there shows its first view
 const BRING_UP = 'bring-up';
+// How many rows a long table shows before its Show all button
+const CAP = 10;
 
 export default function StatusTable(props: Props) {
   const views: View[] = props.views ?? [{ id: 'default', label: '', question: '', columns: props.columns ?? [] }];
@@ -155,7 +159,8 @@ export default function StatusTable(props: Props) {
     helper.accessor('search', { id: 'q', filterFn: bySearch }),
   ]);
 
-  const [sorting, setSorting] = createSignal<SortingState>([]);
+  // The page is built in Hardware, in the order that view opens in, so the rows a long table shows first are the ones it keeps
+  const [sorting, setSorting] = createSignal<SortingState>(hardware ? opening(hardware) : []);
   const [filters, setFilters] = createSignal<ColumnFiltersState>([]);
   const table = createTable({
     features,
@@ -196,6 +201,11 @@ export default function StatusTable(props: Props) {
   });
   const counts = (id: string) => table.getColumn(id)?.getFacetedUniqueValues() ?? new Map<unknown, number>();
   const shown = () => table.getRowModel().rows.length;
+  // A long table shows its first rows and a button for the rest while nothing is searched or filtered and no chip is
+  // chosen for the page, so every section fits in a few screens. A search or filter looks through every row
+  const [expanded, setExpanded] = createSignal(false);
+  const capped = () => !expanded() && filters().length === 0 && pageChip() === 'all' && props.rows.length > CAP + 2;
+  const rows = () => (capped() ? table.getRowModel().rows.slice(0, CAP) : table.getRowModel().rows);
   // The spreadsheet holds the rows the table shows, in its order, with the labels it shows
   const exportHeader = () => ['Brand', 'Model', 'Details', ...statusColumns().map((column) => column.header), 'Variants', 'Notes', 'Link'];
   const exportRows = () =>
@@ -229,7 +239,8 @@ export default function StatusTable(props: Props) {
   const settle = (next: View) => {
     const kept = new Set(['brand', 'chip', 'q', ...[...next.columns, ...(next.hidden ?? [])].map((column) => column.id)]);
     setFilters((current) => current.filter((filter) => kept.has(filter.id)));
-    setSorting((current) => current.filter((sort) => kept.has(sort.id) || sort.id === 'model'));
+    // The order the old view opened in gives way to the new one's, and an order someone chose stays where it can
+    setSorting((current) => (current.length && JSON.stringify(current) === JSON.stringify(opening(view())) ? opening(next) : current.filter((sort) => kept.has(sort.id) || sort.id === 'model')));
   };
   const switchView = (id: string) => {
     settle(booting.find((v) => v.id === id) ?? booting[0]);
@@ -246,8 +257,7 @@ export default function StatusTable(props: Props) {
   };
   // A view that names a column to open sorted by gets that order while nothing else sorts
   const openSorted = () => {
-    const first = view().sort;
-    if (first && sorting().length === 0) setSorting([{ id: first, desc: false }]);
+    if (sorting().length === 0) setSorting(opening(view()));
   };
   // A page section marked data-views shows the legend of the view in use
   let root!: HTMLDivElement;
@@ -509,7 +519,7 @@ export default function StatusTable(props: Props) {
             </tr>
           </thead>
           <tbody class="divide-y divide-zinc-800 max-xl:block">
-            <For each={table.getRowModel().rows}>
+            <For each={rows()}>
               {(row) => {
                 const model = row.original;
                 // The whole row opens the model's page, as its name does. A link or button inside the row
@@ -584,6 +594,11 @@ export default function StatusTable(props: Props) {
       </div>
       <Show when={shown() === 0}>
         <p class="mt-4 text-sm text-zinc-500">No models match.</p>
+      </Show>
+      <Show when={capped()}>
+        <button type="button" onClick={() => setExpanded(true)} class="mt-3 w-full rounded-lg py-2.5 text-sm font-medium text-zinc-300 ring-1 ring-zinc-700 hover:bg-zinc-800 hover:text-zinc-100" data-show-all>
+          Show all {shown()}
+        </button>
       </Show>
     </div>
   );

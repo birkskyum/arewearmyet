@@ -55,7 +55,8 @@ const HARDWARE_VIEW = { id: 'hardware', label: 'What works', question: HARDWARE_
 // own Bootable column, and its legend with that column's labels
 type BootColumn = { id: string; header: string; question: string; options?: unknown };
 type LegendGroup = (typeof OMARCHY_LEGEND)[number];
-const hardwareView = (boot: BootColumn) => ({ ...HARDWARE_VIEW, columns: [boot, ...HARDWARE_VIEW.columns] });
+// Models with as much seen are ordered by whether they boot, so a table's first rows are the ones furthest along
+const hardwareView = (boot: BootColumn) => ({ ...HARDWARE_VIEW, then: boot.id, columns: [boot, ...HARDWARE_VIEW.columns] });
 const hardwareLegend = (boot: LegendGroup) => [boot, ...HARDWARE_LEGEND];
 const HARDWARE_KEYS = [{ dot: 'bg-emerald-400', text: 'works' }, { dot: 'bg-amber-400', text: 'partly' }, { dot: 'bg-rose-400', text: 'broken' }];
 const HARDWARE_DOTS = { id: 'parts', header: 'Parts', question: `The parts past booting, in the order of What works (${PARTS.map((part) => part.title.toLowerCase()).join(', ')}). Filled is seen on Omarchy on that model, faint is not tested yet. Click for What works.` };
