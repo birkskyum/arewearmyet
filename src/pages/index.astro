@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Legend from '../components/Legend.astro';
 import Family from '../components/Family.astro';
-import PieceBars from '../components/PieceBars.astro';
+import Progress from '../components/Progress';
 import StatusTable from '../components/StatusTable';
 import OmarchyIcon from '../assets/omarchy-icon.svg';
 import status from '../data/status.json';
@@ -10,12 +10,11 @@ import { ANNOUNCED, CHROMEBOOK_OMARCHY_LEGEND, FILTERS, GOOGLEBOOK_OMARCHY_LEGEN
 import { PILL } from '../lib/tones';
 import { googlebookRows, nvidiaRows, snapdragonRows } from '../lib/rows';
 import { PARTS, PART_OPTIONS } from '../lib/parts';
-import PartBars from '../components/PartBars.astro';
+import { PROGRESS_GROUPS, PROGRESS_PARTS, progressModels } from '../lib/progress';
 import Group from '../components/Group.astro';
 import ViewState from '../components/ViewState.astro';
 import ModeSwitch from '../components/ModeSwitch.astro';
 
-const { summary } = status;
 // The edge nightly image testers install, linked as the collector last found it
 const image = status.omarchy.image;
 const byName = <T extends { vendor: string; name: string }>(a: T, b: T) => a.vendor.localeCompare(b.vendor) || a.name.localeCompare(b.name);
@@ -154,6 +153,8 @@ import { SHELL } from '../lib/shell';
       { href: '#chromebooks-and-googlebooks', label: 'Chromebooks', total: googlebooks.length + chromebooks.length },
     ]} />
 
+    <Progress client:load models={progressModels()} groups={PROGRESS_GROUPS} parts={PROGRESS_PARTS} />
+
     <Group id="snapdragon-pcs" title="Snapdragon PCs" total={current.length + older.length + entry.length}>
       Laptops, tablets and desktops sold with Windows or Linux. They start through UEFI and need a device tree, hardware IDs and firmware. Until Omarchy 4.6 is out, <a class={LINK} href="/docs/install">install from the edge image</a>, which has the newest fixes for these machines. <a class={LINK} href="#chromebooks-and-googlebooks">Chromebooks and Googlebooks</a> are further down.
     </Group>
@@ -161,19 +162,13 @@ import { SHELL } from '../lib/shell';
     <Family id="snapdragon" title="Snapdragon X and X2" total={current.length}>
       <div class="group/views" data-views data-view="hardware">
         <ViewState prefix="" views={snapdragonViews.map((v) => v.id)} />
-        <div class="group-data-[view=hardware]/views:hidden">
-          <PieceBars pieces={summary.byPiece} models={current} anchor="snapdragon" />
-        </div>
-        <div class="hidden group-data-[view=hardware]/views:block">
-          <PartBars models={current} anchor="snapdragon" />
-        </div>
-        <div class="mt-8 group-data-[view=hardware]/views:hidden group-data-[view=upstream]/views:hidden">
+        <div class="group-data-[view=hardware]/views:hidden group-data-[view=upstream]/views:hidden">
           <Legend title="What the labels mean" groups={OMARCHY_LEGEND} extra={legendExtra} />
         </div>
-        <div class="mt-8 hidden group-data-[view=hardware]/views:block">
+        <div class="hidden group-data-[view=hardware]/views:block">
           <Legend title="What the labels mean" groups={hardwareLegend(OMARCHY_LEGEND[0])} keys={HARDWARE_KEYS} />
         </div>
-        <div class="mt-8 hidden group-data-[view=upstream]/views:block">
+        <div class="hidden group-data-[view=upstream]/views:block">
           <Legend title="What the labels mean" groups={UPSTREAM_LEGEND} extra={legendExtra} />
         </div>
         <div class="mt-4">
@@ -194,16 +189,9 @@ import { SHELL } from '../lib/shell';
       <p class="max-w-3xl text-sm text-zinc-400">
         The Windows on Arm machines from before Snapdragon X, with the Snapdragon 8cx, 850, 835 and 7c. They start through UEFI like the models above, so they need the same pieces and use the same views and labels. Omarchy carries device trees for most of them, from Linux, from owners' ports, or written from their ACPI tables.
       </p>
-      {/* The bars follow the page's switch, as the first table's do */}
-      <div class="group/views mt-8" data-views data-view="hardware">
+      <div class="group/views mt-4" data-views data-view="hardware">
         <ViewState prefix="8cx-" views={snapdragonViews.map((v) => v.id)} />
-        <div class="group-data-[view=hardware]/views:hidden">
-          <PieceBars pieces={summary.byPieceOlder} models={older} anchor="snapdragon-7c-8cx-835-850" urlPrefix="8cx-" />
-        </div>
-        <div class="hidden group-data-[view=hardware]/views:block">
-          <PartBars models={older} anchor="snapdragon-7c-8cx-835-850" urlPrefix="8cx-" />
-        </div>
-        <div class="mt-4">
+        <div>
           <StatusTable client:load rows={older} views={snapdragonViews} chips={[{ key: '8cx', label: '8cx Gen 3' }, { key: '8cx-gen1', label: '8cx Gen 1 and 2' }, { key: '850', label: '850' }, { key: '835', label: '835' }, { key: '7c', label: '7c' }]} urlPrefix="8cx-" exportName="arewearmyet-snapdragon-7c-8cx-835-850" exportTitle="Snapdragon 7c, 8cx, 835 and 850" />
         </div>
       </div>
@@ -213,16 +201,9 @@ import { SHELL } from '../lib/shell';
       <p class="max-w-3xl text-sm text-zinc-400">
         Qualcomm's entry line for budget Windows laptops. Its drivers are the ones for the 7c Gen 3 (SC7280) in Arm Chromebooks, a chip Linux already describes, so each laptop needs a board tree, hardware IDs and firmware like the models above.
       </p>
-      {/* The bars follow the page's switch, as the first table's do */}
-      <div class="group/views mt-8" data-views data-view="hardware">
+      <div class="group/views mt-4" data-views data-view="hardware">
         <ViewState prefix="c-" views={snapdragonViews.map((v) => v.id)} />
-        <div class="group-data-[view=hardware]/views:hidden">
-          <PieceBars pieces={summary.byPieceEntry} models={entry} anchor="snapdragon-c" urlPrefix="c-" />
-        </div>
-        <div class="hidden group-data-[view=hardware]/views:block">
-          <PartBars models={entry} anchor="snapdragon-c" urlPrefix="c-" />
-        </div>
-        <div class="mt-4">
+        <div>
           <StatusTable client:load rows={entry} views={snapdragonViews} chips={[]} urlPrefix="c-" exportName="arewearmyet-snapdragon-c" exportTitle="Snapdragon C" />
         </div>
       </div>
@@ -241,9 +222,6 @@ import { SHELL } from '../lib/shell';
       </p>
       <div class="group/views mt-4" data-views data-view="hardware">
         <ViewState prefix="nvidia-" views={nvidiaViews.map((v) => v.id)} />
-        <div class="mb-8 hidden group-data-[view=hardware]/views:block">
-          <PartBars models={nvidia} anchor="nvidia" urlPrefix="nvidia-" />
-        </div>
         <div class="group-data-[view=hardware]/views:hidden group-data-[view=upstream]/views:hidden">
           <Legend title="What the labels mean" groups={NVIDIA_OMARCHY_LEGEND} />
         </div>
@@ -272,9 +250,6 @@ import { SHELL } from '../lib/shell';
       </p>
       <div class="group/views mt-4" data-views data-view="hardware">
         <ViewState prefix="googlebook-" views={googlebookViews.map((v) => v.id)} />
-        <div class="mb-8 hidden group-data-[view=hardware]/views:block">
-          <PartBars models={googlebooks} anchor="googlebooks" urlPrefix="googlebook-" />
-        </div>
         <div class="group-data-[view=hardware]/views:hidden group-data-[view=upstream]/views:hidden">
           <Legend title="What the labels mean" groups={GOOGLEBOOK_OMARCHY_LEGEND} />
         </div>
@@ -296,9 +271,6 @@ import { SHELL } from '../lib/shell';
       </p>
       <div class="group/views mt-4" data-views data-view="hardware">
         <ViewState prefix="chromebook-" views={chromebookViews.map((v) => v.id)} />
-        <div class="mb-8 hidden group-data-[view=hardware]/views:block">
-          <PartBars models={chromebooks} anchor="chromebooks" urlPrefix="chromebook-" />
-        </div>
         <div class="group-data-[view=hardware]/views:hidden group-data-[view=upstream]/views:hidden">
           <Legend title="What the labels mean" groups={CHROMEBOOK_OMARCHY_LEGEND} />
         </div>
@@ -355,3 +327,8 @@ import { SHELL } from '../lib/shell';
     </section>
   </main>
 </Layout>
+
+<script>
+  // The bars' cells ask their model's table to search for it
+  import '../lib/search-links';
+</script>

@@ -254,7 +254,7 @@ export default function StatusTable(props: Props) {
     addEventListener(MODE_EVENT, heardMode);
     onCleanup(() => removeEventListener(MODE_EVENT, heardMode));
   });
-  // A link on the page asked for a search in this table, like a model's cell in the bars above it
+  // A link on the page asked for a search in this table, like a model's cell in the bars at the top
   const heardSearch = (event: Event) => {
     const asked = (event as CustomEvent<SearchAsked>).detail;
     if (asked.prefix !== (props.urlPrefix ?? '')) return;
