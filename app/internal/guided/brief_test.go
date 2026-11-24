@@ -504,6 +504,12 @@ func TestTheBriefSaysWhenTheOwnerLetsTheAgentWorkOnItsOwn(t *testing.T) {
 			t.Errorf("the brief with the owner's word lacks %q", want)
 		}
 	}
+	// It tells no agent how to get past its own program's safety prompts
+	for _, never := range []string{"rm -rf", "script file"} {
+		if strings.Contains(trusted, never) {
+			t.Errorf("the brief with the owner's word says %q", never)
+		}
+	}
 }
 
 func TestNewWorkOpensTheOwnersAgentAndT3CodeOnlyWhereAskedFor(t *testing.T) {
