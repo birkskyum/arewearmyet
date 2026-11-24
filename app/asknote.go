@@ -63,7 +63,7 @@ func headline(text string) string {
 }
 
 // askNote asks at the terminal for what a note needs and wasn't given, which is the part it is
-// about, what happened, and which log shows it. Nobody has to type the options out. It answers
+// about, what happened, and which log shows it, if any. Nobody has to type the options out. It answers
 // false when the owner gave nothing to write.
 func askNote(in *bufio.Reader, out io.Writer, checks map[string]report.Check, args noteArgs, word string) (noteArgs, bool) {
 	ask := func(question string) string {
@@ -110,8 +110,13 @@ func askNote(in *bufio.Reader, out io.Writer, checks map[string]report.Check, ar
 		args.title = headline(args.body)
 	}
 	if len(args.logs) == 0 {
-		// The log that shows it is this start's, or the one before when the computer was restarted since
-		answer := strings.ToLower(ask("Has the computer been restarted since it happened? [y/N]"))
+		// A tip needs no log, so the owner says whether one goes. Then the log that shows it is this
+		// start's, or the one before when the computer was restarted since
+		answer := strings.ToLower(ask("Should the kernel's log go with it? It shows what the computer did, and a tip needs none. [Y/n]"))
+		if answer == "n" || answer == "no" {
+			return args, true
+		}
+		answer = strings.ToLower(ask("Has the computer been restarted since it happened? [y/N]"))
 		if answer == "y" || answer == "yes" {
 			args.logs = []string{"previous"}
 		} else {

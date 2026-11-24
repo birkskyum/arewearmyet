@@ -48,13 +48,14 @@ func TestANoteIsAskedForAtTheTerminalSoNothingHasToBeTypedOut(t *testing.T) {
 		return bufio.NewReader(strings.NewReader(strings.Join(lines, "\n") + "\n"))
 	}
 
-	// hw-test note asks for the part, what happened, and whether it was before the last restart
+	// hw-test note asks for the part, what happened, whether a log goes, and whether it was before
+	// the last restart
 	var asked strings.Builder
-	args, written := askNote(typed("sleep", "Slept about five minutes. Wi-Fi was gone on wake and needed a restart.", "y"), &asked, checks, noteArgs{kind: "problem"}, "")
+	args, written := askNote(typed("sleep", "Slept about five minutes. Wi-Fi was gone on wake and needed a restart.", "", "y"), &asked, checks, noteArgs{kind: "problem"}, "")
 	if !written || args.check != "suspend" || args.title != "Slept about five minutes. Wi-Fi was gone on wake and needed a restart" || strings.Join(args.logs, ",") != "previous" || !strings.HasPrefix(args.body, "Slept about five") {
 		t.Errorf("asked for everything: %+v", args)
 	}
-	for _, question := range []string{"Which part is it about?", "What happened?", "restarted since it happened? [y/N]"} {
+	for _, question := range []string{"Which part is it about?", "What happened?", "Should the kernel's log go with it?", "restarted since it happened? [y/N]"} {
 		if !strings.Contains(asked.String(), question) {
 			t.Errorf("it didn't ask %q:\n%s", question, asked.String())
 		}
@@ -65,9 +66,15 @@ func TestANoteIsAskedForAtTheTerminalSoNothingHasToBeTypedOut(t *testing.T) {
 	if !written || args.check != "wifi" || strings.Join(args.logs, ",") != "kernel" || strings.Contains(asked.String(), "Which part") || args.title != "It restarts by itself a few minutes after joining the network" {
 		t.Errorf("with the part given: %+v\n%s", args, asked.String())
 	}
+	// A tip goes without a log when the owner says so, and nothing is asked of restarts
+	asked.Reset()
+	args, written = askNote(typed("Camera works in Monologue once the privacy shutter is slid to the right.", "n"), &asked, checks, noteArgs{kind: "problem"}, "camera")
+	if !written || args.check != "camera" || len(args.logs) != 0 || strings.Contains(asked.String(), "restarted") {
+		t.Errorf("a note without a log: %+v\n%s", args, asked.String())
+	}
 	// A word that names no part gets the list, and a note that fits none has no part
 	asked.Reset()
-	args, _ = askNote(typed("flux", "", "The clock is an hour off after every restart of the laptop.", "n"), &asked, checks, noteArgs{kind: "note"}, "")
+	args, _ = askNote(typed("flux", "", "The clock is an hour off after every restart of the laptop.", "", "n"), &asked, checks, noteArgs{kind: "note"}, "")
 	if args.check != "" || !strings.Contains(asked.String(), `No part is called "flux" here. The parts are camera, lid, suspend, wifi.`) || args.logs[0] != "kernel" {
 		t.Errorf("an unknown part: %+v\n%s", args, asked.String())
 	}

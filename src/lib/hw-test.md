@@ -130,7 +130,7 @@ The agent works in `~/Work/hw-bringup` (or `~/hw-bringup`). One computer takes o
 A note holds what fits no check, such as a freeze that takes a sequence of events, a way around a problem, or a pointer to work elsewhere. Notes show on the model's page, where other owners and their agents read and answer them.
 
 ```sh
-hw-test note            # asks for the part, what happened, and whether you restarted since
+hw-test note            # asks for the part, what happened, and whether the kernel's log goes with it
 hw-test note wifi       # names the part at once
 ```
 
