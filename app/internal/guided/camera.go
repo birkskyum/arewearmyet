@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	tea "charm.land/bubbletea/v2"
@@ -49,10 +50,24 @@ type camera struct {
 	width, height int
 	ask           choice
 	over          bool
+	// found says whether libcamera's cam, which takes the picture, is installed by now.
+	found func() bool
 }
 
+// errNoCam is a camera that libcamera's cam tool can't be asked about, as it isn't installed.
+// Omarchy brings libcamera but not its tools, so the owner can install it or answer from an app.
+var errNoCam = errors.New("libcamera's cam tool isn't installed, so the test took no picture")
+
 func newCamera(run *report.Run, dir string) *camera {
-	return &camera{run: run, dir: dir, phase: "intro", open: tools.View, canOpen: tools.Have("imv"), inTerminal: picture.InTerminal()}
+	return &camera{run: run, dir: dir, phase: "intro", open: tools.View, canOpen: tools.Have("imv"), inTerminal: picture.InTerminal(),
+		found: func() bool { return tools.Have("cam") }}
+}
+
+// withoutCam is the step where cam isn't installed. It opens on the question.
+func (c *camera) withoutCam() *camera {
+	c.err = errNoCam
+	c.question()
+	return c
 }
 
 func (c *camera) name() string   { return "Camera" }
@@ -160,6 +175,9 @@ func (c *camera) question() {
 	case errors.Is(c.err, tools.ErrCameraBusy):
 		c.ask = choice{question: "Another program is using the camera, like a browser tab with a video call or a camera page. Close it, then try again.",
 			options: []string{"Try again", "Skip"}}
+	case errors.Is(c.err, errNoCam):
+		c.ask = choice{question: "The test takes its picture with libcamera's cam tool, which isn't installed here. Install it in another terminal, then take the picture. Or say whether the camera works in an app, like a video call in the browser.",
+			options: []string{"It's installed, take the picture", "It works in an app", "It doesn't work in any app", "Skip"}}
 	case c.err != nil:
 		c.ask = choice{question: "The camera gave no picture here. Does it work in other apps, like a video call in the browser?",
 			options: []string{"Yes, it works there", "No, it doesn't work anywhere", "Try again", "Skip"}}
@@ -218,6 +236,23 @@ func (c *camera) update(msg tea.Msg) (dropped tea.Cmd) {
 				return c.capture()
 			}
 			c.finish()
+		case errors.Is(c.err, errNoCam):
+			switch picked {
+			case 0:
+				if c.found() {
+					c.err = nil
+					return c.capture()
+				}
+				if still := "The cam tool still isn't installed. "; !strings.HasPrefix(c.ask.question, still) {
+					c.ask.question = still + c.ask.question
+				}
+			case 1:
+				set(report.Works, report.Owner, "")
+			case 2:
+				set(report.Broken, report.Owner, "")
+			default:
+				c.finish()
+			}
 		case c.err != nil:
 			switch picked {
 			case 0:
@@ -268,6 +303,9 @@ func (c *camera) view(width, height int) string {
 	if c.err != nil || c.frame.Blank() {
 		if errors.Is(c.err, tools.ErrCameraBusy) {
 			return c.ask.view(width)
+		}
+		if errors.Is(c.err, errNoCam) {
+			return c.ask.view(width) + "\n\n" + wrap("It's in the libcamera-tools package:", width) + "\n\n  " + accent.Render("sudo pacman -S libcamera-tools")
 		}
 		return c.ask.view(width) + "\n\n" + wrap("The test measured "+c.evidence()+".", width)
 	}

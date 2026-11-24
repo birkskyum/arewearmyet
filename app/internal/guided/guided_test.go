@@ -443,6 +443,41 @@ func TestCameraTakesItsPictureOnlyWhenToldAndShowsItInTheTerminal(t *testing.T) 
 	if c.update(press('1')) == nil || c.phase != "capturing" || len(busy.Results) != 0 {
 		t.Errorf("trying again: phase %q, results %v", c.phase, busy.Results)
 	}
+
+	// Without libcamera's cam the step still runs. It says how to install it, takes the picture
+	// once it is there, and otherwise takes the owner's word from an app
+	installed := false
+	without := func(run *report.Run) *camera {
+		c := newCamera(run, dir)
+		c.found = func() bool { return installed }
+		return c.withoutCam()
+	}
+	asked := &report.Run{}
+	c = without(asked)
+	if view := c.view(80, 30); c.phase != "ask" || !strings.Contains(view, "cam tool, which isn't installed") || !strings.Contains(view, "sudo pacman -S libcamera-tools") || !strings.Contains(view, "It works in an app") {
+		t.Errorf("without cam, phase %q:\n%s", c.phase, view)
+	}
+	if c.update(press('1')) != nil || c.phase != "ask" || !strings.Contains(c.view(80, 30), "still isn't installed") {
+		t.Errorf("taking the picture before cam is installed: phase %q:\n%s", c.phase, c.view(80, 30))
+	}
+	c.update(press('1'))
+	if strings.Count(c.view(80, 30), "still isn't installed") != 1 {
+		t.Errorf("asked again:\n%s", c.view(80, 30))
+	}
+	installed = true
+	if c.update(press('1')) == nil || c.phase != "capturing" || c.err != nil {
+		t.Errorf("once cam is installed: phase %q, err %v", c.phase, c.err)
+	}
+	c = without(asked)
+	c.update(press('2'))
+	if result, _ := asked.Get("camera"); !c.done() || result.State != report.Works || result.How != report.Owner || !strings.Contains(result.Evidence, "cam tool isn't installed") {
+		t.Errorf("works in an app: %+v", result)
+	}
+	c = without(asked)
+	c.update(press('3'))
+	if asked.State("camera") != report.Broken {
+		t.Errorf("works in no app: %q", asked.State("camera"))
+	}
 }
 
 func TestTheFanTestIsDoneWithTheOwnerWhereOnlyTheirEarsCanTell(t *testing.T) {

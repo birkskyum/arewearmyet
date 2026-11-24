@@ -189,8 +189,13 @@ func build(run *report.Run, facts probe.Facts, dir string) []step {
 		// with the owner speaking, is only for microphones that step couldn't hear anything with
 		add("speakers microphones headphones", speakers, &skippable{step: microphones, skip: speakers.heardTone}, newHeadphones(run, dir))
 	}
-	if facts.Camera != "" && tools.Have("cam") {
-		add("camera", newCamera(run, dir))
+	if facts.Camera != "" {
+		camera := newCamera(run, dir)
+		// Without cam the step asks the owner, and tells them how to install it
+		if !camera.found() {
+			camera.withoutCam()
+		}
+		add("camera", camera)
 	}
 	add("usb", newUSB(run, sys))
 	add("external-display", newScreen(run, sys))
