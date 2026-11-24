@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-23T05:29:19.785Z",
+  "collected": "2026-11-24T05:28:24.625Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -44,7 +44,7 @@
     "v261",
     "v262"
   ],
-  "linuxNext": "20261120",
+  "linuxNext": "20261123",
   "deviceTrees": [
     {
       "file": "glymur-asus-ascent-qn10.dts",
@@ -2920,7 +2920,7 @@
       "state": "merged",
       "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-hp-elitebook-x-g2q.json",
       "name": "HP 103C_5336AN HP EliteBook",
-      "compatible": "hp,elitebook-x-g2q",
+      "compatible": "hp,kalambo-elitebook-x-g2q-lcd",
       "hwids": [
         "a8eb125e-80bb-5eb6-a448-8b9a73a9fda4",
         "2111654e-fca0-5191-adf1-a341304be9ac",
@@ -2933,7 +2933,10 @@
         "19fe40b5-1900-5d4a-a48f-b9f9938f3e69",
         "4c84c882-b54c-58d5-b412-26bcdf254c3e",
         "24c45613-de19-5b89-9fa1-9e269daf079d",
-        "93f84748-c854-5d6b-b78a-13c2361e0758"
+        "93f84748-c854-5d6b-b78a-13c2361e0758",
+        "5ce6d34d-2de2-5128-8ead-c46904ca37aa",
+        "4972c5ee-a499-5605-8323-eef033e2b343",
+        "d988d261-d18d-54dc-b132-cd674b61ebd3"
       ]
     },
     {
@@ -2958,6 +2961,30 @@
         "51ae1f74-c06a-5ada-a4d3-57c5b050aa9c",
         "4d7e2d2e-d9b8-54e5-a859-89fe74ceb38c",
         "c98707aa-1249-5670-b3d8-3c560d008628"
+      ]
+    },
+    {
+      "file": "kalambo-hp-elitebook-x-g2q-lcd.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/kalambo-hp-elitebook-x-g2q-lcd.json",
+      "name": "HP 103C_5336AN HP EliteBook",
+      "compatible": "hp,elitebook-x-g2q",
+      "hwids": [
+        "a8eb125e-80bb-5eb6-a448-8b9a73a9fda4",
+        "2111654e-fca0-5191-adf1-a341304be9ac",
+        "547910dc-38d6-509e-af6a-1bac70567950",
+        "6778dcb3-7a6c-5aa9-90fe-4b131dc2076a",
+        "1f684671-96d7-5c00-a060-54604fe83c55",
+        "02de9849-4c7c-5a0e-acda-f575977ecb10",
+        "b0d41b70-a607-5e5e-9da8-cce48044dfaf",
+        "99590fa9-8fc9-5066-80b8-49e1dbf06f4d",
+        "19fe40b5-1900-5d4a-a48f-b9f9938f3e69",
+        "4c84c882-b54c-58d5-b412-26bcdf254c3e",
+        "24c45613-de19-5b89-9fa1-9e269daf079d",
+        "93f84748-c854-5d6b-b78a-13c2361e0758",
+        "ae9ede4a-6f09-5da5-af26-f8d7029d130f",
+        "38de2df7-847d-5db4-9e36-d17b052a8a29",
+        "0c505c21-5c47-50e9-b2e9-16fd7ab3820f"
       ]
     },
     {
@@ -4503,6 +4530,9 @@
     "qcom/glymur/cdsp_dtb.mbn",
     "qcom/glymur/cdspr.jsn",
     "qcom/glymur/gen80100_zap.mbn",
+    "qcom/glymur/soccp.mbn",
+    "qcom/glymur/soccp_dtb.mbn",
+    "qcom/glymur/soccpr.jsn",
     "qcom/sc8280xp/LENOVO/21BX/adspr.jsn",
     "qcom/sc8280xp/LENOVO/21BX/adspua.jsn",
     "qcom/sc8280xp/LENOVO/21BX/audioreach-tplg.bin",
@@ -6002,7 +6032,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-77",
+        "kernel": "7.3-78",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -6214,6 +6244,7 @@
           "sc7180-lenovo-10w.json",
           "sc7180-samsung-galaxy-book-go.json",
           "sc7180-tcl-book-14-go.json",
+          "sc7280-hp-omnibook-3-16-ct0.json",
           "sc7280-samsung-galaxy-book2-go.json",
           "sc8180x-microsoft-cambria.json",
           "sc8180x-microsoft-caspar.json",
@@ -9056,6 +9087,24 @@
         ]
       },
       {
+        "file": "sc7280-hp-omnibook-3-16-ct0.json",
+        "recipe": "pkgbuilds/linux-omarchy-dtbs",
+        "name": "HP OmniBook 3 Laptop 16-ct0xxx",
+        "compatible": "hp,omnibook-3-16-ct0",
+        "hwids": [
+          "cdb242cb-4d3f-5c2f-a53c-2a3d1cacc0e5",
+          "5eff0eae-71a2-5342-8b39-6df029f3282c",
+          "b267efb4-aa5f-5791-8ff0-46b63ec8d0d1",
+          "fdb0248f-bf2c-5884-8724-8eecadc219b6",
+          "61095d7d-9a77-5169-a276-ef604ca88e60",
+          "6c3203da-52cb-58c9-9f35-ed8330856ce1",
+          "121b925d-79f6-5f99-8ac8-e4c87721fce4",
+          "fe677703-82d5-509f-a5e9-e9120cb05b31",
+          "aa6aabc1-159d-5330-9248-e374fd32cbc4",
+          "1a7fd50c-3a81-5b8e-a4f8-8f21648fdd72"
+        ]
+      },
+      {
         "file": "sc7280-samsung-galaxy-book2-go.json",
         "recipe": "pkgbuilds/linux-omarchy-dtbs",
         "name": "Samsung Galaxy Book2 Go 5G",
@@ -9719,24 +9768,42 @@
       }
     ],
     "image": {
-      "version": "2026.11.22.499",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.22.499/omarchy-edge-2026.11.22.499-aarch64.iso",
-      "kernel": "7.3.0-75-omarchy"
+      "version": "2026.11.23.500",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.23.500/omarchy-edge-2026.11.23.500-aarch64.iso",
+      "kernel": "7.3.0-77-omarchy"
     },
     "pulls": [
       {
-        "number": 3276,
-        "title": "linux-omarchy-dtbs: add the HP OmniBook 3 16 (16-ct0)'s hardware IDs",
-        "url": "https://github.com/omacom/omarchy-pkgs/pull/3276",
+        "number": 3305,
+        "title": "asus-vivobook-s15-firmware: install the ADSP image signed for each board",
+        "url": "https://github.com/omacom/omarchy-pkgs/pull/3305",
         "draft": true,
         "deviceTrees": [],
-        "ids": [
-          {
-            "file": "sc7280-hp-omnibook-3-16-ct0.json",
-            "compatible": "hp,omnibook-3-16-ct0"
-          }
-        ],
-        "firmware": []
+        "ids": [],
+        "firmware": [
+          "qcom/x1e80100/ASUSTeK/vivobook-s15/adsp_dtbs.elf",
+          "qcom/x1e80100/ASUSTeK/vivobook-s15/adspr.jsn",
+          "qcom/x1e80100/ASUSTeK/vivobook-s15/adsps.jsn",
+          "qcom/x1e80100/ASUSTeK/vivobook-s15/adspua.jsn",
+          "qcom/x1e80100/ASUSTeK/vivobook-s15/battmgr.jsn",
+          "qcom/x1e80100/ASUSTeK/vivobook-s15/cdsp_dtbs.elf",
+          "qcom/x1e80100/ASUSTeK/vivobook-s15/cdspr.jsn",
+          "qcom/x1e80100/ASUSTeK/vivobook-s15/qcadsp8380.mbn",
+          "qcom/x1e80100/ASUSTeK/vivobook-s15/qccdsp8380.mbn",
+          "qcom/x1e80100/ASUSTeK/vivobook-s15/qcdxkmsuc8380.mbn",
+          "qcom/x1e80100/ASUSTeK/vivobook-s15/qcvss8380.mbn",
+          "qcom/x1p42100/ASUSTeK/vivobook-s15/adsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/vivobook-s15/adspr.jsn",
+          "qcom/x1p42100/ASUSTeK/vivobook-s15/adsps.jsn",
+          "qcom/x1p42100/ASUSTeK/vivobook-s15/adspua.jsn",
+          "qcom/x1p42100/ASUSTeK/vivobook-s15/battmgr.jsn",
+          "qcom/x1p42100/ASUSTeK/vivobook-s15/cdsp_dtbs.elf",
+          "qcom/x1p42100/ASUSTeK/vivobook-s15/cdspr.jsn",
+          "qcom/x1p42100/ASUSTeK/vivobook-s15/qcadsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/vivobook-s15/qccdsp8380.mbn",
+          "qcom/x1p42100/ASUSTeK/vivobook-s15/qcdxkmsucpurwa.mbn",
+          "qcom/x1p42100/ASUSTeK/vivobook-s15/qcvss8380.mbn"
+        ]
       }
     ]
   }

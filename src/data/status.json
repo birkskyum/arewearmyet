@@ -1,18 +1,18 @@
 {
-  "collected": "2026-11-23T05:29:19.785Z",
+  "collected": "2026-11-24T05:28:24.625Z",
   "stale": [],
-  "linuxNext": "20261120",
+  "linuxNext": "20261123",
   "firmwareRelease": "20261019",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-77",
+    "kernel": "7.3-78",
     "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.22.499",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.22.499/omarchy-edge-2026.11.22.499-aarch64.iso",
-      "kernel": "7.3.0-75-omarchy"
+      "version": "2026.11.23.500",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.23.500/omarchy-edge-2026.11.23.500-aarch64.iso",
+      "kernel": "7.3.0-77-omarchy"
     },
     "channels": [
       {
@@ -397,7 +397,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-77",
+        "kernel": "7.3-78",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -609,6 +609,7 @@
           "sc7180-lenovo-10w.json",
           "sc7180-samsung-galaxy-book-go.json",
           "sc7180-tcl-book-14-go.json",
+          "sc7280-hp-omnibook-3-16-ct0.json",
           "sc7280-samsung-galaxy-book2-go.json",
           "sc8180x-microsoft-cambria.json",
           "sc8180x-microsoft-caspar.json",
@@ -1659,9 +1660,9 @@
     "nvidia": 22,
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
-    "works": 18,
+    "works": 19,
     "should": 48,
-    "workaround": 11,
+    "workaround": 10,
     "problems": 4,
     "notYet": 7,
     "deviceTree": 84,
@@ -2266,23 +2267,23 @@
         }
       },
       "ids": {
-        "omarchy": 0,
+        "omarchy": 1,
         "fromUpstream": 0,
-        "added": 0,
-        "pull": 1,
+        "added": 1,
+        "pull": 0,
         "available": 0,
         "upstream": 0,
         "channels": {
           "stable": 0,
           "rc": 0,
-          "edge": 0
+          "edge": 1
         },
         "models": {
           "fromUpstream": [],
-          "added": [],
-          "pull": [
+          "added": [
             "hp-omnibook-3-16-ct0"
           ],
+          "pull": [],
           "available": []
         }
       },
@@ -2308,18 +2309,18 @@
         }
       },
       "all": {
-        "omarchy": 0,
+        "omarchy": 1,
         "fromUpstream": 0,
-        "added": 0,
-        "pull": 1,
+        "added": 1,
+        "pull": 0,
         "available": 0,
         "upstream": 0,
         "models": {
           "fromUpstream": [],
-          "added": [],
-          "pull": [
+          "added": [
             "hp-omnibook-3-16-ct0"
           ],
+          "pull": [],
           "available": []
         }
       }
@@ -4908,12 +4909,6 @@
           "state": "workaround",
           "note": "Reaches the desktop on 4.5.0-rc2 once the GPU, compute DSP and video firmware are in place. The installer didn't copy them from the Windows partition on the owner's laptop, so they were copied over on a USB stick and installed with qcom-firmware-extract. The owner confirmed the fix for the dark disk password prompt, which is the default since omacom/omarchy#17352 (omacom/omarchy#11823).",
           "checked": "2026-10"
-        },
-        {
-          "state": "workaround",
-          "note": "An owner has Omarchy running on it, going by the 9 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
-          "checked": "2026-11",
-          "from": "findings"
         }
       ],
       "machine": "omarchy",
@@ -5008,12 +5003,6 @@
               "state": "workaround",
               "note": "Reaches the desktop on 4.5.0-rc2 once the GPU, compute DSP and video firmware are in place. The installer didn't copy them from the Windows partition on the owner's laptop, so they were copied over on a USB stick and installed with qcom-firmware-extract. The owner confirmed the fix for the dark disk password prompt, which is the default since omacom/omarchy#17352 (omacom/omarchy#11823).",
               "checked": "2026-10"
-            },
-            {
-              "state": "workaround",
-              "note": "An owner has Omarchy running on it, going by the 9 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
-              "checked": "2026-11",
-              "from": "findings"
             }
           ]
         },
@@ -5069,12 +5058,6 @@
               "state": "workaround",
               "note": "Reaches the desktop on 4.5.0-rc2 once the GPU, compute DSP and video firmware are in place. The installer didn't copy them from the Windows partition on the owner's laptop, so they were copied over on a USB stick and installed with qcom-firmware-extract. The owner confirmed the fix for the dark disk password prompt, which is the default since omacom/omarchy#17352 (omacom/omarchy#11823).",
               "checked": "2026-10"
-            },
-            {
-              "state": "workaround",
-              "note": "An owner has Omarchy running on it, going by the 9 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
-              "checked": "2026-11",
-              "from": "findings"
             }
           ]
         }
@@ -6590,14 +6573,14 @@
         "https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/glymur-asus-zenbook-a16-ux3607oa.dts"
       ],
       "notes": null,
-      "outcome": "workaround",
-      "bootable": "workaround",
+      "outcome": "works",
+      "bootable": "stable",
       "reports": [
         {
-          "state": "workaround",
-          "note": "An owner has Omarchy running on it, going by the 18 checks written up from it. There, the installer from a USB stick partly works, and the disk password prompt partly works.",
+          "state": "works",
+          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-78. There, the installer from a USB stick works, and the disk password prompt works.",
           "checked": "2026-11",
-          "from": "findings"
+          "from": "hw-test"
         }
       ],
       "machine": "omarchy",
@@ -6681,13 +6664,13 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-asus-zenbook-a16-ux3607oa.json"
             }
           ],
-          "outcome": "workaround",
+          "outcome": "works",
           "reports": [
             {
-              "state": "workaround",
-              "note": "An owner has Omarchy running on it, going by the 18 checks written up from it. There, the installer from a USB stick partly works, and the disk password prompt partly works.",
+              "state": "works",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-78. There, the installer from a USB stick works, and the disk password prompt works.",
               "checked": "2026-11",
-              "from": "findings"
+              "from": "hw-test"
             }
           ]
         }
@@ -8538,19 +8521,15 @@
         "https://www.energystar.gov/productfinder/product/certified-computers/details/4688594"
       ],
       "notes": "HP's driver pack sp174797 is the 7c Gen 3's (SC7280 power driver, 8270 firmware), and its BIOS capsule holds the DSDT a device tree can be written from.",
-      "outcome": "manual",
-      "bootable": "pr",
+      "outcome": "should",
+      "bootable": "edge",
       "reports": [],
       "machine": "omarchy",
       "omarchy": {
         "deviceTree": "edge",
         "deviceTreePull": null,
-        "ids": null,
-        "idsPull": {
-          "url": "https://github.com/omacom/omarchy-pkgs/pull/3276",
-          "number": 3276,
-          "title": "linux-omarchy-dtbs: add the HP OmniBook 3 16 (16-ct0)'s hardware IDs"
-        },
+        "ids": "edge",
+        "idsPull": null,
         "firmware": "shipped",
         "firmwareChannel": "edge",
         "firmwarePackages": [
@@ -8560,7 +8539,7 @@
       },
       "pieces": {
         "deviceTree": "edge",
-        "ids": "pr",
+        "ids": "edge",
         "firmware": "edge"
       },
       "upstream": {
@@ -8589,16 +8568,12 @@
       "variants": [
         {
           "compatible": "hp,omnibook-3-16-ct0",
-          "computed": "manual",
+          "computed": "should",
           "treeChannel": "edge",
-          "idsChannel": null,
-          "bootChannel": null,
+          "idsChannel": "edge",
+          "bootChannel": "edge",
           "treePull": null,
-          "idsPull": {
-            "url": "https://github.com/omacom/omarchy-pkgs/pull/3276",
-            "number": 3276,
-            "title": "linux-omarchy-dtbs: add the HP OmniBook 3 16 (16-ct0)'s hardware IDs"
-          },
+          "idsPull": null,
           "deviceTree": {
             "file": "sc7280-hp-omnibook-3-16-ct0.dts",
             "firstRelease": null,
@@ -8614,7 +8589,7 @@
           ],
           "ids": [],
           "stubble": [],
-          "outcome": "manual",
+          "outcome": "should",
           "reports": []
         }
       ],
@@ -9311,9 +9286,9 @@
           ],
           "stubble": [
             {
-              "file": "glymur-hp-elitebook-x-g2q.json",
+              "file": "kalambo-hp-elitebook-x-g2q-lcd.json",
               "state": "merged",
-              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-hp-elitebook-x-g2q.json"
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/kalambo-hp-elitebook-x-g2q-lcd.json"
             }
           ],
           "outcome": "should",

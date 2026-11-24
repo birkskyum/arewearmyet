@@ -1473,6 +1473,7 @@ The Surface Pro X uses an RTC provided by the SSAM. Add a driver for it.
 
 Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
 Signed-off-by: Val Packett <val@packett.cool>
+Tested-by: Emfox Zhou <emfox@debian.org> # Surface Pro 8 (x86), with ssam_node_rtc added
 ---
  MAINTAINERS               |   8 +++
  drivers/rtc/Kconfig       |   9 +++
