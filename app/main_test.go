@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"encoding/json"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -158,6 +159,44 @@ printf '{"steps":["camera"],"results":[{"check":"camera","state":"works","how":"
 	// A word that names no step opens nothing
 	if ask([]string{"flux"}) != 2 || ask(nil) != 2 {
 		t.Error("something that is no step was opened")
+	}
+
+	// A step that can't run leaves its window open with the reason, and the agent is told it at
+	// once, also when the step ended before it could answer at all
+	os.WriteFile(window, []byte("#!/bin/sh\n\"$@\" </dev/null >"+dir+"/shown 2>&1 &\n"), 0o755)
+	step := filepath.Join(dir, "hw-test")
+	executable = func() (string, error) { return step, nil }
+	ownerWait = 10 * time.Second
+	defer func() { executable, ownerWait = os.Executable, 30*time.Minute }()
+	for name, test := range map[string]struct{ step, said string }{
+		"no step": {`while [ $# -gt 1 ]; do [ "$1" = --done ] && file=$2; shift; done
+printf '{"steps":["camera"],"results":null,"error":"this computer has nothing to test for camera"}\n' > "$file"
+echo "hw-test: the guided test couldn't run here: this computer has nothing to test for camera" >&2
+exit 1`, "camera couldn't run in the owner's window: this computer has nothing to test for camera"},
+		"no answer": {"exit 3", "hw-test ended with exit code 3 before the step was through"},
+	} {
+		os.WriteFile(step, []byte("#!/bin/sh\n"+test.step+"\n"), 0o755)
+		os.Remove(filepath.Join(dir, "shown"))
+		errors := os.Stderr
+		read, write, _ := os.Pipe()
+		os.Stderr = write
+		started := time.Now()
+		code := ask([]string{"camera"})
+		write.Close()
+		os.Stderr = errors
+		said, _ := io.ReadAll(read)
+		if code != 1 || !strings.Contains(string(said), test.said) || time.Since(started) > 5*time.Second {
+			t.Errorf("%s: exit %d after %s, said:\n%s", name, code, time.Since(started).Round(time.Second), said)
+		}
+		for waited := 0; waited < 50; waited++ {
+			if shown, _ := os.ReadFile(filepath.Join(dir, "shown")); strings.Contains(string(shown), "Press Enter to close this window.") {
+				break
+			}
+			time.Sleep(100 * time.Millisecond)
+		}
+		if shown, _ := os.ReadFile(filepath.Join(dir, "shown")); !strings.Contains(string(shown), "Press Enter to close this window.") {
+			t.Errorf("%s: the window didn't wait to be read:\n%s", name, shown)
+		}
 	}
 }
 

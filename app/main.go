@@ -380,7 +380,12 @@ func main() {
 			if err != nil || !*once {
 				results = nil
 			}
-			data, _ := json.MarshalIndent(map[string]any{"steps": only, "results": results}, "", "  ")
+			answer := map[string]any{"steps": only, "results": results}
+			// Why the step couldn't run, for whoever is waiting on it
+			if err != nil {
+				answer["error"] = err.Error()
+			}
+			data, _ := json.MarshalIndent(answer, "", "  ")
 			_ = os.WriteFile(*done, append(data, '\n'), 0o600)
 		}
 		if err == nil {
@@ -1181,7 +1186,7 @@ func ask(steps []string) int {
 			return 2
 		}
 	}
-	self, err := os.Executable()
+	self, err := executable()
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "hw-test:", err)
 		return 1
@@ -1195,13 +1200,27 @@ func ask(steps []string) int {
 	file.Close()
 	os.Remove(answered)
 	defer os.Remove(answered)
-	if err := tools.Terminal(self, append(steps, "--no-send", "--once", "--done", answered)...); err != nil {
+	// A step that ends with an error leaves its window open until the owner has read why, and
+	// one that ends before it could answer still answers, so nobody waits on it
+	window := `done=$1; shift
+"$0" "$@"
+code=$?
+[ -s "$done" ] || printf '{"error": "hw-test ended with exit code %s before the step was through"}\n' "$code" > "$done"
+if [ "$code" -ne 0 ]; then printf '\nPress Enter to close this window.'; read -r _; fi`
+	if err := tools.Terminal("sh", append([]string{"-c", window, self, answered}, append(steps, "--no-send", "--once", "--done", answered)...)...); err != nil {
 		fmt.Fprintln(os.Stderr, "hw-test: the step couldn't be opened for the owner:", err)
 		return 1
 	}
 	fmt.Fprintf(os.Stderr, "Opened %s for the owner in a window of its own. Waiting until they are through, half an hour at most.\n", strings.Join(steps, ", "))
-	for waited := time.Duration(0); waited < 30*time.Minute; waited += 500 * time.Millisecond {
+	for waited := time.Duration(0); waited < ownerWait; waited += 500 * time.Millisecond {
 		if data, err := os.ReadFile(answered); err == nil && len(data) > 0 {
+			var answer struct {
+				Error string `json:"error"`
+			}
+			if json.Unmarshal(data, &answer) == nil && answer.Error != "" {
+				fmt.Fprintf(os.Stderr, "hw-test: %s couldn't run in the owner's window: %s\n", strings.Join(steps, ", "), answer.Error)
+				return 1
+			}
 			fmt.Print(string(data))
 			return 0
 		}
@@ -1210,6 +1229,13 @@ func ask(steps []string) int {
 	fmt.Fprintln(os.Stderr, "hw-test: the owner didn't get to it. Nothing was measured.")
 	return 1
 }
+
+// ownerWait is how long an agent waits on a step opened for the owner, and executable is what
+// that window runs. Tests replace both.
+var (
+	ownerWait  = 30 * time.Minute
+	executable = os.Executable
+)
 
 // pickOne asks which of several parts an agent should look into, by its number.
 func pickOne(in *bufio.Reader, out io.Writer, lines []string) (int, bool) {
