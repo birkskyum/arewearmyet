@@ -288,11 +288,11 @@ Then tell the owner to restart when it suits them, or restart yourself with `sys
 
 ### Sending the fix upstream too
 
-A fix in Omarchy reaches owners with the next `omarchy update`. The lasting fix is upstream, in the project the code comes from, like the kernel, Mesa or linux-firmware. There every distribution gets it, and Omarchy can drop its copy. So once the Omarchy pull request is out, help the owner send it there.
+A fix in Omarchy reaches owners with the next `omarchy update`. The lasting fix is upstream, in the project the code comes from, like the kernel, Mesa or linux-firmware. There every distribution gets it, and Omarchy can drop its copy. So once the Omarchy pull request is out, prepare the fix for upstream as well.
 
-- **Look first.** Search the project's list or tracker for the part and the fault (lore.kernel.org for the kernel). When someone has posted the fix already, carry their patch in Omarchy with its author and link, and don't send another. A reply on their thread with what the owner measured, and a `Tested-by` when the owner wants their name on it, helps it get applied.
+- **Look first.** Search the project's list or tracker for the part and the fault (lore.kernel.org for the kernel). When someone has posted the fix already, carry their patch in Omarchy with its author and link, and don't send another. A reply on their thread with what you measured helps it get applied, so draft that instead.
 - **Read the project's rules for work done with an AI program** before you draft anything. The kernel's are in `Documentation/process/coding-assistants.rst`. Each project has its own, and some take no such work at all.
-- **The owner sends it,** under their own name, from their own mail or account, as the project's contribution guide says. Draft it for them, and never send it yourself.
+- **Draft, don't send.** Write it as the project's contribution guide says. Whether it goes out, and under which name, is the owner's choice. Never send it yourself.
 - **Link it.** Put the upstream patch or thread in the Omarchy pull request and in a note (step 6), so the copy can go once upstream has it.
 
 ### Cleaning up
