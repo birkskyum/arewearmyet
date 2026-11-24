@@ -29,7 +29,7 @@ The base URL is `https://arewearmyet.com`. Everything is plain HTTP and JSON. Ch
 - **Don't use the camera or the microphones yourself.** The tests that do are run by the owner, who sees what is recorded. The one exception is the sound test, `hw-test speakers --no-send`, which you run yourself once the owner has said yes to it. Handing you the speakers or the microphones (`hw-test fix`, or the test's own screen) is that yes. Otherwise ask them once, and add `--play`. It plays tones at half volume for about twenty seconds, listens to them, keeps only how loud each one was and deletes the recording.
 - **What needs no asking** is reading, measuring, reporting to this site, test boot entries, a test module loaded until the next restart, installing a test package under a name of its own, opening yourself again after a restart, and a pull request or an issue on Omarchy's repositories.
 - **What you tell the owner first** is a restart, since it closes what they have open (unless they said to restart as you need), and a pull request or issue, since it goes out under their GitHub account.
-- **What you ask the owner first** is changing a system file, replacing a stock package, changing a settings file in their home folder (like `~/.config/chromium-flags.conf`), and running `omarchy update`. Keep a copy of what you change and write into `PROGRESS.md` how to undo it.
+- **What you ask the owner first** is changing a system file, replacing a stock package, changing a settings file in their home folder (like `~/.config/chromium-flags.conf`), running `omarchy update`, and anything that goes to another project in their name. Keep a copy of what you change and write into `PROGRESS.md` how to undo it.
 - **Root goes through `sudo`.** When it asks for a password, don't ask the owner for it. Hand them the exact command to run in their own terminal. Where the owner has chosen to let you work on your own, the brief says so and what that changes.
 
 ## 1. Find the computer model
@@ -166,7 +166,7 @@ A device tree switches power, so a wrong one can do more than fail. Three rules.
 | A sound profile | omarchy-pkgs, `pkgbuilds/alsa-ucm-conf` |
 | A system setting for one model or a family (a kernel option, a service, a file under `/etc`) | [Omarchy](https://github.com/omacom/omarchy), branch `quattro`, `install/hardware/<family>/`, which runs as root before any user exists |
 | A setting of an application in the user's home (Chromium's switches) | Omarchy, as a `bin/omarchy-install-*` command called from `install/user/hardware/<family>/`, plus a migration for computers already installed. `bin/omarchy-install-video-decode` and `bin/omarchy-chromium-add-feature` show how |
-| Something Omarchy has no place for, or that needs another project to change | That project, as its own contribution guide says, and a note (step 6) |
+| Something Omarchy has no place for, or that needs another project to change | That project, as its own contribution guide says ("Sending the fix upstream too"), and a note (step 6) |
 
 - **In omarchy-pkgs,** `README.md` says how packages are built (`bin/build --package <name> --arch aarch64`, which needs Docker or Podman), and `AGENTS.md` what a recipe change needs, like a `pkgrel` bump. Each package's own `README.md` explains its patches. Add a paragraph for yours there.
 - **A device tree fix** is one patch in the kernel's format, named `00NN-arm64-dts-qcom-<board>-<what>.patch`, listed in the recipe's `source` and `b2sums`. It may only touch files under `arch/arm64/boot/dts/` and `include/dt-bindings/`. `hw-test tree patch` writes it for you (below).
@@ -285,6 +285,15 @@ Then tell the owner to restart when it suits them, or restart yourself with `sys
 - What got worse is shown as plainly as what got better. Fix it or say so. Don't leave it out.
 - Another owner of the same model can confirm a pull request the same way, with its address. Each computer counts once.
 - `GET /api/fixes?url=<the pull request>` answers what a pull request changed over every computer that measured it. That is what a reviewer looks at.
+
+### Sending the fix upstream too
+
+A fix in Omarchy reaches owners with the next `omarchy update`. The lasting fix is upstream, in the project the code comes from, like the kernel, Mesa or linux-firmware. There every distribution gets it, and Omarchy can drop its copy. So once the Omarchy pull request is out, help the owner send it there.
+
+- **Look first.** Search the project's list or tracker for the part and the fault (lore.kernel.org for the kernel). When someone has posted the fix already, carry their patch in Omarchy with its author and link, and don't send another. A reply on their thread with what the owner measured, and a `Tested-by` when the owner wants their name on it, helps it get applied.
+- **Read the project's rules for work done with an AI program** before you draft anything. The kernel's are in `Documentation/process/coding-assistants.rst`. Each project has its own, and some take no such work at all.
+- **The owner sends it,** under their own name, from their own mail or account, as the project's contribution guide says. Draft it for them, and never send it yourself.
+- **Link it.** Put the upstream patch or thread in the Omarchy pull request and in a note (step 6), so the copy can go once upstream has it.
 
 ### Cleaning up
 
