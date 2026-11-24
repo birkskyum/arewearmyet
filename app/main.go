@@ -30,6 +30,8 @@ import (
 	"strings"
 	"time"
 
+	"golang.org/x/term"
+
 	"github.com/birkskyum/arewearmyet/app/internal/deep"
 	"github.com/birkskyum/arewearmyet/app/internal/guided"
 	"github.com/birkskyum/arewearmyet/app/internal/kernel"
@@ -274,7 +276,7 @@ func main() {
 		// whole command
 		if args.solved == "" && args.body == "" && args.bodyFile == "" && guided.Interactive() {
 			checks, _ := report.Checks(*api)
-			asked, written := askNote(terminal, os.Stderr, checks, args, strings.Join(topics, " "))
+			asked, written := askNote(ownersTerminal(), os.Stderr, checks, args, strings.Join(topics, " "))
 			if !written {
 				fmt.Fprintln(os.Stderr, "Nothing written.")
 				os.Exit(0)
@@ -1228,6 +1230,25 @@ if [ "$code" -ne 0 ]; then printf '\nPress Enter to close this window.'; read -r
 	}
 	fmt.Fprintln(os.Stderr, "hw-test: the owner didn't get to it. Nothing was measured.")
 	return 1
+}
+
+// ownersTerminal reads answers at the owner's terminal, where they can be edited as they are typed.
+func ownersTerminal() reader {
+	fd := int(os.Stdin.Fd())
+	if !term.IsTerminal(fd) {
+		return plain(terminal)
+	}
+	return editable(os.Stdin, func(line *term.Terminal) (func(), error) {
+		state, err := term.MakeRaw(fd)
+		if err != nil {
+			return nil, err
+		}
+		// A line longer than the terminal is wide goes on to the next row
+		if width, height, err := term.GetSize(fd); err == nil && width > 0 {
+			line.SetSize(width, height)
+		}
+		return func() { term.Restore(fd, state) }, nil
+	})
 }
 
 // ownerWait is how long an agent waits on a step opened for the owner, and executable is what

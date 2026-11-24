@@ -7,8 +7,49 @@ import (
 	"sort"
 	"strings"
 
+	"golang.org/x/term"
+
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 )
+
+// reader reads the owner's answer to a question just put. ok is false when they stopped.
+type reader func(out io.Writer) (answer string, ok bool)
+
+// plain reads answers a line at a time, as typed or piped in.
+func plain(in *bufio.Reader) reader {
+	return func(out io.Writer) (string, bool) {
+		fmt.Fprint(out, "> ")
+		answer, _ := in.ReadString('\n')
+		return answer, true
+	}
+}
+
+// editable reads answers at the owner's terminal, where the line can be edited while it is typed.
+// The arrow keys, Home and End move in it, and Backspace, Delete, Ctrl+W and Ctrl+U take out
+// what's wrong. Ctrl+C, or Ctrl+D on an empty line, stops. ready puts the terminal in the state for
+// it and says how to put it back. Where that fails, the answer is read as a plain line.
+func editable(in io.Reader, ready func(line *term.Terminal) (done func(), err error)) reader {
+	var line *term.Terminal
+	var fallback reader
+	return func(out io.Writer) (string, bool) {
+		if line == nil {
+			line = term.NewTerminal(struct {
+				io.Reader
+				io.Writer
+			}{in, out}, "> ")
+		}
+		done, err := ready(line)
+		if err != nil {
+			if fallback == nil {
+				fallback = plain(bufio.NewReader(in))
+			}
+			return fallback(out)
+		}
+		defer done()
+		answer, err := line.ReadLine()
+		return answer, err == nil
+	}
+}
 
 // Everyday words for a part, and the check each one means.
 var partWords = map[string]string{
@@ -65,10 +106,15 @@ func headline(text string) string {
 // askNote asks at the terminal for what a note needs and wasn't given, which is the part it is
 // about, what happened, and which log shows it, if any. Nobody has to type the options out. It answers
 // false when the owner gave nothing to write.
-func askNote(in *bufio.Reader, out io.Writer, checks map[string]report.Check, args noteArgs, word string) (noteArgs, bool) {
+func askNote(read reader, out io.Writer, checks map[string]report.Check, args noteArgs, word string) (noteArgs, bool) {
+	stopped := false
 	ask := func(question string) string {
-		fmt.Fprint(out, question+"\n> ")
-		answer, _ := in.ReadString('\n')
+		if stopped {
+			return ""
+		}
+		fmt.Fprint(out, question+"\n")
+		answer, ok := read(out)
+		stopped = !ok
 		return strings.TrimSpace(answer)
 	}
 	if args.check == "" && args.reply == "" {
@@ -92,7 +138,7 @@ func askNote(in *bufio.Reader, out io.Writer, checks map[string]report.Check, ar
 			word = ""
 		}
 	}
-	for tries := 0; args.body == "" && tries < 3; tries++ {
+	for tries := 0; args.body == "" && tries < 3 && !stopped; tries++ {
 		text := ask("What happened? A sentence or two, then Enter.")
 		switch {
 		case text == "":
@@ -114,7 +160,7 @@ func askNote(in *bufio.Reader, out io.Writer, checks map[string]report.Check, ar
 		// start's, or the one before when the computer was restarted since
 		answer := strings.ToLower(ask("Should the kernel's log go with it? It shows what the computer did, and a tip needs none. [Y/n]"))
 		if answer == "n" || answer == "no" {
-			return args, true
+			return args, !stopped
 		}
 		answer = strings.ToLower(ask("Has the computer been restarted since it happened? [y/N]"))
 		if answer == "y" || answer == "yes" {
@@ -123,5 +169,5 @@ func askNote(in *bufio.Reader, out io.Writer, checks map[string]report.Check, ar
 			args.logs = []string{"kernel"}
 		}
 	}
-	return args, true
+	return args, !stopped
 }

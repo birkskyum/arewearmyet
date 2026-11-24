@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -11,6 +12,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"golang.org/x/term"
 
 	"github.com/birkskyum/arewearmyet/app/internal/report"
 )
@@ -44,8 +47,8 @@ func TestBeforeALogGoesTheOwnerIsToldWhatGoesAndCanSayNo(t *testing.T) {
 
 func TestANoteIsAskedForAtTheTerminalSoNothingHasToBeTypedOut(t *testing.T) {
 	checks := map[string]report.Check{"wifi": {ID: "wifi", Title: "Wi-Fi"}, "suspend": {ID: "suspend", Title: "Sleep and wake"}, "camera": {ID: "camera", Title: "Webcam"}, "lid": {ID: "lid", Title: "Lid switch"}}
-	typed := func(lines ...string) *bufio.Reader {
-		return bufio.NewReader(strings.NewReader(strings.Join(lines, "\n") + "\n"))
+	typed := func(lines ...string) reader {
+		return plain(bufio.NewReader(strings.NewReader(strings.Join(lines, "\n") + "\n")))
 	}
 
 	// hw-test note asks for the part, what happened, whether a log goes, and whether it was before
@@ -92,6 +95,31 @@ func TestANoteIsAskedForAtTheTerminalSoNothingHasToBeTypedOut(t *testing.T) {
 	args, _ = askNote(typed("It froze when the dock was plugged in during sleep."), &asked, checks, noteArgs{check: "suspend", title: "Freezes with a dock", logs: []string{"boot-3"}}, "")
 	if asked.String() != "What happened? A sentence or two, then Enter.\n> " || args.title != "Freezes with a dock" || args.logs[0] != "boot-3" {
 		t.Errorf("given options were asked for again:\n%s", asked.String())
+	}
+
+	// At the owner's terminal the line can be edited as it is typed, with the arrow keys, Home and
+	// End, and Ctrl+C stops without writing anything
+	left, home := "\x1b[D", "\x1b[H"
+	keys := "wifi\r" + "Drops after sleep wrks again" + strings.Repeat(left, 9) + "o" + home + "Wi-Fi " + "\r" + "n\r"
+	ready, restored := 0, 0
+	terminal := func(keys string) reader {
+		return editable(strings.NewReader(keys), func(*term.Terminal) (func(), error) {
+			ready++
+			return func() { restored++ }, nil
+		})
+	}
+	asked.Reset()
+	args, written = askNote(terminal(keys), &asked, checks, noteArgs{kind: "problem"}, "")
+	if !written || args.check != "wifi" || args.body != "Wi-Fi Drops after sleep works again" || len(args.logs) != 0 || ready != 3 || restored != 3 {
+		t.Errorf("edited at the terminal, %d ready and %d restored: %+v\n%q", ready, restored, args, asked.String())
+	}
+	if _, written = askNote(terminal("wifi\r"+"It drops off after sleep, every time"+"\x03"), &asked, checks, noteArgs{kind: "problem"}, ""); written {
+		t.Error("Ctrl+C wrote the note")
+	}
+	// A terminal that can't be made ready is read a line at a time
+	broken := editable(strings.NewReader("Stays dark for the first seconds\n"), func(*term.Terminal) (func(), error) { return nil, errors.New("not a terminal") })
+	if answer, ok := broken(io.Discard); !ok || strings.TrimSpace(answer) != "Stays dark for the first seconds" {
+		t.Errorf("read plainly: %q, %v", answer, ok)
 	}
 
 	// Everyday words, ids and a title's own word all find the part
@@ -184,13 +212,13 @@ exit 1`, "camera couldn't run in the owner's window: this computer has nothing t
 	} {
 		os.WriteFile(step, []byte("#!/bin/sh\n"+test.step+"\n"), 0o755)
 		os.Remove(filepath.Join(dir, "shown"))
-		errors := os.Stderr
+		stderr := os.Stderr
 		read, write, _ := os.Pipe()
 		os.Stderr = write
 		started := time.Now()
 		code := ask([]string{"camera"})
 		write.Close()
-		os.Stderr = errors
+		os.Stderr = stderr
 		said, _ := io.ReadAll(read)
 		if code != 1 || !strings.Contains(string(said), test.said) || time.Since(started) > 5*time.Second {
 			t.Errorf("%s: exit %d after %s, said:\n%s", name, code, time.Since(started).Round(time.Second), said)
