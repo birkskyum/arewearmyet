@@ -471,8 +471,9 @@ async function collectOmarchy() {
     channels.push({ name: channel.name, ...channelContents(packages(repo), packages(core)) });
   }
   const recipe = omarchyKernelRecipe();
-  // The edge nightly image, which testers install. It picks up every tree and ID the edge kernel has
-  const latest = await getJson('https://nightly.omarchy.org/edge-aarch64/latest.json').catch(() => undefined);
+  // The Snapdragon edge nightly image, which testers install. It picks up every tree and ID the edge kernel has.
+  // The plain aarch64 image has no device trees, so a Snapdragon laptop doesn't start it
+  const latest = await getJson('https://nightly.omarchy.org/edge-snapdragon/latest.json').catch(() => undefined);
   const image = latest?.url ? { version: latest.version, url: latest.url, kernel: latest.kernel ?? null } : null;
   return { channels, kernelAddedDeviceTrees: recipe.added, kernelChangedFirmware: recipe.changedFirmware, carriedIds: recipe.ids, image, pulls: await collectOmarchyPulls() };
 }

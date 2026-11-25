@@ -30,13 +30,13 @@ const SECTIONS = [
   <article class="guide">
     <h1>Install Omarchy on an ARM PC</h1>
     <p>
-      Omarchy builds one install image for every ARM PC it supports. This page takes a Snapdragon laptop from Windows to the Omarchy desktop.
+      Omarchy builds an install image of its own for Snapdragon laptops. This page takes one from Windows to the Omarchy desktop.
     </p>
     <p>
       <strong>Snapdragon laptops are supported from Omarchy 4.6.</strong> Until 4.6 is released, that means the <span class={`${PILL} ${TONE.good}`}>Edge</span> image, which is built every night. The 4.5 release image is too old for them.
     </p>
     <p>
-      NVIDIA's ARM desktops and laptops install from the same image. Apple Silicon Macs have <a href="https://github.com/omacom/omarchy-mac-installer">an installer of their own</a>. Chromebooks and Googlebooks start differently and don't install from this image.
+      NVIDIA's ARM desktops and laptops install from Omarchy's plain ARM image (<a href="https://nightly.omarchy.org/edge-aarch64/latest.json">edge</a>), which a Snapdragon laptop doesn't start. Apple Silicon Macs have <a href="https://github.com/omacom/omarchy-mac-installer">an installer of their own</a>. Chromebooks and Googlebooks start differently and install from neither.
     </p>
 
     <section>
@@ -78,12 +78,12 @@ const SECTIONS = [
       <h3>From any computer</h3>
       <ol>
         <li>
-          Download the edge image and check that it arrived whole:
-          <pre><code>latest=$(curl -fsSL https://nightly.omarchy.org/edge-aarch64/latest.json)
+          Download the Snapdragon edge image and check that it arrived whole:
+          <pre><code>latest=$(curl -fsSL https://nightly.omarchy.org/edge-snapdragon/latest.json)
 url=$(jq -r .url &lt;&lt;&lt;"$latest")
 curl -fLO "$url"
 echo "$(jq -r .sha256 &lt;&lt;&lt;"$latest")  $&#123;url##*/&#125;" | sha256sum -c</code></pre>
-          <a href="https://nightly.omarchy.org/edge-aarch64/latest.json">latest.json</a> names the newest image and its checksum, for downloading it by hand.
+          <a href="https://nightly.omarchy.org/edge-snapdragon/latest.json">latest.json</a> names the newest image and its checksum, for downloading it by hand.
         </li>
         <li>Write it to the stick with <a href="https://etcher.balena.io/">balenaEtcher</a> on Windows or a Mac, or <a href="https://github.com/ifd3f/caligula">caligula</a> on Linux.</li>
         <li>
