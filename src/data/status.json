@@ -1,18 +1,18 @@
 {
-  "collected": "2026-11-24T05:28:24.625Z",
+  "collected": "2026-11-25T05:28:59.437Z",
   "stale": [],
-  "linuxNext": "20261123",
-  "firmwareRelease": "20261019",
+  "linuxNext": "20261124",
+  "firmwareRelease": "20261124",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3-78",
+    "kernel": "7.3-79",
     "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.23.500",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.23.500/omarchy-edge-2026.11.23.500-aarch64.iso",
-      "kernel": "7.3.0-77-omarchy"
+      "version": "2026.11.24.501",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.24.501/omarchy-edge-2026.11.24.501-aarch64.iso",
+      "kernel": "7.3.0-78-omarchy"
     },
     "channels": [
       {
@@ -397,7 +397,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-78",
+        "kernel": "7.3-79",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -1889,11 +1889,11 @@
       },
       "firmware": {
         "omarchy": 72,
-        "fromUpstream": 1,
-        "added": 71,
+        "fromUpstream": 2,
+        "added": 70,
         "pull": 0,
         "available": 1,
-        "upstream": 1,
+        "upstream": 2,
         "channels": {
           "stable": 1,
           "rc": 1,
@@ -1901,7 +1901,8 @@
         },
         "models": {
           "fromUpstream": [
-            "lenovo-thinkpad-t14s-gen-6-snapdragon"
+            "lenovo-thinkpad-t14s-gen-6-snapdragon",
+            "lenovo-yoga-slim-7x-14q8x9"
           ],
           "added": [
             "acer-aspire-14-ai-a14-11m",
@@ -1957,7 +1958,6 @@
             "lenovo-ideapad-slim-5x-14q8x9",
             "lenovo-thinkbook-16-gen-7-qoy",
             "lenovo-thinkcentre-neo-50q-qc",
-            "lenovo-yoga-slim-7x-14q8x9",
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
             "medion-sprchrgd-14-s1",
             "microsoft-surface-laptop-7-13",
@@ -1984,14 +1984,15 @@
       },
       "all": {
         "omarchy": 70,
-        "fromUpstream": 1,
-        "added": 69,
+        "fromUpstream": 2,
+        "added": 68,
         "pull": 0,
         "available": 0,
-        "upstream": 1,
+        "upstream": 2,
         "models": {
           "fromUpstream": [
-            "lenovo-thinkpad-t14s-gen-6-snapdragon"
+            "lenovo-thinkpad-t14s-gen-6-snapdragon",
+            "lenovo-yoga-slim-7x-14q8x9"
           ],
           "added": [
             "acer-aspire-14-ai-a14-11m",
@@ -2045,7 +2046,6 @@
             "lenovo-ideapad-slim-5x-14q8x9",
             "lenovo-thinkbook-16-gen-7-qoy",
             "lenovo-thinkcentre-neo-50q-qc",
-            "lenovo-yoga-slim-7x-14q8x9",
             "lenovo-thinkpad-t14s-gen-7-snapdragon",
             "medion-sprchrgd-14-s1",
             "microsoft-surface-laptop-7-13",
@@ -9865,7 +9865,7 @@
       "reports": [
         {
           "state": "works",
-          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick works.",
+          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-78. There, the installer from a USB stick works.",
           "checked": "2026-11",
           "from": "hw-test"
         }
@@ -9945,7 +9945,7 @@
           "reports": [
             {
               "state": "works",
-              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-72. There, the installer from a USB stick works.",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-78. There, the installer from a USB stick works.",
               "checked": "2026-11",
               "from": "hw-test"
             }
@@ -11837,17 +11837,13 @@
         "ids": "listed",
         "idsCollected": null,
         "idsStubble": null,
-        "firmware": "next-release",
-        "firmwareMissing": [
-          "cdsp_dtbs.elf"
-        ],
+        "firmware": "linux-firmware",
+        "firmwareMissing": [],
         "firmwareAudioOnly": false,
         "firmwareDownload": null,
         "firmwarePosted": null,
-        "firmwareUpstream": "next-release",
-        "firmwareUpstreamMissing": [
-          "cdsp_dtbs.elf"
-        ],
+        "firmwareUpstream": "released",
+        "firmwareUpstreamMissing": [],
         "firmwareFolders": [
           "qcom/x1e80100/LENOVO/83ED"
         ],
@@ -13136,6 +13132,12 @@
           "state": "workaround",
           "note": "Installed from the edge nightly and used daily since 14 November (omacom/omarchy#18966). On a stock install the disk unlock prompt is black and the built-in keyboard is dead there, Wi-Fi only works after the first update, the touchpad is a one-finger mouse, Wi-Fi and Bluetooth have no fixed address (Bluetooth doesn't work), the touchscreen, camera and video decode are missing, and suspend wakes by itself. The Surface Pro 11's unlock and address fixes, iptsd and three device tree additions make all but suspend work. The touchpad's physical click still fails under iptsd.",
           "checked": "2026-11"
+        },
+        {
+          "state": "workaround",
+          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-78. There, the installer from a USB stick partly works, and the disk password prompt works.",
+          "checked": "2026-11",
+          "from": "hw-test"
         }
       ],
       "machine": "omarchy",
@@ -13227,6 +13229,12 @@
               "state": "workaround",
               "note": "Installed from the edge nightly and used daily since 14 November (omacom/omarchy#18966). On a stock install the disk unlock prompt is black and the built-in keyboard is dead there, Wi-Fi only works after the first update, the touchpad is a one-finger mouse, Wi-Fi and Bluetooth have no fixed address (Bluetooth doesn't work), the touchscreen, camera and video decode are missing, and suspend wakes by itself. The Surface Pro 11's unlock and address fixes, iptsd and three device tree additions make all but suspend work. The touchpad's physical click still fails under iptsd.",
               "checked": "2026-11"
+            },
+            {
+              "state": "workaround",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-78. There, the installer from a USB stick partly works, and the disk password prompt works.",
+              "checked": "2026-11",
+              "from": "hw-test"
             }
           ]
         }

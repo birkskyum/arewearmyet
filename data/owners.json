@@ -3273,6 +3273,34 @@
   "asus-zenbook-a16-ux3607oa": {
    "machines": 1,
    "checks": {
+    "usb": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "owner",
+       "note": "1 plug-ins gave no device.",
+       "evidence": "4 plug-ins detected, on 2-1 at 10 Gb/s, 2-1 at 10 Gb/s, 4-1 at 10 Gb/s, 6-1 at 10 Gb/s",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-23T21:23:52.653Z",
+       "run": "RUN-RQN88YKV35",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
     "display": {
      "machines": 1,
      "states": {
@@ -3791,34 +3819,6 @@
        "how": "owner",
        "note": "With headphones plugged in, the sound stays on the speakers.",
        "evidence": "the sound server offers no headphone output on the built-in sound card",
-       "depth": "test",
-       "kernel": "7.3.0-78-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-23T21:23:52.653Z",
-       "run": "RUN-RQN88YKV35",
-       "setup": {
-        "options": [
-         "rd.luks.name",
-         "rd.luks.options"
-        ]
-       }
-      }
-     ]
-    },
-    "usb": {
-     "machines": 1,
-     "states": {
-      "partial": 1
-     },
-     "how": {
-      "owner": 1
-     },
-     "latest": [
-      {
-       "state": "partial",
-       "how": "owner",
-       "note": "1 plug-ins gave no device.",
-       "evidence": "4 plug-ins detected, on 2-1 at 10 Gb/s, 2-1 at 10 Gb/s, 4-1 at 10 Gb/s, 6-1 at 10 Gb/s",
        "depth": "test",
        "kernel": "7.3.0-78-omarchy",
        "os": "Omarchy",
@@ -4776,6 +4776,28 @@
   "hp-omnibook-x-14-kr": {
    "machines": 1,
    "checks": {
+    "camera": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "owner",
+       "note": "The camera works in apps, but libcamera's cam tool got no frame from it.",
+       "evidence": "cam gave no frame (<nil>): 76244.236165 (19.23 fps) cam0-stream0 seq: 000449 bytesused: 488976",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T23:23:17.984Z",
+       "run": "RUN-BCRKQPCTSV"
+      }
+     ]
+    },
     "display": {
      "machines": 1,
      "states": {
@@ -5671,8 +5693,449 @@
    }
   },
   "lenovo-yoga-slim-7x-14q8x9": {
-   "machines": 1,
+   "machines": 2,
    "checks": {
+    "display": {
+     "machines": 2,
+     "states": {
+      "works": 2
+     },
+     "how": {
+      "measured": 2
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "eDP-1 connected, 2944x1840",
+       "depth": "look",
+       "kernel": "7.3.0",
+       "os": "NixOS 26.11 (Zokor)",
+       "created": "2026-11-24T15:38:55.408Z",
+       "run": "RUN-225T5CVEV5",
+       "setup": {
+        "modules": [
+         "xt_connmark",
+         "xt_MASQUERADE",
+         "xt_mark",
+         "nft_chain_nat",
+         "nf_nat",
+         "aes_ce_ccm",
+         "snd_seq_dummy",
+         "snd_hrtimer",
+         "rfcomm",
+         "snd_seq",
+         "snd_seq_device",
+         "algif_hash",
+         "algif_skcipher",
+         "af_alg",
+         "qrtr_mhi",
+         "bnep",
+         "reset_gpio",
+         "snd_soc_wsa884x",
+         "regmap_sdw",
+         "gpio_shared_proxy"
+        ],
+        "options": [
+         "init",
+         "module_blacklist",
+         "console",
+         "loglevel",
+         "lsm"
+        ]
+       }
+      },
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "eDP-1 connected, 2944x1840",
+       "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "gpu": {
+     "machines": 2,
+     "states": {
+      "works": 2
+     },
+     "how": {
+      "measured": 2
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adreno bound to 3d00000.gpu, render node from msm_dpu",
+       "depth": "look",
+       "kernel": "7.3.0",
+       "os": "NixOS 26.11 (Zokor)",
+       "created": "2026-11-24T15:38:55.408Z",
+       "run": "RUN-225T5CVEV5",
+       "setup": {
+        "modules": [
+         "xt_connmark",
+         "xt_MASQUERADE",
+         "xt_mark",
+         "nft_chain_nat",
+         "nf_nat",
+         "aes_ce_ccm",
+         "snd_seq_dummy",
+         "snd_hrtimer",
+         "rfcomm",
+         "snd_seq",
+         "snd_seq_device",
+         "algif_hash",
+         "algif_skcipher",
+         "af_alg",
+         "qrtr_mhi",
+         "bnep",
+         "reset_gpio",
+         "snd_soc_wsa884x",
+         "regmap_sdw",
+         "gpio_shared_proxy"
+        ],
+        "options": [
+         "init",
+         "module_blacklist",
+         "console",
+         "loglevel",
+         "lsm"
+        ]
+       }
+      },
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "Vulkan draws on Adreno X1-85 (turnip Mesa driver)",
+       "kernel": "7.3.0-72-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-19T15:44:41.050Z",
+       "run": "RUN-85CBV653X8"
+      }
+     ]
+    },
+    "wifi": {
+     "machines": 2,
+     "states": {
+      "works": 2
+     },
+     "how": {
+      "measured": 2
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "wlP4p1s0 (ath12k_wifi7_pci) connected",
+       "depth": "look",
+       "kernel": "7.3.0",
+       "os": "NixOS 26.11 (Zokor)",
+       "created": "2026-11-24T15:38:55.408Z",
+       "run": "RUN-225T5CVEV5",
+       "setup": {
+        "modules": [
+         "xt_connmark",
+         "xt_MASQUERADE",
+         "xt_mark",
+         "nft_chain_nat",
+         "nf_nat",
+         "aes_ce_ccm",
+         "snd_seq_dummy",
+         "snd_hrtimer",
+         "rfcomm",
+         "snd_seq",
+         "snd_seq_device",
+         "algif_hash",
+         "algif_skcipher",
+         "af_alg",
+         "qrtr_mhi",
+         "bnep",
+         "reset_gpio",
+         "snd_soc_wsa884x",
+         "regmap_sdw",
+         "gpio_shared_proxy"
+        ],
+        "options": [
+         "init",
+         "module_blacklist",
+         "console",
+         "loglevel",
+         "lsm"
+        ]
+       }
+      },
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "connected at 5180 MHz, signal -47 dBm, sending at 2401.9 Mb/s",
+       "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-19T03:05:34.195Z",
+       "run": "RUN-X5ENYP5NBP"
+      }
+     ]
+    },
+    "wifi-address": {
+     "machines": 2,
+     "states": {
+      "works": 2
+     },
+     "how": {
+      "measured": 2
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "wlP4p1s0 (ath12k_wifi7_pci) has an address set by the system (not from the card)",
+       "depth": "look",
+       "kernel": "7.3.0",
+       "os": "NixOS 26.11 (Zokor)",
+       "created": "2026-11-24T15:38:55.408Z",
+       "run": "RUN-225T5CVEV5",
+       "setup": {
+        "modules": [
+         "xt_connmark",
+         "xt_MASQUERADE",
+         "xt_mark",
+         "nft_chain_nat",
+         "nf_nat",
+         "aes_ce_ccm",
+         "snd_seq_dummy",
+         "snd_hrtimer",
+         "rfcomm",
+         "snd_seq",
+         "snd_seq_device",
+         "algif_hash",
+         "algif_skcipher",
+         "af_alg",
+         "qrtr_mhi",
+         "bnep",
+         "reset_gpio",
+         "snd_soc_wsa884x",
+         "regmap_sdw",
+         "gpio_shared_proxy"
+        ],
+        "options": [
+         "init",
+         "module_blacklist",
+         "console",
+         "loglevel",
+         "lsm"
+        ]
+       }
+      },
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "wlan0 (ath12k_wifi7_pci): address set by the system (not from the card)",
+       "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "adsp": {
+     "machines": 2,
+     "states": {
+      "works": 2
+     },
+     "how": {
+      "measured": 2
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adsp running (qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn)",
+       "depth": "look",
+       "kernel": "7.3.0",
+       "os": "NixOS 26.11 (Zokor)",
+       "created": "2026-11-24T15:38:55.408Z",
+       "run": "RUN-225T5CVEV5",
+       "setup": {
+        "modules": [
+         "xt_connmark",
+         "xt_MASQUERADE",
+         "xt_mark",
+         "nft_chain_nat",
+         "nf_nat",
+         "aes_ce_ccm",
+         "snd_seq_dummy",
+         "snd_hrtimer",
+         "rfcomm",
+         "snd_seq",
+         "snd_seq_device",
+         "algif_hash",
+         "algif_skcipher",
+         "af_alg",
+         "qrtr_mhi",
+         "bnep",
+         "reset_gpio",
+         "snd_soc_wsa884x",
+         "regmap_sdw",
+         "gpio_shared_proxy"
+        ],
+        "options": [
+         "init",
+         "module_blacklist",
+         "console",
+         "loglevel",
+         "lsm"
+        ]
+       }
+      },
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adsp running (qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn)",
+       "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "cdsp": {
+     "machines": 2,
+     "states": {
+      "works": 2
+     },
+     "how": {
+      "measured": 2
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "cdsp running (qcom/x1e80100/LENOVO/83ED/qccdsp8380.mbn)",
+       "depth": "look",
+       "kernel": "7.3.0",
+       "os": "NixOS 26.11 (Zokor)",
+       "created": "2026-11-24T15:38:55.408Z",
+       "run": "RUN-225T5CVEV5",
+       "setup": {
+        "modules": [
+         "xt_connmark",
+         "xt_MASQUERADE",
+         "xt_mark",
+         "nft_chain_nat",
+         "nf_nat",
+         "aes_ce_ccm",
+         "snd_seq_dummy",
+         "snd_hrtimer",
+         "rfcomm",
+         "snd_seq",
+         "snd_seq_device",
+         "algif_hash",
+         "algif_skcipher",
+         "af_alg",
+         "qrtr_mhi",
+         "bnep",
+         "reset_gpio",
+         "snd_soc_wsa884x",
+         "regmap_sdw",
+         "gpio_shared_proxy"
+        ],
+        "options": [
+         "init",
+         "module_blacklist",
+         "console",
+         "loglevel",
+         "lsm"
+        ]
+       }
+      },
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "cdsp running (qcom/x1e80100/LENOVO/83ED/qccdsp8380.mbn)",
+       "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
+    "battery": {
+     "machines": 2,
+     "states": {
+      "works": 2
+     },
+     "how": {
+      "measured": 2
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "qcom-battmgr-bat at 66%, Discharging",
+       "depth": "look",
+       "kernel": "7.3.0",
+       "os": "NixOS 26.11 (Zokor)",
+       "created": "2026-11-24T15:38:55.408Z",
+       "run": "RUN-225T5CVEV5",
+       "setup": {
+        "modules": [
+         "xt_connmark",
+         "xt_MASQUERADE",
+         "xt_mark",
+         "nft_chain_nat",
+         "nf_nat",
+         "aes_ce_ccm",
+         "snd_seq_dummy",
+         "snd_hrtimer",
+         "rfcomm",
+         "snd_seq",
+         "snd_seq_device",
+         "algif_hash",
+         "algif_skcipher",
+         "af_alg",
+         "qrtr_mhi",
+         "bnep",
+         "reset_gpio",
+         "snd_soc_wsa884x",
+         "regmap_sdw",
+         "gpio_shared_proxy"
+        ],
+        "options": [
+         "init",
+         "module_blacklist",
+         "console",
+         "loglevel",
+         "lsm"
+        ]
+       }
+      },
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "qcom-battmgr-bat at 98%, Not charging",
+       "kernel": "7.3.0-59-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-19T00:40:46.186Z",
+       "run": "RUN-MQW53YXVRD"
+      }
+     ]
+    },
     "hibernate": {
      "machines": 1,
      "states": {
@@ -5757,27 +6220,6 @@
        "setup": {
         "testTree": true
        }
-      }
-     ]
-    },
-    "gpu": {
-     "machines": 1,
-     "states": {
-      "works": 1
-     },
-     "how": {
-      "measured": 1
-     },
-     "latest": [
-      {
-       "state": "works",
-       "how": "measured",
-       "note": null,
-       "evidence": "Vulkan draws on Adreno X1-85 (turnip Mesa driver)",
-       "kernel": "7.3.0-72-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-19T15:44:41.050Z",
-       "run": "RUN-85CBV653X8"
       }
      ]
     },
@@ -5988,27 +6430,6 @@
       }
      ]
     },
-    "wifi": {
-     "machines": 1,
-     "states": {
-      "works": 1
-     },
-     "how": {
-      "measured": 1
-     },
-     "latest": [
-      {
-       "state": "works",
-       "how": "measured",
-       "note": null,
-       "evidence": "connected at 5180 MHz, signal -47 dBm, sending at 2401.9 Mb/s",
-       "kernel": "7.3.0-59-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-19T03:05:34.195Z",
-       "run": "RUN-X5ENYP5NBP"
-      }
-     ]
-    },
     "bluetooth": {
      "machines": 1,
      "states": {
@@ -6134,111 +6555,6 @@
        "how": "owner",
        "note": "The recording plays back quiet or muffled.",
        "evidence": "voice level 760, loudest 3296; the microphones heard the left tone for 2.5 s (level 161), the right for 2.5 s (level 40)",
-       "kernel": "7.3.0-59-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-19T00:40:46.186Z",
-       "run": "RUN-MQW53YXVRD"
-      }
-     ]
-    },
-    "display": {
-     "machines": 1,
-     "states": {
-      "works": 1
-     },
-     "how": {
-      "measured": 1
-     },
-     "latest": [
-      {
-       "state": "works",
-       "how": "measured",
-       "note": null,
-       "evidence": "eDP-1 connected, 2944x1840",
-       "kernel": "7.3.0-59-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-19T00:40:46.186Z",
-       "run": "RUN-MQW53YXVRD"
-      }
-     ]
-    },
-    "wifi-address": {
-     "machines": 1,
-     "states": {
-      "works": 1
-     },
-     "how": {
-      "measured": 1
-     },
-     "latest": [
-      {
-       "state": "works",
-       "how": "measured",
-       "note": null,
-       "evidence": "wlan0 (ath12k_wifi7_pci): address set by the system (not from the card)",
-       "kernel": "7.3.0-59-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-19T00:40:46.186Z",
-       "run": "RUN-MQW53YXVRD"
-      }
-     ]
-    },
-    "adsp": {
-     "machines": 1,
-     "states": {
-      "works": 1
-     },
-     "how": {
-      "measured": 1
-     },
-     "latest": [
-      {
-       "state": "works",
-       "how": "measured",
-       "note": null,
-       "evidence": "adsp running (qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn)",
-       "kernel": "7.3.0-59-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-19T00:40:46.186Z",
-       "run": "RUN-MQW53YXVRD"
-      }
-     ]
-    },
-    "cdsp": {
-     "machines": 1,
-     "states": {
-      "works": 1
-     },
-     "how": {
-      "measured": 1
-     },
-     "latest": [
-      {
-       "state": "works",
-       "how": "measured",
-       "note": null,
-       "evidence": "cdsp running (qcom/x1e80100/LENOVO/83ED/qccdsp8380.mbn)",
-       "kernel": "7.3.0-59-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-19T00:40:46.186Z",
-       "run": "RUN-MQW53YXVRD"
-      }
-     ]
-    },
-    "battery": {
-     "machines": 1,
-     "states": {
-      "works": 1
-     },
-     "how": {
-      "measured": 1
-     },
-     "latest": [
-      {
-       "state": "works",
-       "how": "measured",
-       "note": null,
-       "evidence": "qcom-battmgr-bat at 98%, Not charging",
        "kernel": "7.3.0-59-omarchy",
        "os": "Omarchy",
        "created": "2026-11-19T00:40:46.186Z",
@@ -6613,6 +6929,861 @@
          "rd.luks.options"
         ],
         "testTree": true
+       }
+      }
+     ]
+    }
+   }
+  },
+  "microsoft-surface-laptop-7-15": {
+   "machines": 1,
+   "checks": {
+    "webgl": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "Chrome on ANGLE (angleisbroken, Adreno X1-85, OpenGL ES 3.2), WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T07:33:43.333Z",
+       "run": "RUN-JDYQ6GKTXW",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "webgpu": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "Chrome offers WebGPU on qualcomm adreno-7xx",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T07:33:43.333Z",
+       "run": "RUN-JDYQ6GKTXW",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       },
+       "needs": {
+        "text": "The Vulkan feature switched on in the browser's settings, without which Chrome offers pages no WebGPU adapter.",
+        "how": "agent",
+        "proved": true,
+        "created": "2026-11-24T07:34:11.387Z"
+       }
+      }
+     ],
+     "changed": 1,
+     "fixed": {
+      "machines": 1,
+      "from": "7.3.0-78-omarchy",
+      "to": "7.3.0-78-omarchy",
+      "since": "2026-11-24T07:33:43.333Z"
+     }
+    },
+    "touchscreen": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": "Touchscreen works well in use. This model does not support pen input, so no pen was tested. The test's touch step counted nothing because it watched a different interrupt with the same pin number (issue 19).",
+       "evidence": null,
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:56:56.927Z",
+       "run": "RUN-ND8J6FPZDC",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "installer": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "owner",
+       "note": "Nightly image of 18 November 2026 (kernel 7.3.0-72), started six times from a USB-A stick. Three starts reached the installer with the built-in keyboard working. Three froze on the large logo and took no keys. Cause not yet known.",
+       "evidence": null,
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:48:09.019Z",
+       "run": "RUN-C2RZV6VDZH",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "display": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "eDP-1 connected, 2496x1664",
+       "depth": "look",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "gpu": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adreno bound to 3d00000.gpu, render node from msm_dpu",
+       "depth": "look",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "disk-unlock": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "the screen came up at 0.4 s and the built-in keyboard at 1.7 s, and the encrypted disk opened at 12.9 s",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "wifi": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "connected at 5500 MHz, signal -50 dBm, sending at 1729.6 Mb/s",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "wifi-address": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "wlP4p1s0 (ath12k_wifi7_pci) has an address set by the system (not from the card)",
+       "depth": "look",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "bluetooth": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "heard 83 Bluetooth devices nearby in 8 s",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "adsp": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adsp running (qcom/x1e80100/microsoft/Romulus/qcadsp8380.mbn)",
+       "depth": "look",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "cdsp": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "cdsp running (qcom/x1e80100/microsoft/Romulus/qccdsp8380.mbn)",
+       "depth": "look",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "battery": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "qcom-battmgr-bat at 83%, Discharging",
+       "depth": "look",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "fans": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "59 temperature sensors. The hottest went from 44 to 97 °C in 56 s with every core and the GPU busy, and back to 73 °C after. The processor was slowed to 45% of its speed as it got hot. The fan (surface_fan) went from 0 to 273 rpm",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "keyboard": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "76 keys registered, every letter, number and arrow among them",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "backlight": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "both brightness keys work, the backlight moved between 1843 and 2048",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "touchpad": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "IPTSD Virtual Touchpad 045E:0C77, moving the pointer, clicking and two-finger scrolling both ways registered",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "speakers": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "by the microphones at half volume, left speaker heard at -44 dB, right speaker heard at -45 dB, both sides about equally loud at the microphones",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "microphones": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "the speakers at half volume recorded as 300 Hz at -48 dB, 1000 Hz at -38 dB, 3000 Hz at -32 dB, and noise with nothing playing -100 dB, input volume 100%",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "headphones": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": null,
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "usb": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "3 plug-ins detected, on 1-2 at 480 Mb/s, 3-1 at 12 Mb/s, 5-1 at 12 Mb/s",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "external-display": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": "DP-1 (DisplayPort over USB-C), 2560x1440 at 60 Hz, and it came back 22 s after plugging it in again",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "lid": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "the lid switch reported closed and then open again, and the computer slept 8 s while it was down",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "suspend": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": "slept and woke in s2idle [deep], Wi-Fi was back 17 s after waking, the audio processor is running",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "camera": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": null,
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "charging": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": null,
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "video-decode": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "60 frames of 720p H.264 decoded on the hardware decoder in 0.2 s",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-24T06:09:13.901Z",
+       "run": "RUN-TZJBAWHW2S",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
        }
       }
      ]

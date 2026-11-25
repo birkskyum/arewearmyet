@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-24T05:28:24.625Z",
+  "collected": "2026-11-25T05:28:59.437Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -44,7 +44,7 @@
     "v261",
     "v262"
   ],
-  "linuxNext": "20261123",
+  "linuxNext": "20261124",
   "deviceTrees": [
     {
       "file": "glymur-asus-ascent-qn10.dts",
@@ -4377,7 +4377,7 @@
       ]
     }
   ],
-  "firmwareRelease": "20261019",
+  "firmwareRelease": "20261124",
   "firmware": [
     {
       "path": "qcom/glymur/ASUSTeK/UX3407NA",
@@ -4622,7 +4622,13 @@
     "qcom/x1p42100/gen71500_zap.mbn"
   ],
   "firmwareReleased": [
+    "qcom/glymur/ASUSTeK/UX3407NA/GLYMUR-ASUS-Zenbook-A14-UX3407NA-tplg.bin",
+    "qcom/glymur/ASUSTeK/UX3607OA/GLYMUR-ASUS-Zenbook-A16-UX3607OA-tplg.bin",
+    "qcom/glymur/GLYMUR-ASUS-Zenbook-A14-UX3407NA-tplg.bin",
+    "qcom/glymur/GLYMUR-ASUS-Zenbook-A16-UX3607OA-tplg.bin",
     "qcom/glymur/GLYMUR-CRD-tplg.bin",
+    "qcom/glymur/LENOVO/22A8/Lenovo-ThinkPad-T14s-Gen-7-tplg.bin",
+    "qcom/glymur/Lenovo-ThinkPad-T14s-Gen-7-tplg.bin",
     "qcom/glymur/adsp.mbn",
     "qcom/glymur/adsp_dtb.mbn",
     "qcom/glymur/adspr.jsn",
@@ -4632,6 +4638,9 @@
     "qcom/glymur/cdsp_dtb.mbn",
     "qcom/glymur/cdspr.jsn",
     "qcom/glymur/gen80100_zap.mbn",
+    "qcom/glymur/soccp.mbn",
+    "qcom/glymur/soccp_dtb.mbn",
+    "qcom/glymur/soccpr.jsn",
     "qcom/sc8280xp/LENOVO/21BX/adspr.jsn",
     "qcom/sc8280xp/LENOVO/21BX/adspua.jsn",
     "qcom/sc8280xp/LENOVO/21BX/audioreach-tplg.bin",
@@ -4643,6 +4652,7 @@
     "qcom/sc8280xp/LENOVO/21BX/qcslpi8280.mbn",
     "qcom/sc8280xp/LENOVO/21BX/qcvss8280.mbn",
     "qcom/sc8280xp/SC8280XP-LENOVO-X13S-tplg.bin",
+    "qcom/sc8280xp/radxa/dragon-q8b/SC8280XP-Radxa-Dragon-Q8B-tplg.bin",
     "qcom/sc8280xp/radxa/dragon-q8b/qcadsp8280.mbn",
     "qcom/x1e80100/ASUSTeK/vivobook-16/X1E80100-ASUS-Vivobook-16-tplg.bin",
     "qcom/x1e80100/ASUSTeK/vivobook-s15/X1E80100-ASUS-Vivobook-S15-tplg.bin",
@@ -4665,13 +4675,16 @@
     "qcom/x1e80100/LENOVO/83ED/adsps.jsn",
     "qcom/x1e80100/LENOVO/83ED/adspua.jsn",
     "qcom/x1e80100/LENOVO/83ED/battmgr.jsn",
+    "qcom/x1e80100/LENOVO/83ED/cdsp_dtbs.elf",
     "qcom/x1e80100/LENOVO/83ED/cdspr.jsn",
     "qcom/x1e80100/LENOVO/83ED/qcadsp8380.mbn",
     "qcom/x1e80100/LENOVO/83ED/qcav1e8380.mbn",
     "qcom/x1e80100/LENOVO/83ED/qccdsp8380.mbn",
     "qcom/x1e80100/LENOVO/83ED/qcdxkmsuc8380.mbn",
     "qcom/x1e80100/LENOVO/83ED/qcvss8380.mbn",
+    "qcom/x1e80100/LENOVO/91B6/X1E80100-LENOVO-IdeaCentre-Mini-tplg.bin",
     "qcom/x1e80100/X1E001DE-DEVKIT-tplg.bin",
+    "qcom/x1e80100/X1E80100-ACER-SWIFT-14-tplg.bin",
     "qcom/x1e80100/X1E80100-ASUS-Vivobook-16-tplg.bin",
     "qcom/x1e80100/X1E80100-ASUS-Vivobook-S15-tplg.bin",
     "qcom/x1e80100/X1E80100-ASUS-Zenbook-A14-tplg.bin",
@@ -4681,8 +4694,11 @@
     "qcom/x1e80100/X1E80100-Dell-XPS-13-9345-tplg.bin",
     "qcom/x1e80100/X1E80100-EVK-tplg.bin",
     "qcom/x1e80100/X1E80100-HP-OMNIBOOK-X14-tplg.bin",
+    "qcom/x1e80100/X1E80100-LENOVO-IdeaCentre-Mini-tplg.bin",
     "qcom/x1e80100/X1E80100-LENOVO-Thinkpad-T14s-tplg.bin",
     "qcom/x1e80100/X1E80100-LENOVO-Yoga-Slim7x-tplg.bin",
+    "qcom/x1e80100/X1E80100-MEDION-SPRCHRGD-14-S1-tplg.bin",
+    "qcom/x1e80100/X1E80100-Microsoft-Surface-Pro-11-tplg.bin",
     "qcom/x1e80100/X1E80100-Romulus-tplg.bin",
     "qcom/x1e80100/X1E80100-TUXEDO-Elite-14-tplg.bin",
     "qcom/x1e80100/X1P42100-Microsoft-Surface-Pro-12in-tplg.bin",
@@ -6032,7 +6048,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3-78",
+        "kernel": "7.3-79",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -9768,9 +9784,9 @@
       }
     ],
     "image": {
-      "version": "2026.11.23.500",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.23.500/omarchy-edge-2026.11.23.500-aarch64.iso",
-      "kernel": "7.3.0-77-omarchy"
+      "version": "2026.11.24.501",
+      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.24.501/omarchy-edge-2026.11.24.501-aarch64.iso",
+      "kernel": "7.3.0-78-omarchy"
     },
     "pulls": [
       {
