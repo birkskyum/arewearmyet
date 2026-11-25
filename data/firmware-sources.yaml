@@ -2229,10 +2229,11 @@ folders:
           - { package: "asus-socpackage-50069", member: "QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
       - name: "qcvss8380.mbn"
         size: 2323048
-        sha256: "2e37684e8c84b7d945396da24c295c3267e97087a537386bb10ad1fa5ef85ebc"
+        sha256: "c85e552d4ee9e2e60166d658f509307caf879b56ef079696959c5fbcfe44c9fc"
+        note: "The device tree loads qcvss8380.mbn. ASUS's file of that name is the X Elite image, signed only for chip 0xA009, which this x1p42100 (0xA016) rejects. This is qcvss8380_pa.mbn from the same packages, vfw-3.1 rel0092, signed for 0xA016, under the name the tree requests."
         from:
-          - { package: "asus-socpackage-50070", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
-          - { package: "asus-socpackage-50069", member: "QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+          - { package: "asus-socpackage-50070", member: "QualcommBSP/GFX/qcdx8380/qcvss8380_pa.mbn" }
+          - { package: "asus-socpackage-50069", member: "QualcommBSP/GFX/qcdx8380/qcvss8380_pa.mbn" }
   - path: "qcom/x1p42100/ASUSTeK/vivobook-s15"
     models: ["asus-vivobook-s15-s5507"]
     files:
@@ -2298,9 +2299,10 @@ folders:
           - { package: "asus-socpackage-44984", member: "Driver/QualcommBSP/GFX/qcdx8380/qcdxkmsucpurwa.mbn" }
       - name: "qcvss8380.mbn"
         size: 2314856
-        sha256: "d81f81727c6b51fd760e842e77377f83375c5163c4965cab50d5c5c6cb74ec4a"
+        sha256: "60ef91ee42fe360f87cf8ff5ee8ec399f90df7160b533f0dbca3cc30a4c5a4ff"
+        note: "The device tree loads qcvss8380.mbn. ASUS's file of that name is the X Elite image, signed only for chip 0xA009, which this X1P-42-100 (0xA016) rejects with -EINVAL. This is qcvss8380_pa.mbn from the same package, vfw-3.1 rel0088, signed for 0xA016, under the name the tree requests."
         from:
-          - { package: "asus-socpackage-44984", member: "Driver/QualcommBSP/GFX/qcdx8380/qcvss8380.mbn" }
+          - { package: "asus-socpackage-44984", member: "Driver/QualcommBSP/GFX/qcdx8380/qcvss8380_pa.mbn" }
   - path: "qcom/x1p42100/ASUSTeK/zenbook-a14"
     models: ["asus-zenbook-a14-ux3407"]
     files:
@@ -2685,11 +2687,14 @@ folders:
         sha256: "23788d4891403545c6d28cf09d97c5f6e81d9aed9d5f155c21fc8b39d03ef2a7"
         from:
           - { package: "lenovo-83hl-wu-200.0.20.0-qcdx8380", member: "qcdxkmsucpurwa.mbn" }
-      - name: "qcvss8380_pa.mbn"
+      - name: "qcvss8380.mbn"
         size: 2318952
         sha256: "d153ae5029a19d734c9ff3149906abcddc93763ea493d1827974d61bac324bd3"
+        note: "The posted device tree loads qcvss8380.mbn. Lenovo's file of that name is the X Elite image, signed only for chip 0xA009, which this X1P-42-100 (0xA016) rejects. This is qcvss8380_pa.mbn from the same cabinet, vfw-3.1 rel0090, signed for 0xA016, under the name that tree requests. The same bytes are also linked as qcvss8380_pa.mbn, which the tree Omarchy ships still loads."
         from:
           - { package: "lenovo-83hl-wu-200.0.20.0-qcdx8380", member: "qcvss8380_pa.mbn" }
+    links:
+      - { name: "qcvss8380_pa.mbn", target: "qcvss8380.mbn" }
   - path: "qcom/x1p42100/LENOVO/83N3"
     models: ["lenovo-ideapad-slim-3x-15q8x10"]
     files:
