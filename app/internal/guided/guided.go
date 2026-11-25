@@ -79,6 +79,21 @@ type opening interface{ isOpening() bool }
 // like the camera's picture window.
 type cleaner interface{ cleanup() }
 
+// apart is implemented by a step that runs only when it is chosen, never in a round with the
+// others, like hibernation, which powers the computer off.
+type apart interface{ apart() }
+
+// together leaves out the steps that run only apart.
+func together(steps []step) []step {
+	var kept []step
+	for _, s := range steps {
+		if _, ok := s.(apart); !ok {
+			kept = append(kept, s)
+		}
+	}
+	return kept
+}
+
 // The words a step can be asked for by on the command line, and the steps each one runs.
 var stepWords = []struct {
 	word  string
@@ -98,6 +113,8 @@ var stepWords = []struct {
 	{"screen", []string{"External screen"}},
 	{"lid", []string{"Lid"}},
 	{"sleep", []string{"Sleep"}},
+	{"hibernate", []string{"Hibernation"}},
+	{"hibernation", []string{"Hibernation"}},
 	{"questions", []string{"Questions"}},
 	{"auto", []string{"Sound", "Graphics", "Browser", "Wireless", "Ethernet", "Video decoding", "Temperatures"}},
 	{"manual", []string{"Keyboard", "Volume and brightness keys", "Touchpad", "Touchscreen", "Headphones", "Camera", "USB ports", "External screen", "Lid", "Sleep", heatByEar, "Questions"}},
@@ -123,7 +140,7 @@ var automaticWords = []string{"auto", "graphics", "vulkan", "browser", "webgl", 
 var stepCheck = map[string]string{
 	"Keyboard": "keyboard", "Volume and brightness keys": "keyboard", "Touchpad": "touchpad", "Touchscreen": "touchscreen",
 	"Sound": "speakers", "Voice": "microphones", "Headphones": "headphones", "Camera": "camera",
-	"USB ports": "usb", "External screen": "external-display", "Lid": "lid", "Sleep": "suspend",
+	"USB ports": "usb", "External screen": "external-display", "Lid": "lid", "Sleep": "suspend", "Hibernation": "hibernate",
 	"Graphics": "gpu", "Browser": "webgl", "Ethernet": "ethernet", "Video decoding": "video-decode", heatAlone: "fans", heatByEar: "fans",
 }
 
@@ -206,6 +223,8 @@ func build(run *report.Run, facts probe.Facts, dir string) []step {
 		// itself
 		add("suspend", newSleepAsked(run, facts, sys))
 	}
+	// Not part of the round with everything, as it powers the computer off. It is asked for alone
+	add("hibernate", newHibernate(run, facts, sys))
 	// Where the fan's speed can't be read, only the owner can say when it starts. The
 	// temperature test is then done with them, before the part they can walk away from
 	warm := newHeat(run, sys, dir)
@@ -326,9 +345,11 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 	if len(options.Only) > 0 {
 		run.Results = nil
 	}
-	steps := build(run, facts, dir)
+	// Everything is the steps that run in one round, and a step that runs apart is only chosen
+	all := build(run, facts, dir)
+	steps := together(all)
 	if len(options.Only) > 0 {
-		if steps = choose(steps, options.Only); len(steps) == 0 {
+		if steps = choose(all, options.Only); len(steps) == 0 {
 			return outcome{}, fmt.Errorf("this computer has nothing to test for %s", strings.Join(options.Only, ", "))
 		}
 	}
@@ -348,7 +369,7 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 		start.thread, _ = report.ThreadFor(Workspace())
 	}
 	for _, entry := range menu {
-		offered := choose(steps, []string{entry.word})
+		offered := choose(all, []string{entry.word})
 		if len(offered) > 0 && (entry.step == "" || offered[0].name() == entry.step) {
 			start.parts = append(start.parts, entry)
 		}
@@ -356,8 +377,8 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 	start.pick = func(word string) {
 		// One part alone reports that part only
 		run.Results = nil
-		handsOff(steps, []string{word})
-		chosen := choose(steps, []string{word})
+		handsOff(all, []string{word})
+		chosen := choose(all, []string{word})
 		last.recorded = records(chosen)
 		m.steps = append(append([]step{start}, chosen...), last)
 	}
@@ -371,14 +392,19 @@ func once(run *report.Run, facts probe.Facts, options Options, dir string, initi
 	resuming := false
 	// Only the first round looks. Later ones follow a part that just finished
 	if pending, found := report.LoadPending(); found && initial && !last.once {
-		opening, steps = resume(run, pending, report.BootID(), opening, steps)
+		// A step that runs apart was chosen alone, so it is looked for among them all
+		pool := steps
+		if len(options.Only) == 0 {
+			pool = all
+		}
+		opening, steps = resume(run, pending, report.BootID(), opening, pool)
 		_, resuming = opening.(*resumed)
 	}
 
 	m.steps = append(append([]step{opening}, steps...), last)
 	final, err := tea.NewProgram(m).Run()
 	// Whatever a step left open is closed, however the test ended
-	for _, s := range steps {
+	for _, s := range all {
 		if open, ok := s.(cleaner); ok {
 			open.cleanup()
 		}
@@ -411,9 +437,14 @@ func resume(run *report.Run, pending report.Pending, boot string, opening step, 
 			continue
 		}
 		pending.Restore(run)
-		back := &resumed{run: run, pending: pending, restarted: pending.Restarted(boot), last: at == len(steps)-1}
+		// After a step that runs apart, only the results are left
+		next := together(steps[at+1:])
+		if _, ok := s.(apart); ok {
+			next = nil
+		}
+		back := &resumed{run: run, pending: pending, restarted: pending.Restarted(boot), last: len(next) == 0, sys: machine.Real()}
 		back.ask = back.question()
-		rest := append([]step{&skippable{step: s, skip: func() bool { return back.skip }}}, steps[at+1:]...)
+		rest := append([]step{&skippable{step: s, skip: func() bool { return back.skip }}}, next...)
 		return back, rest
 	}
 	return opening, steps
@@ -673,6 +704,7 @@ var menu = []menuEntry{
 	{word: "screen", label: "External screen", checks: []string{"external-display"}},
 	{word: "lid", label: "Lid switch", checks: []string{"lid"}},
 	{word: "sleep", label: "Sleep", checks: []string{"suspend"}},
+	{word: "hibernate", label: "Hibernation", checks: []string{"hibernate"}},
 	{word: "temperatures", label: "Temperatures, and the fan by ear", checks: []string{"fans"}, step: heatByEar},
 }
 
@@ -1078,10 +1110,22 @@ type resumed struct {
 	// skip is set when the step it stopped in is to be passed over.
 	skip bool
 	over bool
+	// sys is read for what the kernel's logs show of a hibernation that didn't come back.
+	sys machine.System
+}
+
+// hibernated says whether the test stopped while the computer hibernated and the computer started
+// fresh since. That is a session that didn't come back, which the owner needn't be asked about.
+func (r *resumed) hibernated() bool {
+	return r.restarted && r.pending.Began && r.pending.Step == "Hibernation"
 }
 
 func (r *resumed) question() choice {
 	step := r.pending.Step
+	if r.hibernated() {
+		return choice{question: "The last test hibernated the computer, and it started fresh instead of coming back to where it was. Your answers up to there are kept, and this is recorded as what hibernation does here.",
+			options: []string{"Go on"}}
+	}
 	if r.restarted {
 		return choice{question: "The last test stopped during its " + step + " step, and the computer has restarted since. Your answers up to there are kept. What happened?",
 			options: []string{"The computer crashed or restarted by itself during that step", "I restarted it or closed the test myself"}}
@@ -1107,6 +1151,9 @@ func (r *resumed) update(msg tea.Msg) tea.Cmd {
 	}
 	r.over = true
 	switch {
+	case r.hibernated():
+		r.skip = true
+		r.run.Set("hibernate", report.Broken, report.Measured, afterHibernating(r.sys), "")
 	case r.restarted && picked == 0:
 		// It went down by itself. That is the step's result, and the step isn't run again
 		r.skip = true
@@ -1122,6 +1169,10 @@ func (r *resumed) update(msg tea.Msg) tea.Cmd {
 func (r *resumed) view(width, height int) string {
 	text := r.ask.view(width)
 	switch {
+	case r.hibernated() && r.last:
+		text += "\n\n" + wrap("The results come next.", width)
+	case r.hibernated():
+		text += "\n\n" + wrap("The test goes on with the next step.", width)
 	case r.restarted && r.last:
 		text += "\n\n" + wrap("A crash during a step is recorded as what that step found. It was the test's last step, so the whole test's results come next.", width)
 	case r.restarted:

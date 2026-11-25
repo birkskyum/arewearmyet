@@ -120,18 +120,46 @@ func (s *sleep) evidence() string {
 	return text
 }
 
-// wifiUp and audioUp say whether each is back.
-func (s *sleep) wifiUp() bool {
-	return s.sys.Read("/sys/class/net/"+s.wifi+"/operstate") == "up"
+func (s *sleep) wifiUp() bool { return wifiUp(s.sys, s.wifi) }
+
+// wifiUp says whether the Wi-Fi interface is connected.
+func wifiUp(sys machine.System, wifi string) bool {
+	return sys.Read("/sys/class/net/"+wifi+"/operstate") == "up"
 }
 
-func (s *sleep) audioState() string {
-	for _, processor := range s.sys.Glob("/sys/class/remoteproc/remoteproc*") {
-		if strings.Contains(s.sys.Read(processor+"/name"), "adsp") {
-			return s.sys.Read(processor + "/state")
+// audioState is the audio processor's state, or "" where there is none.
+func audioState(sys machine.System) string {
+	for _, processor := range sys.Glob("/sys/class/remoteproc/remoteproc*") {
+		if strings.Contains(sys.Read(processor+"/name"), "adsp") {
+			return sys.Read(processor + "/state")
 		}
 	}
 	return ""
+}
+
+// cameBack looks, took after waking, at whether Wi-Fi (when it was connected before) and the audio
+// processor are back. It says whether to look again, and once not, what came back and what didn't.
+func cameBack(sys machine.System, wifi string, wifiWas bool, took time.Duration) (again bool, back, problems []string) {
+	up := !wifiWas || wifiUp(sys, wifi)
+	audio := audioState(sys)
+	if (!up || (audio != "" && audio != "running")) && took < settleLimit {
+		return true, nil, nil
+	}
+	if wifiWas {
+		if up {
+			back = append(back, fmt.Sprintf("Wi-Fi was back %.0f s after waking", took.Seconds()))
+		} else {
+			problems = append(problems, fmt.Sprintf("Wi-Fi hadn't reconnected %.0f s after waking", took.Seconds()))
+		}
+	}
+	switch audio {
+	case "running":
+		back = append(back, "the audio processor is running")
+	case "":
+	default:
+		problems = append(problems, "the audio processor was "+audio+" after waking")
+	}
+	return false, back, problems
 }
 
 func (s *sleep) settle() tea.Cmd {
@@ -174,26 +202,11 @@ func (s *sleep) update(msg tea.Msg) tea.Cmd {
 		if s.phase != "settling" {
 			return nil
 		}
-		took := s.clock().Sub(s.woke)
-		wifi := !s.wifiWas || s.wifiUp()
-		audio := s.audioState()
-		if (!wifi || (audio != "" && audio != "running")) && took < settleLimit {
+		again, back, problems := cameBack(s.sys, s.wifi, s.wifiWas, s.clock().Sub(s.woke))
+		if again {
 			return s.settle()
 		}
-		if s.wifiWas {
-			if wifi {
-				s.back = append(s.back, fmt.Sprintf("Wi-Fi was back %.0f s after waking", took.Seconds()))
-			} else {
-				s.problems = append(s.problems, fmt.Sprintf("Wi-Fi hadn't reconnected %.0f s after waking", took.Seconds()))
-			}
-		}
-		switch audio {
-		case "running":
-			s.back = append(s.back, "the audio processor is running")
-		case "":
-		default:
-			s.problems = append(s.problems, "the audio processor was "+audio+" after waking")
-		}
+		s.back, s.problems = append(s.back, back...), append(s.problems, problems...)
 		s.phase = "ask"
 	case tea.KeyPressMsg:
 		switch s.phase {

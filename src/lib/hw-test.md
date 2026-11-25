@@ -14,7 +14,7 @@ hw-test
 It opens on a menu of what it can test on your computer, with where each part stands. A full round takes about a quarter of an hour.
 
 - **By itself** it tests the speakers and microphones (it plays test tones and listens to them), graphics, Wi-Fi and Bluetooth, the network cable, video decoding, and temperatures under load.
-- **With you** it tests the keyboard, touchpad, touchscreen, headphones, camera, USB ports, an external screen, the lid and sleep.
+- **With you** it tests the keyboard, touchpad, touchscreen, headphones, camera, USB ports, an external screen, the lid and sleep, and hibernation when you ask for it.
 - **The results** are shown to you, and sent to the model's page unless you say no. A recording or a camera picture is only for you to check. It never leaves the computer and is deleted when its step ends.
 
 `hw-test` says at its start when a newer release is out, and `hw-test update` gets it. `hw-test version` prints the one you have. Releases are on [GitHub](https://github.com/birkskyum/arewearmyet/releases), built for Linux on ARM and on x86.
@@ -49,6 +49,7 @@ It opens on a menu of what it can test on your computer, with where each part st
 | `screen` | An external screen | yes |
 | `lid` | Closing and opening the lid | yes |
 | `sleep` | Sleep and wake. On a laptop you close the lid. A computer without a lid is put to sleep by the test, and you wake it | yes |
+| `hibernate`, `hibernation` | Hibernation. The test saves the session to the drive and powers off, you power it on, and it checks that the session, Wi-Fi and sound came back. Save your work first. It runs only when you ask for it, never with the rest. Where hibernation isn't set up, it shows the command that sets it up | yes |
 | `questions` | What no test can see, like whether a USB stick worked in every port. The disk password prompt is asked about only where the quick check couldn't measure it | yes |
 | `graphics`, `vulkan` | Drawing with the graphics chip | no |
 | `browser`, `webgl`, `webgpu` | WebGL and WebGPU in the browser | no |

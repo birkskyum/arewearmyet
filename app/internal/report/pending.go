@@ -20,6 +20,9 @@ type Pending struct {
 	SleepMode string    `json:"sleepMode"`
 	Saved     time.Time `json:"saved"`
 	Results   []Result  `json:"results"`
+	// Began is set while the step does what ends in a power-off, which is hibernating. A restart
+	// then is what the step found, and the owner needn't be asked.
+	Began bool `json:"began,omitempty"`
 }
 
 func pendingFile() string { return filepath.Join(stateDir(), "pending.json") }
@@ -47,6 +50,18 @@ func LoadPending() (Pending, bool) {
 		return Pending{}, false
 	}
 	return pending, true
+}
+
+// MarkBegan notes in the saved test that its step has begun what ends in a power-off, or, with
+// false, that the step came back from it. Without a saved test it does nothing.
+func MarkBegan(began bool) error {
+	pending, found := LoadPending()
+	if !found {
+		return nil
+	}
+	pending.Began = began
+	data, _ := json.Marshal(pending)
+	return os.WriteFile(pendingFile(), data, 0o600)
 }
 
 // ClearPending forgets the saved test.

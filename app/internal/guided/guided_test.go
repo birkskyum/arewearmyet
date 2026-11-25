@@ -1540,6 +1540,177 @@ func TestSleepWaitsForWifiAndRecordsHowLongItTook(t *testing.T) {
 	}
 }
 
+// hibernating is a computer set up to hibernate, whose sleep log the test writes.
+func hibernating(t *testing.T, files map[string]string) (*hibernate, *report.Run, *string, *[]bool, *time.Time) {
+	root := t.TempDir()
+	for path, text := range map[string]string{
+		"sys/power/state":                        "freeze mem disk\n",
+		"sys/power/image_size":                   "6000000000\n",
+		"proc/cmdline":                           "root=/dev/mapper/root rw resume=/dev/mapper/root resume_offset=4242\n",
+		"proc/swaps":                             "Filename\tType\tSize\tUsed\tPriority\n/swap/swapfile file 33554428 0 0\n/dev/zram0 partition 4194300 0 100\n",
+		"sys/class/net/wlan0/operstate":          "up\n",
+		"sys/class/remoteproc/remoteproc0/name":  "adsp\n",
+		"sys/class/remoteproc/remoteproc0/state": "running\n",
+	} {
+		if replaced, ok := files[path]; ok {
+			text = replaced
+		}
+		os.MkdirAll(filepath.Dir(filepath.Join(root, path)), 0o755)
+		os.WriteFile(filepath.Join(root, path), []byte(text), 0o644)
+	}
+	slept := ""
+	sys := machine.Fixture(root)
+	sys.Command = func(name string, args ...string) (string, error) {
+		if name == "journalctl" && strings.Contains(strings.Join(args, " "), "-t systemd-sleep") {
+			return slept, nil
+		}
+		return "", nil
+	}
+	run := &report.Run{}
+	h := newHibernate(run, probe.Facts{Wifi: "wlan0"}, sys)
+	marks := []bool{}
+	h.began = func(on bool) { marks = append(marks, on) }
+	now := time.Unix(5000, 0)
+	h.clock = func() time.Time { return now }
+	h.away = func(time.Time) time.Duration { return 0 }
+	return h, run, &slept, &marks, &now
+}
+
+func TestHibernationWaitsForTheSessionAndWhatItUses(t *testing.T) {
+	h, run, slept, marks, now := hibernating(t, nil)
+	if h.phase != "intro" || !strings.Contains(h.view(90, 30), "Save your work") {
+		t.Fatalf("phase %q:\n%s", h.phase, h.view(90, 30))
+	}
+	h.update(press(tea.KeyEnter))
+	if h.phase != "waiting" || len(*marks) != 1 || !(*marks)[0] {
+		t.Fatalf("after Enter: phase %q, marks %v", h.phase, *marks)
+	}
+	// Saving the session, nothing to see yet
+	*slept = "Performing sleep operation 'hibernate'...\n"
+	h.update(hibernatedMsg{})
+	if h.phase != "waiting" || h.done() {
+		t.Fatalf("before the power-off it is %q", h.phase)
+	}
+	// Powered on again, and the sleep program says so
+	*slept += "System returned from sleep operation 'hibernate'.\n"
+	*now = now.Add(107 * time.Second)
+	h.update(hibernatedMsg{})
+	if h.phase != "settling" || (*marks)[len(*marks)-1] {
+		t.Fatalf("once back: phase %q, marks %v", h.phase, *marks)
+	}
+	h.update(settleMsg{})
+	h.update(press('1'))
+	result, _ := run.Get("hibernate")
+	if result.State != report.Works || result.How != report.Owner || result.Evidence != "came back from hibernation 107 s after it was asked for, Wi-Fi was back 0 s after waking, the audio processor is running" {
+		t.Errorf("result %+v", result)
+	}
+
+	// Where the journal can't be read, the wall clock running ahead of the monotonic one says it
+	h, _, _, _, _ = hibernating(t, nil)
+	h.update(press(tea.KeyEnter))
+	h.away = func(time.Time) time.Duration { return 90 * time.Second }
+	h.update(hibernatedMsg{})
+	if h.phase != "settling" {
+		t.Errorf("a clock that jumped 90 s isn't a return: %q", h.phase)
+	}
+
+	// A refusal comes at once and says why
+	h, run, _, marks, _ = hibernating(t, nil)
+	h.update(press(tea.KeyEnter))
+	h.update(askedMsg{said: "Call to Hibernate failed: Not enough suitable swap space for hibernation\n", err: fmt.Errorf("exit status 1"), took: time.Second})
+	if result, _ := run.Get("hibernate"); !h.done() || result.State != report.Broken || result.Evidence != "systemctl hibernate was refused (Call to Hibernate failed: Not enough suitable swap space for hibernation)" || (*marks)[len(*marks)-1] {
+		t.Errorf("refused: %+v, marks %v", result, *marks)
+	}
+
+	// A hibernation that failed before the power-off is in the sleep log
+	h, run, slept, _, _ = hibernating(t, nil)
+	h.update(press(tea.KeyEnter))
+	*slept = "Performing sleep operation 'hibernate'...\nFailed to put system to sleep. System resumed again: Device or resource busy\n"
+	h.update(hibernatedMsg{})
+	if result, _ := run.Get("hibernate"); !h.done() || result.State != report.Broken || result.How != report.Measured || !strings.Contains(result.Evidence, "before the computer powered off (Failed to put system to sleep. System resumed again: Device or resource busy)") {
+		t.Errorf("failed in place: %+v", result)
+	}
+
+	// The owner says it never went off
+	h, run, _, _, _ = hibernating(t, nil)
+	h.update(press(tea.KeyEnter))
+	h.update(press(tea.KeyEnter))
+	if result, _ := run.Get("hibernate"); result.State != report.Broken || result.How != report.Owner {
+		t.Errorf("never off: %+v", result)
+	}
+}
+
+func TestHibernationThatIsNotSetUpSaysHowAndRecordsNothing(t *testing.T) {
+	for files, why := range map[string]string{
+		"root=/dev/mapper/root rw\n": "hibernation isn't set up",
+		"":                           "the swap on the drive is too small",
+	} {
+		changed := map[string]string{"proc/cmdline": files}
+		if files == "" {
+			changed = map[string]string{"proc/swaps": "Filename\tType\tSize\tUsed\tPriority\n/swap/swapfile file 1024 0 0\n"}
+		}
+		h, run, _, _, _ := hibernating(t, changed)
+		if h.phase != "setup" || !strings.Contains(h.view(200, 30), why) || !strings.Contains(h.view(200, 30), "omarchy-hibernation-setup") {
+			t.Errorf("%s:\n%s", why, h.view(200, 30))
+		}
+		h.update(press(tea.KeyEnter))
+		if !h.done() || len(run.Results) != 0 {
+			t.Errorf("%s: done %v, %+v", why, h.done(), run.Results)
+		}
+	}
+	// A kernel without hibernation is what was found, also in a step run alone
+	h, run, _, _, _ := hibernating(t, map[string]string{"sys/power/state": "freeze mem\n"})
+	h.update(press(tea.KeyEnter))
+	if result, _ := run.Get("hibernate"); h.phase != "unavailable" || result.State != report.Broken || result.Evidence != noHibernation {
+		t.Errorf("no hibernation: %q, %+v", h.phase, result)
+	}
+}
+
+func TestAHibernationThatStartedFreshIsRecordedWithoutAsking(t *testing.T) {
+	dir := t.TempDir()
+	build := func(run *report.Run) []step {
+		return []step{newKeyboard(run), newCamera(run, dir), newHibernate(run, probe.Facts{}, machine.Fixture(dir)), newQuestions(run, probe.Facts{}, nil)}
+	}
+	// It powers the computer off, so it runs only when chosen
+	run := &report.Run{}
+	if steps := build(run); len(together(steps)) != 3 || len(choose(steps, []string{"hibernation"})) != 1 {
+		t.Fatal("hibernation is in a round with the others, or can't be chosen")
+	}
+	klog := func(logs map[string]string) machine.System {
+		return machine.System{Command: func(name string, args ...string) (string, error) { return logs[args[2]], nil }}
+	}
+	for _, c := range []struct {
+		logs map[string]string
+		want string
+	}{
+		{map[string]string{"-1": "PM: hibernation: hibernation entry\nFilesystems sync: 0.022 seconds\n", "0": "PM: Image not found (code -22)\n"},
+			"the computer started fresh instead of coming back from hibernation, and this start found no saved session to restore"},
+		{map[string]string{"-1": "PM: hibernation: hibernation entry\nRestarting tasks: Done\nPM: hibernation: hibernation exit\n"},
+			"the computer started fresh instead of coming back from hibernation, the saved session came back first and went down after that, and this start found no saved session to restore"},
+		{map[string]string{"0": "PM: hibernation: resume from hibernation\nPM: hibernation: resume failed (-22)\n"},
+			"the computer started fresh instead of coming back from hibernation, and this start found the saved session and couldn't restore it (PM: hibernation: resume failed (-22))"},
+	} {
+		run = &report.Run{}
+		opening, rest := resume(run, report.Pending{Boot: "an-earlier-boot", Step: "Hibernation", Began: true}, "this-boot", &welcome{run: run}, build(run))
+		back, ok := opening.(*resumed)
+		// Nothing of the round comes after a step that runs apart
+		if !ok || len(rest) != 1 || !back.last || !strings.Contains(back.view(100, 30), "started fresh") {
+			t.Fatalf("resumed=%v, %d steps:\n%s", ok, len(rest), opening.view(100, 30))
+		}
+		back.sys = klog(c.logs)
+		back.update(press(tea.KeyEnter))
+		if result, _ := run.Get("hibernate"); result.State != report.Broken || result.How != report.Measured || result.Evidence != c.want || !rest[0].done() {
+			t.Errorf("logs %v: %+v", c.logs, result)
+		}
+	}
+	// Stopped before it asked for hibernation, a restart is asked about as in any step
+	run = &report.Run{}
+	opening, _ := resume(run, report.Pending{Boot: "an-earlier-boot", Step: "Hibernation"}, "this-boot", &welcome{run: run}, build(run))
+	if !strings.Contains(opening.view(100, 30), "What happened?") {
+		t.Errorf("not asked:\n%s", opening.view(100, 30))
+	}
+}
+
 func TestStatusListsEveryCheckWithWhatFailsFirst(t *testing.T) {
 	when := time.Date(2026, 11, 19, 2, 0, 0, 0, time.UTC)
 	listed := Status(map[string]report.Kept{

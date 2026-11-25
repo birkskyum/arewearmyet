@@ -81,7 +81,7 @@ It says at its start when a newer release is out, and `hw-test update` gets it. 
 | `hw-test auto --no-send` | Every test that runs by itself (graphics, WebGL and WebGPU, Wi-Fi and Bluetooth, video decoding, temperatures). About four minutes, and it heats the computer. Runs without a terminal |
 | `hw-test graphics`, `wireless`, `video`, `temperatures` | One of those alone |
 | `hw-test speakers --no-send` | The sound test, which plays tones and listens to them with the microphones. You run it yourself, without a terminal, on the owner's yes (see Rules). Add `--json` for the result as data |
-| `hw-test ask camera` (or `keyboard`, `touchpad`, `touchscreen`, `headphones`, `usb`, `screen`, `lid`, `sleep`) | A test that takes the owner. This opens it in a window on their desktop, waits until they are through, and prints the result as JSON. Tell them a window is coming. Never have them run a test and retype what it said |
+| `hw-test ask camera` (or `keyboard`, `touchpad`, `touchscreen`, `headphones`, `usb`, `screen`, `lid`, `sleep`, `hibernate`) | A test that takes the owner. This opens it in a window on their desktop, waits until they are through, and prints the result as JSON. Tell them a window is coming. Never have them run a test and retype what it said. `hibernate` powers the computer off, so the owner saves their work first, and a session that doesn't come back ends yours too |
 | `hw-test status --json` | Every check's latest result on this computer as data, whoever ran the test |
 
 - Add `--no-send` to look without reporting. Without it a run is sent to the model's page.

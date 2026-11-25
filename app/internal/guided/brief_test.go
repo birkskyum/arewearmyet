@@ -65,7 +65,7 @@ func TestTheBriefSaysWhatFailsWhatIsKnownAndHowToGoAboutIt(t *testing.T) {
 		// What the site has written up goes beside what was measured, with its source
 		"### Hibernation (check `hibernate`), broken", "**Already known on the site, on Omarchy** (broken, 2026-10). Waking from hibernation restarts the laptop. Source: https://github.com/omacom/omarchy/discussions/11823",
 		// A part that takes the owner is said to, and one that runs by itself has its command
-		"**Measure again.** `hw-test speakers --no-send --play`, which you run yourself, also without a terminal, once the owner has said yes", "**Measure again.** `hw-test graphics --no-send`, which runs by itself", "**Measure again.** `hw-test quick --no-send`",
+		"**Measure again.** `hw-test speakers --no-send --play`, which you run yourself, also without a terminal, once the owner has said yes", "**Measure again.** `hw-test graphics --no-send`, which runs by itself", "**Measure again.** `hw-test ask hibernate`, which opens the test in a window for the owner",
 		"- **Works.** wifi", "- **Not tested.**",
 		// No notes yet isn't the same as nothing known
 		"Nobody has left a note on this model yet. That means nobody wrote one, not that nothing is known", "api/notes?q=<words>",
@@ -99,7 +99,7 @@ func TestTheBriefSaysWhatFailsWhatIsKnownAndHowToGoAboutIt(t *testing.T) {
 			t.Errorf("the brief repeats the guide's %q", repeated)
 		}
 	}
-	if words := len(strings.Fields(brief)); words > 1300 {
+	if words := len(strings.Fields(brief)); words > 1325 {
 		t.Errorf("the brief has grown to %d words", words)
 	}
 

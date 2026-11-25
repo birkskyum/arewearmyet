@@ -42,9 +42,27 @@ func TestARestartDuringSleepIsFoundAndKeepsTheAnswers(t *testing.T) {
 		t.Errorf("sleep: %+v", sleep)
 	}
 
+	// Hibernating marks the saved test, so a fresh start after it is known for what it is, and
+	// coming back takes the mark off again
+	if MarkBegan(true) != nil {
+		t.Fatal("couldn't mark the saved test")
+	}
+	if marked, _ := LoadPending(); !marked.Began || len(marked.Results) != 3 {
+		t.Errorf("marked: %+v", marked)
+	}
+	MarkBegan(false)
+	if unmarked, _ := LoadPending(); unmarked.Began {
+		t.Error("the mark stayed after coming back")
+	}
+
 	ClearPending()
 	if _, found := LoadPending(); found {
 		t.Error("the saved test wasn't cleared")
+	}
+	// With no saved test there is nothing to mark
+	MarkBegan(true)
+	if _, found := LoadPending(); found {
+		t.Error("marking made a saved test")
 	}
 }
 
