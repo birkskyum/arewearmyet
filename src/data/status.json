@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-26T05:28:27.327Z",
+  "collected": "2026-11-26T10:43:02.998Z",
   "stale": [],
   "linuxNext": "20261125",
   "firmwareRelease": "20261124",
@@ -10,9 +10,9 @@
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.25.502",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.25.502/omarchy-edge-2026.11.25.502-aarch64.iso",
-      "kernel": "7.3.0-79-omarchy"
+      "version": "2026.11.26.506",
+      "url": "https://nightly.omarchy.org/edge-snapdragon/2026.11.26.506/omarchy-edge-2026.11.26.506-snapdragon.iso",
+      "kernel": "7.3.6-2-omarchy"
     },
     "channels": [
       {
@@ -2731,8 +2731,8 @@
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
     "works": 19,
-    "should": 48,
-    "workaround": 10,
+    "should": 49,
+    "workaround": 9,
     "problems": 4,
     "notYet": 7,
     "deviceTree": 84,
@@ -15925,20 +15925,14 @@
         "https://patchwork.kernel.org/project/linux-arm-msm/patch/20260930212421.4810-4-mstoretv@cern.ch/"
       ],
       "notes": "The European NP940XMA has another baseboard name and BIOS line than the NP944XMA, so it has its own hardware IDs, on edge since linux-omarchy 7.3-42. The NP944XMA boots the edge image without the owner's board package, and what it still lacks there is in its report.",
-      "outcome": "workaround",
-      "bootable": "workaround",
+      "outcome": "should",
+      "bootable": "rc",
       "reports": [
         {
           "state": "problems",
           "variant": "NP944XMA",
           "note": "Edge 2026.11.16.492 boots, installs and reaches the desktop without the owner's board package, with display, GPU, Wi-Fi and both DSPs working. The built-in keyboard is dead in Hyprland (0CF2:9050 is tagged as a tablet pad), the disk password prompt isn't shown, USB-C has no hotplug and SuperSpeed in one orientation only, the Wi-Fi MAC address changes every boot, and there is no sound, battery, Bluetooth, camera or fan control. With the owner's board package all of these work.",
           "checked": "2026-11"
-        },
-        {
-          "state": "workaround",
-          "note": "An owner has Omarchy running on it, going by the 14 checks written up from it. There, the disk password prompt doesn't work.",
-          "checked": "2026-11",
-          "from": "findings"
         }
       ],
       "machine": "team",
@@ -16021,12 +16015,6 @@
               "variant": "NP944XMA",
               "note": "Edge 2026.11.16.492 boots, installs and reaches the desktop without the owner's board package, with display, GPU, Wi-Fi and both DSPs working. The built-in keyboard is dead in Hyprland (0CF2:9050 is tagged as a tablet pad), the disk password prompt isn't shown, USB-C has no hotplug and SuperSpeed in one orientation only, the Wi-Fi MAC address changes every boot, and there is no sound, battery, Bluetooth, camera or fan control. With the owner's board package all of these work.",
               "checked": "2026-11"
-            },
-            {
-              "state": "workaround",
-              "note": "An owner has Omarchy running on it, going by the 14 checks written up from it. There, the disk password prompt doesn't work.",
-              "checked": "2026-11",
-              "from": "findings"
             }
           ]
         },
@@ -16062,15 +16050,8 @@
               "url": "https://github.com/ubuntu/stubble/pull/98"
             }
           ],
-          "outcome": "workaround",
-          "reports": [
-            {
-              "state": "workaround",
-              "note": "An owner has Omarchy running on it, going by the 14 checks written up from it. There, the disk password prompt doesn't work.",
-              "checked": "2026-11",
-              "from": "findings"
-            }
-          ]
+          "outcome": "should",
+          "reports": []
         }
       ],
       "boot": "uefi",
@@ -19671,6 +19652,7 @@
     ],
     "ids": [],
     "firmware": [
+      "qcom/sc8280xp/microsoft/blackrock",
       "qcom/x1e80100/ASUSTeK/vivobook-16"
     ],
     "acpi": [

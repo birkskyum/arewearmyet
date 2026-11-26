@@ -9122,17 +9122,702 @@
    }
   },
   "samsung-galaxy-book4-edge-14": {
-   "machines": 1,
+   "machines": 2,
    "checks": {
-    "camera": {
+    "display": {
      "machines": 1,
      "states": {
       "works": 1
      },
      "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "eDP-1 connected, 2880x1800",
+       "depth": "look",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "gpu": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adreno bound to 3d00000.gpu, render node from msm_dpu",
+       "depth": "look",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "disk-unlock": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "the screen came up at 0.3 s and the built-in keyboard at 1.1 s, and the encrypted disk opened at 14.9 s",
+       "depth": "test",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "wifi": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "connected at 5180 MHz, signal -45 dBm, sending at 960.7 Mb/s",
+       "depth": "test",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "wifi-address": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "wlP4p1s0 (ath12k_wifi7_pci) has an address set by the system (not from the card)",
+       "depth": "look",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "bluetooth": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "heard 2 Bluetooth devices nearby in 8 s",
+       "depth": "test",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "adsp": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adsp running (qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qcadsp8380.mbn)",
+       "depth": "look",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "cdsp": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "cdsp running (qcom/x1e80100/SAMSUNG/galaxy-book4-edge/qccdsp8380.mbn)",
+       "depth": "look",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "battery": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "samsung-galaxybook-battery at 98%, Not charging",
+       "depth": "look",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "charging": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "1-0033-usb, 20000 mV",
+       "depth": "look",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "video-decode": {
+     "machines": 1,
+     "states": {
+      "broken": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "the hardware decoder gave no frames (Error opening output files: Invalid argument)",
+       "depth": "test",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "usb": {
+     "machines": 2,
+     "states": {
+      "works": 2
+     },
+     "how": {
+      "measured": 2
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "4 plug-ins detected, on 3-1 at 5 Gb/s, 3-1 at 5 Gb/s, 3-1 at 5 Gb/s, 3-1 at 5 Gb/s",
+       "depth": "test",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      },
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "12 plug-ins detected, on 2-1 at 480 Mb/s, 2-1 at 480 Mb/s, 2-1 at 480 Mb/s, 2-1 at 480 Mb/s, 2-1.4 at 480 Mb/s through a hub, 2-1.4 at 480 Mb/s through a hub, 2-1.4 at 480 Mb/s through a hub, 2-1.4 at 480 Mb/s through a hub, 3-1 at 5 Gb/s, 3-1 at 5 Gb/s, 3-1 at 5 Gb/s, 3-1 at 5 Gb/s",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-23T14:43:23.072Z",
+       "run": "RUN-YMWMTYQQFF",
+       "setup": {
+        "rebuilt": [
+         "linux-firmware-qcom"
+        ],
+        "options": [
+         "ro",
+         "pcie_port_pm",
+         "earlycon",
+         "keep_bootcon",
+         "ignore_loglevel"
+        ]
+       }
+      }
+     ]
+    },
+    "keyboard": {
+     "machines": 2,
+     "states": {
+      "works": 2
+     },
+     "how": {
+      "measured": 2
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "75 keys registered, every letter, number and arrow among them",
+       "depth": "test",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      },
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "45 keys registered, every letter, number and arrow among them",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-23T14:43:23.072Z",
+       "run": "RUN-YMWMTYQQFF",
+       "setup": {
+        "rebuilt": [
+         "linux-firmware-qcom"
+        ],
+        "options": [
+         "ro",
+         "pcie_port_pm",
+         "earlycon",
+         "keep_bootcon",
+         "ignore_loglevel"
+        ]
+       }
+      }
+     ]
+    },
+    "backlight": {
+     "machines": 2,
+     "states": {
+      "works": 2
+     },
+     "how": {
+      "measured": 2
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "both brightness keys work, the backlight moved between 1740 and 2047",
+       "depth": "test",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      },
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "both brightness keys work, the backlight moved between 716 and 1024",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-23T14:43:23.072Z",
+       "run": "RUN-YMWMTYQQFF",
+       "setup": {
+        "rebuilt": [
+         "linux-firmware-qcom"
+        ],
+        "options": [
+         "ro",
+         "pcie_port_pm",
+         "earlycon",
+         "keep_bootcon",
+         "ignore_loglevel"
+        ]
+       }
+      }
+     ]
+    },
+    "touchpad": {
+     "machines": 2,
+     "states": {
+      "works": 2
+     },
+     "how": {
+      "measured": 2
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "hid-over-i2c 14E5:650E Touchpad, moving the pointer, clicking and two-finger scrolling both ways registered",
+       "depth": "test",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      },
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "hid-over-i2c 14E5:650E Touchpad, moving the pointer, clicking and two-finger scrolling both ways registered",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-23T14:43:23.072Z",
+       "run": "RUN-YMWMTYQQFF",
+       "setup": {
+        "rebuilt": [
+         "linux-firmware-qcom"
+        ],
+        "options": [
+         "ro",
+         "pcie_port_pm",
+         "earlycon",
+         "keep_bootcon",
+         "ignore_loglevel"
+        ]
+       }
+      }
+     ]
+    },
+    "touchscreen": {
+     "machines": 2,
+     "states": {
+      "works": 1,
+      "partial": 1
+     },
+     "how": {
+      "measured": 1,
       "owner": 1
      },
      "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "hid-over-i2c 27C6:0123, 3 touches, its interrupt fired 266 times",
+       "depth": "test",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      },
+      {
+       "state": "partial",
+       "how": "owner",
+       "note": "The touchscreen registers touches, but nothing on the desktop reacts to them.",
+       "evidence": "hid-over-i2c 27C6:0123, 3 touches, its interrupt fired 46 times",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-23T14:43:23.072Z",
+       "run": "RUN-YMWMTYQQFF",
+       "setup": {
+        "rebuilt": [
+         "linux-firmware-qcom"
+        ],
+        "options": [
+         "ro",
+         "pcie_port_pm",
+         "earlycon",
+         "keep_bootcon",
+         "ignore_loglevel"
+        ]
+       }
+      }
+     ]
+    },
+    "speakers": {
+     "machines": 2,
+     "states": {
+      "works": 1,
+      "partial": 1
+     },
+     "how": {
+      "measured": 2
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "by the microphones at half volume, left speaker heard at -33 dB, right speaker heard at -33 dB, both sides about equally loud at the microphones",
+       "depth": "test",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      },
+      {
+       "state": "partial",
+       "how": "measured",
+       "note": "Only the left speaker was heard by the microphones.",
+       "evidence": "by the microphones at half volume, left speaker heard at -46 dB, right speaker not heard",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-23T14:43:23.072Z",
+       "run": "RUN-YMWMTYQQFF",
+       "setup": {
+        "rebuilt": [
+         "linux-firmware-qcom"
+        ],
+        "options": [
+         "ro",
+         "pcie_port_pm",
+         "earlycon",
+         "keep_bootcon",
+         "ignore_loglevel"
+        ]
+       }
+      }
+     ]
+    },
+    "microphones": {
+     "machines": 2,
+     "states": {
+      "works": 2
+     },
+     "how": {
+      "measured": 2
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "the speakers at half volume recorded as 300 Hz not picked up, 1000 Hz not picked up, 3000 Hz at -28 dB, and noise with nothing playing -100 dB, input volume 100%",
+       "depth": "test",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      },
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "the speakers at half volume recorded as 300 Hz not picked up, 1000 Hz at -45 dB, 3000 Hz not picked up, and noise with nothing playing -100 dB, input volume 100%",
+       "depth": "test",
+       "kernel": "7.3.0-78-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-23T14:43:23.072Z",
+       "run": "RUN-YMWMTYQQFF",
+       "setup": {
+        "rebuilt": [
+         "linux-firmware-qcom"
+        ],
+        "options": [
+         "ro",
+         "pcie_port_pm",
+         "earlycon",
+         "keep_bootcon",
+         "ignore_loglevel"
+        ]
+       }
+      }
+     ]
+    },
+    "camera": {
+     "machines": 2,
+     "states": {
+      "works": 2
+     },
+     "how": {
+      "owner": 2
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": "a 1920x1092 frame, brightness 164 of 255, contrast 66",
+       "depth": "test",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      },
       {
        "state": "works",
        "how": "owner",
@@ -9164,127 +9849,100 @@
       "since": "2026-11-23T14:44:51.760Z"
      }
     },
-    "keyboard": {
+    "lid": {
      "machines": 1,
      "states": {
-      "works": 1
+      "broken": 1
      },
      "how": {
       "measured": 1
      },
      "latest": [
       {
-       "state": "works",
+       "state": "broken",
        "how": "measured",
        "note": null,
-       "evidence": "45 keys registered, every letter, number and arrow among them",
+       "evidence": "the computer restarted by itself during the test's Lid step, before the step finished",
        "depth": "test",
-       "kernel": "7.3.0-78-omarchy",
+       "kernel": "7.3.0-79-omarchy",
        "os": "Omarchy",
-       "created": "2026-11-23T14:43:23.072Z",
-       "run": "RUN-YMWMTYQQFF",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
        "setup": {
-        "rebuilt": [
-         "linux-firmware-qcom"
-        ],
         "options": [
-         "ro",
-         "pcie_port_pm",
-         "earlycon",
-         "keep_bootcon",
-         "ignore_loglevel"
+         "rd.luks.name",
+         "rd.luks.options"
         ]
        }
       }
      ]
     },
-    "backlight": {
+    "suspend": {
      "machines": 1,
      "states": {
-      "works": 1
+      "broken": 1
      },
      "how": {
       "measured": 1
      },
      "latest": [
       {
-       "state": "works",
+       "state": "broken",
        "how": "measured",
        "note": null,
-       "evidence": "both brightness keys work, the backlight moved between 716 and 1024",
+       "evidence": "closing the lid ended in a restart instead of a wake, as the test was waiting for the computer to wake when it booted fresh (sleep modes s2idle [deep])",
        "depth": "test",
-       "kernel": "7.3.0-78-omarchy",
+       "kernel": "7.3.0-79-omarchy",
        "os": "Omarchy",
-       "created": "2026-11-23T14:43:23.072Z",
-       "run": "RUN-YMWMTYQQFF",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
        "setup": {
-        "rebuilt": [
-         "linux-firmware-qcom"
-        ],
         "options": [
-         "ro",
-         "pcie_port_pm",
-         "earlycon",
-         "keep_bootcon",
-         "ignore_loglevel"
+         "rd.luks.name",
+         "rd.luks.options"
         ]
        }
       }
      ]
     },
-    "touchpad": {
-     "machines": 1,
+    "fans": {
+     "machines": 2,
      "states": {
+      "partial": 1,
       "works": 1
      },
      "how": {
-      "measured": 1
-     },
-     "latest": [
-      {
-       "state": "works",
-       "how": "measured",
-       "note": null,
-       "evidence": "hid-over-i2c 14E5:650E Touchpad, moving the pointer, clicking and two-finger scrolling both ways registered",
-       "depth": "test",
-       "kernel": "7.3.0-78-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-23T14:43:23.072Z",
-       "run": "RUN-YMWMTYQQFF",
-       "setup": {
-        "rebuilt": [
-         "linux-firmware-qcom"
-        ],
-        "options": [
-         "ro",
-         "pcie_port_pm",
-         "earlycon",
-         "keep_bootcon",
-         "ignore_loglevel"
-        ]
-       }
-      }
-     ]
-    },
-    "touchscreen": {
-     "machines": 1,
-     "states": {
-      "partial": 1
-     },
-     "how": {
+      "measured": 1,
       "owner": 1
      },
      "latest": [
       {
        "state": "partial",
+       "how": "measured",
+       "note": "The temperatures can be read and answer to load. No fan was seen starting, and there is no sensor for its speed.",
+       "evidence": "58 temperature sensors. The hottest went from 39 to 97 °C in 120 s with every core and the GPU busy, and back to 71 °C after. The processor was slowed to 53% of its speed as it got hot. No fan speed sensor",
+       "depth": "test",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      },
+      {
+       "state": "works",
        "how": "owner",
-       "note": "The touchscreen registers touches, but nothing on the desktop reacts to them.",
-       "evidence": "hid-over-i2c 27C6:0123, 3 touches, its interrupt fired 46 times",
+       "note": "The fan's speed can't be read, for want of a sensor.",
+       "evidence": "58 temperature sensors. The hottest went from 46 to 80 °C in 82 s with every core and the GPU busy, and back to 56 °C after. No fan speed sensor. The owner heard the fan speed up at 80 °C, 81 s in",
        "depth": "test",
        "kernel": "7.3.0-78-omarchy",
        "os": "Omarchy",
-       "created": "2026-11-23T14:43:23.072Z",
-       "run": "RUN-YMWMTYQQFF",
+       "created": "2026-11-23T14:35:33.279Z",
+       "run": "RUN-DK68X33BY9",
        "setup": {
         "rebuilt": [
          "linux-firmware-qcom"
@@ -9300,25 +9958,43 @@
       }
      ]
     },
-    "microphones": {
-     "machines": 1,
+    "webgl": {
+     "machines": 2,
      "states": {
-      "works": 1
+      "works": 1,
+      "partial": 1
      },
      "how": {
-      "measured": 1
+      "measured": 2
      },
      "latest": [
       {
        "state": "works",
        "how": "measured",
        "note": null,
-       "evidence": "the speakers at half volume recorded as 300 Hz not picked up, 1000 Hz at -45 dB, 3000 Hz not picked up, and noise with nothing playing -100 dB, input volume 100%",
+       "evidence": "Chrome on ANGLE (angleisbroken, Adreno X1-85, OpenGL ES 3.2), WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+       "depth": "test",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      },
+      {
+       "state": "partial",
+       "how": "measured",
+       "note": "WebGL runs on the processor, not the GPU.",
+       "evidence": "Chrome on ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver), WebGL 2.0 (OpenGL ES 3.0 Chromium)",
        "depth": "test",
        "kernel": "7.3.0-78-omarchy",
        "os": "Omarchy",
-       "created": "2026-11-23T14:43:23.072Z",
-       "run": "RUN-YMWMTYQQFF",
+       "created": "2026-11-23T14:35:33.279Z",
+       "run": "RUN-DK68X33BY9",
        "setup": {
         "rebuilt": [
          "linux-firmware-qcom"
@@ -9334,25 +10010,43 @@
       }
      ]
     },
-    "speakers": {
-     "machines": 1,
+    "webgpu": {
+     "machines": 2,
      "states": {
-      "partial": 1
+      "partial": 1,
+      "broken": 1
      },
      "how": {
-      "measured": 1
+      "measured": 2
      },
      "latest": [
       {
        "state": "partial",
        "how": "measured",
-       "note": "Only the left speaker was heard by the microphones.",
-       "evidence": "by the microphones at half volume, left speaker heard at -46 dB, right speaker not heard",
+       "note": "Chrome doesn't offer WebGPU by itself here. It works when started with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU.",
+       "evidence": "Chrome has WebGPU on qualcomm adreno-7xx with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU, and without them no adapter",
+       "depth": "test",
+       "kernel": "7.3.0-79-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T07:31:53.913Z",
+       "run": "RUN-PC2BCA94Y3",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      },
+      {
+       "state": "broken",
+       "how": "measured",
+       "note": null,
+       "evidence": "Chrome offers no WebGPU, also with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU (only an adapter that runs on the processor (google swiftshader))",
        "depth": "test",
        "kernel": "7.3.0-78-omarchy",
        "os": "Omarchy",
-       "created": "2026-11-23T14:43:23.072Z",
-       "run": "RUN-YMWMTYQQFF",
+       "created": "2026-11-23T14:35:33.279Z",
+       "run": "RUN-DK68X33BY9",
        "setup": {
         "rebuilt": [
          "linux-firmware-qcom"
@@ -9402,40 +10096,6 @@
       }
      ]
     },
-    "usb": {
-     "machines": 1,
-     "states": {
-      "works": 1
-     },
-     "how": {
-      "measured": 1
-     },
-     "latest": [
-      {
-       "state": "works",
-       "how": "measured",
-       "note": null,
-       "evidence": "12 plug-ins detected, on 2-1 at 480 Mb/s, 2-1 at 480 Mb/s, 2-1 at 480 Mb/s, 2-1 at 480 Mb/s, 2-1.4 at 480 Mb/s through a hub, 2-1.4 at 480 Mb/s through a hub, 2-1.4 at 480 Mb/s through a hub, 2-1.4 at 480 Mb/s through a hub, 3-1 at 5 Gb/s, 3-1 at 5 Gb/s, 3-1 at 5 Gb/s, 3-1 at 5 Gb/s",
-       "depth": "test",
-       "kernel": "7.3.0-78-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-23T14:43:23.072Z",
-       "run": "RUN-YMWMTYQQFF",
-       "setup": {
-        "rebuilt": [
-         "linux-firmware-qcom"
-        ],
-        "options": [
-         "ro",
-         "pcie_port_pm",
-         "earlycon",
-         "keep_bootcon",
-         "ignore_loglevel"
-        ]
-       }
-      }
-     ]
-    },
     "external-display": {
      "machines": 1,
      "states": {
@@ -9455,108 +10115,6 @@
        "os": "Omarchy",
        "created": "2026-11-23T14:43:23.072Z",
        "run": "RUN-YMWMTYQQFF",
-       "setup": {
-        "rebuilt": [
-         "linux-firmware-qcom"
-        ],
-        "options": [
-         "ro",
-         "pcie_port_pm",
-         "earlycon",
-         "keep_bootcon",
-         "ignore_loglevel"
-        ]
-       }
-      }
-     ]
-    },
-    "fans": {
-     "machines": 1,
-     "states": {
-      "works": 1
-     },
-     "how": {
-      "owner": 1
-     },
-     "latest": [
-      {
-       "state": "works",
-       "how": "owner",
-       "note": "The fan's speed can't be read, for want of a sensor.",
-       "evidence": "58 temperature sensors. The hottest went from 46 to 80 °C in 82 s with every core and the GPU busy, and back to 56 °C after. No fan speed sensor. The owner heard the fan speed up at 80 °C, 81 s in",
-       "depth": "test",
-       "kernel": "7.3.0-78-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-23T14:35:33.279Z",
-       "run": "RUN-DK68X33BY9",
-       "setup": {
-        "rebuilt": [
-         "linux-firmware-qcom"
-        ],
-        "options": [
-         "ro",
-         "pcie_port_pm",
-         "earlycon",
-         "keep_bootcon",
-         "ignore_loglevel"
-        ]
-       }
-      }
-     ]
-    },
-    "webgl": {
-     "machines": 1,
-     "states": {
-      "partial": 1
-     },
-     "how": {
-      "measured": 1
-     },
-     "latest": [
-      {
-       "state": "partial",
-       "how": "measured",
-       "note": "WebGL runs on the processor, not the GPU.",
-       "evidence": "Chrome on ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver), WebGL 2.0 (OpenGL ES 3.0 Chromium)",
-       "depth": "test",
-       "kernel": "7.3.0-78-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-23T14:35:33.279Z",
-       "run": "RUN-DK68X33BY9",
-       "setup": {
-        "rebuilt": [
-         "linux-firmware-qcom"
-        ],
-        "options": [
-         "ro",
-         "pcie_port_pm",
-         "earlycon",
-         "keep_bootcon",
-         "ignore_loglevel"
-        ]
-       }
-      }
-     ]
-    },
-    "webgpu": {
-     "machines": 1,
-     "states": {
-      "broken": 1
-     },
-     "how": {
-      "measured": 1
-     },
-     "latest": [
-      {
-       "state": "broken",
-       "how": "measured",
-       "note": null,
-       "evidence": "Chrome offers no WebGPU, also with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU (only an adapter that runs on the processor (google swiftshader))",
-       "depth": "test",
-       "kernel": "7.3.0-78-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-23T14:35:33.279Z",
-       "run": "RUN-DK68X33BY9",
        "setup": {
         "rebuilt": [
          "linux-firmware-qcom"

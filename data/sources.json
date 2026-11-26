@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-26T05:28:27.327Z",
+  "collected": "2026-11-26T10:43:02.998Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -4413,6 +4413,12 @@
       ]
     },
     {
+      "path": "qcom/sc8280xp/microsoft/blackrock",
+      "files": [
+        "SC8280XP-MICROSOFT-BLACKROCK-tplg.bin"
+      ]
+    },
+    {
       "path": "qcom/sc8280xp/radxa/dragon-q8b",
       "files": [
         "SC8280XP-Radxa-Dragon-Q8B-tplg.bin",
@@ -4544,6 +4550,8 @@
     "qcom/sc8280xp/LENOVO/21BX/qcslpi8280.mbn",
     "qcom/sc8280xp/LENOVO/21BX/qcvss8280.mbn",
     "qcom/sc8280xp/SC8280XP-LENOVO-X13S-tplg.bin",
+    "qcom/sc8280xp/SC8280XP-MICROSOFT-BLACKROCK-tplg.bin",
+    "qcom/sc8280xp/microsoft/blackrock/SC8280XP-MICROSOFT-BLACKROCK-tplg.bin",
     "qcom/sc8280xp/radxa/dragon-q8b/SC8280XP-Radxa-Dragon-Q8B-tplg.bin",
     "qcom/sc8280xp/radxa/dragon-q8b/qcadsp8280.mbn",
     "qcom/x1e80100/ASUSTeK/vivobook-16/X1E80100-ASUS-Vivobook-16-tplg.bin",
@@ -10854,9 +10862,9 @@
       }
     ],
     "image": {
-      "version": "2026.11.25.502",
-      "url": "https://nightly.omarchy.org/edge-aarch64/2026.11.25.502/omarchy-edge-2026.11.25.502-aarch64.iso",
-      "kernel": "7.3.0-79-omarchy"
+      "version": "2026.11.26.506",
+      "url": "https://nightly.omarchy.org/edge-snapdragon/2026.11.26.506/omarchy-edge-2026.11.26.506-snapdragon.iso",
+      "kernel": "7.3.6-2-omarchy"
     },
     "pulls": [
       {
