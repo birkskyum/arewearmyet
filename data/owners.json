@@ -5695,6 +5695,40 @@
   "lenovo-yoga-slim-7x-14q8x9": {
    "machines": 2,
    "checks": {
+    "hibernate": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": "came back from hibernation 156 s after it was asked for, Wi-Fi was back 26 s after waking, the audio processor is running",
+       "depth": "test",
+       "kernel": "7.3.6-1-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-25T13:06:16.997Z",
+       "run": "RUN-GD2HT64WGY",
+       "needs": {
+        "text": "A locally built linux-omarchy-yogahib 7.3-75 kernel as Limine's default (fixes for GIC LPI tables, the GPU GMU, TrustZone memory bridges, Bluetooth UART, SoundWire and reset-gpio after a power-off restore, plus a watchdog guard), and a systemd unit that stops the DSPs and Wi-Fi before hibernating an",
+        "how": "agent",
+        "created": "2026-11-22T22:52:33.738Z"
+       }
+      }
+     ],
+     "changed": 1,
+     "fixed": {
+      "machines": 1,
+      "from": "7.3.0-59-omarchy",
+      "to": "7.3.0-75-omarchy-yogahib",
+      "since": "2026-11-22T22:52:32.663Z"
+     }
+    },
     "display": {
      "machines": 2,
      "states": {
@@ -6135,45 +6169,6 @@
        "run": "RUN-MQW53YXVRD"
       }
      ]
-    },
-    "hibernate": {
-     "machines": 1,
-     "states": {
-      "works": 1
-     },
-     "how": {
-      "agent": 1
-     },
-     "latest": [
-      {
-       "state": "works",
-       "how": "agent",
-       "note": "5 of 5 power-off hibernations in one session resumed where it was (dt1-5, 23 Nov 2026) on the pull request's code: linux-omarchy-aarch64 2280-2298 built on 7.3-75 and the linux-omarchy-dtbs 0071 tree, with Wi-Fi, sound, both DSPs and the GPU working after each and the GIC LPI tables in the tree's region. 10 of 10 before on the same patches with the window from arch code (22 Nov).",
-       "evidence": null,
-       "depth": "test",
-       "kernel": "7.3.0-75-omarchy-yogahib76",
-       "os": "Omarchy",
-       "created": "2026-11-23T11:49:29.906Z",
-       "run": "RUN-TAFJ5FE7YZ",
-       "setup": {
-        "modules": [
-         "sbsa_gwdt"
-        ]
-       },
-       "needs": {
-        "text": "A locally built linux-omarchy-yogahib 7.3-75 kernel as Limine's default (fixes for GIC LPI tables, the GPU GMU, TrustZone memory bridges, Bluetooth UART, SoundWire and reset-gpio after a power-off restore, plus a watchdog guard), and a systemd unit that stops the DSPs and Wi-Fi before hibernating an",
-        "how": "agent",
-        "created": "2026-11-22T22:52:33.738Z"
-       }
-      }
-     ],
-     "changed": 1,
-     "fixed": {
-      "machines": 1,
-      "from": "7.3.0-59-omarchy",
-      "to": "7.3.0-75-omarchy-yogahib",
-      "since": "2026-11-22T22:52:32.663Z"
-     }
     },
     "headphones": {
      "machines": 1,
@@ -6630,6 +6625,270 @@
   "microsoft-surface-laptop-7-13": {
    "machines": 1,
    "checks": {
+    "display": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "eDP-1 connected, 2304x1536",
+       "depth": "look",
+       "kernel": "7.3.0-77-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-25T07:11:14.288Z",
+       "run": "RUN-H284CFNGTD",
+       "setup": {
+        "modules": [
+         "qcom_glink_smem",
+         "v4l2loopback",
+         "msm"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "gpu": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adreno bound to 3d00000.gpu, render node from msm_dpu",
+       "depth": "look",
+       "kernel": "7.3.0-77-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-25T07:11:14.288Z",
+       "run": "RUN-H284CFNGTD",
+       "setup": {
+        "modules": [
+         "qcom_glink_smem",
+         "v4l2loopback",
+         "msm"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "disk-unlock": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "the screen came up at 0.4 s and the built-in keyboard at 1.1 s, and the encrypted disk opened at 49.5 s",
+       "depth": "test",
+       "kernel": "7.3.0-77-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-25T07:11:14.288Z",
+       "run": "RUN-H284CFNGTD",
+       "setup": {
+        "modules": [
+         "qcom_glink_smem",
+         "v4l2loopback",
+         "msm"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "wifi-address": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "wlP4p1s0 (ath12k_wifi7_pci) has an address set by the system (not from the card)",
+       "depth": "look",
+       "kernel": "7.3.0-77-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-25T07:11:14.288Z",
+       "run": "RUN-H284CFNGTD",
+       "setup": {
+        "modules": [
+         "qcom_glink_smem",
+         "v4l2loopback",
+         "msm"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "adsp": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "adsp running (qcom/x1e80100/microsoft/Romulus/qcadsp8380.mbn)",
+       "depth": "look",
+       "kernel": "7.3.0-77-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-25T07:11:14.288Z",
+       "run": "RUN-H284CFNGTD",
+       "setup": {
+        "modules": [
+         "qcom_glink_smem",
+         "v4l2loopback",
+         "msm"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "cdsp": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "cdsp running (qcom/x1e80100/microsoft/Romulus/qccdsp8380.mbn)",
+       "depth": "look",
+       "kernel": "7.3.0-77-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-25T07:11:14.288Z",
+       "run": "RUN-H284CFNGTD",
+       "setup": {
+        "modules": [
+         "qcom_glink_smem",
+         "v4l2loopback",
+         "msm"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "battery": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "qcom-battmgr-bat at 77%, Discharging",
+       "depth": "look",
+       "kernel": "7.3.0-77-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-25T07:11:14.288Z",
+       "run": "RUN-H284CFNGTD",
+       "setup": {
+        "modules": [
+         "qcom_glink_smem",
+         "v4l2loopback",
+         "msm"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "fans": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "surface_fan 0 rpm, 59 temperature sensors",
+       "depth": "look",
+       "kernel": "7.3.0-77-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-25T07:11:14.288Z",
+       "run": "RUN-H284CFNGTD",
+       "setup": {
+        "modules": [
+         "qcom_glink_smem",
+         "v4l2loopback",
+         "msm"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
     "speakers": {
      "machines": 1,
      "states": {
@@ -6695,64 +6954,6 @@
      ],
      "changed": 1
     },
-    "webgl": {
-     "machines": 1,
-     "states": {
-      "works": 1
-     },
-     "how": {
-      "measured": 1
-     },
-     "latest": [
-      {
-       "state": "works",
-       "how": "measured",
-       "note": null,
-       "evidence": "Chrome on ANGLE (angleisbroken, Adreno X1-85, OpenGL ES 3.2), WebGL 2.0 (OpenGL ES 3.0 Chromium)",
-       "depth": "test",
-       "kernel": "7.3.0-75-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-22T09:13:24.868Z",
-       "run": "RUN-QM2S3G2RDD",
-       "setup": {
-        "options": [
-         "rd.luks.name",
-         "rd.luks.options"
-        ],
-        "testTree": true
-       }
-      }
-     ]
-    },
-    "webgpu": {
-     "machines": 1,
-     "states": {
-      "partial": 1
-     },
-     "how": {
-      "measured": 1
-     },
-     "latest": [
-      {
-       "state": "partial",
-       "how": "measured",
-       "note": "Chrome doesn't offer WebGPU by itself here. It works when started with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU.",
-       "evidence": "Chrome has WebGPU on qualcomm adreno-7xx with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU, and without them no adapter",
-       "depth": "test",
-       "kernel": "7.3.0-75-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-22T09:13:24.868Z",
-       "run": "RUN-QM2S3G2RDD",
-       "setup": {
-        "options": [
-         "rd.luks.name",
-         "rd.luks.options"
-        ],
-        "testTree": true
-       }
-      }
-     ]
-    },
     "wifi": {
      "machines": 1,
      "states": {
@@ -6796,6 +6997,64 @@
        "how": "measured",
        "note": null,
        "evidence": "heard 9 Bluetooth devices nearby in 8 s",
+       "depth": "test",
+       "kernel": "7.3.0-75-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T09:13:24.868Z",
+       "run": "RUN-QM2S3G2RDD",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ],
+        "testTree": true
+       }
+      }
+     ]
+    },
+    "webgl": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "Chrome on ANGLE (angleisbroken, Adreno X1-85, OpenGL ES 3.2), WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+       "depth": "test",
+       "kernel": "7.3.0-75-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-22T09:13:24.868Z",
+       "run": "RUN-QM2S3G2RDD",
+       "setup": {
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ],
+        "testTree": true
+       }
+      }
+     ]
+    },
+    "webgpu": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "measured",
+       "note": "Chrome doesn't offer WebGPU by itself here. It works when started with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU.",
+       "evidence": "Chrome has WebGPU on qualcomm adreno-7xx with --enable-unsafe-webgpu --enable-features=Vulkan,WebGPU, and without them no adapter",
        "depth": "test",
        "kernel": "7.3.0-75-omarchy",
        "os": "Omarchy",
