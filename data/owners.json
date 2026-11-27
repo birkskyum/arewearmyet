@@ -3273,6 +3273,105 @@
   "asus-zenbook-a16-ux3607oa": {
    "machines": 1,
    "checks": {
+    "external-display": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "owner",
+       "note": null,
+       "evidence": "HDMI-A-1 (HDMI), 1920x1080 offered, and it came back 4 s after plugging it in again",
+       "depth": "test",
+       "kernel": "7.3.6-5-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T16:07:05.788Z",
+       "run": "RUN-RE6MG3YNDW",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
+    "fans": {
+     "machines": 1,
+     "states": {
+      "works": 1
+     },
+     "how": {
+      "measured": 1
+     },
+     "latest": [
+      {
+       "state": "works",
+       "how": "measured",
+       "note": null,
+       "evidence": "102 temperature sensors. The hottest went from 37 to 80 °C in 46 s with every core and the GPU busy, drawing up to 56 W from the battery, and back to 55 °C after. The fan (asus_glymur_ec) went from 2340 to 2700 rpm",
+       "depth": "test",
+       "kernel": "7.3.6-5-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T15:59:59.526Z",
+       "run": "RUN-TGHRJQ27SK",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ],
+     "fixed": {
+      "machines": 1,
+      "from": "7.3.0-78-omarchy",
+      "to": "7.3.6-5-omarchy",
+      "since": "2026-11-26T15:59:59.526Z"
+     }
+    },
+    "camera": {
+     "machines": 1,
+     "states": {
+      "partial": 1
+     },
+     "how": {
+      "owner": 1
+     },
+     "latest": [
+      {
+       "state": "partial",
+       "how": "owner",
+       "note": "The camera works in apps, but libcamera's cam tool got no frame from it.",
+       "evidence": "cam gave no frame (<nil>): 914.560533 (29.70 fps) cam0-stream0 seq: 000449 bytesused: 253440",
+       "depth": "test",
+       "kernel": "7.3.6-5-omarchy",
+       "os": "Omarchy",
+       "created": "2026-11-26T15:57:02.147Z",
+       "run": "RUN-N3KJTM9SWB",
+       "setup": {
+        "modules": [
+         "v4l2loopback"
+        ],
+        "options": [
+         "rd.luks.name",
+         "rd.luks.options"
+        ]
+       }
+      }
+     ]
+    },
     "usb": {
      "machines": 1,
      "states": {
@@ -3553,34 +3652,6 @@
       }
      ]
     },
-    "camera": {
-     "machines": 1,
-     "states": {
-      "broken": 1
-     },
-     "how": {
-      "measured": 1
-     },
-     "latest": [
-      {
-       "state": "broken",
-       "how": "measured",
-       "note": null,
-       "evidence": "no camera device",
-       "depth": "look",
-       "kernel": "7.3.0-78-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-23T21:23:52.653Z",
-       "run": "RUN-RQN88YKV35",
-       "setup": {
-        "options": [
-         "rd.luks.name",
-         "rd.luks.options"
-        ]
-       }
-      }
-     ]
-    },
     "video-decode": {
      "machines": 1,
      "states": {
@@ -3596,34 +3667,6 @@
        "note": null,
        "evidence": "no iris or venus video decoder",
        "depth": "look",
-       "kernel": "7.3.0-78-omarchy",
-       "os": "Omarchy",
-       "created": "2026-11-23T21:23:52.653Z",
-       "run": "RUN-RQN88YKV35",
-       "setup": {
-        "options": [
-         "rd.luks.name",
-         "rd.luks.options"
-        ]
-       }
-      }
-     ]
-    },
-    "fans": {
-     "machines": 1,
-     "states": {
-      "broken": 1
-     },
-     "how": {
-      "measured": 1
-     },
-     "latest": [
-      {
-       "state": "broken",
-       "how": "measured",
-       "note": null,
-       "evidence": "the computer restarted by itself during the test's Temperatures step, before the step finished",
-       "depth": "test",
        "kernel": "7.3.0-78-omarchy",
        "os": "Omarchy",
        "created": "2026-11-23T21:23:52.653Z",

@@ -1,18 +1,18 @@
 {
-  "collected": "2026-11-26T10:43:02.998Z",
+  "collected": "2026-11-27T05:29:16.699Z",
   "stale": [],
-  "linuxNext": "20261125",
+  "linuxNext": "20261126",
   "firmwareRelease": "20261124",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3.6-2",
+    "kernel": "7.3.6-6",
     "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.26.506",
-      "url": "https://nightly.omarchy.org/edge-snapdragon/2026.11.26.506/omarchy-edge-2026.11.26.506-snapdragon.iso",
-      "kernel": "7.3.6-2-omarchy"
+      "version": "2026.11.27.509",
+      "url": "https://nightly.omarchy.org/edge-snapdragon/2026.11.27.509/omarchy-edge-2026.11.27.509-snapdragon.iso",
+      "kernel": "7.3.6-6-omarchy"
     },
     "channels": [
       {
@@ -207,7 +207,7 @@
       },
       {
         "name": "rc",
-        "kernel": "7.3.6-2",
+        "kernel": "7.3.6-6",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -1466,7 +1466,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3.6-2",
+        "kernel": "7.3.6-6",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -7648,7 +7648,7 @@
       "reports": [
         {
           "state": "works",
-          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-78. There, the installer from a USB stick works, and the disk password prompt works.",
+          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.6-5. There, the installer from a USB stick works, and the disk password prompt works.",
           "checked": "2026-11",
           "from": "hw-test"
         }
@@ -7738,7 +7738,7 @@
           "reports": [
             {
               "state": "works",
-              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-78. There, the installer from a USB stick works, and the disk password prompt works.",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.6-5. There, the installer from a USB stick works, and the disk password prompt works.",
               "checked": "2026-11",
               "from": "hw-test"
             }
@@ -10356,9 +10356,9 @@
           ],
           "stubble": [
             {
-              "file": "kalambo-hp-elitebook-x-g2q-lcd.json",
+              "file": "glymur-hp-elitebook-x-g2q.json",
               "state": "merged",
-              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/kalambo-hp-elitebook-x-g2q-lcd.json"
+              "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-hp-elitebook-x-g2q.json"
             }
           ],
           "outcome": "should",

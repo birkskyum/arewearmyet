@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-26T10:43:02.998Z",
+  "collected": "2026-11-27T05:29:16.699Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -44,7 +44,7 @@
     "v261",
     "v262"
   ],
-  "linuxNext": "20261125",
+  "linuxNext": "20261126",
   "deviceTrees": [
     {
       "file": "glymur-asus-ascent-qn10.dts",
@@ -2920,7 +2920,7 @@
       "state": "merged",
       "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/glymur-hp-elitebook-x-g2q.json",
       "name": "HP 103C_5336AN HP EliteBook",
-      "compatible": "hp,kalambo-elitebook-x-g2q-lcd",
+      "compatible": "hp,elitebook-x-g2q",
       "hwids": [
         "a8eb125e-80bb-5eb6-a448-8b9a73a9fda4",
         "2111654e-fca0-5191-adf1-a341304be9ac",
@@ -2968,7 +2968,7 @@
       "state": "merged",
       "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/kalambo-hp-elitebook-x-g2q-lcd.json",
       "name": "HP 103C_5336AN HP EliteBook",
-      "compatible": "hp,elitebook-x-g2q",
+      "compatible": "hp,kalambo-elitebook-x-g2q-lcd",
       "hwids": [
         "a8eb125e-80bb-5eb6-a448-8b9a73a9fda4",
         "2111654e-fca0-5191-adf1-a341304be9ac",
@@ -5866,7 +5866,7 @@
       },
       {
         "name": "rc",
-        "kernel": "7.3.6-2",
+        "kernel": "7.3.6-6",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -7125,7 +7125,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3.6-2",
+        "kernel": "7.3.6-6",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -10862,9 +10862,9 @@
       }
     ],
     "image": {
-      "version": "2026.11.26.506",
-      "url": "https://nightly.omarchy.org/edge-snapdragon/2026.11.26.506/omarchy-edge-2026.11.26.506-snapdragon.iso",
-      "kernel": "7.3.6-2-omarchy"
+      "version": "2026.11.27.509",
+      "url": "https://nightly.omarchy.org/edge-snapdragon/2026.11.27.509/omarchy-edge-2026.11.27.509-snapdragon.iso",
+      "kernel": "7.3.6-6-omarchy"
     },
     "pulls": [
       {
