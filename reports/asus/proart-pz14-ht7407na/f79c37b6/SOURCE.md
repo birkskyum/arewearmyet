@@ -1,6 +1,6 @@
 # Hardware report asus/proart-pz14-ht7407na/f79c37b6
 
-From pull request #36 (https://github.com/turbineBMW/omarchy-hardware-reports/pull/36, not merged yet) at commit 8db35d9cba3550100ae93182b84d5ef08f0dc3c4, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
+From https://github.com/turbineBMW/omarchy-hardware-reports/tree/8ad795bace951c22fe99ca5f28b82467eb815de2/reports/asus/proart-pz14-ht7407na/f79c37b6, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
 addresses. Here the SoC serial number (SOSN) is also zeroed in the ACPI tables and each table's checksum corrected.
 The device list, driver files and registry export stay in that repository.
 

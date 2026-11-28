@@ -1,6 +1,6 @@
 # Hardware report lenovo/13c8cto1ww/c6b22c7a
 
-From pull request #26 (https://github.com/turbineBMW/omarchy-hardware-reports/pull/26, not merged yet) at commit c344150ca08dfe9db8f628ecd0890b611cbf837c, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
+From https://github.com/turbineBMW/omarchy-hardware-reports/tree/8ad795bace951c22fe99ca5f28b82467eb815de2/reports/lenovo/13c8cto1ww/c6b22c7a, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
 addresses. Here the SoC serial number (SOSN) is also zeroed in the ACPI tables and each table's checksum corrected.
 The device list, driver files and registry export stay in that repository.
 

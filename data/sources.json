@@ -1,5 +1,5 @@
 {
-  "collected": "2026-11-27T05:29:16.699Z",
+  "collected": "2026-11-28T05:27:22.114Z",
   "kernelReleases": [
     "v5.10",
     "v5.11",
@@ -44,7 +44,7 @@
     "v261",
     "v262"
   ],
-  "linuxNext": "20261126",
+  "linuxNext": "20261127",
   "deviceTrees": [
     {
       "file": "glymur-asus-ascent-qn10.dts",
@@ -3316,6 +3316,26 @@
       ]
     },
     {
+      "file": "spacemit-k3-com260-tq.json",
+      "state": "merged",
+      "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/spacemit-k3-com260-tq.json",
+      "name": "SpacemiT K3 CoM260 TQ",
+      "compatible": "spacemit,k3-com260-tq",
+      "hwids": [
+        "0cf6be0f-e73c-56a6-9f7b-90ac51c516da",
+        "1629a609-6603-5242-a755-797625f84685",
+        "ef6b6799-7c20-5319-a8bb-8ddd51ac2c38",
+        "ab8b7d55-e499-58cb-97d8-e2a6d1ff7ade",
+        "a0984b1d-d0d6-567a-9b11-d72d92a8cb34",
+        "e4d39de5-0726-5452-b5ba-1a797eb40679",
+        "571c2b6c-092e-55a2-a16d-4c0ac54a25e0",
+        "00a02b12-5411-5b63-844a-92b7635669c1",
+        "55f91f93-a212-500c-b944-00a1bfb17530",
+        "33b2e8d7-4826-5c46-b018-376cf7c4b3c8",
+        "aa34fba7-3217-5fec-9b75-391f436e95c5"
+      ]
+    },
+    {
       "file": "spacemit-k3-pico-itx.json",
       "state": "merged",
       "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/spacemit-k3-pico-itx.json",
@@ -5296,8 +5316,28 @@
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/anduril/qualcomm-glymur"
     },
     {
+      "folder": "hardware-reports/asus/proart-pz14-ht7407na",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/asus/proart-pz14-ht7407na"
+    },
+    {
+      "folder": "hardware-reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa"
+    },
+    {
+      "folder": "hardware-reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa"
+    },
+    {
       "folder": "hardware-reports/asustek-computer-inc/asus-vivobook-s-16-s3607qa-s3607qa",
       "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/asustek-computer-inc/asus-vivobook-s-16-s3607qa-s3607qa"
+    },
+    {
+      "folder": "hardware-reports/dell-inc/inspiron-14-5441",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/dell-inc/inspiron-14-5441"
+    },
+    {
+      "folder": "hardware-reports/hp/hp-omnibook-3-laptop-14-hz0xxx",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-14-hz0xxx"
     },
     {
       "folder": "hardware-reports/hp/hp-omnibook-3-laptop-16-bz0xxx",
@@ -5305,267 +5345,55 @@
     },
     {
       "folder": "hardware-reports/hp/hp-omnibook-3-laptop-16-ct0xxx",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/63",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "e26be29f88a9d00e9f2dd430f7c6cb0cf399e508",
-      "dir": "reports/hp/hp-omnibook-3-laptop-16-ct0xxx/e21c3e28",
-      "pull": {
-        "number": 63,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
-    },
-    {
-      "folder": "hardware-reports/lenovo/83n3",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/61",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "19902ad98bcb60530f625f059675adc199d680d1",
-      "dir": "reports/lenovo/83n3/85c9358e",
-      "pull": {
-        "number": 61,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
-    },
-    {
-      "folder": "hardware-reports/dell-inc/inspiron-14-5441",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/59",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "4ec2b7e644c4d0330788e634f6095535483436ed",
-      "dir": "reports/dell-inc/inspiron-14-5441/0b7969eb",
-      "pull": {
-        "number": 59,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
-    },
-    {
-      "folder": "hardware-reports/hp/hp-omnibook-x-laptop-14-fe0xxx",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/56",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "ead0b558fa323de10cd6e7d6254fec3bce64b500",
-      "dir": "reports/hp/hp-omnibook-x-laptop-14-fe0xxx/29e98fde",
-      "pull": {
-        "number": 56,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
-    },
-    {
-      "folder": "hardware-reports/samsung/galaxy-book6-edge-palf",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/54",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "f5582b95880d9d7de3d103619706c8b9b377334b",
-      "dir": "reports/samsung/galaxy-book6-edge-palf/13d4892b",
-      "pull": {
-        "number": 54,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
-    },
-    {
-      "folder": "hardware-reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/52",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "bae5ccee24e7e1019dc514e869f6f2712f557be3",
-      "dir": "reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa/a7d05faf",
-      "pull": {
-        "number": 52,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
-    },
-    {
-      "folder": "hardware-reports/samsung-electronics-co-ltd/galaxy-book-go-5g",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/50",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "984a2fb0a241d7416d40594b54269b1122d8b83a",
-      "dir": "reports/samsung-electronics-co-ltd/galaxy-book-go-5g/dbf72fb1",
-      "pull": {
-        "number": 50,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
-    },
-    {
-      "folder": "hardware-reports/microsoft-corporation/surface-pro-x",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/48",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "7b374c19a811eb33ee6637057a77ad46116672e9",
-      "dir": "reports/microsoft-corporation/surface-pro-x/eeb66301",
-      "pull": {
-        "number": 48,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
-    },
-    {
-      "folder": "hardware-reports/hp/hp-omnibook-x-laptop-14-kr1xxx",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/46",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "2876e32b03ec9e967b57a8c710a1d3aa6fb90319",
-      "dir": "reports/hp/hp-omnibook-x-laptop-14-kr1xxx/5202d43e",
-      "pull": {
-        "number": 46,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
-    },
-    {
-      "folder": "hardware-reports/hp/hp-omnibook-3-laptop-14-hz0xxx",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/44",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "45720e4055f94b64e4f2c2676e4d3c45bb928c8e",
-      "dir": "reports/hp/hp-omnibook-3-laptop-14-hz0xxx/3a1d0c54",
-      "pull": {
-        "number": 44,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
-    },
-    {
-      "folder": "hardware-reports/microsoft-corporation/microsoft-surface-pro-11th-edition",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/42",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "408215264926a0584a09b7747a246570340097f3",
-      "dir": "reports/microsoft-corporation/microsoft-surface-pro-11th-edition/7c32cf76",
-      "pull": {
-        "number": 42,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
-    },
-    {
-      "folder": "hardware-reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/40",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "7a8bae6046001d09f8b3844d3048d01be57c085a",
-      "dir": "reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa/208e5f19",
-      "pull": {
-        "number": 40,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
-    },
-    {
-      "folder": "hardware-reports/microsoft-corporation/microsoft-surface-pro-11th-edition",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/38",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "41da9334b930ebee72a1266b532c390b439721c5",
-      "dir": "reports/microsoft-corporation/microsoft-surface-pro-11th-edition/c23dc3d8",
-      "pull": {
-        "number": 38,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
-    },
-    {
-      "folder": "hardware-reports/asus/proart-pz14-ht7407na",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/36",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "8db35d9cba3550100ae93182b84d5ef08f0dc3c4",
-      "dir": "reports/asus/proart-pz14-ht7407na/f79c37b6",
-      "pull": {
-        "number": 36,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
-    },
-    {
-      "folder": "hardware-reports/samsung-electronics-co-ltd/galaxy-book4-edge/a220b319",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/34",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "2fdcae6fc67926220ee5947edb53fe7912939bbe",
-      "dir": "reports/samsung-electronics-co-ltd/galaxy-book4-edge/a220b319",
-      "pull": {
-        "number": 34,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
-    },
-    {
-      "folder": "hardware-reports/dell-inc/inspiron-14-5441",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/32",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "2e11d41568b942c8c619d143d89747e132404ad4",
-      "dir": "reports/dell-inc/inspiron-14-5441/c4e26892",
-      "pull": {
-        "number": 32,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-ct0xxx"
     },
     {
       "folder": "hardware-reports/hp/hp-omnibook-5-laptop-14-he0xxx",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/30",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "a38ea3d9bc063818aded48ad43f02860365beead",
-      "dir": "reports/hp/hp-omnibook-5-laptop-14-he0xxx/97863638",
-      "pull": {
-        "number": 30,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-5-laptop-14-he0xxx"
     },
     {
-      "folder": "hardware-reports/microsoft-corporation/microsoft-surface-laptop-7th-edition",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/28",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "81118b3db1cf182d33bb57e2f315887e5fae55f6",
-      "dir": "reports/microsoft-corporation/microsoft-surface-laptop-7th-edition/21ab1011",
-      "pull": {
-        "number": 28,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
+      "folder": "hardware-reports/hp/hp-omnibook-x-laptop-14-fe0xxx",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-x-laptop-14-fe0xxx"
+    },
+    {
+      "folder": "hardware-reports/hp/hp-omnibook-x-laptop-14-kr1xxx",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-x-laptop-14-kr1xxx"
     },
     {
       "folder": "hardware-reports/lenovo/13c8cto1ww",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/26",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "c344150ca08dfe9db8f628ecd0890b611cbf837c",
-      "dir": "reports/lenovo/13c8cto1ww/c6b22c7a",
-      "pull": {
-        "number": 26,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/lenovo/13c8cto1ww"
+    },
+    {
+      "folder": "hardware-reports/lenovo/83n3",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/lenovo/83n3"
     },
     {
       "folder": "hardware-reports/microsoft-corporation/microsoft-surface-laptop-7th-edition",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/24",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "12abcbe7327d2ce69e6c2849b8718c3c5b1a8afd",
-      "dir": "reports/microsoft-corporation/microsoft-surface-laptop-7th-edition/ad8b46fc",
-      "pull": {
-        "number": 24,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/microsoft-corporation/microsoft-surface-laptop-7th-edition"
     },
     {
       "folder": "hardware-reports/microsoft-corporation/microsoft-surface-pro-11th-edition",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/22",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "2a0f7b02872caf6e23505702cba3df047a8e2dd6",
-      "dir": "reports/microsoft-corporation/microsoft-surface-pro-11th-edition/43df080a",
-      "pull": {
-        "number": 22,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/microsoft-corporation/microsoft-surface-pro-11th-edition"
+    },
+    {
+      "folder": "hardware-reports/microsoft-corporation/surface-pro-x",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/microsoft-corporation/surface-pro-x"
+    },
+    {
+      "folder": "hardware-reports/samsung-electronics-co-ltd/galaxy-book-go-5g",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/samsung-electronics-co-ltd/galaxy-book-go-5g"
+    },
+    {
+      "folder": "hardware-reports/samsung-electronics-co-ltd/galaxy-book4-edge/a220b319",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/samsung-electronics-co-ltd/galaxy-book4-edge/a220b319"
+    },
+    {
+      "folder": "hardware-reports/samsung/galaxy-book6-edge-palf",
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/samsung/galaxy-book6-edge-palf"
     },
     {
       "folder": "hardware-reports/unknown/unknown/94bdf4be",
-      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/pull/20",
-      "repo": "turbineBMW/omarchy-hardware-reports",
-      "ref": "5e080091a40823cff5ca670866120b5b863434fb",
-      "dir": "reports/unknown/unknown/94bdf4be",
-      "pull": {
-        "number": 20,
-        "state": "open",
-        "by": "github-actions[bot]"
-      }
+      "url": "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/unknown/unknown/94bdf4be"
     },
     {
       "folder": "arewearmyet/asus-vivobook-s14-s3407qa",
@@ -7125,7 +6953,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3.6-6",
+        "kernel": "7.3.6-10",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -10862,8 +10690,8 @@
       }
     ],
     "image": {
-      "version": "2026.11.27.509",
-      "url": "https://nightly.omarchy.org/edge-snapdragon/2026.11.27.509/omarchy-edge-2026.11.27.509-snapdragon.iso",
+      "version": "2026.11.27.510",
+      "url": "https://nightly.omarchy.org/edge-snapdragon/2026.11.27.510/omarchy-edge-2026.11.27.510-snapdragon.iso",
       "kernel": "7.3.6-6-omarchy"
     },
     "pulls": [

@@ -1,6 +1,6 @@
 # Hardware report dell-inc/inspiron-14-5441/c4e26892
 
-From pull request #32 (https://github.com/turbineBMW/omarchy-hardware-reports/pull/32, not merged yet) at commit 2e11d41568b942c8c619d143d89747e132404ad4, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
+From https://github.com/turbineBMW/omarchy-hardware-reports/tree/8ad795bace951c22fe99ca5f28b82467eb815de2/reports/dell-inc/inspiron-14-5441/c4e26892, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
 addresses. Here the SoC serial number (SOSN) is also zeroed in the ACPI tables and each table's checksum corrected.
 The device list, driver files and registry export stay in that repository.
 

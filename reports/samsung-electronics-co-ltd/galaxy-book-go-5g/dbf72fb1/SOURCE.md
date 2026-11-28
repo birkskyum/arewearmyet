@@ -1,6 +1,6 @@
 # Hardware report samsung-electronics-co-ltd/galaxy-book-go-5g/dbf72fb1
 
-From pull request #50 (https://github.com/turbineBMW/omarchy-hardware-reports/pull/50, not merged yet) at commit 984a2fb0a241d7416d40594b54269b1122d8b83a, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
+From https://github.com/turbineBMW/omarchy-hardware-reports/tree/8ad795bace951c22fe99ca5f28b82467eb815de2/reports/samsung-electronics-co-ltd/galaxy-book-go-5g/dbf72fb1, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
 addresses. Here the SoC serial number (SOSN) is also zeroed in the ACPI tables and each table's checksum corrected.
 The device list, driver files and registry export stay in that repository.
 

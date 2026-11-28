@@ -1,17 +1,17 @@
 {
-  "collected": "2026-11-27T05:29:16.699Z",
+  "collected": "2026-11-28T05:27:22.114Z",
   "stale": [],
-  "linuxNext": "20261126",
+  "linuxNext": "20261127",
   "firmwareRelease": "20261124",
   "omarchy": {
     "channel": "edge",
-    "kernel": "7.3.6-6",
+    "kernel": "7.3.6-10",
     "systemd": "262.2-1",
     "kernelBase": "v7.3",
     "systemdRelease": "v262",
     "image": {
-      "version": "2026.11.27.509",
-      "url": "https://nightly.omarchy.org/edge-snapdragon/2026.11.27.509/omarchy-edge-2026.11.27.509-snapdragon.iso",
+      "version": "2026.11.27.510",
+      "url": "https://nightly.omarchy.org/edge-snapdragon/2026.11.27.510/omarchy-edge-2026.11.27.510-snapdragon.iso",
       "kernel": "7.3.6-6-omarchy"
     },
     "channels": [
@@ -1466,7 +1466,7 @@
       },
       {
         "name": "edge",
-        "kernel": "7.3.6-6",
+        "kernel": "7.3.6-10",
         "systemd": "262.2-1",
         "deviceTrees": [
           "glymur-anduril-bluechip.dts",
@@ -2730,9 +2730,9 @@
     "nvidia": 22,
     "nvidiaWorks": 6,
     "nvidiaExpected": 16,
-    "works": 19,
+    "works": 20,
     "should": 49,
-    "workaround": 9,
+    "workaround": 8,
     "problems": 4,
     "notYet": 7,
     "deviceTree": 84,
@@ -5804,7 +5804,7 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/40",
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/asustek-computer-inc/asus-vivobook-14-x1407qa-x1407qa",
           "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-vivobook-14-x1407qa"
         ]
       },
@@ -6204,7 +6204,7 @@
         "acpi": "collected",
         "acpiUrls": [
           "https://github.com/birkskyum/arewearmyet/tree/main/acpi/asus-vivobook-s14-s3407qa",
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/52"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa"
         ]
       },
       "variants": [
@@ -6993,14 +6993,14 @@
         "https://github.com/systemd/systemd/blob/main/src/boot/hwids/aa64/x1p42100-asus-zenbook-a14.json"
       ],
       "notes": null,
-      "outcome": "workaround",
-      "bootable": "workaround",
+      "outcome": "works",
+      "bootable": "stable",
       "reports": [
         {
-          "state": "workaround",
-          "note": "An owner has Omarchy running on it, going by the 10 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+          "state": "works",
+          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.6-2. There, the installer from a USB stick works, and the disk password prompt works.",
           "checked": "2026-11",
-          "from": "findings"
+          "from": "hw-test"
         }
       ],
       "machine": "omarchy",
@@ -7086,13 +7086,13 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-asus-zenbook-a14.json"
             }
           ],
-          "outcome": "workaround",
+          "outcome": "works",
           "reports": [
             {
-              "state": "workaround",
-              "note": "An owner has Omarchy running on it, going by the 10 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+              "state": "works",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.6-2. There, the installer from a USB stick works, and the disk password prompt works.",
               "checked": "2026-11",
-              "from": "findings"
+              "from": "hw-test"
             }
           ]
         },
@@ -7136,13 +7136,13 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1e80100-asus-zenbook-a14-oled.json"
             }
           ],
-          "outcome": "workaround",
+          "outcome": "works",
           "reports": [
             {
-              "state": "workaround",
-              "note": "An owner has Omarchy running on it, going by the 10 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+              "state": "works",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.6-2. There, the installer from a USB stick works, and the disk password prompt works.",
               "checked": "2026-11",
-              "from": "findings"
+              "from": "hw-test"
             }
           ]
         },
@@ -7186,13 +7186,13 @@
               "url": "https://github.com/ubuntu/stubble/blob/main/hwids/json/x1p42100-asus-zenbook-a14.json"
             }
           ],
-          "outcome": "workaround",
+          "outcome": "works",
           "reports": [
             {
-              "state": "workaround",
-              "note": "An owner has Omarchy running on it, going by the 10 checks written up from it. There, the installer from a USB stick works, and the disk password prompt partly works.",
+              "state": "works",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.6-2. There, the installer from a USB stick works, and the disk password prompt works.",
               "checked": "2026-11",
-              "from": "findings"
+              "from": "hw-test"
             }
           ]
         }
@@ -7369,7 +7369,7 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/36",
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/asus/proart-pz14-ht7407na",
           "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/asus-proart-pz14-ht7407"
         ]
       },
@@ -7648,7 +7648,7 @@
       "reports": [
         {
           "state": "works",
-          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.6-5. There, the installer from a USB stick works, and the disk password prompt works.",
+          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.6-7. There, the installer from a USB stick works, and the disk password prompt works.",
           "checked": "2026-11",
           "from": "hw-test"
         }
@@ -7738,7 +7738,7 @@
           "reports": [
             {
               "state": "works",
-              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.6-5. There, the installer from a USB stick works, and the disk password prompt works.",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.6-7. There, the installer from a USB stick works, and the disk password prompt works.",
               "checked": "2026-11",
               "from": "hw-test"
             }
@@ -7822,7 +7822,7 @@
         "acpiUrls": [
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspiron-14-5441-x1p-42-100",
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/dell-inspron-14-5441-x1p-64-100",
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/59"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/dell-inc/inspiron-14-5441"
         ]
       },
       "variants": [
@@ -9428,7 +9428,7 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/44"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-14-hz0xxx"
         ]
       },
       "variants": [
@@ -9631,7 +9631,7 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/63",
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-3-laptop-16-ct0xxx",
           "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/hp-omnibook-3-16-ct0"
         ]
       },
@@ -9731,7 +9731,7 @@
         "acpi": "collected",
         "acpiUrls": [
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-omnibook-5-14-he0xxx",
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/30"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-5-laptop-14-he0xxx"
         ]
       },
       "variants": [
@@ -9955,7 +9955,7 @@
         "acpi": "collected",
         "acpiUrls": [
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/hp-omnibook-x14-fe0xxx",
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/56"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-x-laptop-14-fe0xxx"
         ]
       },
       "variants": [
@@ -10977,7 +10977,7 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/46"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/hp/hp-omnibook-x-laptop-14-kr1xxx"
         ]
       },
       "variants": [
@@ -12630,7 +12630,7 @@
         "acpi": "collected",
         "acpiUrls": [
           "https://github.com/birkskyum/arewearmyet/tree/main/acpi/firmware/lenovo-thinkcentre-neo-50q-qc",
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/26"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/lenovo/13c8cto1ww"
         ]
       },
       "variants": [
@@ -14112,7 +14112,7 @@
         "acpiUrls": [
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-romulus13_and_15",
           "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_laptop_7_qcom",
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/28"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/microsoft-corporation/microsoft-surface-laptop-7th-edition"
         ]
       },
       "variants": [
@@ -14205,7 +14205,7 @@
         },
         {
           "state": "workaround",
-          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-78. There, the installer from a USB stick partly works, and the disk password prompt works.",
+          "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.6-6. There, the installer from a USB stick partly works, and the disk password prompt works.",
           "checked": "2026-11",
           "from": "hw-test"
         }
@@ -14302,7 +14302,7 @@
             },
             {
               "state": "workaround",
-              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.0-78. There, the installer from a USB stick partly works, and the disk password prompt works.",
+              "note": "An owner runs Omarchy on it and tested it with hw-test on linux-omarchy 7.3.6-6. There, the installer from a USB stick partly works, and the disk password prompt works.",
               "checked": "2026-11",
               "from": "hw-test"
             }
@@ -14482,7 +14482,7 @@
         "acpiUrls": [
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-pro-11",
           "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_11_qcom",
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/42"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/microsoft-corporation/microsoft-surface-pro-11th-edition"
         ]
       },
       "variants": [
@@ -14963,7 +14963,7 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/20"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/unknown/unknown/94bdf4be"
         ]
       },
       "variants": [
@@ -15859,7 +15859,7 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/34"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/samsung-electronics-co-ltd/galaxy-book4-edge/a220b319"
         ]
       },
       "variants": [
@@ -16220,7 +16220,7 @@
         "firmwareFolders": [],
         "acpi": "collected",
         "acpiUrls": [
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/54"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/samsung/galaxy-book6-edge-palf"
         ]
       },
       "variants": [
@@ -18395,7 +18395,7 @@
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/microsoft-surface-prox",
           "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_x_sq1",
           "https://github.com/linux-surface/acpidumps/tree/HEAD/surface_pro_x_sq2",
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/48"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/microsoft-corporation/surface-pro-x"
         ]
       },
       "variants": [
@@ -18864,7 +18864,7 @@
         "acpi": "collected",
         "acpiUrls": [
           "https://github.com/aarch64-laptops/build/tree/HEAD/misc/samsung-galaxy-book-go-5g",
-          "https://github.com/turbineBMW/omarchy-hardware-reports/pull/50"
+          "https://github.com/turbineBMW/omarchy-hardware-reports/tree/main/reports/samsung-electronics-co-ltd/galaxy-book-go-5g"
         ]
       },
       "variants": [

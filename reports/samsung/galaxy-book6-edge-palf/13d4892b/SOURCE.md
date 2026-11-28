@@ -1,6 +1,6 @@
 # Hardware report samsung/galaxy-book6-edge-palf/13d4892b
 
-From pull request #54 (https://github.com/turbineBMW/omarchy-hardware-reports/pull/54, not merged yet) at commit f5582b95880d9d7de3d103619706c8b9b377334b, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
+From https://github.com/turbineBMW/omarchy-hardware-reports/tree/8ad795bace951c22fe99ca5f28b82467eb815de2/reports/samsung/galaxy-book6-edge-palf/13d4892b, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
 addresses. Here the SoC serial number (SOSN) is also zeroed in the ACPI tables and each table's checksum corrected.
 The device list, driver files and registry export stay in that repository.
 

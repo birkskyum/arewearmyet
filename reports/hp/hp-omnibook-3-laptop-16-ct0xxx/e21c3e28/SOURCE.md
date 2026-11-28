@@ -1,6 +1,6 @@
 # Hardware report hp/hp-omnibook-3-laptop-16-ct0xxx/e21c3e28
 
-From pull request #63 (https://github.com/turbineBMW/omarchy-hardware-reports/pull/63, not merged yet) at commit e26be29f88a9d00e9f2dd430f7c6cb0cf399e508, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
+From https://github.com/turbineBMW/omarchy-hardware-reports/tree/8ad795bace951c22fe99ca5f28b82467eb815de2/reports/hp/hp-omnibook-3-laptop-16-ct0xxx/e21c3e28, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
 addresses. Here the SoC serial number (SOSN) is also zeroed in the ACPI tables and each table's checksum corrected.
 The device list, driver files and registry export stay in that repository.
 

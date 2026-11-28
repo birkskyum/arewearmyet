@@ -1,6 +1,6 @@
 # Hardware report microsoft-corporation/microsoft-surface-pro-11th-edition/43df080a
 
-From pull request #22 (https://github.com/turbineBMW/omarchy-hardware-reports/pull/22, not merged yet) at commit 2a0f7b02872caf6e23505702cba3df047a8e2dd6, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
+From https://github.com/turbineBMW/omarchy-hardware-reports/tree/8ad795bace951c22fe99ca5f28b82467eb815de2/reports/microsoft-corporation/microsoft-surface-pro-11th-edition/43df080a, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
 addresses. Here the SoC serial number (SOSN) is also zeroed in the ACPI tables and each table's checksum corrected.
 The device list, driver files and registry export stay in that repository.
 

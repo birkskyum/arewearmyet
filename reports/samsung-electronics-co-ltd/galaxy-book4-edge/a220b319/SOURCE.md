@@ -1,6 +1,6 @@
 # Hardware report samsung-electronics-co-ltd/galaxy-book4-edge/a220b319
 
-From pull request #34 (https://github.com/turbineBMW/omarchy-hardware-reports/pull/34, not merged yet) at commit 2fdcae6fc67926220ee5947edb53fe7912939bbe, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
+From https://github.com/turbineBMW/omarchy-hardware-reports/tree/8ad795bace951c22fe99ca5f28b82467eb815de2/reports/samsung-electronics-co-ltd/galaxy-book4-edge/a220b319, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
 addresses. Here the SoC serial number (SOSN) is also zeroed in the ACPI tables and each table's checksum corrected.
 The device list, driver files and registry export stay in that repository.
 

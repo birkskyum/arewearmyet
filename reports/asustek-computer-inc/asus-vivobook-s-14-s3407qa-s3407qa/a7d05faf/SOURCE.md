@@ -1,6 +1,6 @@
 # Hardware report asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa/a7d05faf
 
-From pull request #52 (https://github.com/turbineBMW/omarchy-hardware-reports/pull/52, not merged yet) at commit bae5ccee24e7e1019dc514e869f6f2712f557be3, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
+From https://github.com/turbineBMW/omarchy-hardware-reports/tree/8ad795bace951c22fe99ca5f28b82467eb815de2/reports/asustek-computer-inc/asus-vivobook-s-14-s3407qa-s3407qa/a7d05faf, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
 addresses. Here the SoC serial number (SOSN) is also zeroed in the ACPI tables and each table's checksum corrected.
 The device list, driver files and registry export stay in that repository.
 

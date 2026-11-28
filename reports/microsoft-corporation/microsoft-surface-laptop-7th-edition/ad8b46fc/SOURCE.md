@@ -1,6 +1,6 @@
 # Hardware report microsoft-corporation/microsoft-surface-laptop-7th-edition/ad8b46fc
 
-From pull request #24 (https://github.com/turbineBMW/omarchy-hardware-reports/pull/24, not merged yet) at commit 12abcbe7327d2ce69e6c2849b8718c3c5b1a8afd, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
+From https://github.com/turbineBMW/omarchy-hardware-reports/tree/8ad795bace951c22fe99ca5f28b82467eb815de2/reports/microsoft-corporation/microsoft-surface-laptop-7th-edition/ad8b46fc, made with the Omarchy Arm Installer, which takes out serial numbers, the system UUID and MAC
 addresses. Here the SoC serial number (SOSN) is also zeroed in the ACPI tables and each table's checksum corrected.
 The device list, driver files and registry export stay in that repository.
 
